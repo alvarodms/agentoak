@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.env
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# pokeemerald build artifacts
+pokeemerald/build/
+pokeemerald/*.gba
+pokeemerald/*.elf
+pokeemerald/*.map
+pokeemerald/*.sym

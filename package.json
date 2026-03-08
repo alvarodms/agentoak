@@ -1,0 +1,25 @@
+{
+  "name": "agent-oak",
+  "version": "0.1.0",
+  "description": "Autonomous AI agent that explores, modifies, and builds a Pokémon ROM hack through iterative learning cycles",
+  "type": "module",
+  "scripts": {
+    "cycle": "tsx src/index.ts",
+    "build:check": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.7",
+    "glob": "^11.0.1",
+    "simple-git": "^3.27.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.12.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
