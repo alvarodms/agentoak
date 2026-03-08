@@ -50,12 +50,37 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Cache ARM toolchain
+        id: cache-arm
+        uses: actions/cache@v4
+        with:
+          path: ~/arm-toolchain
+          key: arm-toolchain-${{ runner.os }}-v1
+
       - name: Install ARM toolchain & build deps
+        if: steps.cache-arm.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+          # Snapshot installed files for cache
+          mkdir -p ~/arm-toolchain
+          dpkg -L gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev | \
+            grep -E '^/(usr|lib)' | sort -u | \
+            rsync -a --files-from=- / ~/arm-toolchain/
+
+      - name: Restore ARM toolchain from cache
+        if: steps.cache-arm.outputs.cache-hit == 'true'
+        run: sudo rsync -a ~/arm-toolchain/ /
+
+      - name: Cache agbcc
+        id: cache-agbcc
+        uses: actions/cache@v4
+        with:
+          path: pokeemerald/tools/agbcc
+          key: agbcc-${{ runner.os }}-v1
 
       - name: Build & install agbcc
+        if: steps.cache-agbcc.outputs.cache-hit != 'true'
         run: |
           git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc
           cd /tmp/agbcc
