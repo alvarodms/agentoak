@@ -1,0 +1,85 @@
+name: Agent Oak Cycle
+
+on:
+  # Manual trigger with optional config overrides
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Claude model to use"
+        required: false
+        default: "claude-sonnet-4-20250514"
+      max_tokens:
+        description: "Max tokens per cycle"
+        required: false
+        default: "200000"
+      max_tool_calls:
+        description: "Max tool calls per cycle"
+        required: false
+        default: "50"
+
+  # Run every 6 hours automatically
+  schedule:
+    - cron: "0 */6 * * *"
+
+# Prevent concurrent cycles from racing on commits
+concurrency:
+  group: agent-cycle
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install ARM toolchain & build deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
+
+      - name: Build & install agbcc
+        run: |
+          git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc
+          cd /tmp/agbcc
+          ./build.sh
+          ./install.sh "${{ github.workspace }}/pokeemerald"
+
+      - name: Configure git identity
+        run: |
+          git config user.name "Agent Oak [bot]"
+          git config user.email "agent-oak[bot]@users.noreply.github.com"
+
+      - name: Run agent cycle
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
+          MAX_TOKENS_PER_CYCLE: ${{ inputs.max_tokens || '200000' }}
+          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
+        run: npm run cycle
+
+      - name: Push changes
+        run: |
+          # Push only if there are new commits
+          if git diff --quiet origin/main..HEAD; then
+            echo "No new commits to push"
+          else
+            git push origin main
+          fi
