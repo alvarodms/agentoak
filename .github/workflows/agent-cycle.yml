@@ -38,8 +38,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch full history for git operations
+        run: git fetch --unshallow origin main 2>/dev/null || true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
