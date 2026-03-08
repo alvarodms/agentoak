@@ -49,7 +49,7 @@ jobs:
           node-version: "22"
 
       - name: Install Node dependencies
-        run: npm ci
+        run: npm i
 
       - name: Cache ARM toolchain
         id: cache-arm
