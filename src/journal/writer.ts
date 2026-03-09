@@ -5,6 +5,7 @@ import { logger } from "../utils/logger.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import type { CycleMode } from "../cycle/modes.js";
 import type { TokenUsage } from "../memory/types.js";
+import type { IssueAction, HelpRequest } from "../github/client.js";
 
 export interface JournalData {
   cycleNumber: number;
@@ -19,6 +20,8 @@ export interface JournalData {
   reflectionText: string;
   tokenUsage: TokenUsage;
   toolCallCount: number;
+  issueActions?: IssueAction[];
+  helpRequests?: HelpRequest[];
 }
 
 /** Write a journal entry for a completed cycle */
@@ -53,6 +56,8 @@ export function writeJournalEntry(data: JournalData): string {
       }`
     : "No build was attempted this cycle.";
 
+  const issueSection = formatIssueSection(data.issueActions, data.helpRequests);
+
   const content = `# Cycle ${paddedNumber}
 
 **Date**: ${timestamp}  
@@ -62,7 +67,7 @@ export function writeJournalEntry(data: JournalData): string {
 ## Reasoning
 
 ${data.reasoning}
-
+${issueSection}
 ## Actions Taken
 
 ${actionList}
@@ -133,4 +138,34 @@ function summarizeInput(input: Record<string, unknown>): string {
     parts.push(`${key}: ${strVal.slice(0, 50)}${strVal.length > 50 ? "..." : ""}`);
   }
   return parts.join(", ");
+}
+
+/** Format the Community Issues section for the journal entry */
+function formatIssueSection(
+  issueActions?: IssueAction[],
+  helpRequests?: HelpRequest[],
+): string {
+  const hasIssues = issueActions && issueActions.length > 0;
+  const hasHelp = helpRequests && helpRequests.length > 0;
+  if (!hasIssues && !hasHelp) return "\n";
+
+  const parts: string[] = ["\n## Community Issues\n"];
+
+  if (hasIssues) {
+    parts.push("### Issue Actions\n");
+    for (const action of issueActions) {
+      parts.push(`- **#${action.issueNumber}** — ${action.action}: ${action.response.slice(0, 120)}${action.response.length > 120 ? "..." : ""}`);
+    }
+    parts.push("");
+  }
+
+  if (hasHelp) {
+    parts.push("### Help Requests Created\n");
+    for (const hr of helpRequests) {
+      parts.push(`- **${hr.title}**: ${hr.body.slice(0, 120)}${hr.body.length > 120 ? "..." : ""}`);
+    }
+    parts.push("");
+  }
+
+  return parts.join("\n");
 }

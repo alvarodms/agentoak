@@ -11,6 +11,7 @@ import { runBuild, saveBuildLog } from "../repo/build.js";
 import { recordSuccessfulBuild, formatVersion } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
 import { commitCycle, getHeadSha, revertPokeemerald } from "../git/committer.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
 import { logger, cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import type { TokenUsage } from "../memory/types.js";
@@ -38,8 +39,31 @@ async function runPlanningPhase(
 
   const memory = loadMemory();
   const recentJournals = getRecentJournalSummaries(3);
-  const plan = await planCycle(memory, recentJournals, cycleNumber);
+
+  // Fetch new community issues (silently skipped if GitHub is not configured)
+  log.info("  Checking for community issues...");
+  const communityIssues = await fetchNewCommunityIssues();
+  const issueContext = formatIssuesForPrompt(communityIssues);
+
+  const plan = await planCycle(memory, recentJournals, cycleNumber, issueContext);
   log.info(`Plan: [${plan.mode}] ${plan.objective}`);
+
+  // Execute issue actions decided by the planner (comment + label)
+  if (plan.issueActions.length > 0) {
+    log.info(`  Executing ${plan.issueActions.length} issue action(s)...`);
+    await executeIssueActions(plan.issueActions);
+  }
+
+  // Create help-request issues if the planner asked for human input
+  if (plan.helpRequests.length > 0) {
+    log.info(`  Creating ${plan.helpRequests.length} help request(s)...`);
+    for (const hr of plan.helpRequests) {
+      const issueNum = await createHelpRequest(hr.title, hr.body);
+      if (issueNum) {
+        log.info(`  Created help request issue #${issueNum}: ${hr.title}`);
+      }
+    }
+  }
 
   return { memory, recentJournals, plan };
 }
@@ -294,6 +318,8 @@ export async function runCycle(): Promise<void> {
       reflectionText: reflection.reflectionText,
       tokenUsage: totalTokenUsage,
       toolCallCount: implResult.toolCallCount + fixActions.length,
+      issueActions: plan.issueActions.length > 0 ? plan.issueActions : undefined,
+      helpRequests: plan.helpRequests.length > 0 ? plan.helpRequests : undefined,
     });
 
     log.info("Phase 5: Committing to git...");

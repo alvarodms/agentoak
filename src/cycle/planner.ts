@@ -4,11 +4,14 @@ import type { CycleMode } from "./modes.js";
 import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
 import { getMemorySummary } from "../memory/store.js";
+import type { IssueAction, HelpRequest } from "../github/client.js";
 
 export interface CyclePlan {
   mode: CycleMode;
   objective: string;
   reasoning: string;
+  issueActions: IssueAction[];
+  helpRequests: HelpRequest[];
 }
 
 /** JSON schema for validated structured output from the planning phase */
@@ -28,6 +31,40 @@ const CYCLE_PLAN_SCHEMA = {
       type: "string",
       description: "Why this mode and objective make sense right now.",
     },
+    issueActions: {
+      type: "array",
+      description: "Actions to take on community issues. Only include entries for issues you reviewed.",
+      items: {
+        type: "object",
+        properties: {
+          issueNumber: { type: "number", description: "The issue number" },
+          action: {
+            type: "string",
+            enum: ["accept", "defer", "reject", "need-info"],
+            description: "What to do with the issue",
+          },
+          response: {
+            type: "string",
+            description: "A brief, friendly response to post as a comment on the issue",
+          },
+        },
+        required: ["issueNumber", "action", "response"],
+        additionalProperties: false,
+      },
+    },
+    helpRequests: {
+      type: "array",
+      description: "Issues to create asking the community for help. Only use when genuinely stuck or need human input.",
+      items: {
+        type: "object",
+        properties: {
+          title: { type: "string", description: "Short title for the help request" },
+          body: { type: "string", description: "Detailed description of what help is needed" },
+        },
+        required: ["title", "body"],
+        additionalProperties: false,
+      },
+    },
   },
   required: ["mode", "objective", "reasoning"],
   additionalProperties: false,
@@ -38,6 +75,7 @@ export async function planCycle(
   memory: Memory,
   recentJournalSummaries: string[],
   cycleNumber: number,
+  issueContext: string = "",
 ): Promise<CyclePlan> {
   const model = process.env.ANTHROPIC_MODEL;
 
@@ -51,6 +89,10 @@ export async function planCycle(
     .map((m) => `- **${m.name}**: ${m.description}`)
     .join("\n");
 
+  const issueSection = issueContext
+    ? `\n\n${issueContext}\n`
+    : "";
+
   const prompt = `You are Agent Oak's planning module. Decide what the next autonomous cycle should focus on.
 
 Cycle ${cycleNumber} is about to start.
@@ -63,14 +105,18 @@ ${journalContext}
 
 ## Available Modes
 ${modeList}
-
+${issueSection}
 Decide: What mode should this cycle use, and what should the objective be?
 
 For early cycles (1–5), prefer "research" or "planning" to build up knowledge.
 If previous cycles had build failures, consider "repair".
 Choose freely based on what seems most valuable given the current state.
 
-Respond with a JSON object containing mode, objective, and reasoning.`;
+If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
+
+You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
+
+Respond with a JSON object containing mode, objective, reasoning, and optionally issueActions and helpRequests.`;
 
   try {
     const result = await runClaudeCode(prompt, {
@@ -83,7 +129,13 @@ Respond with a JSON object containing mode, objective, and reasoning.`;
     console.log('Planning result:', result);
 
     // With --json-schema, the structured JSON is in the result message's result field
-    interface PlanJson { mode?: string; objective?: string; reasoning?: string }
+    interface PlanJson {
+      mode?: string;
+      objective?: string;
+      reasoning?: string;
+      issueActions?: IssueAction[];
+      helpRequests?: HelpRequest[];
+    }
     let parsed: PlanJson | null = null;
 
     // Try the resultText first (structured output via --json-schema)
@@ -131,12 +183,20 @@ Respond with a JSON object containing mode, objective, and reasoning.`;
 
     if (parsed?.mode && parsed?.objective && parsed?.reasoning) {
       const mode = parsed.mode as CycleMode;
+      const issueActions = Array.isArray(parsed.issueActions) ? parsed.issueActions : [];
+      const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
       if (!CYCLE_MODES[mode]) {
         logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
-        return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning };
+        return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, issueActions, helpRequests };
       }
       logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
-      return { mode, objective: parsed.objective, reasoning: parsed.reasoning };
+      if (issueActions.length > 0) {
+        logger.info(`  Issue actions: ${issueActions.length} (${issueActions.map(a => `#${a.issueNumber}:${a.action}`).join(", ")})`);
+      }
+      if (helpRequests.length > 0) {
+        logger.info(`  Help requests: ${helpRequests.length}`);
+      }
+      return { mode, objective: parsed.objective, reasoning: parsed.reasoning, issueActions, helpRequests };
     }
 
     logger.warn("Could not parse structured plan from CLI output, using fallback");
@@ -148,5 +208,7 @@ Respond with a JSON object containing mode, objective, and reasoning.`;
     mode: "research",
     objective: "Explore the pokeemerald codebase and understand its structure",
     reasoning: "Default fallback — planner could not produce a structured plan.",
+    issueActions: [],
+    helpRequests: [],
   };
 }
