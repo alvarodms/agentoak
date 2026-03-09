@@ -4,8 +4,7 @@ import { logger } from "./utils/logger.js";
 
 async function main() {
   logger.info("Agent Oak starting up...");
-  logger.info(`Model: ${process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-20250514"}`);
-  logger.info(`Max tokens/cycle: ${process.env.MAX_TOKENS_PER_CYCLE ?? "200000"}`);
+  logger.info(`Model: ${process.env.ANTHROPIC_MODEL ?? "(default)"}`);
   logger.info(`Max tool calls/cycle: ${process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50"}`);
 
   try {

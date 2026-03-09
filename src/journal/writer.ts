@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { JOURNAL_DIR } from "../utils/paths.js";
 import { logger } from "../utils/logger.js";
-import type { ActionRecord } from "../agent/claude.js";
+import type { ActionRecord } from "../agent/output-parser.js";
 import type { CycleMode } from "../cycle/modes.js";
 import type { TokenUsage } from "../memory/types.js";
 

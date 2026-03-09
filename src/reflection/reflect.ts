@@ -1,7 +1,8 @@
-import { runAgentLoop } from "../agent/claude.js";
-import type { AgentLoopResult, ActionRecord } from "../agent/claude.js";
+import { runClaudeCode } from "../agent/claude-cli.js";
+import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import type { ActionRecord } from "../agent/output-parser.js";
 import { buildReflectionPrompt } from "../agent/prompts.js";
-import { buildSystemPrompt } from "../agent/prompts.js";
+import { buildDynamicContext } from "../agent/prompts.js";
 import { loadMemory } from "../memory/store.js";
 import { logger } from "../utils/logger.js";
 
@@ -23,10 +24,16 @@ export async function runReflection(context: {
   logger.info("Starting reflection phase...");
 
   const memory = loadMemory();
-  const systemPrompt = buildSystemPrompt(memory, [], context.cycleNumber, "Reflection");
+  const dynamicContext = buildDynamicContext(memory, [], context.cycleNumber, "Reflection");
   const reflectionPrompt = buildReflectionPrompt(context);
 
-  const result = await runAgentLoop(systemPrompt, reflectionPrompt);
+  const model = process.env.ANTHROPIC_MODEL;
+  const result = await runClaudeCode(reflectionPrompt, {
+    appendSystemPrompt: dynamicContext,
+    maxTurns: 10,
+    tools: "Read,Write,Bash",
+    model,
+  });
 
   // Collect the reflection text from actions
   const reflectionText = [

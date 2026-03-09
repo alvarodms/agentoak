@@ -1,9 +1,10 @@
 import { loadMemory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import { getModeDescription } from "./modes.js";
-import { buildSystemPrompt, buildTaskPrompt, buildBuildFixPrompt } from "../agent/prompts.js";
-import { runAgentLoop } from "../agent/claude.js";
-import type { AgentLoopResult, ActionRecord } from "../agent/claude.js";
+import { buildDynamicContext, buildTaskPrompt, buildBuildFixPrompt } from "../agent/prompts.js";
+import { runClaudeCode } from "../agent/claude-cli.js";
+import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
@@ -54,11 +55,18 @@ async function runImplementationPhase(
   log.info("Phase 2: Implementation...");
 
   const modeDescription = getModeDescription(plan.mode as Parameters<typeof getModeDescription>[0]);
-  const systemPrompt = buildSystemPrompt(memory, recentJournals, cycleNumber, modeDescription);
+  const dynamicContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
   const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode);
 
+  const model = process.env.ANTHROPIC_MODEL;
+  const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50", 10);
+
   log.info(`  → Task: ${plan.objective}`);
-  const result = await runAgentLoop(systemPrompt, taskPrompt);
+  const result = await runClaudeCode(taskPrompt, {
+    appendSystemPrompt: dynamicContext,
+    maxTurns,
+    model,
+  });
 
   log.info(
     `  Implementation complete: ${result.toolCallCount} tool calls, ${result.filesModified.length} files modified`,
@@ -76,7 +84,7 @@ async function runImplementationPhase(
  */
 async function runBuildVerifyPhase(
   cycleNumber: number,
-  implResult: AgentLoopResult,
+  implResult: ClaudeCodeResult,
   sessionStartSha: string,
   memory: ReturnType<typeof loadMemory>,
   recentJournals: string[],
@@ -120,10 +128,16 @@ async function runBuildVerifyPhase(
     log.info(`  Build: FAIL — running fix agent (attempt ${attempt}/${MAX_BUILD_FIX_ATTEMPTS})...`);
 
     const modeDescription = getModeDescription("repair");
-    const fixSystemPrompt = buildSystemPrompt(memory, recentJournals, cycleNumber, modeDescription);
+    const fixContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
     const fixPrompt = buildBuildFixPrompt(cycleNumber, buildResult.errors, buildResult.stderr);
 
-    const fixResult = await runAgentLoop(fixSystemPrompt, fixPrompt);
+    const model = process.env.ANTHROPIC_MODEL;
+    const fixResult = await runClaudeCode(fixPrompt, {
+      appendSystemPrompt: fixContext,
+      maxTurns: 15,
+      tools: "Bash,Read,Edit,Write,Grep",
+      model,
+    });
     fixActions.push(...fixResult.actions);
     fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
 
@@ -168,7 +182,7 @@ async function runBuildVerifyPhase(
 async function runReflectionPhase(
   cycleNumber: number,
   plan: { mode: string; objective: string },
-  implResult: AgentLoopResult,
+  implResult: ClaudeCodeResult,
   buildResult: { success: boolean; errors: string[] } | null,
   log: ReturnType<typeof cycleLogger>,
 ) {

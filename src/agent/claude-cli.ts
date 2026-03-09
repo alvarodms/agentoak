@@ -78,7 +78,7 @@ function buildArgs(opts: {
 }): string[] {
   const args: string[] = [
     "--print",
-    "--output-format", "json",
+    "--output-format", "stream-json",
     "--verbose",
     "--dangerously-skip-permissions",
   ];
@@ -128,9 +128,9 @@ function spawnClaude(
     });
 
     const stdoutChunks: Buffer[] = [];
-    let toolCallsSeen = 0;
+    const streamState = new StreamState();
 
-    // Stream stdout and parse JSON messages in real-time for live logging
+    // Stream stdout — parse NDJSON messages in real-time for live logging
     let stdoutLineBuffer = "";
     child.stdout.on("data", (chunk: Buffer) => {
       stdoutChunks.push(chunk);
@@ -144,7 +144,7 @@ function spawnClaude(
         if (!trimmed) continue;
         try {
           const msg = JSON.parse(trimmed) as Record<string, unknown>;
-          logStreamedMessage(msg, ++toolCallsSeen);
+          streamState.handleMessage(msg);
         } catch {
           // Not a JSON line — skip
         }
@@ -170,7 +170,12 @@ function spawnClaude(
     // Log periodic heartbeat so we know the process is still alive
     const heartbeat = setInterval(() => {
       const elapsed = ((Date.now() - spawnStart) / 1000).toFixed(0);
-      logger.info(`  [claude] still running... (${elapsed}s elapsed, pid: ${child.pid})`);
+      const stats = streamState.getStats();
+      logger.info(
+        `  [claude] still running... (${elapsed}s, ` +
+        `${stats.turns} turns, ${stats.toolCalls} tool calls, ` +
+        `${stats.filesModified} files modified)`,
+      );
     }, 30_000);
 
     // Timeout handling
@@ -188,9 +193,18 @@ function spawnClaude(
 
       const elapsed = ((Date.now() - spawnStart) / 1000).toFixed(1);
       const stdout = Buffer.concat(stdoutChunks).toString();
+      const stats = streamState.getStats();
+
+      // Log completion summary
+      logger.info(
+        `  [claude] finished in ${elapsed}s — ` +
+        `${stats.turns} turns, ${stats.toolCalls} tool calls, ` +
+        `${stats.filesModified} files modified` +
+        (stats.costUsd > 0 ? `, $${stats.costUsd.toFixed(4)}` : ""),
+      );
 
       if (stderrFull) {
-        logger.debug(`claude stderr total (${stderrFull.length} bytes, after ${elapsed}s): ${stderrFull.slice(0, 1000)}`);
+        logger.debug(`claude stderr total (${stderrFull.length} bytes): ${stderrFull.slice(0, 1000)}`);
       }
 
       if (code !== 0) {
@@ -220,33 +234,222 @@ function spawnClaude(
   });
 }
 
-/** Log a streamed JSON message from Claude CLI stdout in real-time */
-function logStreamedMessage(msg: Record<string, unknown>, _toolCallsSeen: number): void {
-  const content = msg.content;
-  if (!Array.isArray(content)) return;
+/**
+ * Tracks streaming state and logs real-time feedback from Claude Code CLI.
+ *
+ * The stream-json format emits NDJSON messages. Each message has a `type`
+ * field: "system", "assistant", "user", "result". Content blocks within
+ * messages follow the Anthropic API format (text, tool_use, tool_result).
+ */
+class StreamState {
+  private turns = 0;
+  private toolCalls = 0;
+  private filesModified = new Set<string>();
+  private costUsd = 0;
+  private lastToolName = "";
 
-  for (const block of content as Array<Record<string, unknown>>) {
-    if (block.type === "tool_use" && block.name) {
-      const input = block.input as Record<string, unknown> | undefined;
-      const inputPreview = input ? JSON.stringify(input).slice(0, 120) : "";
-      logger.info(`  [claude] tool: ${block.name as string}(${inputPreview})`);
+  handleMessage(msg: Record<string, unknown>): void {
+    const msgType = msg.type as string | undefined;
+    const role = msg.role as string | undefined;
+
+    // Track cost from usage/cost fields
+    if (typeof msg.cost_usd === "number") {
+      this.costUsd = msg.cost_usd;
     }
 
-    if (block.type === "text" && block.text) {
-      const text = block.text as string;
-      // Show a short preview of assistant text
-      const preview = text.replace(/\n/g, " ").slice(0, 150);
-      if (preview.trim()) {
-        logger.info(`  [claude] ${preview}${text.length > 150 ? "..." : ""}`);
+    // Track turns (each assistant message = a turn)
+    if (msgType === "assistant" || role === "assistant") {
+      this.turns++;
+      logger.info(`  [claude] ── Turn ${this.turns} ──`);
+    }
+
+    // Handle "result" type (final output from stream-json)
+    if (msgType === "result") {
+      if (typeof msg.cost_usd === "number") {
+        this.costUsd = msg.cost_usd;
+      }
+      const result = msg.result as string | undefined;
+      if (result) {
+        const preview = result.replace(/\n/g, " ").slice(0, 200);
+        logger.info(`  [claude] result: ${preview}${result.length > 200 ? "..." : ""}`);
+      }
+      return;
+    }
+
+    // Parse content blocks
+    const content = msg.content;
+    if (!Array.isArray(content)) return;
+
+    for (const block of content as Array<Record<string, unknown>>) {
+      this.handleContentBlock(block);
+    }
+  }
+
+  private handleContentBlock(block: Record<string, unknown>): void {
+    switch (block.type) {
+      case "tool_use":
+        this.handleToolUse(block);
+        break;
+      case "tool_result":
+        this.handleToolResult(block);
+        break;
+      case "text":
+        this.handleText(block);
+        break;
+    }
+  }
+
+  private handleToolUse(block: Record<string, unknown>): void {
+    this.toolCalls++;
+    const name = block.name as string;
+    const input = block.input as Record<string, unknown> | undefined;
+    this.lastToolName = name;
+
+    // Build a human-readable description of the tool call
+    const description = this.describeToolCall(name, input);
+    logger.info(`  [claude] 🔧 ${description}`);
+  }
+
+  private handleToolResult(block: Record<string, unknown>): void {
+    const content = block.content as string | undefined;
+    if (!content || typeof content !== "string") return;
+
+    // For file-modifying tools, track success
+    if (["Write", "Edit", "MultiEdit"].includes(this.lastToolName)) {
+      if (!content.toLowerCase().includes("error")) {
+        logger.info(`  [claude]    ✓ done`);
+      } else {
+        const preview = content.replace(/\n/g, " ").slice(0, 120);
+        logger.warn(`  [claude]    ✗ ${preview}`);
+      }
+      return;
+    }
+
+    // For Bash (build), show relevant output
+    if (this.lastToolName === "Bash") {
+      const lines = content.split("\n").filter(Boolean);
+      if (content.toLowerCase().includes("error")) {
+        const errorLines = lines.filter((l) => /error/i.test(l)).slice(0, 5);
+        for (const line of errorLines) {
+          logger.warn(`  [claude]    ${line.trim()}`);
+        }
+      } else {
+        // Show last few lines as a summary
+        const tail = lines.slice(-3);
+        for (const line of tail) {
+          logger.info(`  [claude]    ${line.trim()}`);
+        }
+      }
+      return;
+    }
+
+    // For Read/Grep/Glob, show just a brief confirmation
+    if (["Read", "Grep", "Glob", "LS"].includes(this.lastToolName)) {
+      const lineCount = content.split("\n").length;
+      logger.debug(`  [claude]    → ${lineCount} lines`);
+      return;
+    }
+
+    // Generic result preview
+    const preview = content.replace(/\n/g, " ").slice(0, 100);
+    logger.debug(`  [claude]    → ${preview}${content.length > 100 ? "..." : ""}`);
+  }
+
+  private handleText(block: Record<string, unknown>): void {
+    const text = block.text as string | undefined;
+    if (!text?.trim()) return;
+
+    // Check for CYCLE_COMPLETE marker
+    if (text.includes("CYCLE_COMPLETE")) {
+      const match = text.match(/<!--\s*CYCLE_COMPLETE:\s*(\{.*?\})\s*-->/s);
+      if (match) {
+        try {
+          const parsed = JSON.parse(match[1]) as { summary?: string };
+          if (parsed.summary) {
+            logger.info(`  [claude] ✅ Cycle complete: ${parsed.summary}`);
+            return;
+          }
+        } catch {
+          // ignore
+        }
+      }
+      logger.info(`  [claude] ✅ Cycle complete`);
+      return;
+    }
+
+    // Show assistant thinking/text as a preview
+    const lines = text.trim().split("\n");
+    // Show first meaningful line(s), skip very short fragments
+    const meaningful = lines.filter((l) => l.trim().length > 5).slice(0, 3);
+    for (const line of meaningful) {
+      const preview = line.trim().slice(0, 150);
+      logger.info(`  [claude] 💬 ${preview}${line.length > 150 ? "..." : ""}`);
+    }
+  }
+
+  /** Build a human-readable description for a tool call */
+  private describeToolCall(name: string, input?: Record<string, unknown>): string {
+    if (!input) return name;
+
+    switch (name) {
+      case "Read": {
+        const filePath = (input.file_path as string) ?? "";
+        return `Read ${this.shortenPath(filePath)}`;
+      }
+      case "Write": {
+        const filePath = (input.file_path as string) ?? "";
+        this.filesModified.add(filePath);
+        return `Write ${this.shortenPath(filePath)}`;
+      }
+      case "Edit": {
+        const filePath = (input.file_path as string) ?? "";
+        this.filesModified.add(filePath);
+        return `Edit ${this.shortenPath(filePath)}`;
+      }
+      case "MultiEdit": {
+        const filePath = (input.file_path as string) ?? "";
+        this.filesModified.add(filePath);
+        return `MultiEdit ${this.shortenPath(filePath)}`;
+      }
+      case "Bash": {
+        const cmd = (input.command as string) ?? "";
+        const preview = cmd.length > 80 ? cmd.slice(0, 80) + "..." : cmd;
+        return `Bash: ${preview}`;
+      }
+      case "Grep": {
+        const pattern = (input.pattern as string) ?? "";
+        const path = (input.path as string) ?? "";
+        return `Grep "${pattern}" in ${this.shortenPath(path)}`;
+      }
+      case "Glob": {
+        const pattern = (input.pattern as string) ?? "";
+        return `Glob ${pattern}`;
+      }
+      case "LS": {
+        const path = (input.path as string) ?? ".";
+        return `LS ${this.shortenPath(path)}`;
+      }
+      default: {
+        const preview = JSON.stringify(input).slice(0, 80);
+        return `${name}(${preview})`;
       }
     }
+  }
 
-    if (block.type === "tool_result") {
-      const resultContent = block.content as string | undefined;
-      if (resultContent && typeof resultContent === "string") {
-        const preview = resultContent.replace(/\n/g, " ").slice(0, 100);
-        logger.debug(`  [claude] result: ${preview}${resultContent.length > 100 ? "..." : ""}`);
-      }
-    }
+  /** Shorten a file path for display — show only the last 2-3 segments */
+  private shortenPath(filePath: string): string {
+    if (!filePath) return "(unknown)";
+    const parts = filePath.split("/");
+    if (parts.length <= 3) return filePath;
+    return ".../" + parts.slice(-3).join("/");
+  }
+
+  getStats() {
+    return {
+      turns: this.turns,
+      toolCalls: this.toolCalls,
+      filesModified: this.filesModified.size,
+      costUsd: this.costUsd,
+    };
   }
 }

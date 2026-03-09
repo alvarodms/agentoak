@@ -1,8 +1,15 @@
 import type { Memory } from "../memory/types.js";
 import { getMemorySummary } from "../memory/store.js";
 
-/** Build the system prompt for Agent Oak */
-export function buildSystemPrompt(
+/**
+ * Build dynamic per-cycle context to append to the system prompt.
+ *
+ * Static instructions (identity, safety rules, repo layout, build system,
+ * memory system docs) live in CLAUDE.md and are loaded automatically by
+ * the Claude Code CLI. This function only provides the per-cycle dynamic
+ * state: cycle number, mode, memory contents, and recent journal entries.
+ */
+export function buildDynamicContext(
   memory: Memory,
   recentJournalSummaries: string[],
   cycleNumber: number,
@@ -14,55 +21,10 @@ export function buildSystemPrompt(
       ? recentJournalSummaries.join("\n\n---\n\n")
       : "No previous cycles yet. This is the first cycle.";
 
-  return `You are Agent Oak, an autonomous AI agent whose mission is to explore, understand, modify, and eventually build a Pokémon Emerald ROM hack by working with the pokeemerald decompilation source code.
-
-## Identity
-
-You are a curious, persistent, and methodical researcher-developer. You learn through experimentation. Failure is not just acceptable — it's valuable data. You think carefully before acting, but you're not afraid to try things.
-
-Your long-term goal is to create a unique, playable Pokémon ROM hack. How you get there is entirely up to you — explore, research, plan, prototype, build, break things, learn, and iterate.
-
-## Current State
+  return `## Current State
 
 - **Cycle**: ${cycleNumber}
 - **Mode**: ${modeDescription}
-
-## How Cycles Work
-
-Each cycle, you decide what to do. You are NOT required to make code changes every cycle. You might:
-- Spend a cycle exploring and understanding a part of the codebase
-- Research how a game system works by reading source files
-- Plan a feature and write notes in your memory
-- Make a small experimental edit and try to build
-- Fix build errors from a previous attempt
-- Brainstorm ideas and record them for later
-
-The key is to be intentional. Each cycle should have a clear purpose, even if that purpose is just "understand how wild encounters work."
-
-## Available Tools
-
-You have tools to explore the repository (read files, search code, list directories), edit files (write, find-replace, insert, delete), run the build, and manage your persistent memory.
-
-Use your tools to gather information before making decisions. Read files to understand code. Search for patterns to find related code. Use memory to accumulate knowledge across cycles.
-
-## Memory System
-
-You have four persistent memory files in markdown format:
-- **codebase-facts**: What you've learned about how the code works
-- **failure-patterns**: Build errors and problems you've encountered
-- **strategy-notes**: Your ideas, plans, and high-level strategies
-- **project-facts**: Build system details, tool info, configuration notes
-
-These memories persist across cycles. Update them as you learn. They are your most valuable resource — they let you build on previous work instead of starting from scratch each time.
-
-## Guidelines
-
-1. **Start each cycle by reviewing your memory** to understand what you already know and what you planned to do.
-2. **Be specific in your memory updates** — record file paths, function names, data structures, and concrete details.
-3. **When editing code**, understand the context first. Read the file, understand what it does, then make targeted changes.
-4. **When a build fails**, analyze the errors carefully. Record the failure pattern in memory so you can avoid it next time.
-5. **Think about the big picture** — what kind of ROM hack do you want to create? What features interest you? Record your vision in strategy notes.
-6. **Each cycle should end with complete_cycle** — summarize what you did and suggest what to try next.
 
 ## Current Memory
 
@@ -70,27 +32,7 @@ ${memorySummary}
 
 ## Recent Journal Entries
 
-${journalContext}
-
-## Important Notes
-
-- The build may fail if the ARM cross-compiler toolchain is not installed locally. This is expected — analyze the error output and record what you learn.
-- The codebase is a C decompilation of Pokémon Emerald. It uses GBA-specific patterns: 32-bit ARM architecture, limited memory, tile-based graphics.
-- Files are organized by system: src/ for C code, include/ for headers, data/ for scripts and game data, graphics/ for sprites and tilesets.
-- The build system uses GNU Make. Run the build with the run_build tool.`;
-}
-
-/** Build the initial user message that kicks off a cycle */
-export function buildCycleKickoff(cycleNumber: number, objective: string, reasoning: string): string {
-  return `## Cycle ${cycleNumber} Begins
-
-**Planned objective**: ${objective}
-
-**Reasoning**: ${reasoning}
-
-You may follow this objective, modify it, or do something completely different based on what you discover. The objective is a suggestion, not a constraint.
-
-Begin your work. Use your tools to explore, learn, edit, build, and update your memory as you go. When you're done with this cycle's work, call complete_cycle with a summary.`;
+${journalContext}`;
 }
 
 /** Build a focused task prompt for the implementation phase (Phase 2) */
@@ -114,9 +56,9 @@ Guidelines:
 - Focus exclusively on this task. Do not plan other work or diverge.
 - Read relevant files before making changes. Understand the code first.
 - Make targeted, surgical edits. Change the minimum needed.
-- If you modify code, try to build afterward to verify your changes.
+- If you modify code, run \`make\` in the pokeemerald/ directory to verify your changes compile.
 - Update your memory files with anything you learn or discover.
-- When you are done, call complete_cycle with a summary of what you accomplished.
+- When you are done, output the CYCLE_COMPLETE marker with a summary.
 
 Begin your work now.`;
 }
@@ -148,9 +90,9 @@ ${stderrPreview}
 ### Instructions
 1. Read the files mentioned in the errors to understand the context.
 2. Fix each error with targeted edits.
-3. After fixing, call complete_cycle to report what you changed.
+3. After fixing, output the CYCLE_COMPLETE marker to report what you changed.
 
-Do NOT run the build yourself — the pipeline will re-run it automatically after you finish.
+Do NOT run \`make\` yourself — the pipeline will re-run it automatically after you finish.
 Focus only on fixing these errors. Nothing else.`;
 }
 
@@ -198,11 +140,11 @@ Please provide a structured reflection:
 4. **What did I learn about the codebase?** — New concrete facts
 5. **What should I try next?** — Specific, actionable next steps
 
-Also provide any memory updates as tool calls:
-- New codebase facts to append_to_memory(file: "codebase-facts", ...)
-- New failure patterns to append_to_memory(file: "failure-patterns", ...)
-- Strategy updates to append_to_memory(file: "strategy-notes", ...)
-- Project facts to append_to_memory(file: "project-facts", ...)
+Update the memory files in the memory/ directory as needed:
+- memory/codebase-facts.md — new codebase facts
+- memory/failure-patterns.md — new failure patterns
+- memory/strategy-notes.md — strategy updates
+- memory/project-facts.md — project facts
 
-Call complete_cycle when you're done reflecting.`;
+When done reflecting, output the CYCLE_COMPLETE marker with your summary.`;
 }
