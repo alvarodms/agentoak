@@ -195,6 +195,29 @@ export async function addLabelsToIssue(issueNumber: number, labels: string[]): P
   }
 }
 
+/** Close an issue with a reason */
+export async function closeIssue(
+  issueNumber: number,
+  reason: "completed" | "not_planned" = "completed",
+): Promise<void> {
+  const octokit = getGitHubClient();
+  const repo = getRepoInfo();
+  if (!octokit || !repo) return;
+
+  try {
+    await octokit.issues.update({
+      owner: repo.owner,
+      repo: repo.repo,
+      issue_number: issueNumber,
+      state: "closed",
+      state_reason: reason,
+    });
+    logger.info(`Closed issue #${issueNumber} (reason: ${reason})`);
+  } catch (err) {
+    logger.error(`Failed to close issue #${issueNumber}: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
 /** Create a new issue and return its number, or null on failure */
 export async function createIssue(
   title: string,

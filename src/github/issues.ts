@@ -10,6 +10,7 @@ import {
   fetchOpenIssues,
   commentOnIssue,
   addLabelsToIssue,
+  closeIssue,
   createIssue,
   getGitHubClient,
   AGENT_LABELS,
@@ -147,6 +148,11 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
       if (actionLabel) labels.push(actionLabel);
 
       await addLabelsToIssue(action.issueNumber, labels);
+
+      // Close rejected issues immediately — the decision is final
+      if (action.action === "reject") {
+        await closeIssue(action.issueNumber, "not_planned");
+      }
 
       logger.info(
         `Issue #${action.issueNumber}: ${action.action} — labels: [${labels.join(", ")}]`,
