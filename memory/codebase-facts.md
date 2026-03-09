@@ -256,3 +256,56 @@ struct TrainerMonItemCustomMoves {
 - Player Larvitar → Rival Beldum (Steel resists Rock/Ground, immune to Dark)
 - Player Bagon → Rival Larvitar (Rock resists Flying, Dark hits Dragon neutral)
 - Player Beldum → Rival Bagon (Dragon resists Steel's common targets)
+
+## Bulk Editing Patterns
+
+### Python Script Approach for `wild_encounters.json` (Cycle 9)
+
+For batch modifications to encounter tables, writing a Python script to `/tmp/` and running it is the most reliable approach. The script:
+1. Reads `src/data/wild_encounters.json` as a JSON object
+2. Iterates over map keys, matching by substring (e.g., `"GRANITE_CAVE"`)
+3. Mutates the `land`/`water`/`fishing` arrays in place
+4. Writes the modified JSON back
+
+**Pattern:**
+```python
+import json
+with open('src/data/wild_encounters.json') as f:
+    data = json.load(f)
+
+for entry in data['wild_encounter_groups'][0]['encounters']:
+    if 'MAP_MT_PYRE' in entry['map']:
+        entry['land_mons']['mons'] = [
+            {"min_level": N, "max_level": N, "species": "SPECIES_X"},
+            ...  # 12 entries for land
+        ]
+
+with open('src/data/wild_encounters.json', 'w') as f:
+    json.dump(data, f, indent=4)
+```
+
+**JSON structure of each entry:**
+```json
+{
+  "map": "MAP_NAME",
+  "base_label": "gWildMonHeader_MapName",
+  "land_mons": { "encounter_rate": N, "mons": [ ...12 entries... ] },
+  "water_mons": { "encounter_rate": N, "mons": [ ...5 entries... ] },
+  "fishing_mons": { "encounter_rate": N, "mons": [ ...10 entries... ] }
+}
+```
+
+**Notes:**
+- Not all maps have all encounter types (some only have `land_mons`, some have all three)
+- The script approach is much faster and less error-prone than manual JSON editing
+- Always run `make` after modification to confirm no JSON parse errors
+
+### Key Villain Trainers (for Cycle 10)
+
+Target trainers for antagonist overhaul:
+- `sParty_Maxie` — Team Magma leader (multiple versions — pre-battle, hideout, final)
+- `sParty_Archie` — Team Aqua leader
+- `sParty_Wally` — friendly rival/counterpart to Brendan/May
+- `sParty_Courtney` — Team Magma admin
+- `sParty_Matt` — Team Aqua admin
+- Search `trainer_parties.h` for these names to find their party definitions
