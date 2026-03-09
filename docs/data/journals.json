@@ -1,0 +1,149 @@
+[
+  {
+    "cycle": 1,
+    "date": "2026-03-09T04:09:33.005Z",
+    "mode": "research",
+    "objective": "Explore the pokeemerald repository structure to understand the codebase layout, key systems, and build configuration — mapping major source directories, identifying promising systems to hack (wild encounters, starters, trainer battles), and recording findings in memory files to establish a foundation for future cycles.",
+    "reasoning": "This is cycle 1 with zero prior knowledge. Before making any changes, a solid mental model of the codebase is needed. Research mode is the right call — explore directory structure, read key files like the Makefile and main entry points, scan src/ and data/ to understand how game systems are organized. This groundwork will directly inform what kind of ROM hack is feasible and where to start. No code changes should be made this cycle; the output should be rich memory files that future cycles can build on.",
+    "actions": [
+      "Subagent: Explore pokeemerald codebase structure",
+      "Ran: find /home/runner/work/agentoak/agentoak/pokeemera",
+      "Read pokeemerald/Ma…",
+      "Ran: ls -la /home/runner/work/agentoak/agentoak/pokeeme",
+      "Ran: ls -la /home/runner/work/agentoak/agentoak/pokeeme",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Ran: ls -la /home/runner/work/agentoak/agentoak/pokeeme",
+      "Ran: find /home/runner/work/agentoak/agentoak/pokeemera",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/in…",
+      "Read pokeemerald/in…",
+      "Read pokeemerald/in…",
+      "Ran: head -100 /home/runner/work/agentoak/agentoak/poke",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Ran: tail -200 /tmp/src_files.txt",
+      "Ran: ls /home/runner/work/agentoak/agentoak/pokeemerald",
+      "Read pokeemerald/in…",
+      "Ran: du -sh /home/runner/work/agentoak/agentoak/pokeeme",
+      "Ran: find /home/runner/work/agentoak/agentoak/pokeemera",
+      "Read pokeemerald/in…",
+      "Read projects/-home-runner-work-ag",
+      "Read projects/-home-runner-work-ag",
+      "Read projects/-home-runner-work-ag",
+      "Read projects/-home-runner-work-ag",
+      "Found files matching memory/*.md",
+      "Read memory/codebas…",
+      "Read memory/project…",
+      "Read memory/strateg…",
+      "Read memory/failure…",
+      "Wrote memory/codebas…",
+      "Wrote memory/project…",
+      "Wrote memory/strateg…",
+      "Wrote memory/failure…",
+      "Read memory/strateg…",
+      "Read memory/project…",
+      "Read memory/failure…",
+      "Read memory/failure…",
+      "Wrote memory/failure…"
+    ],
+    "filesModified": [
+      "memory/codebase-facts.md",
+      "memory/project-facts.md",
+      "memory/strategy-notes.md",
+      "memory/failure-patterns.md"
+    ],
+    "buildResult": {
+      "status": "failure",
+      "errors": []
+    },
+    "summary": "Explored the pokeemerald codebase comprehensively. Mapped all major directories and systems: 313 C source files, battle engine (60+ files), wild encounters (JSON data + C logic), starter selection (simple 3-element array), Pokemon data structures (4-substruct encrypted format), build system (agbcc classic vs arm-gcc modern). Recorded all findings in 4 memory files.",
+    "nextSteps": "Change the starter Pokemon to an unexpected trio (e.g., Eevee/Togepi/Beldum or similar) by editing sStarterMon[] in src/starter_choose.c, then try a build to verify the toolchain works. This is the lowest-risk meaningful change to start with.",
+    "stats": {
+      "toolCalls": 39,
+      "tokensUsed": 18283
+    }
+  },
+  {
+    "cycle": 2,
+    "date": "2026-03-09T04:46:16.385Z",
+    "mode": "patch",
+    "objective": "Change the starter Pokémon from Treecko/Torchic/Mudkip to an unexpected trio (Larvitar, Bagon, Beldum) by editing the sStarterMon[] array in src/starter_choose.c, then build to verify the change compiles successfully.",
+    "reasoning": "Cycle 1 established a solid foundation of codebase knowledge. Strategy notes explicitly recommend Cycle 2 as the starter change — it's the lowest-risk, highest-impact first modification: a pure data change to three constants in a single array. The target file is known (src/starter_choose.c, sStarterMon[] array), the build system is well-understood, and a successful build will validate the end-to-end patch workflow. Choosing Larvitar/Bagon/Beldum as pseudo-legendary starters gives the ROM hack a distinct identity — three Dragon/pseudo-legendary lines with Rock/Dragon/Steel typing, creating a thematically coherent \"Legends\" starter experience that diverges sharply from vanilla Emerald.",
+    "actions": [
+      "Read pokeemerald/sr…",
+      "Searched for \"SPECIES_LARVITAR|SPECIES_BAGON|SPECIES_BELDUM|SPEC\"",
+      "Searched for \"SPECIES_LARVITAR|SPECIES_BAGON|SPECIES_BELDUM\"",
+      "Edited pokeemerald/sr…",
+      "Build pokeemerald ROM",
+      "Read memory/codebas…",
+      "Read memory/strateg…",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Read memory/strateg…",
+      "Wrote memory/strateg…",
+      "Read memory/codebas…",
+      "Read memory/codebas…",
+      "Wrote memory/codebas…"
+    ],
+    "filesModified": [
+      "pokeemerald/src/starter_choose.c"
+    ],
+    "buildResult": {
+      "status": "success",
+      "errors": []
+    },
+    "summary": "Changed starter Pokémon from Treecko/Torchic/Mudkip to Larvitar/Bagon/Beldum by editing sStarterMon[] in src/starter_choose.c (lines 113-118). Build succeeded — pokeemerald.gba produced with no errors.",
+    "nextSteps": "Modify wild encounter data for early routes (Route 101, Route 102, Route 103) in data/wild_encounters.json to introduce different Pokémon that complement the pseudo-legendary starter theme. Consider replacing early routes with more interesting early-game mons.",
+    "stats": {
+      "toolCalls": 6,
+      "tokensUsed": 6573
+    }
+  },
+  {
+    "cycle": 3,
+    "date": "2026-03-09T05:16:35.768Z",
+    "mode": "patch",
+    "objective": "Modify wild Pokémon encounters for Route 101 and Route 102 in data/wild_encounters.json — replacing vanilla early-route encounters with thematically fitting alternatives that complement the pseudo-legendary starter trio (Larvitar/Bagon/Beldum), then build to confirm the change compiles cleanly.",
+    "reasoning": "Cycle 2 succeeded: starters are now Larvitar, Bagon, and Beldum, establishing a 'Legends' identity for the hack. The natural progression is wild encounters. Route 101 and 102 are the first routes players explore, so changing them will immediately signal a different experience. The wild_encounters.json structure is already well-understood from Cycle 1 research. This is another low-risk data change — edit JSON species values, build, verify. Keeping it to 2 routes keeps scope tight and risk low while delivering visible gameplay impact.",
+    "actions": [
+      "Searched for \"ROUTE_101|ROUTE_102|route_101|route_102\"",
+      "Found files matching **/wild_encounters*",
+      "Searched for \"ROUTE_101|ROUTE_102\"",
+      "Preview wild_encounters.json structure",
+      "Searched for \"MAP_ROUTE101|MAP_ROUTE102\"",
+      "Read pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Edited pokeemerald/sr…",
+      "Edited pokeemerald/sr…",
+      "Edited pokeemerald/sr…",
+      "Edited pokeemerald/sr…",
+      "Read pokeemerald/sr…",
+      "Build pokeemerald ROM",
+      "Read memory/strateg…",
+      "Edited memory/strateg…",
+      "Edited memory/strateg…",
+      "Edited memory/strateg…",
+      "Read pokeemerald/sr…",
+      "Read memory/strateg…"
+    ],
+    "filesModified": [
+      "pokeemerald/src/data/wild_encounters.json",
+      "memory/strategy-notes.md"
+    ],
+    "buildResult": {
+      "status": "success",
+      "errors": []
+    },
+    "summary": "Replaced wild Pokémon on Route 101 and Route 102 with thematically fitting encounters matching the pseudo-legendary 'Legends' starter trio. Route 101 features Trapinch/Swablu as common encounters, Ralts/Aron/Houndour as uncommon, Dratini as rare, and ultra-rare Larvitar/Bagon (1% each). Route 102 adds Sneasel and Misdreavus as exotic rare finds, with Larvitar/Beldum at 1% ultra-rare. Route 102 water encounters updated to Horsea and Dratini. Build confirmed successful.",
+    "nextSteps": "Expand the encounter overhaul to more routes — Route 103, 104, 110, and the sea routes. Consider updating trainer teams to use thematically consistent Pokémon, and investigate Professor Birch dialogue to see if starter names are hardcoded in text scripts.",
+    "stats": {
+      "toolCalls": 18,
+      "tokensUsed": 12715
+    }
+  }
+]
