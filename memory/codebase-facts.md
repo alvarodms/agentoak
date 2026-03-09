@@ -57,6 +57,43 @@ struct WildPokemonHeader { u8 mapGroup; u8 mapNum;
 
 **Encounter rate**: Max 2880; abilities (Synchronize, Static, Magnet Pull) influence species
 
+### Gym Leaders and Champion (`src/data/trainer_parties.h`)
+
+**Data structure:**
+```c
+static const struct TrainerMonItemCustomMoves sParty_[TrainerName][] = {
+    {
+    .iv = [0-255],           // Individual values (stats)
+    .lvl = [level],          // Pokemon level
+    .species = SPECIES_[NAME], // Species constant
+    .heldItem = ITEM_[NAME],   // Held item constant
+    .moves = {MOVE_[NAME], MOVE_[NAME], MOVE_[NAME], MOVE_[NAME]} // Moveset
+    }
+};
+```
+
+**Gym Leader party locations (line numbers):**
+- Roxanne: 3367 → sParty_Roxanne1
+- Brawly: 3391 → sParty_Brawly1
+- Wattson: 3415 → sParty_Wattson1
+- Flannery: 3446 → sParty_Flannery1
+- Norman: 3477 → sParty_Norman1
+- Winona: 3508 → sParty_Winona1
+- Tate & Liza: 3546 → sParty_TateAndLiza1
+- Juan: 3577 → sParty_Juan1
+- Wallace (Champion): 4414 → sParty_Wallace
+
+**Move constant format:**
+- Correct: `MOVE_THUNDER_PUNCH` (with underscore)
+- Incorrect: `MOVE_THUNDERPUNCH` (causes compile error)
+- All move constants defined in `include/constants/moves.h`
+- Must match exact spelling and format in constants file
+
+**Species and Item Constants:**
+- Species: `SPECIES_[NAME]` format (e.g., SPECIES_AERODACTYL, SPECIES_SALAMENCE)
+- Items: `ITEM_[NAME]` format (e.g., ITEM_SITRUS_BERRY, ITEM_LEFTOVERS)
+- All constants must exist in their respective header files to compile
+
 **Wild encounter data location**: `data/wild_encounters.json` — JSON format mapping maps to species/levels/rates. This is the primary file to edit for changing wild Pokémon.
 
 ### Starter Selection (`src/starter_choose.c`)
