@@ -302,13 +302,13 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 4 | ✅ All 73 Hoenn route encounter tables redesigned |
 | Cycle 5 | ✅ Game Design Document created |
 | Cycle 6 | ✅ **Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses |
+| Cycle 7 | ✅ **Rival team overhaul** — all 5 rival battles (30 party definitions) redesigned with pseudo-legendary starters + thematic supports |
 
 ### Upcoming Roadmap
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **7** | **Elite Four redesign** (Sidney, Phoebe, Glacia, Drake) | HIGH | Medium |
-| **8** | **Rival team overhaul** (all 6 rival battles) | HIGH | Low-Medium |
+| **8** | **Elite Four redesign** (Sidney, Phoebe, Glacia, Drake) | HIGH | Medium |
 | **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
 | **10** | **Key NPC trainer overhaul** (Maxie, Archie, Wally, Courtney, Matt) | MEDIUM | Medium |
 | **11** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
@@ -338,6 +338,33 @@ Key line numbers:
 - MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_THUNDERBOLT, MOVE_FLAMETHROWER
 - MOVE_CRUNCH, MOVE_DRAGON_CLAW, MOVE_ICE_BEAM, MOVE_PSYCHIC
 - MOVE_EARTHQUAKE, MOVE_SURF, MOVE_SHADOW_BALL, MOVE_AERIAL_ACE
+
+### Cycle 7 Completed: Rival Team Overhaul
+
+**30 party definitions updated** across 5 battle locations (Route 103, Rustboro, Route 110, Route 119, Lilycove) for both Brendan and May, with 3 variants per location based on player's starter choice.
+
+**Rival Starter Mapping** (based on `sParty_*` naming convention):
+- `*Mudkip` parties → Rival has Larvitar (player chose Beldum)
+- `*Treecko` parties → Rival has Bagon (player chose Larvitar)
+- `*Torchic` parties → Rival has Beldum (player chose Bagon)
+
+**Thematic Team Identities:**
+
+| Rival Starter | Theme | Support Pokemon |
+|---------------|-------|-----------------|
+| Larvitar line | Dark/Aggressive | Houndour→Houndoom, Murkrow, Crobat |
+| Bagon line | Fast Predators | Sneasel, Scyther, Skarmory |
+| Beldum line | Technical Precision | Magnemite→Magneton, Kadabra, Starmie |
+
+**Battle Progression:**
+
+| Location | Levels | Team Size | Starter Stage |
+|----------|--------|-----------|---------------|
+| Route 103 | 5 | 1 | Base form |
+| Rustboro | 13-15 | 2 | Base form |
+| Route 110 | 18-20 | 3 | Base (Metang for Beldum) |
+| Route 119 | 29-31 | 3 | Mid-stage (Pupitar/Shelgon/Metang) |
+| Lilycove | 31-34 | 4 | Mid-stage |
 
 ---
 
