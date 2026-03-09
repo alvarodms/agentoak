@@ -55,8 +55,6 @@ function parseJournal(md, filename) {
 
   // Parse each section
   const reasoning = (sections['Reasoning'] || '').trim();
-  const actionsRaw = sections['Actions Taken'] || '';
-  const actions = parseActions(actionsRaw);
   const filesModified = parseFilesList(sections['Files Modified'] || '');
   const buildResult = parseBuildResult(sections['Build Result'] || '');
   const summary = (sections['Summary'] || '').trim();
@@ -69,7 +67,6 @@ function parseJournal(md, filename) {
     mode,
     objective,
     reasoning,
-    actions,
     filesModified,
     buildResult,
     summary,
@@ -112,117 +109,6 @@ function extractField(text, key) {
 }
 
 /**
- * Parse numbered action lines into human-readable descriptions.
- * Format: `ToolType` — key: value, key: value  \n   → result
- */
-function parseActions(text) {
-  const actions = [];
-  const lines = text.split('\n');
-
-  for (const line of lines) {
-    const actionMatch = line.match(/^\d+\.\s+(.+)/);
-    if (!actionMatch) continue;
-
-    let raw = actionMatch[1];
-    // Strip arrow result on same line
-    const arrowIdx = raw.indexOf('→');
-    if (arrowIdx > 0) raw = raw.substring(0, arrowIdx).trim();
-    raw = raw.replace(/,\s*$/, '');
-
-    // Extract tool type and params
-    const toolMatch = raw.match(/^`(\w+)`\s*—\s*(.*)/);
-    if (!toolMatch) {
-      actions.push(truncate(raw, 150));
-      continue;
-    }
-
-    const toolType = toolMatch[1];
-    const params = toolMatch[2];
-
-    const desc = formatAction(toolType, params);
-    if (desc) actions.push(desc);
-  }
-  return actions;
-}
-
-/** Turn raw tool type + params into a readable action string. */
-function formatAction(toolType, params) {
-  const shortPath = (p) => {
-    if (!p) return p;
-    // Strip trailing ... and whitespace from truncated journal paths
-    p = p.replace(/\.{3}\s*$/, '').trim();
-    // Strip long absolute CI/runner paths, keep from pokeemerald/ or memory/ onward
-    for (const prefix of ['pokeemerald/', 'memory/', 'journal/']) {
-      const idx = p.indexOf(prefix);
-      if (idx >= 0) {
-        let result = p.substring(idx);
-        // If the path is truncated (no extension), it won't be useful as-is;
-        // try to show the last meaningful directory segment
-        if (!/\.\w+$/.test(result) && result.length < 25) {
-          return result + '…';
-        }
-        return result;
-      }
-    }
-    // Fallback: take last path segments
-    const parts = p.split('/').filter(Boolean);
-    const tail = parts.slice(-2).join('/');
-    return tail || p;
-  };
-
-  const getParam = (key) => {
-    const re = new RegExp(`${key}:\\s*(.+?)(?:,\\s*\\w+:|$)`);
-    const m = params.match(re);
-    return m ? m[1].trim().replace(/\.\.\.$/, '').trim() : null;
-  };
-
-  switch (toolType) {
-    case 'Bash': {
-      const cmd = getParam('command');
-      if (!cmd) return `Ran shell command`;
-      // Extract the base command
-      const base = cmd.replace(/^cd\s+\S+\s*&&\s*/, '').split(/\s/)[0];
-      const desc = getParam('description');
-      if (desc) return desc;
-      return `Ran: ${truncate(cmd, 120)}`;
-    }
-    case 'Read': {
-      const fp = getParam('file_path');
-      return `Read ${shortPath(fp || 'file')}`;
-    }
-    case 'Write': {
-      const fp = getParam('file_path');
-      return `Wrote ${shortPath(fp || 'file')}`;
-    }
-    case 'Edit': {
-      const fp = getParam('file_path');
-      return `Edited ${shortPath(fp || 'file')}`;
-    }
-    case 'Grep': {
-      const pattern = getParam('pattern');
-      return `Searched for "${truncate(pattern || '...', 60)}"`;
-    }
-    case 'Glob': {
-      const pattern = getParam('pattern');
-      return `Found files matching ${truncate(pattern || '...', 60)}`;
-    }
-    case 'Agent': {
-      const desc = getParam('description');
-      return desc ? `Subagent: ${truncate(desc, 100)}` : 'Ran subagent';
-    }
-    case 'ToolSearch':
-      return null; // Skip internal tool lookups
-    default:
-      return truncate(`${toolType}: ${params}`, 150);
-  }
-}
-
-function truncate(s, max) {
-  if (!s || s.length <= max) return s;
-  return s.substring(0, max - 3) + '...';
-}
-
-/**
  * Parse file list from "- path" bullet points.
  */
 function parseFilesList(text) {
@@ -261,8 +147,6 @@ function parseBuildResult(text) {
  */
 function parseStats(text) {
   const stats = {};
-  const toolCallsMatch = text.match(/Tool calls:\s*(\d+)/i);
-  if (toolCallsMatch) stats.toolCalls = parseInt(toolCallsMatch[1], 10);
 
   const tokensMatch = text.match(/Tokens used:\s*([\d,]+)/i);
   if (tokensMatch) stats.tokensUsed = parseInt(tokensMatch[1].replace(/,/g, ''), 10);

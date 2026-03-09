@@ -36,13 +36,10 @@
     const successes = builds.filter(j => j.buildResult.status === 'success').length;
     const failures = builds.length - successes;
     const filesModified = new Set(journalData.flatMap(j => j.filesModified || [])).size;
-    const totalActions = journalData.reduce((s, j) => s + (j.actions ? j.actions.length : 0), 0);
-
     document.getElementById('stat-cycles').textContent = String(totalCycles).padStart(3, '0');
     document.getElementById('stat-builds').textContent = successes + '/' + builds.length;
     document.getElementById('stat-builds').className = 'stat-value ' + (failures > 0 ? '' : 'success');
     document.getElementById('stat-files').textContent = String(filesModified);
-    document.getElementById('stat-actions').textContent = String(totalActions);
   }
 
   // ---- Render Timeline ----
@@ -80,19 +77,6 @@
         '</div>';
     }
 
-    // Actions list
-    let actionsHtml = '';
-    if (entry.actions && entry.actions.length > 0) {
-      actionsHtml = '<div class="card-section">' +
-        '<div class="section-title"><span class="icon">⚡</span> Actions</div>' +
-        '<ul class="actions-list">' +
-        entry.actions.map((a, i) =>
-          '<li><span class="action-num">' + String(i + 1).padStart(2, '0') + '</span>' +
-          escapeHtml(a) + '</li>'
-        ).join('') +
-        '</ul></div>';
-    }
-
     // Files modified
     let filesHtml = '';
     if (entry.filesModified && entry.filesModified.length > 0) {
@@ -107,9 +91,6 @@
     let statsHtml = '';
     if (entry.stats) {
       statsHtml = '<div class="card-section"><div class="section-title"><span class="icon">📊</span> Stats</div><div class="stats-bar">';
-      if (entry.stats.toolCalls != null) {
-        statsHtml += '<span class="stat-chip">Tool Calls: <strong>' + entry.stats.toolCalls + '</strong></span>';
-      }
       if (entry.stats.tokensUsed != null) {
         statsHtml += '<span class="stat-chip">Tokens: <strong>' + entry.stats.tokensUsed.toLocaleString() + '</strong></span>';
       }
@@ -130,7 +111,6 @@
           '<div class="section-title"><span class="icon">🧠</span> Reasoning</div>' +
           '<div class="reasoning-block">' + escapeHtml(entry.reasoning || '') + '</div>' +
         '</div>' +
-        actionsHtml +
         filesHtml +
         '<div class="card-section">' +
           '<div class="section-title"><span class="icon">📋</span> Summary</div>' +
