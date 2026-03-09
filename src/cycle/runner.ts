@@ -8,12 +8,13 @@ import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
-import { recordSuccessfulBuild, formatVersion } from "../repo/version.js";
+import { recordSuccessfulBuild, formatVersion, loadVersion } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
 import { commitCycle, getHeadSha, revertPokeemerald } from "../git/committer.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
 import { logger, cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
+import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
@@ -329,6 +330,22 @@ export async function runCycle(): Promise<void> {
       filesModified,
     );
 
+    // Create GitHub release with IPS patch if build succeeded with pokeemerald changes
+    let releaseUrl: string | null = null;
+    if (gameVersion && commitHash && !reverted) {
+      log.info("Phase 5: Creating GitHub release with IPS patch...");
+      const version = loadVersion();
+      releaseUrl = await createCycleRelease(
+        version,
+        commitHash,
+        implResult.cycleSummary || "",
+        plan.objective,
+      );
+      if (releaseUrl) {
+        log.info(`  Release: ${releaseUrl}`);
+      }
+    }
+
     // Summary
     log.info("═══════════════════════════════════════════════════");
     log.info(`  Cycle ${String(cycleNumber).padStart(4, "0")} complete`);
@@ -343,6 +360,9 @@ export async function runCycle(): Promise<void> {
     log.info(`  Tokens: ${totalTokenUsage.totalTokens.toLocaleString()}`);
     log.info(`  Journal: ${journalFile}`);
     log.info(`  Commit: ${commitHash ?? "none"}`);
+    if (releaseUrl) {
+      log.info(`  Release: ${releaseUrl}`);
+    }
     log.info("═══════════════════════════════════════════════════");
   } catch (err) {
     log.error(`Cycle failed with error: ${err instanceof Error ? err.message : String(err)}`);

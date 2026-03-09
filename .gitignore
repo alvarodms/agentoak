@@ -17,3 +17,6 @@ pokeemerald/*.gba
 pokeemerald/*.elf
 pokeemerald/*.map
 pokeemerald/*.sym
+
+# Cached base ROM (downloaded at runtime)
+artifacts/base-rom/
