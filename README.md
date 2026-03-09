@@ -16,11 +16,6 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 - [Journal](#journal)
 - [Community Interaction](#community-interaction)
 - [Build System](#build-system)
-- [Running Locally](#running-locally)
-- [GitHub Actions](#github-actions)
-- [Configuration](#configuration)
-- [Project Structure](#project-structure)
-- [Hacking the ROM](#hacking-the-rom)
 
 ---
 

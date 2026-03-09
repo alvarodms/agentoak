@@ -33,16 +33,6 @@ export function writeJournalEntry(data: JournalData): string {
   const filePath = path.join(JOURNAL_DIR, filename);
   const timestamp = new Date().toISOString();
 
-  const actionList =
-    data.actions.length > 0
-      ? data.actions
-          .map(
-            (a, i) =>
-              `${i + 1}. \`${a.tool}\` — ${typeof a.input === "object" ? summarizeInput(a.input) : ""}  \n   → ${a.result.slice(0, 120)}${a.result.length > 120 ? "..." : ""}`,
-          )
-          .join("\n")
-      : "No actions taken.";
-
   const fileList =
     data.filesModified.length > 0
       ? data.filesModified.map((f) => `- ${f}`).join("\n")
@@ -68,10 +58,6 @@ export function writeJournalEntry(data: JournalData): string {
 
 ${data.reasoning}
 ${issueSection}
-## Actions Taken
-
-${actionList}
-
 ## Files Modified
 
 ${fileList}
@@ -94,7 +80,6 @@ ${data.nextSteps || "No next steps specified."}
 
 ## Stats
 
-- Tool calls: ${data.toolCallCount}
 - Tokens used: ${data.tokenUsage.totalTokens.toLocaleString()} (input: ${data.tokenUsage.inputTokens.toLocaleString()}, output: ${data.tokenUsage.outputTokens.toLocaleString()})
 `;
 
@@ -128,16 +113,6 @@ export function getRecentJournalSummaries(count: number): string[] {
     }
     return content;
   });
-}
-
-/** Create a short summary of tool input for the action log */
-function summarizeInput(input: Record<string, unknown>): string {
-  const parts: string[] = [];
-  for (const [key, value] of Object.entries(input)) {
-    const strVal = typeof value === "string" ? value : JSON.stringify(value);
-    parts.push(`${key}: ${strVal.slice(0, 50)}${strVal.length > 50 ? "..." : ""}`);
-  }
-  return parts.join(", ");
 }
 
 /** Format the Community Issues section for the journal entry */
