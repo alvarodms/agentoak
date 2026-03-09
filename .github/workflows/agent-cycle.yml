@@ -102,6 +102,7 @@ jobs:
           MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO: ${{ github.repository }}
+          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: npm run cycle
 
       - name: Retry after 5min (attempt 2)
@@ -114,6 +115,7 @@ jobs:
           MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO: ${{ github.repository }}
+          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: |
           echo "Attempt 1 failed. Waiting 5 minutes before retry..."
           sleep 300
@@ -127,6 +129,7 @@ jobs:
           MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO: ${{ github.repository }}
+          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: |
           echo "Attempt 2 failed. Waiting 15 minutes before final retry..."
           sleep 900
