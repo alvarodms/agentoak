@@ -40,6 +40,7 @@ export async function commitCycle(
   cycleNumber: number,
   summary: string,
   filesModified: string[],
+  closedIssueNumbers?: number[],
 ): Promise<string | null> {
   const paddedCycle = String(cycleNumber).padStart(4, "0");
 
@@ -81,7 +82,10 @@ export async function commitCycle(
 
     // Clean the summary for commit message (single line, max 72 chars for first line)
     const shortSummary = summary.replace(/\n/g, " ").slice(0, 60);
-    const commitMessage = `agent-oak: cycle ${paddedCycle} – ${shortSummary}`;
+    const issueRefs = closedIssueNumbers?.length
+      ? `\n\n${closedIssueNumbers.map(n => `Fixes #${n}`).join("\n")}`
+      : "";
+    const commitMessage = `agent-oak: cycle ${paddedCycle} – ${shortSummary}${issueRefs}`;
 
     const result = await git.commit(commitMessage);
     // Resolve full SHA — simple-git returns a short hash
