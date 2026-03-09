@@ -1,3 +1,4 @@
+import path from "path";
 import { loadMemory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import { getModeDescription } from "./modes.js";
@@ -7,9 +8,11 @@ import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
+import { recordSuccessfulBuild, formatVersion } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
 import { commitCycle, getHeadSha, revertPokeemerald } from "../git/committer.js";
 import { logger, cycleLogger } from "../utils/logger.js";
+import { PROJECT_ROOT } from "../utils/paths.js";
 import type { TokenUsage } from "../memory/types.js";
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
@@ -94,32 +97,48 @@ async function runBuildVerifyPhase(
   fixActions: ActionRecord[];
   fixTokenUsage: TokenUsage;
   reverted: boolean;
+  gameVersion: string | null;
 }> {
   const fixActions: ActionRecord[] = [];
   let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
 
-  // No files modified — skip build verification
-  if (implResult.filesModified.length === 0) {
-    log.info("Phase 3: No files modified — skipping build verification.");
+  // Check if any modified files are within pokeemerald/
+  const hasPokeemeraldChanges = implResult.filesModified.some((filePath) => {
+    const rel = path.isAbsolute(filePath)
+      ? path.relative(PROJECT_ROOT, filePath)
+      : filePath;
+    return rel.startsWith("pokeemerald/") || rel.startsWith("pokeemerald\\");
+  });
+
+  // No pokeemerald files modified — skip build verification
+  if (implResult.filesModified.length === 0 || !hasPokeemeraldChanges) {
+    if (implResult.filesModified.length > 0) {
+      log.info("Phase 3: No pokeemerald/ files modified — skipping build verification.");
+    } else {
+      log.info("Phase 3: No files modified — skipping build verification.");
+    }
     return {
       finalBuildResult: implResult.buildResult,
       fixActions,
       fixTokenUsage,
       reverted: false,
+      gameVersion: null,
     };
   }
 
   log.info("Phase 3: Build verification...");
-  let buildResult = runBuild();
+  let buildResult = await runBuild();
   saveBuildLog(cycleNumber, buildResult);
 
   if (buildResult.success) {
-    log.info("  Build: PASS");
+    const version = recordSuccessfulBuild(cycleNumber);
+    log.info(`  Build: PASS — ${formatVersion(version)}`);
     return {
       finalBuildResult: { success: true, errors: [] },
       fixActions,
       fixTokenUsage,
       reverted: false,
+      gameVersion: formatVersion(version),
     };
   }
 
@@ -142,16 +161,18 @@ async function runBuildVerifyPhase(
     fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
 
     // Re-run build to check if fix worked
-    buildResult = runBuild();
+    buildResult = await runBuild();
     saveBuildLog(cycleNumber, buildResult);
 
     if (buildResult.success) {
-      log.info(`  Build: PASS (fixed on attempt ${attempt})`);
+      const version = recordSuccessfulBuild(cycleNumber);
+      log.info(`  Build: PASS (fixed on attempt ${attempt}) — ${formatVersion(version)}`);
       return {
         finalBuildResult: { success: true, errors: [] },
         fixActions,
         fixTokenUsage,
         reverted: false,
+        gameVersion: formatVersion(version),
       };
     }
   }
@@ -172,6 +193,7 @@ async function runBuildVerifyPhase(
     fixActions,
     fixTokenUsage,
     reverted: true,
+    gameVersion: null,
   };
 }
 
@@ -229,6 +251,7 @@ export async function runCycle(): Promise<void> {
       fixActions,
       fixTokenUsage,
       reverted,
+      gameVersion,
     } = await runBuildVerifyPhase(
       cycleNumber,
       implResult,
@@ -287,6 +310,9 @@ export async function runCycle(): Promise<void> {
     log.info(`  Objective: ${plan.objective}`);
     log.info(`  Files modified: ${filesModified.length}${reverted ? " (reverted)" : ""}`);
     log.info(`  Build: ${finalBuildResult ? (finalBuildResult.success ? "SUCCESS" : "FAILED") : "not attempted"}`);
+    if (gameVersion) {
+      log.info(`  Version: ${gameVersion}`);
+    }
     log.info(`  Tool calls: ${implResult.toolCallCount}`);
     log.info(`  Tokens: ${totalTokenUsage.totalTokens.toLocaleString()}`);
     log.info(`  Journal: ${journalFile}`);

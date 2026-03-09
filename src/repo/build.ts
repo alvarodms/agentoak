@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { spawn } from "child_process";
 import fs from "fs";
 import path from "path";
 import { POKEEMERALD_DIR, BUILD_LOGS_DIR } from "../utils/paths.js";
@@ -14,37 +14,60 @@ export interface BuildResult {
   errors: string[];
 }
 
-/** Run `make` in the pokeemerald directory and capture results */
-export function runBuild(): BuildResult {
+/** Run `make` in the pokeemerald directory, streaming output in real-time */
+export async function runBuild(): Promise<BuildResult> {
   fs.mkdirSync(BUILD_LOGS_DIR, { recursive: true });
 
   const timestamp = new Date().toISOString();
   const start = Date.now();
-  let stdout = "";
-  let stderr = "";
-  let exitCode = 0;
+  const stdoutChunks: string[] = [];
+  const stderrChunks: string[] = [];
 
   logger.info("Starting ROM build...");
 
-  try {
-    stdout = execSync("make", {
+  const exitCode = await new Promise<number>((resolve) => {
+    const proc = spawn("make", [], {
       cwd: POKEEMERALD_DIR,
-      encoding: "utf-8",
-      maxBuffer: 10 * 1024 * 1024,
-      timeout: 5 * 60 * 1000, // 5 minute timeout
+      stdio: ["ignore", "pipe", "pipe"],
     });
-  } catch (err: unknown) {
-    if (err && typeof err === "object" && "status" in err) {
-      const execErr = err as { status: number; stdout?: string; stderr?: string };
-      exitCode = execErr.status ?? 1;
-      stdout = execErr.stdout ?? "";
-      stderr = execErr.stderr ?? "";
-    } else {
-      exitCode = 1;
-      stderr = err instanceof Error ? err.message : String(err);
-    }
-  }
 
+    const timeout = setTimeout(() => {
+      proc.kill("SIGTERM");
+      logger.warn("Build timed out after 5 minutes");
+    }, 5 * 60 * 1000);
+
+    proc.stdout.on("data", (chunk: Buffer) => {
+      const text = chunk.toString();
+      stdoutChunks.push(text);
+      // Stream each line to the logger
+      for (const line of text.trimEnd().split("\n")) {
+        if (line) logger.info(`  [build] ${line}`);
+      }
+    });
+
+    proc.stderr.on("data", (chunk: Buffer) => {
+      const text = chunk.toString();
+      stderrChunks.push(text);
+      for (const line of text.trimEnd().split("\n")) {
+        if (line) logger.warn(`  [build] ${line}`);
+      }
+    });
+
+    proc.on("close", (code) => {
+      clearTimeout(timeout);
+      resolve(code ?? 1);
+    });
+
+    proc.on("error", (err) => {
+      clearTimeout(timeout);
+      stderrChunks.push(err.message);
+      logger.error(`  [build] spawn error: ${err.message}`);
+      resolve(1);
+    });
+  });
+
+  const stdout = stdoutChunks.join("");
+  const stderr = stderrChunks.join("");
   const duration = Date.now() - start;
   const success = exitCode === 0;
   const errors = parseErrors(stderr + "\n" + stdout);
