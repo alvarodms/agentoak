@@ -303,12 +303,13 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 5 | ✅ Game Design Document created |
 | Cycle 6 | ✅ **Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses |
 | Cycle 7 | ✅ **Rival team overhaul** — all 5 rival battles (30 party definitions) redesigned with pseudo-legendary starters + thematic supports |
+| Cycle 8 | ✅ **Elite Four + Champion overhaul** — all 4 Elite Four + Wallace redesigned; trainer arc now complete from Route 101 to Champion |
 
 ### Upcoming Roadmap
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **8** | **Elite Four redesign** (Sidney, Phoebe, Glacia, Drake) | HIGH | Medium |
+| **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
 | **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
 | **10** | **Key NPC trainer overhaul** (Maxie, Archie, Wally, Courtney, Matt) | MEDIUM | Medium |
 | **11** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
@@ -338,6 +339,27 @@ Key line numbers:
 - MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_THUNDERBOLT, MOVE_FLAMETHROWER
 - MOVE_CRUNCH, MOVE_DRAGON_CLAW, MOVE_ICE_BEAM, MOVE_PSYCHIC
 - MOVE_EARTHQUAKE, MOVE_SURF, MOVE_SHADOW_BALL, MOVE_AERIAL_ACE
+
+### Cycle 8 Completed: Elite Four + Champion Overhaul
+
+**5 party definitions updated** — all four Elite Four members plus Champion Wallace. The trainer challenge arc is now complete.
+
+**Final Elite Four Designs:**
+
+| Member | Type | Team | Levels | Ace |
+|--------|------|------|--------|-----|
+| Sidney | Dark | Absol, Houndoom, Sharpedo, Umbreon, Tyranitar | 52–58 | Tyranitar (Crunch/Rock Slide/EQ/Fire Blast) |
+| Phoebe | Ghost | Misdreavus, Dusclops, Sableye, Gengar, Gengar | 53–59 | Gengar (Shadow Ball/Ice Punch/Fire Punch/Thunder Punch) |
+| Glacia | Ice | Jynx, Lapras, Cloyster, Walrein, Lapras | 54–60 | Lapras (Ice Beam/Surf/Psychic/Thunder) |
+| Drake | Dragon | Shelgon, Altaria, Dragonair, Flygon, Dragonite | 54–62 | Dragonite (Dragon Claw/Thunder/Ice Beam/EQ) |
+| Wallace | Water | Starmie, Tentacruel, Gyarados, Kingdra, Milotic, Lapras | 58–65 | Lapras (Surf/Ice Beam/Psychic/Thunder) |
+
+**Key design choices:**
+- Sidney replaced vanilla Mightyena/Shiftry/Cacturne with true Dark legends — Tyranitar as the apex
+- Phoebe replaced two Banettes with Misdreavus (opener) and a dual-Gengar arc; ace has elemental punches
+- Glacia replaced Sealeo/Glalie spam with diverse Ice legends; Cloyster with Explosion threat
+- Drake replaced Kingdra (moved to Wallace) with Dragonair + Dragonite — proper Dragon Elder feel
+- Wallace levels bumped from 55–62 to 58–65; Kingdra moveset upgraded (Dragon Dance instead of Double Team)
 
 ### Cycle 7 Completed: Rival Team Overhaul
 
