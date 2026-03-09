@@ -229,21 +229,27 @@ All 73 encounter tables across Hoenn have been redesigned. The philosophy:
 
 **No Dead Encounters**: Even common 20% slots feature interesting Pokémon — Houndour, Electabuzz, Growlithe — not Rattata or Zigzagoon.
 
-### Still TODO: Dungeon Encounters
+### Dungeon Encounters — COMPLETED (Cycle 9)
 
-Key locations still using vanilla encounters (to fix in future cycles):
-- Petalburg Woods
-- Rusturf Tunnel
-- Granite Cave
-- Mt. Chimney / Jagged Pass
-- Fiery Path
-- New Mauville
-- Safari Zone
-- Shoal Cave
-- Mt. Pyre
-- Seafloor Cavern
-- Sky Pillar
-- Victory Road
+All key dungeon encounter tables have been overhauled:
+- **Petalburg Woods**: Gastly/Haunter (20% each!), Heracross, Scyther, Abra — rare Larvitar/Bagon
+- **Rusturf Tunnel**: Machop/Geodude + Larvitar common (10%), rare Bagon/Graveler
+- **Granite Cave** (3 floors): Aron, Zubat, Sableye, Abra lines — rare Larvitar/Bagon per floor
+- **Fiery Path**: Magmar, Houndour/Houndoom, Camerupt, rare Arcanine/Dragonair
+- **New Mauville**: Magnemite, Voltorb, Electabuzz, Jolteon, Raichu, Ampharos
+- **Meteor Falls** (4 floors): Solrock, Lunatone, Bagon line, Dragonair, Metang — rare Salamence/Metagross/Dragonite in water
+- **Shoal Cave** (4 rooms): Spheal, Snorunt, Jynx, Sneasel, Lapras (1%), Walrein — water has swimming Lapras
+- **Mt. Pyre** (5 floors): Pure ghost paradise — Haunter/Misdreavus dominant, Gengar (5%), Dusclops, Banette
+- **Seafloor Cavern** (2 rooms): Bagon/Shelgon, Camerupt, Absol, Dragonair — rare Tyranitar/Salamence
+- **Sky Pillar** (3 floors): Dragon paradise — Dragonair/Dragonite dominant, Salamence/Metagross rare
+- **Victory Road** (3 floors): Lairon/Aggron, Metang/Metagross, Alakazam, Absol, Dusclops — rare Metagross/Salamence/Tyranitar
+
+### Still TODO: Minor Encounters
+- Safari Zone (unique mechanics, defer to dedicated cycle)
+- Cave of Origin (story area, may want special encounters)
+- Artisan Cave / Altering Cave (post-game)
+- Mt. Chimney (only has trainer battles, no wild area)
+- Magma/Aqua Hideout (story areas)
 
 ---
 
@@ -304,13 +310,12 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 6 | ✅ **Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses |
 | Cycle 7 | ✅ **Rival team overhaul** — all 5 rival battles (30 party definitions) redesigned with pseudo-legendary starters + thematic supports |
 | Cycle 8 | ✅ **Elite Four + Champion overhaul** — all 4 Elite Four + Wallace redesigned; trainer arc now complete from Route 101 to Champion |
+| Cycle 9 | ✅ **Dungeon encounter tables** — 34 tables overhauled across 11 key dungeons (Petalburg Woods, Rusturf Tunnel, Granite Cave, Fiery Path, New Mauville, Meteor Falls, Shoal Cave, Mt. Pyre, Seafloor Cavern, Sky Pillar, Victory Road) |
 
 ### Upcoming Roadmap
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
-| **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
 | **10** | **Key NPC trainer overhaul** (Maxie, Archie, Wally, Courtney, Matt) | MEDIUM | Medium |
 | **11** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
 | **12** | **Safari Zone + late-game area encounters** | LOW | Low |
