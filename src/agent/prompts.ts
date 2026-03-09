@@ -59,11 +59,12 @@ export function buildTaskPrompt(
 You are in the implementation phase. A planning agent has already decided what to work on — your job is to execute this task.
 
 Guidelines:
-- Focus exclusively on this task. Do not plan other work or diverge.
+- Focus on executing this task thoroughly. If the objective is broad, break it into steps and make meaningful progress.
 - Read relevant files before making changes. Understand the code first.
-- Make targeted, surgical edits. Change the minimum needed.
+- When making data changes (encounters, trainers, items), think holistically — design for the full game experience, not just one file in isolation.
+- Don't be afraid to modify multiple files if the objective calls for it. A cohesive feature that touches 5 files is better than a timid single-line edit.
 - If you modify code, run \`make\` in the pokeemerald/ directory to verify your changes compile.
-- Update your memory files with anything you learn or discover.
+- Update your memory files with anything you learn or discover — especially update strategy-notes.md with how this cycle fits into the larger game design.
 - When you are done, output the CYCLE_COMPLETE marker with a summary.
 
 Begin your work now.`;
@@ -145,11 +146,12 @@ Please provide a structured reflection:
 3. **What evidence supports or contradicts my assumptions?** — Cite specific files, errors, or observations
 4. **What did I learn about the codebase?** — New concrete facts
 5. **What should I try next?** — Specific, actionable next steps
+5. **How does this cycle fit into the larger game design?** — Does the ROM hack have a coherent creative direction? Is the current strategy-notes.md roadmap still the right plan, or should it be updated? Think about the player experience holistically.
 
 Update the memory files in the memory/ directory as needed:
 - memory/codebase-facts.md — new codebase facts
 - memory/failure-patterns.md — new failure patterns
-- memory/strategy-notes.md — strategy updates
+- memory/strategy-notes.md — strategy updates, game design evolution, multi-cycle roadmap
 - memory/project-facts.md — project facts
 
 When done reflecting, output the CYCLE_COMPLETE marker with your summary.`;

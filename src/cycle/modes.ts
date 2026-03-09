@@ -14,17 +14,17 @@ export const CYCLE_MODES: Record<CycleMode, CycleModeConfig> = {
     name: "research",
     label: "Research & Explore",
     description:
-      "Explore the codebase to understand how systems work. Read files, search for patterns, build mental models. No code changes required.",
+      "Deep-dive into a specific game system to understand how it works end-to-end. Best used when preparing for a major feature implementation. Read files, trace function calls, build mental models.",
     promptAddendum:
-      "This is a research cycle. Focus on understanding the codebase. Read source files, trace function calls, understand data structures. Record everything you learn in your memory files. You do not need to make any code changes.",
+      "This is a research cycle. Conduct a deep, targeted investigation of a specific game system. Don't just browse — go deep enough to understand how you would modify this system for the ROM hack. Map out data flows, identify all the files involved, understand constraints. Record detailed findings in codebase-facts.md with specific file paths, function names, and data structure details. Your research should directly enable a future implementation cycle.",
   },
   patch: {
     name: "patch",
     label: "Patch & Modify",
     description:
-      "Make targeted code modifications — tweak values, change data, small functional changes.",
+      "Make code modifications — change data, tune gameplay values, modify game systems. Can range from focused edits to broad sweeping changes across many files.",
     promptAddendum:
-      "This is a patch cycle. You're making targeted modifications to the codebase. Be surgical — understand the code before editing, make focused changes, and try to build afterward to verify.",
+      "This is a patch cycle. Understand the code before editing, and build afterward to verify. If the objective involves a broad change (e.g. redesigning encounters across multiple routes), don't limit yourself to one file — make all the changes needed to deliver a cohesive result.",
   },
   repair: {
     name: "repair",
@@ -44,19 +44,19 @@ export const CYCLE_MODES: Record<CycleMode, CycleModeConfig> = {
   },
   feature: {
     name: "feature",
-    label: "Feature Attempt",
+    label: "Feature Implementation",
     description:
-      "Attempt to implement a new feature or significant gameplay change.",
+      "Implement a significant gameplay change or new feature that may span multiple files and systems. This is where the ROM hack takes shape.",
     promptAddendum:
-      "This is a feature cycle. You're attempting something ambitious — a new feature, a gameplay modification, or a significant change. Break the work into steps. Research first, then implement incrementally. Record your progress in memory even if you don't finish.",
+      "This is a feature cycle. You're implementing something substantial — a new gameplay system, a major overhaul, or a significant creative change. Break the work into steps, implement them methodically, and build to verify. If the feature is too large for one cycle, implement as much as you can and document the remaining work in strategy-notes.md for the next cycle. Don't be afraid of touching multiple files — real features require it.",
   },
   planning: {
     name: "planning",
     label: "Plan & Strategize",
     description:
-      "Step back, review progress, brainstorm ideas, and plan future work. Update strategy notes.",
+      "Design the game — develop a comprehensive vision, plan multi-cycle roadmaps, design game systems (encounter tables, difficulty curves, story beats, regional themes). Write detailed game design documents in strategy-notes.md.",
     promptAddendum:
-      "This is a planning cycle. Step back from implementation and think about the big picture. Review your memory, reflect on what you've learned, brainstorm ROM hack ideas, and update your strategy notes with a plan. No code changes needed.",
+      "This is a planning cycle. Think like a game designer, not just a programmer. Develop a comprehensive creative vision for the ROM hack. Consider: What makes this hack unique? What's the player experience from start to finish? Design specific systems — encounter philosophy per area, difficulty progression, thematic elements, narrative hooks. Write a detailed game design document in strategy-notes.md that future cycles can execute against. Plan a concrete multi-cycle roadmap with dependencies. No code changes needed, but the output should be a rich, actionable design document.",
   },
 };
 

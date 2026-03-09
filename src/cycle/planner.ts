@@ -108,9 +108,20 @@ ${modeList}
 ${issueSection}
 Decide: What mode should this cycle use, and what should the objective be?
 
-For early cycles (1–5), prefer "research" or "planning" to build up knowledge.
 If previous cycles had build failures, consider "repair".
-Choose freely based on what seems most valuable given the current state.
+
+### Strategic Vision
+
+You are building a complete ROM hack — not just making isolated tweaks. Every cycle should serve a larger game design vision. Think like a game designer:
+
+- **What kind of game experience are you creating?** Have a clear creative direction (theme, difficulty curve, narrative hooks, what makes this hack unique).
+- **What's the multi-cycle roadmap?** Plan 5–10 cycles ahead. Each cycle should build on previous work toward a coherent whole.
+- **Prefer ambitious, interconnected changes** over safe, isolated ones. Changing wild encounters on one route is fine — but designing an entire regional encounter philosophy across all routes is better.
+- **Use "planning" mode** to develop comprehensive game design documents in strategy-notes.md when you need to think through a major system (encounter design, difficulty curve, story beats, regional themes).
+- **Use "feature" mode** when implementing multi-file changes that transform a game system.
+- **Use "research" mode** when you need deep understanding of a system before a major feature — not as a default safe choice.
+
+Don't play it safe. The goal is a ROM hack with a strong creative identity, not a collection of minor data edits.
 
 If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
 
