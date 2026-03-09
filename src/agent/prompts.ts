@@ -93,6 +93,67 @@ You may follow this objective, modify it, or do something completely different b
 Begin your work. Use your tools to explore, learn, edit, build, and update your memory as you go. When you're done with this cycle's work, call complete_cycle with a summary.`;
 }
 
+/** Build a focused task prompt for the implementation phase (Phase 2) */
+export function buildTaskPrompt(
+  cycleNumber: number,
+  objective: string,
+  reasoning: string,
+  mode: string,
+): string {
+  return `## Cycle ${cycleNumber} — Implementation Phase
+
+**Your task**: ${objective}
+
+**Mode**: ${mode}
+
+**Reasoning**: ${reasoning}
+
+You are in the implementation phase. A planning agent has already decided what to work on — your job is to execute this task.
+
+Guidelines:
+- Focus exclusively on this task. Do not plan other work or diverge.
+- Read relevant files before making changes. Understand the code first.
+- Make targeted, surgical edits. Change the minimum needed.
+- If you modify code, try to build afterward to verify your changes.
+- Update your memory files with anything you learn or discover.
+- When you are done, call complete_cycle with a summary of what you accomplished.
+
+Begin your work now.`;
+}
+
+/** Build a prompt for the build-fix agent (Phase 3 repair loop) */
+export function buildBuildFixPrompt(
+  cycleNumber: number,
+  errors: string[],
+  stderr: string,
+): string {
+  const errorList = errors.length > 0
+    ? errors.slice(0, 30).join("\n")
+    : "(no parsed errors — see raw stderr below)";
+
+  const stderrPreview = stderr
+    ? stderr.split("\n").slice(0, 50).join("\n")
+    : "(no stderr output)";
+
+  return `## Cycle ${cycleNumber} — Build Fix Required
+
+The build has FAILED. Your only job is to fix the build errors. Do NOT add features or make unrelated changes.
+
+### Parsed Errors
+${errorList}
+
+### Raw Build Output (stderr)
+${stderrPreview}
+
+### Instructions
+1. Read the files mentioned in the errors to understand the context.
+2. Fix each error with targeted edits.
+3. After fixing, call complete_cycle to report what you changed.
+
+Do NOT run the build yourself — the pipeline will re-run it automatically after you finish.
+Focus only on fixing these errors. Nothing else.`;
+}
+
 /** Build the reflection prompt sent after the main agent loop */
 export function buildReflectionPrompt(cycleContext: {
   cycleNumber: number;

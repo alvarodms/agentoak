@@ -4,6 +4,36 @@ import { logger } from "../utils/logger.js";
 
 const git = simpleGit(PROJECT_ROOT);
 
+/** Get the current HEAD commit SHA */
+export async function getHeadSha(): Promise<string> {
+  try {
+    const sha = await git.revparse(["HEAD"]);
+    return sha.trim();
+  } catch {
+    return "unknown";
+  }
+}
+
+/**
+ * Revert all pokeemerald/ changes back to a given commit SHA.
+ * This restores the pokeemerald directory to exactly how it was at that commit.
+ */
+export async function revertPokeemerald(sha: string): Promise<boolean> {
+  if (sha === "unknown") {
+    logger.warn("Cannot revert: unknown start SHA");
+    return false;
+  }
+
+  try {
+    await git.checkout([sha, "--", "pokeemerald/"]);
+    logger.info(`Reverted pokeemerald/ to ${sha}`);
+    return true;
+  } catch (err) {
+    logger.error(`Failed to revert pokeemerald/: ${err instanceof Error ? err.message : String(err)}`);
+    return false;
+  }
+}
+
 /** Stage and commit all cycle artifacts */
 export async function commitCycle(
   cycleNumber: number,
