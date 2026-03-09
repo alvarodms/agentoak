@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "cycle": "tsx src/index.ts",
-    "build:check": "tsc --noEmit"
+    "build:check": "tsc --noEmit",
+    "build:docs": "node docs/build-journals.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
