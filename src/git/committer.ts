@@ -84,8 +84,10 @@ export async function commitCycle(
     const commitMessage = `agent-oak: cycle ${paddedCycle} – ${shortSummary}`;
 
     const result = await git.commit(commitMessage);
-    logger.info(`Committed: ${commitMessage} (${result.commit})`);
-    return result.commit;
+    // Resolve full SHA — simple-git returns a short hash
+    const fullSha = await git.revparse(["HEAD"]);
+    logger.info(`Committed: ${commitMessage} (${fullSha.trim()})`);
+    return fullSha.trim();
   } catch (err) {
     logger.error(`Git commit failed: ${err instanceof Error ? err.message : String(err)}`);
     return null;
