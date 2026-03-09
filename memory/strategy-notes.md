@@ -32,12 +32,12 @@ Create a unique, interesting Pokémon Emerald ROM hack that changes the gameplay
 - **Impact**: Changes battle difficulty and variety
 - **Risk**: Low — data change
 
-## Implementation Order (updated after Cycle 2)
+## Implementation Order (updated after Cycle 3)
 
 1. ~~**Cycle 2**: Change starters to something unexpected (quick win, low risk)~~ ✅ DONE
-2. **Cycle 3**: Modify wild encounters for 1-2 early routes (Route 101/102 — starter routes)
-3. **Cycle 4+**: Expand encounters to more routes, consider thematic consistency with the pseudo-legendary starter theme (Larvitar/Bagon/Beldum)
-4. **Later**: Investigate NPC dialogue changes — Professor Birch introduces starters, may reference species names
+2. ~~**Cycle 3**: Modify wild encounters for Route 101/102~~ ✅ DONE
+3. **Cycle 4**: Expand encounters to more routes (Route 103, 104, 110, etc.) — extend the "Legends" theme consistently
+4. **Later**: Investigate NPC dialogue, trainer teams, Professor Birch text edits
 
 ## Thematic Direction: "The Pseudo-Legendary Run"
 
@@ -53,7 +53,7 @@ With Larvitar/Bagon/Beldum as starters, the hack has a clear identity: pseudo-le
 - `constants/species.h` — verify which species IDs exist for non-Hoenn Pokémon
 - `src/pokedex.c` — can we add new Pokédex entries for non-Hoenn mons?
 - NPC dialogue for Professor Birch — does he name the starters explicitly? Would need text edits.
-- Route 101/102 wild encounters — first place to change for thematic consistency
+- ~~Route 101/102 wild encounters — first place to change for thematic consistency~~ ✅ DONE
 
 ## Technical Lessons Learned
 
@@ -70,6 +70,13 @@ With Larvitar/Bagon/Beldum as starters, the hack has a clear identity: pseudo-le
 - Gen 2/3 pseudo-legendary pre-evolutions are fully supported in the Emerald ROM data
 - The starter change required only editing `sStarterMon[]` — no other files needed updating
 - Build with `make -j$(nproc)` from `pokeemerald/` works; incremental builds are fast after first full build
+
+### Cycle 3
+- `src/data/wild_encounters.json` (not `data/`) is the actual path for wild encounter data
+- Route 101/102 encounters changed: Trapinch, Swablu, Ralts, Aron, Houndour, Dratini as main pool; Larvitar/Bagon/Beldum as ultra-rare (1%) wilds matching the starter species
+- `SPECIES_TRAPINCH`, `SPECIES_SWABLU`, `SPECIES_HOUNDOUR`, `SPECIES_SNEASEL`, `SPECIES_MISDREAVUS`, `SPECIES_HORSEA`, `SPECIES_DRATINI` all compile cleanly
+- Route 102 water_mons changed to Horsea/Dratini for Dragon-themed surfing
+- The file has 12 land slots and 5 water slots per route; encounter_rate and mons array structure is straightforward JSON
 
 ## Risk Assessment
 
