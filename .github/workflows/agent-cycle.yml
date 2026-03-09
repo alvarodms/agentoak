@@ -108,7 +108,7 @@ jobs:
 
       - name: Install and start Headroom proxy
         run: |
-          pip install headroom-ai
+          pip install "headroom-ai[proxy]"
           headroom proxy --no-intelligent-context --log-file headroom.jsonl &
           for i in $(seq 1 10); do
             if curl -s http://localhost:8787/health > /dev/null 2>&1; then
