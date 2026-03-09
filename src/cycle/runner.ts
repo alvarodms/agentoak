@@ -324,10 +324,14 @@ export async function runCycle(): Promise<void> {
     });
 
     log.info("Phase 5: Committing to git...");
+    const acceptedIssueNumbers = plan.issueActions
+      .filter(a => a.action === "accept")
+      .map(a => a.issueNumber);
     const commitHash = await commitCycle(
       cycleNumber,
       implResult.cycleSummary || plan.objective,
       filesModified,
+      acceptedIssueNumbers,
     );
 
     // Create GitHub release with IPS patch if build succeeded with pokeemerald changes

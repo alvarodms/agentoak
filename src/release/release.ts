@@ -75,7 +75,7 @@ export async function createCycleRelease(
   }
 
   // Git tags cannot contain '+', so use '-' as separator instead
-  const tagName = `v${version.major}.${version.minor}.${version.patch}-build.${version.build}`;
+  const tagName = `v${version.major}.${version.minor}.${version.patch}`;
   const releaseName = `Agent Oak v${version.major}.${version.minor}.${version.patch} Build ${version.build}`;
   const changelog = formatChangelog(version, cycleSummary, objective);
   const assetName = patchFilename(version);
