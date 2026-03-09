@@ -61,10 +61,19 @@ struct WildPokemonHeader { u8 mapGroup; u8 mapNum;
 
 ### Starter Selection (`src/starter_choose.c`)
 
-**Starters defined** (line ~15):
+**Current starters** (lines 113–118) — **MODIFIED in Cycle 2**:
 ```c
-static const u16 sStarterMon[3] = { SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP };
+static const u16 sStarterMon[STARTER_MON_COUNT] =
+{
+    SPECIES_LARVITAR,
+    SPECIES_BAGON,
+    SPECIES_BELDUM,
+};
 ```
+
+Original was `{ SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP }` on a single line.
+
+**`STARTER_MON_COUNT`** is defined at line 27 as `3`.
 
 **UI flow** (task-based state machine):
 1. `CB2_StarterChoose()` — init
@@ -75,7 +84,7 @@ static const u16 sStarterMon[3] = { SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MU
 6. `Task_HandleConfirmStarterInput()` — handle response
 7. `Task_DeclineStarter()` — if player says no
 
-To change starters: modify `sStarterMon[]` array with different `SPECIES_*` constants.
+**Confirmed**: `SPECIES_LARVITAR`, `SPECIES_BAGON`, `SPECIES_BELDUM` are valid constants — build succeeded.
 
 ### Battle System (`src/battle_main.c` — 194KB)
 
