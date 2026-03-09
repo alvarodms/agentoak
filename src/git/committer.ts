@@ -1,3 +1,4 @@
+import path from "node:path";
 import { simpleGit } from "simple-git";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { logger } from "../utils/logger.js";
@@ -49,8 +50,26 @@ export async function commitCycle(
     await git.add("artifacts/build-logs/*");
 
     // Stage modified pokeemerald files
-    for (const file of filesModified) {
-      await git.add(`pokeemerald/${file}`);
+    for (const rawPath of filesModified) {
+      // Convert absolute paths to relative (from PROJECT_ROOT)
+      const relPath = path.isAbsolute(rawPath)
+        ? path.relative(PROJECT_ROOT, rawPath)
+        : rawPath;
+
+      // Skip files already staged by the glob patterns above (memory, journal, build-logs)
+      if (
+        relPath.startsWith("memory/") ||
+        relPath.startsWith("journal/") ||
+        relPath.startsWith("artifacts/")
+      ) {
+        continue;
+      }
+
+      // Ensure pokeemerald/ prefix for files that don't already have it
+      const gitPath = relPath.startsWith("pokeemerald/")
+        ? relPath
+        : `pokeemerald/${relPath}`;
+      await git.add(gitPath);
     }
 
     // Check if there's anything to commit
