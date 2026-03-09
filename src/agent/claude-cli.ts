@@ -249,11 +249,19 @@ class StreamState {
   private lastToolName = "";
 
   handleMessage(msg: Record<string, unknown>): void {
+    // Normalize stream-json format: content is nested under msg.message
+    const inner = msg.message as Record<string, unknown> | undefined;
+    if (inner && typeof inner === "object") {
+      if (inner.content && !msg.content) msg.content = inner.content;
+    }
+
     const msgType = msg.type as string | undefined;
     const role = msg.role as string | undefined;
 
     // Track cost from usage/cost fields
-    if (typeof msg.cost_usd === "number") {
+    if (typeof msg.total_cost_usd === "number") {
+      this.costUsd = msg.total_cost_usd;
+    } else if (typeof msg.cost_usd === "number") {
       this.costUsd = msg.cost_usd;
     }
 
@@ -265,7 +273,9 @@ class StreamState {
 
     // Handle "result" type (final output from stream-json)
     if (msgType === "result") {
-      if (typeof msg.cost_usd === "number") {
+      if (typeof msg.total_cost_usd === "number") {
+        this.costUsd = msg.total_cost_usd;
+      } else if (typeof msg.cost_usd === "number") {
         this.costUsd = msg.cost_usd;
       }
       const result = msg.result as string | undefined;

@@ -39,15 +39,38 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let resultText = "";
 
   for (const msg of messages) {
+    // Normalize stream-json format: content and usage are nested under msg.message
+    const inner = msg.message as Record<string, unknown> | undefined;
+    if (inner && typeof inner === "object") {
+      if (inner.content && !msg.content) msg.content = inner.content;
+      if (inner.usage && !msg.usage) msg.usage = inner.usage;
+    }
+
     // Capture the "result" field from result-type messages (structured output via --json-schema)
+    // Only use it if it contains actual content (not "(no content)" placeholder)
     if (msg.type === "result" && typeof msg.result === "string") {
-      resultText = msg.result;
+      const r = msg.result.trim();
+      if (r && r !== "(no content)") {
+        resultText = r;
+      }
     }
     // Accumulate token usage from usage fields
     if (msg.usage && typeof msg.usage === "object") {
       const usage = msg.usage as Record<string, number>;
       totalInputTokens += usage.input_tokens ?? 0;
       totalOutputTokens += usage.output_tokens ?? 0;
+    }
+
+    // Also capture total usage from result messages (stream-json puts cumulative usage here)
+    if (msg.type === "result") {
+      const resultUsage = msg.usage as Record<string, number> | undefined;
+      if (resultUsage?.input_tokens || resultUsage?.output_tokens) {
+        // Result usage is cumulative — use it if we haven't accumulated anything yet
+        if (totalInputTokens === 0 && totalOutputTokens === 0) {
+          totalInputTokens = resultUsage.input_tokens ?? 0;
+          totalOutputTokens = resultUsage.output_tokens ?? 0;
+        }
+      }
     }
 
     const content = msg.content;
@@ -101,6 +124,11 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
             // We'll update buildResult when we see the tool_result
             buildResult = { success: true, errors: [] }; // optimistic, overwritten below
           }
+        }
+
+        // Capture StructuredOutput tool input as resultText (--json-schema uses this tool)
+        if (toolName === "StructuredOutput" && !resultText) {
+          resultText = JSON.stringify(input);
         }
       }
 

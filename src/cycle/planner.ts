@@ -74,12 +74,13 @@ Respond with a JSON object containing mode, objective, and reasoning.`;
 
   try {
     const result = await runClaudeCode(prompt, {
-      maxTurns: 1,
-      tools: "",
+      maxTurns: 10,
       timeout: 2 * 60 * 1000,
       model,
       jsonSchema: CYCLE_PLAN_SCHEMA,
     });
+
+    console.log('Planning result:', result);
 
     // With --json-schema, the structured JSON is in the result message's result field
     interface PlanJson { mode?: string; objective?: string; reasoning?: string }
@@ -97,6 +98,14 @@ Respond with a JSON object containing mode, objective, and reasoning.`;
     // Fallback: look through action results for valid JSON
     if (!parsed) {
       for (const action of result.actions) {
+        // Check StructuredOutput tool input directly (contains the plan object)
+        if (action.tool === "StructuredOutput" && action.input) {
+          const candidate = action.input as PlanJson;
+          if (candidate?.mode && candidate?.objective) {
+            parsed = candidate;
+            break;
+          }
+        }
         if (action.result) {
           try {
             const candidate = JSON.parse(action.result) as PlanJson;
