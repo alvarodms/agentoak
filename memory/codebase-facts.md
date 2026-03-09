@@ -232,3 +232,27 @@ struct TrainerMonItemCustomMoves {
 **Match Call rematches:** Gym leaders have 5 progressive versions (e.g., `sParty_Roxanne1` through `sParty_Roxanne5`). The first (1) is the actual gym battle; 2–5 are rematches via the Pokénav Match Call feature.
 
 **To change a gym leader's team:** Edit the `.species`, `.lvl`, `.heldItem`, `.moves` fields in the relevant struct. Can use any valid `SPECIES_*` and `MOVE_*` constants.
+
+### Rival System (Brendan/May) — `src/data/trainer_parties.h`
+
+**Naming convention:** `sParty_{Character}{Location}{OriginalStarter}`
+- The suffix (Mudkip/Treecko/Torchic) indicates which **player starter** triggers this party
+- Example: `sParty_BrendanRoute103Mudkip` triggers when player chose Mudkip (rival gets counter)
+
+**Battle locations and approximate line numbers:**
+| Location | Lines | Team Size | Description |
+|----------|-------|-----------|-------------|
+| Route 103 | 6749–6850 | 1 | First battle |
+| Rustboro | 7801–7950 | 2 | After Gym 1 |
+| Route 110 | 6889–7000 | 3 | Mid-early game |
+| Route 119 | 6995–7100 | 4 | Mid game |
+| Lilycove | 8851–9000 | 5 | Late game |
+
+**Total party count:** 5 locations × 3 variants × 2 characters = 30 definitions
+
+**Struct type:** `TrainerMonNoItemDefaultMoves` — only `.lvl` and `.species` required (no held items or custom moves in vanilla)
+
+**Legends of Hoenn counter relationships:**
+- Player Larvitar → Rival Beldum (Steel resists Rock/Ground, immune to Dark)
+- Player Bagon → Rival Larvitar (Rock resists Flying, Dark hits Dragon neutral)
+- Player Beldum → Rival Bagon (Dragon resists Steel's common targets)
