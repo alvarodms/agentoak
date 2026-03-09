@@ -12,6 +12,7 @@ import { recordSuccessfulBuild, formatVersion, loadVersion } from "../repo/versi
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
 import { commitCycle, getHeadSha, revertPokeemerald } from "../git/committer.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
+import { closeIssue } from "../github/client.js";
 import { logger, cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
@@ -333,6 +334,14 @@ export async function runCycle(): Promise<void> {
       filesModified,
       acceptedIssueNumbers,
     );
+
+    // Close accepted issues after successful commit (not reverted)
+    if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
+      log.info(`  Closing ${acceptedIssueNumbers.length} accepted issue(s)...`);
+      for (const issueNumber of acceptedIssueNumbers) {
+        await closeIssue(issueNumber, "completed");
+      }
+    }
 
     // Create GitHub release with IPS patch if build succeeded with pokeemerald changes
     let releaseUrl: string | null = null;
