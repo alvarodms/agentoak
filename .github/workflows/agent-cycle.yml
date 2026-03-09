@@ -32,7 +32,7 @@ permissions:
 jobs:
   run-cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: Checkout repository
@@ -49,7 +49,7 @@ jobs:
           node-version: "22"
 
       - name: Install Node dependencies
-        run: npm ci --verbose
+        run: npm i --verbose
 
       - name: Cache ARM toolchain
         id: cache-arm
@@ -93,13 +93,41 @@ jobs:
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
 
-      - name: Run agent cycle
+      - name: Run agent cycle (attempt 1)
+        id: attempt1
+        continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
           MAX_TOKENS_PER_CYCLE: ${{ inputs.max_tokens || '200000' }}
           MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
         run: npm run cycle
+
+      - name: Retry after 5min (attempt 2)
+        id: attempt2
+        if: steps.attempt1.outcome == 'failure'
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
+          MAX_TOKENS_PER_CYCLE: ${{ inputs.max_tokens || '200000' }}
+          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
+        run: |
+          echo "Attempt 1 failed. Waiting 5 minutes before retry..."
+          sleep 300
+          npm run cycle
+
+      - name: Retry after 15min (attempt 3)
+        if: steps.attempt1.outcome == 'failure' && steps.attempt2.outcome == 'failure'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
+          MAX_TOKENS_PER_CYCLE: ${{ inputs.max_tokens || '200000' }}
+          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
+        run: |
+          echo "Attempt 2 failed. Waiting 15 minutes before final retry..."
+          sleep 900
+          npm run cycle
 
       - name: Push changes
         run: |
