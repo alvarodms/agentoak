@@ -4,109 +4,395 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 
 ---
 
-## ROM Hack Vision
+# LEGENDS OF HOENN — Game Design Document
 
-Create a unique, interesting Pokémon Emerald ROM hack that changes the gameplay experience in meaningful ways. Possible directions:
+*Version 1.0 — Cycle 5*
 
-1. **Radical encounter overhaul** — Change wild Pokémon to create a unique regional ecosystem, using Pokémon not normally found in Emerald
-2. **Custom starter trio** — Replace Treecko/Torchic/Mudkip with a custom or unexpected set ✅ DONE (Larvitar/Bagon/Beldum)
-3. **Difficulty hack** — Increase trainer difficulty, add level scaling, improve AI
-4. **New narrative twist** — Use scripting to add custom events, NPC dialogue, story beats
-5. **Expanded Pokédex** — Use Gen 4+ Pokémon species that are already in the ROM data
+---
 
-## Easiest Entry Points (low risk, high impact)
+## 1. Vision Statement
 
-### 1. Wild Pokémon (`data/wild_encounters.json`)
-- **Effort**: Very low — edit JSON file
-- **Impact**: Completely changes what players encounter in every area
-- **Risk**: Low — just data change, no logic change
-- **How**: Change `"species"` values in the JSON to different `SPECIES_*` constants
+**Legends of Hoenn** is a Pokémon Emerald ROM hack that reimagines Hoenn as a region teeming with powerful, rare, and legendary-adjacent Pokémon. Where vanilla Emerald gave you Zigzagoon and Poochyena on every early route, Legends of Hoenn drops you into a world where every encounter matters. The player begins with one of three pseudo-legendary lines and must navigate an ecosystem of powerhouses — Houndour packs prowling early routes, Dratini lurking in the rivers, Lapras crossing the southern seas.
 
-### 2. Starter Pokémon (`src/starter_choose.c`) ✅ DONE
-- **Result**: Changed to Larvitar / Bagon / Beldum — all compiled successfully
-- `sStarterMon[]` is at lines 113–118, `SPECIES_*` constants work directly
+**The core promise**: Every Pokémon you encounter is worth catching. Every trainer is a real fight. The story of Legends of Hoenn is the story of a trainer who builds a team of legends and earns their place in a world that doesn't make it easy.
 
-### 3. Trainer Pokémon Data
-- **Location**: `data/trainers.h` or equivalent trainer data files
-- **Effort**: Moderate — many trainers to change
-- **Impact**: Changes battle difficulty and variety
-- **Risk**: Low — data change
+---
 
-## Implementation Order (updated after Cycle 4)
+## 2. Thematic Identity
 
-1. ~~**Cycle 2**: Change starters to something unexpected (quick win, low risk)~~ ✅ DONE
-2. ~~**Cycle 3**: Modify wild encounters for Route 101/102~~ ✅ DONE
-3. ~~**Cycle 4**: Full Hoenn-wide encounter overhaul (Routes 103–134 + all ocean)~~ ✅ DONE (73 tables)
-4. **Cycle 5**: Trainer team overhaul — change gym leaders and key trainers to use rare/powerful Pokémon matching the Legends theme
-5. **Later**: Professor Birch text edits, difficulty tuning, Victory Road encounters, dungeon encounters (caves, Mt. Chimney, etc.)
+### "The World Has Changed"
 
-## Thematic Direction: "The Pseudo-Legendary Run"
+The conceit of Legends of Hoenn is that Hoenn's ecosystem has undergone a transformation — rare Pokémon from across the world have migrated into the region, disrupting the old hierarchy. Trainers who relied on common local Pokémon now struggle. The gyms have adapted their teams. Professor Birch is studying the phenomenon. The player, arriving at the perfect moment, chooses one of three migratory pseudo-legendary species that have appeared near Littleroot — and sets out into this newly wild Hoenn.
 
-With Larvitar/Bagon/Beldum as starters, the hack has a clear identity: pseudo-legendary and powerful Pokémon from various generations. This could extend to:
-- Wild encounters featuring rarer/stronger Pokémon earlier
-- A harder overall difficulty curve to match the powerful starters
-- Trainer teams that also use rare/powerful Pokémon
+This framing explains:
+- Why rare Pokémon appear on early routes
+- Why gym leaders have unusual teams
+- Why the rival is more dangerous than expected
+- Why Team Magma/Aqua are more aggressively pursuing the legendaries (who have been drawn out by the ecological shift)
 
-## Things to Investigate
+### The Three Starter Lines as Identity Choices
 
-- `src/new_game.c` — understand how new game initialization works (starter gifting, initial party setup)
-- `data/trainers/` — find trainer Pokémon data format
-- `constants/species.h` — verify which species IDs exist for non-Hoenn Pokémon
-- `src/pokedex.c` — can we add new Pokédex entries for non-Hoenn mons?
-- NPC dialogue for Professor Birch — does he name the starters explicitly? Would need text edits.
-- ~~Route 101/102 wild encounters — first place to change for thematic consistency~~ ✅ DONE
+| Starter | Line | Type | Identity |
+|---------|------|------|----------|
+| **Larvitar** | → Pupitar → Tyranitar | Rock/Ground → Rock/Dark | The Crusher — slow early, unstoppable late |
+| **Bagon** | → Shelgon → Salamence | Dragon/Flying | The Dreamer — evolves into the classic powerhouse |
+| **Beldum** | → Metang → Metagross | Steel/Psychic | The Machine — tanky, methodical, technical |
 
-## Technical Lessons Learned
+Each choice signals a different playstyle and creates a different "journey" through the hack. Tyranitar players brute-force; Salamence players speed-sweep; Metagross players wall and tank.
 
-### Cycle 1
-- Wild encounter data is in `data/wild_encounters.json` — a JSON file processed during build. Clean format, easy to edit.
-- Starter selection uses a simple array `sStarterMon[3]` at the top of `src/starter_choose.c`
-- The build has two modes: classic (agbcc) and modern (arm-none-eabi-gcc). The default should work.
-- Battle system is massive (194KB for battle_main.c alone) — don't modify unless necessary
-- The scripting system in `data/` uses `.s` assembly format — learning curve but powerful
-- Pokémon data uses a 4-substruct encrypted format — access via `GetMonData()`/`SetMonData()` helpers
+---
 
-### Cycle 2
-- `SPECIES_LARVITAR`, `SPECIES_BAGON`, `SPECIES_BELDUM` are all valid constants that compile without issue
-- Gen 2/3 pseudo-legendary pre-evolutions are fully supported in the Emerald ROM data
-- The starter change required only editing `sStarterMon[]` — no other files needed updating
-- Build with `make -j$(nproc)` from `pokeemerald/` works; incremental builds are fast after first full build
+## 3. Difficulty Philosophy
 
-### Cycle 3
-- `src/data/wild_encounters.json` (not `data/`) is the actual path for wild encounter data
-- Route 101/102 encounters changed: Trapinch, Swablu, Ralts, Aron, Houndour, Dratini as main pool; Larvitar/Bagon/Beldum as ultra-rare (1%) wilds matching the starter species
-- `SPECIES_TRAPINCH`, `SPECIES_SWABLU`, `SPECIES_HOUNDOUR`, `SPECIES_SNEASEL`, `SPECIES_MISDREAVUS`, `SPECIES_HORSEA`, `SPECIES_DRATINI` all compile cleanly
-- Route 102 water_mons changed to Horsea/Dratini for Dragon-themed surfing
-- The file has 12 land slots and 5 water slots per route; encounter_rate and mons array structure is straightforward JSON
+### Progressive Power Scaling
 
-### Cycle 4 — Full Hoenn Encounter Overhaul
-- Used Python script to transform 73 encounter tables across all major routes in one pass
-- Script approach: `json.load()` → modify species in-place → `json.dump()` — clean and reliable
-- All 34+ routes updated; 0 build warnings, ROM compiled to 16MB successfully
-- **Geographic design implemented:**
-  - Routes 103-110: Houndour, Gastly, Electabuzz, Growlithe, Bagon, Dratini (early Legends)
-  - Route 111 (desert): Larvitar, Trapinch, Sandslash, Gligar, Kangaskhan (rare)
-  - Route 112: Magmar, Houndour, Growlithe, Arcanine (volcanic)
-  - Route 113: Skarmory, Magnemite, Porygon (ash route)
-  - Route 114: Dratini in water (60%!), Swablu, Zangoose, Seviper, Lunatone (river)
-  - Route 115: Swinub, Snorunt, Jynx, Lapras (coastal ice)
-  - Route 116: Gastly, Abra, Haunter, Hypno (forest ghost/psychic)
-  - Route 117: Chansey, Clefairy, Togetic, Blissey (day care theme)
-  - Routes 118-120: Electabuzz, Bagon, Dragonair, Absol, Lapras (escalating Dragons)
-  - Route 119: Heracross, Tropius, Dragonair (rainforest power)
-  - Route 120: Absol, Misdreavus, Duskull, Lapras, Milotic in fishing (ultra rare)
-  - Routes 121-123: Xatu, Scyther, Heracross, Pinsir (rare Bug/Dragon)
-  - Routes 124-128: Corsola, Staryu, Chinchou, Relicanth, Lapras, Wailord (deep sea)
-  - Routes 129-134: Dragonair dominates water, Kingdra super rod, Milotic at 1% in Routes 133/134
-- **Valid species confirmed**: SPECIES_ELECTABUZZ, SPECIES_FLAAFFY, SPECIES_GROWLITHE, SPECIES_ARCANINE, SPECIES_MAGMAR, SPECIES_MAGBY, SPECIES_JYNX, SPECIES_SWINUB, SPECIES_SNORUNT, SPECIES_KANGASKHAN, SPECIES_GLIGAR, SPECIES_ABSOL, SPECIES_SABLEYE, SPECIES_CORSOLA, SPECIES_REMORAID, SPECIES_OCTILLERY, SPECIES_MANTINE, SPECIES_LANTURN, SPECIES_CHINCHOU, SPECIES_RELICANTH, SPECIES_MILOTIC, SPECIES_BLISSEY, SPECIES_TOGETIC, SPECIES_HERACROSS, SPECIES_SCYTHER, SPECIES_PINSIR, SPECIES_DRAGONAIR, SPECIES_KINGDRA, SPECIES_LAPRAS, SPECIES_CLOYSTER, SPECIES_SHELLDER — all compile without errors
+Legends of Hoenn is harder than vanilla Emerald, but not in a cheap way. The difficulty comes from:
 
-## Risk Assessment
+1. **Enemy teams use competent Pokémon** — Gym leaders and key trainers field Pokémon with real offensive presence, not just thematic fillers with bad stats
+2. **Level curve is tight** — Trainers' levels are pushed up to match the player's accelerated access to powerful wild Pokémon
+3. **No easy sweeps** — Key leaders have diverse typings within their theme; you can't one-shot the whole team with one move
+
+### Difficulty Tiers
+
+| Phase | Player Level | Difficulty Feel |
+|-------|-------------|-----------------|
+| Route 101 – Gym 1 | 5–15 | Surprisingly tough early encounters; Roxanne has real Rock threats |
+| Gym 2 – Gym 4 | 20–35 | Trainers use rare Pokémon; rival is genuinely scary |
+| Gym 5 – Gym 7 | 38–52 | Full teams with held items; Tate & Liza are notorious |
+| Gym 8 – Elite Four | 52–65 | Every fight requires strategy; Champion is a real boss |
+
+### Design Rule: No Wasted Slots
+
+Every trainer Pokémon slot should be something interesting. Gym leaders should never use "filler" Pokémon that exist only for thematic padding. If a type doesn't have good representatives, use dual-types or adjacent types to keep battles interesting.
+
+---
+
+## 4. Gym Leader Redesign
+
+### Philosophy
+
+Each gym leader's team should:
+- Have a clear thematic identity that extends their type
+- Use Pokémon that are genuinely threatening at that stage
+- Have their ace be something memorable and powerful
+- Include strategic coverage moves to punish type-exploiting
+
+### Gym Leader Teams (Target Design)
+
+#### Gym 1: Roxanne (Rock)
+*Theme: Ancient Stone — fossils, rock formations, earth*
+- Aerodactyl (Rock/Flying, pre-historic fossil feel)
+- Onix / Graveler (type cannon fodder, but high-level)
+- **Ace**: Tyranitar (if obtainable) OR Rhydon with Rock Blast
+- *Design note: Even at low levels, Aerodactyl's speed + Rock Slide should threaten the player*
+
+#### Gym 2: Brawly (Fighting)
+*Theme: Ocean Brawlers — coastal martial arts*
+- Machoke (Fighting staple)
+- Hitmonlee (kicking specialist)
+- **Ace**: Heracross (Bug/Fighting — unexpected coverage)
+- *Design note: Heracross at ~25 with Brick Break is a genuine threat*
+
+#### Gym 3: Wattson (Electric)
+*Theme: Industrial Thunder — machines, magnets, sparks*
+- Magneton (Electric/Steel, resists everything)
+- Electabuzz (fast, punching)
+- **Ace**: Jolteon OR Ampharos with full Electric coverage
+- *Design note: Magneton's Steel typing creates coverage problems*
+
+#### Gym 4: Flannery (Fire)
+*Theme: Volcanic Fury — magma, heat, intensity*
+- Magmar (Fire with Confuse Ray)
+- Arcanine (fast Fire)
+- **Ace**: Houndoom (Fire/Dark — Flamethrower + Crunch)
+- *Design note: Houndoom at ~38 is a powerful ace that's never a gym leader's Pokémon normally*
+
+#### Gym 5: Norman (Normal)
+*Theme: Balanced Power — the most "natural" trainer*
+- Kangaskhan (Normal with Fake Out + Return)
+- Tauros (high Attack, multi-hit moves)
+- **Ace**: Blissey (the ultimate stall) OR Slaking (double Slaking challenge)
+- *Design note: Norman representing "normal" as "overwhelming force of nature"*
+
+#### Gym 6: Winona (Flying)
+*Theme: Sky Legends — high-altitude rare birds*
+- Dragonite-adjacent: Altaria (Dragon/Flying, unexpected Dragon typing)
+- Skarmory (Steel/Flying for bulk)
+- **Ace**: Aerodactyl OR Salamence (the sky's apex predator)
+- *Design note: Salamence ace for Winona makes her terrifying — Dragon typing on a Flying gym*
+
+#### Gym 7: Tate & Liza (Psychic)
+*Theme: Twin Minds — cosmic, psychic, mysterious*
+- Xatu + Hypno (doubles pair)
+- Slowbro + Claydol (doubles pair)
+- **Ace pair**: Alakazam + Gardevoir
+- *Design note: Doubles format with complementary moves (Trick Room + high SpAtk) is brutal*
+
+#### Gym 8: Juan (Water)
+*Theme: Deep Ocean Royalty — the depths of the sea*
+- Starmie (Water/Psychic — fast and versatile)
+- Kingdra (Dragon/Water — double Dragon weakness)
+- **Ace**: Lapras (Water/Ice — the noble sea legend)
+- *Design note: Kingdra's Dragon/Water has almost no weaknesses — the real hurdle*
+
+---
+
+## 5. Rival Team Design
+
+### Rival Philosophy
+
+The rival should feel like a mirror of the player's journey. They pick the starter with a type advantage, but their team grows to include powerful non-starters as the game progresses.
+
+### Rival Team Progression (if player chose Larvitar)
+
+| Battle | Level | Rival's Team |
+|--------|-------|--------------|
+| Route 103 | 7–10 | Bagon (rival starter) + Houndour |
+| Slateport | 18–22 | Bagon/Shelgon + Growlithe + Electabuzz |
+| Route 110 | 26–30 | Shelgon + Arcanine + Electabuzz + Absol |
+| Mt. Pyre | 34–38 | Shelgon/Salamence + 4 legends-tier Pokémon |
+| Lilycove | 42–46 | Salamence + full 6-Pokémon team of powerhouses |
+| Champion | 55–60 | Fully evolved, diverse team with Salamence ace |
+
+### Rival's Signature: Adaptation
+
+The rival explicitly acknowledges the changed world. His dialogue (when scripted) references how he's been catching powerful Pokémon all over Hoenn. He's not a villain, but he's a genuine rival — someone who's risen to the occasion.
+
+---
+
+## 6. Elite Four Redesign
+
+### Philosophy
+
+The Elite Four should be the hardest fights in the game. Each member uses powerful, thematic Pokémon at levels 52–60, with held items and strategic movesets.
+
+### Sidney (Dark)
+*The Dark Specialist — tricky and relentless*
+- Absol (Dark, Swords Dance + Night Slash)
+- Houndoom (Dark/Fire, mixed attacker)
+- Sharpedo (Dark/Water, speed demon)
+- Umbreon (Dark, stall with Moonlight)
+- **Ace**: Tyranitar (Dark/Rock, Sand Stream, the dark rock behemoth)
+
+### Phoebe (Ghost)
+*The Ghost Master — unsettling and evasive*
+- Misdreavus (Ghost, Confuse Ray chaos)
+- Dusclops (Ghost, Will-O-Wisp + stall)
+- Gengar (Ghost/Poison, speed + Shadow Ball)
+- Sableye (Dark/Ghost — no weaknesses, infuriating)
+- **Ace**: Gengar at high level with full special coverage
+
+### Glacia (Ice)
+*The Ice Queen — brittle but devastating*
+- Jynx (Ice/Psychic, Lovely Kiss + Blizzard)
+- Lapras (Water/Ice, Sing + Ice Beam)
+- Cloyster (Water/Ice, Explosion threat)
+- Walrein (Ice/Water, the tanky ace)
+- **Ace**: Articuno-equivalent — or Lapras at level 58 with all coverage
+
+### Drake (Dragon)
+*The Dragon Elder — the ultimate test before Champion*
+- Bagon → Shelgon (early Dragon, low-level warmup)
+- Altaria (Dragon/Flying, Cotton Guard stall)
+- Flygon (Dragon/Ground, all-rounder)
+- Dragonair (Dragon, setup with Dragon Dance)
+- **Ace**: Dragonite (Dragon/Flying — the classic apex Dragon)
+
+### Wallace (Champion)
+*The Legend — a master who has adapted to the new Hoenn*
+- Starmie (Water/Psychic, fast all-rounder)
+- Tentacruel (Water/Poison, toxic stall)
+- Gyarados (Water/Flying, Dragon Dance threat)
+- Kingdra (Dragon/Water, near-impossible to counter)
+- Milotic (Water, Recover + Marvel Scale — the most beautiful and resilient)
+- **Ace**: Wailord OR Lapras at level 62 (the gentle giant of the sea)
+
+*Design note: Wallace's team should feel like "the sea has come to life." Every Pokémon is majestic and powerful.*
+
+---
+
+## 7. Encounter Design Rationale
+
+### What Was Done (Cycles 3–4)
+
+All 73 encounter tables across Hoenn have been redesigned. The philosophy:
+
+**Geographic Coherence**: Every area has a personality.
+- Rocky routes (103, 111): Larvitar, Gligar, Rhyhorn lines
+- Volcanic routes (112, 113): Magmar, Houndour, Skarmory
+- Coastal routes (115, 121): Swinub, Snorunt, Lapras
+- River routes (114, 119): Dratini, Dragonair, Heracross
+- Deep ocean (124–134): Relicanth, Lapras, Milotic
+- Forests (116, 117): Gastly, Abra, Chansey (the peaceful center of Hoenn)
+
+**Rarity as Reward**: 1% encounters include Milotic, Lapras in early waters, Beldum/Bagon/Larvitar on Routes 101/102. Finding them feels like a discovery event.
+
+**No Dead Encounters**: Even common 20% slots feature interesting Pokémon — Houndour, Electabuzz, Growlithe — not Rattata or Zigzagoon.
+
+### Still TODO: Dungeon Encounters
+
+Key locations still using vanilla encounters (to fix in future cycles):
+- Petalburg Woods
+- Rusturf Tunnel
+- Granite Cave
+- Mt. Chimney / Jagged Pass
+- Fiery Path
+- New Mauville
+- Safari Zone
+- Shoal Cave
+- Mt. Pyre
+- Seafloor Cavern
+- Sky Pillar
+- Victory Road
+
+---
+
+## 8. Quality of Life Changes
+
+### Planned QoL (Priority Order)
+
+1. **Professor Birch Dialogue** — Update opening dialogue to explain the changed world; rename starter descriptions
+2. **Pokémon Descriptions / NPC Flavor** — Update key NPCs to reference the migration phenomenon
+3. **Move Tutor Availability** — Ensure strong moves are accessible (Dragon Claw, Earthquake) reasonably early
+4. **TM Prices** — Consider reducing prices for key combat TMs
+5. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
+
+### Not Planning to Change
+
+- Core battle mechanics (too risky, low reward)
+- Overworld movement speed (requires ASM changes)
+- Experience formula (complex, risk of breaking things)
+- Physical/Special split (already in pokeemerald as optional, evaluate later)
+
+---
+
+## 9. Narrative Hooks
+
+### The Migration Event
+
+*Opening text suggestion (for NPC dialogue edits):*
+
+> "Something strange is happening in Hoenn. Professor Birch has been reporting sightings of rare Pokémon from other regions — species never seen here before. Nobody knows why they've come. Some say it's the weather changes caused by Kyogre and Groudon stirring in their slumber. Others think it's something else entirely. What's certain is that Hoenn's routes are no longer safe for the unprepared."
+
+### Professor Birch's Updated Research Brief
+
+Birch should acknowledge:
+- He found three unusual Pokémon near Littleroot (Larvitar/Bagon/Beldum)
+- They appear to be juveniles of a far-traveling species group
+- He wants the player to document their journey through this changed Hoenn
+
+### Rival's Character Arc
+
+The rival starts cocky (same as vanilla), but the changed world humbles him slightly. By Mt. Pyre, he's more focused — he's been fighting seriously to keep up. By the Champion battle, he's a peer, not just a foil.
+
+### Team Magma / Aqua's Motivation Shift
+
+In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting to the migration event. Magma wants to create more land to give the land-based migrants territory. Aqua wants to expand the seas to accommodate the ocean species pouring in. Both sides have a twisted logic that's understandable, making them more interesting villains.
+
+---
+
+## 10. Multi-Cycle Implementation Roadmap
+
+### Completed
+
+| Cycle | Achievement |
+|-------|-------------|
+| Cycle 2 | ✅ Starters changed to Larvitar / Bagon / Beldum |
+| Cycle 3 | ✅ Routes 101/102 encounter overhaul |
+| Cycle 4 | ✅ All 73 Hoenn route encounter tables redesigned |
+| Cycle 5 | ✅ Game Design Document created (this cycle) |
+
+### Upcoming Roadmap
+
+| Cycle | Objective | Priority | Complexity |
+|-------|-----------|----------|------------|
+| **6** | **Gym leader team overhaul** (all 8 leaders + Champion Wallace) | HIGH | Medium |
+| **7** | **Elite Four redesign** (Sidney, Phoebe, Glacia, Drake) | HIGH | Medium |
+| **8** | **Rival team overhaul** (all 6 rival battles) | HIGH | Low-Medium |
+| **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
+| **10** | **Key NPC trainer overhaul** (Maxie, Archie, Wally, Courtney, Matt) | MEDIUM | Medium |
+| **11** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
+| **12** | **Safari Zone + late-game area encounters** | LOW | Low |
+| **13** | **Held items on key trainers + wild Pokémon** | LOW | Low-Medium |
+| **14** | **Polish pass** — level curve tuning, edge case fixes, balance | LOW | Medium |
+
+### Cycle 6 Detailed Plan: Gym Leader Overhaul
+
+Target file: `src/data/trainer_parties.h`
+Key line numbers:
+- Roxanne: 3367 (+ rematches at 10301+)
+- Brawly: 3391
+- Wattson: 3415
+- Flannery: 3446
+- Norman: 3477
+- Winona: 3508
+- Tate & Liza: 3546
+- Juan: 3577
+- Wallace (Champion): 4414
+
+**Approach**: Edit each gym leader's party struct, changing `.species`, `.lvl`, `.heldItem`, and `.moves` fields. Use `TrainerMonItemCustomMoves` format for all gym leaders (they already use this format). Verify with `make` after each leader group.
+
+**Species to use (confirmed valid)**: Aerodactyl, Heracross, Electabuzz, Houndoom, Arcanine, Kangaskhan, Blissey, Altaria, Skarmory, Alakazam, Starmie, Kingdra, Lapras — all compile cleanly.
+
+**Moves to use** (need to verify MOVE_* constants but likely valid):
+- MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_THUNDERBOLT, MOVE_FLAMETHROWER
+- MOVE_CRUNCH, MOVE_DRAGON_CLAW, MOVE_ICE_BEAM, MOVE_PSYCHIC
+- MOVE_EARTHQUAKE, MOVE_SURF, MOVE_SHADOW_BALL, MOVE_AERIAL_ACE
+
+---
+
+## 11. Technical Implementation Notes
+
+### Trainer Modification Checklist
+
+When changing gym leaders:
+1. Edit primary party struct (first battle)
+2. Edit all rematch structs (2–5, for Match Call)
+3. Ensure levels scale appropriately for rematches
+4. Verify all SPECIES_* and MOVE_* constants exist before building
+
+### Wild Encounter JSON Rules
+- Land: 12 slots (indices 0–11), water: 5 slots (0–4), fishing: 10 slots (0–9)
+- Slot probabilities: 20/20/10/10/10/10/5/5/4/4/1/1 for land
+- Use Python inline for bulk edits: `python3 -c "import json; ..."`
+- File path: `pokeemerald/src/data/wild_encounters.json`
+
+### Known Valid Species (confirmed compile)
+LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY, JYNX, SWINUB, SNORUNT, KANGASKHAN, GLIGAR, ABSOL, SABLEYE, CORSOLA, REMORAID, OCTILLERY, MANTINE, LANTURN, CHINCHOU, RELICANTH, MILOTIC, BLISSEY, TOGETIC, HERACROSS, SCYTHER, PINSIR, DRAGONAIR, KINGDRA, LAPRAS, CLOYSTER, SHELLDER, HOUNDOUR, HOUNDOOM, TRAPINCH, SWABLU, DRATINI, GASTLY, HAUNTER, ABRA, MISDREAVUS, DUSKULL, SNEASEL, STARMIE, ALAKAZAM
+
+### Known Risky Operations
+- Battle script edits (.s assembly)
+- NPC dialogue (event_scripts.s — 43KB of custom assembly)
+- Core game logic (battle_main.c — 194KB)
+- Graphics changes (require correct dimensions, 8x8 tiles)
+
+---
+
+## Legacy Notes (Pre-GDD)
+
+### Easiest Entry Points
+
+1. Wild Pokémon (`data/wild_encounters.json`) ✅ DONE
+2. Starters (`src/starter_choose.c`) ✅ DONE
+3. Trainer Pokémon (`src/data/trainer_parties.h`) — NEXT
+
+### Risk Assessment
 
 | Change | Risk | Notes |
 |--------|------|-------|
-| Edit `wild_encounters.json` | Very Low | JSON data only |
-| Change `sStarterMon[]` | Very Low | 3-line constant change — confirmed working |
+| Edit `wild_encounters.json` | Very Low | JSON data only — DONE |
+| Change `sStarterMon[]` | Very Low | 3-line constant change — DONE |
+| Edit trainer parties | Low | Data change, many structs |
 | Modify battle scripts | Medium | Complex assembly scripting |
+| NPC dialogue edits | Medium | Custom .s assembly format |
 | Add new moves | High | Requires data + logic changes |
-| Modify UI | Medium | Task state machine complexity |
-| Change core logic | High | Potential for subtle bugs |
+| Modify core logic | High | Potential for subtle bugs |
+
+### Technical Lessons (Cycle 1–4)
+
+- Wild encounter path: `pokeemerald/src/data/wild_encounters.json` (NOT `data/`)
+- Starter array: `sStarterMon[STARTER_MON_COUNT]` at lines 113–118 of `src/starter_choose.c`
+- Build: `make -j$(nproc)` from `pokeemerald/` — incremental builds are fast
+- Python script approach works well for bulk JSON edits
+- C89 only in classic mode: no `//` comments, no C99 features
+- All Gen 1-3 species are available in Emerald ROM data
