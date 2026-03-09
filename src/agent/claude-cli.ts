@@ -36,7 +36,7 @@ export async function runClaudeCode(
     maxTurns,
     maxBudgetUsd,
     tools,
-    timeout = 10 * 60 * 1000,
+    timeout = 30 * 60 * 1000,
     cwd = PROJECT_ROOT,
     model,
     jsonSchema,
