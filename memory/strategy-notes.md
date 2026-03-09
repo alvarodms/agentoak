@@ -32,12 +32,13 @@ Create a unique, interesting Pokémon Emerald ROM hack that changes the gameplay
 - **Impact**: Changes battle difficulty and variety
 - **Risk**: Low — data change
 
-## Implementation Order (updated after Cycle 3)
+## Implementation Order (updated after Cycle 4)
 
 1. ~~**Cycle 2**: Change starters to something unexpected (quick win, low risk)~~ ✅ DONE
 2. ~~**Cycle 3**: Modify wild encounters for Route 101/102~~ ✅ DONE
-3. **Cycle 4**: Expand encounters to more routes (Route 103, 104, 110, etc.) — extend the "Legends" theme consistently
-4. **Later**: Investigate NPC dialogue, trainer teams, Professor Birch text edits
+3. ~~**Cycle 4**: Full Hoenn-wide encounter overhaul (Routes 103–134 + all ocean)~~ ✅ DONE (73 tables)
+4. **Cycle 5**: Trainer team overhaul — change gym leaders and key trainers to use rare/powerful Pokémon matching the Legends theme
+5. **Later**: Professor Birch text edits, difficulty tuning, Victory Road encounters, dungeon encounters (caves, Mt. Chimney, etc.)
 
 ## Thematic Direction: "The Pseudo-Legendary Run"
 
@@ -77,6 +78,27 @@ With Larvitar/Bagon/Beldum as starters, the hack has a clear identity: pseudo-le
 - `SPECIES_TRAPINCH`, `SPECIES_SWABLU`, `SPECIES_HOUNDOUR`, `SPECIES_SNEASEL`, `SPECIES_MISDREAVUS`, `SPECIES_HORSEA`, `SPECIES_DRATINI` all compile cleanly
 - Route 102 water_mons changed to Horsea/Dratini for Dragon-themed surfing
 - The file has 12 land slots and 5 water slots per route; encounter_rate and mons array structure is straightforward JSON
+
+### Cycle 4 — Full Hoenn Encounter Overhaul
+- Used Python script to transform 73 encounter tables across all major routes in one pass
+- Script approach: `json.load()` → modify species in-place → `json.dump()` — clean and reliable
+- All 34+ routes updated; 0 build warnings, ROM compiled to 16MB successfully
+- **Geographic design implemented:**
+  - Routes 103-110: Houndour, Gastly, Electabuzz, Growlithe, Bagon, Dratini (early Legends)
+  - Route 111 (desert): Larvitar, Trapinch, Sandslash, Gligar, Kangaskhan (rare)
+  - Route 112: Magmar, Houndour, Growlithe, Arcanine (volcanic)
+  - Route 113: Skarmory, Magnemite, Porygon (ash route)
+  - Route 114: Dratini in water (60%!), Swablu, Zangoose, Seviper, Lunatone (river)
+  - Route 115: Swinub, Snorunt, Jynx, Lapras (coastal ice)
+  - Route 116: Gastly, Abra, Haunter, Hypno (forest ghost/psychic)
+  - Route 117: Chansey, Clefairy, Togetic, Blissey (day care theme)
+  - Routes 118-120: Electabuzz, Bagon, Dragonair, Absol, Lapras (escalating Dragons)
+  - Route 119: Heracross, Tropius, Dragonair (rainforest power)
+  - Route 120: Absol, Misdreavus, Duskull, Lapras, Milotic in fishing (ultra rare)
+  - Routes 121-123: Xatu, Scyther, Heracross, Pinsir (rare Bug/Dragon)
+  - Routes 124-128: Corsola, Staryu, Chinchou, Relicanth, Lapras, Wailord (deep sea)
+  - Routes 129-134: Dragonair dominates water, Kingdra super rod, Milotic at 1% in Routes 133/134
+- **Valid species confirmed**: SPECIES_ELECTABUZZ, SPECIES_FLAAFFY, SPECIES_GROWLITHE, SPECIES_ARCANINE, SPECIES_MAGMAR, SPECIES_MAGBY, SPECIES_JYNX, SPECIES_SWINUB, SPECIES_SNORUNT, SPECIES_KANGASKHAN, SPECIES_GLIGAR, SPECIES_ABSOL, SPECIES_SABLEYE, SPECIES_CORSOLA, SPECIES_REMORAID, SPECIES_OCTILLERY, SPECIES_MANTINE, SPECIES_LANTURN, SPECIES_CHINCHOU, SPECIES_RELICANTH, SPECIES_MILOTIC, SPECIES_BLISSEY, SPECIES_TOGETIC, SPECIES_HERACROSS, SPECIES_SCYTHER, SPECIES_PINSIR, SPECIES_DRAGONAIR, SPECIES_KINGDRA, SPECIES_LAPRAS, SPECIES_CLOYSTER, SPECIES_SHELLDER — all compile without errors
 
 ## Risk Assessment
 

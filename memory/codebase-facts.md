@@ -157,3 +157,41 @@ Key files for modifying game content:
 | `data/battle_ai_scripts.s` | 91KB | AI decision logic |
 | `data/event_scripts.s` | 43KB | Map events and NPC dialogue |
 | `data/wild_encounters.json` | ~50KB | Wild Pokémon tables (JSON) |
+
+### Trainer System (`src/data/trainer_parties.h`, `src/data/trainers.h`)
+
+**Files:**
+- `src/data/trainer_parties.h` — 12,436 lines — defines each trainer's Pokémon party
+- `src/data/trainers.h` — 10,263 lines — trainer metadata (name, class, sprite, party pointer)
+
+**Two party struct types:**
+```c
+// Simple grunts/trainers — no held items, default moves
+struct TrainerMonNoItemDefaultMoves { u8 iv; u8 lvl; u16 species; };
+
+// Gym leaders, E4, named trainers — full customization
+struct TrainerMonItemCustomMoves {
+    u8 iv; u8 lvl; u16 species;
+    u16 heldItem;
+    u16 moves[4];
+};
+```
+
+**Key trainer party locations in trainer_parties.h:**
+- Sidney (E4 Dark): line 3215
+- Phoebe (E4 Ghost): line 3253
+- Glacia (E4 Ice): line 3291
+- Drake (E4 Dragon): line 3329
+- Roxanne (Gym 1 Rock): line 3367 (+ rematches at 10301, 10332, 10370, 10408)
+- Brawly (Gym 2 Fight): line 3391 (+ rematches at 10453+)
+- Wattson (Gym 3 Elec): line 3415
+- Flannery (Gym 4 Fire): line 3446
+- Norman (Gym 5 Normal): line 3477
+- Winona (Gym 6 Flying): line 3508
+- Tate & Liza (Gym 7 Psychic): line 3546
+- Juan (Gym 8 Water): line 3577
+- Wallace (Champion): line 4414
+
+**Match Call rematches:** Gym leaders have 5 progressive versions (e.g., `sParty_Roxanne1` through `sParty_Roxanne5`). The first (1) is the actual gym battle; 2–5 are rematches via the Pokénav Match Call feature.
+
+**To change a gym leader's team:** Edit the `.species`, `.lvl`, `.heldItem`, `.moves` fields in the relevant struct. Can use any valid `SPECIES_*` and `MOVE_*` constants.
