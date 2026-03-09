@@ -80,18 +80,26 @@ export async function createCycleRelease(
   const changelog = formatChangelog(version, cycleSummary, objective);
   const assetName = patchFilename(version);
 
+  const releaseData = {
+    owner: repo.owner,
+    repo: repo.repo,
+    tag_name: tagName,
+    name: releaseName,
+    body: changelog,
+    target_commitish: commitHash,
+    draft: false,
+    prerelease: version.major === 0,
+  } as const;
+
+  logger.info(`Preparing to create GitHub release: ${releaseName}`);
+  logger.info(`Release tag: ${tagName}`);
+  logger.info(`Release target commit: ${commitHash}`);
+
+  logger.info(`Creating GitHub release: ${releaseName}`);
+
   try {
     // Create the release
-    const release = await octokit.repos.createRelease({
-      owner: repo.owner,
-      repo: repo.repo,
-      tag_name: tagName,
-      name: releaseName,
-      body: changelog,
-      target_commitish: commitHash,
-      draft: false,
-      prerelease: version.major === 0,
-    });
+    const release = await octokit.repos.createRelease(releaseData);
 
     logger.info(`Created GitHub release: ${releaseName} (${release.data.html_url})`);
 
