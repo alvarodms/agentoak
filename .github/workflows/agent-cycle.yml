@@ -45,7 +45,7 @@ jobs:
           node-version: "22"
 
       - name: Install Node dependencies
-        run: npm i --verbose
+        run: npm i
 
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
