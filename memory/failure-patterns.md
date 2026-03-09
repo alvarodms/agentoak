@@ -36,3 +36,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 - Graphics must be PNG with correct dimensions (multiples of 8)
 - Tile-based: 8x8 tiles, sprite sheets must follow GBA size constraints
 - `gbagfx` will error on invalid dimensions or color counts
+
+## Actual Build Failures (Cycle 6)
+
+### Move constant naming errors
+
+**Symptom**: `MOVE_THUNDERPUNCH' undeclared here (not in a function)` compile error
+**Cause**: Used `MOVE_THUNDERPUNCH` instead of `MOVE_THUNDER_PUNCH` (missing underscore)
+**Resolution**: All move constants follow exact format in `include/constants/moves.h` — must check exact spelling
+**Error location**: `src/data/trainer_parties.h` line 3428 (Wattson's Electabuzz moveset)
+**Lesson**: Move constants are case-sensitive and format-sensitive. Always verify against header file.

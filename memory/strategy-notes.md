@@ -300,13 +300,13 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 2 | ✅ Starters changed to Larvitar / Bagon / Beldum |
 | Cycle 3 | ✅ Routes 101/102 encounter overhaul |
 | Cycle 4 | ✅ All 73 Hoenn route encounter tables redesigned |
-| Cycle 5 | ✅ Game Design Document created (this cycle) |
+| Cycle 5 | ✅ Game Design Document created |
+| Cycle 6 | ✅ **Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses |
 
 ### Upcoming Roadmap
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **6** | **Gym leader team overhaul** (all 8 leaders + Champion Wallace) | HIGH | Medium |
 | **7** | **Elite Four redesign** (Sidney, Phoebe, Glacia, Drake) | HIGH | Medium |
 | **8** | **Rival team overhaul** (all 6 rival battles) | HIGH | Low-Medium |
 | **9** | **Dungeon encounter tables** (Mt. Pyre, Victory Road, Sky Pillar, caves) | MEDIUM | Medium |
