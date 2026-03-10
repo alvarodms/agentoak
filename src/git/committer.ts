@@ -5,6 +5,12 @@ import { logger } from "../utils/logger.js";
 
 const git = simpleGit(PROJECT_ROOT);
 
+export type CommitFailureReason = "nothing-to-stage" | "commit-error";
+
+export type CommitOutcome =
+  | { success: true; hash: string }
+  | { success: false; reason: CommitFailureReason; message: string };
+
 /** Get the current HEAD commit SHA */
 export async function getHeadSha(): Promise<string> {
   try {
@@ -41,7 +47,7 @@ export async function commitCycle(
   summary: string,
   filesModified: string[],
   closedIssueNumbers?: number[],
-): Promise<string | null> {
+): Promise<CommitOutcome> {
   const paddedCycle = String(cycleNumber).padStart(4, "0");
 
   try {
@@ -77,7 +83,11 @@ export async function commitCycle(
     const status = await git.status();
     if (status.staged.length === 0) {
       logger.info("No changes to commit");
-      return null;
+      return {
+        success: false,
+        reason: "nothing-to-stage",
+        message: "No changes were staged for commit.",
+      };
     }
 
     // Clean the summary for commit message (single line, max 72 chars for first line)
@@ -87,14 +97,71 @@ export async function commitCycle(
       : "";
     const commitMessage = `agent-oak: cycle ${paddedCycle} – ${shortSummary}${issueRefs}`;
 
-    const result = await git.commit(commitMessage);
+    await git.commit(commitMessage);
     // Resolve full SHA — simple-git returns a short hash
     const fullSha = await git.revparse(["HEAD"]);
     logger.info(`Committed: ${commitMessage} (${fullSha.trim()})`);
-    return fullSha.trim();
+    return { success: true, hash: fullSha.trim() };
   } catch (err) {
-    logger.error(`Git commit failed: ${err instanceof Error ? err.message : String(err)}`);
-    return null;
+    const message = err instanceof Error ? err.message : String(err);
+    logger.error(`Git commit failed: ${message}`);
+    return { success: false, reason: "commit-error", message };
+  }
+}
+
+/**
+ * Last-resort fallback commit that captures at least the journal/memory updates.
+ */
+export async function commitJournalOnly(
+  cycleNumber: number,
+  note: string,
+): Promise<CommitOutcome> {
+  const paddedCycle = String(cycleNumber).padStart(4, "0");
+
+  try {
+    await git.add("journal/*");
+    await git.add("memory/*");
+
+    const status = await git.status();
+    if (status.staged.length === 0) {
+      return {
+        success: false,
+        reason: "nothing-to-stage",
+        message: "No journal/memory changes were staged for fallback commit.",
+      };
+    }
+
+    const shortNote = note.replace(/\n/g, " ").slice(0, 48);
+    const commitMessage = `agent-oak: cycle ${paddedCycle} – [FALLBACK] ${shortNote}`;
+
+    await git.commit(commitMessage);
+    const fullSha = await git.revparse(["HEAD"]);
+    logger.info(`Fallback commit created: ${commitMessage} (${fullSha.trim()})`);
+    return { success: true, hash: fullSha.trim() };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    logger.error(`Fallback git commit failed: ${message}`);
+    return { success: false, reason: "commit-error", message };
+  }
+}
+
+/** Snapshot git status for commit-fix agent context. */
+export async function getGitStatusText(): Promise<string> {
+  try {
+    const output = await git.raw(["status", "--short", "--branch"]);
+    return output.trim() || "(empty git status output)";
+  } catch (err) {
+    return `Failed to get git status: ${err instanceof Error ? err.message : String(err)}`;
+  }
+}
+
+/** Snapshot recent commits for commit-fix agent context. */
+export async function getRecentGitLogText(limit = 5): Promise<string> {
+  try {
+    const output = await git.raw(["log", "--oneline", `-${limit}`]);
+    return output.trim() || "(no git log output)";
+  } catch (err) {
+    return `Failed to get git log: ${err instanceof Error ? err.message : String(err)}`;
   }
 }
 
