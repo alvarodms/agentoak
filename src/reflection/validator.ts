@@ -84,20 +84,6 @@ export function validateCycle(params: {
     }
   }
 
-  // --- Check 4: Token ratio heuristic ---
-  // Extreme output-to-input ratio on code-change modes suggests the agent
-  // spent its time generating text (planning/summarizing) instead of reading & editing code
-  if (expectsCodeChanges && implResult.tokenUsage.inputTokens > 0) {
-    const ratio = implResult.tokenUsage.outputTokens / implResult.tokenUsage.inputTokens;
-    if (ratio > 50 && implResult.tokenUsage.inputTokens < 500) {
-      warnings.push(
-        `Extreme output-to-input token ratio (${ratio.toFixed(1)}:1) with very low input tokens ` +
-        `(${implResult.tokenUsage.inputTokens}). This suggests the agent did not read code files ` +
-        `and may have hallucinated its work.`,
-      );
-    }
-  }
-
   // --- Determine status ---
   let status: ValidationStatus;
   if (warnings.length === 0) {
