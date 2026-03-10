@@ -5,6 +5,7 @@ import { buildReflectionPrompt } from "../agent/prompts.js";
 import { buildDynamicContext } from "../agent/prompts.js";
 import { loadMemory } from "../memory/store.js";
 import { logger } from "../utils/logger.js";
+import type { ValidationResult } from "./validator.js";
 
 export interface ReflectionResult {
   reflectionText: string;
@@ -20,6 +21,7 @@ export async function runReflection(context: {
   filesModified: string[];
   buildResult: { success: boolean; errors: string[] } | null;
   cycleSummary: string;
+  validationResult?: ValidationResult | null;
 }): Promise<ReflectionResult> {
   logger.info("Starting reflection phase...");
 

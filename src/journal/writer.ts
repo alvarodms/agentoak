@@ -22,6 +22,8 @@ export interface JournalData {
   toolCallCount: number;
   issueActions?: IssueAction[];
   helpRequests?: HelpRequest[];
+  validationWarnings?: string[];
+  validationStatus?: string;
 }
 
 /** Write a journal entry for a completed cycle */
@@ -47,6 +49,7 @@ export function writeJournalEntry(data: JournalData): string {
     : "No build was attempted this cycle.";
 
   const issueSection = formatIssueSection(data.issueActions, data.helpRequests);
+  const validationSection = formatValidationSection(data.validationWarnings, data.validationStatus);
 
   const content = `# Cycle ${paddedNumber}
 
@@ -69,7 +72,7 @@ ${buildSection}
 ## Summary
 
 ${data.cycleSummary || "No summary provided."}
-
+${validationSection}
 ## Reflection
 
 ${data.reflectionText || "No reflection generated."}
@@ -141,6 +144,26 @@ function formatIssueSection(
     }
     parts.push("");
   }
+
+  return parts.join("\n");
+}
+
+/** Format the Validation Warnings section for the journal entry */
+function formatValidationSection(
+  warnings?: string[],
+  status?: string,
+): string {
+  if (!warnings || warnings.length === 0) return "\n";
+
+  const parts: string[] = [
+    "\n## Validation Warnings\n",
+    `**Status**: ${(status ?? "unknown").toUpperCase()}\n`,
+  ];
+
+  for (const warning of warnings) {
+    parts.push(`- ⚠ ${warning}`);
+  }
+  parts.push("");
 
   return parts.join("\n");
 }
