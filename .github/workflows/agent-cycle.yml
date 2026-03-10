@@ -90,6 +90,12 @@ jobs:
           ./build.sh
           ./install.sh "${{ github.workspace }}/pokeemerald"
 
+      - name: Install Flips (IPS patcher) via Flatpak
+        run: |
+          sudo apt-get install -y -qq flatpak
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install --noninteractive flathub com.github.Alcaro.Flips
+
       - name: Configure git identity
         run: |
           git config user.name "Agent Oak [bot]"
