@@ -31,6 +31,17 @@ permissions:
 jobs:
   run-cycle:
     runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_BASE_URL: http://localhost:8787
+      ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
+      MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REPO: ${{ github.repository }}
+      BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
+      DEEPSEEK_MODEL: ${{ env.DEEPSEEK_MODEL || '' }}
+      DEEPSEEK_BASE_URL: ${{ env.DEEPSEEK_BASE_URL || '' }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || '' }}
     timeout-minutes: 60
 
     steps:
@@ -129,28 +140,12 @@ jobs:
       - name: Run agent cycle (attempt 1)
         id: attempt1
         continue-on-error: true
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_BASE_URL: http://localhost:8787
-          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
-          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPO: ${{ github.repository }}
-          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: npm run cycle
 
       - name: Retry after 5min (attempt 2)
         id: attempt2
         if: steps.attempt1.outcome == 'failure'
         continue-on-error: true
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_BASE_URL: http://localhost:8787
-          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
-          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPO: ${{ github.repository }}
-          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: |
           echo "Attempt 1 failed. Waiting 5 minutes before retry..."
           sleep 300
@@ -158,14 +153,6 @@ jobs:
 
       - name: Retry after 15min (attempt 3)
         if: steps.attempt1.outcome == 'failure' && steps.attempt2.outcome == 'failure'
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_BASE_URL: http://localhost:8787
-          ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
-          MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPO: ${{ github.repository }}
-          BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
         run: |
           echo "Attempt 2 failed. Waiting 15 minutes before final retry..."
           sleep 900
