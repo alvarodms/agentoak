@@ -48,7 +48,12 @@ export function buildTaskPrompt(
   objective: string,
   reasoning: string,
   mode: string,
+  implementationPlan?: string,
 ): string {
+  const planSection = implementationPlan
+    ? `\n## Implementation Plan\n\n${implementationPlan}\n`
+    : "";
+
   return `## Cycle ${cycleNumber} — Implementation Phase
 
 **Your task**: ${objective}
@@ -56,7 +61,7 @@ export function buildTaskPrompt(
 **Mode**: ${mode}
 
 **Reasoning**: ${reasoning}
-
+${planSection}
 You are in the implementation phase. A planning agent has already decided what to work on — your job is to execute this task.
 
 Guidelines:

@@ -10,6 +10,7 @@ export interface CyclePlan {
   mode: CycleMode;
   objective: string;
   reasoning: string;
+  implementationPlan: string;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -30,6 +31,10 @@ const CYCLE_PLAN_SCHEMA = {
     reasoning: {
       type: "string",
       description: "Why this mode and objective make sense right now.",
+    },
+    implementationPlan: {
+      type: "string",
+      description: "Step-by-step implementation plan for the implementation agent. The agent uses a cost-optimised model and needs clear marching orders. Describe: (1) logical actions to take in order, (2) what to read or understand first, (3) what kind of changes to make and where (describe patterns/conventions — no need to hard-code exact file paths), (4) how to verify the work is correct (e.g. run make, check a value in a specific system). Be concise but actionable — numbered steps work well.",
     },
     issueActions: {
       type: "array",
@@ -66,7 +71,7 @@ const CYCLE_PLAN_SCHEMA = {
       },
     },
   },
-  required: ["mode", "objective", "reasoning"],
+  required: ["mode", "objective", "reasoning", "implementationPlan"],
   additionalProperties: false,
 };
 
@@ -133,13 +138,15 @@ You are building a complete ROM hack — not just making isolated tweaks. Every 
 
 Don't play it safe. The goal is a ROM hack with a strong creative identity, not a collection of minor data edits.
 
+Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent may be running on a cost-optimised model that is less familiar with the codebase, so it needs clear step-by-step marching orders. Include: (1) what to read or understand first, (2) logical actions to take in order, (3) conventions or patterns to follow, (4) how to verify the work compiled and is correct. Keep it numbered and concise.
+
 If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
 
 **Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
-Respond with a JSON object containing mode, objective, reasoning, and optionally issueActions and helpRequests.`;
+Respond with a JSON object containing mode, objective, reasoning, implementationPlan, and optionally issueActions and helpRequests.`;
 
   try {
     const result = await runClaudeCode(prompt, {
@@ -156,6 +163,7 @@ Respond with a JSON object containing mode, objective, reasoning, and optionally
       mode?: string;
       objective?: string;
       reasoning?: string;
+      implementationPlan?: string;
       issueActions?: IssueAction[];
       helpRequests?: HelpRequest[];
     }
@@ -210,7 +218,7 @@ Respond with a JSON object containing mode, objective, reasoning, and optionally
       const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
       if (!CYCLE_MODES[mode]) {
         logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
-        return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, issueActions, helpRequests };
+        return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
       }
       logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
       if (issueActions.length > 0) {
@@ -219,7 +227,7 @@ Respond with a JSON object containing mode, objective, reasoning, and optionally
       if (helpRequests.length > 0) {
         logger.info(`  Help requests: ${helpRequests.length}`);
       }
-      return { mode, objective: parsed.objective, reasoning: parsed.reasoning, issueActions, helpRequests };
+      return { mode, objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
     }
 
     logger.warn("Could not parse structured plan from CLI output, using fallback");
@@ -231,6 +239,7 @@ Respond with a JSON object containing mode, objective, reasoning, and optionally
     mode: "research",
     objective: "Explore the pokeemerald codebase and understand its structure",
     reasoning: "Default fallback — planner could not produce a structured plan.",
+    implementationPlan: "",
     issueActions: [],
     helpRequests: [],
   };
