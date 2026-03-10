@@ -86,16 +86,14 @@ export async function createCycleRelease(
     tag_name: tagName,
     name: releaseName,
     body: changelog,
-    target_commitish: commitHash,
+    target_commitish: 'main',
     draft: false,
     prerelease: version.major === 0,
   } as const;
 
   logger.info(`Preparing to create GitHub release: ${releaseName}`);
   logger.info(`Release tag: ${tagName}`);
-  logger.info(`Release target commit: ${commitHash}`);
-
-  logger.info(`Creating GitHub release: ${releaseName}`);
+  logger.info(`Release target branch: main`);
 
   try {
     // Create the release
