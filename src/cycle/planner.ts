@@ -3,7 +3,7 @@ import type { Memory } from "../memory/types.js";
 import type { CycleMode } from "./modes.js";
 import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
-import { getMemorySummary } from "../memory/store.js";
+import { getMemorySummary, getCycleModeHistorySummary } from "../memory/store.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
 
 export interface CyclePlan {
@@ -86,6 +86,7 @@ export async function planCycle(
   const model = process.env.ANTHROPIC_MODEL;
 
   const memorySummary = getMemorySummary(memory);
+  const modeHistorySummary = getCycleModeHistorySummary();
   const journalContext =
     recentJournalSummaries.length > 0
       ? recentJournalSummaries.join("\n\n---\n\n")
@@ -106,6 +107,11 @@ export async function planCycle(
   const prompt = `You are Agent Oak's planning module. Decide what the next autonomous cycle should focus on.
 
 Cycle ${cycleNumber} is about to start.
+
+## Cycle Mode History
+${modeHistorySummary}
+
+_Heads-up: if there is a long run of consecutive "feature" cycles, consider whether a "planning" cycle would be valuable to re-evaluate direction and ensure the roadmap for the next few cycles is concrete and clear. This is a suggestion — use your own judgment._
 
 ## Current Memory
 ${memorySummary}
