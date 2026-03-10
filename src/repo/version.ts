@@ -23,7 +23,7 @@ export interface GameVersion {
 /** Default initial version for a fresh project */
 const INITIAL_VERSION: GameVersion = {
   major: 0,
-  minor: 1,
+  minor: 0,
   patch: 0,
   build: 0,
   cycle: 0,
@@ -40,9 +40,9 @@ export function loadVersion(): GameVersion {
   }
 }
 
-/** Format the version as a human-readable string: v0.1.0+build.42 */
+/** Format the version as a human-readable string: v0.0.15+build.42 */
 export function formatVersion(v: GameVersion): string {
-  return `v${v.major}.${v.minor}.${v.patch}+build.${v.build}`;
+  return `v${v.major}.${v.minor}.${v.cycle}+build.${v.build}`;
 }
 
 /**
@@ -54,6 +54,7 @@ export function recordSuccessfulBuild(cycleNumber: number): GameVersion {
 
   version.build += 1;
   version.cycle = cycleNumber;
+  version.patch = cycleNumber;
   version.builtAt = new Date().toISOString();
 
   fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });

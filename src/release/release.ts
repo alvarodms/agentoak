@@ -15,11 +15,21 @@ import { formatVersion } from "../repo/version.js";
 import { logger } from "../utils/logger.js";
 
 /**
+ * Determine the release stage label based on the version.
+ * major === 0: Alpha; minor < 5 when major >= 1: Beta; otherwise Stable.
+ */
+function getReleaseStage(version: GameVersion): string {
+  if (version.major === 0) return "Alpha";
+  if (version.minor < 5) return "Beta";
+  return "Stable";
+}
+
+/**
  * Format the IPS patch filename.
- * e.g. "agentoak-v0.1.0-build42.ips"
+ * e.g. "agentoak-v0.0.15-build42.ips"
  */
 function patchFilename(version: GameVersion): string {
-  return `agentoak-v${version.major}.${version.minor}.${version.patch}-build${version.build}.ips`;
+  return `agentoak-v${version.major}.${version.minor}.${version.cycle}-build${version.build}.ips`;
 }
 
 /**
@@ -74,9 +84,10 @@ export async function createCycleRelease(
     return null;
   }
 
-  // Git tags cannot contain '+', so use '-' as separator instead
-  const tagName = `v${version.major}.${version.minor}.${version.patch}`;
-  const releaseName = `Agent Oak v${version.major}.${version.minor}.${version.patch} Build ${version.build}`;
+  // Tag uses the cycle number as the patch component: v0.0.<cycle>
+  const tagName = `v${version.major}.${version.minor}.${version.cycle}`;
+  const releaseStage = getReleaseStage(version);
+  const releaseName = `Agent Oak v${version.major}.${version.minor}.${version.cycle} ${releaseStage} Build ${version.build}`;
   const changelog = formatChangelog(version, cycleSummary, objective);
   const assetName = patchFilename(version);
 
