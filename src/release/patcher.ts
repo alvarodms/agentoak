@@ -1,16 +1,20 @@
 /**
  * IPS patch generation and base ROM management.
  *
- * Creates IPS (International Patching System) format patches by comparing
- * the original unmodified pokeemerald ROM against a freshly built ROM.
+ * Creates IPS (International Patching System) format patches using Flips
+ * (Floating IPS), installed via Flatpak as com.github.Alcaro.Flips.
  * The base ROM is downloaded on first use and cached locally.
  */
 
-import fs from "fs";
-import crypto from "crypto";
-import path from "path";
+import fs from "node:fs";
+import crypto from "node:crypto";
+import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { ARTIFACTS_DIR, POKEEMERALD_DIR } from "../utils/paths.js";
 import { logger } from "../utils/logger.js";
+
+const execFileAsync = promisify(execFile);
 
 const BASE_ROM_DIR = path.join(ARTIFACTS_DIR, "base-rom");
 const BASE_ROM_PATH = path.join(BASE_ROM_DIR, "base.gba");
@@ -78,7 +82,8 @@ function hashFile(filePath: string): string {
 }
 
 /**
- * Generate an IPS patch by comparing the base ROM against the built ROM.
+ * Generate an IPS patch by comparing the base ROM against the built ROM
+ * using Flips (com.github.Alcaro.Flips) installed via Flatpak.
  * Returns the patch as a Buffer, or null if generation fails.
  */
 export async function generateIPSPatch(): Promise<Buffer | null> {
@@ -90,84 +95,31 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
     return null;
   }
 
-  const original = fs.readFileSync(baseRomPath);
-  const modified = fs.readFileSync(BUILT_ROM_PATH);
+  const patchPath = path.join(BASE_ROM_DIR, "patch.ips");
 
-  const patch = createIPSPatch(original, modified);
-  logger.info(`IPS patch generated: ${patch.length} bytes`);
-  return patch;
-}
+  try {
+    await execFileAsync("flatpak", [
+      "run",
+      "com.github.Alcaro.Flips",
+      "--create-ips",
+      baseRomPath,
+      BUILT_ROM_PATH,
+      patchPath,
+    ]);
 
-/**
- * Create an IPS format patch from two ROM buffers.
- *
- * IPS format:
- *   Header: "PATCH" (5 bytes)
- *   Records: offset(3B) + size(2B) + data(sizeB)
- *   Footer: "EOF" (3 bytes)
- *
- * IPS supports offsets up to 0xFFFFFF (16 MB - 1), which covers
- * the full GBA ROM address space.
- */
-function createIPSPatch(original: Buffer, modified: Buffer): Buffer {
-  const chunks: Buffer[] = [];
-  chunks.push(Buffer.from("PATCH"));
-
-  const maxLen = Math.max(original.length, modified.length);
-  // IPS max addressable offset
-  const limit = Math.min(maxLen, 0xffffff);
-
-  let i = 0;
-  while (i < limit) {
-    // Skip identical bytes
-    while (
-      i < limit &&
-      i < original.length &&
-      i < modified.length &&
-      original[i] === modified[i]
-    ) {
-      i++;
+    if (!fs.existsSync(patchPath)) {
+      logger.error("Flips did not produce an output patch file.");
+      return null;
     }
 
-    if (i >= limit) break;
-
-    // Start of a changed region
-    const start = i;
-    let matchRun = 0;
-
-    // Extend the region, allowing small gaps of matching bytes (up to 6)
-    // to avoid fragmenting into many tiny records.
-    while (i < limit && i - start < 0xffff) {
-      const origByte = i < original.length ? original[i] : 0;
-      const modByte = i < modified.length ? modified[i] : 0;
-
-      if (origByte === modByte) {
-        matchRun++;
-        if (matchRun > 6) {
-          i -= matchRun;
-          break;
-        }
-      } else {
-        matchRun = 0;
-      }
-      i++;
-    }
-
-    const size = i - start;
-    if (size <= 0) {
-      i++;
-      continue;
-    }
-
-    // Write record: offset (3 bytes BE) + size (2 bytes BE) + data
-    const record = Buffer.alloc(3 + 2 + size);
-    record.writeUIntBE(start, 0, 3);
-    record.writeUInt16BE(size, 3);
-    modified.copy(record, 5, start, start + size);
-
-    chunks.push(record);
+    const patch = fs.readFileSync(patchPath);
+    fs.unlinkSync(patchPath);
+    logger.info(`IPS patch generated via Flips: ${patch.length} bytes`);
+    return patch;
+  } catch (err) {
+    logger.error(
+      `Flips patch generation failed: ${err instanceof Error ? err.message : String(err)}`,
+    );
+    return null;
   }
-
-  chunks.push(Buffer.from("EOF"));
-  return Buffer.concat(chunks);
 }
