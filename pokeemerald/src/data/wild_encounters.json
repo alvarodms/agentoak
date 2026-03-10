@@ -2204,62 +2204,62 @@
               {
                 "min_level": 25,
                 "max_level": 25,
-                "species": "SPECIES_ODDISH"
+                "species": "SPECIES_LARVITAR"
               },
               {
                 "min_level": 27,
                 "max_level": 27,
-                "species": "SPECIES_ODDISH"
+                "species": "SPECIES_LARVITAR"
               },
               {
                 "min_level": 25,
                 "max_level": 25,
-                "species": "SPECIES_GIRAFARIG"
+                "species": "SPECIES_BAGON"
               },
               {
                 "min_level": 27,
                 "max_level": 27,
-                "species": "SPECIES_GIRAFARIG"
+                "species": "SPECIES_BAGON"
               },
               {
                 "min_level": 25,
                 "max_level": 25,
-                "species": "SPECIES_NATU"
+                "species": "SPECIES_DRATINI"
               },
               {
                 "min_level": 25,
                 "max_level": 25,
-                "species": "SPECIES_DODUO"
-              },
-              {
-                "min_level": 25,
-                "max_level": 25,
-                "species": "SPECIES_GLOOM"
+                "species": "SPECIES_GROWLITHE"
               },
               {
                 "min_level": 27,
                 "max_level": 27,
-                "species": "SPECIES_WOBBUFFET"
-              },
-              {
-                "min_level": 25,
-                "max_level": 25,
-                "species": "SPECIES_PIKACHU"
-              },
-              {
-                "min_level": 27,
-                "max_level": 27,
-                "species": "SPECIES_WOBBUFFET"
-              },
-              {
-                "min_level": 27,
-                "max_level": 27,
-                "species": "SPECIES_PIKACHU"
+                "species": "SPECIES_ELECTABUZZ"
               },
               {
                 "min_level": 29,
                 "max_level": 29,
-                "species": "SPECIES_WOBBUFFET"
+                "species": "SPECIES_MAGMAR"
+              },
+              {
+                "min_level": 27,
+                "max_level": 27,
+                "species": "SPECIES_DRATINI"
+              },
+              {
+                "min_level": 29,
+                "max_level": 29,
+                "species": "SPECIES_HERACROSS"
+              },
+              {
+                "min_level": 30,
+                "max_level": 30,
+                "species": "SPECIES_ABSOL"
+              },
+              {
+                "min_level": 32,
+                "max_level": 32,
+                "species": "SPECIES_LAPRAS"
               }
             ]
           }
