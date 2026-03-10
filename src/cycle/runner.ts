@@ -1,5 +1,5 @@
 import path from "path";
-import { loadMemory } from "../memory/store.js";
+import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import { getModeDescription } from "./modes.js";
 import {
@@ -413,6 +413,9 @@ export async function runCycle(): Promise<void> {
   try {
     // ── Phase 1: Planning (separate agent context) ──
     const { memory, recentJournals, plan } = await runPlanningPhase(cycleNumber, log);
+
+    // Record the chosen mode in history so future planners can see the pattern
+    updateCycleModeHistory(plan.mode);
 
     // ── Phase 2: Implementation (separate agent context) ──
     const implResult = await runImplementationPhase(

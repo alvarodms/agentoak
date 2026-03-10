@@ -116,3 +116,84 @@ export function getMemorySummary(memory: Memory): string {
     })
     .join("\n\n---\n\n");
 }
+
+// ── Cycle Mode History ──────────────────────────────────────────────────────
+
+const ALL_MODES = ["research", "patch", "repair", "refactor", "feature", "planning"] as const;
+type ModeType = (typeof ALL_MODES)[number];
+
+interface CycleModeHistoryData {
+  recentModes: ModeType[];
+  counts: Record<ModeType, number>;
+}
+
+const MODE_HISTORY_PATH = path.join(MEMORY_DIR, "cycle-mode-history.md");
+
+function parseCycleModeHistory(): CycleModeHistoryData {
+  const zeroCounts = Object.fromEntries(ALL_MODES.map((m) => [m, 0])) as Record<ModeType, number>;
+
+  if (!fs.existsSync(MODE_HISTORY_PATH)) {
+    return { recentModes: [], counts: zeroCounts };
+  }
+
+  const raw = fs.readFileSync(MODE_HISTORY_PATH, "utf-8");
+
+  const recentMatch = raw.match(/## Recent Modes\s*\n([^\n]+)/);
+  const recentModes: ModeType[] = recentMatch
+    ? (recentMatch[1]
+        .split(",")
+        .map((m) => m.trim())
+        .filter((m) => (ALL_MODES as readonly string[]).includes(m)) as ModeType[])
+    : [];
+
+  const counts = { ...zeroCounts };
+  const tableRowRegex = /\|\s*(\w+)\s*\|\s*(\d+)\s*\|/g;
+  let match: RegExpExecArray | null;
+  while ((match = tableRowRegex.exec(raw)) !== null) {
+    const mode = match[1] as ModeType;
+    if ((ALL_MODES as readonly string[]).includes(mode)) {
+      counts[mode] = parseInt(match[2], 10);
+    }
+  }
+
+  return { recentModes, counts };
+}
+
+function writeCycleModeHistory(data: CycleModeHistoryData): void {
+  const recentLine = data.recentModes.length > 0 ? data.recentModes.join(", ") : "(none yet)";
+  const countRows = ALL_MODES.map((m) => `| ${m} | ${data.counts[m]} |`).join("\n");
+
+  const content = `# Cycle Mode History\n\n## Recent Modes\n${recentLine}\n\n## Mode Counts\n\n| Mode | Count |\n|------|-------|\n${countRows}\n`;
+
+  fs.mkdirSync(MEMORY_DIR, { recursive: true });
+  fs.writeFileSync(MODE_HISTORY_PATH, content, "utf-8");
+}
+
+/** Record the mode chosen for the current cycle (call once per cycle, after planning). */
+export function updateCycleModeHistory(mode: string): void {
+  const data = parseCycleModeHistory();
+  const typedMode = (ALL_MODES as readonly string[]).includes(mode) ? (mode as ModeType) : null;
+  if (!typedMode) {
+    logger.warn(`updateCycleModeHistory: unknown mode "${mode}", skipping`);
+    return;
+  }
+  data.recentModes.unshift(typedMode);
+  data.counts[typedMode] = (data.counts[typedMode] ?? 0) + 1;
+  writeCycleModeHistory(data);
+  logger.info(`Updated cycle mode history: added "${typedMode}"`);
+}
+
+/** Return a compact summary of cycle mode history for inclusion in the planner prompt. */
+export function getCycleModeHistorySummary(): string {
+  const data = parseCycleModeHistory();
+  if (data.recentModes.length === 0) {
+    return "No cycle history yet.";
+  }
+
+  const recentLine = data.recentModes.join(", ");
+  const countsLines = ALL_MODES.filter((m) => data.counts[m] > 0)
+    .map((m) => `  - ${m}: ${data.counts[m]}`)
+    .join("\n");
+
+  return `Recent cycle modes (most recent first): ${recentLine}\n\nMode totals across all cycles:\n${countsLines}`;
+}
