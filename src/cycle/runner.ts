@@ -2,7 +2,13 @@ import path from "path";
 import { loadMemory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import { getModeDescription } from "./modes.js";
-import { buildDynamicContext, buildTaskPrompt, buildBuildFixPrompt, buildReflectionPrompt } from "../agent/prompts.js";
+import {
+  buildDynamicContext,
+  buildTaskPrompt,
+  buildBuildFixPrompt,
+  buildCommitFixPrompt,
+  buildReflectionPrompt,
+} from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
@@ -10,7 +16,15 @@ import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
-import { commitCycle, getHeadSha, revertPokeemerald, getDiffStats } from "../git/committer.js";
+import {
+  commitCycle,
+  commitJournalOnly,
+  getHeadSha,
+  revertPokeemerald,
+  getDiffStats,
+  getGitStatusText,
+  getRecentGitLogText,
+} from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
@@ -21,6 +35,7 @@ import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
+const MAX_COMMIT_FIX_ATTEMPTS = 3;
 
 /** Aggregate token usage from multiple phases */
 function mergeTokenUsage(...usages: TokenUsage[]): TokenUsage {
@@ -249,6 +264,86 @@ async function runReflectionPhase(
   });
 }
 
+/**
+ * Phase 5 helper: commit with auto-fix loop and fallback commit guarantee.
+ */
+async function runCommitPhase(params: {
+  cycleNumber: number;
+  summary: string;
+  filesModified: string[];
+  acceptedIssueNumbers: number[];
+  memory: ReturnType<typeof loadMemory>;
+  recentJournals: string[];
+  log: ReturnType<typeof cycleLogger>;
+}): Promise<{ commitHash: string | null; commitFailed: boolean }> {
+  const {
+    cycleNumber,
+    summary,
+    filesModified,
+    acceptedIssueNumbers,
+    memory,
+    recentJournals,
+    log,
+  } = params;
+
+  let commitResult = await commitCycle(
+    cycleNumber,
+    summary,
+    filesModified,
+    acceptedIssueNumbers,
+  );
+
+  if (commitResult.success) {
+    return { commitHash: commitResult.hash, commitFailed: false };
+  }
+
+  let lastFailure = `${commitResult.reason}: ${commitResult.message}`;
+
+  for (let attempt = 1; attempt <= MAX_COMMIT_FIX_ATTEMPTS; attempt++) {
+    log.warn(
+      `  Commit: FAIL (${lastFailure}) — running commit-fix agent `
+      + `(attempt ${attempt}/${MAX_COMMIT_FIX_ATTEMPTS})...`,
+    );
+
+    const modeDescription = getModeDescription("repair");
+    const fixContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
+    const gitStatus = await getGitStatusText();
+    const recentGitLog = await getRecentGitLogText(5);
+    const fixPrompt = buildCommitFixPrompt(cycleNumber, lastFailure, gitStatus, recentGitLog);
+
+    const model = process.env.ANTHROPIC_MODEL;
+    await runClaudeCode(fixPrompt, {
+      appendSystemPrompt: fixContext,
+      maxTurns: 10,
+      tools: "Bash,Read,Write",
+      model,
+    });
+
+    commitResult = await commitCycle(
+      cycleNumber,
+      summary,
+      filesModified,
+      acceptedIssueNumbers,
+    );
+    if (commitResult.success) {
+      log.info(`  Commit: PASS (fixed on attempt ${attempt})`);
+      return { commitHash: commitResult.hash, commitFailed: false };
+    }
+
+    lastFailure = `${commitResult.reason}: ${commitResult.message}`;
+  }
+
+  log.error("  Commit: FAIL after fix attempts — trying fallback journal commit...");
+  const fallbackResult = await commitJournalOnly(cycleNumber, "commit recovery fallback");
+  if (fallbackResult.success) {
+    log.warn("  Fallback journal commit succeeded after commit failure.");
+    return { commitHash: fallbackResult.hash, commitFailed: false };
+  }
+
+  log.error(`  Fallback commit failed: ${fallbackResult.reason}: ${fallbackResult.message}`);
+  return { commitHash: null, commitFailed: true };
+}
+
 /** Run a single autonomous cycle with multi-phase pipeline */
 export async function runCycle(): Promise<void> {
   const cycleNumber = getNextCycleNumber();
@@ -361,12 +456,20 @@ export async function runCycle(): Promise<void> {
     const acceptedIssueNumbers = plan.issueActions
       .filter(a => a.action === "accept")
       .map(a => a.issueNumber);
-    const commitHash = await commitCycle(
+    const { commitHash, commitFailed } = await runCommitPhase({
       cycleNumber,
-      implResult.cycleSummary || plan.objective,
+      summary: implResult.cycleSummary || plan.objective,
       filesModified,
       acceptedIssueNumbers,
-    );
+      memory,
+      recentJournals,
+      log,
+    });
+
+    if (commitFailed) {
+      log.error("CRITICAL: Cycle completed without producing a git commit.");
+      process.exitCode = 1;
+    }
 
     // Close accepted issues after successful commit (not reverted)
     if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
@@ -405,7 +508,7 @@ export async function runCycle(): Promise<void> {
     log.info(`  Tool calls: ${implResult.toolCallCount}`);
     log.info(`  Tokens: ${totalTokenUsage.totalTokens.toLocaleString()}`);
     log.info(`  Journal: ${journalFile}`);
-    log.info(`  Commit: ${commitHash ?? "none"}`);
+    log.info(`  Commit: ${commitHash ?? "none"}${commitFailed ? " [COMMIT_FAILED]" : ""}`);
     if (releaseUrl) {
       log.info(`  Release: ${releaseUrl}`);
     }
@@ -432,7 +535,10 @@ export async function runCycle(): Promise<void> {
         tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
         toolCallCount: 0,
       });
-      await commitCycle(cycleNumber, "cycle crashed", []);
+      const crashCommit = await commitCycle(cycleNumber, "cycle crashed", []);
+      if (!crashCommit.success) {
+        await commitJournalOnly(cycleNumber, "crash fallback commit");
+      }
     } catch {
       log.error("Failed to write crash journal entry");
     }

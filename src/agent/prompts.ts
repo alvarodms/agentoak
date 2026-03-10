@@ -109,6 +109,41 @@ Do NOT run \`make\` yourself — the pipeline will re-run it automatically after
 Focus only on fixing these errors. Nothing else.`;
 }
 
+/** Build a prompt for the git-commit-fix agent (Phase 5 repair loop) */
+export function buildCommitFixPrompt(
+  cycleNumber: number,
+  commitFailure: string,
+  gitStatus: string,
+  recentGitLog: string,
+): string {
+  const failurePreview = commitFailure
+    ? commitFailure.split("\n").slice(0, 20).join("\n")
+    : "(no failure message provided)";
+
+  return `## Cycle ${cycleNumber} — Commit Fix Required
+
+The git commit step has FAILED. Your only job is to diagnose and fix why the cycle commit cannot be created.
+Do NOT add gameplay features or unrelated refactors.
+
+### Commit Failure
+${failurePreview}
+
+### Git Status
+${gitStatus || "(no git status output)"}
+
+### Recent Git Log
+${recentGitLog || "(no git log output)"}
+
+### Instructions
+1. Diagnose the root cause of the failed commit (identity config, lock file, staging state, merge state, hooks, etc.).
+2. Apply targeted fixes only for git/commit reliability.
+3. Keep changes minimal and focused on making the commit succeed.
+4. **IMPORTANT**: After fixing, call the \`/communicate\` skill to write a short summary in Professor Oak's voice. Wait for the result, then paste that text into the CYCLE_COMPLETE marker's \`summary\` field.
+
+Do NOT run full project tasks unrelated to commit recovery.
+Focus only on making the commit step succeed.`;
+}
+
 /** Build the reflection prompt sent after the main agent loop */
 export function buildReflectionPrompt(cycleContext: {
   cycleNumber: number;
