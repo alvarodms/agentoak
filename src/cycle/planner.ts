@@ -162,7 +162,7 @@ Respond with a JSON object containing mode, objective, reasoning, implementation
   try {
     const result = await runClaudeCode(prompt, {
       maxTurns: 10,
-      timeout: 2 * 60 * 1000,
+      timeout: 5 * 60 * 1000,
       model,
       jsonSchema: CYCLE_PLAN_SCHEMA,
     });
