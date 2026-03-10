@@ -6,7 +6,7 @@
   "scripts": {
     "cycle": "tsx src/index.ts",
     "build:check": "tsc --noEmit",
-    "build:docs": "node docs/build-journals.mjs"
+    "build:docs": "node docs/build-journals.mjs && node docs/build-game-guide.mjs"
   },
   "engines": {
     "node": ">=20.0.0"

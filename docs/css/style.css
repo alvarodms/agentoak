@@ -653,7 +653,7 @@ body::after {
 }
 
 /* ---- View: Strategy ---- */
-.strategy-view, .about-view {
+.strategy-view, .about-view, .guide-view {
   display: none;
   position: relative;
   z-index: 5;
@@ -662,7 +662,7 @@ body::after {
   padding: 32px 24px 80px;
 }
 
-.strategy-view.active, .about-view.active {
+.strategy-view.active, .about-view.active, .guide-view.active {
   display: block;
 }
 
@@ -780,7 +780,7 @@ body::after {
     gap: 16px;
   }
 
-  .main-content, .strategy-view, .about-view {
+  .main-content, .strategy-view, .about-view, .guide-view {
     padding: 20px 12px 60px;
   }
 
@@ -854,5 +854,265 @@ body::after {
   .pokeball-icon .bottom {
     width: 36px;
     height: 18px;
+  }
+}
+
+/* ============================================================
+   GAME GUIDE STYLES
+   ============================================================ */
+
+/* ---- Section Titles ---- */
+.guide-section {
+  margin-bottom: 32px;
+}
+
+.guide-section-title {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--green-bright);
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+  border-bottom: 1px solid var(--lab-panel-border);
+  padding-bottom: 8px;
+}
+
+/* ---- Guide Cards (collapsible) ---- */
+.guide-card {
+  background: var(--lab-panel);
+  border: 1px solid var(--lab-panel-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.guide-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition-fast);
+}
+
+.guide-card-header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.guide-card-title {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.guide-card-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 0 20px 8px;
+  font-family: var(--font-ui);
+}
+
+.guide-card-body {
+  display: none;
+  padding: 0 20px 20px;
+}
+
+.guide-card.expanded .guide-card-body {
+  display: block;
+}
+
+.guide-card.expanded .card-expand {
+  transform: rotate(180deg);
+}
+
+/* ---- Encounter Count Badge ---- */
+.encounter-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Type Badges ---- */
+.type-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  background: var(--text-muted);
+}
+
+.type-rock       { background: #b8a038; }
+.type-fighting   { background: #c03028; }
+.type-electric   { background: #f8d030; color: #333; }
+.type-fire       { background: #f08030; }
+.type-normal     { background: #a8a878; }
+.type-flying     { background: #a890f0; }
+.type-psychic    { background: #f85888; }
+.type-water      { background: #6890f0; }
+.type-dark       { background: #705848; }
+.type-ghost      { background: #705898; }
+.type-ice        { background: #98d8d8; color: #333; }
+.type-dragon     { background: #7038f8; }
+.type-champion   { background: linear-gradient(135deg, #ffd740, #ff6d00); color: #333; }
+.type-rival      { background: linear-gradient(135deg, var(--pokeball-red), var(--pokeball-red-dark)); }
+.type-steel      { background: #b8b8d0; color: #333; }
+.type-grass      { background: #78c850; }
+.type-poison     { background: #a040a0; }
+.type-ground     { background: #e0c068; color: #333; }
+.type-bug        { background: #a8b820; }
+
+/* ---- Party Table ---- */
+.party-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.party-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--lab-panel-border);
+}
+
+.party-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+}
+
+.party-table tr:last-child td {
+  border-bottom: none;
+}
+
+.party-table .mon-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.party-table .mon-level {
+  color: var(--yellow-bright);
+  font-weight: 600;
+}
+
+.party-table .mon-moves {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.party-table .text-muted {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ---- Encounter Tables ---- */
+.encounter-group {
+  margin-bottom: 16px;
+}
+
+.encounter-group:last-child {
+  margin-bottom: 0;
+}
+
+.encounter-group-title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-accent);
+  margin-bottom: 8px;
+}
+
+.encounter-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.encounter-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--lab-panel-border);
+}
+
+.encounter-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+}
+
+.encounter-table tr:last-child td {
+  border-bottom: none;
+}
+
+.encounter-table .mon-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---- Rarity Badges ---- */
+.rarity-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.rarity-common    { background: rgba(0, 230, 118, 0.15); color: var(--green-bright); }
+.rarity-uncommon  { background: rgba(255, 215, 64, 0.15); color: var(--yellow-bright); }
+.rarity-rare      { background: rgba(68, 138, 255, 0.15); color: var(--blue-bright); }
+.rarity-ultrarare { background: rgba(179, 136, 255, 0.15); color: var(--purple-bright); }
+
+/* ---- Guide Loading State ---- */
+.guide-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ---- Guide Responsive ---- */
+@media (max-width: 640px) {
+  .guide-card-header {
+    padding: 12px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .party-table, .encounter-table {
+    font-size: 11px;
+  }
+
+  .party-table th, .encounter-table th {
+    font-size: 9px;
+  }
+
+  .party-table .mon-moves {
+    font-size: 10px;
+  }
+
+  .guide-section-title {
+    font-size: 11px;
   }
 }
