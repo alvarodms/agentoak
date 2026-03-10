@@ -23,6 +23,12 @@ export interface ClaudeCodeOptions {
   model?: string;
   /** JSON schema for structured output (print mode only) */
   jsonSchema?: Record<string, unknown>;
+  /** Environment variable overrides injected into the child process env.
+   * Use to redirect the CLI to a different API provider (e.g. DeepSeek)
+   * without affecting the current process environment. Undefined values
+   * are filtered out so they don't shadow existing vars.
+   */
+  envOverrides?: Record<string, string | undefined>;
 }
 
 /** Spawn `claude` CLI in print mode and return parsed results */
@@ -40,6 +46,7 @@ export async function runClaudeCode(
     cwd = PROJECT_ROOT,
     model,
     jsonSchema,
+    envOverrides,
   } = options;
 
   const args = buildArgs({
@@ -60,7 +67,7 @@ export async function runClaudeCode(
   logger.debug(`claude CLI cwd: ${cwd}, timeout: ${timeout}ms`);
 
   const startTime = Date.now();
-  const stdout = await spawnClaude(prompt, args, { timeout, cwd });
+  const stdout = await spawnClaude(prompt, args, { timeout, cwd, envOverrides });
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   logger.debug(`claude CLI finished in ${elapsed}s, output size: ${stdout.length} bytes`);
 
@@ -115,15 +122,22 @@ function buildArgs(opts: {
 function spawnClaude(
   prompt: string,
   args: string[],
-  opts: { timeout: number; cwd: string },
+  opts: { timeout: number; cwd: string; envOverrides?: Record<string, string | undefined> },
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const spawnStart = Date.now();
     logger.debug(`Spawning: claude ${args.join(" ")} <prompt>`);
 
+    // Filter undefined values so we don't shadow existing env vars with undefined
+    const filteredOverrides = opts.envOverrides
+      ? Object.fromEntries(
+          Object.entries(opts.envOverrides).filter(([, v]) => v !== undefined)
+        ) as Record<string, string>
+      : {};
+
     const child = spawn("claude", [...args, prompt], {
       cwd: opts.cwd,
-      env: { ...process.env },
+      env: { ...process.env, ...filteredOverrides },
       stdio: ["pipe", "pipe", "pipe"],
     });
 

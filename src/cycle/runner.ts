@@ -37,6 +37,24 @@ import type { TokenUsage } from "../memory/types.js";
 const MAX_BUILD_FIX_ATTEMPTS = 3;
 const MAX_COMMIT_FIX_ATTEMPTS = 3;
 
+/**
+ * Build env overrides to route the Claude CLI subprocess to DeepSeek.
+ * Returns undefined if DEEPSEEK_BASE_URL is not configured, so callers
+ * can cheaply check for DeepSeek being active.
+ */
+function buildDeepSeekOverrides(): Record<string, string | undefined> | undefined {
+  const baseUrl = process.env.DEEPSEEK_BASE_URL;
+  if (!baseUrl) return undefined;
+  return {
+    ANTHROPIC_BASE_URL: baseUrl,
+    ANTHROPIC_API_KEY: process.env.DEEPSEEK_API_KEY,
+    ANTHROPIC_MODEL: process.env.DEEPSEEK_MODEL,
+    ANTHROPIC_SMALL_FAST_MODEL: process.env.DEEPSEEK_MODEL,
+    API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000",
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: process.env.DEEPSEEK_DISABLE_NONESSENTIAL_TRAFFIC ?? "1",
+  };
+}
+
 /** Aggregate token usage from multiple phases */
 function mergeTokenUsage(...usages: TokenUsage[]): TokenUsage {
   return usages.reduce(
@@ -93,7 +111,7 @@ async function runPlanningPhase(
  */
 async function runImplementationPhase(
   cycleNumber: number,
-  plan: { mode: string; objective: string; reasoning: string },
+  plan: { mode: string; objective: string; reasoning: string; implementationPlan?: string },
   memory: ReturnType<typeof loadMemory>,
   recentJournals: string[],
   log: ReturnType<typeof cycleLogger>,
@@ -102,16 +120,26 @@ async function runImplementationPhase(
 
   const modeDescription = getModeDescription(plan.mode as Parameters<typeof getModeDescription>[0]);
   const dynamicContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
-  const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode);
+  const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode, plan.implementationPlan);
 
-  const model = process.env.ANTHROPIC_MODEL;
+  const deepSeekOverrides = buildDeepSeekOverrides();
+  const usingDeepSeek = !!deepSeekOverrides;
+  const model = usingDeepSeek
+    ? process.env.DEEPSEEK_MODEL
+    : process.env.ANTHROPIC_MODEL;
+  const timeout = usingDeepSeek
+    ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000", 10)
+    : 30 * 60 * 1000;
   const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50", 10);
 
+  log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})"}`}`);
   log.info(`  → Task: ${plan.objective}`);
   const result = await runClaudeCode(taskPrompt, {
     appendSystemPrompt: dynamicContext,
     maxTurns,
     model,
+    timeout,
+    envOverrides: deepSeekOverrides,
   });
 
   log.info(
@@ -193,12 +221,21 @@ async function runBuildVerifyPhase(
     const fixContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
     const fixPrompt = buildBuildFixPrompt(cycleNumber, buildResult.errors, buildResult.stderr);
 
-    const model = process.env.ANTHROPIC_MODEL;
+    const deepSeekOverrides = buildDeepSeekOverrides();
+    const usingDeepSeek = deepSeekOverrides != null;
+    const model = usingDeepSeek
+      ? process.env.DEEPSEEK_MODEL
+      : process.env.ANTHROPIC_MODEL;
+    const timeout = usingDeepSeek
+      ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000", 10)
+      : 30 * 60 * 1000;
     const fixResult = await runClaudeCode(fixPrompt, {
       appendSystemPrompt: fixContext,
       maxTurns: 15,
       tools: "Bash,Read,Edit,Write,Grep",
       model,
+      timeout,
+      envOverrides: deepSeekOverrides,
     });
     fixActions.push(...fixResult.actions);
     fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
