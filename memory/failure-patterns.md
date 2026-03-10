@@ -10,6 +10,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The agent runner checks for the existence of `pokeemerald.gba` after each cycle. If no build was attempted, the file doesn't exist and the runner reports failure.
 **Resolution**: This is expected for exploration-only cycles. Not a real failure. Only run `make` in cycles where code changes are made.
 
+## Incomplete Multi-Part Objectives (Cycle 14)
+
+**Symptom**: Agent completes only part of a multi-component objective, declares success, but reflection reveals missing work.
+**Example**: Objective was "Overhaul Safari Zone encounters AND update Birch dialogue" but only encounters were modified.
+**Cause**: Agent gets focused on first component and fails to track that multiple deliverables were required.
+**Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components.
+**Pattern**: When objective uses "AND" or lists multiple systems, verify ALL components were addressed before declaring completion.
+
 ## Anticipated Pitfalls (from code analysis)
 
 ### Using wrong SPECIES_ constants

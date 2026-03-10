@@ -57,6 +57,35 @@ struct WildPokemonHeader { u8 mapGroup; u8 mapNum;
 
 **Encounter rate**: Max 2880; abilities (Synchronize, Static, Magnet Pull) influence species
 
+### Safari Zone System (`src/safari_zone.c`, `data/wild_encounters.json`)
+
+**Safari Zone maps in wild_encounters.json:**
+- `MAP_SAFARI_ZONE_SOUTH` — main entrance area
+- `MAP_SAFARI_ZONE_SOUTHEAST` — southeast quadrant
+- `MAP_SAFARI_ZONE_SOUTHWEST` — southwest quadrant
+- `MAP_SAFARI_ZONE_NORTH` — northern area
+- `MAP_SAFARI_ZONE_NORTHEAST` — northeast quadrant
+- `MAP_SAFARI_ZONE_NORTHWEST` — northwest quadrant
+
+Each Safari Zone map has separate encounter tables for land, water, and rock smash encounters with different species distributions and levels.
+
+**Safari Zone mechanics** (`src/safari_zone.c`):
+- Special battle system with throwing rocks/bait instead of standard trainer battles
+- Players get limited Safari Balls and steps
+- Encounter logic still uses standard wild encounter system but with Safari-specific catch mechanics
+
+### NPC Dialogue System (`data/maps/[MapName]/scripts.inc`)
+
+**Professor Birch dialogue location:**
+- `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` — opening dialogue and lab interactions
+- Dialogue references like `LikeYouToHavePokemon` and `BirchAwayOnFieldwork` found in these script files
+- Script files use assembly-like format with labels and jump instructions
+
+**Text storage format:**
+- Dialogue text stored as script commands in individual map script files
+- Text strings may be referenced by label names that get compiled into the ROM
+- Early game NPC dialogue scattered across Route 101, Route 103, Oldale Town, Petalburg City map scripts
+
 ### Gym Leaders and Champion (`src/data/trainer_parties.h`)
 
 **Data structure:**
