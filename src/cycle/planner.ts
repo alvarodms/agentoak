@@ -135,6 +135,8 @@ Don't play it safe. The goal is a ROM hack with a strong creative identity, not 
 
 If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
 
+**Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
+
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
 Respond with a JSON object containing mode, objective, reasoning, and optionally issueActions and helpRequests.`;
