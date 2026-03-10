@@ -81,6 +81,7 @@ export async function planCycle(
   recentJournalSummaries: string[],
   cycleNumber: number,
   issueContext: string = "",
+  issueBacklog: string = "",
 ): Promise<CyclePlan> {
   const model = process.env.ANTHROPIC_MODEL;
 
@@ -98,6 +99,10 @@ export async function planCycle(
     ? `\n\n${issueContext}\n`
     : "";
 
+  const backlogSection = issueBacklog
+    ? `\n\n## Deferred Issue Backlog\n\nThe following issues were deferred from earlier cycles. You may pick one up this cycle if the timing is right — include it in \`issueActions\` with action \"accept\" along with a brief response.\n\n${issueBacklog}\n`
+    : "";
+
   const prompt = `You are Agent Oak's planning module. Decide what the next autonomous cycle should focus on.
 
 Cycle ${cycleNumber} is about to start.
@@ -110,7 +115,7 @@ ${journalContext}
 
 ## Available Modes
 ${modeList}
-${issueSection}
+${issueSection}${backlogSection}
 Decide: What mode should this cycle use, and what should the objective be?
 
 If previous cycles had build failures, consider "repair".

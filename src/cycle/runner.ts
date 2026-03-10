@@ -27,8 +27,8 @@ import {
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
-import { closeIssue } from "../github/client.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog } from "../github/issues.js";
+import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { logger, cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
@@ -81,14 +81,30 @@ async function runPlanningPhase(
   log.info("  Checking for community issues...");
   const communityIssues = await fetchNewCommunityIssues();
   const issueContext = formatIssuesForPrompt(communityIssues);
+  const issueBacklog = readIssueBacklog();
 
-  const plan = await planCycle(memory, recentJournals, cycleNumber, issueContext);
+  const plan = await planCycle(memory, recentJournals, cycleNumber, issueContext, issueBacklog);
   log.info(`Plan: [${plan.mode}] ${plan.objective}`);
 
   // Execute issue actions decided by the planner (comment + label)
   if (plan.issueActions.length > 0) {
     log.info(`  Executing ${plan.issueActions.length} issue action(s)...`);
     await executeIssueActions(plan.issueActions);
+  }
+
+  // Update the deferred-issue backlog based on this cycle's actions
+  const issueMap = new Map(communityIssues.map((i) => [i.number, i]));
+  updateIssueBacklog(plan.issueActions, issueMap);
+
+  // Any issue presented to the planner but NOT included in issueActions must
+  // still be marked agent-reviewed so it doesn't resurface on the next cycle.
+  const actedNumbers = new Set(plan.issueActions.map((a) => a.issueNumber));
+  const unhandled = communityIssues.filter((i) => !actedNumbers.has(i.number));
+  if (unhandled.length > 0) {
+    log.info(`  Marking ${unhandled.length} unhandled issue(s) as reviewed...`);
+    for (const issue of unhandled) {
+      await addLabelsToIssue(issue.number, [AGENT_LABELS.reviewed]);
+    }
   }
 
   // Create help-request issues if the planner asked for human input

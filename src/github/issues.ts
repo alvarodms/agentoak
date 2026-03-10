@@ -6,6 +6,8 @@
  * prompt, and executes the planner's decisions (comment + label).
  */
 
+import fs from "fs";
+import path from "path";
 import {
   fetchOpenIssues,
   commentOnIssue,
@@ -18,6 +20,81 @@ import {
 } from "./client.js";
 import type { GitHubIssue, IssueAction, HelpRequest } from "./client.js";
 import { logger } from "../utils/logger.js";
+import { MEMORY_DIR } from "../utils/paths.js";
+
+const BACKLOG_FILE = path.join(MEMORY_DIR, "issue-backlog.md");
+
+/**
+ * Read the current issue backlog file contents.
+ * Returns an empty string if the file does not exist yet.
+ */
+export function readIssueBacklog(): string {
+  try {
+    if (fs.existsSync(BACKLOG_FILE)) {
+      return fs.readFileSync(BACKLOG_FILE, "utf-8");
+    }
+  } catch (err) {
+    logger.error(`Failed to read issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  }
+  return "";
+}
+
+/**
+ * Update the issue backlog based on the planner's actions:
+ * - "defer": add the issue to the backlog (if not already present)
+ * - "accept" / "reject": remove the issue from the backlog
+ * "need-info" leaves the backlog unchanged; the issue stays deferred if it was there.
+ */
+export function updateIssueBacklog(
+  actions: IssueAction[],
+  issueMap: Map<number, GitHubIssue>,
+): void {
+  // Parse existing entries keyed by issue number
+  const existing = new Map<number, string>();
+  try {
+    if (fs.existsSync(BACKLOG_FILE)) {
+      for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
+        const match = line.match(/^- #(\d+):/);
+        if (match) existing.set(parseInt(match[1], 10), line);
+      }
+    }
+  } catch (err) {
+    logger.error(`Failed to parse issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  }
+
+  let changed = false;
+  for (const action of actions) {
+    if (action.action === "defer") {
+      if (!existing.has(action.issueNumber)) {
+        const title = issueMap.get(action.issueNumber)?.title ?? "Unknown";
+        existing.set(action.issueNumber, `- #${action.issueNumber}: ${title}`);
+        changed = true;
+      }
+    } else if (action.action === "accept" || action.action === "reject") {
+      if (existing.has(action.issueNumber)) {
+        existing.delete(action.issueNumber);
+        changed = true;
+      }
+    }
+  }
+
+  if (!changed && existing.size === 0) return;
+
+  const header = "# Issue Backlog\n\nDeferred community issues for future consideration.\n";
+  const entries = [...existing.values()];
+  const content =
+    entries.length > 0
+      ? header + "\n" + entries.join("\n") + "\n"
+      : header + "\n*No deferred issues.*\n";
+
+  try {
+    fs.mkdirSync(path.dirname(BACKLOG_FILE), { recursive: true });
+    fs.writeFileSync(BACKLOG_FILE, content, "utf-8");
+    logger.info(`Updated issue backlog (${entries.length} item(s)).`);
+  } catch (err) {
+    logger.error(`Failed to write issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
 
 const MAX_ISSUES_PER_CYCLE = 10;
 const MAX_ISSUE_BODY_LENGTH = 2000;
