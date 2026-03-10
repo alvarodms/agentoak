@@ -98,17 +98,18 @@ static const struct TrainerMonItemCustomMoves sParty_[TrainerName][] = {
 
 ### Starter Selection (`src/starter_choose.c`)
 
-**Current starters** (lines 113–118) — **MODIFIED in Cycle 2**:
+**Current starters** (lines 113–118) — **MODIFIED in Cycles 2 & 12**:
 ```c
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {
     SPECIES_LARVITAR,
     SPECIES_BAGON,
-    SPECIES_BELDUM,
+    SPECIES_DRATINI,
 };
 ```
 
 Original was `{ SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP }` on a single line.
+Cycle 2 changed to Larvitar/Bagon/Beldum. Cycle 12 corrected third starter to Dratini.
 
 **`STARTER_MON_COUNT`** is defined at line 27 as `3`.
 
@@ -121,7 +122,9 @@ Original was `{ SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP }` on a single 
 6. `Task_HandleConfirmStarterInput()` — handle response
 7. `Task_DeclineStarter()` — if player says no
 
-**Confirmed**: `SPECIES_LARVITAR`, `SPECIES_BAGON`, `SPECIES_BELDUM` are valid constants — build succeeded.
+**Confirmed valid**: `SPECIES_LARVITAR`, `SPECIES_BAGON`, `SPECIES_DRATINI` — build succeeded.
+
+**Rival party naming**: When the player picks Bagon (index 1), rival parties named `sParty_BrendanRoute103Torchic` / `sParty_MayRoute103Torchic` etc. are used (legacy naming retained, species changed). Naming follows pattern: `sParty_[Brendan|May][Location][OriginalStarter]`.
 
 ### Battle System (`src/battle_main.c` — 194KB)
 
@@ -252,10 +255,11 @@ struct TrainerMonItemCustomMoves {
 
 **Struct type:** `TrainerMonNoItemDefaultMoves` — only `.lvl` and `.species` required (no held items or custom moves in vanilla)
 
-**Legends of Hoenn counter relationships:**
-- Player Larvitar → Rival Beldum (Steel resists Rock/Ground, immune to Dark)
+**Legends of Hoenn counter relationships (Cycle 12 final):**
+- Player Larvitar → Rival Bagon (Dragon resists Rock, provides offensive pressure)
 - Player Bagon → Rival Larvitar (Rock resists Flying, Dark hits Dragon neutral)
-- Player Beldum → Rival Bagon (Dragon resists Steel's common targets)
+- Player Dratini → Rival Larvitar or Bagon (thematic counterpart)
+Note: Rival Bagon path uses water-dragon theme: Horsea/Dratini early, Gyarados mid, Dragonair at Lilycove.
 
 ## Bulk Editing Patterns
 
