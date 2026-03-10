@@ -34,6 +34,8 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let cycleSummary = "";
   let nextSteps = "";
   let toolCallCount = 0;
+  let cycleMarkerFound = false;
+  const postMarkerTexts: string[] = [];
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
   let resultText = "";
@@ -83,6 +85,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
           /<!--\s*CYCLE_COMPLETE:\s*(\{.*?\})\s*-->/s,
         );
         if (markerMatch) {
+          cycleMarkerFound = true;
           try {
             const parsed = JSON.parse(markerMatch[1]) as {
               summary?: string;
@@ -93,6 +96,10 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
           } catch {
             // Malformed JSON in marker — ignore
           }
+        } else if (cycleMarkerFound && block.text.trim().length > 50) {
+          // Capture substantial text after the CYCLE_COMPLETE marker as
+          // fallback summary (e.g. when Oak-voiced text comes in a later turn)
+          postMarkerTexts.push(block.text.trim());
         }
       }
 
@@ -160,6 +167,13 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
         }
       }
     }
+  }
+
+  // Fallback: if the CYCLE_COMPLETE marker had an empty summary but Claude
+  // output substantial text afterward (e.g. the Oak-voiced summary came in
+  // a later turn), use the longest post-marker text block as the summary.
+  if (!cycleSummary && postMarkerTexts.length > 0) {
+    cycleSummary = postMarkerTexts.reduce((a, b) => (a.length >= b.length ? a : b));
   }
 
   return {

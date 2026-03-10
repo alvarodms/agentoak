@@ -66,7 +66,12 @@ Guidelines:
 - Don't be afraid to modify multiple files if the objective calls for it. A cohesive feature that touches 5 files is better than a timid single-line edit.
 - If you modify code, run \`make\` in the pokeemerald/ directory to verify your changes compile.
 - Update your memory files with anything you learn or discover — especially update strategy-notes.md with how this cycle fits into the larger game design.
-- **IMPORTANT**: When you are done, use the \`/communicate\` skill to write your cycle summary in Professor Oak's voice, then output the CYCLE_COMPLETE marker with that summary.
+- **IMPORTANT — Cycle completion (follow these steps IN ORDER)**:
+  1. First, call the \`/communicate\` skill to generate your cycle summary in Professor Oak's voice.
+  2. Wait for the skill to return the text.
+  3. Copy that exact text into the \`summary\` field of the CYCLE_COMPLETE marker:
+     \`<!-- CYCLE_COMPLETE: {"summary": "<paste Oak voice summary here>", "next_steps": "..."} -->\`
+  Do NOT output the CYCLE_COMPLETE marker at the same time as calling the skill — you must wait for the skill result first.
 
 Begin your work now.`;
 }
@@ -98,7 +103,7 @@ ${stderrPreview}
 ### Instructions
 1. Read the files mentioned in the errors to understand the context.
 2. Fix each error with targeted edits.
-3. **IMPORTANT**: After fixing, use the \`/communicate\` skill to write a summary in Professor Oak's voice, then output the CYCLE_COMPLETE marker.
+3. **IMPORTANT**: After fixing, call the \`/communicate\` skill to write a summary in Professor Oak's voice. Wait for the result, then paste that text into the CYCLE_COMPLETE marker's \`summary\` field.
 
 Do NOT run \`make\` yourself — the pipeline will re-run it automatically after you finish.
 Focus only on fixing these errors. Nothing else.`;
@@ -164,5 +169,10 @@ Update the memory files in the memory/ directory as needed:
 - memory/strategy-notes.md — strategy updates, game design evolution, multi-cycle roadmap
 - memory/project-facts.md — project facts
 
-**IMPORTANT**: When done reflecting, use the \`/communicate\` skill to write your reflection and next steps in Professor Oak's voice, then output the CYCLE_COMPLETE marker with that content.`;
+**IMPORTANT — Reflection completion (follow these steps IN ORDER)**:
+1. First, call the \`/communicate\` skill to write your reflection and next steps in Professor Oak's voice.
+2. Wait for the skill to return the text.
+3. Copy that exact text into the CYCLE_COMPLETE marker:
+   \`<!-- CYCLE_COMPLETE: {"summary": "<paste Oak voice reflection here>", "next_steps": "<paste Oak voice next steps here>"} -->\`
+Do NOT output the CYCLE_COMPLETE marker at the same time as calling the skill — you must wait for the skill result first.`;
 }
