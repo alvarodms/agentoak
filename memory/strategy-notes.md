@@ -312,16 +312,18 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 8 | ✅ **Elite Four + Champion overhaul** — all 4 Elite Four + Wallace redesigned; trainer arc now complete from Route 101 to Champion |
 | Cycle 9 | ✅ **Dungeon encounter tables** — 34 tables overhauled across 11 key dungeons (Petalburg Woods, Rusturf Tunnel, Granite Cave, Fiery Path, New Mauville, Meteor Falls, Shoal Cave, Mt. Pyre, Seafloor Cavern, Sky Pillar, Victory Road) |
 | Cycle 10 | ✅ **Key NPC trainer overhaul** — Maxie (3 battles), Archie, Matt, Shelly (2 battles), Tabitha (3 battles), Wally (VR1-VR5 + Mauville), Steven post-game; villain bosses upgraded to NoItemCustomMoves with strategic movesets |
+| Cycle 11 | ✅ **Admin custom moves upgrade** — Verified all Cycle 10 changes in place; upgraded Matt, Shelly (×2), Tabitha (×3), and Maxie Mt. Chimney from DefaultMoves to NoItemCustomMoves with full Gen3-valid strategic movesets |
 
 ### Upcoming Roadmap
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| ~~**10**~~ | ~~**Key NPC trainer overhaul** (Maxie, Archie, Wally, Matt, Tabitha, Shelly, Steven)~~ | ✅ DONE | — |
-| **11** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
-| **12** | **Safari Zone + late-game area encounters** | LOW | Low |
-| **13** | **Held items on key trainers + wild Pokémon** | LOW | Low-Medium |
-| **14** | **Polish pass** — level curve tuning, edge case fixes, balance | LOW | Medium |
+| ~~**10**~~ | ~~**Key NPC trainer overhaul**~~ | ✅ DONE | — |
+| ~~**11**~~ | ~~**Admin custom moves upgrade** (Matt, Shelly, Tabitha, Maxie MtChimney)~~ | ✅ DONE | — |
+| **12** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
+| **13** | **Safari Zone + late-game area encounters** | LOW | Low |
+| **14** | **Held items on key trainers + wild Pokémon** | LOW | Low-Medium |
+| **15** | **Polish pass** — level curve tuning, edge case fixes, balance | LOW | Medium |
 
 ### Cycle 6 Detailed Plan: Gym Leader Overhaul
 
