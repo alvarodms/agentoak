@@ -106,3 +106,33 @@ export async function getDiff(): Promise<string> {
     return "";
   }
 }
+
+export interface DiffStats {
+  filesChanged: number;
+  insertions: number;
+  deletions: number;
+  summary: string;
+}
+
+/** Get structured diff statistics for pokeemerald/ changes (staged + unstaged) */
+export async function getDiffStats(): Promise<DiffStats> {
+  try {
+    // Include both staged and unstaged changes
+    const stat = await git.diff(["--stat", "HEAD", "--", "pokeemerald/"]);
+    const lines = stat.trim().split("\n");
+    const summaryLine = lines[lines.length - 1] ?? "";
+
+    const filesMatch = summaryLine.match(/(\d+)\s+files?\s+changed/);
+    const insertMatch = summaryLine.match(/(\d+)\s+insertions?\(\+\)/);
+    const deleteMatch = summaryLine.match(/(\d+)\s+deletions?\(-\)/);
+
+    return {
+      filesChanged: filesMatch ? parseInt(filesMatch[1], 10) : 0,
+      insertions: insertMatch ? parseInt(insertMatch[1], 10) : 0,
+      deletions: deleteMatch ? parseInt(deleteMatch[1], 10) : 0,
+      summary: stat.trim() || "No changes in pokeemerald/",
+    };
+  } catch {
+    return { filesChanged: 0, insertions: 0, deletions: 0, summary: "Could not compute diff stats" };
+  }
+}

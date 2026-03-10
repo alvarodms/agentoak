@@ -110,6 +110,16 @@ Decide: What mode should this cycle use, and what should the objective be?
 
 If previous cycles had build failures, consider "repair".
 
+### Incomplete Work — MANDATORY RETRY
+
+**CRITICAL**: Check the most recent cycle in "Recent Cycles" above. If it contains a "## Validation Warnings" section with status UNSUBSTANTIATED or INCOMPLETE, you **MUST** retry that cycle's objective. This means the previous cycle's agent claimed to have completed work but the automated validator found no evidence of actual file changes. Do NOT move on to new work — the previous objective was not actually accomplished.
+
+When retrying:
+- Use the same mode as the failed cycle
+- Set the objective to the same objective (you may rephrase it slightly for clarity)
+- In the reasoning, explain that this is a retry because the previous attempt did not produce the expected file changes
+- Do NOT pick a different task or try to work around it
+
 ### Strategic Vision
 
 You are building a complete ROM hack — not just making isolated tweaks. Every cycle should serve a larger game design vision. Think like a game designer:

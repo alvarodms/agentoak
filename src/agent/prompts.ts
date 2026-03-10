@@ -1,5 +1,6 @@
 import type { Memory } from "../memory/types.js";
 import { getMemorySummary } from "../memory/store.js";
+import type { ValidationResult } from "../reflection/validator.js";
 
 /**
  * Build dynamic per-cycle context to append to the system prompt.
@@ -111,6 +112,7 @@ export function buildReflectionPrompt(cycleContext: {
   filesModified: string[];
   buildResult: { success: boolean; errors: string[] } | null;
   cycleSummary: string;
+  validationResult?: ValidationResult | null;
 }): string {
   const actionLog = cycleContext.actions
     .map((a, i) => `${i + 1}. ${a.tool}(${JSON.stringify(a.input).slice(0, 80)}) → ${a.result.slice(0, 100)}`)
@@ -119,6 +121,10 @@ export function buildReflectionPrompt(cycleContext: {
   const buildInfo = cycleContext.buildResult
     ? `Build: ${cycleContext.buildResult.success ? "SUCCESS" : "FAILED"}\nErrors: ${cycleContext.buildResult.errors.join("; ") || "none"}`
     : "No build was attempted this cycle.";
+
+  const validationSection = cycleContext.validationResult
+    ? `## Validation Result\n\n**Status**: ${cycleContext.validationResult.status.toUpperCase()}\n\n${cycleContext.validationResult.warnings.length > 0 ? "**Warnings**:\n" + cycleContext.validationResult.warnings.map(w => `- ⚠ ${w}`).join("\n") : "No warnings."}\n\n**Git Diff Summary** (ground truth of actual changes):\n\`\`\`\n${cycleContext.validationResult.diffSummary}\n\`\`\``
+    : "";
 
   return `Reflect on Cycle ${cycleContext.cycleNumber}.
 
@@ -137,6 +143,8 @@ ${buildInfo}
 ## Agent Summary
 ${cycleContext.cycleSummary}
 
+${validationSection}
+
 ---
 
 Please provide a structured reflection:
@@ -146,7 +154,9 @@ Please provide a structured reflection:
 3. **What evidence supports or contradicts my assumptions?** — Cite specific files, errors, or observations
 4. **What did I learn about the codebase?** — New concrete facts
 5. **What should I try next?** — Specific, actionable next steps
-5. **How does this cycle fit into the larger game design?** — Does the ROM hack have a coherent creative direction? Is the current strategy-notes.md roadmap still the right plan, or should it be updated? Think about the player experience holistically.
+6. **How does this cycle fit into the larger game design?** — Does the ROM hack have a coherent creative direction? Is the current strategy-notes.md roadmap still the right plan, or should it be updated? Think about the player experience holistically.
+
+**CRITICAL**: Compare the "Files Modified" list above against the "Objective". If the objective called for modifying game data (encounters, trainers, maps, etc.) but the Files Modified list does NOT include the relevant pokeemerald/ files, then the cycle is **INCOMPLETE** regardless of what the Agent Summary claims. State this explicitly in your reflection. Do not echo the agent's summary as truth — the Files Modified list and Git Diff Summary are the ground truth.
 
 Update the memory files in the memory/ directory as needed:
 - memory/codebase-facts.md — new codebase facts

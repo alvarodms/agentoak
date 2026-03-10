@@ -2,7 +2,7 @@ import path from "path";
 import { loadMemory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import { getModeDescription } from "./modes.js";
-import { buildDynamicContext, buildTaskPrompt, buildBuildFixPrompt } from "../agent/prompts.js";
+import { buildDynamicContext, buildTaskPrompt, buildBuildFixPrompt, buildReflectionPrompt } from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
@@ -10,7 +10,9 @@ import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
-import { commitCycle, getHeadSha, revertPokeemerald } from "../git/committer.js";
+import { commitCycle, getHeadSha, revertPokeemerald, getDiffStats } from "../git/committer.js";
+import { validateCycle } from "../reflection/validator.js";
+import type { ValidationResult } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest } from "../github/issues.js";
 import { closeIssue } from "../github/client.js";
 import { logger, cycleLogger } from "../utils/logger.js";
@@ -232,6 +234,7 @@ async function runReflectionPhase(
   plan: { mode: string; objective: string },
   implResult: ClaudeCodeResult,
   buildResult: { success: boolean; errors: string[] } | null,
+  validationResult: ValidationResult | null,
   log: ReturnType<typeof cycleLogger>,
 ) {
   log.info("Phase 4: Reflection...");
@@ -242,6 +245,7 @@ async function runReflectionPhase(
     filesModified: implResult.filesModified,
     buildResult,
     cycleSummary: implResult.cycleSummary,
+    validationResult,
   });
 }
 
@@ -287,12 +291,33 @@ export async function runCycle(): Promise<void> {
       log,
     );
 
+    // ── Phase 3.5: Validation — programmatic claim cross-check ──
+    let validationResult: ValidationResult | null = null;
+    if (!reverted) {
+      log.info("Phase 3.5: Validating implementation claims...");
+      const diffStats = await getDiffStats();
+      validationResult = validateCycle({
+        mode: plan.mode as Parameters<typeof validateCycle>[0]["mode"],
+        objective: plan.objective,
+        implResult,
+        diffStats,
+      });
+
+      if (validationResult.status !== "verified") {
+        log.warn(`  ⚠ Validation: ${validationResult.status.toUpperCase()}`);
+        for (const w of validationResult.warnings) {
+          log.warn(`    - ${w}`);
+        }
+      }
+    }
+
     // ── Phase 4: Reflection (separate agent context) ──
     const reflection = await runReflectionPhase(
       cycleNumber,
       plan,
       implResult,
       finalBuildResult,
+      validationResult,
       log,
     );
 
@@ -315,7 +340,15 @@ export async function runCycle(): Promise<void> {
       actions: allActions,
       filesModified,
       buildResult: finalBuildResult,
-      cycleSummary: implResult.cycleSummary + (reverted ? " [REVERTED: build could not be fixed]" : ""),
+      cycleSummary: implResult.cycleSummary
+        + (reverted ? " [REVERTED: build could not be fixed]" : "")
+        + (validationResult && validationResult.status !== "verified"
+          ? ` [${validationResult.status.toUpperCase()}: agent claimed changes not reflected in file modifications]`
+          : ""),
+      validationWarnings: validationResult && validationResult.warnings.length > 0
+        ? validationResult.warnings
+        : undefined,
+      validationStatus: validationResult?.status,
       nextSteps: implResult.nextSteps,
       reflectionText: reflection.reflectionText,
       tokenUsage: totalTokenUsage,
