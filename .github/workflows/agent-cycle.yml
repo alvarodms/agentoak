@@ -53,6 +53,17 @@ jobs:
       - name: Fetch full history for git operations
         run: git fetch --unshallow origin main 2>/dev/null || true
 
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
