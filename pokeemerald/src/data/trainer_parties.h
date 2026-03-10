@@ -6874,7 +6874,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BrendanRoute103Torchic[]
     {
     .iv = 0,
     .lvl = 5,
-    .species = SPECIES_BELDUM,
+    .species = SPECIES_DRATINI,
     }
 };
 
@@ -6882,17 +6882,17 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BrendanRoute110Torchic[]
     {
     .iv = 50,
     .lvl = 18,
-    .species = SPECIES_MAGNEMITE,
+    .species = SPECIES_HORSEA,
     },
     {
     .iv = 50,
     .lvl = 18,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 100,
     .lvl = 20,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRATINI,
     }
 };
 
@@ -6900,17 +6900,17 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BrendanRoute119Torchic[]
     {
     .iv = 100,
     .lvl = 29,
-    .species = SPECIES_MAGNETON,
+    .species = SPECIES_SEADRA,
     },
     {
     .iv = 100,
     .lvl = 29,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 150,
     .lvl = 31,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRAGONAIR,
     }
 };
 
@@ -7006,7 +7006,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayRoute103Torchic[] = {
     {
     .iv = 0,
     .lvl = 5,
-    .species = SPECIES_BELDUM,
+    .species = SPECIES_DRATINI,
     }
 };
 
@@ -7014,17 +7014,17 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayRoute110Torchic[] = {
     {
     .iv = 50,
     .lvl = 18,
-    .species = SPECIES_MAGNEMITE,
+    .species = SPECIES_HORSEA,
     },
     {
     .iv = 50,
     .lvl = 18,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 100,
     .lvl = 20,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRATINI,
     }
 };
 
@@ -7032,17 +7032,17 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayRoute119Torchic[] = {
     {
     .iv = 100,
     .lvl = 29,
-    .species = SPECIES_MAGNETON,
+    .species = SPECIES_SEADRA,
     },
     {
     .iv = 100,
     .lvl = 29,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 150,
     .lvl = 31,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRAGONAIR,
     }
 };
 
@@ -7938,12 +7938,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BrendanRustboroTorchic[]
     {
     .iv = 25,
     .lvl = 13,
-    .species = SPECIES_MAGNEMITE,
+    .species = SPECIES_HORSEA,
     },
     {
     .iv = 50,
     .lvl = 15,
-    .species = SPECIES_BELDUM,
+    .species = SPECIES_DRATINI,
     }
 };
 
@@ -8950,22 +8950,22 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BrendanLilycoveTorchic[]
     {
     .iv = 150,
     .lvl = 31,
-    .species = SPECIES_MAGNETON,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 150,
     .lvl = 32,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_LAPRAS,
     },
     {
     .iv = 150,
     .lvl = 32,
-    .species = SPECIES_STARMIE,
+    .species = SPECIES_SEADRA,
     },
     {
     .iv = 200,
     .lvl = 34,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRAGONAIR,
     }
 };
 
@@ -9019,22 +9019,22 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayLilycoveTorchic[] = {
     {
     .iv = 150,
     .lvl = 31,
-    .species = SPECIES_MAGNETON,
+    .species = SPECIES_GYARADOS,
     },
     {
     .iv = 150,
     .lvl = 32,
-    .species = SPECIES_KADABRA,
+    .species = SPECIES_LAPRAS,
     },
     {
     .iv = 150,
     .lvl = 32,
-    .species = SPECIES_STARMIE,
+    .species = SPECIES_SEADRA,
     },
     {
     .iv = 200,
     .lvl = 34,
-    .species = SPECIES_METANG,
+    .species = SPECIES_DRAGONAIR,
     }
 };
 
@@ -10319,12 +10319,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayRustboroTorchic[] = {
     {
     .iv = 25,
     .lvl = 13,
-    .species = SPECIES_MAGNEMITE,
+    .species = SPECIES_HORSEA,
     },
     {
     .iv = 50,
     .lvl = 15,
-    .species = SPECIES_BELDUM,
+    .species = SPECIES_DRATINI,
     }
 };
 

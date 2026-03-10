@@ -36,9 +36,19 @@ This framing explains:
 |---------|------|------|----------|
 | **Larvitar** | → Pupitar → Tyranitar | Rock/Ground → Rock/Dark | The Crusher — slow early, unstoppable late |
 | **Bagon** | → Shelgon → Salamence | Dragon/Flying | The Dreamer — evolves into the classic powerhouse |
-| **Beldum** | → Metang → Metagross | Steel/Psychic | The Machine — tanky, methodical, technical |
+| **Dratini** | → Dragonair → Dragonite | Dragon | The Legend — graceful, builds to an iconic finish |
 
-Each choice signals a different playstyle and creates a different "journey" through the hack. Tyranitar players brute-force; Salamence players speed-sweep; Metagross players wall and tank.
+Each choice signals a different playstyle and creates a different "journey" through the hack. Tyranitar players brute-force; Salamence players speed-sweep; Dragonite players persist and endure.
+
+### Starter → Rival Correspondence (Implemented Cycle 12)
+
+| Player Picks | VAR_STARTER_MON | Rival Gets | Rival Theme |
+|---|---|---|---|
+| Larvitar (slot 0) | 0 (Treecko slot) | Bagon | Dragon/Flying — Sneasel/Scyther support |
+| Bagon (slot 1) | 1 (Torchic slot) | Dratini | Dragon/Water — Horsea/Gyarados support |
+| Dratini (slot 2) | 2 (Mudkip slot) | Larvitar | Dark/Rock — Houndour/Murkrow support |
+
+**Files modified**: `src/starter_choose.c` (sStarterMon array), `src/data/trainer_parties.h` (10 rival party definitions for Brendan/May Torchic variants: Route103/110/119, Rustboro, Lilycove)
 
 ---
 
@@ -303,7 +313,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 
 | Cycle | Achievement |
 |-------|-------------|
-| Cycle 2 | ✅ Starters changed to Larvitar / Bagon / Beldum |
+| Cycle 2 | ✅ Starters changed to Larvitar / Bagon / Dratini (initially Beldum; corrected Cycle 12) |
 | Cycle 3 | ✅ Routes 101/102 encounter overhaul |
 | Cycle 4 | ✅ All 73 Hoenn route encounter tables redesigned |
 | Cycle 5 | ✅ Game Design Document created |
@@ -313,6 +323,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 9 | ✅ **Dungeon encounter tables** — 34 tables overhauled across 11 key dungeons (Petalburg Woods, Rusturf Tunnel, Granite Cave, Fiery Path, New Mauville, Meteor Falls, Shoal Cave, Mt. Pyre, Seafloor Cavern, Sky Pillar, Victory Road) |
 | Cycle 10 | ✅ **Key NPC trainer overhaul** — Maxie (3 battles), Archie, Matt, Shelly (2 battles), Tabitha (3 battles), Wally (VR1-VR5 + Mauville), Steven post-game; villain bosses upgraded to NoItemCustomMoves with strategic movesets |
 | Cycle 11 | ✅ **Admin custom moves upgrade** — Verified all Cycle 10 changes in place; upgraded Matt, Shelly (×2), Tabitha (×3), and Maxie Mt. Chimney from DefaultMoves to NoItemCustomMoves with full Gen3-valid strategic movesets |
+| Cycle 12 | ✅ **Starter overhaul finalized** — Third starter corrected from Beldum to Dratini; all 10 "Torchic" rival party definitions (Brendan + May, 5 locations each) rebuilt with Horsea/Gyarados/Seadra/Dragonair water-dragon theme |
 
 ### Upcoming Roadmap
 
@@ -320,7 +331,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 |-------|-----------|----------|------------|
 | ~~**10**~~ | ~~**Key NPC trainer overhaul**~~ | ✅ DONE | — |
 | ~~**11**~~ | ~~**Admin custom moves upgrade** (Matt, Shelly, Tabitha, Maxie MtChimney)~~ | ✅ DONE | — |
-| **12** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
+| **13** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
 | **13** | **Safari Zone + late-game area encounters** | LOW | Low |
 | **14** | **Held items on key trainers + wild Pokémon** | LOW | Low-Medium |
 | **15** | **Polish pass** — level curve tuning, edge case fixes, balance | LOW | Medium |
