@@ -324,17 +324,19 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 10 | ✅ **Key NPC trainer overhaul** — Maxie (3 battles), Archie, Matt, Shelly (2 battles), Tabitha (3 battles), Wally (VR1-VR5 + Mauville), Steven post-game; villain bosses upgraded to NoItemCustomMoves with strategic movesets |
 | Cycle 11 | ✅ **Admin custom moves upgrade** — Verified all Cycle 10 changes in place; upgraded Matt, Shelly (×2), Tabitha (×3), and Maxie Mt. Chimney from DefaultMoves to NoItemCustomMoves with full Gen3-valid strategic movesets |
 | Cycle 12 | ✅ **Starter overhaul finalized** — Third starter corrected from Beldum to Dratini; all 10 "Torchic" rival party definitions (Brendan + May, 5 locations each) rebuilt with Horsea/Gyarados/Seadra/Dragonair water-dragon theme |
+| Cycle 13 | ❌ **Unsubstantiated** — Professor Birch dialogue and Safari Zone not completed (cycle flagged) |
+| Cycle 14 | ✅ **Safari Zone encounter overhaul** — All six Safari Zone encounter tables updated with rare migrated species: Dratini, Gible, Horsea, Larvitar, Bagon, and other powerful Pokémon |
+| Cycle 15 | ✅ **Professor Birch + NPC dialogue edits** — Migration event narrative added: Birch's lab aide, Route 101 rescue dialogue, Littleroot Town NPCs updated to reference strange Pokémon appearances and rare migrations |
 
-### Upcoming Roadmap
+### Upcoming Roadmap (Cycles 16–20)
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| ~~**10**~~ | ~~**Key NPC trainer overhaul**~~ | ✅ DONE | — |
-| ~~**11**~~ | ~~**Admin custom moves upgrade** (Matt, Shelly, Tabitha, Maxie MtChimney)~~ | ✅ DONE | — |
-| **13** | **Professor Birch + NPC dialogue edits** (narrative flavor text) | MEDIUM | High (scripting) |
-| **13** | **Safari Zone + late-game area encounters** | LOW | Low |
-| **14** | **Held items on key trainers + wild Pokémon** | LOW | Low-Medium |
-| **15** | **Polish pass** — level curve tuning, edge case fixes, balance | LOW | Medium |
+| **16** | **Held items on key trainers + wild Pokémon** — Add thematic held items to gym leaders, Elite Four, rival, and rare wild encounters | MEDIUM | Medium (data editing) |
+| **17** | **Minor area encounters** — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts, Mt. Chimney (if applicable) | LOW | Low (JSON edits) |
+| **18** | **Quality of life: Move tutors + TM prices** — Ensure strong moves (Dragon Claw, Earthquake) accessible; consider reducing TM prices for key combat moves | LOW | Medium (script/data) |
+| **19** | **Level curve tuning + balance pass** — Review trainer levels across progression; ensure difficulty scaling matches player's accelerated power | HIGH | High (analysis + edits) |
+| **20** | **Final polish + bug testing** — Playtest critical path, fix any crashes, verify all changes compile cleanly, create release candidate | HIGH | High (testing) |
 
 ### Cycle 6 Detailed Plan: Gym Leader Overhaul
 
