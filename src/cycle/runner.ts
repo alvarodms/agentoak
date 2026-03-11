@@ -209,7 +209,7 @@ async function runBuildVerifyPhase(
       log.info("Phase 3: No files modified — skipping build verification.");
     }
     return {
-      finalBuildResult: implResult.buildResult,
+      finalBuildResult: null, // No build verification = no build result
       fixActions,
       fixTokenUsage,
       reverted: false,
