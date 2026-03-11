@@ -65,3 +65,12 @@ export function getModeDescription(mode: CycleMode): string {
   const config = CYCLE_MODES[mode];
   return `${config.label} — ${config.description}\n\n${config.promptAddendum}`;
 }
+
+/**
+ * Returns true for modes that involve code/data changes and benefit from
+ * a cost-optimised coding model (DeepSeek). Research and planning modes
+ * stay on the Anthropic model for richer reasoning.
+ */
+export function isCodingMode(mode: CycleMode): boolean {
+  return mode === "patch" || mode === "repair" || mode === "refactor" || mode === "feature";
+}

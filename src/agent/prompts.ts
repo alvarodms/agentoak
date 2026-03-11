@@ -42,6 +42,84 @@ ${memorySummary}
 ${journalContext}${issueSection}`;
 }
 
+type TaskMode = "patch" | "repair" | "refactor" | "feature" | "research" | "planning";
+
+interface ModePromptConfig {
+  planSectionLabel: string;
+  intro: string;
+  guidelines: string[];
+}
+
+const MODE_PROMPT_CONFIGS: Record<TaskMode, ModePromptConfig> = {
+  patch: {
+    planSectionLabel: "Implementation Plan",
+    intro: "You are in the implementation phase. A planning agent has decided what changes to make — your job is to execute them precisely.",
+    guidelines: [
+      "Read the relevant files before editing. Understand the code and data structures first.",
+      "Make all the changes described in the plan. Don't stop at one file if more are needed.",
+      "When modifying data (encounters, trainers, items), think holistically — changes should be consistent across routes and progression.",
+      "After making changes, run `make` in the pokeemerald/ directory to verify your changes compile.",
+      "Update memory files with anything you discover — especially failure-patterns.md if you hit a tricky issue.",
+    ],
+  },
+  repair: {
+    planSectionLabel: "Build Errors / Repair Plan",
+    intro: "You are in the repair phase. The build is broken and your only job is to fix it. Do NOT add features or make unrelated changes.",
+    guidelines: [
+      "Review the error list carefully. Identify the root cause before editing anything.",
+      "Read the files mentioned in the errors to understand the context around each failure.",
+      "Fix each error with targeted, minimal edits. Prefer the simplest correction that preserves intent.",
+      "After fixing, run `make` in the pokeemerald/ directory to confirm the build passes.",
+      "Record the failure pattern and its solution in memory/failure-patterns.md so future cycles avoid the same mistake.",
+    ],
+  },
+  refactor: {
+    planSectionLabel: "Refactoring Plan",
+    intro: "You are in the refactoring phase. Your goal is to restructure or reorganize code while preserving existing behaviour.",
+    guidelines: [
+      "Read and understand the code you are restructuring before touching anything — the pokeemerald codebase is a decompilation with subtle constraints.",
+      "Make incremental, safe changes. Preserve behaviour unless the plan explicitly calls for a behavioural change.",
+      "After refactoring, run `make` in the pokeemerald/ directory to confirm nothing is broken.",
+      "Update codebase-facts.md with any structural insights you gain during the refactor.",
+    ],
+  },
+  feature: {
+    planSectionLabel: "Implementation Plan",
+    intro: "You are in the feature implementation phase. A planning agent has designed what to build — your job is to implement it fully and cohesively.",
+    guidelines: [
+      "Break the feature into logical steps and work through them methodically.",
+      "Read all relevant files before writing code. Understand existing patterns and conventions.",
+      "Don't be timid — a real feature touches multiple files. Implement everything needed for the feature to feel complete.",
+      "After implementing, run `make` in the pokeemerald/ directory to verify the build passes.",
+      "If the feature is too large to finish in one cycle, implement as much as possible and document remaining work in strategy-notes.md.",
+      "Update codebase-facts.md with any new system knowledge and strategy-notes.md to reflect how this feature fits the game design.",
+    ],
+  },
+  research: {
+    planSectionLabel: "Research Agenda",
+    intro: "You are in the research phase. Your goal is deep exploration — understand a game system end-to-end so future cycles can confidently modify it.",
+    guidelines: [
+      "Don't just skim — go deep. Trace function calls, map data flows, understand every file involved in the system.",
+      "Identify all constraints relevant to future modifications: what is safe to change, what is fragile, what depends on what.",
+      "Do NOT modify any source files or run the build. Research only.",
+      "Record detailed findings in memory/codebase-facts.md: specific file paths, function names, data structure layouts, offset tables, and any gotchas.",
+      "Conclude by noting what a future implementation cycle would need to do, so the next cycle can act on your findings immediately.",
+    ],
+  },
+  planning: {
+    planSectionLabel: "Planning Agenda",
+    intro: "You are in the planning phase. Think like a game designer: your job is to shape the vision for this ROM hack and create a concrete roadmap future cycles can execute against.",
+    guidelines: [
+      "Review memory/strategy-notes.md first — understand what has already been planned and what has shipped.",
+      "Think holistically: what is the player experience from start to finish? What makes this hack unique and worth playing?",
+      "Design specific systems where needed: encounter philosophy per area, trainer difficulty curve, story hooks, thematic elements.",
+      "Write a detailed, actionable game design document in memory/strategy-notes.md. Future implementation cycles will use this as their marching orders, so be specific.",
+      "Define a multi-cycle roadmap with dependencies and priorities. Name the next 3–5 cycles and what each one should accomplish.",
+      "Do NOT modify source files or run the build. This is a design cycle.",
+    ],
+  },
+};
+
 /** Build a focused task prompt for the implementation phase (Phase 2) */
 export function buildTaskPrompt(
   cycleNumber: number,
@@ -50,11 +128,15 @@ export function buildTaskPrompt(
   mode: string,
   implementationPlan?: string,
 ): string {
+  const config = MODE_PROMPT_CONFIGS[mode as TaskMode] ?? MODE_PROMPT_CONFIGS.patch;
+
   const planSection = implementationPlan
-    ? `\n## Implementation Plan\n\n${implementationPlan}\n`
+    ? `\n## ${config.planSectionLabel}\n\n${implementationPlan}\n`
     : "";
 
-  return `## Cycle ${cycleNumber} — Implementation Phase
+  const guidelinesList = config.guidelines.map((g) => `- ${g}`).join("\n");
+
+  return `## Cycle ${cycleNumber} — ${mode.charAt(0).toUpperCase() + mode.slice(1)} Phase
 
 **Your task**: ${objective}
 
@@ -62,15 +144,10 @@ export function buildTaskPrompt(
 
 **Reasoning**: ${reasoning}
 ${planSection}
-You are in the implementation phase. A planning agent has already decided what to work on — your job is to execute this task.
+${config.intro}
 
 Guidelines:
-- Focus on executing this task thoroughly. If the objective is broad, break it into steps and make meaningful progress.
-- Read relevant files before making changes. Understand the code first.
-- When making data changes (encounters, trainers, items), think holistically — design for the full game experience, not just one file in isolation.
-- Don't be afraid to modify multiple files if the objective calls for it. A cohesive feature that touches 5 files is better than a timid single-line edit.
-- If you modify code, run \`make\` in the pokeemerald/ directory to verify your changes compile.
-- Update your memory files with anything you learn or discover — especially update strategy-notes.md with how this cycle fits into the larger game design.
+${guidelinesList}
 
 Begin your work now.`;
 }
