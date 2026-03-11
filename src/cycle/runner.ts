@@ -491,7 +491,7 @@ export async function runCycle(): Promise<void> {
       actions: allActions,
       filesModified,
       buildResult: finalBuildResult,
-      cycleSummary: implResult.cycleSummary
+      cycleSummary: reflection.cycleSummary
         + (reverted ? " [REVERTED: build could not be fixed]" : "")
         + (validationResult && validationResult.status !== "verified"
           ? ` [${validationResult.status.toUpperCase()}: agent claimed changes not reflected in file modifications]`
@@ -500,7 +500,7 @@ export async function runCycle(): Promise<void> {
         ? validationResult.warnings
         : undefined,
       validationStatus: validationResult?.status,
-      nextSteps: implResult.nextSteps,
+      nextSteps: reflection.nextSteps,
       reflectionText: reflection.reflectionText,
       tokenUsage: totalTokenUsage,
       toolCallCount: implResult.toolCallCount + fixActions.length,
@@ -514,7 +514,7 @@ export async function runCycle(): Promise<void> {
       .map(a => a.issueNumber);
     const { commitHash, commitFailed } = await runCommitPhase({
       cycleNumber,
-      summary: implResult.cycleSummary || plan.objective,
+      summary: reflection.cycleSummary || plan.objective,
       filesModified,
       acceptedIssueNumbers,
       memory,
@@ -543,7 +543,7 @@ export async function runCycle(): Promise<void> {
       releaseUrl = await createCycleRelease(
         version,
         commitHash,
-        implResult.cycleSummary || "",
+        reflection.cycleSummary || "",
         plan.objective,
       );
       if (releaseUrl) {

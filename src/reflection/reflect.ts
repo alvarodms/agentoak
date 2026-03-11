@@ -9,6 +9,8 @@ import type { ValidationResult } from "./validator.js";
 
 export interface ReflectionResult {
   reflectionText: string;
+  cycleSummary: string;
+  nextSteps: string;
   actions: ActionRecord[];
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
 }
@@ -53,6 +55,8 @@ export async function runReflection(context: {
 
   return {
     reflectionText,
+    cycleSummary: result.cycleSummary || context.cycleSummary,
+    nextSteps: result.nextSteps,
     actions: result.actions,
     tokenUsage: result.tokenUsage,
   };

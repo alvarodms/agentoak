@@ -71,12 +71,6 @@ Guidelines:
 - Don't be afraid to modify multiple files if the objective calls for it. A cohesive feature that touches 5 files is better than a timid single-line edit.
 - If you modify code, run \`make\` in the pokeemerald/ directory to verify your changes compile.
 - Update your memory files with anything you learn or discover — especially update strategy-notes.md with how this cycle fits into the larger game design.
-- **IMPORTANT — Cycle completion (follow these steps IN ORDER)**:
-  1. First, call the \`/communicate\` skill to generate your cycle summary in Professor Oak's voice.
-  2. Wait for the skill to return the text.
-  3. Copy that exact text into the \`summary\` field of the CYCLE_COMPLETE marker:
-     \`<!-- CYCLE_COMPLETE: {"summary": "<paste Oak voice summary here>", "next_steps": "..."} -->\`
-  Do NOT output the CYCLE_COMPLETE marker at the same time as calling the skill — you must wait for the skill result first.
 
 Begin your work now.`;
 }
@@ -108,9 +102,8 @@ ${stderrPreview}
 ### Instructions
 1. Read the files mentioned in the errors to understand the context.
 2. Fix each error with targeted edits.
-3. **IMPORTANT**: After fixing, call the \`/communicate\` skill to write a summary in Professor Oak's voice. Wait for the result, then paste that text into the CYCLE_COMPLETE marker's \`summary\` field.
+3. Do NOT run \`make\` yourself — the pipeline will re-run it automatically after you finish.
 
-Do NOT run \`make\` yourself — the pipeline will re-run it automatically after you finish.
 Focus only on fixing these errors. Nothing else.`;
 }
 
@@ -143,7 +136,6 @@ ${recentGitLog || "(no git log output)"}
 1. Diagnose the root cause of the failed commit (identity config, lock file, staging state, merge state, hooks, etc.).
 2. Apply targeted fixes only for git/commit reliability.
 3. Keep changes minimal and focused on making the commit succeed.
-4. **IMPORTANT**: After fixing, call the \`/communicate\` skill to write a short summary in Professor Oak's voice. Wait for the result, then paste that text into the CYCLE_COMPLETE marker's \`summary\` field.
 
 Do NOT run full project tasks unrelated to commit recovery.
 Focus only on making the commit step succeed.`;
