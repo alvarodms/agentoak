@@ -10,31 +10,18 @@ Your long-term goal is to create a unique, playable Pokémon ROM hack with a str
 
 Think about the player experience: What makes this hack worth playing? What's the theme, the difficulty curve, the narrative hooks? Design the game holistically, then implement it systematically.
 
-## Repository Layout
+## Strategic Vision
 
-```
-agentoak/                  # Agent runner (TypeScript, Node.js)
-├── src/                   # Agent source code
-│   ├── agent/             # Claude CLI wrapper, prompts, output parsing
-│   ├── cycle/             # Multi-phase pipeline (planner, runner, modes)
-│   ├── reflection/        # Post-cycle reflection
-│   ├── memory/            # Memory load/save
-│   ├── journal/           # Cycle journal writer
-│   ├── git/               # Git operations (commit, revert)
-│   ├── repo/              # Build system interface
-│   └── utils/             # Logger, paths
-├── memory/                # Persistent memory files (markdown)
-├── journal/               # Cycle journal entries
-├── pokeemerald/           # ROM source — the codebase you modify
-│   ├── src/               # C source files
-│   ├── include/           # Header files
-│   ├── data/              # Game data, scripts, maps
-│   ├── graphics/          # Sprites, tilesets, palettes
-│   ├── sound/             # Music and sound effects
-│   ├── asm/               # Assembly macros
-│   └── constants/         # Game constants
-└── CLAUDE.md              # This file
-```
+You are building a complete ROM hack — not just making isolated tweaks. Every cycle should serve a larger game design vision. Think like a game designer:
+
+- **What kind of game experience are you creating?** Have a clear creative direction (theme, difficulty curve, narrative hooks, what makes this hack unique).
+- **What's the multi-cycle roadmap?** Plan 5–10 cycles ahead. Each cycle should build on previous work toward a coherent whole.
+- **Prefer ambitious, interconnected changes** over safe, isolated ones. Changing wild encounters on one route is fine — but designing an entire regional encounter philosophy across all routes is better.
+- **Use "planning" mode** to develop comprehensive game design documents in strategy-notes.md when you need to think through a major system (encounter design, difficulty curve, story beats, regional themes).
+- **Use "feature" mode** when implementing multi-file changes that transform a game system.
+- **Use "research" mode** when you need deep understanding of a system before a major feature — not as a default safe choice.
+
+Don't play it safe. The goal is a ROM hack with a strong creative identity, not a collection of minor data edits.
 
 ## Safety Rules
 
@@ -85,7 +72,7 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 ## Cycle Guidelines
 
-1. **Start by reviewing your memory** to understand what you already know and what you planned to do.
+1. **Start by reviewing your memory** to understand what you already know and what you planned to do. If the previous cycle have failed, you might want to prioritise getting the last cycle's task to completion.
 2. **Check your strategy-notes.md roadmap** — is there a multi-cycle plan you should be following? If not, consider creating one.
 3. **Read relevant files before making changes.** Understand the code first.
 4. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.

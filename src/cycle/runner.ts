@@ -75,7 +75,11 @@ async function runPlanningPhase(
   log.info("Phase 1: Planning...");
 
   const memory = loadMemory();
-  const recentJournals = getRecentJournalSummaries(3);
+  const recentJournals = getRecentJournalSummaries(3); // used by implementation, build-fix, and commit phases
+
+  // Only pass the single most-recent journal to the planner to keep its prompt lean.
+  // The planner can read memory files on demand via its tools if it needs more context.
+  const lastJournal = getRecentJournalSummaries(1);
 
   // Fetch new community issues (silently skipped if GitHub is not configured)
   log.info("  Checking for community issues...");
@@ -83,7 +87,7 @@ async function runPlanningPhase(
   const issueContext = formatIssuesForPrompt(communityIssues);
   const issueBacklog = readIssueBacklog();
 
-  const plan = await planCycle(memory, recentJournals, cycleNumber, issueContext, issueBacklog);
+  const plan = await planCycle(lastJournal, cycleNumber, issueContext, issueBacklog);
   log.info(`Plan: [${plan.mode}] ${plan.objective}`);
 
   // Execute issue actions decided by the planner (comment + label)
