@@ -112,7 +112,17 @@ jobs:
           ./build.sh
           ./install.sh "${{ github.workspace }}/pokeemerald"
 
+      - name: Cache Flatpak installation
+        id: cache-flatpak
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/flatpak
+            /var/lib/flatpak
+          key: flatpak-flips-${{ runner.os }}-v1
+
       - name: Install Flips (IPS patcher) via Flatpak
+        if: steps.cache-flatpak.outputs.cache-hit != 'true'
         run: |
           sudo apt-get install -y -qq flatpak
           sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
