@@ -1,7 +1,7 @@
 import path from "path";
 import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
-import { getModeDescription } from "./modes.js";
+import { getModeDescription, isCodingMode } from "./modes.js";
 import {
   buildDynamicContext,
   buildTaskPrompt,
@@ -138,7 +138,11 @@ async function runImplementationPhase(
   const dynamicContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
   const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode, plan.implementationPlan);
 
-  const deepSeekOverrides = buildDeepSeekOverrides();
+  // Only route to DeepSeek for coding-focused modes; research and planning
+  // require richer reasoning and stay on the Anthropic model.
+  const deepSeekOverrides = isCodingMode(plan.mode as Parameters<typeof isCodingMode>[0])
+    ? buildDeepSeekOverrides()
+    : undefined;
   const usingDeepSeek = !!deepSeekOverrides;
   const model = usingDeepSeek
     ? process.env.DEEPSEEK_MODEL
@@ -148,7 +152,7 @@ async function runImplementationPhase(
     : 30 * 60 * 1000;
   const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50", 10);
 
-  log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})"}`}`);
+  log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})`} [mode: ${plan.mode}]`);
   log.info(`  → Task: ${plan.objective}`);
   const result = await runClaudeCode(taskPrompt, {
     appendSystemPrompt: dynamicContext,
