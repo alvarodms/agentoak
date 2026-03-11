@@ -241,17 +241,8 @@ Respond with a JSON object containing mode, objective, reasoning, implementation
       return { mode, objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
     }
 
-    logger.warn("Could not parse structured plan from CLI output, using fallback");
+    throw new Error("Could not parse structured plan from CLI output");
   } catch (err) {
-    logger.warn(`Planning phase failed: ${err instanceof Error ? err.message : String(err)}`);
+    throw new Error(`Planning phase failed: ${err instanceof Error ? err.message : String(err)}`, { cause: err });
   }
-
-  return {
-    mode: "research",
-    objective: "Explore the pokeemerald codebase and understand its structure",
-    reasoning: "Default fallback — planner could not produce a structured plan.",
-    implementationPlan: "",
-    issueActions: [],
-    helpRequests: [],
-  };
 }
