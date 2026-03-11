@@ -154,6 +154,8 @@ async function runImplementationPhase(
 
   log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})`} [mode: ${plan.mode}]`);
   log.info(`  → Task: ${plan.objective}`);
+  log.info(`  → Prompt: ${taskPrompt}`);
+  log.info(`  → Dynamic context: ${dynamicContext}`);
   const result = await runClaudeCode(taskPrompt, {
     appendSystemPrompt: dynamicContext,
     maxTurns,
