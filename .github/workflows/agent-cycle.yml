@@ -138,15 +138,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Cache Headroom pip packages
+      - name: Cache Headroom virtual environment
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip
-          key: headroom-pip-${{ runner.os }}-v1
+          path: ~/headroom-venv
+          key: headroom-venv-${{ runner.os }}-v1
 
       - name: Install and start Headroom proxy
         run: |
-          pip install "headroom-ai[proxy]"
+          if [ ! -d ~/headroom-venv ]; then
+            python -m venv ~/headroom-venv
+            source ~/headroom-venv/bin/activate
+            pip install "headroom-ai[proxy]"
+          else
+            source ~/headroom-venv/bin/activate
+          fi
           headroom proxy --no-intelligent-context --log-file headroom.jsonl &
           for i in $(seq 1 10); do
             if curl -s http://localhost:8787/health > /dev/null 2>&1; then
