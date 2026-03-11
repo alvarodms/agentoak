@@ -135,12 +135,13 @@ async function runImplementationPhase(
   log.info("Phase 2: Implementation...");
 
   const modeDescription = getModeDescription(plan.mode as Parameters<typeof getModeDescription>[0]);
-  const dynamicContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
+  const isCoding = isCodingMode(plan.mode as Parameters<typeof isCodingMode>[0]);
+  const dynamicContext = isCoding ? "" : buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
   const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode, plan.implementationPlan);
 
   // Only route to DeepSeek for coding-focused modes; research and planning
   // require richer reasoning and stay on the Anthropic model.
-  const deepSeekOverrides = isCodingMode(plan.mode as Parameters<typeof isCodingMode>[0])
+  const deepSeekOverrides = isCoding
     ? buildDeepSeekOverrides()
     : undefined;
   const usingDeepSeek = !!deepSeekOverrides;
@@ -239,8 +240,6 @@ async function runBuildVerifyPhase(
   for (let attempt = 1; attempt <= MAX_BUILD_FIX_ATTEMPTS; attempt++) {
     log.info(`  Build: FAIL — running fix agent (attempt ${attempt}/${MAX_BUILD_FIX_ATTEMPTS})...`);
 
-    const modeDescription = getModeDescription("repair");
-    const fixContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
     const fixPrompt = buildBuildFixPrompt(cycleNumber, buildResult.errors, buildResult.stderr);
 
     const deepSeekOverrides = buildDeepSeekOverrides();
@@ -252,7 +251,6 @@ async function runBuildVerifyPhase(
       ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000", 10)
       : 30 * 60 * 1000;
     const fixResult = await runClaudeCode(fixPrompt, {
-      appendSystemPrompt: fixContext,
       maxTurns: 15,
       tools: "Bash,Read,Edit,Write,Grep",
       model,
@@ -364,15 +362,12 @@ async function runCommitPhase(params: {
       + `(attempt ${attempt}/${MAX_COMMIT_FIX_ATTEMPTS})...`,
     );
 
-    const modeDescription = getModeDescription("repair");
-    const fixContext = buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
     const gitStatus = await getGitStatusText();
     const recentGitLog = await getRecentGitLogText(5);
     const fixPrompt = buildCommitFixPrompt(cycleNumber, lastFailure, gitStatus, recentGitLog);
 
     const model = process.env.ANTHROPIC_MODEL;
     await runClaudeCode(fixPrompt, {
-      appendSystemPrompt: fixContext,
       maxTurns: 10,
       tools: "Bash,Read,Write",
       model,

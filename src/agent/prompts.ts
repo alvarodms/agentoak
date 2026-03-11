@@ -138,16 +138,16 @@ export function buildTaskPrompt(
 
   return `## Cycle ${cycleNumber} — ${mode.charAt(0).toUpperCase() + mode.slice(1)} Phase
 
-**Your task**: ${objective}
-
 **Mode**: ${mode}
 
 **Reasoning**: ${reasoning}
-${planSection}
 ${config.intro}
 
 Guidelines:
 ${guidelinesList}
+
+**Your task**: ${objective}
+${planSection}
 
 Begin your work now.`;
 }
