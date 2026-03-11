@@ -1,9 +1,8 @@
 import { runClaudeCode } from "../agent/claude-cli.js";
-import type { Memory } from "../memory/types.js";
 import type { CycleMode } from "./modes.js";
 import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
-import { getMemorySummary, getCycleModeHistorySummary } from "../memory/store.js";
+import { getCycleModeHistorySummary } from "../memory/store.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
 
 export interface CyclePlan {
@@ -77,7 +76,6 @@ const CYCLE_PLAN_SCHEMA = {
 
 /** Use Claude Code CLI to decide what the next cycle should focus on */
 export async function planCycle(
-  memory: Memory,
   recentJournalSummaries: string[],
   cycleNumber: number,
   issueContext: string = "",
@@ -85,7 +83,6 @@ export async function planCycle(
 ): Promise<CyclePlan> {
   const model = process.env.ANTHROPIC_MODEL;
 
-  const memorySummary = getMemorySummary(memory);
   const modeHistorySummary = getCycleModeHistorySummary();
   const journalContext =
     recentJournalSummaries.length > 0
@@ -108,16 +105,27 @@ export async function planCycle(
 
 Cycle ${cycleNumber} is about to start.
 
+## Last Cycle's Journal
+${journalContext}
+
 ## Cycle Mode History
+Use this summary of past cycle modes to inform your decision, but do not feel constrained by it.
+If the previous few cycles were all "research", maybe it's time for a "feature". If there was a recent "repair", maybe a "patch" or "refactor" is next.
+Use your judgment to choose the best mode for the current situation and objective — the goal is to build a great ROM hack, not to follow a rigid pattern.
+
 ${modeHistorySummary}
 
-_Heads-up: if there is a long run of consecutive "feature" cycles, consider whether a "planning" cycle would be valuable to re-evaluate direction and ensure the roadmap for the next few cycles is concrete and clear. This is a suggestion — use your own judgment._
 
-## Current Memory
-${memorySummary}
+## Memory Files (on demand)
 
-## Recent Cycles
-${journalContext}
+Your full memory is in the \`memory/\` directory. Read these files if you need more context before deciding — don't pre-emptively read them all, only fetch what is relevant:
+
+- \`memory/strategy-notes.md\` — game design direction, multi-cycle roadmap, and goals
+- \`memory/codebase-facts.md\` — discovered facts about the pokeemerald codebase
+- \`memory/failure-patterns.md\` — build failures encountered and their solutions
+- \`memory/project-facts.md\` — build system details and configuration notes
+
+You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.
 
 ## Available Modes
 ${modeList}
@@ -126,28 +134,6 @@ Decide: What mode should this cycle use, and what should the objective be?
 
 If previous cycles had build failures, consider "repair".
 
-### Incomplete Work — MANDATORY RETRY
-
-**CRITICAL**: Check the most recent cycle in "Recent Cycles" above. If it contains a "## Validation Warnings" section with status UNSUBSTANTIATED or INCOMPLETE, you **MUST** retry that cycle's objective. This means the previous cycle's agent claimed to have completed work but the automated validator found no evidence of actual file changes. Do NOT move on to new work — the previous objective was not actually accomplished.
-
-When retrying:
-- Use the same mode as the failed cycle
-- Set the objective to the same objective (you may rephrase it slightly for clarity)
-- In the reasoning, explain that this is a retry because the previous attempt did not produce the expected file changes
-- Do NOT pick a different task or try to work around it
-
-### Strategic Vision
-
-You are building a complete ROM hack — not just making isolated tweaks. Every cycle should serve a larger game design vision. Think like a game designer:
-
-- **What kind of game experience are you creating?** Have a clear creative direction (theme, difficulty curve, narrative hooks, what makes this hack unique).
-- **What's the multi-cycle roadmap?** Plan 5–10 cycles ahead. Each cycle should build on previous work toward a coherent whole.
-- **Prefer ambitious, interconnected changes** over safe, isolated ones. Changing wild encounters on one route is fine — but designing an entire regional encounter philosophy across all routes is better.
-- **Use "planning" mode** to develop comprehensive game design documents in strategy-notes.md when you need to think through a major system (encounter design, difficulty curve, story beats, regional themes).
-- **Use "feature" mode** when implementing multi-file changes that transform a game system.
-- **Use "research" mode** when you need deep understanding of a system before a major feature — not as a default safe choice.
-
-Don't play it safe. The goal is a ROM hack with a strong creative identity, not a collection of minor data edits.
 
 Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent runs on a less capable model — it should execute your plan, not make design decisions. Your instructions must be complete and specific:
 
