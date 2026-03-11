@@ -327,12 +327,16 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 13 | ❌ **Unsubstantiated** — Professor Birch dialogue and Safari Zone not completed (cycle flagged) |
 | Cycle 14 | ✅ **Safari Zone encounter overhaul** — All six Safari Zone encounter tables updated with rare migrated species: Dratini, Gible, Horsea, Larvitar, Bagon, and other powerful Pokémon |
 | Cycle 15 | ✅ **Professor Birch + NPC dialogue edits** — Migration event narrative added: Birch's lab aide, Route 101 rescue dialogue, Littleroot Town NPCs updated to reference strange Pokémon appearances and rare migrations |
+| Cycle 16 | ⚠️ **Held items PARTIAL** — Gym leaders 1–5 (Roxanne–Norman) updated with strategic held items; Winona partial; Tate & Liza, Juan, all Elite Four, and Wallace Champion still have ITEM_NONE on non-ace mons (~26 items remaining) |
 
 ### Upcoming Roadmap (Cycles 16–20)
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **16** | **Held items on key trainers + wild Pokémon** — Add thematic held items to gym leaders, Elite Four, rival, and rare wild encounters | MEDIUM | Medium (data editing) |
+| **17** | **Complete held items** — Finish held item assignments for Winona, Tate & Liza, Juan, all 4 Elite Four, and Champion Wallace (~26 remaining ITEM_NONE slots) | HIGH | Low (targeted edits) |
+| **18** | **Minor area encounters** — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts | LOW | Low (JSON edits) |
+| **19** | **Level curve tuning + balance pass** — Review trainer levels across progression | HIGH | High (analysis + edits) |
+| **20** | **Final polish + bug testing** — Playtest critical path, verify all changes, create release candidate | HIGH | High (testing) |
 | **17** | **Minor area encounters** — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts, Mt. Chimney (if applicable) | LOW | Low (JSON edits) |
 | **18** | **Quality of life: Move tutors + TM prices** — Ensure strong moves (Dragon Claw, Earthquake) accessible; consider reducing TM prices for key combat moves | LOW | Medium (script/data) |
 | **19** | **Level curve tuning + balance pass** — Review trainer levels across progression; ensure difficulty scaling matches player's accelerated power | HIGH | High (analysis + edits) |
