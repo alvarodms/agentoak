@@ -160,21 +160,6 @@ Once you have decided on the objective, write a precise \`implementationPlan\` f
 **CRITICAL — Specifying creative content**:
 When the plan involves game content (dialogue, encounter tables, trainer rosters, item placements, stat values, move sets, evolution changes, etc.), you MUST provide the complete, verbatim content in the plan itself. The implementation agent should NOT be inventing dialogue, choosing Pokémon species, deciding stat values, or making any creative choices.
 
-**Bad example** (too vague):
-"Update Professor Birch's opening dialogue to reflect the migration event narrative"
-
-**Good example** (complete and specific):
-"Update Professor Birch's opening dialogue in \`data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc\` to:
-\`\`\`
-BIRCH: Welcome to the world of POKéMON!\\p
-My name is BIRCH.\\p
-People call me the POKéMON PROFESSOR.\\p
-But lately, I've been called something else:\\p
-The MIGRATION WITNESS.\\p
-You see, something extraordinary has\\n
-happened to HOENN's ecosystem...$
-\`\`\`"
-
 **What to specify completely (not exhaustive - use your own judgment)**:
 - Full dialogue text (exact wording)
 - Complete encounter tables (species, levels, encounter rates)
@@ -194,6 +179,8 @@ You may also include \`helpRequests\` if you are stuck on something and want to 
 Respond with a JSON object containing mode, objective, reasoning, implementationPlan, and optionally issueActions and helpRequests.`;
 
   try {
+    logger.info(`-> Planner prompt:\n\n\n${prompt}\n\n\n`);
+
     const result = await runClaudeCode(prompt, {
       maxTurns: 10,
       timeout: 5 * 60 * 1000,
@@ -201,7 +188,7 @@ Respond with a JSON object containing mode, objective, reasoning, implementation
       jsonSchema: CYCLE_PLAN_SCHEMA,
     });
 
-    console.log('Planning result:', result);
+    logger.info(`-> Planning result:\n\n\n${JSON.stringify(result, null, 2)}\n\n\n`);
 
     // With --json-schema, the structured JSON is in the result message's result field
     interface PlanJson {
