@@ -98,6 +98,12 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
   const patchPath = path.join(BASE_ROM_DIR, "patch.ips");
 
   try {
+    logger.info("Generating IPS patch using Flips...");
+    logger.info(await execFileAsync("flatpak", [
+      "run",
+      "--help",
+    ]));
+
     await execFileAsync("flatpak", [
       "run",
       "com.github.Alcaro.Flips",
