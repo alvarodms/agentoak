@@ -149,7 +149,41 @@ You are building a complete ROM hack — not just making isolated tweaks. Every 
 
 Don't play it safe. The goal is a ROM hack with a strong creative identity, not a collection of minor data edits.
 
-Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent may be running on a cost-optimised model that is less familiar with the codebase, so it needs clear step-by-step marching orders. Include: (1) what to read or understand first, (2) logical actions to take in order, (3) conventions or patterns to follow, (4) how to verify the work compiled and is correct. Keep it numbered and concise.
+Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent runs on a less capable model — it should execute your plan, not make design decisions. Your instructions must be complete and specific:
+
+**General structure**:
+1. What to read or understand first
+2. Logical actions to take in order
+3. Conventions or patterns to follow
+4. How to verify the work compiled and is correct
+
+**CRITICAL — Specifying creative content**:
+When the plan involves game content (dialogue, encounter tables, trainer rosters, item placements, stat values, move sets, evolution changes, etc.), you MUST provide the complete, verbatim content in the plan itself. The implementation agent should NOT be inventing dialogue, choosing Pokémon species, deciding stat values, or making any creative choices.
+
+**Bad example** (too vague):
+"Update Professor Birch's opening dialogue to reflect the migration event narrative"
+
+**Good example** (complete and specific):
+"Update Professor Birch's opening dialogue in \`data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc\` to:
+\`\`\`
+BIRCH: Welcome to the world of POKéMON!\\p
+My name is BIRCH.\\p
+People call me the POKéMON PROFESSOR.\\p
+But lately, I've been called something else:\\p
+The MIGRATION WITNESS.\\p
+You see, something extraordinary has\\n
+happened to HOENN's ecosystem...$
+\`\`\`"
+
+**What to specify completely (not exhaustive - use your own judgment)**:
+- Full dialogue text (exact wording)
+- Complete encounter tables (species, levels, encounter rates)
+- Exact trainer rosters (species, levels, held items, moves)
+- Specific numerical values (stats, experience yields, catch rates)
+- Item lists and placement locations
+- Evolution conditions and methods
+
+The implementation agent's job is to locate the right files and make the necessary changes — not to design the content itself. When in doubt, over-specify.
 
 If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
 
