@@ -36,6 +36,7 @@ import type { TokenUsage } from "../memory/types.js";
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
 const MAX_COMMIT_FIX_ATTEMPTS = 3;
+const CODING_PHASE_DEFAULT_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
 /**
  * Build env overrides to route the Claude CLI subprocess to DeepSeek.
@@ -50,7 +51,7 @@ function buildDeepSeekOverrides(): Record<string, string | undefined> | undefine
     ANTHROPIC_API_KEY: process.env.DEEPSEEK_API_KEY,
     ANTHROPIC_MODEL: process.env.DEEPSEEK_MODEL,
     ANTHROPIC_SMALL_FAST_MODEL: process.env.DEEPSEEK_MODEL,
-    API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000",
+    API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(),
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: process.env.DEEPSEEK_DISABLE_NONESSENTIAL_TRAFFIC ?? "1",
   };
 }
@@ -153,7 +154,7 @@ async function runImplementationPhase(
     ? process.env.DEEPSEEK_MODEL
     : process.env.ANTHROPIC_MODEL;
   const timeout = usingDeepSeek
-    ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000", 10)
+    ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
     : 30 * 60 * 1000;
   const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50", 10);
 
@@ -252,7 +253,7 @@ async function runBuildVerifyPhase(
       ? process.env.DEEPSEEK_MODEL
       : process.env.ANTHROPIC_MODEL;
     const timeout = usingDeepSeek
-      ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? "600000", 10)
+      ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
       : 30 * 60 * 1000;
     const fixResult = await runClaudeCode(fixPrompt, {
       maxTurns: 15,
