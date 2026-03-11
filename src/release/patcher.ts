@@ -99,10 +99,10 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
 
   try {
     logger.info("Generating IPS patch using Flips...");
-    logger.info(await execFileAsync("flatpak", [
+    logger.info(JSON.stringify(await execFileAsync("flatpak", [
       "run",
       "--help",
-    ]));
+    ])));
 
     await execFileAsync("flatpak", [
       "run",
