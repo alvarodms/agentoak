@@ -7,7 +7,6 @@ import {
   buildTaskPrompt,
   buildBuildFixPrompt,
   buildCommitFixPrompt,
-  buildReflectionPrompt,
 } from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
@@ -29,7 +28,7 @@ import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
-import { logger, cycleLogger } from "../utils/logger.js";
+import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
@@ -188,8 +187,6 @@ async function runBuildVerifyPhase(
   cycleNumber: number,
   implResult: ClaudeCodeResult,
   sessionStartSha: string,
-  memory: ReturnType<typeof loadMemory>,
-  recentJournals: string[],
   log: ReturnType<typeof cycleLogger>,
 ): Promise<{
   finalBuildResult: { success: boolean; errors: string[] } | null;
@@ -344,8 +341,6 @@ async function runCommitPhase(params: {
     summary,
     filesModified,
     acceptedIssueNumbers,
-    memory,
-    recentJournals,
     log,
   } = params;
 
@@ -444,8 +439,6 @@ export async function runCycle(): Promise<void> {
       cycleNumber,
       implResult,
       sessionStartSha,
-      memory,
-      recentJournals,
       log,
     );
 
@@ -455,7 +448,7 @@ export async function runCycle(): Promise<void> {
       log.info("Phase 3.5: Validating implementation claims...");
       const diffStats = await getDiffStats();
       validationResult = validateCycle({
-        mode: plan.mode as Parameters<typeof validateCycle>[0]["mode"],
+        mode: plan.mode,
         objective: plan.objective,
         implResult,
         diffStats,
@@ -492,7 +485,7 @@ export async function runCycle(): Promise<void> {
     log.info("Phase 5: Writing journal entry...");
     const journalFile = writeJournalEntry({
       cycleNumber,
-      mode: plan.mode as Parameters<typeof writeJournalEntry>[0]["mode"],
+      mode: plan.mode,
       objective: plan.objective,
       reasoning: plan.reasoning,
       actions: allActions,
