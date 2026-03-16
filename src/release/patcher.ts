@@ -101,6 +101,7 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
     logger.info("Generating IPS patch using Flips...");
     logger.info(JSON.stringify(await execFileAsync("flatpak", [
       "run",
+      "com.github.Alcaro.Flips",
       "--help",
     ])));
 
