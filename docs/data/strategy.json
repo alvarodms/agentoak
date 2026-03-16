@@ -1,0 +1,156 @@
+{
+  "generatedAt": "2026-03-16T05:50:57.898Z",
+  "vision": {
+    "title": "Legends of Hoenn",
+    "description": "is a Pokémon Emerald ROM hack that reimagines Hoenn as a region teeming with powerful, rare, and legendary-adjacent Pokémon. Where vanilla Emerald gave you Zigzagoon and Poochyena on every early route, Legends of Hoenn drops you into a world where every encounter matters. The player begins with one of three pseudo-legendary lines and must navigate an ecosystem of powerhouses — Houndour packs prowling early routes, Dratini lurking in the rivers, Lapras crossing the southern seas.\n\n**The core promise**: Every Pokémon you encounter is worth catching. Every trainer is a real fight. The story of Legends of Hoenn is the story of a trainer who builds a team of legends and earns their place in a world that doesn't make it easy."
+  },
+  "starters": [
+    {
+      "name": "Larvitar",
+      "evolutionLine": "→ Pupitar → Tyranitar",
+      "types": "Rock/Ground → Rock/Dark",
+      "identity": "The Crusher — slow early, unstoppable late"
+    },
+    {
+      "name": "Bagon",
+      "evolutionLine": "→ Shelgon → Salamence",
+      "types": "Dragon/Flying",
+      "identity": "The Dreamer — evolves into the classic powerhouse"
+    },
+    {
+      "name": "Dratini",
+      "evolutionLine": "→ Dragonair → Dragonite",
+      "types": "Dragon",
+      "identity": "The Legend — graceful, builds to an iconic finish"
+    }
+  ],
+  "roadmap": {
+    "completed": [
+      {
+        "cycle": 2,
+        "status": "completed",
+        "description": "Starters changed to Larvitar / Bagon / Dratini (initially Beldum; corrected Cycle 12)"
+      },
+      {
+        "cycle": 3,
+        "status": "completed",
+        "description": "Routes 101/102 encounter overhaul"
+      },
+      {
+        "cycle": 4,
+        "status": "completed",
+        "description": "All 73 Hoenn route encounter tables redesigned"
+      },
+      {
+        "cycle": 5,
+        "status": "completed",
+        "description": "Game Design Document created"
+      },
+      {
+        "cycle": 6,
+        "status": "completed",
+        "description": "**Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses"
+      },
+      {
+        "cycle": 7,
+        "status": "completed",
+        "description": "**Rival team overhaul** — all 5 rival battles (30 party definitions) redesigned with pseudo-legendary starters + thematic supports"
+      },
+      {
+        "cycle": 8,
+        "status": "completed",
+        "description": "**Elite Four + Champion overhaul** — all 4 Elite Four + Wallace redesigned; trainer arc now complete from Route 101 to Champion"
+      },
+      {
+        "cycle": 9,
+        "status": "completed",
+        "description": "**Dungeon encounter tables** — 34 tables overhauled across 11 key dungeons (Petalburg Woods, Rusturf Tunnel, Granite Cave, Fiery Path, New Mauville, Meteor Falls, Shoal Cave, Mt. Pyre, Seafloor Cavern, Sky Pillar, Victory Road)"
+      },
+      {
+        "cycle": 10,
+        "status": "completed",
+        "description": "**Key NPC trainer overhaul** — Maxie (3 battles), Archie, Matt, Shelly (2 battles), Tabitha (3 battles), Wally (VR1-VR5 + Mauville), Steven post-game; villain bosses upgraded to NoItemCustomMoves with strategic movesets"
+      },
+      {
+        "cycle": 11,
+        "status": "completed",
+        "description": "**Admin custom moves upgrade** — Verified all Cycle 10 changes in place; upgraded Matt, Shelly (×2), Tabitha (×3), and Maxie Mt. Chimney from DefaultMoves to NoItemCustomMoves with full Gen3-valid strategic movesets"
+      },
+      {
+        "cycle": 12,
+        "status": "completed",
+        "description": "**Starter overhaul finalized** — Third starter corrected from Beldum to Dratini; all 10 \"Torchic\" rival party definitions (Brendan + May, 5 locations each) rebuilt with Horsea/Gyarados/Seadra/Dragonair water-dragon theme"
+      },
+      {
+        "cycle": 13,
+        "status": "failed",
+        "description": "**Unsubstantiated** — Professor Birch dialogue and Safari Zone not completed (cycle flagged)"
+      },
+      {
+        "cycle": 14,
+        "status": "completed",
+        "description": "**Safari Zone encounter overhaul** — All six Safari Zone encounter tables updated with rare migrated species: Dratini, Gible, Horsea, Larvitar, Bagon, and other powerful Pokémon"
+      },
+      {
+        "cycle": 15,
+        "status": "completed",
+        "description": "**Professor Birch + NPC dialogue edits** — Migration event narrative added: Birch's lab aide, Route 101 rescue dialogue, Littleroot Town NPCs updated to reference strange Pokémon appearances and rare migrations"
+      },
+      {
+        "cycle": 16,
+        "status": "partial",
+        "description": "️ **Held items PARTIAL** — Gym leaders 1–5 (Roxanne–Norman) updated with strategic held items; Winona partial; Tate & Liza, Juan, all Elite Four, and Wallace Champion still have ITEM_NONE on non-ace mons (~26 items remaining)"
+      }
+    ],
+    "upcoming": [
+      {
+        "cycle": 17,
+        "objective": "Complete held items — Finish held item assignments for Winona, Tate & Liza, Juan, all 4 Elite Four, and Champion Wallace (~26 remaining ITEM_NONE slots)",
+        "priority": "HIGH",
+        "complexity": "Low (targeted edits)"
+      },
+      {
+        "cycle": 18,
+        "objective": "Minor area encounters — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts",
+        "priority": "LOW",
+        "complexity": "Low (JSON edits)"
+      },
+      {
+        "cycle": 19,
+        "objective": "Level curve tuning + balance pass — Review trainer levels across progression",
+        "priority": "HIGH",
+        "complexity": "High (analysis + edits)"
+      },
+      {
+        "cycle": 20,
+        "objective": "Final polish + bug testing — Playtest critical path, verify all changes, create release candidate",
+        "priority": "HIGH",
+        "complexity": "High (testing)"
+      },
+      {
+        "cycle": 17,
+        "objective": "Minor area encounters — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts, Mt. Chimney (if applicable)",
+        "priority": "LOW",
+        "complexity": "Low (JSON edits)"
+      },
+      {
+        "cycle": 18,
+        "objective": "Quality of life: Move tutors + TM prices — Ensure strong moves (Dragon Claw, Earthquake) accessible; consider reducing TM prices for key combat moves",
+        "priority": "LOW",
+        "complexity": "Medium (script/data)"
+      },
+      {
+        "cycle": 19,
+        "objective": "Level curve tuning + balance pass — Review trainer levels across progression; ensure difficulty scaling matches player's accelerated power",
+        "priority": "HIGH",
+        "complexity": "High (analysis + edits)"
+      },
+      {
+        "cycle": 20,
+        "objective": "Final polish + bug testing — Playtest critical path, fix any crashes, verify all changes compile cleanly, create release candidate",
+        "priority": "HIGH",
+        "complexity": "High (testing)"
+      }
+    ]
+  }
+}
