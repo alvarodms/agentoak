@@ -10,6 +10,8 @@ import type { ValidationResult } from "./validator.js";
 export interface ReflectionResult {
   reflectionText: string;
   cycleSummary: string;
+  /** Structured changelog entries from CYCLE_COMPLETE changes[] field */
+  cycleChanges: string[];
   nextSteps: string;
   actions: ActionRecord[];
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
@@ -23,6 +25,7 @@ export async function runReflection(context: {
   filesModified: string[];
   buildResult: { success: boolean; errors: string[] } | null;
   cycleSummary: string;
+  cycleChanges: string[];
   validationResult?: ValidationResult | null;
 }): Promise<ReflectionResult> {
   logger.info("Starting reflection phase...");
@@ -52,6 +55,7 @@ export async function runReflection(context: {
   return {
     reflectionText,
     cycleSummary: result.cycleSummary || context.cycleSummary,
+    cycleChanges: result.cycleChanges.length > 0 ? result.cycleChanges : context.cycleChanges,
     nextSteps: result.nextSteps,
     actions: result.actions,
     tokenUsage: result.tokenUsage,

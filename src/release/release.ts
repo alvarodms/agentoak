@@ -35,22 +35,30 @@ function patchFilename(version: GameVersion): string {
 /**
  * Format a player-facing changelog from the cycle summary.
  * Keeps it non-technical and focused on what changed for players.
+ *
+ * If `cycleChanges` is provided, renders them as a bullet list.
+ * Falls back to the narrative `cycleSummary` or `objective` otherwise.
  */
 function formatChangelog(
   version: GameVersion,
   cycleSummary: string,
   objective: string,
+  cycleChanges: string[],
 ): string {
   const date = new Date().toISOString().split("T")[0];
   const versionStr = formatVersion(version);
 
+  const whatsNew =
+    cycleChanges.length > 0
+      ? cycleChanges.map((c) => `- ${c}`).join("\n")
+      : cycleSummary || objective;
+
   return [
-    `## ${versionStr}`,
     `**Released:** ${date}`,
     "",
-    "### What's New",
+    "## What's New",
     "",
-    cycleSummary || objective,
+    whatsNew,
     "",
     "---",
     `*This patch was generated automatically by Agent Oak (cycle ${version.cycle}).*`,
@@ -69,6 +77,7 @@ export async function createCycleRelease(
   commitHash: string,
   cycleSummary: string,
   objective: string,
+  cycleChanges: string[] = [],
 ): Promise<string | null> {
   const octokit = getGitHubClient();
   const repo = getRepoInfo();
@@ -88,7 +97,7 @@ export async function createCycleRelease(
   const tagName = `v${version.major}.${version.minor}.${version.cycle}`;
   const releaseStage = getReleaseStage(version);
   const releaseName = `Agent Oak v${version.major}.${version.minor}.${version.cycle} ${releaseStage} Build ${version.build}`;
-  const changelog = formatChangelog(version, cycleSummary, objective);
+  const changelog = formatChangelog(version, cycleSummary, objective, cycleChanges);
   const assetName = patchFilename(version);
 
   const releaseData = {
