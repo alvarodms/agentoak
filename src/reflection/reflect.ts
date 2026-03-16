@@ -39,17 +39,13 @@ export async function runReflection(context: {
     model,
   });
 
-  // Collect the reflection text from actions
-  const reflectionText = [
-    `## Reflection on Cycle ${context.cycleNumber}`,
-    "",
-    `**Summary**: ${result.cycleSummary || context.cycleSummary}`,
-    "",
-    `**Next Steps**: ${result.nextSteps || "Not specified"}`,
-    "",
-    "### Tool calls during reflection:",
-    ...result.actions.map((a) => `- ${a.tool}: ${a.result.slice(0, 100)}`),
-  ].join("\n");
+  // Use the narrative text the reflection agent actually wrote (before its CYCLE_COMPLETE marker).
+  // This captures the substantive "what did I learn / what should I try next" content
+  // rather than duplicating the summary or dumping raw tool call outputs.
+  const narrative = result.narrativeText?.trim() || "";
+  const reflectionText = narrative
+    ? `## Reflection on Cycle ${context.cycleNumber}\n\n${narrative}`
+    : `## Reflection on Cycle ${context.cycleNumber}\n\n*No reflection narrative generated.*`;
 
   logger.info("Reflection phase complete");
 
