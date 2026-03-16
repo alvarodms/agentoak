@@ -283,7 +283,8 @@ Update the memory files in the memory/ directory as needed:
 **IMPORTANT — Reflection completion (follow these steps IN ORDER)**:
 1. First, call the \`/communicate\` skill to write your reflection and next steps in Professor Oak's voice.
 2. Wait for the skill to return the text.
-3. Copy that exact text into the CYCLE_COMPLETE marker:
-   \`<!-- CYCLE_COMPLETE: {"summary": "<paste Oak voice reflection here>", "next_steps": "<paste Oak voice next steps here>"} -->\`
+3. Write a \`changes\` array: a short list of player-facing bullet points (plain English, no jargon) describing what changed this cycle. Each entry should be a single concise sentence, e.g. "Reduced TM prices for combat moves from 3,000 to 1,500 Pokédollars". Aim for 3–6 items. If nothing changed (build failed, no ROM changes), use an empty array.
+4. Output the CYCLE_COMPLETE marker with all fields:
+   \`<!-- CYCLE_COMPLETE: {"summary": "<Oak voice reflection>", "changes": ["<change 1>", "<change 2>"], "next_steps": "<Oak voice next steps>"} -->\`
 Do NOT output the CYCLE_COMPLETE marker at the same time as calling the skill — you must wait for the skill result first.`;
 }
