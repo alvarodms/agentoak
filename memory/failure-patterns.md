@@ -14,26 +14,23 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: Agent completes only part of a multi-component objective, declares success, but reflection reveals missing work.
 **Example (Cycle 14)**: Objective was "Overhaul Safari Zone encounters AND update Birch dialogue" but only encounters were modified.
-**Example (Cycle 16)**: Objective was "Add held items to ALL gym leaders AND Elite Four" but only gym leaders 1–5 (Roxanne through Norman) were completed. Winona partially done; Tate & Liza, Juan, all Elite Four, and Champion Wallace left incomplete.
+**Example (Cycle 16)**: Objective was "Add held items to ALL gym leaders AND Elite Four" but only gym leaders 1–5 (Roxanne through Norman) were completed. Winona partially done; Tate & Liza, Juan, all Elite Four, and Champion Wallace left incomplete. **Completed in Cycle 17.**
 **Cause**: Agent gets focused on first component/first items in a list and fails to track that multiple deliverables were required. When editing one-by-one (individual Edit calls), progress stalls without reaching full scope.
 **Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components.
 **Pattern**: When objective covers a large set (all gym leaders + Elite Four = 8 leaders + 4 E4 + 1 Champion = 13 trainers × 3–6 mons each), plan all edits upfront and pace through the full list systematically.
 
-## Held Item Edit Scope Issue (Cycle 16)
+## Held Item Edit Scope Issue (Cycle 16 — RESOLVED Cycle 17)
 
 **Symptom**: Bulk replace attempt blocked (154 matches, replace_all=false), then agent manually edits one-by-one but only completes first 5 gym leaders out of 13 trainers.
 **Cause**: The agent tried to bulk-replace all ITEM_NONE at once, was blocked, then manually iterated but ran out of cycle time/actions before reaching the end.
-**Resolution**: For large-scale data edits across many trainer parties, use a scripted approach (Python/sed) to update all at once rather than individual Edit calls. Alternatively, batch by section: complete all E4 first (fewer mons to edit), then gym leaders.
-**Key finding**: At cycle end, remaining ITEM_NONE entries:
-- Winona: Skarmory (1)
-- Tate & Liza: Xatu, Hypno, Slowbro, Claydol (4)
-- Juan: Starmie, Kingdra (2)
-- Sidney: Absol, Houndoom, Sharpedo (3)
-- Phoebe: Misdreavus, Dusclops, Sableye, Gengar #1 (4)
-- Glacia: Jynx, Lapras, Cloyster, Walrein (4)
-- Drake: Shelgon, Altaria, Dragonair, Flygon (4)
-- Wallace: Starmie, Tentacruel, Gyarados, Kingdra (4)
-Total remaining: ~26 items still ITEM_NONE
+**Resolution**: Cycle 17 completed the remaining 26 held item slots via targeted Edit calls with specific context. For future large-scale edits, use a scripted approach (Python/sed) rather than individual Edit calls.
+**Lesson**: When a species appears in multiple trainer parties (e.g. SPECIES_CLAYDOL at line 460 and 1247 and 3569), use Read first to confirm exact line context before Edit — prevents "2 matches found" errors.
+
+## Duplicate Entry in "2 matches found" Edit error
+
+**Symptom**: Edit tool returns "Found 2 matches of the string to replace, but replace_all is false."
+**Cause**: The search string matches multiple locations in the file (e.g., same species name appears in multiple trainer party blocks).
+**Resolution**: Read the file around the target line number first to get unique surrounding context, then include more lines of context in the old_str to make the match unique.
 
 ## Anticipated Pitfalls (from code analysis)
 

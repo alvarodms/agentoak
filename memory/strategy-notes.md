@@ -328,6 +328,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 14 | ✅ **Safari Zone encounter overhaul** — All six Safari Zone encounter tables updated with rare migrated species: Dratini, Gible, Horsea, Larvitar, Bagon, and other powerful Pokémon |
 | Cycle 15 | ✅ **Professor Birch + NPC dialogue edits** — Migration event narrative added: Birch's lab aide, Route 101 rescue dialogue, Littleroot Town NPCs updated to reference strange Pokémon appearances and rare migrations |
 | Cycle 16 | ⚠️ **Held items PARTIAL** — Gym leaders 1–5 (Roxanne–Norman) updated with strategic held items; Winona partial; Tate & Liza, Juan, all Elite Four, and Wallace Champion still have ITEM_NONE on non-ace mons (~26 items remaining) |
+| Cycle 17 | ✅ **Held items COMPLETE** — Finished all remaining held item assignments: Winona (Skarmory→Leftovers), Tate & Liza (4 slots), Juan (2 slots), Sidney (3 slots), Phoebe (4 slots), Glacia (4 slots), Drake (4 slots), Wallace Champion (4 slots). All 26 targeted replacements applied. |
 
 ### Upcoming Roadmap (Cycles 16–20)
 
