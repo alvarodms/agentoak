@@ -132,44 +132,23 @@ jobs:
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
 
-      - name: Setup Python for Headroom proxy
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Cache Headroom virtual environment
+      - name: Cache RTK binary
+        id: cache-rtk
         uses: actions/cache@v4
         with:
-          path: ~/headroom-venv
-          key: headroom-venv-${{ runner.os }}-v1
+          path: ~/.local/bin/rtk
+          key: rtk-${{ runner.os }}-v1
 
-      - name: Install and start Headroom proxy
+      - name: Install RTK (Rust Token Killer)
+        if: steps.cache-rtk.outputs.cache-hit != 'true'
         run: |
-          if [ ! -d ~/headroom-venv ]; then
-            python -m venv ~/headroom-venv
-            source ~/headroom-venv/bin/activate
-            pip install "headroom-ai[proxy]"
-          else
-            source ~/headroom-venv/bin/activate
-          fi
-          headroom proxy --no-intelligent-context --log-file headroom.jsonl &
-          PROXY_READY=false
-          for i in $(seq 1 10); do
-            if curl -s http://localhost:8787/health > /dev/null 2>&1; then
-              echo "Headroom proxy is ready"
-              curl -s http://localhost:8787/health | python3 -m json.tool
-              PROXY_READY=true
-              break
-            fi
-            echo "Waiting for Headroom proxy... ($i/10)"
-            sleep 2
-          done
-          if [ "$PROXY_READY" = "true" ]; then
-            echo "ANTHROPIC_BASE_URL=http://localhost:8787" >> "$GITHUB_ENV"
-            echo "Headroom proxy active — routing Claude CLI traffic through localhost:8787"
-          else
-            echo "WARNING: Headroom proxy did not start. Claude CLI will connect directly to Anthropic API using OAuth token."
-          fi
+          curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+
+      - name: Register RTK hook with Claude Code
+        run: |
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.local/bin:$PATH"
+          rtk init -g --auto-patch
 
       - name: Run agent cycle (attempt 1)
         id: attempt1
@@ -191,15 +170,6 @@ jobs:
           echo "Attempt 2 failed. Waiting 15 minutes before final retry..."
           sleep 900
           npm run cycle
-
-      - name: Log Headroom stats
-        if: always()
-        run: |
-          curl -s http://localhost:8787/stats | python3 -m json.tool || echo "Headroom proxy not available"
-          if [ -f headroom.jsonl ]; then
-            echo "--- Headroom log (last 20 lines) ---"
-            tail -20 headroom.jsonl
-          fi
 
       - name: Push changes
         run: |
