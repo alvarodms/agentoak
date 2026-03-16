@@ -22,6 +22,13 @@ const WATER_RATES = [60, 30, 5, 4, 1];
 const ROCK_SMASH_RATES = [60, 30, 5, 4, 1];
 const FISHING_RATES = [70, 30, 60, 20, 20, 40, 40, 15, 4, 1];
 
+// ── Type constants (matches include/constants/pokemon.h) ──
+const TYPE_NAMES = {
+  0: 'Normal', 1: 'Fighting', 2: 'Flying', 3: 'Poison', 4: 'Ground',
+  5: 'Rock', 6: 'Bug', 7: 'Ghost', 8: 'Steel', 10: 'Fire', 11: 'Water',
+  12: 'Grass', 13: 'Electric', 14: 'Psychic', 15: 'Ice', 16: 'Dragon', 17: 'Dark',
+};
+
 // ── Helpers ──
 
 /** SPECIES_TRAPINCH → Trapinch */
@@ -73,18 +80,48 @@ function rarityTier(percent) {
   return 'Ultra-Rare';
 }
 
+// ── Species Type Lookup ──
+
+/**
+ * Parse species_info.h to build a map of SPECIES_NAME → { type1, type2 }
+ * Only parses entries we need (starters) by looking them up individually.
+ */
+async function parseSpeciesTypes(speciesConsts) {
+  const src = await readFile(join(POKE, 'src/data/pokemon/species_info.h'), 'utf-8');
+  const typeMap = new Map();
+
+  for (const specConst of speciesConsts) {
+    // Match: [SPECIES_NAME] = { ... .types = { TYPE_X, TYPE_Y }, ... }
+    const pattern = new RegExp(
+      `\\[${specConst}\\]\\s*=\\s*\\{[\\s\\S]*?\\.types\\s*=\\s*\\{\\s*(TYPE_\\w+)\\s*,\\s*(TYPE_\\w+)\\s*\\}`,
+    );
+    const m = src.match(pattern);
+    if (m) {
+      const type1 = m[1].replace('TYPE_', '');
+      const type2 = m[2].replace('TYPE_', '');
+      const t1 = type1.charAt(0) + type1.slice(1).toLowerCase();
+      const t2 = type2.charAt(0) + type2.slice(1).toLowerCase();
+      typeMap.set(specConst, t1 === t2 ? [t1] : [t1, t2]);
+    }
+  }
+  return typeMap;
+}
+
 // ── Starters ──
 
 async function parseStarters() {
   const src = await readFile(join(POKE, 'src/starter_choose.c'), 'utf-8');
   const match = src.match(/sStarterMon\[.*?\]\s*=\s*\{([^}]+)\}/s);
   if (!match) return [];
-  const species = [...match[1].matchAll(/SPECIES_(\w+)/g)].map((m, i) => ({
-    species: formatSpecies('SPECIES_' + m[1]),
-    speciesConst: 'SPECIES_' + m[1],
+  const speciesConsts = [...match[1].matchAll(/SPECIES_(\w+)/g)].map(m => 'SPECIES_' + m[1]);
+  const typeMap = await parseSpeciesTypes(speciesConsts);
+
+  return speciesConsts.map((sc, i) => ({
+    species: formatSpecies(sc),
+    speciesConst: sc,
+    types: typeMap.get(sc) || [],
     position: i,
   }));
-  return species;
 }
 
 // ── Wild Encounters ──
@@ -323,7 +360,15 @@ function assembleChampion(trainers, parties) {
   };
 }
 
-function assembleRivals(trainers, parties) {
+function assembleRivals(trainers, parties, starters) {
+  // Build a set of known starter species names (uppercase) for suffix detection
+  const starterNames = new Set(
+    starters.map(s => s.speciesConst.replace('SPECIES_', ''))
+  );
+  // Also include the original vanilla starters since trainer IDs may still use them
+  for (const name of ['MUDKIP', 'TREECKO', 'TORCHIC']) starterNames.add(name);
+  const starterPattern = new RegExp('_(' + [...starterNames].join('|') + ')$');
+
   // Rival trainers: TRAINER_BRENDAN_* and TRAINER_MAY_*
   // Group by location for a progression view
   const rivalTrainers = trainers.filter(t =>
@@ -333,9 +378,9 @@ function assembleRivals(trainers, parties) {
   return rivalTrainers.map(t => {
     // Extract location from trainer ID: TRAINER_BRENDAN_ROUTE_103_MUDKIP → Route 103
     const idPart = t.id.replace(/^TRAINER_(BRENDAN|MAY)_/, '');
-    // Remove starter suffix
-    const locPart = idPart.replace(/_(MUDKIP|TREECKO|TORCHIC)$/, '');
-    const starterMatch = idPart.match(/(MUDKIP|TREECKO|TORCHIC)$/);
+    // Remove starter suffix (dynamic based on actual starters + vanilla names)
+    const locPart = idPart.replace(starterPattern, '');
+    const starterMatch = idPart.match(starterPattern);
     const location = locPart
       .split('_')
       .map(w => w.charAt(0) + w.slice(1).toLowerCase())
@@ -376,7 +421,7 @@ async function main() {
   const gymLeaders = assembleGymLeaders(trainers, parties);
   const eliteFour = assembleEliteFour(trainers, parties);
   const champion = assembleChampion(trainers, parties);
-  const rivals = assembleRivals(trainers, parties);
+  const rivals = assembleRivals(trainers, parties, starters);
 
   const guide = {
     generatedAt: new Date().toISOString(),
