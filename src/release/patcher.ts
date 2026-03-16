@@ -108,7 +108,7 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
     await execFileAsync("flatpak", [
       "run",
       "com.github.Alcaro.Flips",
-      "--create-ips",
+      "--create",
       baseRomPath,
       BUILT_ROM_PATH,
       patchPath,
