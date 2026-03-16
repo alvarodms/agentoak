@@ -96,7 +96,7 @@ export async function createCycleRelease(
   // Tag uses the cycle number as the patch component: v0.0.<cycle>
   const tagName = `v${version.major}.${version.minor}.${version.cycle}`;
   const releaseStage = getReleaseStage(version);
-  const releaseName = `Agent Oak v${version.major}.${version.minor}.${version.cycle} ${releaseStage} Build ${version.build}`;
+  const releaseName = `Legends of Hoenn v${version.major}.${version.minor}.${version.cycle} ${releaseStage}`;
   const changelog = formatChangelog(version, cycleSummary, objective, cycleChanges);
   const assetName = patchFilename(version);
 
