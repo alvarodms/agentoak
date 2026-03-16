@@ -32,6 +32,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The search string matches multiple locations in the file (e.g., same species name appears in multiple trainer party blocks).
 **Resolution**: Read the file around the target line number first to get unique surrounding context, then include more lines of context in the old_str to make the match unique.
 
+## Validator False-Positive "INCOMPLETE" on Python-Script Edits (Cycle 21)
+
+**Symptom**: Cycle validation reports "INCOMPLETE — no pokeemerald/ files modified" even though the data file was actually changed.
+**Cause**: The agent used a Python script written to `/tmp/` and executed via Bash. The validator tracks Write/Edit tool calls to detect file modifications, but Python-via-Bash bypasses this tracking. The git diff correctly shows the file was changed (12254 insertions, 12213 deletions in `wild_encounters.json`).
+**Resolution**: This is a validator blind spot, not a real failure. The git diff is the ground truth. Python scripts are a valid and efficient approach for bulk JSON edits — but ALWAYS follow large JSON edits with `make` to catch syntax errors immediately.
+**Critical lesson**: When using Python scripts to modify JSON data, run `python3 -c "import json; json.load(open('file.json'))"` immediately after to validate JSON syntax before declaring the cycle done.
+
 ## Anticipated Pitfalls (from code analysis)
 
 ### Using wrong SPECIES_ constants
