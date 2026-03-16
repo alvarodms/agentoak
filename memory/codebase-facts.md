@@ -159,6 +159,74 @@ static const struct TrainerMonItemCustomMoves sParty_[TrainerName][] = {
 
 **Wild encounter data location**: `data/wild_encounters.json` — JSON format mapping maps to species/levels/rates. This is the primary file to edit for changing wild Pokémon.
 
+### Item System and TM Prices (`src/data/items.h`)
+
+**Item data structure:**
+```c
+const struct Item gItems[] = {
+    [ITEM_NAME] = {
+        .name = _("DisplayName"),
+        .itemId = ITEM_NAME,
+        .price = [price_value],
+        .holdEffect = HOLD_EFFECT_[TYPE],
+        .holdEffectParam = [parameter],
+        .description = COMPOUND_STRING("Description text"),
+        .mystery = [mystery_value],
+        .pocket = POCKET_[TYPE],
+        .type = ITEM_TYPE_[TYPE],
+        .fieldUseFunc = [function_pointer],
+        .battleUsage = EFFECT_ITEM_[TYPE],
+        .battleUseFunc = [function_pointer]
+    }
+};
+```
+
+**TM price structure (Cycle 22):**
+- Standard TMs typically priced at 3000 Pokédollars
+- Key combat TMs can be reduced for accessibility (e.g., to 1500 Pokédollars)
+- TM entries found in items.h with pattern `[ITEM_TM_MOVE_NAME]`
+- **Modified prices in Legends of Hoenn:**
+  - `ITEM_TM_DRAGON_CLAW`: 3000 → 1500
+  - `ITEM_TM_ICE_BEAM`: 3000 → 1500
+  - `ITEM_TM_EARTHQUAKE`: 3000 → 1500
+  - `ITEM_TM_THUNDERBOLT`: 3000 → 1500
+  - `ITEM_TM_FLAMETHROWER`: 3000 → 1500
+
+### Wild Pokémon Held Items (`src/data/pokemon/species_info.h`)
+
+**Species data structure with held items:**
+```c
+[SPECIES_NAME] = {
+    .baseHP        = [value],
+    .baseAttack    = [value],
+    // ... other stats ...
+    .heldItems = {ITEM_[NAME], ITEM_[NAME]},  // 5% and 1% rates
+    .abilities = {ABILITY_[NAME], ABILITY_[NAME]},
+    // ... other fields ...
+}
+```
+
+**Held item mechanics:**
+- `heldItems[0]` — 5% chance when encountering wild Pokémon
+- `heldItems[1]` — 1% chance (rarer item)
+- Use `ITEM_NONE` for no held item in either slot
+
+**Legends of Hoenn held item theme (Cycle 22):**
+- **Fire types**: `ITEM_CHARCOAL` (Growlithe, Houndour, Magmar)
+- **Electric types**: `ITEM_MAGNET` (Electabuzz)
+- **Ice types**: `ITEM_NEVER_MELT_ICE` (Swinub, Snorunt)
+- **Fighting types**: `ITEM_BLACK_BELT`
+- **Psychic types**: `ITEM_TWISTED_SPOON`
+- **Dragon types**: `ITEM_DRAGON_SCALE`
+
+**Item constant names** (check `include/constants/items.h` for exact spelling):
+- `ITEM_CHARCOAL` (#215)
+- `ITEM_MAGNET` (#208)
+- `ITEM_NEVER_MELT_ICE` (#217)
+- `ITEM_BLACK_BELT` (#207)
+- `ITEM_TWISTED_SPOON` (#219)
+- `ITEM_DRAGON_SCALE` (#201)
+
 ### Starter Selection (`src/starter_choose.c`)
 
 **Current starters** (lines 113–118) — **MODIFIED in Cycles 2 & 12**:
