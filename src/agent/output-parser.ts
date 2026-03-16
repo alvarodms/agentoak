@@ -15,6 +15,8 @@ export interface ClaudeCodeResult {
   toolCallCount: number;
   /** The text from the final "result" message (e.g. structured JSON from --json-schema) */
   resultText: string;
+  /** Narrative text the agent wrote (pre-CYCLE_COMPLETE); useful as reflection body */
+  narrativeText: string;
 }
 
 export interface ActionRecord {
@@ -35,6 +37,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let nextSteps = "";
   let toolCallCount = 0;
   let cycleMarkerFound = false;
+  const preMarkerTexts: string[] = [];
   const postMarkerTexts: string[] = [];
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
@@ -96,10 +99,19 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
           } catch {
             // Malformed JSON in marker — ignore
           }
+          // Also capture any text in this block that comes before the marker
+          const beforeMarker = block.text.slice(0, markerMatch.index).trim();
+          if (beforeMarker.length > 50) {
+            preMarkerTexts.push(beforeMarker);
+          }
         } else if (cycleMarkerFound && block.text.trim().length > 50) {
           // Capture substantial text after the CYCLE_COMPLETE marker as
           // fallback summary (e.g. when Oak-voiced text comes in a later turn)
           postMarkerTexts.push(block.text.trim());
+        } else if (!cycleMarkerFound && block.text.trim().length > 50) {
+          // Capture substantial text before the CYCLE_COMPLETE marker as
+          // the narrative reflection body
+          preMarkerTexts.push(block.text.trim());
         }
       }
 
@@ -176,6 +188,11 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     cycleSummary = postMarkerTexts.reduce((a, b) => (a.length >= b.length ? a : b));
   }
 
+  // Narrative text: the agent's substantive writing before the CYCLE_COMPLETE marker.
+  // Falls back to post-marker text if nothing was written before the marker.
+  const allNarrativeTexts = preMarkerTexts.length > 0 ? preMarkerTexts : postMarkerTexts;
+  const narrativeText = allNarrativeTexts.join("\n\n");
+
   return {
     actions,
     filesModified: [...filesModified],
@@ -189,6 +206,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     },
     toolCallCount,
     resultText,
+    narrativeText,
   };
 }
 
