@@ -83,6 +83,7 @@ ${data.nextSteps || "No next steps specified."}
 
 ## Stats
 
+- Tool calls: ${data.toolCallCount}
 - Tokens used: ${data.tokenUsage.totalTokens.toLocaleString()} (input: ${data.tokenUsage.inputTokens.toLocaleString()}, output: ${data.tokenUsage.outputTokens.toLocaleString()})
 `;
 
