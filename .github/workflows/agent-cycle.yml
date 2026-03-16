@@ -32,7 +32,7 @@ jobs:
   run-cycle:
     runs-on: ubuntu-latest
     env:
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_BASE_URL: http://localhost:8787
       ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
       MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
