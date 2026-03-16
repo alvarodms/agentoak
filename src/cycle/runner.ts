@@ -322,6 +322,7 @@ async function runReflectionPhase(
     filesModified: implResult.filesModified,
     buildResult,
     cycleSummary: implResult.cycleSummary,
+    cycleChanges: implResult.cycleChanges,
     validationResult,
   });
 }
@@ -551,6 +552,7 @@ export async function runCycle(): Promise<void> {
         commitHash,
         reflection.cycleSummary || "",
         plan.objective,
+        reflection.cycleChanges,
       );
       if (releaseUrl) {
         log.info(`  Release: ${releaseUrl}`);

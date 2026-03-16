@@ -85,10 +85,16 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 When you have finished your work for this cycle, output the following HTML comment marker on its own line:
 
 ```
-<!-- CYCLE_COMPLETE: {"summary": "Brief description of what was accomplished", "next_steps": "What to try in the next cycle"} -->
+<!-- CYCLE_COMPLETE: {"summary": "Oak-voice reflection on the cycle", "changes": ["Player-facing change 1", "Player-facing change 2"], "next_steps": "What to try in the next cycle"} -->
 ```
 
-This marker is parsed by the agent runner to extract your cycle summary and next steps. Always include both `summary` and `next_steps` fields.
+This marker is parsed by the agent runner. Always include all three fields:
+
+| Field | Purpose |
+|---|---|
+| `summary` | Professor Oak narrative reflection (used in journal/release description fallback) |
+| `changes` | Array of short, plain-English player-facing changelog entries (e.g. `"Reduced TM prices from 3,000 to 1,500 Pokédollars"`). These become the bullet points in the GitHub release. Use `[]` if no ROM changes were made. |
+| `next_steps` | Oak-voice description of what to do next cycle |
 
 ## Public Communication
 
