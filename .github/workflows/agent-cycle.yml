@@ -33,7 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      ANTHROPIC_BASE_URL: http://localhost:8787
       ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
       MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -154,15 +153,23 @@ jobs:
             source ~/headroom-venv/bin/activate
           fi
           headroom proxy --no-intelligent-context --log-file headroom.jsonl &
+          PROXY_READY=false
           for i in $(seq 1 10); do
             if curl -s http://localhost:8787/health > /dev/null 2>&1; then
               echo "Headroom proxy is ready"
               curl -s http://localhost:8787/health | python3 -m json.tool
+              PROXY_READY=true
               break
             fi
             echo "Waiting for Headroom proxy... ($i/10)"
             sleep 2
           done
+          if [ "$PROXY_READY" = "true" ]; then
+            echo "ANTHROPIC_BASE_URL=http://localhost:8787" >> "$GITHUB_ENV"
+            echo "Headroom proxy active — routing Claude CLI traffic through localhost:8787"
+          else
+            echo "WARNING: Headroom proxy did not start. Claude CLI will connect directly to Anthropic API using OAuth token."
+          fi
 
       - name: Run agent cycle (attempt 1)
         id: attempt1
