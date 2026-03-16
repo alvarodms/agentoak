@@ -10,14 +10,15 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The agent runner checks for the existence of `pokeemerald.gba` after each cycle. If no build was attempted, the file doesn't exist and the runner reports failure.
 **Resolution**: This is expected for exploration-only cycles. Not a real failure. Only run `make` in cycles where code changes are made.
 
-## Incomplete Multi-Part Objectives (Cycles 14 and 16)
+## Incomplete Multi-Part Objectives (Cycles 14, 16, and 22)
 
 **Symptom**: Agent completes only part of a multi-component objective, declares success, but reflection reveals missing work.
 **Example (Cycle 14)**: Objective was "Overhaul Safari Zone encounters AND update Birch dialogue" but only encounters were modified.
 **Example (Cycle 16)**: Objective was "Add held items to ALL gym leaders AND Elite Four" but only gym leaders 1–5 (Roxanne through Norman) were completed. Winona partially done; Tate & Liza, Juan, all Elite Four, and Champion Wallace left incomplete. **Completed in Cycle 17.**
-**Cause**: Agent gets focused on first component/first items in a list and fails to track that multiple deliverables were required. When editing one-by-one (individual Edit calls), progress stalls without reaching full scope.
-**Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components.
-**Pattern**: When objective covers a large set (all gym leaders + Elite Four = 8 leaders + 4 E4 + 1 Champion = 13 trainers × 3–6 mons each), plan all edits upfront and pace through the full list systematically.
+**Example (Cycle 22)**: Objective was "move tutor accessibility, TM price reductions, and held items on wild Pokémon" but only TM prices and held items were addressed. Move tutor accessibility was completely ignored.
+**Cause**: Agent gets focused on first component/first items in a list and fails to track that multiple deliverables were required. When editing one-by-one (individual Edit calls), progress stalls without reaching full scope. **Pattern intensified in Cycle 22** where agent got distracted by successful TM work and forgot about move tutors entirely.
+**Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components. **For multi-part objectives, create a checklist and verify each component was addressed before declaring completion.**
+**Pattern**: When objective covers multiple unrelated systems (move tutors + TM prices + held items), the agent tends to work on the easier/more familiar systems first and lose track of the harder ones.
 
 ## Held Item Edit Scope Issue (Cycle 16 — RESOLVED Cycle 17)
 
