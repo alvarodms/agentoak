@@ -239,12 +239,12 @@ All 73 encounter tables across Hoenn have been redesigned. The philosophy:
 
 **No Dead Encounters**: Even common 20% slots feature interesting Pokémon — Houndour, Electabuzz, Growlithe — not Rattata or Zigzagoon.
 
-### Dungeon Encounters — COMPLETED (Cycle 9)
+### Dungeon Encounters — COMPLETED (Cycle 9, verified/fixed Cycle 21)
 
 All key dungeon encounter tables have been overhauled:
-- **Petalburg Woods**: Gastly/Haunter (20% each!), Heracross, Scyther, Abra — rare Larvitar/Bagon
+- **Petalburg Woods**: Gastly/Haunter (20% each!), Heracross, Scyther, Abra — rare Larvitar/Bagon ✅ verified Cycle 21 (was vanilla, now fixed)
 - **Rusturf Tunnel**: Machop/Geodude + Larvitar common (10%), rare Bagon/Graveler
-- **Granite Cave** (3 floors): Aron, Zubat, Sableye, Abra lines — rare Larvitar/Bagon per floor
+- **Granite Cave** (3 floors): Aron, Zubat, Sableye, Abra lines — rare Larvitar/Bagon per floor ✅ verified Cycle 21 (all 3 floors re-overhauled with full progression)
 - **Fiery Path**: Magmar, Houndour/Houndoom, Camerupt, rare Arcanine/Dragonair
 - **New Mauville**: Magnemite, Voltorb, Electabuzz, Jolteon, Raichu, Ampharos
 - **Meteor Falls** (4 floors): Solrock, Lunatone, Bagon line, Dragonair, Metang — rare Salamence/Metagross/Dragonite in water
@@ -254,12 +254,17 @@ All key dungeon encounter tables have been overhauled:
 - **Sky Pillar** (3 floors): Dragon paradise — Dragonair/Dragonite dominant, Salamence/Metagross rare
 - **Victory Road** (3 floors): Lairon/Aggron, Metang/Metagross, Alakazam, Absol, Dusclops — rare Metagross/Salamence/Tyranitar
 
-### Still TODO: Minor Encounters
-- Safari Zone (unique mechanics, defer to dedicated cycle)
-- Cave of Origin (story area, may want special encounters)
-- Artisan Cave / Altering Cave (post-game)
-- Mt. Chimney (only has trainer battles, no wild area)
-- Magma/Aqua Hideout (story areas)
+### Minor Encounters — STATUS
+
+✅ **COMPLETE** (Cycle 21):
+- **Cave of Origin** (Entrance + 1F + 3 unused RS maps): Dragon/Ghost legendary cast — Dratini, Dragonair, Bagon, Shelgon, Larvitar, Pupitar, Absol, Misdreavus, Gengar, Dusclops, rare Salamence/Dragonite
+- **Artisan Cave** (B1F + 1F): Post-game collector cave — Smeargle×2 (collectible), Absol, Sneasel, Houndoom, Alakazam, Gengar, Misdreavus, rare Dragonite/Salamence/Metagross/Tyranitar
+- **Altering Cave** (all 9 event tables): Post-game Dragon/pseudo zone — Larvitar, Bagon, Dratini, Dragonair, Beldum, Metang, Absol, Sneasel, rare Salamence/Metagross/Dragonite/Tyranitar
+
+Deferred (non-wild areas):
+- Safari Zone ✅ (Cycle 14)
+- Mt. Chimney (only trainer battles, no wild area)
+- Magma/Aqua Hideout (story areas, no wild encounters)
 
 ---
 
