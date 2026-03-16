@@ -1,9 +1,11 @@
 import { runClaudeCode } from "../agent/claude-cli.js";
+import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { CycleMode } from "./modes.js";
 import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
 import { getCycleModeHistorySummary } from "../memory/store.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
+import { shouldUseTeamPlanning, planCycleWithTeam } from "./team-planner.js";
 
 export interface CyclePlan {
   mode: CycleMode;
@@ -15,7 +17,7 @@ export interface CyclePlan {
 }
 
 /** JSON schema for validated structured output from the planning phase */
-const CYCLE_PLAN_SCHEMA = {
+export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
   type: "object",
   properties: {
     mode: {
@@ -74,6 +76,85 @@ const CYCLE_PLAN_SCHEMA = {
   additionalProperties: false,
 };
 
+/**
+ * Parse a ClaudeCodeResult into a CyclePlan.
+ * Shared by both the single planner and team planner (Producer).
+ */
+export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
+  interface PlanJson {
+    mode?: string;
+    objective?: string;
+    reasoning?: string;
+    implementationPlan?: string;
+    issueActions?: IssueAction[];
+    helpRequests?: HelpRequest[];
+  }
+  let parsed: PlanJson | null = null;
+
+  // Try the resultText first (structured output via --json-schema)
+  if (result.resultText) {
+    try {
+      parsed = JSON.parse(result.resultText) as PlanJson;
+    } catch {
+      // Not valid JSON
+    }
+  }
+
+  // Fallback: look through action results for valid JSON
+  if (!parsed) {
+    for (const action of result.actions) {
+      // Check StructuredOutput tool input directly (contains the plan object)
+      if (action.tool === "StructuredOutput" && action.input) {
+        const candidate = action.input as PlanJson;
+        if (candidate?.mode && candidate?.objective) {
+          parsed = candidate;
+          break;
+        }
+      }
+      if (action.result) {
+        try {
+          const candidate = JSON.parse(action.result) as PlanJson;
+          if (candidate?.mode && candidate?.objective) {
+            parsed = candidate;
+            break;
+          }
+        } catch {
+          // Not JSON, continue
+        }
+      }
+    }
+  }
+
+  // Fallback: try cycleSummary
+  if (!parsed && result.cycleSummary) {
+    try {
+      parsed = JSON.parse(result.cycleSummary) as PlanJson;
+    } catch {
+      // Not JSON
+    }
+  }
+
+  if (parsed?.mode && parsed?.objective && parsed?.reasoning) {
+    const mode = parsed.mode as CycleMode;
+    const issueActions = Array.isArray(parsed.issueActions) ? parsed.issueActions : [];
+    const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
+    if (!CYCLE_MODES[mode]) {
+      logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
+      return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
+    }
+    logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
+    if (issueActions.length > 0) {
+      logger.info(`  Issue actions: ${issueActions.length} (${issueActions.map(a => `#${a.issueNumber}:${a.action}`).join(", ")})`);
+    }
+    if (helpRequests.length > 0) {
+      logger.info(`  Help requests: ${helpRequests.length}`);
+    }
+    return { mode, objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
+  }
+
+  throw new Error("Could not parse structured plan from CLI output");
+}
+
 /** Use Claude Code CLI to decide what the next cycle should focus on */
 export async function planCycle(
   recentJournalSummaries: string[],
@@ -81,6 +162,13 @@ export async function planCycle(
   issueContext: string = "",
   issueBacklog: string = "",
 ): Promise<CyclePlan> {
+  // Dispatch to team planner if conditions are met
+  if (shouldUseTeamPlanning(cycleNumber, undefined, issueContext.length > 0)) {
+    logger.info("[Planning] Using team planning (multi-perspective advisory)");
+    return planCycleWithTeam(recentJournalSummaries, cycleNumber, issueContext, issueBacklog);
+  }
+
+  logger.info("[Planning] Using single planner");
   const model = process.env.ANTHROPIC_MODEL;
 
   const modeHistorySummary = getCycleModeHistorySummary();
@@ -176,79 +264,7 @@ Respond with a JSON object containing mode, objective, reasoning, implementation
 
     logger.info(`-> Planning result:\n\n\n${JSON.stringify(result, null, 2)}\n\n\n`);
 
-    // With --json-schema, the structured JSON is in the result message's result field
-    interface PlanJson {
-      mode?: string;
-      objective?: string;
-      reasoning?: string;
-      implementationPlan?: string;
-      issueActions?: IssueAction[];
-      helpRequests?: HelpRequest[];
-    }
-    let parsed: PlanJson | null = null;
-
-    // Try the resultText first (structured output via --json-schema)
-    if (result.resultText) {
-      try {
-        parsed = JSON.parse(result.resultText) as PlanJson;
-      } catch {
-        // Not valid JSON
-      }
-    }
-
-    // Fallback: look through action results for valid JSON
-    if (!parsed) {
-      for (const action of result.actions) {
-        // Check StructuredOutput tool input directly (contains the plan object)
-        if (action.tool === "StructuredOutput" && action.input) {
-          const candidate = action.input as PlanJson;
-          if (candidate?.mode && candidate?.objective) {
-            parsed = candidate;
-            break;
-          }
-        }
-        if (action.result) {
-          try {
-            const candidate = JSON.parse(action.result) as PlanJson;
-            if (candidate?.mode && candidate?.objective) {
-              parsed = candidate;
-              break;
-            }
-          } catch {
-            // Not JSON, continue
-          }
-        }
-      }
-    }
-
-    // Fallback: try cycleSummary
-    if (!parsed && result.cycleSummary) {
-      try {
-        parsed = JSON.parse(result.cycleSummary) as PlanJson;
-      } catch {
-        // Not JSON
-      }
-    }
-
-    if (parsed?.mode && parsed?.objective && parsed?.reasoning) {
-      const mode = parsed.mode as CycleMode;
-      const issueActions = Array.isArray(parsed.issueActions) ? parsed.issueActions : [];
-      const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
-      if (!CYCLE_MODES[mode]) {
-        logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
-        return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
-      }
-      logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
-      if (issueActions.length > 0) {
-        logger.info(`  Issue actions: ${issueActions.length} (${issueActions.map(a => `#${a.issueNumber}:${a.action}`).join(", ")})`);
-      }
-      if (helpRequests.length > 0) {
-        logger.info(`  Help requests: ${helpRequests.length}`);
-      }
-      return { mode, objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
-    }
-
-    throw new Error("Could not parse structured plan from CLI output");
+    return parsePlanResult(result);
   } catch (err) {
     throw new Error(`Planning phase failed: ${err instanceof Error ? err.message : String(err)}`, { cause: err });
   }
