@@ -10,6 +10,8 @@ export interface ClaudeCodeResult {
   filesModified: string[];
   buildResult: { success: boolean; errors: string[] } | null;
   cycleSummary: string;
+  /** Structured changelog entries for the release (e.g. ["Reduced TM prices", "Added held items"]) */
+  cycleChanges: string[];
   nextSteps: string;
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
   toolCallCount: number;
@@ -34,6 +36,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   const filesModified = new Set<string>();
   let buildResult: { success: boolean; errors: string[] } | null = null;
   let cycleSummary = "";
+  let cycleChanges: string[] = [];
   let nextSteps = "";
   let toolCallCount = 0;
   let cycleMarkerFound = false;
@@ -92,9 +95,13 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
           try {
             const parsed = JSON.parse(markerMatch[1]) as {
               summary?: string;
+              changes?: string[];
               next_steps?: string;
             };
             cycleSummary = parsed.summary ?? cycleSummary;
+            if (Array.isArray(parsed.changes) && parsed.changes.length > 0) {
+              cycleChanges = parsed.changes.filter((c): c is string => typeof c === "string");
+            }
             nextSteps = parsed.next_steps ?? nextSteps;
           } catch {
             // Malformed JSON in marker — ignore
@@ -198,6 +205,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     filesModified: [...filesModified],
     buildResult,
     cycleSummary,
+    cycleChanges,
     nextSteps,
     tokenUsage: {
       inputTokens: totalInputTokens,
