@@ -20,3 +20,6 @@ pokeemerald/*.sym
 
 # Cached base ROM (downloaded at runtime)
 artifacts/base-rom/
+
+# Package manager lock files (generated, not committed)
+package-lock.json
