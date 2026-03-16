@@ -7,6 +7,7 @@
 
   let journalData = [];
   let guideData = null;
+  let strategyData = null;
   let currentView = 'journal';
 
   // ---- Bootstrap ----
@@ -14,6 +15,7 @@
     createParticles();
     loadJournalData();
     loadGuideData();
+    loadStrategyData();
     bindNavigation();
   });
 
@@ -173,6 +175,86 @@
     }
   }
 
+  // ---- Strategy ----
+
+  async function loadStrategyData() {
+    try {
+      const resp = await fetch('data/strategy.json');
+      if (!resp.ok) throw new Error('Failed to load strategy data');
+      strategyData = await resp.json();
+      renderStrategy();
+    } catch (err) {
+      document.querySelector('.strategy-view').innerHTML =
+        '<div class="info-card"><p>\u26A0 Unable to load strategy data.</p></div>';
+    }
+  }
+
+  function renderStrategy() {
+    const container = document.querySelector('.strategy-view');
+    container.innerHTML = '';
+
+    // Vision
+    if (strategyData.vision && strategyData.vision.title) {
+      const visionCard = document.createElement('div');
+      visionCard.className = 'info-card';
+      visionCard.innerHTML =
+        '<h3>\uD83C\uDFAF ROM Hack Vision</h3>' +
+        '<p><strong>' + escapeHtml(strategyData.vision.title) + '</strong> \u2014 ' +
+        escapeHtml(strategyData.vision.description) + '</p>';
+      container.appendChild(visionCard);
+    }
+
+    // Starters
+    if (strategyData.starters && strategyData.starters.length > 0) {
+      const starterCard = document.createElement('div');
+      starterCard.className = 'info-card';
+      const starterEmojis = { 'Rock': '\uD83E\uDEA8', 'Dragon': '\uD83D\uDC09', 'Steel': '\u2699\uFE0F', 'Fire': '\uD83D\uDD25', 'Water': '\uD83D\uDCA7', 'Grass': '\uD83C\uDF3F' };
+      starterCard.innerHTML =
+        '<h3>\u2694\uFE0F New Starter Trio</h3>' +
+        '<div class="starter-grid">' +
+          strategyData.starters.map(function (s) {
+            var primaryType = s.types.split(/\s*[\/→]\s*/)[0].trim();
+            var emoji = starterEmojis[primaryType] || '\uD83D\uDC7E';
+            return '<div class="starter-card">' +
+              '<div class="pokemon-sprite">' + emoji + '</div>' +
+              '<div class="pokemon-name">' + escapeHtml(s.name) + '</div>' +
+              '<div class="pokemon-type">' + escapeHtml(s.types) + '</div>' +
+              '<div class="pokemon-identity" style="font-size:11px;color:var(--text-muted);margin-top:4px">' + escapeHtml(s.identity) + '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      container.appendChild(starterCard);
+    }
+
+    // Roadmap
+    if (strategyData.roadmap) {
+      var roadmapCard = document.createElement('div');
+      roadmapCard.className = 'info-card';
+      var html = '<h3>\uD83D\uDCCB Implementation Roadmap</h3><ul>';
+
+      if (strategyData.roadmap.completed) {
+        strategyData.roadmap.completed.forEach(function (entry) {
+          var color = entry.status === 'completed' ? 'var(--green-bright)' :
+                      entry.status === 'failed' ? 'var(--red, #ff4444)' :
+                      'var(--yellow-bright)';
+          var icon = entry.status === 'completed' ? '\u2713' :
+                     entry.status === 'failed' ? '\u2717' : '\u26A0';
+          html += '<li><strong style="color:' + color + '">' + icon + ' Cycle ' + entry.cycle + '</strong> \u2014 ' + escapeHtml(entry.description) + '</li>';
+        });
+      }
+
+      if (strategyData.roadmap.upcoming) {
+        strategyData.roadmap.upcoming.forEach(function (entry) {
+          html += '<li><strong style="color:var(--text-muted)">\u25CB Cycle ' + entry.cycle + '</strong> \u2014 ' + escapeHtml(entry.objective) + '</li>';
+        });
+      }
+
+      html += '</ul>';
+      roadmapCard.innerHTML = html;
+      container.appendChild(roadmapCard);
+    }
+  }
+
   // ---- Game Guide ----
 
   async function loadGuideData() {
@@ -203,18 +285,20 @@
   function renderStartersSection() {
     const section = document.createElement('div');
     section.className = 'info-card';
-    const starterEmojis = ['\uD83E\uDEA8', '\uD83D\uDC09', '\u2699\uFE0F'];
-    const starterTypes = ['Rock / Ground', 'Dragon', 'Steel / Psychic'];
+    const typeEmojis = { 'Rock': '\uD83E\uDEA8', 'Dragon': '\uD83D\uDC09', 'Steel': '\u2699\uFE0F', 'Fire': '\uD83D\uDD25', 'Water': '\uD83D\uDCA7', 'Grass': '\uD83C\uDF3F', 'Normal': '\u2B50', 'Psychic': '\uD83D\uDD2E', 'Ground': '\uD83C\uDFDC\uFE0F', 'Ice': '\u2744\uFE0F', 'Electric': '\u26A1' };
     section.innerHTML =
       '<h3>\u2694\uFE0F Starter Pok\u00E9mon</h3>' +
       '<div class="starter-grid">' +
-        guideData.starters.map((s, i) =>
-          '<div class="starter-card">' +
-            '<div class="pokemon-sprite">' + starterEmojis[i] + '</div>' +
+        guideData.starters.map(s => {
+          const types = s.types || [];
+          const typeStr = types.join(' / ');
+          const emoji = typeEmojis[types[0]] || '\uD83D\uDC7E';
+          return '<div class="starter-card">' +
+            '<div class="pokemon-sprite">' + emoji + '</div>' +
             '<div class="pokemon-name">' + escapeHtml(s.species) + '</div>' +
-            '<div class="pokemon-type">' + starterTypes[i] + '</div>' +
-          '</div>'
-        ).join('') +
+            '<div class="pokemon-type">' + escapeHtml(typeStr) + '</div>' +
+          '</div>';
+        }).join('') +
       '</div>';
     return section;
   }

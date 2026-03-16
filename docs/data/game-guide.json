@@ -1,19 +1,29 @@
 {
-  "generatedAt": "2026-03-10T00:02:48.725Z",
+  "generatedAt": "2026-03-16T05:50:37.771Z",
   "starters": [
     {
       "species": "Larvitar",
       "speciesConst": "SPECIES_LARVITAR",
+      "types": [
+        "Rock",
+        "Ground"
+      ],
       "position": 0
     },
     {
       "species": "Bagon",
       "speciesConst": "SPECIES_BAGON",
+      "types": [
+        "Dragon"
+      ],
       "position": 1
     },
     {
-      "species": "Beldum",
-      "speciesConst": "SPECIES_BELDUM",
+      "species": "Dratini",
+      "speciesConst": "SPECIES_DRATINI",
+      "types": [
+        "Dragon"
+      ],
       "position": 2
     }
   ],
@@ -2872,86 +2882,86 @@
       "mapConst": "MAP_SAFARI_ZONE_SOUTH",
       "land": [
         {
-          "species": "Oddish",
+          "species": "Larvitar",
           "minLevel": 25,
           "maxLevel": 25,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Oddish",
+          "species": "Larvitar",
           "minLevel": 27,
           "maxLevel": 27,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Girafarig",
+          "species": "Bagon",
           "minLevel": 25,
           "maxLevel": 25,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Girafarig",
+          "species": "Bagon",
           "minLevel": 27,
           "maxLevel": 27,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Natu",
+          "species": "Dratini",
           "minLevel": 25,
           "maxLevel": 25,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Doduo",
+          "species": "Growlithe",
           "minLevel": 25,
           "maxLevel": 25,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Gloom",
-          "minLevel": 25,
-          "maxLevel": 25,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Wobbuffet",
+          "species": "Electabuzz",
           "minLevel": 27,
           "maxLevel": 27,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Pikachu",
-          "minLevel": 25,
-          "maxLevel": 25,
-          "rate": 4,
+          "species": "Magmar",
+          "minLevel": 29,
+          "maxLevel": 29,
+          "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Wobbuffet",
+          "species": "Dratini",
           "minLevel": 27,
           "maxLevel": 27,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Pikachu",
-          "minLevel": 27,
-          "maxLevel": 27,
+          "species": "Heracross",
+          "minLevel": 29,
+          "maxLevel": 29,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 30,
+          "maxLevel": 30,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Wobbuffet",
-          "minLevel": 29,
-          "maxLevel": 29,
+          "species": "Lapras",
+          "minLevel": 32,
+          "maxLevel": 32,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -14339,7 +14349,7 @@
           "species": "Aerodactyl",
           "level": 12,
           "iv": 100,
-          "heldItem": null,
+          "heldItem": "Choice Band",
           "moves": [
             "Wing Attack",
             "Rock Throw",
@@ -14351,7 +14361,7 @@
           "species": "Graveler",
           "level": 12,
           "iv": 100,
-          "heldItem": null,
+          "heldItem": "Sitrus Berry",
           "moves": [
             "Rock Throw",
             "Magnitude",
@@ -14363,7 +14373,7 @@
           "species": "Rhydon",
           "level": 15,
           "iv": 200,
-          "heldItem": "Oran Berry",
+          "heldItem": "Shell Bell",
           "moves": [
             "Horn Attack",
             "Rock Blast",
@@ -14384,7 +14394,7 @@
           "species": "Machoke",
           "level": 16,
           "iv": 100,
-          "heldItem": null,
+          "heldItem": "Choice Band",
           "moves": [
             "Karate Chop",
             "Low Kick",
@@ -14396,7 +14406,7 @@
           "species": "Hitmonlee",
           "level": 16,
           "iv": 100,
-          "heldItem": null,
+          "heldItem": "Choice Band",
           "moves": [
             "Double Kick",
             "Focus Energy",
@@ -14408,7 +14418,7 @@
           "species": "Heracross",
           "level": 19,
           "iv": 200,
-          "heldItem": "Sitrus Berry",
+          "heldItem": "Shell Bell",
           "moves": [
             "Horn Attack",
             "Brick Break",
@@ -14429,7 +14439,7 @@
           "species": "Magneton",
           "level": 20,
           "iv": 200,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Supersonic",
             "Shock Wave",
@@ -14441,7 +14451,7 @@
           "species": "Electabuzz",
           "level": 22,
           "iv": 220,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Thunder Punch",
             "Quick Attack",
@@ -14453,7 +14463,7 @@
           "species": "Jolteon",
           "level": 24,
           "iv": 250,
-          "heldItem": "Sitrus Berry",
+          "heldItem": "Shell Bell",
           "moves": [
             "Thunderbolt",
             "Quick Attack",
@@ -14474,7 +14484,7 @@
           "species": "Magmar",
           "level": 24,
           "iv": 200,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Fire Punch",
             "Confuse Ray",
@@ -14486,7 +14496,7 @@
           "species": "Arcanine",
           "level": 26,
           "iv": 220,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Flame Wheel",
             "Bite",
@@ -14519,7 +14529,7 @@
           "species": "Kangaskhan",
           "level": 27,
           "iv": 200,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Fake Out",
             "Mega Punch",
@@ -14531,7 +14541,7 @@
           "species": "Tauros",
           "level": 29,
           "iv": 220,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Horn Attack",
             "Take Down",
@@ -14543,7 +14553,7 @@
           "species": "Blissey",
           "level": 31,
           "iv": 250,
-          "heldItem": "Sitrus Berry",
+          "heldItem": "Shell Bell",
           "moves": [
             "Soft Boiled",
             "Seismic Toss",
@@ -14564,7 +14574,7 @@
           "species": "Altaria",
           "level": 29,
           "iv": 210,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
             "Dragon Breath",
             "Peck",
@@ -15208,7 +15218,7 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Beldum",
+          "species": "Dratini",
           "level": 5,
           "iv": 0
         }
@@ -15223,17 +15233,17 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magnemite",
+          "species": "Horsea",
           "level": 18,
           "iv": 50
         },
         {
-          "species": "Kadabra",
+          "species": "Gyarados",
           "level": 18,
           "iv": 50
         },
         {
-          "species": "Metang",
+          "species": "Dratini",
           "level": 20,
           "iv": 100
         }
@@ -15248,17 +15258,17 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magneton",
+          "species": "Seadra",
           "level": 29,
           "iv": 100
         },
         {
-          "species": "Kadabra",
+          "species": "Gyarados",
           "level": 29,
           "iv": 100
         },
         {
-          "species": "Metang",
+          "species": "Dragonair",
           "level": 31,
           "iv": 150
         }
@@ -15403,7 +15413,7 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Beldum",
+          "species": "Dratini",
           "level": 5,
           "iv": 0
         }
@@ -15418,17 +15428,17 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magnemite",
+          "species": "Horsea",
           "level": 18,
           "iv": 50
         },
         {
-          "species": "Kadabra",
+          "species": "Gyarados",
           "level": 18,
           "iv": 50
         },
         {
-          "species": "Metang",
+          "species": "Dratini",
           "level": 20,
           "iv": 100
         }
@@ -15443,17 +15453,17 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magneton",
+          "species": "Seadra",
           "level": 29,
           "iv": 100
         },
         {
-          "species": "Kadabra",
+          "species": "Gyarados",
           "level": 29,
           "iv": 100
         },
         {
-          "species": "Metang",
+          "species": "Dragonair",
           "level": 31,
           "iv": 150
         }
@@ -15508,12 +15518,12 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magnemite",
+          "species": "Horsea",
           "level": 13,
           "iv": 25
         },
         {
-          "species": "Beldum",
+          "species": "Dratini",
           "level": 15,
           "iv": 50
         }
@@ -15608,22 +15618,22 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magneton",
+          "species": "Gyarados",
           "level": 31,
           "iv": 150
         },
         {
-          "species": "Kadabra",
+          "species": "Lapras",
           "level": 32,
           "iv": 150
         },
         {
-          "species": "Starmie",
+          "species": "Seadra",
           "level": 32,
           "iv": 150
         },
         {
-          "species": "Metang",
+          "species": "Dragonair",
           "level": 34,
           "iv": 200
         }
@@ -15698,22 +15708,22 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magneton",
+          "species": "Gyarados",
           "level": 31,
           "iv": 150
         },
         {
-          "species": "Kadabra",
+          "species": "Lapras",
           "level": 32,
           "iv": 150
         },
         {
-          "species": "Starmie",
+          "species": "Seadra",
           "level": 32,
           "iv": 150
         },
         {
-          "species": "Metang",
+          "species": "Dragonair",
           "level": 34,
           "iv": 200
         }
@@ -15748,12 +15758,12 @@
       "doubleBattle": false,
       "party": [
         {
-          "species": "Magnemite",
+          "species": "Horsea",
           "level": 13,
           "iv": 25
         },
         {
-          "species": "Beldum",
+          "species": "Dratini",
           "level": 15,
           "iv": 50
         }
