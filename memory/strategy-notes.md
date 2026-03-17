@@ -487,3 +487,63 @@ LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY
 - Python script approach works well for bulk JSON edits
 - C89 only in classic mode: no `//` comments, no C99 features
 - All Gen 1-3 species are available in Emerald ROM data
+
+---
+
+## Gym Difficulty Audit — Cycle 27 (Read-Only Sanity Check)
+
+### Roxanne (Gym 1) — Verified
+
+**Party** (`sParty_Roxanne1`):
+- Aerodactyl, Lv 12, Choice Band: WING_ATTACK / ROCK_THROW / BITE / SCARY_FACE
+- Graveler, Lv 12, Sitrus Berry: ROCK_THROW / MAGNITUDE / DEFENSE_CURL / ROLLOUT
+- Rhydon (ace), Lv 15, Shell Bell: HORN_ATTACK / ROCK_BLAST / SCARY_FACE / STOMP
+
+**Assessment**: Genuinely threatening. Choice Band Aerodactyl at level 12 with ROCK_THROW is a real hazard — physical Rock coverage with 50 BP + 1.5x multiplier. SCARY_FACE allows speed manipulation. Rhydon at 15 with ROCK_BLAST (multi-hit, can break Sturdy) is the hard wall.
+
+**Interaction with pseudo-legendary starters**:
+- Larvitar (Rock type): ROCK_THROW neutral, WING_ATTACK neutral, BITE neutral. MAGNITUDE from Graveler is a coin flip but could OHKO. Manageable.
+- Bagon (Dragon): ROCK_THROW neutral with Choice Band hits hard. BITE is neutral. Nothing is super effective against Bagon here but the raw damage is real.
+- Dratini (Dragon): Same as Bagon — no SE hits, but Choice Band ROCK_THROW at 12 against a Dragon-type with lower base stats could 2HKO.
+
+**Verdict**: The "punishing-but-fair" promise holds. No obvious pushover and no cheese. Aerodactyl threatens without being unanswerable. A player who overlevel-grinds can muscle through; a player at the expected level will feel pressure. The Rhydon ace provides a genuine endgame challenge for the gym.
+
+**Note**: ROCK_TOMB not on Roxanne's Aerodactyl, but ROCK_THROW + SCARY_FACE achieves similar utility (speed cut via status vs direct attack). No balance concern.
+
+---
+
+## Villain Dialogue — COMPLETED (Cycle 27)
+
+**Status**: All six villain speech nodes written and built successfully.
+
+### What Was Written
+
+**Maxie (Mt. Chimney)**:
+- `MtChimney_Text_MaxieIntro` — migration-aware pre-battle speech: Maxie observes NUMEL/SLUGMA flooding the terrain, concludes GROUDON is the answer
+- `MtChimney_Text_MaxieDefeat` — brief in-battle defeat acknowledgment
+- `MtChimney_Text_MaxieYouHaventSeenLastOfMagma` — post-battle vow
+
+**Archie (Slateport Museum 2F)**:
+- `SlateportCity_OceanicMuseum_2F_Text_ArchieWarning` — Archie sees LAPRAS in the harbor and WAILMER in migration paths, declares the sea must reclaim Hoenn
+
+**Archie (Slateport Harbor)**:
+- `SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove` — escape line preserved with migration flavor
+
+**Archie (Seafloor Cavern Room 9)**:
+- `SeafloorCavern_Room9_Text_ArchieYouMustDisappear` — final pre-battle speech
+- `SeafloorCavern_Room9_Text_ArchieWithThisRedOrb` — post-battle (Red Orb reference PRESERVED — required for script engine to continue)
+
+### Narrative Throughline
+Same ecological crisis (migration) → two irreconcilable readings → Maxie wants land dominance, Archie wants ocean dominance. Player receives both perspectives through authentic confrontation dialogue.
+
+---
+
+## Next Priority — Birch Intro (Cycle 28)
+
+**Goal**: Update Professor Birch's opening speech to plant the "world has changed" seed from the very first scene.
+
+**Why**: The villain speeches are narrative payoffs. Birch's intro is the setup. Without the setup, players may experience the villain dialogue as mysterious rather than meaningful.
+
+**Location to research**: `pokeemerald/data/maps/LittlerootTown/` and the intro sequence (likely `pokeemerald/data/maps/` intro map scripts). Birch narrates the intro sequence.
+
+**After Birch**: Rival dialogue updates (Route 103, Route 110) to acknowledge the migration — rival should reference seeing "strange Pokémon" they've never encountered before.
