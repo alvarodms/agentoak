@@ -4,6 +4,27 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Villain Dialogue System (Cycle 26)
+
+**Villain script locations**:
+- `pokeemerald/data/maps/MtChimney/scripts.inc` — Maxie confrontation
+  - `MtChimney_Text_MaxieIntro` — pre-battle speech (after cutscene, before `trainerbattle_no_intro`)
+  - `MtChimney_Text_MaxieDefeat` — in-battle defeat text (brief, shown in battle UI)
+  - `MtChimney_Text_MaxieYouHaventSeenLastOfMagma` — post-battle speech (msgbox after battle)
+- `pokeemerald/data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc` — Archie at Museum 2F
+  - `SlateportCity_OceanicMuseum_2F_Text_ArchieWarning` — Archie's speech after both grunts are defeated (no battle at this scene — Archie warns and leaves)
+  - Note: "Matt" does NOT appear at Slateport in vanilla Emerald; Archie is the villain here
+- `pokeemerald/data/maps/SlateportCity_Harbor/scripts.inc` — Archie at harbor (later event)
+  - `SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove` — Archie escaping with submarine
+- `pokeemerald/data/maps/SeafloorCavern_Room9/scripts.inc` — Archie final confrontation
+  - `SeafloorCavern_Room9_Text_ArchieYouMustDisappear` — pre-battle speech
+  - `SeafloorCavern_Room9_Text_ArchieDefeat` — in-battle defeat text (brief)
+  - `SeafloorCavern_Room9_Text_ArchieWithThisRedOrb` — post-battle (leads into Red Orb usage; must retain Red Orb reference since script continues with orb effect)
+
+**Script flow at Seafloor Cavern**: `ArchieHoldItRightThere` → `ArchieSoItWasYou` → `ArchieBeholdKyogre` → `ArchieYouMustDisappear` → `trainerbattle_no_intro` → `ArchieWithThisRedOrb` → orb sparkle effect → Kyogre awakening
+
+---
+
 ## Rival Dialogue System (Cycle 25)
 
 **Location structure**: Rival dialogue strings live directly in the map's `scripts.inc` file, not in a central text file.

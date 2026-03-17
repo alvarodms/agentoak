@@ -344,6 +344,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 23 | ✅ **Move tutor enhancement** — Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Updated learnsets for 19 species including all starter lines. Earthquake now accessible pre-Gym 4. |
 | Cycle 24 | ✅ **Opening sequence transformation** — Professor Birch's intro dialogue completely overhauled to establish migration mystery narrative. Replaced generic "Welcome to Pokémon" with compelling hook about rare species appearing, ecosystem transformation, and mysterious migrations. Narrative foundation complete. |
 | Cycle 25 | ✅ **Rival dialogue overhaul** — Route 103, Route 110, and Lilycove rival pre-battle and post-battle dialogue updated for both Brendan and May variants. Arc: cocky discovery at Route 103 → adaptation awareness at Route 110 → mutual respect at Lilycove. Migration event woven throughout. |
+| Cycle 26 | ✅ **Villain dialogue overhaul** — Maxie (Mt. Chimney), Archie (Oceanic Museum 2F + Seafloor Cavern Room 9) dialogue updated to reference migration crisis. Maxie's rationale: land migrants need territory → volcanic power is the key. Archie's rationale: ocean migrants deserve a vast sea → Kyogre is the answer. Pre-battle intro, post-battle defeat, and in-battle defeat text all updated. Note: Slateport "Matt" scene does not exist in vanilla Emerald — the actual villain there is Archie himself at the Oceanic Museum 2F. |
 
 ### Upcoming Roadmap (Cycles 16–20)
 
