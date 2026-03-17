@@ -76,3 +76,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: All move constants follow exact format in `include/constants/moves.h` — must check exact spelling
 **Error location**: `src/data/trainer_parties.h` line 3428 (Wattson's Electabuzz moveset)
 **Lesson**: Move constants are case-sensitive and format-sensitive. Always verify against header file.
+## Unicode Character in .string Directive (Cycle 26)
+
+**Symptom**: `data/maps/SeafloorCavern_Room9/scripts.inc:238: error: unknown character U+2014`
+**Cause**: An em dash (—, U+2014) was written into a `.string` directive. Pokeemerald uses a custom character encoding charmap. Em dash is NOT in the charmap.
+**Resolution**: Use only ASCII-safe characters in .string text. Replace em dash (—) with ` - ` (space-hyphen-space). Curly quotes and other Unicode punctuation are similarly banned.
+**Safe Unicode in charmap**: The ellipsis `…` (U+2026) and accented characters like `é` (in POKéMON) ARE in the charmap and work fine. But punctuation symbols like —, –, ", ", ', ' are NOT.
+**Impact**: Build failure caused the runner to discard all pokeemerald file changes from cycle 26 — the objective (migration-aware villain dialogue) is entirely incomplete and must be retried.
+**Lesson**: When writing new `.string` dialogue, type it with plain ASCII. If you see a non-ASCII punctuation mark in your text (smart quote, em dash, ellipsis-that-isnt-three-periods), replace it before saving.
