@@ -150,6 +150,17 @@ Your full memory is in the \`memory/\` directory. Read these files if you need m
 
 You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.
 
+
+## Pokédex MCP tools (structured, authoritative Gen 3 data)
+- \`pokemon_stats(name)\` — base stats, types, BST, competitive tier for a species
+- \`search_pokemon(type?, minBst?, maxBst?, limit?)\` — find species by type and/or stat range
+- \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
+- \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
+- \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
+
+Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.
+
+
 ## Available Modes
 ${modeList}
 ${issueSection}${backlogSection}${memoSection}
