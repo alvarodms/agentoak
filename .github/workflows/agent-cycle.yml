@@ -11,7 +11,7 @@ on:
       max_tool_calls:
         description: "Max tool calls per cycle"
         required: false
-        default: "50"
+        default: "100"
 
   # Run every 8 hours automatically
   schedule:
@@ -34,7 +34,7 @@ jobs:
     env:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
-      MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '50' }}
+      MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '100' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_REPO: ${{ github.repository }}
       BASE_ROM_URL: ${{ secrets.BASE_ROM_URL }}
