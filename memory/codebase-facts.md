@@ -4,6 +4,45 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Move Tutor System (Cycle 23)
+
+**Files**:
+- `pokeemerald/src/data/pokemon/tutor_learnsets.h` — `gTutorMoves[]` array and `sTutorLearnsets[]` bitfield
+- `pokeemerald/data/scripts/move_tutors.inc` — NPC event scripts
+- `pokeemerald/data/text/move_tutors.inc` — NPC dialogue strings
+- `pokeemerald/include/constants/party_menu.h` — `TUTOR_MOVE_*` constants
+
+**How it works**:
+- `TUTOR_MOVE_COUNT = 30` slots, each mapped to a move in `gTutorMoves[]`
+- `sTutorLearnsets[]` is indexed by SPECIES; each entry is a bitfield where bit `TUTOR_MOVE_X` = 1 means that Pokémon can learn that tutor move
+- Macro: `#define TUTOR(move) (1u << (TUTOR_##move))`
+- `TUTOR_MOVE_METRONOME = 8` (slot 8, repurposed to Earthquake in Cycle 23)
+- Each NPC script uses a `FLAG_MOVE_TUTOR_TAUGHT_*` flag so each tutor can only be used once per save
+
+**NPC locations**:
+| NPC location | Move taught | Constant |
+|---|---|---|
+| Slateport City Pokemon Fan Club | Swagger | TUTOR_MOVE_SWAGGER |
+| Mauville City | Rollout | TUTOR_MOVE_ROLLOUT |
+| Verdanturf Town Pokemon Center | Fury Cutter | TUTOR_MOVE_FURY_CUTTER |
+| Lavaridge Town House | Mimic | TUTOR_MOVE_MIMIC |
+| Fallarbor Town Mart | **Earthquake** (was Metronome, changed Cycle 23) | TUTOR_MOVE_METRONOME |
+| Fortree City House | Sleep Talk | TUTOR_MOVE_SLEEP_TALK |
+| Lilycove City Dept Store Rooftop | Substitute | TUTOR_MOVE_SUBSTITUTE |
+| Mossdeep City | DynamicPunch | TUTOR_MOVE_DYNAMIC_PUNCH |
+| Sootopolis City Pokemon Center | Double-Edge | TUTOR_MOVE_DOUBLE_EDGE |
+| Pacifidlog Town Pokemon Center | Explosion | TUTOR_MOVE_EXPLOSION |
+
+**Learnset edit pattern** (to add a tutor move to a species):
+```c
+[SPECIES_X] = (TUTOR(MOVE_MIMIC)
+             | TUTOR(MOVE_METRONOME)   // add after MIMIC in the list
+             | TUTOR(MOVE_SUBSTITUTE)
+             | ...),
+```
+
+---
+
 ## Legends of Hoenn ROM Hack — Comprehensive Validation (Cycle 20)
 
 **Build Status**: ✅ **SUCCESSFUL** — ROM compiles cleanly to `pokeemerald.gba` (16MB)
