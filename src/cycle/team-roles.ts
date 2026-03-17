@@ -33,7 +33,7 @@ export interface TeamRole {
 const gameDesignerRole: TeamRole = {
   name: "game-designer",
   label: "Game Designer",
-  maxTurns: 5,
+  maxTurns: 10,
   timeout: 2 * 60 * 1000,
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Game Designer** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
@@ -73,13 +73,14 @@ Read \`memory/strategy-notes.md\` — it contains the game design direction, mul
 3. Write a plain-text memo addressed to "Producer" with your recommendation.
 4. Be opinionated — rank your top 1-2 priorities and explain why they matter for the player.
 5. If community issues are listed above, note which ones excite you from a design perspective.
-6. Do NOT produce JSON. Just write your memo as plain text.`,
+6. Do NOT produce JSON. Just write your memo as plain text.
+7. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const techLeadRole: TeamRole = {
   name: "tech-lead",
   label: "Technical Lead",
-  maxTurns: 5,
+  maxTurns: 10,
   timeout: 2 * 60 * 1000,
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Technical Lead** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
@@ -119,7 +120,8 @@ Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they co
 3. Write a plain-text memo addressed to "Producer" with your assessment.
 4. Flag any specific risks or prerequisites. If a recent cycle failed, note whether repair should take priority.
 5. If community issues are listed above, note any that have tricky implementation concerns.
-6. Do NOT produce JSON. Just write your memo as plain text.`,
+6. Do NOT produce JSON. Just write your memo as plain text.
+7. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const pokemonSpecialistRole: TeamRole = {
@@ -127,7 +129,7 @@ const pokemonSpecialistRole: TeamRole = {
   label: "Pokémon Specialist",
   maxTurns: 15,
   timeout: 4 * 60 * 1000,
-  tools: "Read,Write,WebSearch,mcp__pokedex__pokemon_stats,mcp__pokedex__search_pokemon,mcp__pokedex__move_data,mcp__pokedex__type_matchup,mcp__pokedex__pokemon_learnset",
+  tools: "Read,Write,WebSearch",
   buildPrompt: (ctx) => `You are the **Pokémon Specialist** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
 Your job: research what makes great Pokémon ROM hacks, understand community expectations, and write a short advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
@@ -141,15 +143,6 @@ You have **web search** access. Use it to research:
 
 ## Your ongoing research data
 You maintain a **persistent knowledge file** at \`memory/pokemon-knowledge.md\`. This is YOUR knowledge base that grows over time.
-
-## Pokédex MCP tools (structured, authoritative Gen 3 data)
-- \`pokemon_stats(name)\` — base stats, types, BST, competitive tier for a species
-- \`search_pokemon(type?, minBst?, maxBst?, limit?)\` — find species by type and/or stat range
-- \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
-- \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
-- \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
-
-Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.
 
 ## Your knowledge-building process
 1. First, read \`memory/pokemon-knowledge.md\` to see what you already know.
@@ -184,14 +177,15 @@ ${ctx.backlogSection ?? "No backlog items"}
 6. Write a plain-text memo addressed to "Producer" with your recommendation, grounded in real-world knowledge of what works in ROM hacks.
 7. Be specific — cite examples from actual ROM hacks, reference community preferences, suggest concrete design patterns.
 8. You don't need to provide a memo for every cycle — if you feel the research doesn't yield actionable insights, it's okay to write a shorter memo that just summarizes your findings without specific recommendations.
-9. Do NOT produce JSON. Just write your memo as plain text.`,
+9. Do NOT produce JSON. Just write your memo as plain text.
+10. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const creativeVisionaryRole: TeamRole = {
   name: "creative-visionary",
   label: "Creative Visionary",
-  maxTurns: 4,
-  timeout: 90 * 1000,
+  maxTurns: 10,
+  timeout: 2 * 60 * 1000,
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Creative Visionary** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
@@ -230,7 +224,8 @@ Read \`memory/strategy-notes.md\` — look for bold ideas that have been noted b
 3. Write a plain-text memo addressed to "Producer" that advocates for creative ambition.
 4. Challenge safe or incremental choices — propose the more exciting alternative.
 5. If community issues are listed above, identify which ones open the door to something truly exciting.
-6. Do NOT produce JSON. Just write your memo as plain text.`,
+6. Do NOT produce JSON. Just write your memo as plain text.
+7. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 /** All advisory roles that run in parallel before the Producer */
