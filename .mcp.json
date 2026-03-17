@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pokedex": {
+      "command": "npx",
+      "args": ["tsx", "src/mcp/pokedex-server.ts"]
+    }
+  }
+}

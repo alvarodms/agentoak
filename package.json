@@ -12,11 +12,14 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "@octokit/rest": "^22.0.1",
+    "@pkmn/dex": "^0.10.7",
     "dotenv": "^16.4.7",
     "glob": "^11.0.1",
     "simple-git": "^3.27.0",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^22.12.0",
