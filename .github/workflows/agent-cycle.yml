@@ -161,20 +161,20 @@ jobs:
         continue-on-error: true
         run: npm run cycle
 
-      - name: Retry after 5min (attempt 2)
+      - name: Retry - Attempt 2
         id: attempt2
         if: steps.attempt1.outcome == 'failure'
         continue-on-error: true
         run: |
-          echo "Attempt 1 failed. Waiting 5 minutes before retry..."
-          sleep 300
+          echo "Attempt 1 failed. Waiting 60 seconds before retry..."
+          sleep 60
           npm run cycle
 
-      - name: Retry after 15min (attempt 3)
+      - name: Retry - Attempt 3 (final)
         if: steps.attempt1.outcome == 'failure' && steps.attempt2.outcome == 'failure'
         run: |
-          echo "Attempt 2 failed. Waiting 15 minutes before final retry..."
-          sleep 900
+          echo "Attempt 2 failed. Waiting 60 seconds before final retry..."
+          sleep 60
           npm run cycle
 
       - name: Push changes
