@@ -180,6 +180,9 @@ jobs:
             git push origin main
           fi
 
+      - name: Log RTK stats
+        run: rtk gain || echo "Failed to get RTK stats"
+
   deploy-docs:
     needs: run-cycle
     runs-on: ubuntu-latest
