@@ -25,6 +25,11 @@ const INITIAL_CONTENT: Record<MemoryFileName, { title: string; description: stri
     description:
       "General project information — build system details, tool versions, configuration notes.",
   },
+  "pokemon-knowledge": {
+    title: "Pokémon Knowledge Base",
+    description:
+      "Research findings about Pokémon games, ROM hacks, community expectations, and design patterns — gathered via web search by the Pokémon Specialist advisor.",
+  },
 };
 
 function memoryPath(name: MemoryFileName): string {
@@ -81,6 +86,7 @@ export function loadMemory(): Memory {
     failurePatterns: parseMemoryFile("failure-patterns"),
     strategyNotes: parseMemoryFile("strategy-notes"),
     projectFacts: parseMemoryFile("project-facts"),
+    pokemonKnowledge: parseMemoryFile("pokemon-knowledge"),
   };
 }
 
@@ -106,7 +112,7 @@ export function appendToMemory(name: MemoryFileName, heading: string, content: s
 
 /** Get a summary of all memory for inclusion in prompts */
 export function getMemorySummary(memory: Memory): string {
-  const sections = [memory.codebaseFacts, memory.failurePatterns, memory.strategyNotes, memory.projectFacts];
+  const sections = [memory.codebaseFacts, memory.failurePatterns, memory.strategyNotes, memory.projectFacts, memory.pokemonKnowledge];
 
   return sections
     .map((file) => {
