@@ -202,7 +202,7 @@ Respond with a JSON object containing mode, objective, reasoning, implementation
   logger.info(`-> Producer prompt:\n\n\n${prompt}\n\n\n`);
 
   const result = await runClaudeCode(prompt, {
-    maxTurns: 10,
+    maxTurns: 50,
     timeout: 5 * 60 * 1000,
     model,
     jsonSchema: CYCLE_PLAN_SCHEMA,
