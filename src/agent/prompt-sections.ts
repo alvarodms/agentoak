@@ -1,0 +1,164 @@
+/**
+ * Reusable prompt section factories.
+ *
+ * Each function returns a plain string representing a self-contained
+ * section of a prompt. They can be used standalone or composed through
+ * PromptBuilder for larger prompts.
+ */
+
+import { CYCLE_MODES } from "../cycle/modes.js";
+import type { TeamContext } from "../cycle/team-roles.js";
+import { PromptBuilder } from "./prompt-builder.js";
+
+// ---------------------------------------------------------------------------
+// Small reusable fragments
+// ---------------------------------------------------------------------------
+
+/** Format journal summaries into a single block, with a fallback for first-cycle. */
+export function formatJournalContext(summaries: string[]): string {
+  return summaries.length > 0
+    ? summaries.join("\n\n---\n\n")
+    : "No previous cycles. This is the very first cycle.";
+}
+
+/** Build the bullet list of available cycle modes. */
+export function formatModeList(): string {
+  return Object.values(CYCLE_MODES)
+    .map((m) => `- **${m.name}**: ${m.description}`)
+    .join("\n");
+}
+
+/** Wrap raw issue context in a conditional section (returns empty string if absent). */
+export function formatIssueSection(issueContext: string): string {
+  return issueContext ? `\n\n${issueContext}\n` : "";
+}
+
+/** Build the "Deferred Issue Backlog" section (returns empty string if absent). */
+export function formatBacklogSection(issueBacklog: string): string {
+  if (!issueBacklog) return "";
+  return `\n\n## Deferred Issue Backlog\n\nThe following issues were deferred from earlier cycles. You may pick one up this cycle if the timing is right — include it in \`issueActions\` with action "accept" along with a brief response.\n\n${issueBacklog}\n`;
+}
+
+/** The Pokédex MCP tools reference block, used by planners and the Pokémon Specialist advisor. */
+export function formatPokedexToolsSection(): string {
+  return `## Pokédex MCP tools (structured, authoritative Gen 3 data)
+- \`pokemon_stats(name)\` — base stats, types, BST, competitive tier for a species
+- \`search_pokemon(type?, minBst?, maxBst?, limit?)\` — find species by type and/or stat range
+- \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
+- \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
+- \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
+
+Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.`;
+}
+
+/** The "Memory Files (on demand)" reference block. Extra entries are appended to the standard list. */
+export function formatMemoryFilesSection(extraFiles?: string[]): string {
+  const base = [
+    "`memory/strategy-notes.md` — game design direction, multi-cycle roadmap, and goals",
+    "`memory/codebase-facts.md` — discovered facts about the pokeemerald codebase",
+    "`memory/failure-patterns.md` — build failures encountered and their solutions",
+    "`memory/project-facts.md` — build system details and configuration notes",
+  ];
+  if (extraFiles) {
+    base.push(...extraFiles);
+  }
+  const bullets = base.map((f) => `- ${f}`).join("\n");
+  return `## Memory Files (on demand)
+
+Your full memory is in the \`memory/\` directory. Read these files if you need more context before deciding — don't pre-emptively read them all, only fetch what is relevant:
+
+${bullets}
+
+You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.`;
+}
+
+/** The mode history heading + "don't feel constrained" preamble. */
+export function formatModeHistorySection(summary: string): string {
+  return `## Cycle Mode History
+Use this summary of past cycle modes to inform your decision, but do not feel constrained by it.
+If the previous few cycles were all "research", maybe it's time for a "feature". If there was a recent "repair", maybe a "patch" or "refactor" is next.
+Use your judgment to choose the best mode for the current situation and objective — the goal is to build a great ROM hack, not to follow a rigid pattern.
+
+${summary}`;
+}
+
+/** The ~20-line implementation plan guidance block shared by both planner variants. */
+export function formatImplementationPlanGuidance(): string {
+  return `Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent should execute your plan, not make design decisions — keep creative choices in the plan, not left to the implementer. Your instructions should be clear and actionable:
+
+**General structure**:
+1. What to read or understand first
+2. Logical actions to take in order
+3. Conventions or patterns to follow
+4. How to verify the work compiled and is correct
+
+**CRITICAL — Specifying creative content**:
+When the plan involves game content (dialogue, encounter tables, trainer rosters, item placements, stat values, move sets, evolution changes, etc.), you MUST provide the complete, verbatim content in the plan itself. The implementation agent should NOT be inventing dialogue, choosing Pokémon species, deciding stat values, or making any creative choices.
+
+**What to specify completely (not exhaustive - use your own judgment)**:
+- Full dialogue text (exact wording)
+- Complete encounter tables (species, levels, encounter rates)
+- Exact trainer rosters (species, levels, held items, moves)
+- Specific numerical values (stats, experience yields, catch rates)
+- Item lists and placement locations
+- Evolution conditions and methods
+
+The implementation agent's job is to locate the right files and make the necessary changes — not to design the content itself. When in doubt, over-specify.`;
+}
+
+/** The issue-response and help-request instructions appended to planner prompts. */
+export function formatPlannerClosingInstructions(): string {
+  return `If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
+
+**Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
+
+You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
+
+Respond with a JSON object containing mode, objective, reasoning, implementationPlan, and optionally issueActions and helpRequests.`;
+}
+
+// ---------------------------------------------------------------------------
+// Composite sections
+// ---------------------------------------------------------------------------
+
+export interface PlannerContextParams {
+  cycleNumber: number;
+  journalContext: string;
+  modeHistorySummary: string;
+  issueContext: string;
+  issueBacklog: string;
+  extraMemoryFiles?: string[];
+}
+
+/**
+ * Build the shared middle portion of the planner / Producer prompt.
+ *
+ * Covers: journal → mode history → memory files → Pokédex tools → modes → issues → backlog.
+ * The preamble and closing instructions are left to each caller.
+ */
+export function buildPlannerContextSections(params: PlannerContextParams): string {
+  const b = new PromptBuilder();
+  b.heading("Last Cycle's Journal", params.journalContext);
+  b.raw(formatModeHistorySection(params.modeHistorySummary));
+  b.raw("\n" + formatMemoryFilesSection(params.extraMemoryFiles));
+  b.raw("\n" + formatPokedexToolsSection());
+  b.heading("Available Modes", formatModeList());
+  b.raw(formatIssueSection(params.issueContext));
+  b.raw(formatBacklogSection(params.issueBacklog));
+  return b.build();
+}
+
+/**
+ * Build the shared Context block used by all advisory team roles.
+ *
+ * Contains: journal, mode history, available modes, issues, backlog — all at ### level.
+ */
+export function buildAdvisorContextBlock(ctx: TeamContext): string {
+  const b = new PromptBuilder();
+  b.heading("Last Cycle Journal", ctx.journalContext, 3);
+  b.heading("Cycle Mode History", ctx.modeHistorySummary, 3);
+  b.heading("Available Modes", ctx.modeList, 3);
+  b.heading("New Community Issues", ctx.issueSection || "No new community issues", 3);
+  b.heading("Community Backlog", ctx.backlogSection || "No backlog items", 3);
+  return b.build();
+}
