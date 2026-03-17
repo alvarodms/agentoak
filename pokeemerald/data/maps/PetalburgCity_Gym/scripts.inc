@@ -1253,18 +1253,11 @@ PetalburgCity_Gym_Text_YouHaveGottenStronger:
 	.string "that you've earned.$"
 
 PetalburgCity_Gym_Text_NormanIntro:
-	.string "DAD: Hm…\n"
-	.string "So, you did get four GYM BADGES.\p"
-	.string "Fine, as I promised, we will have\n"
-	.string "a POKéMON battle.\p"
-	.string "{PLAYER}…\p"
-	.string "I'm so happy that I can have\n"
-	.string "a real battle with my own child.\p"
-	.string "But, a battle is a battle!\p"
-	.string "I will do everything in my power as\n"
-	.string "a GYM LEADER to win.\p"
-	.string "{PLAYER}, you'd better give it your\n"
-	.string "best shot, too!$"
+	.string "Even Normal-types have had to adapt\n"
+	.string "to this new HOENN. Strength isn't\l"
+	.string "about your type -- it's about will.\p"
+	.string "You've grown strong out there.\n"
+	.string "Now face a trainer who's done the same.$"
 
 PetalburgCity_Gym_Text_NormanDefeat:
 	.string "…\p"
