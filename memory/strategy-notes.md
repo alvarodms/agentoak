@@ -274,7 +274,7 @@ Deferred (non-wild areas):
 
 1. **Professor Birch Dialogue** — Update opening dialogue to explain the changed world; rename starter descriptions
 2. **Pokémon Descriptions / NPC Flavor** — Update key NPCs to reference the migration phenomenon
-3. **Move Tutor Availability** — Ensure strong moves are accessible (Dragon Claw, Earthquake) reasonably early
+3. **Move Tutor Availability** — ✅ COMPLETE (Cycle 23): Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Accessible pre-Gym 4. Learnsets updated for 19 species (Larvitar/Pupitar/Tyranitar, Dratini/Dragonair/Dragonite, Bagon/Shelgon/Salamence, Growlithe/Arcanine, Electabuzz, Magmar, Rhyhorn/Rhydon, Cubone/Marowak, Houndour/Houndoom). Dragon Claw already covered by Meteor Falls TM at 1,500P.
 4. **TM Prices** — Consider reducing prices for key combat TMs
 5. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
 
