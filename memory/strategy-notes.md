@@ -343,6 +343,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 22 | ✅ **TM accessibility overhaul** — Reduced critical TM prices by 50% (3,000→1,500P) for Dragon Claw, Earthquake, Shadow Ball, Psychic, Sludge Bomb, and Flamethrower. Made powerful moves accessible by mid-game. |
 | Cycle 23 | ✅ **Move tutor enhancement** — Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Updated learnsets for 19 species including all starter lines. Earthquake now accessible pre-Gym 4. |
 | Cycle 24 | ✅ **Opening sequence transformation** — Professor Birch's intro dialogue completely overhauled to establish migration mystery narrative. Replaced generic "Welcome to Pokémon" with compelling hook about rare species appearing, ecosystem transformation, and mysterious migrations. Narrative foundation complete. |
+| Cycle 25 | ✅ **Rival dialogue overhaul** — Route 103, Route 110, and Lilycove rival pre-battle and post-battle dialogue updated for both Brendan and May variants. Arc: cocky discovery at Route 103 → adaptation awareness at Route 110 → mutual respect at Lilycove. Migration event woven throughout. |
 
 ### Upcoming Roadmap (Cycles 16–20)
 

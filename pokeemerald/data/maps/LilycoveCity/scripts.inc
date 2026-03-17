@@ -410,17 +410,17 @@ LilycoveCity_EventScript_DontKnowAboutBerryBlender::
 	return
 
 LilycoveCity_Text_MayShoppingLetsBattle:
-	.string "MAY: Oh, hey?\n"
-	.string "{PLAYER}{KUN}, are you shopping, too?\p"
-	.string "I bought a whole bunch of DOLLS and\n"
-	.string "POSTERS.\p"
-	.string "Of course, I've also caught a lot of\n"
-	.string "POKéMON, and I'm raising them\l"
-	.string "properly, too.\p"
-	.string "Actually, I'm more worried if you're\n"
-	.string "raising POKéMON properly, {PLAYER}{KUN}.\p"
-	.string "I'll battle with you, so you can show\n"
-	.string "me your POKéMON, {PLAYER}{KUN}.$"
+	.string "MAY: …{PLAYER}{KUN}.\p"
+	.string "I've been thinking about all of it\n"
+	.string "lately.\p"
+	.string "The migrations… TEAM MAGMA\n"
+	.string "and AQUA… the legendaries…\p"
+	.string "The ecosystem transforming…\n"
+	.string "It's all connected, isn't it?\p"
+	.string "We both started our journeys\n"
+	.string "because of the same event.\p"
+	.string "I want to see where yours\n"
+	.string "has led you. Want to battle?$"
 
 LilycoveCity_Text_MayNotRaisingPokemon:
 	.string "MAY: Oh, why? {PLAYER}{KUN}, haven't you\n"
@@ -433,22 +433,33 @@ LilycoveCity_Text_MayBattleMe:
 	.string "check out your POKéMON!$"
 
 LilycoveCity_Text_MayWontBeBeaten:
-	.string "MAY: The POKéMON I raised won't be\n"
-	.string "beaten by your POKéMON, {PLAYER}{KUN}!$"
+	.string "MAY: This isn't just\n"
+	.string "a rivalry anymore.\p"
+	.string "Two trainers shaped by the\n"
+	.string "same changed world.\p"
+	.string "Let's see who adapted better.\n"
+	.string "Let's go, {PLAYER}{KUN}!$"
 
 LilycoveCity_Text_MayDefeat:
-	.string "… … … … … … … …\p"
-	.string "I remember the battle I had with you,\n"
-	.string "{PLAYER}{KUN}, on ROUTE 103.\p"
-	.string "That battle helped you become this\n"
-	.string "strong, {PLAYER}{KUN}, didn't it?$"
+	.string "…\p"
+	.string "You really have become\n"
+	.string "something else, {PLAYER}{KUN}.\p"
+	.string "The migration brought us both\n"
+	.string "incredible POKéMON.\p"
+	.string "But what you've done with yours…\n"
+	.string "I'll keep training.\p"
+	.string "The new HOENN needs trainers\n"
+	.string "like you. See you at the top!$"
 
 LilycoveCity_Text_MayGoingBackToLittleroot:
-	.string "MAY: I'm thinking of going back to\n"
-	.string "LITTLEROOT soon.\p"
-	.string "I've caught a decent group of POKéMON,\n"
-	.string "and my POKéDEX is coming along, so\l"
-	.string "I'm going home to show my dad.$"
+	.string "MAY: I'm heading back\n"
+	.string "to LITTLEROOT.\p"
+	.string "BIRCH's research on the\n"
+	.string "migration event is nearly\l"
+	.string "complete. I should see it.\p"
+	.string "This changed HOENN needs\n"
+	.string "trainers like you, {PLAYER}{KUN}.\p"
+	.string "And rivals like me, too!$"
 
 LilycoveCity_Text_MayYouGoingToCollectBadges:
 	.string "{PLAYER}{KUN}, what are you going to do?\p"
@@ -480,12 +491,17 @@ LilycoveCity_Text_MayYouGoingToBattleFrontier:
 	.string "See you!$"
 
 LilycoveCity_Text_BrendanShoppingLetsBattle:
-	.string "BRENDAN: Oh, hey, it's {PLAYER}.\p"
-	.string "I'm running an errand for my dad.\n"
-	.string "No, I'm not buying any DOLLS.\p"
-	.string "Anyways, it's been a while.\p"
-	.string "Want to have a battle to see who's been\n"
-	.string "raising POKéMON better?$"
+	.string "BRENDAN: …{PLAYER}.\p"
+	.string "I've been thinking about all of it\n"
+	.string "lately.\p"
+	.string "The migrations… TEAM MAGMA\n"
+	.string "and AQUA… the legendaries…\p"
+	.string "The ecosystem transforming…\n"
+	.string "It's all connected, isn't it?\p"
+	.string "We both started our journeys\n"
+	.string "because of the same event.\p"
+	.string "I want to see where yours\n"
+	.string "has led you. Want to battle?$"
 
 LilycoveCity_Text_BrendanNoConfidence:
 	.string "BRENDAN: Oh, what's the matter?\n"
@@ -496,21 +512,33 @@ LilycoveCity_Text_BrendanBattleMe:
 	.string "been raising POKéMON better?$"
 
 LilycoveCity_Text_BrendanWontBeBeaten:
-	.string "BRENDAN: Aww, but you know I'm not\n"
-	.string "going to lose to no {PLAYER}.$"
+	.string "BRENDAN: This isn't just\n"
+	.string "a rivalry anymore.\p"
+	.string "Two trainers shaped by the\n"
+	.string "same changed world.\p"
+	.string "Let's see who adapted better.\n"
+	.string "Let's go, {PLAYER}!$"
 
 LilycoveCity_Text_BrendanDefeat:
-	.string "Humph…\n"
-	.string "You've done a lot of raising.\p"
-	.string "That stings a bit--I had a head start\n"
-	.string "on you as a TRAINER…$"
+	.string "…\p"
+	.string "You really have become\n"
+	.string "something else.\p"
+	.string "The migration brought us both\n"
+	.string "incredible POKéMON.\p"
+	.string "But what you've done with yours…\n"
+	.string "I'll keep training.\p"
+	.string "The new HOENN needs trainers\n"
+	.string "like you. See you at the top.$"
 
 LilycoveCity_Text_BrendanGoingBackToLittleroot:
-	.string "BRENDAN: I…\n"
-	.string "I plan on going home to LITTLEROOT.\p"
-	.string "You know I'm helping out my dad on his\n"
-	.string "POKéDEX. It's coming together pretty\l"
-	.string "decently, so I should go show him.$"
+	.string "BRENDAN: I'm heading back\n"
+	.string "to LITTLEROOT.\p"
+	.string "BIRCH's research on the\n"
+	.string "migration event is nearly\l"
+	.string "complete. I should see it.\p"
+	.string "This changed HOENN needs\n"
+	.string "trainers like you, {PLAYER}.\p"
+	.string "And rivals like me, too.$"
 
 LilycoveCity_Text_BrendanYouGoingToCollectBadges:
 	.string "{PLAYER}, what are you going to do?\p"
