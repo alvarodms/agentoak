@@ -2,7 +2,7 @@
  * IPS patch generation and base ROM management.
  *
  * Creates IPS (International Patching System) format patches using Flips
- * (Floating IPS), installed via Flatpak as com.github.Alcaro.Flips.
+ * (Floating IPS), pre-installed in the runner image as the `flips` binary.
  * The base ROM is downloaded on first use and cached locally.
  */
 
@@ -129,7 +129,7 @@ function hashFile(filePath: string): string {
 
 /**
  * Generate an IPS patch by comparing the base ROM against the built ROM
- * using Flips (com.github.Alcaro.Flips) installed via Flatpak.
+ * using the `flips` binary pre-installed in the runner image.
  * Returns the patch as a Buffer, or null if generation fails.
  */
 export async function generateIPSPatch(): Promise<Buffer | null> {
@@ -144,11 +144,9 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
   const patchPath = path.join(BASE_ROM_DIR, "patch.ips");
 
   try {
-    logger.info("Generating IPS patch using Flips (com.github.Alcaro.Flips)...");
+    logger.info("Generating IPS patch using Flips...");
 
-    await execFileAsync("flatpak", [
-      "run",
-      "com.github.Alcaro.Flips",
+    await execFileAsync("flips", [
       "--create",
       baseRomPath,
       BUILT_ROM_PATH,
@@ -162,7 +160,7 @@ export async function generateIPSPatch(): Promise<Buffer | null> {
 
     const patch = fs.readFileSync(patchPath);
     fs.unlinkSync(patchPath);
-    logger.info(`IPS patch generated via Flips (com.github.Alcaro.Flips): ${patch.length} bytes`);
+    logger.info(`IPS patch generated: ${patch.length} bytes`);
     return patch;
   } catch (err) {
     logger.error(
