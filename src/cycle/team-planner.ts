@@ -146,6 +146,7 @@ Your full memory is in the \`memory/\` directory. Read these files if you need m
 - \`memory/codebase-facts.md\` — discovered facts about the pokeemerald codebase
 - \`memory/failure-patterns.md\` — build failures encountered and their solutions
 - \`memory/project-facts.md\` — build system details and configuration notes
+- \`memory/pokemon-knowledge.md\` — Pokémon game/ROM hack research findings (maintained by the Pokémon Specialist advisor)
 
 You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.
 
