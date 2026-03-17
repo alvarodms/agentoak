@@ -57,7 +57,12 @@ ${ctx.modeHistorySummary}
 
 ### Available Modes
 ${ctx.modeList}
-${ctx.issueSection}${ctx.backlogSection}
+
+### New Community Issues
+${ctx.issueSection}
+
+### Community Backlog
+${ctx.backlogSection}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — it contains the game design direction, multi-cycle roadmap, and goals.
@@ -98,7 +103,12 @@ ${ctx.modeHistorySummary}
 
 ### Available Modes
 ${ctx.modeList}
-${ctx.issueSection}${ctx.backlogSection}
+
+### New Community Issues
+${ctx.issueSection}
+
+### Community Backlog
+${ctx.backlogSection}
 
 ## Your Memory
 Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they contain known build issues and codebase knowledge.
@@ -126,7 +136,7 @@ Your job: write a punchy advisory memo (200-350 words) for the Producer, who wil
 - What would make this hack *genuinely memorable* — not just competent, but worth talking about?
 - Which bold ideas have been deferred too long?
 - When is "playing it safe" actually a missed opportunity to create something special?
-- What is the most ambitious version of what we could do this cycle?
+- What is the most ambitious version of what we could do? Think not only what's possible on this cycle, but what could be seeded for future cycles.
 - Pushing beyond incremental improvements toward transformative changes
 
 ## Context
@@ -139,7 +149,12 @@ ${ctx.modeHistorySummary}
 
 ### Available Modes
 ${ctx.modeList}
-${ctx.issueSection}${ctx.backlogSection}
+
+### New Community Issues
+${ctx.issueSection}
+
+### Community Backlog
+${ctx.backlogSection}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — look for bold ideas that have been noted but not acted on, and assess whether the current roadmap is ambitious enough.
