@@ -161,7 +161,7 @@ async function runImplementationPhase(
   const timeout = usingDeepSeek
     ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
     : 30 * 60 * 1000;
-  const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50", 10);
+  const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "100", 10);
 
   log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})`} [mode: ${plan.mode}]`);
   log.info(`  → Task: ${plan.objective}`);

@@ -6,7 +6,7 @@ async function main() {
   logger.info("Agent Oak starting up...");
   logger.info(`Model: ${process.env.ANTHROPIC_MODEL ?? "(default)"}`);
   logger.info(`Anthropic Base URL: ${process.env.ANTHROPIC_BASE_URL ?? "(default)"}`);
-  logger.info(`Max tool calls/cycle: ${process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "50"}`);
+  logger.info(`Max tool calls/cycle: ${process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "100"}`);
 
   try {
     await runCycle();
