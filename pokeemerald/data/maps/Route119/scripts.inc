@@ -574,13 +574,12 @@ Route119_Text_DontGoNearWeatherInstitute:
 	.string "WEATHER INSTITUTE.$"
 
 Route119_Text_ThoughtFlyByCatchingBirdMons:
-	.string "I thought you FLY by catching a whole\n"
-	.string "flock of BIRD POKéMON, and then\l"
-	.string "hanging on to them somehow.\p"
-	.string "But it turns out there's an HM move\n"
-	.string "called FLY!\p"
-	.string "I wish I'd known about that a long\n"
-	.string "time ago…$"
+	.string "The rain here never used to bother me.\p"
+	.string "What bothers me now are new sounds.\n"
+	.string "POKéMON calling from the tall grass\l"
+	.string "that I do not recognize.\p"
+	.string "My Machoke has been jumpy for a week.\n"
+	.string "He is never jumpy.$"
 
 Route119_Text_TallGrassSnaresBikeTires:
 	.string "Tch…\n"

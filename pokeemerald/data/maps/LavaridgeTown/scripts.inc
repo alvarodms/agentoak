@@ -352,13 +352,13 @@ LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare:
 	.string "Or at least that's how the rumor goes.$"
 
 LavaridgeTown_Text_HotSpringsNeverRunDry:
-	.string "We draw as much hot water as we need,\n"
-	.string "and yet the hot springs never run dry.\p"
-	.string "Isn't it magical?\p"
-	.string "These hot springs appear near active\n"
-	.string "volcanoes. Veins of water under the\l"
-	.string "ground are heated by magma to well up\l"
-	.string "as hot springs.$"
+	.string "The hot springs have been running\n"
+	.string "warmer than usual.\p"
+	.string "We keep finding Magby in the lower\n"
+	.string "pools. More than anyone can remember.\p"
+	.string "The nurses are exhausted.\n"
+	.string "The Magby seem fine.\l"
+	.string "Not sure who to worry about more.$"
 
 LavaridgeTown_Text_PokemonNippedBackside:
 	.string "Being buried in this hot sand is…\n"
@@ -384,11 +384,12 @@ LavaridgeTown_Text_IfPokemonInHotSprings:
 	.string "a bubble bath, or even a lava bath…$"
 
 LavaridgeTown_Text_HotSpringsClaims:
-	.string "They're claiming that these hot springs\n"
-	.string "are good for calming nervous tension,\l"
-	.string "relieving aching muscles, solving\l"
-	.string "romantic problems, and attracting\l"
-	.string "money…$"
+	.string "My grandmother says when the volcanic\n"
+	.string "POKéMON multiply, the mountain wakes.\p"
+	.string "She said this forty years ago.\n"
+	.string "Nothing happened. She is convinced\l"
+	.string "she was right.\p"
+	.string "I am starting to think she might be.$"
 
 LavaridgeTown_Text_TownSign:
 	.string "LAVARIDGE TOWN\p"

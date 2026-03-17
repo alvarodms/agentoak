@@ -134,10 +134,13 @@ Route113_EventScript_Wyatt::
 	end
 
 Route113_Text_AshCanBeFashionedIntoGlass:
-	.string "Wahahaha! Today's technology is a\n"
-	.string "wondrous thing!\p"
-	.string "Take this volcanic ash here.\n"
-	.string "It can be fashioned into glass.$"
+	.string "I collect volcanic ash up here.\n"
+	.string "It is good for making Pokeblocks.\p"
+	.string "But these days I share the path with\n"
+	.string "Magmar who act like they own it.\p"
+	.string "One melted my Pokeblock mold right\n"
+	.string "off my belt. Did not even look\l"
+	.string "apologetic.$"
 
 Route113_Text_FunWalkingThroughAsh:
 	.string "It's fun walking through the volcano's\n"

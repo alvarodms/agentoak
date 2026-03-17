@@ -190,7 +190,12 @@ Route117_Text_ArentTheseFlowersPretty:
 	.string "I planted them all!$"
 
 Route117_Text_AirIsTastyHere:
-	.string "The air is tasty here!$"
+	.string "I walk this route every morning.\n"
+	.string "Used to be Marill and Oddish.\p"
+	.string "Now there are Larvitar in the eastern\n"
+	.string "rocks. They look disoriented.\p"
+	.string "Like they walked a very long way\n"
+	.string "and forgot why they started.$"
 
 Route117_Text_RouteSignVerdanturf:
 	.string "ROUTE 117\n"
