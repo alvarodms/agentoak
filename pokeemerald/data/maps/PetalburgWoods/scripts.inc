@@ -427,11 +427,14 @@ PetalburgWoods_Text_IveBeenTrainingHard:
 	.string "So, I've been training hard.$"
 
 PetalburgWoods_Text_StayOutOfTallGrass:
-	.string "Yo, there!\n"
-	.string "Your POKéMON doing okay?\p"
-	.string "If your POKéMON are weak and you want\n"
-	.string "to avoid battles, you should stay out\l"
-	.string "of tall grass.$"
+	.string "I've walked these woods for years\n"
+	.string "and I know every Pokemon here.\p"
+	.string "But lately I keep finding species\n"
+	.string "with no business in this forest.\p"
+	.string "A Larvitar was asleep right under\n"
+	.string "that fern. A Larvitar! In a\l"
+	.string "rainforest! The world has gone\n"
+	.string "strange on us.$"
 
 PetalburgWoods_Text_HiddenItemsExplanation:
 	.string "Sometimes, there are things on the\n"

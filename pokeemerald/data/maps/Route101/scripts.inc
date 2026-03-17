@@ -282,10 +282,13 @@ Route101_Text_YouSavedMe:
 	.string "by my POKéMON LAB later, okay?$"
 
 Route101_Text_TakeTiredPokemonToPokeCenter:
-	.string "If POKéMON get tired, take them to\n"
-	.string "a POKéMON CENTER.\p"
-	.string "There's a POKéMON CENTER in OLDALE\n"
-	.string "TOWN right close by.$"
+	.string "I used to come here for Poochyena\n"
+	.string "and Zigzagoon.\p"
+	.string "But lately there are things I don't\n"
+	.string "recognize at all.\p"
+	.string "A dark spiky thing almost bit me\n"
+	.string "yesterday. Way too scary for\l"
+	.string "Route 101, if you ask me.$"
 
 Route101_Text_WildPokemonInTallGrass:
 	.string "Wild POKéMON will jump out at you in\n"

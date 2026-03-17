@@ -861,9 +861,12 @@ Route110_Text_YouGotBikeFromRydel:
 	.string "the place--it's good advertising!$"
 
 Route110_Text_TwoRoads:
-	.string "The two roads, one above, one below…\p"
-	.string "A road each for people and POKéMON.\n"
-	.string "Perhaps that is right and fair.$"
+	.string "A Lapras swam past my boat this\n"
+	.string "morning. Never in thirty years.\p"
+	.string "Beautiful creature. But something\n"
+	.string "must be driving them here.\l"
+	.string "They look like they're searching\n"
+	.string "for something. It makes me uneasy.$"
 
 Route110_Text_WalkOnTheLowRoad:
 	.string "I don't have a BIKE, so I'll take\n"

@@ -1001,9 +1001,12 @@ Route104_Text_BrineyLivesInSeasideCottage:
 	.string "feared the sea, however stormy.$"
 
 Route104_Text_WhatsItLikeAtBottomOfSea:
-	.string "The sea, huh?\p"
-	.string "I wonder what it's like at the bottom\n"
-	.string "of the sea?$"
+	.string "The fishing used to be simple --\n"
+	.string "Magikarp, maybe a Tentacool.\p"
+	.string "Now there are Horsea schools and\n"
+	.string "things I can't even name.\p"
+	.string "Someone should warn the Gym\n"
+	.string "Leaders to prepare.$"
 
 Route104_Text_ThrowBallAtWeakenedPokemon:
 	.string "If you're going to throw a POKé BALL,\n"

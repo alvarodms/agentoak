@@ -719,17 +719,20 @@ PetalburgCity_Text_ThisIsGymSign:
 	.string "whenever you're looking for a GYM.$"
 
 PetalburgCity_Text_WaterReflection:
-	.string "My face is reflected in the water.\p"
-	.string "It's a shining grin full of hope…\p"
-	.string "Or it could be a look of somber silence\n"
-	.string "struggling with fear…\p"
-	.string "What do you see reflected in your face?$"
+	.string "I've fished this pond every morning\n"
+	.string "for fifteen years.\p"
+	.string "Last Tuesday I pulled out a Dratini.\n"
+	.string "A Dratini!\p"
+	.string "I nearly fell out of my boat.\n"
+	.string "The water doesn't feel the\l"
+	.string "same anymore.$"
 
 PetalburgCity_Text_FullPartyExplanation:
-	.string "Let's say you have six POKéMON.\n"
-	.string "If you catch another one…\p"
-	.string "It is automatically sent to a STORAGE\n"
-	.string "BOX over a PC connection.$"
+	.string "My sister spotted a Houndour near\n"
+	.string "the edge of town yesterday.\p"
+	.string "Those are from Johto! Pokemon from\n"
+	.string "other regions have been showing up\l"
+	.string "all over Hoenn. Nobody knows why.$"
 
 PetalburgCity_Text_GymSign:
 	.string "PETALBURG CITY POKéMON GYM\n"

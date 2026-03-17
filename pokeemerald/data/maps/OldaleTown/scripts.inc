@@ -340,8 +340,11 @@ OldaleTown_Movement_ReturnToOriginalPosition:
 	step_end
 
 OldaleTown_Text_SavingMyProgress:
-	.string "I want to take a rest, so I'm saving my\n"
-	.string "progress.$"
+	.string "A trainer came in with burns from\n"
+	.string "a Pokemon she'd never seen here.\p"
+	.string "I looked it up -- it was a Magby!\n"
+	.string "Those don't live in Hoenn.\l"
+	.string "Something very strange is happening.$"
 
 OldaleTown_Text_IWorkAtPokemonMart:
 	.string "Hi!\n"

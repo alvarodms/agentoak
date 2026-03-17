@@ -987,8 +987,13 @@ LittlerootTown_Text_YouSavedBirch:
 	.string "I'm so glad!$"
 
 LittlerootTown_Text_GoodLuckCatchingPokemon:
-	.string "Are you going to catch POKéMON?\n"
-	.string "Good luck!$"
+	.string "I saw something in the tall grass\n"
+	.string "I've never seen before!\p"
+	.string "All shimmery and blue -- like a\n"
+	.string "tiny Dragonair.\p"
+	.string "Prof. Birch says rare Pokemon from\n"
+	.string "other regions have been appearing\l"
+	.string "all over Hoenn. I want to catch one!$"
 
 LittlerootTown_Text_TownSign:
 	.string "LITTLEROOT TOWN\n"

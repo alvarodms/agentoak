@@ -1015,10 +1015,13 @@ RustboroCity_EventScript_Boy1::
 	end
 
 RustboroCity_Text_WeShortenItToDevon:
-	.string "The DEVON CORPORATION…\n"
-	.string "We all just shorten it to DEVON.\p"
-	.string "That company makes all sorts of\n"
-	.string "convenient products.$"
+	.string "Devon Corp has been tracking unusual\n"
+	.string "Pokemon sightings across Hoenn.\p"
+	.string "Forty-two species documented that\n"
+	.string "have never been recorded here\l"
+	.string "before -- all in the last few months.\p"
+	.string "Mr. Stone is very interested\n"
+	.string "in the data.$"
 
 RustboroCity_Text_SneakyLookingManWentAroundCorner:
 	.string "Hm? A sneaky-looking man?\p"
@@ -1084,10 +1087,11 @@ RustboroCity_Text_PokemonChangeShape:
 	.string "If one did that, I would be shocked!$"
 
 RustboroCity_Text_TradePokemonGrowFast:
-	.string "A POKéMON you get in a trade from\n"
-	.string "someone grows fast.\p"
-	.string "But if you don't have certain GYM\n"
-	.string "BADGES, it may not obey you…$"
+	.string "Trainers from Route 116 say the\n"
+	.string "tunnels are full of strange things.\p"
+	.string "Not just Geodude and Zubat --\n"
+	.string "stranger things.\p"
+	.string "I'm glad I stay in the city.$"
 
 RustboroCity_Text_OutOfTheWay:
 	.string "Get out!\n"
