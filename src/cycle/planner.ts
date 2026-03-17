@@ -149,7 +149,19 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     if (helpRequests.length > 0) {
       logger.info(`  Help requests: ${helpRequests.length}`);
     }
-    return { mode, objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
+
+    const planResult = {
+      mode,
+      objective: parsed.objective,
+      reasoning: parsed.reasoning,
+      implementationPlan: parsed.implementationPlan ?? "",
+      issueActions,
+      helpRequests
+    };
+
+    logger.info(`[DONE] Final cycle plan: ${JSON.stringify(planResult, null, 2)}`);
+
+    return planResult;
   }
 
   throw new Error("Could not parse structured plan from CLI output");
@@ -247,7 +259,6 @@ Once you have decided on the objective, write a precise \`implementationPlan\` f
 1. What to read or understand first
 2. Logical actions to take in order
 3. Conventions or patterns to follow
-4. How to verify the work compiled and is correct
 
 **CRITICAL — Specifying creative content**:
 When the plan involves game content (dialogue, encounter tables, trainer rosters, item placements, stat values, move sets, evolution changes, etc.), you MUST provide the complete, verbatim content in the plan itself. The implementation agent should NOT be inventing dialogue, choosing Pokémon species, deciding stat values, or making any creative choices.
