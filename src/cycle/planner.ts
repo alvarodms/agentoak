@@ -6,6 +6,12 @@ import { logger } from "../utils/logger.js";
 import { getCycleModeHistorySummary } from "../memory/store.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
 import { shouldUseTeamPlanning, planCycleWithTeam } from "./team-planner.js";
+import {
+  formatJournalContext,
+  buildPlannerContextSections,
+  formatImplementationPlanGuidance,
+  formatPlannerClosingInstructions,
+} from "../agent/prompt-sections.js";
 
 export interface CyclePlan {
   mode: CycleMode;
@@ -184,102 +190,30 @@ export async function planCycle(
   const model = process.env.ANTHROPIC_MODEL;
 
   const modeHistorySummary = getCycleModeHistorySummary();
-  const journalContext =
-    recentJournalSummaries.length > 0
-      ? recentJournalSummaries.join("\n\n---\n\n")
-      : "No previous cycles. This is the very first cycle.";
+  const journalContext = formatJournalContext(recentJournalSummaries);
 
-  const modeList = Object.values(CYCLE_MODES)
-    .map((m) => `- **${m.name}**: ${m.description}`)
-    .join("\n");
-
-  const issueSection = issueContext
-    ? `\n\n${issueContext}\n`
-    : "";
-
-  const backlogSection = issueBacklog
-    ? `\n\n## Deferred Issue Backlog\n\nThe following issues were deferred from earlier cycles. You may pick one up this cycle if the timing is right — include it in \`issueActions\` with action \"accept\" along with a brief response.\n\n${issueBacklog}\n`
-    : "";
+  const sharedContext = buildPlannerContextSections({
+    cycleNumber,
+    journalContext,
+    modeHistorySummary,
+    issueContext,
+    issueBacklog,
+  });
 
   const prompt = `You are Agent Oak's planning module. Decide what the next autonomous cycle should focus on.
 
 Cycle ${cycleNumber} is about to start.
 
-## Last Cycle's Journal
-${journalContext}
-
-## Cycle Mode History
-Use this summary of past cycle modes to inform your decision, but do not feel constrained by it.
-If the previous few cycles were all "research", maybe it's time for a "feature". If there was a recent "repair", maybe a "patch" or "refactor" is next.
-Use your judgment to choose the best mode for the current situation and objective — the goal is to build a great ROM hack, not to follow a rigid pattern.
-
-${modeHistorySummary}
-
-
-## Memory Files (on demand)
-
-Your full memory is in the \`memory/\` directory. Read these files if you need more context before deciding — don't pre-emptively read them all, only fetch what is relevant:
-
-- \`memory/strategy-notes.md\` — game design direction, multi-cycle roadmap, and goals
-- \`memory/codebase-facts.md\` — discovered facts about the pokeemerald codebase
-- \`memory/failure-patterns.md\` — build failures encountered and their solutions
-- \`memory/project-facts.md\` — build system details and configuration notes
-
-You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.
-
-
-## Pokédex MCP tools (structured, authoritative Gen 3 data)
-- \`pokemon_stats(name)\` — base stats, types, BST, competitive tier for a species
-- \`search_pokemon(type?, minBst?, maxBst?, limit?)\` — find species by type and/or stat range
-- \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
-- \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
-- \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
-
-Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.
-
-
-## Available Modes
-${modeList}
-
-## New Community Issues
-${issueSection ?? "No new community issues"}
-
-## Community Backlog
-${backlogSection ?? "No backlog items"}
-
+${sharedContext}
 
 Decide: What mode should this cycle use, and what should the objective be?
 
 If previous cycles had build failures, consider "repair".
 
 
-Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent should execute your plan, not make design decisions — keep creative choices in the plan, not left to the implementer. Your instructions should be clear and actionable:
+${formatImplementationPlanGuidance()}
 
-**General structure**:
-1. What to read or understand first
-2. Logical actions to take in order
-3. Conventions or patterns to follow
-
-**CRITICAL — Specifying creative content**:
-When the plan involves game content (dialogue, encounter tables, trainer rosters, item placements, stat values, move sets, evolution changes, etc.), you MUST provide the complete, verbatim content in the plan itself. The implementation agent should NOT be inventing dialogue, choosing Pokémon species, deciding stat values, or making any creative choices.
-
-**What to specify completely (not exhaustive - use your own judgment)**:
-- Full dialogue text (exact wording)
-- Complete encounter tables (species, levels, encounter rates)
-- Exact trainer rosters (species, levels, held items, moves)
-- Specific numerical values (stats, experience yields, catch rates)
-- Item lists and placement locations
-- Evolution conditions and methods
-
-The implementation agent's job is to locate the right files and make the necessary changes — not to design the content itself. When in doubt, over-specify.
-
-If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
-
-**Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
-
-You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
-
-Respond with a JSON object containing mode, objective, reasoning, implementationPlan, and optionally issueActions and helpRequests.`;
+${formatPlannerClosingInstructions()}`;
 
   try {
     logger.info(`-> Planner prompt:\n\n\n${prompt}\n\n\n`);
