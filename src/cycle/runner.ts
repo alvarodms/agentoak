@@ -90,13 +90,19 @@ async function runPlanningPhase(
   const plan = await planCycle(lastJournal, cycleNumber, issueContext, issueBacklog);
   log.info(`Plan: [${plan.mode}] ${plan.objective}`);
 
-  // Execute issue actions decided by the planner (comment + label)
-  if (plan.issueActions.length > 0) {
-    log.info(`  Executing ${plan.issueActions.length} issue action(s)...`);
-    await executeIssueActions(plan.issueActions);
+  // Execute issue actions only for newly fetched community issues — not for
+  // backlog issues that were already reviewed and commented on in a prior cycle.
+  const communityIssueNumbers = new Set(communityIssues.map((i) => i.number));
+  const newIssueActions = plan.issueActions.filter((a) =>
+    communityIssueNumbers.has(a.issueNumber),
+  );
+  if (newIssueActions.length > 0) {
+    log.info(`  Executing ${newIssueActions.length} issue action(s)...`);
+    await executeIssueActions(newIssueActions);
   }
 
   // Update the deferred-issue backlog based on this cycle's actions
+  // (all actions, including planner decisions on backlog issues)
   const issueMap = new Map(communityIssues.map((i) => [i.number, i]));
   updateIssueBacklog(plan.issueActions, issueMap);
 
