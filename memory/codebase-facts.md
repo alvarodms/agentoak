@@ -4,6 +4,35 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## NPC Dialogue Editing Pattern (Cycle 28)
+
+**Target**: Any `.string` label in a map's `scripts.inc` used by a MSGBOX_NPC or MSGBOX_DEFAULT event script.
+
+**Safe targets**: Labels used only in `MSGBOX_NPC` (static) are purely cosmetic — safe to rewrite. Labels used in `MSGBOX_DEFAULT` inside branching event scripts may have story importance (check surrounding logic first).
+
+**Unsafe targets**: Labels shared between static NPC text AND dynamic event scripts (e.g. `PetalburgCity_Text_AreYouRookieTrainer` — used in both the GymBoy static NPC and the `ShowGymToPlayer` story trigger).
+
+**Text format rules**:
+- `\n` = line break within the same text box (2nd line)
+- `\l` = 3rd line in the same text box (soft scroll/line)
+- `\p` = press A, new text page (clear box)
+- `$` = string terminator
+- Keep display lines under ~35 chars for safety
+- ASCII only: use `--` not em-dash, use `...` not `…`, use straight quotes
+
+**Files edited in Cycle 28** (12 NPCs):
+- `data/maps/LittlerootTown/scripts.inc` — Twin (post-adventure)
+- `data/maps/Route101/scripts.inc` — Youngster
+- `data/maps/OldaleTown/scripts.inc` — Girl
+- `data/maps/PetalburgCity/scripts.inc` — Boy (water) + Gentleman
+- `data/maps/Route104/scripts.inc` — Bug Catcher
+- `data/maps/PetalburgWoods/scripts.inc` — Boy1
+- `data/maps/RustboroCity/scripts.inc` — FatMan + Man2
+- `data/maps/SlateportCity/scripts.inc` — Cook + OldWoman
+- `data/maps/Route110/scripts.inc` — OldMan
+
+---
+
 ## Villain Dialogue System (Cycle 26)
 
 **Villain script locations**:

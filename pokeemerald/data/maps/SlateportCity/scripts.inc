@@ -955,18 +955,20 @@ SlateportCity_Text_WonderIfLighthouseStartlesPokemon:
 	.string "in the sea.$"
 
 SlateportCity_Text_SeaweedFullOfLife:
-	.string "Ooh, look at this!\p"
-	.string "The seaweed you can get around these\n"
-	.string "parts is fresh and full of life.\p"
-	.string "Why, it looks like it can even rear up\n"
-	.string "and attack!$"
+	.string "I was out for my morning swim when\n"
+	.string "something enormous passed below me.\p"
+	.string "Way too big for anything that\n"
+	.string "should be in these waters.\p"
+	.string "I don't scare easy, but I was\n"
+	.string "out of the ocean fast.$"
 
 SlateportCity_Text_HowTownIsBornAndGrows:
-	.string "Where the water is clean, the fruits\n"
-	.string "of bountiful harvest gather.\p"
-	.string "And where people gather, a market\n"
-	.string "soon starts.\p"
-	.string "That is how a town is born and grows.$"
+	.string "Trainers keep bringing in Pokemon\n"
+	.string "I've never seen at market.\p"
+	.string "Species from Kanto, Johto --\n"
+	.string "even some I can't place at all.\p"
+	.string "Too many to be trading stock.\n"
+	.string "They're coming from the wild.$"
 
 SlateportCity_Text_SlateportWonderfulPlace:
 	.string "Shopping where you can breathe the\n"

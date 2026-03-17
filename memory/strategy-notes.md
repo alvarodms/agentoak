@@ -278,7 +278,7 @@ Deferred (non-wild areas):
 
 ### Planned QoL (Remaining)
 
-1. **Pokémon Descriptions / NPC Flavor** — Update key NPCs to reference the migration phenomenon
+1. **Pokémon Descriptions / NPC Flavor** — ✅ COMPLETE (Cycle 28): 12 NPCs updated across Routes 101–110 and Littleroot through Slateport. Each NPC plants the "world has changed" seed through personal observation. See NPC list below.
 2. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
 
 ### Not Planning to Change
@@ -345,6 +345,7 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 24 | ✅ **Opening sequence transformation** — Professor Birch's intro dialogue completely overhauled to establish migration mystery narrative. Replaced generic "Welcome to Pokémon" with compelling hook about rare species appearing, ecosystem transformation, and mysterious migrations. Narrative foundation complete. |
 | Cycle 25 | ✅ **Rival dialogue overhaul** — Route 103, Route 110, and Lilycove rival pre-battle and post-battle dialogue updated for both Brendan and May variants. Arc: cocky discovery at Route 103 → adaptation awareness at Route 110 → mutual respect at Lilycove. Migration event woven throughout. |
 | Cycle 26 | ✅ **Villain dialogue overhaul** — Maxie (Mt. Chimney), Archie (Oceanic Museum 2F + Seafloor Cavern Room 9) dialogue updated to reference migration crisis. Maxie's rationale: land migrants need territory → volcanic power is the key. Archie's rationale: ocean migrants deserve a vast sea → Kyogre is the answer. Pre-battle intro, post-battle defeat, and in-battle defeat text all updated. Note: Slateport "Matt" scene does not exist in vanilla Emerald — the actual villain there is Archie himself at the Oceanic Museum 2F. |
+| Cycle 28 | ✅ **NPC migration flavor text** — 12 NPCs updated across Littleroot Town through Route 110 with personal, grounded observations of the ecological crisis. World now feels inhabited before any villain speech lands. |
 
 ### Upcoming Roadmap (Cycles 16–20)
 
@@ -512,6 +513,29 @@ LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY
 
 ---
 
+## NPC Migration Flavor Text — COMPLETED (Cycle 28)
+
+**12 NPCs updated** across early Hoenn (Littleroot through Route 110):
+
+| Map | NPC | Text label | Theme |
+|-----|-----|-----------|-------|
+| Littleroot Town | Twin (post-adventure) | `LittlerootTown_Text_GoodLuckCatchingPokemon` | Saw shimmery blue thing like Dragonair |
+| Route 101 | Youngster | `Route101_Text_TakeTiredPokemonToPokeCenter` | Dark spiky thing bit him (unfamiliar species) |
+| Oldale Town | Girl near PokeCenter | `OldaleTown_Text_SavingMyProgress` | Trainer came in burned by a Magby |
+| Petalburg City | Boy near water | `PetalburgCity_Text_WaterReflection` | Caught a Dratini in the pond |
+| Petalburg City | Gentleman | `PetalburgCity_Text_FullPartyExplanation` | Sister spotted Houndour near town |
+| Route 104 | Bug Catcher | `Route104_Text_WhatsItLikeAtBottomOfSea` | Horsea schools replaced familiar fishing |
+| Petalburg Woods | Boy1 | `PetalburgWoods_Text_StayOutOfTallGrass` | Larvitar sleeping in rainforest |
+| Rustboro City | FatMan near Devon Corp | `RustboroCity_Text_WeShortenItToDevon` | Devon tracking 42 unknown species |
+| Rustboro City | Man2 | `RustboroCity_Text_TradePokemonGrowFast` | Route 116 tunnel full of strange things |
+| Slateport City | Cook | `SlateportCity_Text_SeaweedFullOfLife` | Something enormous swam past in ocean |
+| Slateport City | Old Woman | `SlateportCity_Text_HowTownIsBornAndGrows` | Wild migrant Pokemon appearing at market |
+| Route 110 | Old Man | `Route110_Text_TwoRoads` | Lapras sighted for first time in 30 years |
+
+**Narrative throughline**: Each NPC has a personal, grounded observation — not exposition. The world feels inhabited and the ecological shift registers emotionally before the player ever meets a villain.
+
+---
+
 ## Villain Dialogue — COMPLETED (Cycle 27)
 
 **Status**: All six villain speech nodes written and built successfully.
@@ -538,12 +562,12 @@ Same ecological crisis (migration) → two irreconcilable readings → Maxie wan
 
 ---
 
-## Next Priority — Birch Intro (Cycle 28)
+## Next Priority — Cycle 29
 
-**Goal**: Update Professor Birch's opening speech to plant the "world has changed" seed from the very first scene.
+**Options** (pick one):
 
-**Why**: The villain speeches are narrative payoffs. Birch's intro is the setup. Without the setup, players may experience the villain dialogue as mysterious rather than meaningful.
+1. **Wild Pokémon held items** — Give thematic held items to wild Pokémon (Magmar holds Charcoal, Electabuzz holds Magnet, Houndour holds Blackglasses). Adds discovery layer to encounters. Medium complexity (wild_encounters.json doesn't support held items natively — may need a different approach).
 
-**Location to research**: `pokeemerald/data/maps/LittlerootTown/` and the intro sequence (likely `pokeemerald/data/maps/` intro map scripts). Birch narrates the intro sequence.
+2. **pokeemerald-expansion planning cycle** — Dedicated planning cycle to scope the pokeemerald-expansion branch switch (physical/special split, new moves, updated mechanics). Multi-cycle architectural commitment. Important for long-term polish.
 
-**After Birch**: Rival dialogue updates (Route 103, Route 110) to acknowledge the migration — rival should reference seeing "strange Pokémon" they've never encountered before.
+3. **Additional NPC coverage** — Extend migration flavor text to mid-game routes (Mauville, Mt. Chimney area, Lilycove). The pattern is established; execution is straightforward.
