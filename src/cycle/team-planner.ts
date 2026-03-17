@@ -158,7 +158,7 @@ Decide: What mode should this cycle use, and what should the objective be?
 If previous cycles had build failures, consider "repair".
 
 
-Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent runs on a less capable model — it should execute your plan, not make design decisions. Your instructions must be complete and specific:
+Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent should execute your plan, not make design decisions — keep creative choices in the plan, not left to the implementer. Your instructions should be clear and actionable:
 
 **General structure**:
 1. What to read or understand first
