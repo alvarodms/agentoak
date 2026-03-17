@@ -31,6 +31,9 @@ permissions:
 jobs:
   run-cycle:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/agentoak-runner:latest
+      options: --user root
     env:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       ANTHROPIC_MODEL: ${{ inputs.model || 'claude-sonnet-4-20250514' }}
@@ -52,17 +55,6 @@ jobs:
       - name: Fetch full history for git operations
         run: git fetch --unshallow origin main 2>/dev/null || true
 
-      - name: Free disk space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -74,58 +66,8 @@ jobs:
       - name: Install Claude Code CLI
         run: npm install -g @anthropic-ai/claude-code
 
-      - name: Cache ARM toolchain
-        id: cache-arm
-        uses: actions/cache@v4
-        with:
-          path: ~/arm-toolchain
-          key: arm-toolchain-${{ runner.os }}-v1
-
-      - name: Install ARM toolchain & build deps
-        if: steps.cache-arm.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev
-          # Snapshot installed files for cache
-          mkdir -p ~/arm-toolchain
-          dpkg -L gcc-arm-none-eabi binutils-arm-none-eabi libpng-dev | \
-            grep -E '^/(usr|lib)' | sort -u | \
-            rsync -a --files-from=- / ~/arm-toolchain/
-
-      - name: Restore ARM toolchain from cache
-        if: steps.cache-arm.outputs.cache-hit == 'true'
-        run: sudo rsync -a ~/arm-toolchain/ /
-
-      - name: Cache agbcc
-        id: cache-agbcc
-        uses: actions/cache@v4
-        with:
-          path: pokeemerald/tools/agbcc
-          key: agbcc-${{ runner.os }}-v1
-
-      - name: Build & install agbcc
-        if: steps.cache-agbcc.outputs.cache-hit != 'true'
-        run: |
-          git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc
-          cd /tmp/agbcc
-          ./build.sh
-          ./install.sh "${{ github.workspace }}/pokeemerald"
-
-      - name: Cache Flatpak installation
-        id: cache-flatpak
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/flatpak
-            /var/lib/flatpak
-          key: flatpak-flips-${{ runner.os }}-v1
-
-      - name: Install Flips (IPS patcher) via Flatpak
-        if: steps.cache-flatpak.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get install -y -qq flatpak
-          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          sudo flatpak install --noninteractive flathub com.github.Alcaro.Flips
+      - name: Copy agbcc into workspace
+        run: cp -r /opt/agbcc ${{ github.workspace }}/pokeemerald/tools/agbcc
 
       - name: Cache base ROM
         uses: actions/cache@v4
@@ -138,23 +80,8 @@ jobs:
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
 
-      - name: Cache RTK binary
-        id: cache-rtk
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/bin/rtk
-          key: rtk-${{ runner.os }}-v1
-
-      - name: Install RTK (Rust Token Killer)
-        if: steps.cache-rtk.outputs.cache-hit != 'true'
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
-
       - name: Register RTK hook with Claude Code
-        run: |
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          export PATH="$HOME/.local/bin:$PATH"
-          rtk init -g --auto-patch
+        run: rtk init -g --auto-patch
 
       - name: Run agent cycle (attempt 1)
         id: attempt1
