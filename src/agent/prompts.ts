@@ -279,6 +279,7 @@ Update the memory files in the memory/ directory as needed:
 - memory/failure-patterns.md — new failure patterns
 - memory/strategy-notes.md — strategy updates, game design evolution, multi-cycle roadmap
 - memory/project-facts.md — project facts
+- memory/pokemon-knowledge.md — Pokémon game/ROM hack research findings (primarily updated by the Pokémon Specialist advisor)
 
 **IMPORTANT — Reflection completion (follow these steps IN ORDER)**:
 1. First, call the \`/communicate\` skill to write your reflection and next steps in Professor Oak's voice.

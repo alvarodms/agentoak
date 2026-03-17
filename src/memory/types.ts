@@ -4,6 +4,7 @@ export const MEMORY_FILES = [
   "failure-patterns",
   "strategy-notes",
   "project-facts",
+  "pokemon-knowledge",
 ] as const;
 
 export type MemoryFileName = (typeof MEMORY_FILES)[number];
@@ -28,6 +29,7 @@ export interface Memory {
   failurePatterns: MemoryFile;
   strategyNotes: MemoryFile;
   projectFacts: MemoryFile;
+  pokemonKnowledge: MemoryFile;
 }
 
 /** Token usage tracking for a cycle */
