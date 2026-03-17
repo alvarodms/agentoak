@@ -59,10 +59,10 @@ ${ctx.modeHistorySummary}
 ${ctx.modeList}
 
 ### New Community Issues
-${ctx.issueSection}
+${ctx.issueSection ?? "No new community issues"}
 
 ### Community Backlog
-${ctx.backlogSection}
+${ctx.backlogSection ?? "No backlog items"}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — it contains the game design direction, multi-cycle roadmap, and goals.
@@ -105,10 +105,10 @@ ${ctx.modeHistorySummary}
 ${ctx.modeList}
 
 ### New Community Issues
-${ctx.issueSection}
+${ctx.issueSection ?? "No new community issues"}
 
 ### Community Backlog
-${ctx.backlogSection}
+${ctx.backlogSection ?? "No backlog items"}
 
 ## Your Memory
 Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they contain known build issues and codebase knowledge.
@@ -160,10 +160,10 @@ ${ctx.modeHistorySummary}
 ${ctx.modeList}
 
 ### New Community Issues
-${ctx.issueSection}
+${ctx.issueSection ?? "No new community issues"}
 
 ### Community Backlog
-${ctx.backlogSection}
+${ctx.backlogSection ?? "No backlog items"}
 
 ## Instructions
 1. Read \`memory/pokemon-knowledge.md\` to review your accumulated knowledge.
@@ -205,10 +205,10 @@ ${ctx.modeHistorySummary}
 ${ctx.modeList}
 
 ### New Community Issues
-${ctx.issueSection}
+${ctx.issueSection ?? "No new community issues"}
 
 ### Community Backlog
-${ctx.backlogSection}
+${ctx.backlogSection ?? "No backlog items"}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — look for bold ideas that have been noted but not acted on, and assess whether the current roadmap is ambitious enough.
