@@ -4,6 +4,29 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Wild Pokémon Held Item System (Cycle 31)
+
+**Core System**: Wild Pokémon held items are automatically assigned via the `SetWildMonHeldItem()` function in `src/pokemon.c` (lines 6664-6717).
+
+**Species-based Assignment**: Each species has `.itemCommon` and `.itemRare` fields in `gSpeciesInfo[]` array defined in `src/data/pokemon/species_info.h`.
+
+**Probability System**:
+- Normal: 45% no item, 50% common item (itemCommon), 5% rare item (itemRare)
+- With Compound Eyes ability: 20% no item, 60% common item, 20% rare item
+- Special case: If itemCommon == itemRare and != ITEM_NONE, then 100% chance to hold that item
+
+**Implementation Pattern** (Cycle 31): All 164 wild encounter species updated with thematic held items:
+- **Type-based items**: Fire types get ITEM_CHARCOAL, Electric get ITEM_MAGNET, Water get ITEM_MYSTIC_WATER, etc.
+- **Pseudo-legendary special cases**: Dratini/Dragonair/Bagon/Shelgon/Larvitar/Pupitar get type boosters (common) + ITEM_LEFTOVERS (rare)
+- **Evolution items**: Magmar gets ITEM_CHARCOAL/ITEM_FIRE_STONE, Electabuzz gets ITEM_MAGNET/ITEM_THUNDER_STONE, Scyther gets ITEM_METAL_COAT
+- **Normal type fallback**: ITEM_ORAN_BERRY for Normal-type species
+
+**Key insight**: The system was already fully implemented — just needed species data updates, not code changes. No modifications to wild encounter JSON or core encounter logic required.
+
+**Automation**: Python script `update_held_items.py` successfully updated all species definitions with regex pattern matching for species types and item assignments.
+
+---
+
 ## NPC Dialogue Editing Pattern (Cycle 28)
 
 **Target**: Any `.string` label in a map's `scripts.inc` used by a MSGBOX_NPC or MSGBOX_DEFAULT event script.
