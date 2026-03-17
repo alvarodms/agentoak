@@ -18,6 +18,7 @@ const execFileAsync = promisify(execFile);
 
 const BASE_ROM_DIR = path.join(ARTIFACTS_DIR, "base-rom");
 const BASE_ROM_PATH = path.join(BASE_ROM_DIR, "base.gba");
+const ZIP_DOWNLOAD_PATH = path.join(BASE_ROM_DIR, "base-rom-download.zip");
 const BUILT_ROM_PATH = path.join(POKEEMERALD_DIR, "pokeemerald.gba");
 
 /** Expected SHA-1 of the original Pokémon Emerald (U) ROM */
@@ -57,7 +58,24 @@ export async function ensureBaseRom(): Promise<string | null> {
     }
 
     const buffer = Buffer.from(await response.arrayBuffer());
-    fs.writeFileSync(BASE_ROM_PATH, buffer);
+    const isZip = url.toLowerCase().endsWith(".zip") || isZipBuffer(buffer);
+
+    if (isZip) {
+      logger.info("Downloaded file is a ZIP archive — extracting .gba...");
+      fs.writeFileSync(ZIP_DOWNLOAD_PATH, buffer);
+      const extracted = await extractGbaFromZip(ZIP_DOWNLOAD_PATH, BASE_ROM_DIR);
+      fs.unlinkSync(ZIP_DOWNLOAD_PATH);
+      if (!extracted) {
+        logger.error("Could not find a .gba file inside the ZIP archive.");
+        return null;
+      }
+      // Move extracted file to canonical path if needed
+      if (extracted !== BASE_ROM_PATH) {
+        fs.renameSync(extracted, BASE_ROM_PATH);
+      }
+    } else {
+      fs.writeFileSync(BASE_ROM_PATH, buffer);
+    }
 
     // Verify integrity
     const sha1 = hashFile(BASE_ROM_PATH);
@@ -71,6 +89,34 @@ export async function ensureBaseRom(): Promise<string | null> {
     return BASE_ROM_PATH;
   } catch (err) {
     logger.error(`Base ROM download error: ${err instanceof Error ? err.message : String(err)}`);
+    return null;
+  }
+}
+
+/** Check ZIP magic bytes (PK\x03\x04) */
+function isZipBuffer(buf: Buffer): boolean {
+  return buf.length >= 4 && buf[0] === 0x50 && buf[1] === 0x4b && buf[2] === 0x03 && buf[3] === 0x04;
+}
+
+/**
+ * Extract the first .gba file from a ZIP archive using the system `unzip` command.
+ * Returns the path to the extracted file, or null if no .gba was found.
+ */
+async function extractGbaFromZip(zipPath: string, destDir: string): Promise<string | null> {
+  try {
+    // List contents to find the .gba file
+    const { stdout } = await execFileAsync("unzip", ["-Z1", zipPath]);
+    const entries = stdout.trim().split("\n");
+    const gbaEntry = entries.find((e) => e.toLowerCase().endsWith(".gba"));
+    if (!gbaEntry) return null;
+
+    // Extract just that file
+    await execFileAsync("unzip", ["-o", zipPath, gbaEntry, "-d", destDir]);
+    const extractedPath = path.join(destDir, gbaEntry);
+    if (!fs.existsSync(extractedPath)) return null;
+    return extractedPath;
+  } catch (err) {
+    logger.error(`ZIP extraction failed: ${err instanceof Error ? err.message : String(err)}`);
     return null;
   }
 }
