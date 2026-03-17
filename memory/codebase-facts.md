@@ -4,6 +4,31 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Rival Dialogue System (Cycle 25)
+
+**Location structure**: Rival dialogue strings live directly in the map's `scripts.inc` file, not in a central text file.
+
+**File paths**:
+- Route 103: `pokeemerald/data/maps/Route103/scripts.inc`
+- Route 110: `pokeemerald/data/maps/Route110/scripts.inc`
+- Lilycove: `pokeemerald/data/maps/LilycoveCity/scripts.inc`
+
+**Label naming convention** (Brendan = rival when player is female; May = rival when player is male):
+
+| Location | Pre-battle (first text) | Pre-battle (challenge) | Post-battle (player wins) | Post-battle (follow-up) |
+|---|---|---|---|---|
+| Route 103 | `Route103_Text_BrendanRoute103Pokemon` | `Route103_Text_BrendanLetsBattle` | `Route103_Text_BrendanDefeated` | `Route103_Text_BrendanTimeToHeadBack` |
+| Route 110 | *(none — goes direct to battle)* | `Route110_Text_BrendanLetsBattle` | `Route110_Text_BrendanDefeated` | `Route110_Text_BrendanTakeThis` + `Route110_Text_BrendanExplainItemfinder` |
+| Lilycove | `LilycoveCity_Text_BrendanShoppingLetsBattle` (YESNO) | `LilycoveCity_Text_BrendanWontBeBeaten` | `LilycoveCity_Text_BrendanDefeat` | `LilycoveCity_Text_BrendanGoingBackToLittleroot` |
+
+Same pattern for May (replace `Brendan` with `May`, `{PLAYER}` → `{PLAYER}{KUN}`).
+
+**Script flow at Lilycove**: Uses MSGBOX_YESNO; if player declines, sets `FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE` and shows a different text. The `BrendanAskToBattleAgain` / `BrendanBattleMe` texts cover re-challenge cases (not updated — left vanilla).
+
+**Key insight**: All rival text strings are plain `.string` assembly in map script files — safe for text-only edits. No event script logic touched.
+
+---
+
 ## Professor Birch Opening Sequence (Cycle 24)
 
 **File**: `pokeemerald/data/text/birch_speech.inc`
