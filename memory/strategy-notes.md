@@ -574,12 +574,310 @@ Same ecological crisis (migration) → two irreconcilable readings → Maxie wan
 
 ---
 
-## Next Priority — Cycle 30
+---
 
-**Options** (pick one):
+# POKEEMERALD-EXPANSION INTEGRATION ANALYSIS — Cycle 30
 
-1. **pokeemerald-expansion planning cycle** — Dedicated planning mode to scope the physical/special split migration. File-by-file risk analysis, branching strategy, decision document. Multi-cycle architectural commitment. Important for long-term polish.
+*Comprehensive planning document for the physical/special split decision*
 
-2. **Wild Pokémon held items** — Give thematic held items to wild Pokémon (Magmar holds Charcoal, Electabuzz holds Magnet, Houndour holds Blackglasses). Adds discovery layer to encounters. Medium complexity (wild_encounters.json doesn't support held items natively — may need a different approach, possibly via species data).
+---
 
-3. **Gym leader pre/post-battle dialogue for mid-game leaders** (Brawly through Winona) — Give Brawly, Wattson, Flannery, Norman, and Winona dialogue that references the migration crisis. Creates narrative continuity between NPC observations and gym badge progression.
+## Executive Summary
+
+After 29 cycles of successful ROM hack development, we face a critical architectural decision: integrate pokeemerald-expansion for modern mechanics (particularly the physical/special split) or continue with vanilla pokeemerald. This analysis provides a complete risk/benefit assessment and implementation roadmap.
+
+**Recommendation**: **PROCEED WITH CAUTION** — Integration offers significant competitive benefits but requires a dedicated 3-4 cycle migration effort with substantial merge conflict resolution.
+
+---
+
+## Current Foundation Assessment
+
+### What We've Built (29 Cycles)
+
+**Stable Systems** (Low Integration Risk):
+- **Starter system**: Larvitar/Bagon/Dratini with rival correspondence ✅
+- **Wild encounters**: 73 route + 34 dungeon tables completely overhauled ✅
+- **Trainer progression**: All 8 gyms + Elite Four + rivals redesigned ✅
+- **Narrative foundation**: Migration crisis established through Birch, NPCs, villains ✅
+- **QoL improvements**: TM prices, move tutors, held items ✅
+
+**Files Modified** (Merge Conflict Candidates):
+- `src/starter_choose.c` — Starter array modification
+- `src/data/trainer_parties.h` — Extensive trainer team edits
+- `src/data/wild_encounters.json` — Complete encounter overhaul
+- `data/text/birch_speech.inc` — Opening sequence transformation
+- `data/maps/*/scripts.inc` — 23 NPC dialogue files across Hoenn
+- `data/maps/MtChimney/scripts.inc` + villain script files — Dialogue updates
+
+**Build Status**: ✅ **STABLE** — ROM compiles cleanly to 16MB, all systems validated in Cycle 20
+
+---
+
+## pokeemerald-expansion Research Findings
+
+### What It Offers
+
+**Core Features** (from RH-Hideout's official repository):
+- **Physical/Special Split**: Moves categorized individually, not by type
+- **Fairy Type**: Complete type chart integration
+- **Gen 4-8+ Pokémon**: 480+ additional species with full data
+- **Modern Battle Mechanics**: Abilities, updated move effects, critical hit formula
+- **Battle Frontier**: Gen 3 post-game facilities with modern balance
+- **QoL Improvements**: Infinite TM use, type effectiveness display, auto-run
+
+**Configuration Options**:
+- Physical/Special Split can be toggled on/off via config flags
+- Individual features can be enabled/disabled modularly
+- Backward compatibility modes available
+
+### Integration Methods
+
+**Option 1: Fresh Start Migration**
+- Create new branch from pokeemerald-expansion master
+- Re-apply our 29 cycles of changes manually
+- Advantage: Clean integration, full feature access
+- **Risk**: 2-3 cycles of pure migration work, potential data loss
+
+**Option 2: Incremental Merge**
+- Add pokeemerald-expansion as remote: `git remote add RHH https://github.com/rh-hideout/pokeemerald-expansion`
+- Pull with `git pull RHH master` and resolve merge conflicts
+- Advantage: Preserves commit history and current work
+- **Risk**: Extensive merge conflicts in modified files
+
+**Option 3: Selective Feature Porting**
+- Extract only physical/special split code from pokeemerald-expansion
+- Apply as targeted patches to our current codebase
+- Advantage: Minimal disruption, focused integration
+- **Risk**: Missing dependencies, incomplete implementation
+
+---
+
+## Risk Assessment
+
+### High Risk Areas
+
+**Data Structure Conflicts**:
+- `trainer_parties.h`: Our extensive trainer edits vs expansion's trainer AI upgrades
+- `wild_encounters.json`: Our encounter tables vs expansion's species additions
+- Build system changes: Modified Makefile, linker scripts, include paths
+
+**Narrative Integration Challenges**:
+- Our migration crisis dialogue vs expansion's updated NPC text
+- Script compatibility with expansion's event system changes
+- Text formatting differences (our ASCII-safe approach vs expansion features)
+
+**Technical Risks**:
+- **Build System**: pokeemerald-expansion uses modern GCC by default vs our agbcc setup
+- **ROM Size**: Expansion adds significant data; may require ROM size increases
+- **Save Compatibility**: New mechanics may break existing save files
+- **Link Battles**: Expansion ROMs can only battle other expansion ROMs
+
+### Medium Risk Areas
+
+**Feature Conflicts**:
+- Our starter system vs expansion's starter selection features
+- Our held item assignments vs expansion's item data updates
+- Move tutor integration with expansion's move database
+
+**Testing Requirements**:
+- All 8 gym leaders + Elite Four need rebalancing for physical/special split
+- Wild encounter balance may need adjustment with new species available
+- Rival teams may need move updates for split mechanics
+
+### Low Risk Areas
+
+**Preserved Systems**:
+- Core game progression remains unchanged
+- Map layouts and geography unaffected
+- Basic dialogue editing patterns preserved
+- Build tools generally compatible
+
+---
+
+## Benefit Analysis
+
+### Major Competitive Advantages
+
+**Enhanced Trainer Battles**:
+- **Gym Leader Improvement**: Roxanne's Aerodactyl gains physical Rock moves; Flannery's Houndoom gets special Dark moves
+- **Elite Four Balance**: Sidney's Tyranitar benefits from physical Crunch; Phoebe's Gengar gains special Shadow Ball power
+- **Rival Enhancement**: Pseudo-legendary starters gain access to optimal STAB moves for their stats
+
+**Specific Examples**:
+- **Tyranitar**: Gains physical Crunch (80 BP) vs special (was locked to weaker physical movepool)
+- **Salamence**: Dragon Claw becomes physical (matches 135 Attack stat)
+- **Dragonite**: Retains special Dragon Pulse for mixed sets, gains physical Dragon Rush
+- **Houndoom**: Fire moves stay special (110 SpA), Dark moves become physical (90 Atk)
+- **Gyarados**: Waterfall, Crunch become physical (125 Attack usage)
+
+**Player Experience**:
+- Every Pokémon becomes competitively viable with proper move split
+- Strategic depth increases with physical/special attackers in same type
+- Our legendary-tier encounter tables gain proper competitive movesets
+
+### Long-term Viability
+
+**Community Standards**:
+- Most 2026 ROM hacks use pokeemerald-expansion as base
+- Physical/special split considered essential for competitive balance
+- Future community tools/resources target expansion framework
+
+**Feature Completeness**:
+- Access to 480+ additional Pokémon species for future encounter updates
+- Modern battle mechanics for accurate competitive simulation
+- Infinite TM use reduces grinding, improves player experience
+
+---
+
+## Migration Strategy Design
+
+### Recommended Approach: **Incremental Merge with Staged Integration**
+
+**Phase 1: Preparation (Cycle 31)**
+- Create safety branch: `git checkout -b pre-expansion-backup`
+- Document all current modifications in detail
+- Set up pokeemerald-expansion remote
+- Test expansion build on clean repository
+
+**Phase 2: Initial Integration (Cycle 32)**
+- Attempt merge: `git pull RHH master`
+- Resolve merge conflicts in order of priority:
+  1. Build system files (Makefile, linker scripts)
+  2. Core data structures (species.h, moves.h, items.h)
+  3. Wild encounter data (preserve our 73+34 table overhauls)
+  4. Trainer party data (preserve our gym/Elite Four designs)
+
+**Phase 3: Feature Validation (Cycle 33)**
+- Enable physical/special split: Set `P_SPLIT_PHYSICAL_SPECIAL` config flag
+- Test build and basic functionality
+- Validate starter system, wild encounters, trainer battles
+- Document any broken features for repair
+
+**Phase 4: Rebalancing and Polish (Cycle 34)**
+- Update trainer movesets for physical/special split
+- Rebalance gym leaders and Elite Four for new mechanics
+- Test narrative elements (Birch dialogue, NPC text, villain speeches)
+- Full integration testing and validation
+
+**Rollback Plan**:
+- If integration fails: `git checkout pre-expansion-backup`
+- Continue development on vanilla pokeemerald base
+- Revisit expansion integration in future development cycle
+
+### Alternative: **Selective Feature Porting**
+
+If full integration proves too risky:
+- Extract physical/special split code only
+- Port as minimal patch to our current codebase
+- Preserve all existing work while gaining core competitive benefits
+
+---
+
+## Multi-Cycle Implementation Roadmap
+
+### Integration Track (High Reward, High Risk)
+
+**Cycle 31: Expansion Preparation**
+- Research phase completion
+- Repository backup and safety measures
+- pokeemerald-expansion environment setup
+- Initial compatibility testing
+
+**Cycle 32: Core Integration**
+- Merge pokeemerald-expansion master
+- Resolve critical merge conflicts
+- Restore build functionality
+- Validate basic systems (startup, starters, basic battles)
+
+**Cycle 33: System Restoration**
+- Restore wild encounter tables (our 73+34 overhauls)
+- Restore trainer party modifications (gyms, Elite Four, rivals)
+- Restore narrative elements (Birch, NPCs, villains)
+- Test physical/special split functionality
+
+**Cycle 34: Rebalancing and Validation**
+- Update trainer movesets for physical/special split benefits
+- Balance test all gym leaders and Elite Four
+- Full narrative playthrough testing
+- Release candidate preparation
+
+**Success Criteria**: ROM builds cleanly, all 29 cycles of work preserved, physical/special split active
+
+### Alternative Track (Low Risk, Moderate Reward)
+
+**Cycle 31: Wild Pokémon Held Items**
+- Add thematic held items to wild Pokémon encounters
+- Magmar holds Charcoal, Electabuzz holds Magnet, etc.
+- Enhances discovery layer without architectural risk
+
+**Cycle 32: Gym Leader Pre/Post Battle Dialogue**
+- Add migration-aware dialogue to Brawly through Winona
+- Creates narrative continuity from early to late game
+- Completes world-building foundation
+
+**Cycle 33: End-game Content Expansion**
+- Elite Four rematches with expanded teams
+- Champion Wallace dialogue updates
+- Post-game trainer additions
+
+**Cycle 34: Final Polish and Release**
+- Late-game NPC flavor text (Mossdeep, Sootopolis, Ever Grande)
+- Comprehensive balance testing
+- Release preparation
+
+---
+
+## Decision Framework
+
+### Go Criteria (pokeemerald-expansion Integration)
+
+**Technical Requirements**:
+- ✅ Successful test merge on sample branch
+- ✅ Build system compatibility confirmed
+- ✅ Core systems (starters, encounters, trainers) restored within 2 cycles
+
+**Strategic Requirements**:
+- ✅ Physical/special split provides meaningful battle improvements
+- ✅ Integration effort justified by competitive enhancement
+- ✅ Community adoption makes expansion the standard framework
+
+### No-Go Criteria (Continue Vanilla)
+
+**Risk Triggers**:
+- ❌ Merge conflicts cannot be resolved within 2 cycles
+- ❌ Core systems (starters, encounters, trainers) broken by integration
+- ❌ Build system incompatibility requires extensive rework
+- ❌ Narrative elements (Birch, NPCs, villains) lost or severely damaged
+
+**Alternative Value**:
+- ❌ Vanilla pokeemerald provides sufficient competitive depth
+- ❌ Player experience satisfactory without modern mechanics
+- ❌ Development time better spent on new content vs integration
+
+---
+
+## Final Recommendation
+
+**PROCEED WITH CAUTION**: pokeemerald-expansion integration offers substantial competitive benefits and long-term viability, but requires significant migration effort with meaningful risk to our 29-cycle foundation.
+
+**Recommended Decision Process**:
+1. **Cycle 31**: Preparation phase — test merge compatibility and create safety measures
+2. **Cycle 32**: Initial integration attempt — if successful, continue; if blocked, abort to vanilla track
+3. **Cycle 33-34**: Complete integration and validation if Path A successful
+
+**Success Probability**: **Medium-High** — Based on research, RH-Hideout's expansion is well-maintained and migration-focused, but our extensive modifications create legitimate merge conflict risk.
+
+**Fallback Position**: Strong — Our vanilla pokeemerald implementation is stable, complete, and release-ready. Expansion integration is an enhancement, not a necessity.
+
+**Long-term Impact**: High — Physical/special split would significantly enhance competitive balance for our legendary-tier trainer battles and provide future-proof foundation for continued development.
+
+---
+
+Sources:
+- [GitHub - rh-hideout/pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
+- [pokeemerald-expansion Installation Guide](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/INSTALL.md)
+- [pokeemerald-expansion Wiki](https://github.com/rh-hideout/pokeemerald-expansion/wiki)
+- [Physical/Special Split Benefits Analysis](https://www.cbr.com/pokemon-gen-4-physical-special-improvements/)
+- [Smogon Physical/Special Split Analysis](https://www.smogon.com/articles/physical-special-split)
+- [Pokemon Physical Special Split Guide](https://pokepolitan.com/pokemon-physical-special-split/)
+- [Physical/Special Split Community Discussion](https://www.pokecommunity.com/threads/the-physical-special-status-split.325221/)
