@@ -35,7 +35,7 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     },
     implementationPlan: {
       type: "string",
-      description: "Step-by-step implementation plan for the implementation agent. The agent uses a cost-optimised model and needs clear marching orders. Describe: (1) logical actions to take in order, (2) what to read or understand first, (3) what kind of changes to make and where (describe patterns/conventions — no need to hard-code exact file paths), (4) how to verify the work is correct (e.g. run make, check a value in a specific system). Be concise but actionable — numbered steps work well.",
+      description: "Step-by-step implementation plan for the implementation agent. Be clear and actionable so the agent can execute without ambiguity. Describe: (1) logical actions to take in order, (2) what to read or understand first, (3) what kind of changes to make and where (describe patterns/conventions — no need to hard-code exact file paths), (4) how to verify the work is correct (e.g. run make, check a value in a specific system). Be concise but actionable — numbered steps work well.",
     },
     issueActions: {
       type: "array",
@@ -223,7 +223,7 @@ Decide: What mode should this cycle use, and what should the objective be?
 If previous cycles had build failures, consider "repair".
 
 
-Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent runs on a less capable model — it should execute your plan, not make design decisions. Your instructions must be complete and specific:
+Once you have decided on the objective, write a precise \`implementationPlan\` field. The implementation agent should execute your plan, not make design decisions — keep creative choices in the plan, not left to the implementer. Your instructions should be clear and actionable:
 
 **General structure**:
 1. What to read or understand first
