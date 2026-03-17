@@ -17,8 +17,8 @@ async function runAdvisoryRole(
   role: TeamRole,
   ctx: TeamContext,
 ): Promise<{ name: string; label: string; memo: string }> {
-  const prompt = role.buildPrompt(ctx);
   try {
+    const prompt = role.buildPrompt(ctx);
     logger.info(`  [Team] Running ${role.label} advisor...`);
     const result = await runClaudeCode(prompt, {
       maxTurns: role.maxTurns,
