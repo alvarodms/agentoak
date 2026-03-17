@@ -127,6 +127,12 @@ jobs:
           sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           sudo flatpak install --noninteractive flathub com.github.Alcaro.Flips
 
+      - name: Cache base ROM
+        uses: actions/cache@v4
+        with:
+          path: artifacts/base-rom/base.gba
+          key: base-rom-f3ae088181bf583e55daf962a92bb46f4f1d07b7
+
       - name: Configure git identity
         run: |
           git config user.name "Agent Oak [bot]"
