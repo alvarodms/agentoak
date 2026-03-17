@@ -270,13 +270,16 @@ Deferred (non-wild areas):
 
 ## 8. Quality of Life Changes
 
-### Planned QoL (Priority Order)
+### Completed QoL
 
-1. **Professor Birch Dialogue** — Update opening dialogue to explain the changed world; rename starter descriptions
-2. **Pokémon Descriptions / NPC Flavor** — Update key NPCs to reference the migration phenomenon
-3. **Move Tutor Availability** — ✅ COMPLETE (Cycle 23): Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Accessible pre-Gym 4. Learnsets updated for 19 species (Larvitar/Pupitar/Tyranitar, Dratini/Dragonair/Dragonite, Bagon/Shelgon/Salamence, Growlithe/Arcanine, Electabuzz, Magmar, Rhyhorn/Rhydon, Cubone/Marowak, Houndour/Houndoom). Dragon Claw already covered by Meteor Falls TM at 1,500P.
-4. **TM Prices** — Consider reducing prices for key combat TMs
-5. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
+1. **Professor Birch Opening Dialogue** — ✅ COMPLETE (Cycle 24): Opening sequence completely transformed to establish migration mystery narrative. Birch now explains the unprecedented phenomenon, rare species migrations, and ecosystem transformation. Creates compelling hook and world-in-flux atmosphere.
+2. **Move Tutor Availability** — ✅ COMPLETE (Cycle 23): Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Accessible pre-Gym 4. Learnsets updated for 19 species (all starter lines, Growlithe/Arcanine, Electabuzz, Magmar, Rhyhorn/Rhydon, Cubone/Marowak, Houndour/Houndoom). Dragon Claw already covered by Meteor Falls TM at 1,500P.
+3. **TM Prices** — ✅ COMPLETE (Cycle 22): Reduced critical TM prices by 50% (3,000→1,500P) for Dragon Claw, Earthquake, Shadow Ball, Psychic, Sludge Bomb, and Flamethrower.
+
+### Planned QoL (Remaining)
+
+1. **Pokémon Descriptions / NPC Flavor** — Update key NPCs to reference the migration phenomenon
+2. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
 
 ### Not Planning to Change
 
@@ -336,6 +339,10 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 17 | ✅ **Held items COMPLETE** — Finished all remaining held item assignments: Winona (Skarmory→Leftovers), Tate & Liza (4 slots), Juan (2 slots), Sidney (3 slots), Phoebe (4 slots), Glacia (4 slots), Drake (4 slots), Wallace Champion (4 slots). All 26 targeted replacements applied. |
 | Cycle 19 | ✅ **Level curve tuning** — Audit + balance pass complete. Roxanne/Elite Four/Wallace/rivals were already on target. Raised Brawly1 (16→18/20/25), Wattson1 (20→25/27/30), Flannery1 (24→30/33/37), Norman1 (27→37/39/43), Winona1 (29→43/45/48), TateAndLiza1 (40→47-49/52), Juan1 (41→50/52/55). Fixed Winona2/TateAndLiza2/Juan2 rematches that became lower than their raised primaries. |
 | Cycle 20 | ✅ **COMPREHENSIVE VALIDATION** — ROM hack tested end-to-end. All major systems validated: starters (Larvitar/Bagon/Dratini), route encounters (legendary-adjacent), trainer battles (all 8 gyms + Elite Four), rival system, migration narrative, Safari Zone, level curve. ROM builds successfully and is **READY FOR RELEASE**. Minor: some dungeon encounters may need investigation. |
+| Cycle 21 | ✅ **Dungeon encounter fixes** — Comprehensive verification and re-overhaul of all dungeon encounters. Petalburg Woods, Granite Cave (all 3 floors), and other key dungeons properly transformed from vanilla to legendary-tier. |
+| Cycle 22 | ✅ **TM accessibility overhaul** — Reduced critical TM prices by 50% (3,000→1,500P) for Dragon Claw, Earthquake, Shadow Ball, Psychic, Sludge Bomb, and Flamethrower. Made powerful moves accessible by mid-game. |
+| Cycle 23 | ✅ **Move tutor enhancement** — Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Updated learnsets for 19 species including all starter lines. Earthquake now accessible pre-Gym 4. |
+| Cycle 24 | ✅ **Opening sequence transformation** — Professor Birch's intro dialogue completely overhauled to establish migration mystery narrative. Replaced generic "Welcome to Pokémon" with compelling hook about rare species appearing, ecosystem transformation, and mysterious migrations. Narrative foundation complete. |
 
 ### Upcoming Roadmap (Cycles 16–20)
 
