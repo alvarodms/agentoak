@@ -606,11 +606,13 @@ LilycoveCity_Text_GetLostMessingUpTraining:
 	.string "so can you, like, get lost?$"
 
 LilycoveCity_Text_ContestHallInTown:
-	.string "There's a POKéMON CONTEST HALL\n"
-	.string "right in this here town. \p"
-	.string "That means well-raised POKéMON will\n"
-	.string "come from all over the country.\p"
-	.string "My heart swells with excitement!$"
+	.string "The harbormaster logged seventeen\n"
+	.string "species last week not in any catalog.\p"
+	.string "Fishermen are nervous. They are not\n"
+	.string "catching what they expect anymore.\p"
+	.string "Something enormous has been moving\n"
+	.string "through deep water off the cape.\l"
+	.string "At night you can hear it.$"
 
 LilycoveCity_Text_StrangeCaveInCove:
 	.string "Have you seen that strange cave in\n"

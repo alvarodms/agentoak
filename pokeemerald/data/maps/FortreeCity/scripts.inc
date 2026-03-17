@@ -113,18 +113,22 @@ FortreeCity_Text_TreesGrowByDrinkingRainwater:
 	.string "there's both water and soil.$"
 
 FortreeCity_Text_EveryoneHealthyAndLively:
-	.string "The CITY consists of homes built on\n"
-	.string "trees.\p"
-	.string "Perhaps because of that lifestyle,\n"
-	.string "everyone is healthy and lively.\p"
-	.string "Why, even myself--I feel as if I've\n"
-	.string "grown thirty years younger.$"
+	.string "Three Skarmory nested on the platform\n"
+	.string "above mine two weeks ago.\p"
+	.string "Skarmory do not nest this far inland.\n"
+	.string "A ranger tracked whole formations\l"
+	.string "moving through Hoenn.\p"
+	.string "Like they are passing through\n"
+	.string "on their way to somewhere bigger.$"
 
 FortreeCity_Text_BugPokemonComeThroughWindow:
-	.string "Living on top of trees is okay.\p"
-	.string "But sometimes BUG POKéMON come in\n"
-	.string "through windows.\l"
-	.string "It can be really startling.$"
+	.string "The tree bridges creak more at night.\p"
+	.string "Something large has been roosting in\n"
+	.string "the upper canopy.\l"
+	.string "I have seen wing shadows I do not\l"
+	.string "recognize.\p"
+	.string "I leave out Oran Berries. Whatever it\n"
+	.string "is, it takes them before dawn.$"
 
 FortreeCity_Text_PokemonThatEvolveWhenTraded:
 	.string "There are POKéMON that evolve when\n"

@@ -346,19 +346,15 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 25 | ✅ **Rival dialogue overhaul** — Route 103, Route 110, and Lilycove rival pre-battle and post-battle dialogue updated for both Brendan and May variants. Arc: cocky discovery at Route 103 → adaptation awareness at Route 110 → mutual respect at Lilycove. Migration event woven throughout. |
 | Cycle 26 | ✅ **Villain dialogue overhaul** — Maxie (Mt. Chimney), Archie (Oceanic Museum 2F + Seafloor Cavern Room 9) dialogue updated to reference migration crisis. Maxie's rationale: land migrants need territory → volcanic power is the key. Archie's rationale: ocean migrants deserve a vast sea → Kyogre is the answer. Pre-battle intro, post-battle defeat, and in-battle defeat text all updated. Note: Slateport "Matt" scene does not exist in vanilla Emerald — the actual villain there is Archie himself at the Oceanic Museum 2F. |
 | Cycle 28 | ✅ **NPC migration flavor text** — 12 NPCs updated across Littleroot Town through Route 110 with personal, grounded observations of the ecological crisis. World now feels inhabited before any villain speech lands. |
+| Cycle 29 | ✅ **NPC mid-game flavor text** — 11 NPCs updated across Mauville through Route 119 with migration-aware observations. Thematic tension now continuous from Littleroot through Lilycove. |
 
-### Upcoming Roadmap (Cycles 16–20)
+### Upcoming Roadmap (Cycles 30+)
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **17** | **Complete held items** — Finish held item assignments for Winona, Tate & Liza, Juan, all 4 Elite Four, and Champion Wallace (~26 remaining ITEM_NONE slots) | HIGH | Low (targeted edits) |
-| **18** | **Minor area encounters** — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts | LOW | Low (JSON edits) |
-| **19** | **Level curve tuning + balance pass** — Review trainer levels across progression | HIGH | High (analysis + edits) |
-| **20** | **Final polish + bug testing** — Playtest critical path, verify all changes, create release candidate | HIGH | High (testing) |
-| **17** | **Minor area encounters** — Cave of Origin, Artisan Cave, Altering Cave, Magma/Aqua Hideouts, Mt. Chimney (if applicable) | LOW | Low (JSON edits) |
-| **18** | **Quality of life: Move tutors + TM prices** — Ensure strong moves (Dragon Claw, Earthquake) accessible; consider reducing TM prices for key combat moves | LOW | Medium (script/data) |
-| **19** | **Level curve tuning + balance pass** — Review trainer levels across progression; ensure difficulty scaling matches player's accelerated power | HIGH | High (analysis + edits) |
-| **20** | **Final polish + bug testing** — Playtest critical path, fix any crashes, verify all changes compile cleanly, create release candidate | HIGH | High (testing) |
+| **30** | **Late-game NPC flavor text** — Add migration-aware observations in Mossdeep, Sootopolis, Ever Grande to close the narrative arc before credits | MEDIUM | Low (script edits) |
+| **31** | **Trainer balance audit** — Review critical-path trainer levels for Winona through Elite Four; ensure power curve matches wild encounter density | HIGH | High (analysis + edits) |
+| **32** | **Final polish + validation** — End-to-end playtest of narrative arc (Birch → NPCs → rivals → villains → credits), verify all builds cleanly, create release candidate | HIGH | High (testing) |
 
 ### Cycle 6 Detailed Plan: Gym Leader Overhaul
 
@@ -513,7 +509,7 @@ LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY
 
 ---
 
-## NPC Migration Flavor Text — COMPLETED (Cycle 28)
+## NPC Migration Flavor Text — COMPLETED (Cycles 28–29)
 
 **12 NPCs updated** across early Hoenn (Littleroot through Route 110):
 
@@ -533,6 +529,22 @@ LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY
 | Route 110 | Old Man | `Route110_Text_TwoRoads` | Lapras sighted for first time in 30 years |
 
 **Narrative throughline**: Each NPC has a personal, grounded observation — not exposition. The world feels inhabited and the ecological shift registers emotionally before the player ever meets a villain.
+
+### Mid-Game NPCs — COMPLETED (Cycle 29)
+
+| Map | NPC | Text label | Theme |
+|-----|-----|-----------|-------|
+| Mauville City | Boy (near Pokemon Center) | `MauvilleCity_Text_NurseHurtMonBackToHealth` | Treating confused Houndour burn cases from western volcanic routes |
+| Mauville City | Maniac (near Game Corner) | `MauvilleCity_Text_AllSortsOfPeopleComeThrough` | Cousin finds Dratini surfacing in his Route 117 irrigation ditches |
+| Route 117 | Little Boy (on path) | `Route117_Text_AirIsTastyHere` | Larvitar spotted in eastern rocks, looking disoriented |
+| Fallarbor Town | Gentleman | `FallarborTown_Text_HaveYouChallengedFlannery` | Houndour packs howling at Mt. Chimney every night; Cozmo dismisses it |
+| Route 113 | Gentleman (ash collector) | `Route113_Text_AshCanBeFashionedIntoGlass` | Magmar have taken over the ash route; one melted his Pokeblock mold |
+| Lavaridge Town | ExpertM (near hot springs) | `LavaridgeTown_Text_HotSpringsNeverRunDry` | Hot springs running warmer; Magby appearing in lower pools |
+| Lavaridge Town | HotSpringsOldWoman2 | `LavaridgeTown_Text_HotSpringsClaims` | Grandmother's warning: volcanic Pokemon multiplying = mountain waking |
+| Fortree City | OldMan (on platform) | `FortreeCity_Text_EveryoneHealthyAndLively` | Three Skarmory nested inland; ranger tracked formations crossing Hoenn |
+| Fortree City | Boy (in treehouse) | `FortreeCity_Text_BugPokemonComeThroughWindow` | Unknown large creature roosting in upper canopy; takes Oran Berries at dawn |
+| Lilycove City | Man3 (in town) | `LilycoveCity_Text_ContestHallInTown` | Harbormaster logged 17 uncatalogued species; something enormous in deep water |
+| Route 119 | Boy1 (in tall grass) | `Route119_Text_ThoughtFlyByCatchingBirdMons` | New Pokemon calls in the rain; Machoke has been jumpy for a week |
 
 ---
 
@@ -562,12 +574,12 @@ Same ecological crisis (migration) → two irreconcilable readings → Maxie wan
 
 ---
 
-## Next Priority — Cycle 29
+## Next Priority — Cycle 30
 
 **Options** (pick one):
 
-1. **Wild Pokémon held items** — Give thematic held items to wild Pokémon (Magmar holds Charcoal, Electabuzz holds Magnet, Houndour holds Blackglasses). Adds discovery layer to encounters. Medium complexity (wild_encounters.json doesn't support held items natively — may need a different approach).
+1. **pokeemerald-expansion planning cycle** — Dedicated planning mode to scope the physical/special split migration. File-by-file risk analysis, branching strategy, decision document. Multi-cycle architectural commitment. Important for long-term polish.
 
-2. **pokeemerald-expansion planning cycle** — Dedicated planning cycle to scope the pokeemerald-expansion branch switch (physical/special split, new moves, updated mechanics). Multi-cycle architectural commitment. Important for long-term polish.
+2. **Wild Pokémon held items** — Give thematic held items to wild Pokémon (Magmar holds Charcoal, Electabuzz holds Magnet, Houndour holds Blackglasses). Adds discovery layer to encounters. Medium complexity (wild_encounters.json doesn't support held items natively — may need a different approach, possibly via species data).
 
-3. **Additional NPC coverage** — Extend migration flavor text to mid-game routes (Mauville, Mt. Chimney area, Lilycove). The pattern is established; execution is straightforward.
+3. **Gym leader pre/post-battle dialogue for mid-game leaders** (Brawly through Winona) — Give Brawly, Wattson, Flannery, Norman, and Winona dialogue that references the migration crisis. Creates narrative continuity between NPC observations and gym badge progression.

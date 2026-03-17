@@ -609,16 +609,25 @@ MauvilleCity_Text_WattsonYoungTakeCharge:
 	.string "the young step up and take charge!$"
 
 MauvilleCity_Text_NurseHurtMonBackToHealth:
-	.string "You know, it's cool to have POKéMON\n"
-	.string "battles and stuff…\p"
-	.string "But if your POKéMON gets hurt,\n"
-	.string "you have to nurse it back to health.$"
+	.string "Lately I have been treating burn cases\n"
+	.string "from POKéMON I do not recognize.\p"
+	.string "Houndour are not from Mauville.\n"
+	.string "Something is pushing them inland\l"
+	.string "from the volcanic routes to the west.\p"
+	.string "Three came through last week.\n"
+	.string "Confused. Frightened.\l"
+	.string "I gave them Rawst Berries and hoped\l"
+	.string "for the best.$"
 
 MauvilleCity_Text_AllSortsOfPeopleComeThrough:
-	.string "The roads of this town stretch north\n"
-	.string "and south, and east and west.\p"
-	.string "Because of that, we get all sorts of\n"
-	.string "people coming through.$"
+	.string "My cousin farms on Route 117.\p"
+	.string "He says Dratini have been turning up\n"
+	.string "in his irrigation ditches. Dratini.\l"
+	.string "In a ditch.\p"
+	.string "He has been putting them back.\n"
+	.string "They keep coming.\l"
+	.string "He is starting to think they need\l"
+	.string "somewhere to go.$"
 
 MauvilleCity_Text_RydelVeryGenerous:
 	.string "Have you been to RYDEL'S CYCLES yet?\p"
