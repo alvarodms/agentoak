@@ -323,12 +323,11 @@ MossdeepCity_Text_WhatToDoWithWeirdRock:
 	.string "supposed to do with some weird rock?$"
 
 MossdeepCity_Text_WailmerWatching:
-	.string "Around MOSSDEEP, you can see wild\n"
-	.string "WAILMER.\p"
-	.string "It's called, uh…\n"
-	.string "What was it now…\p"
-	.string "WAI, WAI, WAI…\p"
-	.string "WAILMER watching!$"
+	.string "I saw a huge DRAGONITE fly over\n"
+	.string "the island last night!\p"
+	.string "Dad says they never came here\n"
+	.string "before the migration.\l"
+	.string "I want to catch one someday!$"
 
 MossdeepCity_Text_SpaceCenterReceivedLetter:
 	.string "The island's SPACE CENTER has been\n"
@@ -362,13 +361,11 @@ MossdeepCity_Text_NiceIfWorldCoveredByFlowers:
 	.string "plants and flowers like this island?$"
 
 MossdeepCity_Text_LifeNeedsSeaToLive:
-	.string "All life needs the sea to live, even\n"
-	.string "though it makes its home on the land.\p"
-	.string "Life, having run its course, becomes\n"
-	.string "soil and returns to the land.\p"
-	.string "And the sea is always connected to\n"
-	.string "the land.\p"
-	.string "Yes, like the very shoreline here.$"
+	.string "My husband used to fish here for\n"
+	.string "hours and catch nothing special.\p"
+	.string "Now KINGDRA surface near the\n"
+	.string "harbor! He's been out on the\l"
+	.string "boat every single day.$"
 
 MossdeepCity_Text_SurfExhilarating:
 	.string "A voyage on a ship is fine.\p"
@@ -378,14 +375,13 @@ MossdeepCity_Text_SurfExhilarating:
 	.string "Wouldn't you agree, youngster?$"
 
 MossdeepCity_Text_SpecialSpaceCenterRock:
-	.string "This rock has a special meaning to\n"
-	.string "the people at the SPACE CENTER.\p"
-	.string "They put it here as their wish for\n"
-	.string "their rockets to fly safely.\p"
-	.string "When you make a wish, what do you use?\n"
-	.string "Do you wish upon a star?\p"
-	.string "I use a wish tag to make it happen.\n"
-	.string "That's what I do.$"
+	.string "The astronomers say the migration\n"
+	.string "may be connected to deep-sea\l"
+	.string "disturbances.\p"
+	.string "KYOGRE stirring, changing ocean\n"
+	.string "currents worldwide.\p"
+	.string "It's bigger than any of us\n"
+	.string "imagined.$"
 
 MossdeepCity_Text_ItsAWhiteRock:
 	.string "It's a white rock.$"

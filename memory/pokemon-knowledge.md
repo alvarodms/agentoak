@@ -19,7 +19,7 @@ Research findings about Pokémon games, ROM hacks, community expectations, and d
 
 **Community Reception**: Positive - players appreciate the enhanced strategic depth and see it as a quality-of-life improvement.
 
-**Sources**: [PokemonCoders Physical Special Split](https://www.pokemoncoders.com/best-pokemon-rom-hacks-physical-special-split/), [Smogon Gen3 PSS Discussion](https://www.smogon.com/forums/threads/3rd-gen-with-physical-special-split-retiering.3643953/), [ROMHacking.net PSS Discussion](https://www.romhacking.net/forum/index.php?topic=35469.0)
+**Sources**: [PokemonCoders Physical Special Split](https://www.pokemoncoders.com/best-pokemon-rom-hacks-physical-special-split/), [Smogon Gen3 PSS Discussion](https://www.smogon.com/forums/threads/3rd-gen-with-physical-special-split-retiering.3643953/), [ROMHacking.net PSS Discussion](https://www.romhacking.net/forum/index.php?topic=35467.0)
 
 ## ROM Hack Polish and Finishing Touches (March 2026)
 
@@ -72,3 +72,41 @@ Research findings about Pokémon games, ROM hacks, community expectations, and d
 **Critical Rule**: Hard = smart, not cheap. Trainers should have items that reward the player for thinking, not items that feel unfair (no Sleep Powder + Bright Powder spam).
 
 **Sources**: [Inclement Emerald PokéCommunity Thread](https://www.pokecommunity.com/threads/pokémon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/), [Inclement Emerald Challenge Mode Docs](https://www.scribd.com/document/598841293/Inclement-Emerald-Challenge-Mode-Trainers-Docs), [Radical Red PokéCommunity Thread](https://www.pokecommunity.com/threads/pokémon-radical-red-version-4-1-released-gen-9-dlc-pokemon-character-customization-now-available.437688/)
+
+## Gym Leader Dialogue & Elite Four Narrative (March 2026)
+
+**Research Question**: How much does dialogue quality matter for gym leaders and the Elite Four, and what patterns work best?
+
+**Key Findings**:
+
+- **Dialogue is a top differentiator**: Community consistently praises hacks where gym leaders have "cinematic flair" and unique characterization — not just battle mechanics. Pokémon Reborn is lauded for gym leaders being "part of underground rings" with distinct personalities embedded in their dialogue.
+- **Gym gimmicks + thematic dialogue = memorability**: Pokémon Unbound's gym leaders are remembered for having clear identities reinforced by both puzzle design *and* dialogue. The two reinforce each other.
+- **Narrative continuity through late-game is critical**: The Elite Four and Champion are the emotional climax. Players who felt the story built toward something (Reborn, Unbound) are far more satisfied than those who experienced dialogue drop-off after the 6th gym.
+- **The Champion speech is the most-remembered dialogue in any Pokémon game**: Wallace/Steven moments in Emerald are among the franchise's most iconic. A ROM hack Champion who speaks to the hack's themes (migration, ecological change) will leave a lasting impression.
+
+**Design Patterns That Work**:
+- Each Elite Four member should reference the hack's central theme (migration crisis) in their opening and defeat lines
+- Wallace as Champion should feel like a culmination — his dialogue should tie migration, ocean, and the player's journey together
+- Post-battle dialogue (after the player wins) is often overlooked but highly memorable when well-written; players replay Elite Four to experience it
+
+**Comparison to Cycle 32 Work**: Brawly through Winona now have migration-aware dialogue. Tate & Liza, Juan, the entire Elite Four (Sidney, Phoebe, Glacia, Drake), and Champion Wallace still lack custom dialogue — these are the highest-visibility battles in the game.
+
+**Sources**: [DualShockers ROM Hacks 2024](https://www.dualshockers.com/best-pokemon-rom-hacks-2024/), [Oreate AI ROM Hacks 2024](https://www.oreateai.com/blog/beyond-the-mainline-diving-into-the-best-pok%C3%A9mon-rom-hacks-of-2024/71d82543839887286765aeb9bc1117e7), [The Game Slayer Best ROM Hacks 2025](https://thegameslayer.com/lists/best-pokemon-rom-hacks-of-2025-ranked/)
+
+## Elite Four & Late-Game Content: Player Retention Factors (March 2026)
+
+**Research Question**: What late-game content patterns drive player satisfaction and retention in ROM hacks?
+
+**Key Findings**:
+
+- **The "empty feeling" problem**: Vanilla Pokémon games feel hollow after the Champion — most ROM hacks that don't address this lose player momentum at the finish line.
+- **Elite Four rematches with new teams** are specifically praised in Refined Platinum: "new teams and alternate text" make returning worth it and are a low-effort, high-reward addition.
+- **The Champion is the narrative climax**: For hacks without postgame, the Champion fight and credits are the entire emotional payoff. This makes Champion dialogue and team presentation disproportionately important.
+- **Postgame depth is the top differentiator for standout hacks** (Unbound, Radical Red) — but for a first release, a well-crafted main story with a satisfying climax outperforms a rushed postgame.
+
+**Implications for Legends of Hoenn**:
+- Completing the full dialogue arc through Wallace Champion is the most impactful remaining task — it closes the narrative loop the migration story opened in Birch's intro
+- Late-game NPC flavor (Mossdeep, Sootopolis, Ever Grande) supports emotional buildup to the final battles
+- Postgame content (rematches, new areas) is a v2.0 feature — don't delay v1.0 for it
+
+**Sources**: [DualShockers Postgame ROM Hacks](https://www.dualshockers.com/best-pokmon-rom-hacks-with-extensive-post-game-content/), [Oreate AI Pokémon Unbound Postgame](https://www.oreateai.com/blog/beyond-the-elite-four-unlocking-the-rich-postgame-of-pok%C3%A9mon-unbound/3c6c742b38562a8f85cc0a8531fe07e6), [Player.One Best ROM Hacks Postgame](https://www.player.one/top-5-best-pokemon-rom-hacks-incredible-post-game-content-161858)

@@ -347,14 +347,15 @@ In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting t
 | Cycle 26 | ✅ **Villain dialogue overhaul** — Maxie (Mt. Chimney), Archie (Oceanic Museum 2F + Seafloor Cavern Room 9) dialogue updated to reference migration crisis. Maxie's rationale: land migrants need territory → volcanic power is the key. Archie's rationale: ocean migrants deserve a vast sea → Kyogre is the answer. Pre-battle intro, post-battle defeat, and in-battle defeat text all updated. Note: Slateport "Matt" scene does not exist in vanilla Emerald — the actual villain there is Archie himself at the Oceanic Museum 2F. |
 | Cycle 28 | ✅ **NPC migration flavor text** — 12 NPCs updated across Littleroot Town through Route 110 with personal, grounded observations of the ecological crisis. World now feels inhabited before any villain speech lands. |
 | Cycle 29 | ✅ **NPC mid-game flavor text** — 11 NPCs updated across Mauville through Route 119 with migration-aware observations. Thematic tension now continuous from Littleroot through Lilycove. |
+| Cycle 32 | ✅ **Gym leader pre/post-battle dialogue** — Migration-themed intro and defeat dialogue added for Roxanne, Brawly, Wattson, Flannery, Norman, Winona. Proven script-edit pattern established. |
+| Cycle 33 | ✅ **Narrative arc complete** — Elite Four (Sidney, Phoebe, Glacia, Drake) + Champion Wallace migration dialogue added; Tate & Liza and Juan gym dialogue added; late-game NPC flavor text added in Mossdeep (3 NPCs), Sootopolis (3 NPCs), and Ever Grande League entrance. Full narrative arc now runs from Birch's opening through the Champion credits. Also fixed Juan's long-standing buffer overflow in defeat text. |
 
-### Upcoming Roadmap (Cycles 30+)
+### Upcoming Roadmap (Cycles 34+)
 
 | Cycle | Objective | Priority | Complexity |
 |-------|-----------|----------|------------|
-| **30** | **Late-game NPC flavor text** — Add migration-aware observations in Mossdeep, Sootopolis, Ever Grande to close the narrative arc before credits | MEDIUM | Low (script edits) |
-| **31** | **Trainer balance audit** — Review critical-path trainer levels for Winona through Elite Four; ensure power curve matches wild encounter density | HIGH | High (analysis + edits) |
-| **32** | **Final polish + validation** — End-to-end playtest of narrative arc (Birch → NPCs → rivals → villains → credits), verify all builds cleanly, create release candidate | HIGH | High (testing) |
+| **34** | **Release candidate validation** — End-to-end playtest of narrative arc (Birch → NPCs → rivals → villains → Elite Four → Champion credits), verify all builds cleanly, create release candidate | HIGH | Medium (testing) |
+| **35** | **Trainer balance audit** — Review critical-path trainer levels for Winona through Elite Four; ensure power curve matches wild encounter density | HIGH | High (analysis + edits) |
 
 ### Cycle 6 Detailed Plan: Gym Leader Overhaul
 

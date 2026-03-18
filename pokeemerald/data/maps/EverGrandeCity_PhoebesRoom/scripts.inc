@@ -59,19 +59,25 @@ EverGrandeCity_PhoebesRoom_EventScript_Defeated::
 	end
 
 EverGrandeCity_PhoebesRoom_Text_IntroSpeech:
-	.string "Ahahaha!\p"
-	.string "I'm PHOEBE of the ELITE FOUR.\n"
-	.string "I did my training on MT. PYRE.\p"
-	.string "While I trained, I gained the ability\n"
-	.string "to commune with GHOST-type POKéMON.\p"
-	.string "Yes, the bond I developed with POKéMON\n"
-	.string "is extremely tight.\p"
-	.string "So, come on, just try and see if you can\n"
-	.string "even inflict damage on my POKéMON!$"
+	.string "Oh, another challenger! Wonderful!\p"
+	.string "My grandmother on MT. PYRE says\n"
+	.string "the spirits have been restless\l"
+	.string "ever since the migration began.\p"
+	.string "All those displaced creatures\n"
+	.string "stirred something old and deep\l"
+	.string "in HOENN.\p"
+	.string "My POKéMON feel it -- they're\n"
+	.string "more awake than ever before!\p"
+	.string "Let's see if your spirit can\n"
+	.string "match theirs!$"
 
 EverGrandeCity_PhoebesRoom_Text_Defeat:
-	.string "Oh, darn.\n"
-	.string "I've gone and lost.$"
+	.string "You've got a strong spirit!\p"
+	.string "Gran was right -- the migration\n"
+	.string "brought more than just POKéMON.\l"
+	.string "It woke up the old power here\l"
+	.string "in HOENN. You carry that now.\p"
+	.string "Don't waste it.$"
 
 EverGrandeCity_PhoebesRoom_Text_PostBattleSpeech:
 	.string "There's a definite bond between you\n"

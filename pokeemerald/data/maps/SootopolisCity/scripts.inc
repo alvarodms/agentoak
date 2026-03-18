@@ -1401,10 +1401,14 @@ SootopolisCity_Text_DoorIsClosed:
 	.string "The door is closed.$"
 
 SootopolisCity_Text_PhysicallyFitLivingHere:
-	.string "Diving in the sea. Climbing up and\n"
-	.string "down stairs all the time…\p"
-	.string "If you live in this town, you end up\n"
-	.string "getting physically fit.$"
+	.string "This city sits in a crater that\n"
+	.string "KYOGRE itself shaped long ago.\l"
+	.string "And now KYOGRE stirs again.\p"
+	.string "The water in our lake has been\n"
+	.string "behaving strangely. New POKéMON\l"
+	.string "surfacing from the depths.\p"
+	.string "I am not sure whether to be\n"
+	.string "awed or afraid.$"
 
 SootopolisCity_Text_GiantPokemonSuddenlyAppeared:
 	.string "These giant POKéMON suddenly appeared\n"
@@ -1420,16 +1424,22 @@ SootopolisCity_Text_WhatIsThatGreenPokemon:
 	.string "What is that green POKéMON?!$"
 
 SootopolisCity_Text_WhereDidLegendariesGo:
-	.string "GROUDON and KYOGRE…\n"
-	.string "Where did they go?\p"
-	.string "Will they cause droughts or downpours\n"
-	.string "somewhere else?$"
+	.string "Ever since the rains began and\n"
+	.string "ocean POKéMON started appearing,\l"
+	.string "SOOTOPOLIS has felt different.\l"
+	.string "Alive in a new way.\p"
+	.string "But when the deep-sea POKéMON\n"
+	.string "surface, the elders say it means\l"
+	.string "something has broken the balance\l"
+	.string "far below.$"
 
 SootopolisCity_Text_TwoPokemonArentAngry:
-	.string "I just get this sense somehow that\n"
-	.string "the two POKéMON aren't angry.\p"
-	.string "I think… They probably can't control\n"
-	.string "their own power…$"
+	.string "My daughter caught a LAPRAS near\n"
+	.string "the CAVE OF ORIGIN.\p"
+	.string "A LAPRAS! I haven't seen one in\n"
+	.string "these waters in forty years.\p"
+	.string "Whatever is happening out there...\n"
+	.string "it brought back the old creatures.$"
 
 SootopolisCity_Text_FlyingMonStoppedRampage:
 	.string "That flying POKéMON came down from\n"
