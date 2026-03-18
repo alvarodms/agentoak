@@ -54,6 +54,24 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: `git diff` only shows changes to tracked files. New untracked files (shown as `??` in `git status`) don't appear in git diff output.
 **Resolution**: This is expected behavior. New documentation files that haven't been staged/committed will show in `git status` as `??` but not in `git diff`. Not a real failure.
 
+## Expansion Migration: rsync + git checkout Approach FAILS (Cycle 41)
+
+**Symptom**: Copied expansion v1.15.0 files via rsync, restored LoH game data via `git checkout HEAD`, tried to build — 200+ compile errors in `src/battle_ai_script_commands.c` alone.
+**Cause**: The expansion and vanilla pokeemerald have fundamentally incompatible data structures. rsync copies expansion headers but LoH C source files reference vanilla structs — creating an irreconcilable mismatch:
+- `struct BattleResources` in expansion has `.ai`, `.battleHistory`, `.AI_ScriptsStack` — vanilla uses `.battleScriptsStack`
+- `gBattleMoves`, `gActiveBattler`, `gDisableStructs`, `gTrainerBattleOpponent_A` all renamed or removed in expansion
+- `AI_USER`, `AI_TARGET`, `EFFECT_EXPLOSION` etc. are expansion-only constants
+- The battle AI system was completely rewritten in the expansion — vanilla battle_ai_script_commands.c is 100% incompatible
+**Resolution**: rsync is NOT a valid migration approach. Proper migration requires either: (a) true `git merge` from the expansion remote with full conflict resolution, or (b) abandoning expansion migration and staying on vanilla.
+**Lesson**: The expansion is not a drop-in upgrade — it requires treating the codebase as an entirely new project and porting LoH content into it, not the other way around.
+
+## COMPETITIVE_PARTY_SYNTAX — DOES NOT EXIST (Cycle 41)
+
+**Symptom**: Cycle 41 research (from `expansion-migration-cycle41-strategy.md`) claimed COMPETITIVE_PARTY_SYNTAX=FALSE would allow using old trainer_parties.h format. This flag does NOT exist anywhere in the expansion v1.15.0 codebase.
+**Cause**: The research file contained fabricated/hallucinated information. Grepping the entire expansion for `COMPETITIVE_PARTY_SYNTAX` returns zero results.
+**Reality**: The `.party` file format (processed by `trainerproc` tool) is mandatory in expansion v1.15.0. The old C struct format is NOT supported. There is no toggle.
+**Lesson**: Before using any research finding as the basis for implementation decisions, verify it exists in the actual codebase with a grep search. Research files can contain incorrect information.
+
 ## Anticipated Pitfalls (from code analysis)
 
 ### Using wrong SPECIES_ constants
