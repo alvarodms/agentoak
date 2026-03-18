@@ -18,12 +18,15 @@ RUN apt-get update -qq && apt-get install -y -qq \
     && rm -rf /var/lib/apt/lists/*
 
 # Build and install agbcc (GBA-specific C compiler) to /opt/agbcc
-# The workflow copies this to pokeemerald/tools/agbcc after checkout
+# install.sh expects a pokeemerald root and creates <dir>/tools/agbcc/ inside it,
+# so we use a staging dir then move the nested result to /opt/agbcc.
+# The workflow copies /opt/agbcc to pokeemerald/tools/agbcc after checkout.
 RUN git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc \
     && cd /tmp/agbcc \
     && ./build.sh \
-    && ./install.sh /opt/agbcc \
-    && rm -rf /tmp/agbcc
+    && ./install.sh /tmp/agbcc-staging \
+    && mv /tmp/agbcc-staging/tools/agbcc /opt/agbcc \
+    && rm -rf /tmp/agbcc /tmp/agbcc-staging
 
 # Build Flips (IPS patcher) from source — flatpak is not usable in containers
 RUN git clone --depth 1 https://github.com/Alcaro/Flips.git /tmp/flips \
