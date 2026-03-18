@@ -43,6 +43,12 @@ export interface ClaudeCodeResult {
    * Omitted: no change to major/minor (normal patch release).
    */
   versionBump?: "major" | "minor";
+  /**
+   * Optional release stage label declared by the agent in the CYCLE_COMPLETE marker.
+   * When set, overrides the auto-computed stage in the GitHub release name.
+   * Examples: "Alpha", "Beta", "Demo", "Stable", "Chapter 1"
+   */
+  releaseStage?: string;
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
   toolCallCount: number;
   /** The text from the final "result" message (e.g. structured JSON from --json-schema) */
@@ -70,6 +76,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let nextSteps = "";
   let issueOutcomes: IssueOutcome[] = [];
   let versionBump: "major" | "minor" | undefined;
+  let releaseStage: string | undefined;
   let toolCallCount = 0;
   let cycleMarkerFound = false;
   const preMarkerTexts: string[] = [];
@@ -131,6 +138,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
               next_steps?: string;
               issue_outcomes?: IssueOutcome[];
               version_bump?: string;
+              release_stage?: string;
             };
             cycleSummary = parsed.summary ?? cycleSummary;
             if (Array.isArray(parsed.changes) && parsed.changes.length > 0) {
@@ -148,6 +156,9 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
             }
             if (parsed.version_bump === "major" || parsed.version_bump === "minor") {
               versionBump = parsed.version_bump;
+            }
+            if (typeof parsed.release_stage === "string" && parsed.release_stage.trim()) {
+              releaseStage = parsed.release_stage.trim();
             }
           } catch {
             // Malformed JSON in marker — ignore
@@ -255,6 +266,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     nextSteps,
     issueOutcomes,
     versionBump,
+    releaseStage,
     tokenUsage: {
       inputTokens: totalInputTokens,
       outputTokens: totalOutputTokens,
