@@ -42,7 +42,7 @@ The ROM is built with GNU Make using an ARM cross-compiler toolchain (agbcc).
 
 ## Memory System
 
-You have five persistent memory files in `memory/` (markdown format):
+You have persistent memory files in `memory/` (markdown format):
 
 | File | Purpose |
 |---|---|
@@ -51,6 +51,7 @@ You have five persistent memory files in `memory/` (markdown format):
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
 | `project-facts.md` | Build system details, tool versions, configuration notes |
+| `pokemon-knowledge.md` | **Index only.** Research findings from the Pokémon Specialist — links to per-topic files in `memory/pokemon-knowledge/` |
 
 These memories persist across cycles. **Update them as you learn.** They are your most valuable resource — they let you build on previous work instead of starting from scratch.
 
@@ -59,6 +60,38 @@ These memories persist across cycles. **Update them as you learn.** They are you
 - Be specific: record file paths, function names, data structures, concrete details
 - When a build fails, record the failure pattern so you can avoid it next time
 - Think about the big picture — what kind of ROM hack do you want to create?
+
+### Pokémon Knowledge Base
+
+`memory/pokemon-knowledge.md` is an **index only** — it contains a table of research topics, each linking to a dedicated file under `memory/pokemon-knowledge/`.
+
+**Reading research:**
+1. Open `memory/pokemon-knowledge.md` and find the relevant row in the index table.
+2. Follow the link to the individual file (e.g., `memory/pokemon-knowledge/trainer-held-items.md`).
+3. Read the full findings there — do not expect substantive content in the index itself.
+
+**Adding new research** (when the Pokémon Specialist produces new findings):
+1. Create a new file in `memory/pokemon-knowledge/` with a descriptive slug (e.g., `rival-design-patterns.md`).
+2. Start the file with the cycle/date metadata header:
+   ```
+   # <Research Topic Title>
+
+   **Cycle**: <N> | **Date**: <Month Year>
+
+   ---
+   ```
+3. Write the full research content below the header.
+4. Add a new row to the index table in `memory/pokemon-knowledge.md`:
+   ```
+   | Topic Title | <cycle> | <Month Year> | [filename.md](pokemon-knowledge/filename.md) |
+   ```
+
+**Updating existing research:**
+- Open the specific file directly (skip the index, it only has the link).
+- Edit in place — replace outdated findings rather than appending. Update the cycle/date header if the entry is substantially revised.
+- Do **not** create a duplicate entry in the index; update the existing row's cycle/date if needed.
+
+**Size budget**: The index file should stay compact (one row per topic, no research content). Individual topic files have no hard limit but should be trimmed if findings become obsolete.
 
 ### Memory Maintenance Rules
 
@@ -73,6 +106,8 @@ Memory files are your most critical resource — but only if they stay **concise
 | `codebase-facts.md` | 150 lines | Remove facts you've internalized or that are obvious |
 | `failure-patterns.md` | 100 lines | Remove patterns for errors you haven't hit in 10+ cycles |
 | `project-facts.md` | 80 lines | Should rarely grow — only add genuinely new infra facts |
+| `pokemon-knowledge.md` (index) | 30 lines | One row per topic; never add research content here |
+| `pokemon-knowledge/*.md` (each file) | 60 lines | Trim or remove when findings are outdated or superseded |
 
 **Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
 1. Check line counts of all memory files
