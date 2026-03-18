@@ -63,3 +63,28 @@ export function recordSuccessfulBuild(cycleNumber: number): GameVersion {
   logger.info(`Game version: ${formatVersion(version)} (cycle ${cycleNumber})`);
   return version;
 }
+
+/**
+ * Apply a major or minor version bump declared by the agent.
+ * - "major": increment major, reset minor to 0.
+ * - "minor": increment minor, keep major unchanged.
+ *
+ * Call this after recordSuccessfulBuild, once the agent's CYCLE_COMPLETE
+ * marker has been parsed and a version bump has been declared.
+ */
+export function applyVersionBump(bump: "major" | "minor"): GameVersion {
+  const version = loadVersion();
+
+  if (bump === "major") {
+    version.major += 1;
+    version.minor = 0;
+  } else {
+    version.minor += 1;
+  }
+
+  fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
+  fs.writeFileSync(VERSION_FILE, JSON.stringify(version, null, 2) + "\n", "utf-8");
+
+  logger.info(`Version bump (${bump}): ${formatVersion(version)}`);
+  return version;
+}
