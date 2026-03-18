@@ -28,7 +28,7 @@ RUN git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc \
 # Build Flips (IPS patcher) from source — flatpak is not usable in containers
 RUN git clone --depth 1 https://github.com/Alcaro/Flips.git /tmp/flips \
     && cd /tmp/flips \
-    && make flips \
+    && TARGET=cli make flips \
     && cp flips /usr/local/bin/flips \
     && rm -rf /tmp/flips
 
