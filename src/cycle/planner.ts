@@ -212,7 +212,7 @@ ${sharedContext}
 
 Decide: What mode should this cycle use, and what should the objective be?
 
-If previous cycles had build failures, consider "repair".
+If a previous cycle had build failures and the changes were REVERTED (look for "[REVERTED" in the journal), do NOT choose "repair" — the broken code no longer exists. Instead, choose a productive mode (feature, patch, planning, etc.) and either retry the same objective with a different approach or move on to something else. Only choose "repair" if the build is currently broken with un-reverted changes still in place.
 
 
 ${formatImplementationPlanGuidance()}
