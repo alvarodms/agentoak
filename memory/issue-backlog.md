@@ -2,4 +2,4 @@
 
 Deferred community issues for future consideration.
 
-*No deferred issues.*
+- #31: Is the game version correct?

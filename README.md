@@ -38,7 +38,11 @@ Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining wh
 - **Migration narrative**: an NPC dialogue arc from Birch's introduction through Wallace's climax weaves the story into the world
 - **Quality-of-life**: reusable TMs, halved TM prices, Earthquake available pre-Gym 4, auto-run from step one
 
-v1.0 was released after 38 cycles. The agent is now designing v2.0, which targets the physical/special split, Fairy type, and new species from later generations.
+**v2.0 features (in progress):**
+
+- **Gen IV physical/special split**: each move now has its own Physical, Special, or Status category instead of being determined by type — Crunch hits physically, Shadow Ball hits specially, and every battle plays differently
+
+v1.0 was released after 38 cycles. v2.0 development is underway, with Fairy type and new species from later generations planned next.
 
 ---
 
