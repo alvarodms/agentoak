@@ -41,10 +41,6 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 
 # LEGENDS OF HOENN v2.0 — Game Design Document
 
-*Draft — Cycle 39*
-
----
-
 ## Creative Manifesto
 
 v2.0 is not a port. It is a redesign built on a new foundation.
@@ -58,75 +54,41 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 ---
 
-## Physical/Special Split — Combat Feel
-
-| Species | Key Move | Old | New | Impact |
-|---------|----------|-----|-----|--------|
-| Tyranitar | Crunch | Special 95bp | Physical 130bp | Devastating wallbreaker |
-| Salamence | Dragon Claw | Special 80bp | Physical 80bp | Strong physical attacker |
-| Dragonite | ExtremeSpeed | Special 80bp | Physical 80bp | Priority sweeper — rival alarming |
-
-**Wholesale shifts** (affects trainer team review, Cycles 42–44):
-- Dark → Physical: Crunch, Bite, Night Slash, Pursuit
-- Ghost → Physical: Shadow Sneak (new); Shadow Ball stays Special
-- Fighting → mostly Physical; Focus Blast new Special
-- Rock, Steel → mostly Physical
-
-**Balance concern**: Tyranitar's Crunch shift may widen Larvitar advantage. If too dominant after Cycle 41 migration, reduce base Attack 134→120.
-
----
-
 ## Fairy Type — Encounter Philosophy ("Fairy Corridors")
 
-Design principle: Fairy creates counter-pressure to Dragons, not replacement. Routes near ancient/spiritual locations become "Fairy corridors."
+**Proposed encounters:**
 
-**Proposed encounters (Cycles 45–46):**
+| Route / Location | Species | Rate | Narrative Role |
+|-----------------|---------|------|----------------|
+| Granite Cave B2F | Ralts | 10% | Early rare — patience rewarded |
+| Route 118 | Snubbull | 15% | Second wave guardian energy |
+| Route 120 | Togetic | 10% | First Dragon-counterplay route |
+| Route 121 | Clefairy | 20% | Fairy sanctuary near Safari Zone |
+| Route 122 (Mt. Pyre) | Snubbull | 20% | Guardian of the spirit mountain |
 
-| Route / Location | Species | Rate | Levels | Narrative Role |
-|-----------------|---------|------|--------|----------------|
-| Granite Cave B2F | Ralts | 10% | 15–18 | Early rare — patience rewarded |
-| Route 118 | Snubbull | 15% | 26–30 | Second wave guardian energy |
-| Route 120 | Togetic | 10% | 28–32 | First Dragon-counterplay route |
-| Route 121 | Clefairy | 20% | 26–30 | Fairy sanctuary near Safari Zone |
-| Safari Zone Area 4 | Togekiss | 5% | 40 | Apex Fairy — reward-tier |
-| Route 122 (Mt. Pyre) | Snubbull | 20% | 28–32 | Guardian of the spirit mountain |
-
-**Gardevoir retype**: Psychic/Fairy in v2.0 (species type change only — no new encounter needed).
+**Gardevoir retype**: Psychic/Fairy in v2.0 (species type change only).
 
 ---
 
 ## New Species — Gen 4/5 Migration
 
-**To be added in Cycles 45–46:**
-
-| Species | Location | Rate | Levels | Narrative Role |
-|---------|----------|------|--------|----------------|
-| Gible | Meteor Falls B1F-2R | 8% | 22–26 | Garchomp's vanguard |
-| Garchomp | Victory Road B2F | 5% | 44–48 | Dragon apex predator |
-| Riolu | Route 116 | 8% | 12–15 | Scout sensing disruption |
-| Lucario | Granite Cave B2F | 5% | 20–24 | Aura senses disrupted |
-| Sneasel | Route 120 | 12% | 26–30 | Ice/Dark following prey |
-| Weavile | Shoal Cave | 8% | 30–34 | Cold-zone apex hunter |
-
-**Not adding in v2.0**: Additional legendaries or pseudo-legendaries beyond Gible/Garchomp.
+| Species | Location | Rate | Narrative Role |
+|---------|----------|------|----------------|
+| Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard |
+| Garchomp | Victory Road B2F | 5% | Dragon apex predator |
+| Riolu | Route 116 | 8% | Scout sensing disruption |
+| Weavile | Shoal Cave | 8% | Cold-zone apex hunter |
 
 ---
 
-## Narrative Twist — Issue #23: The Second Wave
+## Narrative Twist — The Second Wave
 
-After Mt. Chimney showdown, a second migration wave hits overnight. Three touch points (dialogue-only, no new event triggers):
+After Mt. Chimney showdown, a second migration wave hits. Three touch points (dialogue-only):
+- **Rival on Route 118**: Questions whether those who left chose to
+- **NPC near Mauville City Pokemon Center**: Instruments went haywire — density doubled in six hours
+- **Elite Four Phoebe**: First migration woke old spirits; second wave surprised even them
 
-**Touch point 1 — Rival on Route 118:**
-> "Three of my team went back with the new wave last night. Just... left. These four stayed. I keep asking myself whether I should feel abandoned — or whether the ones who stayed made a choice."
-> "Professor Birch called. Says the second wave is bigger than the first. Different species. Things from further away."
-
-**Touch point 2 — NPC near Mauville City Pokémon Center:**
-> "My brother works with Professor Birch. He says the instruments went haywire two nights ago — migration density doubled in six hours. Whatever was holding them back before isn't holding anymore."
-
-**Touch point 3 — Elite Four Phoebe (update existing file):**
-> "The first migration woke the old spirits. The second wave... even they weren't ready. You've been walking through both. I can feel it on you."
-
-*Implementation*: Route 118 scripts.inc one-time NPC after Mt. Chimney event flag; Mauville Center NPC; Phoebe dialogue edit (file already modified Cycle 33).
+*Implementation*: Route 118 scripts.inc, Mauville Center NPC, Phoebe dialogue edit.
 
 ---
 
@@ -135,43 +97,38 @@ After Mt. Chimney showdown, a second migration wave hits overnight. Three touch 
 | Leader | Key Upgrade |
 |--------|-------------|
 | Sidney | Absol gets Night Slash + Swords Dance |
-| Phoebe | Dusknoir joins (replaces Dusclops) + Shadow Sneak |
+| Phoebe | Dusknoir joins (replaces Dusclops) |
 | Glacia | Glaceon joins; Ice Shard |
 | Drake | Garchomp added as 6th at level 60 |
-| Wallace | Milotic gets Moonblast; Kingdra redesigned as Water/Dragon |
+| Wallace | Milotic gets Moonblast; Kingdra → Water/Dragon |
 
 ---
 
-## Technical Migration Roadmap — REVISED (Cycle 40 Research)
+## REVISED v2.0 Migration Strategy (Post Cycle 41)
 
-**MIGRATION DECISION: PROCEED** — Physical/Special split + Fairy type justify the development cost.
+**CRITICAL**: The pokeemerald-expansion migration via rsync FAILED. The expansion is architecturally incompatible with vanilla pokeemerald. The correct migration approach requires treating expansion as a new codebase and porting LoH content INTO it.
 
-### Phase 1: Foundation Migration (Cycles 41-44)
-| Cycle | Objective |
-|-------|-----------|
-| **41** | Initial migration — add RHH remote, pull expansion/1.15.0, document conflicts |
-| **42** | Trainer format conversion — migrate all 365+ trainer parties to .party format |
-| **43** | Conflict resolution — wild encounters, QoL features, species data integration |
-| **44** | Build validation + damage calc verification — ensure P/S split works correctly |
+### Decision: TWO PATHS AVAILABLE
 
-### Phase 2: Content Restoration (Cycles 45-47)
-| Cycle | Objective |
-|-------|-----------|
-| **45** | Legends of Hoenn identity restoration — custom encounters, held items, dialogue |
-| **46** | Physical/Special rebalancing — review all trainer teams for new damage calculations |
-| **47** | v2.0 content integration — Fairy corridors, Gen 4/5 species, narrative twist |
+**Path A — Vanilla v2.0** (Lower risk, faster delivery):
+- Stay on vanilla pokeemerald
+- Implement v2.0 content without expansion: Fairy corridors, second wave narrative, Elite Four rematches, narrative polish
+- Physical/Special split and Fairy type require manual implementation in vanilla (harder)
+- Cycles 42–50: all content, no migration overhead
 
-### Phase 3: Polish & Release (Cycles 48-50)
-| Cycle | Objective |
-|-------|-----------|
-| **48** | Elite Four postgame expansion — leverage new battle engine features |
-| **49** | Balance pass + playtesting — damage verification, difficulty curve |
-| **50** | v2.0 release — major version bump with "Beta" release stage |
+**Path B — Proper Expansion Migration** (Higher risk, better long-term):
+- Start fresh: clone expansion v1.15.0 as the base
+- Port LoH content file by file: encounters (JSON compatible), trainer parties (must convert to .party format), dialogue scripts, QoL patches
+- The .party format requires writing ALL trainer parties in Showdown syntax — use trainerproc
+- Fairy type and Physical/Special split come "for free" with expansion
+- Estimated 5–8 cycles minimum before content work resumes
 
-**CRITICAL BREAKING CHANGE**: `trainer_parties.h` → `trainers.party` format requires complete trainer recreation.
+**NEXT CYCLE (42) MUST**:
+1. FIRST: Revert the 4 broken C files (`src/data.c`, `include/data.h`, `src/difficulty.c`, `src/pokemon.c`) back to their last good committed state
+2. Verify the build returns to working state (the untracked FRLG expansion maps don't affect the build — only the 4 modified tracked files do)
+3. THEN: Choose Path A or Path B and begin accordingly
 
-**Migration Scripts**: `trainer_party_balls_type_change.py`, `givemon_balls_typechange.py` handle most automation.
-
-**Complexity Assessment**: HIGH — but justified by Physical/Special split impact on combat feel.
-
-**Version bumps**: `"minor"` after Cycle 44 (migration complete); `"major"` + `"release_stage": "Beta"` after Cycle 50.
+**Current repo state** (after Cycle 41 failure):
+- 4 tracked C files modified and broken (must revert with `git checkout HEAD -- <file>`)
+- Hundreds of untracked expansion FRLG map files (harmless — untracked, don't affect build)
+- The game data (encounters, trainers, scripts) was restored by `git checkout HEAD` during Cycle 41 — those files are intact
