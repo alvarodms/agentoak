@@ -123,23 +123,22 @@ v1.0 is feature-complete when ALL of the following are true:
 - [x] Narrative arc coherent end-to-end (Birch → Wallace) — VERIFIED (Cycle 34)
 - [x] Wild held items implemented — COMPLETE (Cycles 31/32)
 - [x] Reusable TMs — COMPLETE (Cycle 35)
-- [ ] Final build compiles cleanly — PENDING
-- [ ] Release notes written — PENDING
+- [x] Final build compiles cleanly — VERIFIED (Cycle 37)
+- [x] Release notes written — COMPLETE (Cycle 37)
 
 ### Current Roadmap
 
 | Cycle | Objective | Priority |
 |-------|-----------|----------|
-| **37** | Final validation build + release candidate + release notes | HIGH |
-| Post-v1.0 | Auto-run QoL (field_player_avatar.c, 1-line change) | Medium |
-| Post-v1.0 | Wallace post-battle vanilla text update | Low |
+| ~~**37**~~ | ~~Final validation build + release candidate + release notes~~ | **DONE** |
+| ~~Post-v1.0~~ | ~~Auto-run QoL~~ | **DONE** (was already applied) |
 | v2.0 | pokeemerald-expansion migration (phys/special split, Fairy, etc.) | Future |
 
 ### QoL Features Reference
 
 **Reusable TMs** (DONE): Deleted 2 lines in `src/party_menu.c` → TMs no longer consumed.
 
-**Auto-Run** (post-v1.0): Remove `(heldKeys & B_BUTTON) &&` from `src/field_player_avatar.c` line 658.
+**Auto-Run** (DONE): `(heldKeys & B_BUTTON)` check already removed from `src/field_player_avatar.c`. Running is default behavior.
 
 ---
 
@@ -150,3 +149,16 @@ Full analysis was done in Cycle 30. Key decision: **Do NOT attempt before v1.0 r
 Benefits: Physical/special split, Fairy type, 480+ species, modern mechanics.
 Approach: Clean rebase onto expansion, re-apply all custom data as targeted patches. Estimated 5-8 cycles.
 Detailed analysis archived — refer to cycle 30 journal if needed.
+
+---
+
+## 8. v2.0 Vision — pokeemerald-expansion
+
+**Core premise**: Physical/special split changes the entire combat feel. Fairy type reshapes the Dragon-heavy encounter tables fundamentally (Dragon routes become risky in new ways). 480+ species means encounter ecosystems can be far more differentiated.
+
+**Design questions to answer in v2.0 Cycle 1**:
+- Which new species best fit the migration narrative? (Garchomp in Victory Road, Lucario in Fighting-route dungeons, Togekiss as a reward-tier encounter, Sylveon in Fairy-themed routes)
+- How do the starter lines change? Larvitar/Salamence/Dragonite all benefit from the phys/special split — does that change balance enough to require team retuning?
+- Should Fairy replace some Dragon encounters on early routes, making Dragon more of a reward?
+
+**Technical path** (from Cycle 30 research): Clean rebase onto pokeemerald-expansion, then re-apply all Legends of Hoenn customizations as targeted patches. Estimated 5-8 cycles after a stable v1.0 exists.
