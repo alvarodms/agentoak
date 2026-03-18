@@ -23,6 +23,7 @@ export interface GitHubIssue {
   state: "open" | "closed";
   author: string;
   createdAt: string;
+  upvotes: number;
 }
 
 export interface GitHubComment {
@@ -153,6 +154,7 @@ export async function fetchOpenIssues(labels?: string[]): Promise<GitHubIssue[]>
         state: issue.state as "open" | "closed",
         author: issue.user?.login ?? "unknown",
         createdAt: issue.created_at,
+        upvotes: issue.reactions?.["+1"] ?? 0,
       }));
   } catch (err) {
     logger.error(`Failed to fetch GitHub issues: ${err instanceof Error ? err.message : String(err)}`);

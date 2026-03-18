@@ -127,8 +127,9 @@ export async function fetchNewCommunityIssues(): Promise<GitHubIssue[]> {
       );
     });
 
-    // Limit to most recent N issues
-    const limited = communityIssues.slice(0, MAX_ISSUES_PER_CYCLE);
+    // Sort by upvotes descending so the most community-supported issues surface first
+    const sorted = communityIssues.sort((a, b) => b.upvotes - a.upvotes);
+    const limited = sorted.slice(0, MAX_ISSUES_PER_CYCLE);
 
     if (limited.length > 0) {
       logger.info(`Found ${limited.length} new community issue(s) to review.`);
@@ -162,9 +163,10 @@ export function formatIssuesForPrompt(issues: GitHubIssue[]): string {
         : issue.body;
 
     const labels = issue.labels.length > 0 ? ` [${issue.labels.join(", ")}]` : "";
+    const upvoteStr = issue.upvotes > 0 ? ` | **👍 Upvotes**: ${issue.upvotes}` : "";
 
     return `### Issue #${issue.number}: ${issue.title}${labels}
-**Author**: ${issue.author} | **Created**: ${issue.createdAt}
+**Author**: ${issue.author} | **Created**: ${issue.createdAt}${upvoteStr}
 
 ${truncatedBody}`;
   });
