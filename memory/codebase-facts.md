@@ -219,6 +219,30 @@ The expansion adds a difficulty system: `enum DifficultyLevel` in `include/const
 
 ---
 
+## Fairy Type System (Cycle 44)
+
+**Constant**: `TYPE_FAIRY = 18`, `NUMBER_OF_MON_TYPES = 19` in `include/constants/pokemon.h`
+
+**Type effectiveness** (`src/battle_main.c`): `gTypeEffectiveness[372]` (was 336). 12 new entries added before TYPE_FORESIGHT sentinel. Fairy is SE vs Fighting/Dragon/Dark, NVE vs Fire/Poison/Steel. Dragon→Fairy is TYPE_MUL_NO_EFFECT (immune).
+
+**Files touched for type registration** (all need entries when adding a new type):
+- `include/constants/pokemon.h` — constant + NUMBER_OF_MON_TYPES
+- `include/battle_main.h` — extern array size
+- `src/battle_main.c` — gTypeNames + gTypeEffectiveness
+- `src/battle_message.c` — sATypeMove_Table
+- `src/pokemon_summary_screen.c` — sprite anim + anim table + palette map
+- `src/pokedex.c` — sDexSearchTypeOptions + sDexSearchTypeIds
+- `src/menu.c` — sMenuInfoIcons
+- `src/data/union_room.h` — sTradingBoardTypes
+- `graphics_file_rules.mk` — types variable
+- `graphics/types/<name>.png` — icon graphic (32x16, 4bpp indexed PNG)
+
+**Placeholder graphics**: Fairy icon is a copy of psychic.png. The menu info icon offset (0x84) also reuses Psychic's entry in `gMenuInfoElements_Gfx`.
+
+**Not updated**: Battle Factory script (`BattleFrontier_BattleFactoryPreBattleRoom/scripts.inc`) has no Fairy-specific opponent type message — falls through to "no common type" harmlessly.
+
+---
+
 ## ROM Build System
 
 **Command**: `make` from `pokeemerald/` directory
