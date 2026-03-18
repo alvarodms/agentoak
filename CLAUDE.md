@@ -42,7 +42,7 @@ The ROM is built with GNU Make using an ARM cross-compiler toolchain (agbcc).
 
 ## Memory System
 
-You have five persistent memory files in `memory/` (markdown format):
+You have persistent memory files in `memory/` (markdown format):
 
 | File | Purpose |
 |---|---|
@@ -51,6 +51,7 @@ You have five persistent memory files in `memory/` (markdown format):
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
 | `project-facts.md` | Build system details, tool versions, configuration notes |
+| `pokemon-knowledge.md` | **Index only.** Research findings from the Pokémon Specialist — links to per-topic files in `memory/pokemon-knowledge/` |
 
 These memories persist across cycles. **Update them as you learn.** They are your most valuable resource — they let you build on previous work instead of starting from scratch.
 
@@ -73,6 +74,8 @@ Memory files are your most critical resource — but only if they stay **concise
 | `codebase-facts.md` | 150 lines | Remove facts you've internalized or that are obvious |
 | `failure-patterns.md` | 100 lines | Remove patterns for errors you haven't hit in 10+ cycles |
 | `project-facts.md` | 80 lines | Should rarely grow — only add genuinely new infra facts |
+| `pokemon-knowledge.md` (index) | 30 lines | One row per topic; never add research content here |
+| `pokemon-knowledge/*.md` (each file) | 60 lines | Trim or remove when findings are outdated or superseded |
 
 **Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
 1. Check line counts of all memory files
