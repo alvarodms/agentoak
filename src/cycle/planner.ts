@@ -59,6 +59,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
             type: "string",
             description: "A brief, friendly response to post as a comment on the issue",
           },
+          partial: {
+            type: "boolean",
+            description: "Set to true when accepting a complex issue that will require multiple cycles to fully implement. The issue will stay open and remain in the backlog so you can continue working on it next cycle. Only valid with action 'accept'.",
+          },
         },
         required: ["issueNumber", "action", "response"],
         additionalProperties: false,
