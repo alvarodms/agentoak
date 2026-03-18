@@ -59,22 +59,23 @@ EverGrandeCity_GlaciasRoom_EventScript_Defeated::
 	end
 
 EverGrandeCity_GlaciasRoom_Text_IntroSpeech:
-	.string "Welcome, my name is GLACIA\n"
-	.string "of the ELITE FOUR.\p"
-	.string "I've traveled from afar to HOENN\n"
-	.string "so that I may hone my ice skills.\p"
-	.string "But all I have seen are challenges by\n"
-	.string "weak TRAINERS and their POKéMON.\p"
-	.string "What about you?\p"
-	.string "It would please me to no end if I could\n"
-	.string "go all out against you!$"
+	.string "Welcome, young TRAINER.\p"
+	.string "I came to HOENN from a distant\n"
+	.string "northern land -- much like the\l"
+	.string "ICE POKéMON who migrated here\l"
+	.string "from far frozen shores.\p"
+	.string "We are both strangers who found\n"
+	.string "our place in this changed HOENN.\l"
+	.string "But that does not make us gentle.\p"
+	.string "The cold is patient. Are you?$"
 
 EverGrandeCity_GlaciasRoom_Text_Defeat:
-	.string "You and your POKéMON…\n"
-	.string "How hot your spirits burn!\p"
-	.string "The all-consuming heat overwhelms.\p"
-	.string "It's no surprise that my icy skills\n"
-	.string "failed to harm you.$"
+	.string "You have proven yourself worthy.\p"
+	.string "Ice endures because it adapts --\n"
+	.string "becoming water, becoming vapor,\l"
+	.string "then returning as ice again.\p"
+	.string "You showed that same resilience\n"
+	.string "today. Carry it to the end.$"
 
 EverGrandeCity_GlaciasRoom_Text_PostBattleSpeech:
 	.string "Advance to the next room.\p"

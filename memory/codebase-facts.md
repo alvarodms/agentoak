@@ -336,3 +336,30 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne[] = {
 - `TRAINER_*` (trainer classes)
 
 **Data validation**: All constants must be defined in headers before use, or build fails with "undefined" errors.
+
+---
+
+## Elite Four, Champion, and Late-Game Gym File Naming (Cycle 33)
+
+**Elite Four rooms** follow the pattern `EverGrandeCity_[Name]sRoom/scripts.inc`:
+- `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` — Sidney (Dark)
+- `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` — Phoebe (Ghost)
+- `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` — Glacia (Ice)
+- `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` — Drake (Dragon)
+
+**Champion's room** is `EverGrandeCity_ChampionsRoom/scripts.inc` — NOT `WallacesRoom`.
+
+**Pokémon League lobby**: `EverGrandeCity_PokemonLeague_1F/scripts.inc`
+
+**Late-game gyms**:
+- Tate & Liza: `data/maps/MossdeepCity_Gym/scripts.inc`
+- Juan: `data/maps/SootopolisCity_Gym_1F/scripts.inc` (note: `_1F` suffix required — `SootopolisCity_Gym` does NOT exist)
+
+**Discovery method**: Glob does not reliably find all map directories — use `find` via Bash for discovery.
+
+**Dialogue label conventions for Elite Four**:
+- Pre-battle: `[MapName]_Text_IntroSpeech` — used in `MSGBOX_NPC` before `trainerbattle_no_intro`
+- Defeat text: `[MapName]_Text_DefeatSpeech` — brief in-battle text shown when trainer is beaten
+- Post-battle: `[MapName]_Text_PostBattle` — shown after battle ends, uses `MSGBOX_DEFAULT`
+
+**Key constraint**: Defeat text (shown inside battle UI) must be short — no more than ~35 chars per line, max 2 lines. Post-battle dialogue has more room.

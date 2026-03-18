@@ -62,20 +62,27 @@ EverGrandeCity_DrakesRoom_EventScript_Defeated::
 	end
 
 EverGrandeCity_DrakesRoom_Text_IntroSpeech:
-	.string "I am the last of the POKéMON LEAGUE\n"
-	.string "ELITE FOUR, DRAKE the DRAGON master!\p"
-	.string "In their natural state, POKéMON are\n"
-	.string "wild living things. They are free.\p"
-	.string "At times, they hinder us.\n"
-	.string "At times, they help us.\p"
-	.string "For us to battle with POKéMON as\n"
-	.string "partners, do you know what it takes?\p"
-	.string "Do you know what is needed?\p"
-	.string "If you don't, then you will never\n"
-	.string "prevail over me!$"
+	.string "I've sailed every sea in this\n"
+	.string "world, young one. Trained\l"
+	.string "DRAGON POKéMON for fifty years.\p"
+	.string "Then the migration came. I watched\n"
+	.string "DRAGONS I'd never seen before fly\l"
+	.string "over HOENN's mountains.\p"
+	.string "DRAGONS that made mine look small.\p"
+	.string "It humbled me. My crew and I had\n"
+	.string "to earn our place again.\p"
+	.string "Now I wonder -- can you earn\n"
+	.string "yours?$"
 
 EverGrandeCity_DrakesRoom_Text_Defeat:
-	.string "Superb, it should be said.$"
+	.string "Ha! Well battled, TRAINER.\p"
+	.string "When those new DRAGONS came, I\n"
+	.string "was angry. Thought they were\l"
+	.string "taking what was mine to claim.\p"
+	.string "But they taught me there's always\n"
+	.string "more to learn. You've done the\l"
+	.string "same for me today.\p"
+	.string "Now go. Face WALLACE.$"
 
 EverGrandeCity_DrakesRoom_Text_PostBattleSpeech:
 	.string "You deserve every credit for coming\n"

@@ -65,18 +65,23 @@ EverGrandeCity_SidneysRoom_EventScript_Defeated::
 	end
 
 EverGrandeCity_SidneysRoom_Text_IntroSpeech:
-	.string "Welcome, challenger!\n"
-	.string "I'm SIDNEY of the ELITE FOUR.\p"
-	.string "I like that look you're giving me.\n"
-	.string "I guess you'll give me a good match.\l"
-	.string "That's good! Looking real good!\p"
-	.string "All right! You and me, let's enjoy\n"
-	.string "a battle that can only be staged\l"
-	.string "here in the POKéMON LEAGUE!$"
+	.string "Oh, a challenger! Good timing.\p"
+	.string "Ever since the migration hit HOENN,\n"
+	.string "the wilds near VICTORY ROAD have\l"
+	.string "gotten dangerous.\p"
+	.string "DARK types especially -- they're\n"
+	.string "drawn to the chaos.\p"
+	.string "My team? We've embraced it.\n"
+	.string "Let's see if you can handle the\l"
+	.string "shadows the migration brought!$"
 
 EverGrandeCity_SidneysRoom_Text_Defeat:
-	.string "Well, how do you like that? I lost!\n"
-	.string "Eh, it was fun, so it doesn't matter.$"
+	.string "Hmph... you're the real deal.\p"
+	.string "The migration shook up the power\n"
+	.string "balance in this whole region.\l"
+	.string "Looks like it shook up the\l"
+	.string "TRAINERS too.\p"
+	.string "I like it. Keep going.$"
 
 EverGrandeCity_SidneysRoom_Text_PostBattleSpeech:
 	.string "Well, listen to what this loser has\n"
