@@ -287,28 +287,19 @@ Route103_EventScript_Isabelle::
 	end
 
 Route103_Text_MayRoute103Pokemon:
-	.string "MAY: …Strange new POKéMON\n"
-	.string "on ROUTE 103 now, too…$"
+	.string "Hey, {PLAYER}{KUN}! Have you seen\n"
+	.string "what's been showing up around here?\l"
+	.string "The migration is incredible!$"
 
 Route103_Text_MayLetsBattle:
-	.string "Hey, {PLAYER}{KUN}!\p"
-	.string "I've been looking everywhere\n"
-	.string "for you!\p"
-	.string "I just caught a POKéMON I've\n"
-	.string "never seen in HOENN before!\p"
-	.string "It showed up near LITTLEROOT -\n"
-	.string "one of those migrants BIRCH\l"
-	.string "has been studying!\p"
-	.string "This migration is an opportunity.\n"
-	.string "The trainer who finds the\l"
-	.string "strongest migrants wins!\p"
-	.string "I found one before you.\n"
-	.string "Let's see how yours measures up!$"
+	.string "We both picked migrant Pokemon!\l"
+	.string "Let's see who chose the right one.\n"
+	.string "Bring it!$"
 
 Route103_Text_MayDefeated:
-	.string "Wha…?!\p"
-	.string "Your POKéMON is already\n"
-	.string "that strong?!$"
+	.string "You're strong, {PLAYER}{KUN}...\n"
+	.string "Maybe you did pick the right\l"
+	.string "migrant for this new Hoenn.$"
 
 Route103_Text_MayTimeToHeadBack:
 	.string "MAY: Fine.\n"
@@ -321,28 +312,19 @@ Route103_Text_MayTimeToHeadBack:
 	.string "ahead of me for long!$"
 
 Route103_Text_BrendanRoute103Pokemon:
-	.string "BRENDAN: …Strange new POKéMON\n"
-	.string "on ROUTE 103 now, too…$"
+	.string "Hey, {PLAYER}! Have you seen what's\n"
+	.string "been showing up around here?\l"
+	.string "The migration is incredible!$"
 
 Route103_Text_BrendanLetsBattle:
-	.string "Hey, {PLAYER}!\p"
-	.string "I've been looking everywhere\n"
-	.string "for you!\p"
-	.string "I just caught a POKéMON I've\n"
-	.string "never seen in HOENN before!\p"
-	.string "It showed up near LITTLEROOT -\n"
-	.string "one of those migrants BIRCH\l"
-	.string "has been studying!\p"
-	.string "This migration is an opportunity.\n"
-	.string "The trainer who finds the\l"
-	.string "strongest migrants wins!\p"
-	.string "I found one before you.\n"
-	.string "Let's see how yours measures up!$"
+	.string "We both picked migrant Pokemon!\l"
+	.string "Let's see who chose the right one.\n"
+	.string "Bring it!$"
 
 Route103_Text_BrendanDefeated:
-	.string "Wha…?!\p"
-	.string "Your POKéMON is already\n"
-	.string "that strong?!$"
+	.string "You're strong, {PLAYER}...\n"
+	.string "Maybe you did pick the right\l"
+	.string "migrant for this new Hoenn.$"
 
 Route103_Text_BrendanTimeToHeadBack:
 	.string "BRENDAN: Fine.\n"

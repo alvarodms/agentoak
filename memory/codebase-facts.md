@@ -27,6 +27,30 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Gym Leader Pre-Battle Dialogue — Confirmed File Paths (Cycle 36)
+
+**Label pattern**: `[MapName]_Text_[GymLeaderName]Intro` — used in `trainerbattle_single` or via `msgbox` + `trainerbattle_no_intro`
+
+| Gym Leader | File Path | Label |
+|---|---|---|
+| Roxanne | `data/maps/RustboroCity_Gym/scripts.inc` | `RustboroCity_Gym_Text_RoxanneIntro` |
+| Brawly | `data/maps/DewfordTown_Gym/scripts.inc` | `DewfordTown_Gym_Text_BrawlyIntro` |
+| Wattson | `data/maps/MauvilleCity_Gym/scripts.inc` | `MauvilleCity_Gym_Text_WattsonIntro` |
+| Flannery | `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | `LavaridgeTown_Gym_1F_Text_FlanneryIntro` |
+| Norman | `data/maps/PetalburgCity_Gym/scripts.inc` | `PetalburgCity_Gym_Text_NormanIntro` |
+| Winona | `data/maps/FortreeCity_Gym/scripts.inc` | `FortreeCity_Gym_Text_WinonaIntro` |
+| Tate & Liza | `data/maps/MossdeepCity_Gym/scripts.inc` | `MossdeepCity_Gym_Text_TateAndLizaIntro` |
+| Juan | `data/maps/SootopolisCity_Gym_1F/scripts.inc` | `SootopolisCity_Gym_1F_Text_JuanIntro` |
+
+**Gym file naming quirks**:
+- Flannery's gym is `LavaridgeTown_Gym_1F` — there is NO `LavaridgeTown_Gym` (only `_1F` and `_B1F`)
+- Juan's gym requires `_1F` suffix: `SootopolisCity_Gym_1F`
+- Norman's pre-battle uses `MSGBOX_DEFAULT` + `trainerbattle_no_intro` (two-step pattern, differs from single `trainerbattle_single`)
+
+**Rival label confirmed** (Cycle 36): Route 103 pre-battle label is `Route103_Text_BrendanRoute103Pokemon` (Brendan) / `Route103_Text_MayRoute103Pokemon` (May). These are shown BEFORE the rival approaches; the challenge text is `BrendanLetsBattle`/`MayLetsBattle`.
+
+---
+
 ## NPC Dialogue Editing Pattern (Cycle 28)
 
 **Target**: Any `.string` label in a map's `scripts.inc` used by a MSGBOX_NPC or MSGBOX_DEFAULT event script.

@@ -176,13 +176,11 @@ RustboroCity_Gym_Text_MarcPostBattle:
 	.string "pick the ROCK type at her young age.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
-	.string "Hello, I am ROXANNE, the RUSTBORO\n"
-	.string "POKéMON GYM LEADER.\p"
-	.string "I became a GYM LEADER so that I might\n"
-	.string "apply what I learned at the POKéMON\l"
-	.string "TRAINER'S SCHOOL in battle.\p"
-	.string "Would you kindly demonstrate how you\n"
-	.string "battle, and with which POKéMON?$"
+	.string "The migration stirred Granite Cave.\n"
+	.string "Fossils cracked open -- Aerodactyl\l"
+	.string "soared out after a thousand years!\p"
+	.string "My team has trained alongside them.\l"
+	.string "Now face the power of ancient rock!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
 	.string "So…\n"

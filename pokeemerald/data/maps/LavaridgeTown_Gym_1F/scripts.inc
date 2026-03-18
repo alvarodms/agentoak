@@ -299,11 +299,12 @@ LavaridgeTown_Gym_B1F_Text_EliPostBattle:
 	.string "Hehehehe.$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryIntro:
-	.string "The migration brought Fire-types\n"
-	.string "down from the north in numbers\l"
-	.string "we've never seen before.\p"
-	.string "I've been training hard to keep up.\n"
-	.string "Let's see if YOU can keep up!$"
+	.string "Mt. Chimney has new arrivals daily!\n"
+	.string "Magmar, Ninetales -- flowing down\l"
+	.string "the slopes since migration began.\p"
+	.string "My team's trained with every one.\l"
+	.string "We burn hotter than ever!\n"
+	.string "Now show me YOUR flame!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
 	.string "Oh…\n"
