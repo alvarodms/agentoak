@@ -40,6 +40,20 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: This is a validator blind spot, not a real failure. The git diff is the ground truth. Python scripts are a valid and efficient approach for bulk JSON edits — but ALWAYS follow large JSON edits with `make` to catch syntax errors immediately.
 **Critical lesson**: When using Python scripts to modify JSON data, run `python3 -c "import json; json.load(open('file.json'))"` immediately after to validate JSON syntax before declaring the cycle done.
 
+## Claiming Credit for Human-Contributor (PR) Work (Cycle 37)
+
+**Symptom**: Cycle completed-work.md logs a feature as "implemented in Cycle 37" but the git diff shows 0 files changed by the agent. The feature was actually implemented by a human contributor in a merged PR.
+**Example**: Auto-run (B_BUTTON check removal from `field_player_avatar.c`) was recorded as Cycle 37 work, but was implemented by PR #27 from alvarodms.
+**Cause**: Agent searched for B_BUTTON, found no matches, correctly concluded auto-run was done — but incorrectly attributed it to itself rather than the PR history.
+**Resolution**: Before attributing "already done" features to any cycle, run `git log --oneline -5 -- <file>` to confirm who made the change. If the change was made by a PR, credit the PR in completed-work.md, not the current cycle.
+**Lesson**: Negative search results ("no B_BUTTON found") confirm a feature exists but don't indicate when or by whom it was implemented. Always check git history.
+
+## Untracked Files Not Appearing in Git Diff (Cycle 37)
+
+**Symptom**: Validator shows "No changes in pokeemerald/" in git diff, but RELEASE_NOTES.md was created in pokeemerald/.
+**Cause**: `git diff` only shows changes to tracked files. New untracked files (shown as `??` in `git status`) don't appear in git diff output.
+**Resolution**: This is expected behavior. New documentation files that haven't been staged/committed will show in `git status` as `??` but not in `git diff`. Not a real failure.
+
 ## Anticipated Pitfalls (from code analysis)
 
 ### Using wrong SPECIES_ constants
@@ -76,6 +90,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: All move constants follow exact format in `include/constants/moves.h` — must check exact spelling
 **Error location**: `src/data/trainer_parties.h` line 3428 (Wattson's Electabuzz moveset)
 **Lesson**: Move constants are case-sensitive and format-sensitive. Always verify against header file.
+
 ## Unicode Character in .string Directive (Cycle 26)
 
 **Symptom**: `data/maps/SeafloorCavern_Room9/scripts.inc:238: error: unknown character U+2014`
