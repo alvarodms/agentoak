@@ -606,13 +606,12 @@ LilycoveCity_Text_GetLostMessingUpTraining:
 	.string "so can you, like, get lost?$"
 
 LilycoveCity_Text_ContestHallInTown:
-	.string "The harbormaster logged seventeen\n"
-	.string "species last week not in any catalog.\p"
-	.string "Fishermen are nervous. They are not\n"
-	.string "catching what they expect anymore.\p"
-	.string "Something enormous has been moving\n"
-	.string "through deep water off the cape.\l"
-	.string "At night you can hear it.$"
+	.string "The Contest judges keep talking about\n"
+	.string "the new arrivals. Houndoom. Gengar.\l"
+	.string "Even Tyranitar entered last month.\p"
+	.string "I thought Contests were for beloved\n"
+	.string "partners. Now it feels like the\l"
+	.string "migrants are rewriting everything.$"
 
 LilycoveCity_Text_StrangeCaveInCove:
 	.string "Have you seen that strange cave in\n"

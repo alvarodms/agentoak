@@ -366,42 +366,36 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne[] = {
 
 ---
 
-## TM Consumption Mechanic (Cycle 34 Research)
+## TM Consumption Mechanic — IMPLEMENTED (Cycle 35)
 
 **File**: `pokeemerald/src/party_menu.c`
 
-**Function**: `Task_LearnedMove` (around line 4778)
+**Function**: `Task_LearnedMove` (line 4777)
 
-**Current code that consumes TMs**:
-```c
-if (item < ITEM_HM01)
-    RemoveBagItem(item, 1);
-```
+**Change**: Deleted the 2-line block `if (item < ITEM_HM01) RemoveBagItem(item, 1);` — TMs are now permanent, HMs unchanged.
 
-**To make TMs reusable**: Delete these 2 lines entirely.
-
-**How it works**: `ITEM_HM01` is the item ID boundary between TMs and HMs. TMs have lower IDs (< ITEM_HM01) and get consumed. HMs have higher IDs and are never consumed by this path. Removing the block makes TMs permanent — HM behavior unchanged.
-
-**Coverage**: This handles BOTH the direct-learn path AND the replace-move path (Task_PartyMenuReplaceMove ultimately calls Task_LearnedMove).
-
-**Risk**: Very low — 2-line deletion, no cascading effects. Planned for Cycle 35.
+**How it works**: `ITEM_HM01` is the item ID boundary. TMs (lower IDs) no longer consumed. Coverage: both direct-learn and replace-move paths.
 
 ---
 
-## Auto-Run (Always Running) Mechanic (Cycle 34 Research)
+## Auto-Run (Always Running) — IMPLEMENTED (Cycle 35)
 
 **File**: `pokeemerald/src/field_player_avatar.c`
 
-**Approximate location**: Line 658, inside the running condition.
+**Location**: Line 658, running condition.
 
-**Current condition**:
-```c
-if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
- && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
-```
+**Change**: Removed `(heldKeys & B_BUTTON) &&` from the condition. Player always runs once FLAG_SYS_B_DASH is set (running shoes from Mom), unless underwater or on restricted tiles.
 
-**To enable auto-run**: Remove `(heldKeys & B_BUTTON) &&` from the condition.
+---
 
-**Result**: Player always runs (when FLAG_SYS_B_DASH is set, after receiving running shoes from Mom) unless underwater or on restricted tiles.
+## Migration NPCs — Cycle 35 (5 new NPCs)
 
-**Risk**: Low technically. Flagged as post-v1.0 QoL — changes core movement feel permanently and community feedback should guide this decision.
+**Pattern**: Route 120 has NO suitable MSGBOX_NPC NPCs — all trainers use global `data/text/trainers.inc`. Used Route 111 instead.
+
+| Location | Label edited | NPC context |
+|---|---|---|
+| DewfordTown | `DewfordTown_Text_TinyIslandCommunity` | Woman NPC, beach observer |
+| FortreeCity | `FortreeCity_Text_SawGiganticPokemonInSky` | Man NPC, sky watcher |
+| LilycoveCity | `LilycoveCity_Text_ContestHallInTown` | Man3 NPC, Contest Hall area |
+| Route111 | `Route111_Text_WinstrateFamilyDestroyedMe` | Man2 NPC, desert near Mt. Chimney |
+| LavaridgeTown | `LavaridgeTown_Text_OhYouLikeHotSprings` | ExpertF NPC, hot springs area |
