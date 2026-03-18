@@ -292,9 +292,10 @@ Route103_Text_MayRoute103Pokemon:
 	.string "The migration is incredible!$"
 
 Route103_Text_MayLetsBattle:
-	.string "We both picked migrant Pokemon!\l"
-	.string "Let's see who chose the right one.\n"
-	.string "Bring it!$"
+	.string "We both picked migrant Pokemon!\p"
+	.string "I spotted a Horsea school near\n"
+	.string "the shore this morning!\l"
+	.string "You're already behind. Bring it!$"
 
 Route103_Text_MayDefeated:
 	.string "You're strong, {PLAYER}{KUN}...\n"
@@ -317,9 +318,10 @@ Route103_Text_BrendanRoute103Pokemon:
 	.string "The migration is incredible!$"
 
 Route103_Text_BrendanLetsBattle:
-	.string "We both picked migrant Pokemon!\l"
-	.string "Let's see who chose the right one.\n"
-	.string "Bring it!$"
+	.string "We both picked migrant Pokemon!\p"
+	.string "I spotted a Horsea school near\n"
+	.string "the shore this morning!\l"
+	.string "You're already behind. Bring it!$"
 
 Route103_Text_BrendanDefeated:
 	.string "You're strong, {PLAYER}...\n"

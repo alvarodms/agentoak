@@ -536,24 +536,24 @@ MtChimney_Text_MeteoriteWillActivateVolcano:
 	.string "Fufufu…$"
 
 MtChimney_Text_MaxieIntro:
-	.string "See what the migration has done?!\n"
-	.string "Pokemon flooding into Hoenn --\l"
-	.string "no territory, no order, pure chaos!\p"
-	.string "Team Magma will expand the land\l"
-	.string "with the meteor's power -- creating\n"
-	.string "stable ground for every migrant!\p"
-	.string "This is progress. Now step ASIDE!$"
+	.string "The migration has accelerated\n"
+	.string "our timeline!\p"
+	.string "Every day, Tentacruel and Gyarados\n"
+	.string "claim shores we intended to expand\l"
+	.string "with Groudon's power!\p"
+	.string "The land cannot wait. We cannot\n"
+	.string "wait. Now step ASIDE!$"
 
 MtChimney_Text_MaxieDefeat:
 	.string "What?!\p"
 	.string "I, MAXIE, was caught off guard?!$"
 
 MtChimney_Text_MaxieYouHaventSeenLastOfMagma:
-	.string "You may have stopped me here...\n"
-	.string "But the migration grows more\l"
-	.string "chaotic by the hour, trainer!\p"
-	.string "When we expand the land, all those\l"
-	.string "newcomer Pokemon will have a home.\n"
+	.string "You've slowed us, nothing more.\p"
+	.string "The migrants pour in. The sea-types\n"
+	.string "encroach. And GROUDON sleeps.\p"
+	.string "When I awaken it, the land will\n"
+	.string "rise and swallow every last drop.\l"
 	.string "Team Magma will not be stopped!$"
 
 MtChimney_Text_TabithaIntro:
