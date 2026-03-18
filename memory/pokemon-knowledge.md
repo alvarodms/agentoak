@@ -22,3 +22,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v2.0 Update: What Players Want After v1.0 | 38 | March 2026 | [v2-update-desires.md](pokemon-knowledge/v2-update-desires.md) |
 | pokeemerald-expansion Migration: Planning & Design Implications | 39 | March 2026 | [expansion-migration-planning.md](pokemon-knowledge/expansion-migration-planning.md) |
 | pokeemerald-expansion Migration: Cycle 41 Practical Strategy | 41 | March 2026 | [expansion-migration-cycle41-strategy.md](pokemon-knowledge/expansion-migration-cycle41-strategy.md) |
+| Vanilla Physical/Special Split: Implementation Feasibility | 42 | March 2026 | [vanilla-physical-special-split.md](pokemon-knowledge/vanilla-physical-special-split.md) |

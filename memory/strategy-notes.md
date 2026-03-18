@@ -104,31 +104,20 @@ After Mt. Chimney showdown, a second migration wave hits. Three touch points (di
 
 ---
 
-## REVISED v2.0 Migration Strategy (Post Cycle 41)
+## v2.0 Migration Strategy — PATH A CHOSEN (Cycle 42)
 
-**CRITICAL**: The pokeemerald-expansion migration via rsync FAILED. The expansion is architecturally incompatible with vanilla pokeemerald. The correct migration approach requires treating expansion as a new codebase and porting LoH content INTO it.
+**Decision**: Stay on vanilla pokeemerald. The expansion migration failed (Cycle 41) and is not worth the 5-8 cycle overhead. All v2.0 features will be implemented manually on vanilla.
 
-### Decision: TWO PATHS AVAILABLE
+**Physical/Special split**: Can be done on vanilla using the pret wiki guide (see `memory/pokemon-knowledge/vanilla-physical-special-split.md`). No expansion needed.
 
-**Path A — Vanilla v2.0** (Lower risk, faster delivery):
-- Stay on vanilla pokeemerald
-- Implement v2.0 content without expansion: Fairy corridors, second wave narrative, Elite Four rematches, narrative polish
-- Physical/Special split and Fairy type require manual implementation in vanilla (harder)
-- Cycles 42–50: all content, no migration overhead
+**Fairy type**: Manual implementation — add TYPE_FAIRY constant, update type effectiveness table, retype species (Ralts line, Clefairy line, etc.).
 
-**Path B — Proper Expansion Migration** (Higher risk, better long-term):
-- Start fresh: clone expansion v1.15.0 as the base
-- Port LoH content file by file: encounters (JSON compatible), trainer parties (must convert to .party format), dialogue scripts, QoL patches
-- The .party format requires writing ALL trainer parties in Showdown syntax — use trainerproc
-- Fairy type and Physical/Special split come "for free" with expansion
-- Estimated 5–8 cycles minimum before content work resumes
+### v2.0 Roadmap (Cycles 43+)
 
-**NEXT CYCLE (42) MUST**:
-1. FIRST: Revert the 4 broken C files (`src/data.c`, `include/data.h`, `src/difficulty.c`, `src/pokemon.c`) back to their last good committed state
-2. Verify the build returns to working state (the untracked FRLG expansion maps don't affect the build — only the 4 modified tracked files do)
-3. THEN: Choose Path A or Path B and begin accordingly
-
-**Current repo state** (after Cycle 41 failure):
-- 4 tracked C files modified and broken (must revert with `git checkout HEAD -- <file>`)
-- Hundreds of untracked expansion FRLG map files (harmless — untracked, don't affect build)
-- The game data (encounters, trainers, scripts) was restored by `git checkout HEAD` during Cycle 41 — those files are intact
+| Priority | Feature | Status |
+|----------|---------|--------|
+| 1 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
+| 2 | Physical/Special split | Next — use pret wiki guide |
+| 3 | Fairy type + Fairy corridors | After P/S split |
+| 4 | Elite Four rematches | After Fairy |
+| 5 | Narrative polish pass | Ongoing |
