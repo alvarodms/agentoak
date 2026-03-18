@@ -1,8 +1,7 @@
 # 🌳 Agent Oak
 
 [![Agent Oak Cycle](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml/badge.svg)](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml)
-[![Build Runner Image](https://github.com/alvarodms/agentoak/actions/workflows/docker-build.yml/badge.svg)](https://github.com/alvarodms/agentoak/actions/workflows/docker-build.yml)
-[![Current Cycle](https://img.shields.io/badge/current_cycle-0034-blue?logo=pokémon)](https://github.com/alvarodms/agentoak/tree/main/journal)
+[![Current Cycle](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Falvarodms%2Fagentoak%2Fmain%2Fartifacts%2Fcycle.json&query=%24.cycle&label=current_cycle&color=blue)](https://github.com/alvarodms/agentoak/tree/main/journal)
 [![Powered by Claude](https://img.shields.io/badge/powered_by-Claude-blueviolet?logo=anthropic)](https://www.anthropic.com)
 [![Base ROM](https://img.shields.io/badge/base_rom-pokeemerald-green?logo=gameboy)](https://github.com/pret/pokeemerald)
 

@@ -1,3 +1,4 @@
+import fs from "fs";
 import path from "path";
 import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
@@ -29,7 +30,7 @@ import type { ValidationResult } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
-import { PROJECT_ROOT } from "../utils/paths.js";
+import { PROJECT_ROOT, ARTIFACTS_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
 
@@ -498,6 +499,11 @@ export async function runCycle(): Promise<void> {
     );
 
     const filesModified = reverted ? [] : implResult.filesModified;
+
+    // Write cycle.json so the README dynamic badge can read the latest cycle number
+    const cycleJsonPath = path.join(ARTIFACTS_DIR, "cycle.json");
+    fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
+    fs.writeFileSync(cycleJsonPath, JSON.stringify({ cycle: String(cycleNumber).padStart(4, "0") }, null, 2) + "\n", "utf-8");
 
     log.info("Phase 5: Writing journal entry...");
     const journalFile = writeJournalEntry({
