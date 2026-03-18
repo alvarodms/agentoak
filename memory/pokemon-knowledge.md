@@ -20,3 +20,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | ROM Hack Release: Final QA & Community Announcement | 37 | March 2026 | [release-qa-announcement.md](pokemon-knowledge/release-qa-announcement.md) |
 | Auto-Run Implementation in Vanilla pokeemerald | 38 | March 2026 | [auto-run-implementation.md](pokemon-knowledge/auto-run-implementation.md) |
 | v2.0 Update: What Players Want After v1.0 | 38 | March 2026 | [v2-update-desires.md](pokemon-knowledge/v2-update-desires.md) |
+| pokeemerald-expansion Migration: Planning & Design Implications | 39 | March 2026 | [expansion-migration-planning.md](pokemon-knowledge/expansion-migration-planning.md) |
