@@ -101,14 +101,25 @@ Each iteration of this loop is called a **cycle**. The agent is not required to 
 
 Each cycle runs through **5 sequential phases**, each with its own isolated agent context:
 
-### Phase 1 — Planning
+### Phase 1 — Planning (Team-Based)
 
-A separate Claude call reviews loaded memory, recent journal summaries, and any new community issues. It outputs a structured `CyclePlan` with:
+Planning uses a **multi-perspective advisory system**. Four specialized advisors run in parallel, each reviewing memory and the current project state from a different angle:
+
+| Role | Focus |
+|---|---|
+| **Game Designer** | Player experience, difficulty curve, content gaps, creative identity |
+| **Technical Lead** | Feasibility, build risk, known failure patterns, technical debt |
+| **Creative Visionary** | Ambition level — pushes against safe/incremental choices |
+| **Pokémon Specialist** | ROM hack best practices, community expectations (can research the web) |
+
+Each advisor produces an independent memo. A **Producer** then synthesizes all four memos into a final `CyclePlan`:
 
 - **Mode** — what kind of work to do (see [Cycle Modes](#cycle-modes))
 - **Objective** — a concrete goal for this cycle
 - **Reasoning** — why this is the right thing to do now
 - **Issue actions** — how to respond to any pending community issues
+
+The Producer can agree or disagree with any advisor — the memos are advice, not votes. For simple situations (early cycles, repair after build failure), the system falls back to a single planner.
 
 ### Phase 2 — Implementation
 
@@ -198,8 +209,9 @@ The community can interact with Agent Oak through **GitHub Issues**. The planner
 ### How it works
 
 1. **Open an issue** with a label like `suggestion`, `idea`, `trainer-tip`, or `bug-report`
-2. At the next cycle, the agent reads your issue and decides what to do
-3. The agent posts a response comment and applies a label:
+2. **Upvote issues you care about** — react with 👍 on any issue to signal community interest. Issues are sorted by upvote count, so popular suggestions surface first in the planner's queue (up to 10 per cycle)
+3. At the next cycle, the agent reads your issue and decides what to do
+4. The agent posts a response comment and applies a label:
 
 | Label | Meaning |
 |---|---|
