@@ -27,7 +27,7 @@ import {
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR } from "../utils/paths.js";
@@ -612,10 +612,7 @@ export async function runCycle(): Promise<void> {
           await postIssuePartialDeliveryComment(issueNumber, reason, "defer");
           await addLabelsToIssue(issueNumber, [AGENT_LABELS.deferred]);
           // Re-add to backlog so it surfaces in a future cycle
-          updateIssueBacklog(
-            [{ issueNumber, action: "defer", response: reason }],
-            new Map([[issueNumber, { number: issueNumber, title: `Issue #${issueNumber}`, body: "", labels: [], state: "open", author: "", createdAt: "", upvotes: 0 }]]),
-          );
+          addIssueToBacklog(issueNumber, `Issue #${issueNumber}`);
         }
       }
 
