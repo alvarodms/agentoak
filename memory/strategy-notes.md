@@ -2,6 +2,8 @@
 
 High-level strategies, ideas for the ROM hack, what to try next, and lessons about approach.
 
+> **Maintenance**: Keep this file under ~200 lines. Delete completed roadmap items older than 10 cycles. Remove research/analysis for decisions already made. This file is for *current* vision, *active* plans, and *live* technical reference — not a historical archive.
+
 ---
 
 # LEGENDS OF HOENN — Game Design Document
