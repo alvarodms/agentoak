@@ -51,10 +51,11 @@ export async function commitCycle(
   const paddedCycle = String(cycleNumber).padStart(4, "0");
 
   try {
-    // Stage memory, journal, and build logs
+    // Stage memory, journal, build logs, and cycle counter
     await git.add("memory/*");
     await git.add("journal/*");
     await git.add("artifacts/build-logs/*");
+    await git.add("artifacts/cycle.json");
 
     // Stage modified pokeemerald files
     for (const rawPath of filesModified) {
