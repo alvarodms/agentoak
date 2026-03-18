@@ -27,6 +27,7 @@ permissions:
   issues: write
   pages: write
   id-token: write
+  packages: read
 
 jobs:
   run-cycle:
