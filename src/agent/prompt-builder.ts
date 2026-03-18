@@ -41,6 +41,15 @@ export class PromptBuilder {
     return this;
   }
 
+  /** Append a numbered list under a heading. */
+  numberedList(title: string, items: string[], level: number = 2): this {
+    const prefix = "#".repeat(level);
+    this.sections.push(
+      `${prefix} ${title}\n\n${items.map((item, i) => `${i + 1}. ${item}`).join("\n")}`,
+    );
+    return this;
+  }
+
   /** Render all accumulated sections into a single string separated by double newlines. */
   build(): string {
     return this.sections.join("\n\n").trim();
