@@ -61,38 +61,6 @@ These memories persist across cycles. **Update them as you learn.** They are you
 - When a build fails, record the failure pattern so you can avoid it next time
 - Think about the big picture — what kind of ROM hack do you want to create?
 
-### Pokémon Knowledge Base
-
-`memory/pokemon-knowledge.md` is an **index only** — it contains a table of research topics, each linking to a dedicated file under `memory/pokemon-knowledge/`.
-
-**Reading research:**
-1. Open `memory/pokemon-knowledge.md` and find the relevant row in the index table.
-2. Follow the link to the individual file (e.g., `memory/pokemon-knowledge/trainer-held-items.md`).
-3. Read the full findings there — do not expect substantive content in the index itself.
-
-**Adding new research** (when the Pokémon Specialist produces new findings):
-1. Create a new file in `memory/pokemon-knowledge/` with a descriptive slug (e.g., `rival-design-patterns.md`).
-2. Start the file with the cycle/date metadata header:
-   ```
-   # <Research Topic Title>
-
-   **Cycle**: <N> | **Date**: <Month Year>
-
-   ---
-   ```
-3. Write the full research content below the header.
-4. Add a new row to the index table in `memory/pokemon-knowledge.md`:
-   ```
-   | Topic Title | <cycle> | <Month Year> | [filename.md](pokemon-knowledge/filename.md) |
-   ```
-
-**Updating existing research:**
-- Open the specific file directly (skip the index, it only has the link).
-- Edit in place — replace outdated findings rather than appending. Update the cycle/date header if the entry is substantially revised.
-- Do **not** create a duplicate entry in the index; update the existing row's cycle/date if needed.
-
-**Size budget**: The index file should stay compact (one row per topic, no research content). Individual topic files have no hard limit but should be trimmed if findings become obsolete.
-
 ### Memory Maintenance Rules
 
 Memory files are your most critical resource — but only if they stay **concise and current**. Follow these rules to prevent bloat and staleness:
