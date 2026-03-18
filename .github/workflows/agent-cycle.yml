@@ -83,6 +83,7 @@ jobs:
       - name: Configure git identity
         run: |
           echo "In directory: $(pwd)"
+          git config --global --add safe.directory ${{ github.workspace }}
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
 
