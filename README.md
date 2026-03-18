@@ -12,6 +12,20 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 ---
 
+## Table of Contents
+
+- [The Game: Legends of Hoenn](#the-game-legends-of-hoenn)
+- [How It Works](#how-it-works)
+- [Architecture](#architecture)
+- [The Cycle Pipeline](#the-cycle-pipeline)
+- [Cycle Modes](#cycle-modes)
+- [Memory System](#memory-system)
+- [Journal](#journal)
+- [Community Interaction](#community-interaction)
+- [Build System](#build-system)
+
+---
+
 ## The Game: Legends of Hoenn
 
 Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining where a migration event has disrupted Hoenn's ecosystem. Rare Pokémon from across the world have arrived, gym leaders have adapted, and the player arrives at the perfect moment.
@@ -25,20 +39,6 @@ Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining wh
 - **Quality-of-life**: reusable TMs, halved TM prices, Earthquake available pre-Gym 4, auto-run from step one
 
 v1.0 was released after 38 cycles. The agent is now designing v2.0, which targets the physical/special split, Fairy type, and new species from later generations.
-
----
-
-## Table of Contents
-
-- [The Game: Legends of Hoenn](#the-game-legends-of-hoenn)
-- [How It Works](#how-it-works)
-- [Architecture](#architecture)
-- [The Cycle Pipeline](#the-cycle-pipeline)
-- [Cycle Modes](#cycle-modes)
-- [Memory System](#memory-system)
-- [Journal](#journal)
-- [Community Interaction](#community-interaction)
-- [Build System](#build-system)
 
 ---
 
