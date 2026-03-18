@@ -60,15 +60,15 @@ Before modifying ANY pokeemerald file:
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/Route103/scripts.inc` | Rival encounter 1 — cocky discovery | 25, **36** | Cycle 36 rewrote (was already migration-themed) |
-| `data/maps/Route110/scripts.inc` | Rival encounter 2 — growing awareness | 25, **36** | Cycle 36 rewrote (was already migration-themed) |
+| `data/maps/Route103/scripts.inc` | Rival encounter 1 — cocky discovery | 25, 36, **38** | Cycle 38 added Horsea species name to pre-battle line |
+| `data/maps/Route110/scripts.inc` | Rival encounter 2 — growing awareness | 25, 36, **38** | Cycle 38 added "no joke" + team-changed-since-103 line |
 | `data/maps/LilycoveCity/scripts.inc` | Rival encounter 3 — mutual respect | 25, 29, **36** | Cycle 29 added NPCs; cycle 36 rewrote rival text |
 
 ## NPC Dialogue — Villains (Maxie & Archie)
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/MtChimney/scripts.inc` | Maxie pre/post-battle dialogue | 27, **36** | Cycle 36 rewrote (was already migration-themed) |
+| `data/maps/MtChimney/scripts.inc` | Maxie pre/post-battle dialogue | 27, 36, **38** | Cycle 38 added Tentacruel/Gyarados + Groudon urgency |
 | `data/maps/SeafloorCavern_Room9/scripts.inc` | Archie pre/post-battle dialogue | 27, **36** | Cycle 36 rewrote (was already migration-themed) |
 | `data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc` | Archie museum warning | 27 | Migration-flavored |
 | `data/maps/SlateportCity_Harbor/scripts.inc` | Archie escape line | 27 | Migration flavor preserved |
@@ -136,7 +136,8 @@ Before modifying ANY pokeemerald file:
 |------|-------------|-------|-------|
 | TM shop data files | TM prices halved (3000→1500) | 22 | Dragon Claw, EQ, Shadow Ball, Psychic, etc. |
 | `data/maps/FallarborTown/scripts.inc` | Move tutor: Metronome→Earthquake | 23 | Pre-Gym 4 EQ access |
-| `src/field_player_avatar.c` | Auto-run enabled (B_BUTTON check removed) | 37 | Running is now default; hold B to walk |
+| `src/field_player_avatar.c` | Auto-run enabled (B_BUTTON check removed) | 37 | Running is now default; always runs when FLAG_SYS_B_DASH set |
+| `src/new_game.c` | FlagSet(FLAG_SYS_B_DASH) at game start | 38 | Player runs from very first step, not just after getting shoes |
 
 ## Release
 
@@ -150,10 +151,10 @@ Before modifying ANY pokeemerald file:
 
 These files have been touched in multiple cycles and are at highest risk of accidental regression:
 
-- **Route103/scripts.inc**: Cycles 25, 36
-- **Route110/scripts.inc**: Cycles 25, 28, 36
+- **Route103/scripts.inc**: Cycles 25, 36, 38
+- **Route110/scripts.inc**: Cycles 25, 28, 36, 38
 - **LilycoveCity/scripts.inc**: Cycles 25, 29, 36
-- **MtChimney/scripts.inc**: Cycles 27, 36
+- **MtChimney/scripts.inc**: Cycles 27, 36, 38
 - **LittlerootTown/scripts.inc**: Cycles 15, 28
 - **SlateportCity/scripts.inc**: Cycles 27, 28
 - **src/data/trainer_parties.h**: Cycles 6, 7, 8, 10, 11, 12, 16, 17, 19

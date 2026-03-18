@@ -165,6 +165,7 @@ void NewGameInitData(void)
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
     InitEventData();
+    FlagSet(FLAG_SYS_B_DASH); // Auto-run: player always runs from game start
     ClearTVShowData();
     ResetGabbyAndTy();
     ClearSecretBases();

@@ -755,9 +755,11 @@ Route110_Text_AquaActionsBringSmiles:
 	.string "smiles to people's faces!$"
 
 Route110_Text_MayLetsBattle:
-	.string "{PLAYER}{KUN}! My team's adapted\n"
-	.string "to the migration's new world.\l"
-	.string "Have yours? Let's find out!$"
+	.string "{PLAYER}{KUN}! These migrant\n"
+	.string "Pokemon are no joke.\p"
+	.string "I swapped half my team since\n"
+	.string "Route 103 just to keep up.\l"
+	.string "You'd better be ready!$"
 
 Route110_Text_MayDefeated:
 	.string "Your migrant's grown so strong...\n"
@@ -778,9 +780,11 @@ Route110_Text_MayExplainItemfinder:
 	.string "next time!$"
 
 Route110_Text_BrendanLetsBattle:
-	.string "{PLAYER}! My team's adapted to\n"
-	.string "the migration's new world.\l"
-	.string "Have yours? Let's find out!$"
+	.string "{PLAYER}! These migrant Pokemon\n"
+	.string "are no joke.\p"
+	.string "I swapped half my team since\n"
+	.string "Route 103 just to keep up.\l"
+	.string "You'd better be ready!$"
 
 Route110_Text_BrendanDefeated:
 	.string "Your migrant's grown so strong...\n"

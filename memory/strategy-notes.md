@@ -91,9 +91,8 @@ Routes should feel like ecosystems, not random loot tables. Each route has a the
 | 32 | Gym leader dialogue: Roxanne through Winona |
 | 33 | Elite Four + Champion + Tate & Liza + Juan dialogue; late-game NPCs |
 | 35 | Reusable TMs |
-| 36 | ⚠️ REWROTE gym leader/rival/villain dialogue that was already done in cycles 25/27/32/33 |
-
-**⚠️ CYCLE 36 WARNING**: Cycle 36 rewrote dialogue for gym leaders, rivals, and villains believing they were "still vanilla" — but they had already been updated in cycles 25, 27, 32, 33. The cycle 36 versions are now live. Future cycles MUST check `completed-work.md` and `git log` target files before modifying.
+| 36 | Rewrote gym leader/rival/villain dialogue — inadvertently replaced cycles 25/27/32/33 work |
+| 38 | Cycle 36 dialogue audited (Roxanne/Archie good; Maxie/rivals improved with species specificity); auto-run fixed |
 
 ---
 
@@ -131,14 +130,15 @@ v1.0 is feature-complete when ALL of the following are true:
 | Cycle | Objective | Priority |
 |-------|-----------|----------|
 | ~~**37**~~ | ~~Final validation build + release candidate + release notes~~ | **DONE** |
-| ~~Post-v1.0~~ | ~~Auto-run QoL~~ | **DONE** (was already applied) |
+| ~~**38**~~ | ~~Auto-run verified/fixed + Cycle 36 dialogue audit~~ | **DONE** |
+| **39** | Draft v2.0 GDD for pokeemerald-expansion migration roadmap | **Next** |
 | v2.0 | pokeemerald-expansion migration (phys/special split, Fairy, etc.) | Future |
 
 ### QoL Features Reference
 
 **Reusable TMs** (DONE): Deleted 2 lines in `src/party_menu.c` → TMs no longer consumed.
 
-**Auto-Run** (DONE): `(heldKeys & B_BUTTON)` check already removed from `src/field_player_avatar.c`. Running is default behavior.
+**Auto-Run** (DONE, Cycle 38 verified): `(heldKeys & B_BUTTON)` removed in Cycle 37; player always runs when `FLAG_SYS_B_DASH` set. Cycle 38 added `FlagSet(FLAG_SYS_B_DASH)` to `new_game.c` so player runs from very first step.
 
 ---
 
