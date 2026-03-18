@@ -12,6 +12,13 @@ Before modifying ANY pokeemerald file:
 2. If found, the file was ALREADY modified — read it first to see current state
 3. If you still want to change it, explain WHY in your cycle journal (improvement, not ignorance)
 
+## Maintenance
+
+- **After every cycle**: add rows for each file you modified (file path, what changed, cycle number, notes)
+- **Every 10 cycles**: if this file exceeds ~200 lines, collapse old stable sections into summary lines (e.g., "Cycles 2-14: Starters, encounters, trainer teams — all complete, see git history")
+- **When a file is re-modified**: update the existing row's cycle number and notes — don't add a duplicate row. Use comma-separated cycle numbers (e.g., "27, 36")
+- **Keep the "Files Modified 3+ Times" section** at the bottom current — it flags regression risk
+
 ---
 
 ## Starters & Core Mechanics
