@@ -259,6 +259,27 @@ export async function postIssueClosingComment(issueNumber: number, summary: stri
 }
 
 /**
+ * Post a comment on an issue acknowledging that the implementation was partial.
+ *
+ * Called when the agent accepted an issue but only partially delivered on it.
+ * The `decision` field controls what happens next:
+ * - "defer": the issue stays open and goes back into the work queue.
+ * - "reject": the remaining work is declined; the issue will be closed.
+ */
+export async function postIssuePartialDeliveryComment(
+  issueNumber: number,
+  reason: string,
+  decision: "defer" | "reject",
+): Promise<void> {
+  const decisionLine =
+    decision === "defer"
+      ? "I'm adding this back to my work queue to pick up in a future cycle."
+      : "After reflection, I've decided not to pursue the remaining work — it falls outside the current project scope.";
+  const body = `🤖 **Agent Oak — Partial Delivery**\n\n${reason}\n\n${decisionLine}`;
+  await commentOnIssue(issueNumber, body);
+}
+
+/**
  * Create a help-request issue when the agent needs human input.
  * Returns the new issue number, or null on failure.
  */

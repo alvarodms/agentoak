@@ -26,7 +26,7 @@ import {
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, postIssueClosingComment } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
@@ -545,15 +545,49 @@ export async function runCycle(): Promise<void> {
     }
 
     // Close accepted issues after successful commit (not reverted).
-    // Partial issues (multi-cycle work) stay open and remain in the backlog.
-    // Always post a closing comment before closing so the community knows what was done.
+    //
+    // Three categories of accepted issues:
+    // 1. "partial" flag at planning time — multi-cycle work, stays open in backlog (unchanged).
+    // 2. issueOutcomes[status="partial"] from CYCLE_COMPLETE — agent delivered only part of
+    //    what was asked. Post a partial-delivery comment; either defer (keep open, re-backlog)
+    //    or reject (close as not_planned) based on the agent's decision field.
+    // 3. Everything else — fully implemented; post closing comment and close as "completed".
     if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
-      const partialNumbers = new Set(
+      // Issues the planner explicitly flagged as multi-cycle at planning time
+      const plannedPartialNumbers = new Set(
         plan.issueActions
           .filter((a) => a.action === "accept" && a.partial)
           .map((a) => a.issueNumber),
       );
-      const closingNumbers = acceptedIssueNumbers.filter((n) => !partialNumbers.has(n));
+
+      // Post-implementation outcomes reported in the CYCLE_COMPLETE marker
+      const outcomeMap = new Map(
+        implResult.issueOutcomes.map((o) => [o.number, o]),
+      );
+
+      const closingNumbers: number[] = [];
+      const deferNumbers: number[] = [];
+      const rejectNumbers: number[] = [];
+
+      for (const issueNumber of acceptedIssueNumbers) {
+        if (plannedPartialNumbers.has(issueNumber)) {
+          // Already handled as a planned multi-cycle issue — leave open, skip.
+          continue;
+        }
+        const outcome = outcomeMap.get(issueNumber);
+        if (outcome?.status === "partial") {
+          if ((outcome.decision ?? "defer") === "reject") {
+            rejectNumbers.push(issueNumber);
+          } else {
+            deferNumbers.push(issueNumber);
+          }
+        } else {
+          // No outcome entry or status="complete" — treat as fully delivered.
+          closingNumbers.push(issueNumber);
+        }
+      }
+
+      // Fully completed issues
       if (closingNumbers.length > 0) {
         log.info(`  Closing ${closingNumbers.length} completed issue(s)...`);
         const closingSummary = reflection.cycleSummary || plan.objective;
@@ -562,8 +596,37 @@ export async function runCycle(): Promise<void> {
           await closeIssue(issueNumber, "completed");
         }
       }
-      if (partialNumbers.size > 0) {
-        log.info(`  Kept ${partialNumbers.size} partial issue(s) open for future cycles.`);
+
+      // Partially delivered → defer: keep open, re-add to backlog
+      if (deferNumbers.length > 0) {
+        log.info(`  Deferring ${deferNumbers.length} partially-delivered issue(s) back to backlog...`);
+        for (const issueNumber of deferNumbers) {
+          const outcome = outcomeMap.get(issueNumber)!;
+          const reason = outcome.reason ?? "This cycle's work partially addressed this issue.";
+          await postIssuePartialDeliveryComment(issueNumber, reason, "defer");
+          await addLabelsToIssue(issueNumber, [AGENT_LABELS.deferred]);
+          // Re-add to backlog so it surfaces in a future cycle
+          updateIssueBacklog(
+            [{ issueNumber, action: "defer", response: reason }],
+            new Map([[issueNumber, { number: issueNumber, title: `Issue #${issueNumber}`, body: "", labels: [], state: "open", author: "", createdAt: "", upvotes: 0 }]]),
+          );
+        }
+      }
+
+      // Partially delivered → reject: close without completing
+      if (rejectNumbers.length > 0) {
+        log.info(`  Closing ${rejectNumbers.length} partially-delivered issue(s) as rejected...`);
+        for (const issueNumber of rejectNumbers) {
+          const outcome = outcomeMap.get(issueNumber)!;
+          const reason = outcome.reason ?? "This cycle's work only partially addressed this issue, and the remaining work will not be pursued.";
+          await postIssuePartialDeliveryComment(issueNumber, reason, "reject");
+          await addLabelsToIssue(issueNumber, [AGENT_LABELS.rejected]);
+          await closeIssue(issueNumber, "not_planned");
+        }
+      }
+
+      if (plannedPartialNumbers.size > 0) {
+        log.info(`  Kept ${plannedPartialNumbers.size} planned multi-cycle issue(s) open.`);
       }
     }
 

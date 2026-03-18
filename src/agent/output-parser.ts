@@ -5,6 +5,23 @@
  * object, OR a single JSON array containing all messages.
  */
 
+/**
+ * Per-issue delivery outcome reported by the implementation agent in CYCLE_COMPLETE.
+ *
+ * The agent must include an entry for every accepted issue.
+ * - "complete": the issue was fully implemented; the runner will close it.
+ * - "partial": the implementation only partially addressed the issue.
+ *   The agent must also set `decision` ("defer" to keep it open for a future
+ *   cycle, or "reject" to close it without completing the work) and `reason`
+ *   (a plain-English explanation posted as a comment on the issue).
+ */
+export interface IssueOutcome {
+  number: number;
+  status: "complete" | "partial";
+  decision?: "defer" | "reject";
+  reason?: string;
+}
+
 export interface ClaudeCodeResult {
   actions: ActionRecord[];
   filesModified: string[];
@@ -13,6 +30,12 @@ export interface ClaudeCodeResult {
   /** Structured changelog entries for the release (e.g. ["Reduced TM prices", "Added held items"]) */
   cycleChanges: string[];
   nextSteps: string;
+  /**
+   * Delivery outcomes for accepted issues, keyed by issue number.
+   * Populated from the issueOutcomes field in the CYCLE_COMPLETE marker.
+   * Issues not listed here are treated as fully complete (backward compat).
+   */
+  issueOutcomes: IssueOutcome[];
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
   toolCallCount: number;
   /** The text from the final "result" message (e.g. structured JSON from --json-schema) */
@@ -38,6 +61,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let cycleSummary = "";
   let cycleChanges: string[] = [];
   let nextSteps = "";
+  let issueOutcomes: IssueOutcome[] = [];
   let toolCallCount = 0;
   let cycleMarkerFound = false;
   const preMarkerTexts: string[] = [];
@@ -97,12 +121,22 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
               summary?: string;
               changes?: string[];
               next_steps?: string;
+              issue_outcomes?: IssueOutcome[];
             };
             cycleSummary = parsed.summary ?? cycleSummary;
             if (Array.isArray(parsed.changes) && parsed.changes.length > 0) {
               cycleChanges = parsed.changes.filter((c): c is string => typeof c === "string");
             }
             nextSteps = parsed.next_steps ?? nextSteps;
+            if (Array.isArray(parsed.issue_outcomes) && parsed.issue_outcomes.length > 0) {
+              issueOutcomes = parsed.issue_outcomes.filter(
+                (o): o is IssueOutcome =>
+                  o !== null &&
+                  typeof o === "object" &&
+                  typeof o.number === "number" &&
+                  (o.status === "complete" || o.status === "partial"),
+              );
+            }
           } catch {
             // Malformed JSON in marker — ignore
           }
@@ -207,6 +241,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     cycleSummary,
     cycleChanges,
     nextSteps,
+    issueOutcomes,
     tokenUsage: {
       inputTokens: totalInputTokens,
       outputTokens: totalOutputTokens,
