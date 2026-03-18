@@ -37,6 +37,9 @@ export interface IssueAction {
   issueNumber: number;
   action: "accept" | "defer" | "reject" | "need-info";
   response: string;
+  /** When true, the issue requires multiple cycles to complete. The issue stays open and
+   *  remains in the backlog for future cycles. Only meaningful with action "accept". */
+  partial?: boolean;
 }
 
 /** A help request the agent wants to raise */

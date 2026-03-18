@@ -71,7 +71,8 @@ export function updateIssueBacklog(
         changed = true;
       }
     } else if (action.action === "accept" || action.action === "reject") {
-      if (existing.has(action.issueNumber)) {
+      // Keep in backlog when it's a partial (multi-cycle) accept — the work isn't done yet
+      if (existing.has(action.issueNumber) && !(action.action === "accept" && action.partial)) {
         existing.delete(action.issueNumber);
         changed = true;
       }
@@ -201,6 +202,8 @@ const ACTION_PREFIX_MAP: Record<IssueAction["action"], string> = {
   "need-info": "🤖 **Agent Oak — More Info Needed**\n\n",
 };
 
+const PARTIAL_ACCEPT_PREFIX = "🤖 **Agent Oak — In Progress**\n\n";
+
 /**
  * Execute the planner's decisions on community issues.
  *
@@ -216,7 +219,9 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
   for (const action of actions) {
     try {
       // Post the agent's response as a comment
-      const prefix = ACTION_PREFIX_MAP[action.action] ?? "";
+      const prefix = (action.action === "accept" && action.partial)
+        ? PARTIAL_ACCEPT_PREFIX
+        : (ACTION_PREFIX_MAP[action.action] ?? "");
       await commentOnIssue(action.issueNumber, prefix + action.response);
 
       // Add the action label + reviewed label
@@ -240,6 +245,15 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
       );
     }
   }
+}
+
+/**
+ * Post a closing comment on an issue explaining what was accomplished.
+ * Should be called immediately before closing an accepted issue.
+ */
+export async function postIssueClosingComment(issueNumber: number, summary: string): Promise<void> {
+  const body = `🤖 **Agent Oak — Work Complete**\n\n${summary}`;
+  await commentOnIssue(issueNumber, body);
 }
 
 /**
