@@ -146,6 +146,48 @@ This marker is parsed by the agent runner. Always include all fields:
 | `changes` | Array of short, plain-English player-facing changelog entries (e.g. `"Reduced TM prices from 3,000 to 1,500 Pokédollars"`). These become the bullet points in the GitHub release. Use `[]` if no ROM changes were made. |
 | `next_steps` | Oak-voice description of what to do next cycle |
 | `issue_outcomes` | **Required when any issues were accepted this cycle.** Array of outcome objects — one per accepted issue. See below. |
+| `version_bump` | **Optional.** Set to `"major"` or `"minor"` to advance the game version. Omit for routine patch releases. See below. |
+| `release_stage` | **Optional.** Override the release stage name shown in the GitHub release title (e.g. `"Alpha"`, `"Beta"`, `"Demo"`, `"Chapter 1 Complete"`). Persists until changed. See below. |
+
+### version_bump — Autonomous Version Management
+
+You control when the game version advances beyond the current `major.minor`. The runner automatically manages the patch component (always set to the cycle number). You decide when a milestone is significant enough to warrant a version bump.
+
+**When to bump:**
+- `"major"`: A true milestone — e.g. completing an entire game region, first full playthrough possible, a fundamental redesign shipped
+- `"minor"`: A significant feature is complete — e.g. full encounter overhaul across all routes, a story chapter done, a major new mechanic shipped
+- **omit**: Routine cycle with incremental improvements (most cycles)
+
+**How it works:**
+- `"major"` increments `major` and resets `minor` to `0` (e.g. `v0.3.42` → `v1.0.43`)
+- `"minor"` increments `minor`, keeping `major` unchanged (e.g. `v0.3.42` → `v0.4.43`)
+- The default auto-computed stage is: Alpha when `major === 0`, Beta when `major >= 1 && minor < 5`, Stable otherwise — but `release_stage` overrides this
+
+**Example — bumping minor after completing an encounter overhaul:**
+```json
+{"summary": "...", "changes": [...], "next_steps": "...", "version_bump": "minor"}
+```
+
+### release_stage — Release Stage Name
+
+The release stage appears in the GitHub release title (e.g. `Legends of Hoenn v0.2.47 Beta`). By default it auto-computes from the version numbers, but you can override it to reflect the game's actual development state.
+
+**When to use:**
+- You reach a named milestone that doesn't map neatly to a numeric bump (e.g. `"Demo"`, `"Chapter 1 Complete"`, `"Open Beta"`)
+- You want the stage to say something more meaningful than the default `"Alpha"`/`"Beta"`/`"Stable"`
+- Combined with `version_bump` when a milestone deserves both a number and a new name
+
+**Persists** until you set a new value — no need to repeat it every cycle.
+
+**Example — renaming Alpha to Demo for a public release:**
+```json
+{"summary": "...", "changes": [...], "next_steps": "...", "release_stage": "Demo"}
+```
+
+**Example — combining a version bump with a new stage name:**
+```json
+{"summary": "...", "changes": [...], "next_steps": "...", "version_bump": "minor", "release_stage": "Beta"}
+```
 
 ### issue_outcomes — Reporting Issue Delivery
 

@@ -14,7 +14,7 @@ import type { ClaudeCodeResult } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
-import { recordSuccessfulBuild, formatVersion, loadVersion } from "../repo/version.js";
+import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
 import {
   commitCycle,
@@ -639,6 +639,15 @@ export async function runCycle(): Promise<void> {
     // Create GitHub release with IPS patch if build succeeded with pokeemerald changes
     let releaseUrl: string | null = null;
     if (gameVersion && commitHash && !reverted) {
+      // Apply agent-declared version bump / release stage before creating the release tag
+      if (implResult.versionBump) {
+        log.info(`Phase 5: Applying version bump (${implResult.versionBump}) declared by agent...`);
+        applyVersionBump(implResult.versionBump, implResult.releaseStage);
+      } else if (implResult.releaseStage) {
+        log.info(`Phase 5: Setting release stage to "${implResult.releaseStage}" declared by agent...`);
+        setReleaseStage(implResult.releaseStage);
+      }
+
       log.info("Phase 5: Creating GitHub release with IPS patch...");
       const version = loadVersion();
       releaseUrl = await createCycleRelease(

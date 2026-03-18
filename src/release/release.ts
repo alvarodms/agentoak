@@ -15,10 +15,12 @@ import { formatVersion } from "../repo/version.js";
 import { logger } from "../utils/logger.js";
 
 /**
- * Determine the release stage label based on the version.
- * major === 0: Alpha; minor < 5 when major >= 1: Beta; otherwise Stable.
+ * Determine the release stage label.
+ * Uses the agent-declared stage from version.releaseStage when set;
+ * otherwise auto-computes: major === 0 → Alpha, minor < 5 → Beta, else Stable.
  */
 function getReleaseStage(version: GameVersion): string {
+  if (version.releaseStage) return version.releaseStage;
   if (version.major === 0) return "Alpha";
   if (version.minor < 5) return "Beta";
   return "Stable";
