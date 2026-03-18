@@ -42,10 +42,11 @@ The ROM is built with GNU Make using an ARM cross-compiler toolchain (agbcc).
 
 ## Memory System
 
-You have four persistent memory files in `memory/` (markdown format):
+You have five persistent memory files in `memory/` (markdown format):
 
 | File | Purpose |
 |---|---|
+| `completed-work.md` | **CHECK FIRST every cycle.** Authoritative registry of all modified files, organized by system. Prevents duplicate work. |
 | `codebase-facts.md` | What you've learned about how the code works |
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
@@ -74,11 +75,28 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 1. **Start by reviewing your memory** to understand what you already know and what you planned to do. If the previous cycle have failed, you might want to prioritise getting the last cycle's task to completion.
 2. **Check your strategy-notes.md roadmap** — is there a multi-cycle plan you should be following? If not, consider creating one.
-3. **Read relevant files before making changes.** Understand the code first.
-4. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.
-5. **If you modify code, build afterward** to verify your changes compile.
-6. **Record what you learn in memory** — especially update strategy-notes.md with how this work fits into the larger game design.
-7. **When done, signal completion** using the marker format below.
+3. **Check `memory/completed-work.md`** before planning any file modifications — see "Pre-Modification Verification" below.
+4. **Read relevant files before making changes.** Understand the code first.
+5. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.
+6. **If you modify code, build afterward** to verify your changes compile.
+7. **Record what you learn in memory** — update strategy-notes.md with how this work fits into the larger game design, and update completed-work.md with every file you modified.
+8. **When done, signal completion** using the marker format below.
+
+## Pre-Modification Verification (MANDATORY)
+
+**Before modifying ANY pokeemerald file, you MUST:**
+
+1. **Check `memory/completed-work.md`** — search for the filename. If it appears, the file was ALREADY modified in a previous cycle.
+2. **Run `git log --oneline -5 -- <filepath>`** on each target file to see its actual commit history. This catches modifications not yet recorded in memory.
+3. **If the file was previously modified, READ its current content** before making changes. Do NOT assume any file contains "vanilla" or "original" text without verifying.
+4. **In your cycle journal, explicitly state** which files you verified and whether they contained previous modifications.
+
+**If you find a file was already modified:**
+- You MAY still choose to improve or rewrite it — but you must **acknowledge the previous work** and explain **why a rewrite is needed** (e.g., "Cycle 32's Roxanne dialogue was functional but lacked specific migration species references — rewriting for consistency with the villain dialogue style").
+- **NEVER claim content is "vanilla" or "original" without first reading the file.** This has caused wasted cycles in the past (Cycle 36 rewrote dialogue from Cycles 25/27/32/33 believing it was vanilla).
+
+**After modifying files:**
+- Update `memory/completed-work.md` with every file you touched and what you changed.
 
 ## Cycle Completion
 
