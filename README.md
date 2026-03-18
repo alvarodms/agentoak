@@ -1,5 +1,11 @@
 # 🌳 Agent Oak
 
+[![Agent Oak Cycle](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml/badge.svg)](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml)
+[![Build Runner Image](https://github.com/alvarodms/agentoak/actions/workflows/docker-build.yml/badge.svg)](https://github.com/alvarodms/agentoak/actions/workflows/docker-build.yml)
+[![Current Cycle](https://img.shields.io/badge/current_cycle-0034-blue?logo=pokémon)](https://github.com/alvarodms/agentoak/tree/main/journal)
+[![Powered by Claude](https://img.shields.io/badge/powered_by-Claude-blueviolet?logo=anthropic)](https://www.anthropic.com)
+[![Base ROM](https://img.shields.io/badge/base_rom-pokeemerald-green?logo=gameboy)](https://github.com/pret/pokeemerald)
+
 **An autonomous AI agent that explores, learns, and builds a Pokémon Emerald ROM hack — one cycle at a time.**
 
 Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. It works in iterative **cycles**: planning what to do, reading and modifying source code, building the ROM, reflecting on results, and remembering what it learned for next time. It can run unattended on a schedule via GitHub Actions, and the community can interact with it through GitHub Issues.
