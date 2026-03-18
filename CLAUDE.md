@@ -85,16 +85,53 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 When you have finished your work for this cycle, output the following HTML comment marker on its own line:
 
 ```
-<!-- CYCLE_COMPLETE: {"summary": "Oak-voice reflection on the cycle", "changes": ["Player-facing change 1", "Player-facing change 2"], "next_steps": "What to try in the next cycle"} -->
+<!-- CYCLE_COMPLETE: {"summary": "Oak-voice reflection on the cycle", "changes": ["Player-facing change 1", "Player-facing change 2"], "next_steps": "What to try in the next cycle", "issue_outcomes": [{"number": 23, "status": "complete"}, {"number": 7, "status": "partial", "decision": "defer", "reason": "Added NPC dialogue but event trigger rewrites are deferred to a future cycle."}]} -->
 ```
 
-This marker is parsed by the agent runner. Always include all three fields:
+This marker is parsed by the agent runner. Always include all fields:
 
 | Field | Purpose |
 |---|---|
 | `summary` | Professor Oak narrative reflection (used in journal/release description fallback) |
 | `changes` | Array of short, plain-English player-facing changelog entries (e.g. `"Reduced TM prices from 3,000 to 1,500 Pokédollars"`). These become the bullet points in the GitHub release. Use `[]` if no ROM changes were made. |
 | `next_steps` | Oak-voice description of what to do next cycle |
+| `issue_outcomes` | **Required when any issues were accepted this cycle.** Array of outcome objects — one per accepted issue. See below. |
+
+### issue_outcomes — Reporting Issue Delivery
+
+**You must report an outcome for every issue you accepted this cycle.** This is how the runner decides whether to close an issue or keep it open.
+
+Each outcome object has these fields:
+
+| Field | Required | Values | Purpose |
+|---|---|---|---|
+| `number` | yes | integer | The issue number |
+| `status` | yes | `"complete"` or `"partial"` | Was the ask fully implemented? |
+| `decision` | if partial | `"defer"` or `"reject"` | What to do with the remaining work |
+| `reason` | if partial | string | Plain-English explanation posted as a comment on the issue |
+
+**Rules:**
+- `"complete"` — the issue's ask was fully implemented. The runner will close the issue.
+- `"partial"` — only part of the ask was implemented. You MUST also set `decision` and `reason`.
+  - `"defer"` — keep the issue open and return it to the backlog for a future cycle.
+  - `"reject"` — decline the remaining work; the issue will be closed without full delivery.
+- **Never omit `issue_outcomes` when you accepted issues.** Omitting it causes the runner to close issues as if they were complete, even if they weren't.
+- **Never mark an issue `"complete"` unless its full ask was implemented.** If you only partially addressed it, use `"partial"`.
+
+**Example — issue fully delivered:**
+```json
+{"number": 23, "status": "complete"}
+```
+
+**Example — issue partially delivered, deferred:**
+```json
+{"number": 23, "status": "partial", "decision": "defer", "reason": "Added five migration-reactive NPCs as requested. The deeper ask — rewriting Magma/Aqua event triggers to reflect the migration — requires a dedicated feature cycle and is deferred to my next pass."}
+```
+
+**Example — issue partially delivered, remaining work rejected:**
+```json
+{"number": 7, "status": "partial", "decision": "reject", "reason": "Implemented the sprite recolour as asked. The second part of the request (adding new animations) is out of scope for the current project direction."}
+```
 
 ## Public Communication
 
