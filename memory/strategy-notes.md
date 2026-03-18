@@ -117,7 +117,7 @@ After Mt. Chimney showdown, a second migration wave hits. Three touch points (di
 | Priority | Feature | Status |
 |----------|---------|--------|
 | 1 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
-| 2 | Physical/Special split | Next — use pret wiki guide |
+| 2 | Physical/Special split | **DONE** (Cycle 43) — all 355 moves categorized |
 | 3 | Fairy type + Fairy corridors | After P/S split |
 | 4 | Elite Four rematches | After Fairy |
 | 5 | Narrative polish pass | Ongoing |

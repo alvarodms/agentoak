@@ -140,6 +140,17 @@ Before modifying ANY pokeemerald file:
 | `data/maps/MauvilleCity/map.json` | Added scientist object event at (24,7) | 42 | Near Pokemon Center |
 | `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | Phoebe intro extended with second wave spirits | 33, **42** | Wove guardian/second-wave text into Cycle 33 intro |
 
+## Battle Engine — Physical/Special Split (v2.0)
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/pokemon.h` | Added MOVE_CATEGORY_* defines + `u8 category` to BattleMove struct | 43 | Foundation for P/S split |
+| `include/battle.h` | Added IS_MOVE_PHYSICAL/SPECIAL/STATUS macros | 43 | Move-based category checks |
+| `src/pokemon.c` | Rewrote damage calc to use move category instead of type | 43 | Weather/Flash Fire moved outside special branch; Thick Fat halves power |
+| `src/battle_script_commands.c` | Hustle + Counter/Mirror Coat use move category | 43 | 3 instances updated |
+| `src/battle_tv.c` | Reflect/Light Screen checks use move category | 43 | 2 instances updated |
+| `src/data/battle_moves.h` | Added .category to all 355 moves | 43 | Gen IV categories from Kateulator's pokeemerald-physpe |
+
 ## QoL Changes
 
 | File | What Changed | Cycle | Notes |

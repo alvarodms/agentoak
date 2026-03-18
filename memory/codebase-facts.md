@@ -195,6 +195,30 @@ The expansion adds a difficulty system: `enum DifficultyLevel` in `include/const
 
 ---
 
+## Physical/Special Split System (Cycle 43)
+
+**Struct**: `struct BattleMove` in `include/pokemon.h` has `u8 category` field (last field).
+
+**Constants** (in `include/pokemon.h`):
+- `MOVE_CATEGORY_PHYSICAL` (0), `MOVE_CATEGORY_SPECIAL` (1), `MOVE_CATEGORY_STATUS` (2)
+
+**Macros** (in `include/battle.h`):
+- `IS_MOVE_PHYSICAL(move)`, `IS_MOVE_SPECIAL(move)`, `IS_MOVE_STATUS(move)` — take move ID, check `gBattleMoves[move].category`
+- Old `IS_TYPE_PHYSICAL`/`IS_TYPE_SPECIAL` macros kept but unused in battle logic
+
+**Damage calc** (`src/pokemon.c:CalculateBaseDamage`):
+- Physical/special branch determined by `IS_MOVE_PHYSICAL(gCurrentMove)` / `IS_MOVE_SPECIAL(gCurrentMove)`
+- Weather (rain/sun) applies based on move TYPE (not category) — outside both branches
+- Flash Fire boosts all Fire moves regardless of category — outside both branches
+- Thick Fat halves `gBattleMovePower` (works for both physical and special)
+- Type-boost held items boost both attack and spAttack (correct stat selected by branch)
+
+**Move data**: All 355 entries in `src/data/battle_moves.h` have `.category` field, sourced from Kateulator's pokeemerald-physpe (Gen IV categories).
+
+**Counter/Mirror Coat** (`src/battle_script_commands.c`): Use `IS_MOVE_PHYSICAL`/`IS_MOVE_SPECIAL` for damage tracking.
+
+---
+
 ## ROM Build System
 
 **Command**: `make` from `pokeemerald/` directory
