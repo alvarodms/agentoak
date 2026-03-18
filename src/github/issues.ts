@@ -40,6 +40,42 @@ export function readIssueBacklog(): string {
 }
 
 /**
+ * Add a single issue to the backlog file unconditionally.
+ *
+ * Unlike updateIssueBacklog (which routes planning-phase actions), this is a
+ * simple write: if the issue isn't already in the backlog, add it; then write.
+ * Always writes the file so the change is not lost due to the "nothing changed"
+ * early-return guard inside updateIssueBacklog.
+ */
+export function addIssueToBacklog(issueNumber: number, title: string): void {
+  const existing = new Map<number, string>();
+  try {
+    if (fs.existsSync(BACKLOG_FILE)) {
+      for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
+        const match = line.match(/^- #(\d+):/);
+        if (match) existing.set(parseInt(match[1], 10), line);
+      }
+    }
+  } catch (err) {
+    logger.error(`Failed to parse issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  }
+
+  existing.set(issueNumber, `- #${issueNumber}: ${title}`);
+
+  const header = "# Issue Backlog\n\nDeferred community issues for future consideration.\n";
+  const entries = [...existing.values()];
+  const content = header + "\n" + entries.join("\n") + "\n";
+
+  try {
+    fs.mkdirSync(path.dirname(BACKLOG_FILE), { recursive: true });
+    fs.writeFileSync(BACKLOG_FILE, content, "utf-8");
+    logger.info(`Added issue #${issueNumber} to backlog (${entries.length} item(s) total).`);
+  } catch (err) {
+    logger.error(`Failed to write issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
+/**
  * Update the issue backlog based on the planner's actions:
  * - "defer": add the issue to the backlog (if not already present)
  * - "accept" / "reject": remove the issue from the backlog
