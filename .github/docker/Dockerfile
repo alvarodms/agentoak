@@ -24,6 +24,7 @@ RUN apt-get update -qq && apt-get install -y -qq \
 RUN git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc \
     && cd /tmp/agbcc \
     && ./build.sh \
+    && mkdir -p /tmp/agbcc-staging \
     && ./install.sh /tmp/agbcc-staging \
     && mv /tmp/agbcc-staging/tools/agbcc /opt/agbcc \
     && rm -rf /tmp/agbcc /tmp/agbcc-staging
