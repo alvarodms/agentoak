@@ -30,9 +30,9 @@ export const CYCLE_MODES: Record<CycleMode, CycleModeConfig> = {
     name: "repair",
     label: "Repair Build",
     description:
-      "Fix build errors from previous cycles. Analyze error logs and make corrective changes.",
+      "Fix build errors from UN-REVERTED previous changes still in the source tree. Do NOT use this mode if the previous cycle's changes were reverted — there is nothing to repair.",
     promptAddendum:
-      "This is a repair cycle. Previous changes caused build failures. Your priority is to fix the build. Review the failure patterns in memory, analyze the errors, and make corrections. Try building after each fix.",
+      "This is a repair cycle. Previous changes caused build failures and those changes are still present in the source tree. Your priority is to fix the build. Review the failure patterns in memory, analyze the errors, and make corrections. Try building after each fix. NOTE: If the previous cycle was reverted (changes rolled back), this mode should NOT have been chosen — the broken code no longer exists.",
   },
   refactor: {
     name: "refactor",
