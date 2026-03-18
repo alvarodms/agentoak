@@ -363,3 +363,45 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne[] = {
 - Post-battle: `[MapName]_Text_PostBattle` — shown after battle ends, uses `MSGBOX_DEFAULT`
 
 **Key constraint**: Defeat text (shown inside battle UI) must be short — no more than ~35 chars per line, max 2 lines. Post-battle dialogue has more room.
+
+---
+
+## TM Consumption Mechanic (Cycle 34 Research)
+
+**File**: `pokeemerald/src/party_menu.c`
+
+**Function**: `Task_LearnedMove` (around line 4778)
+
+**Current code that consumes TMs**:
+```c
+if (item < ITEM_HM01)
+    RemoveBagItem(item, 1);
+```
+
+**To make TMs reusable**: Delete these 2 lines entirely.
+
+**How it works**: `ITEM_HM01` is the item ID boundary between TMs and HMs. TMs have lower IDs (< ITEM_HM01) and get consumed. HMs have higher IDs and are never consumed by this path. Removing the block makes TMs permanent — HM behavior unchanged.
+
+**Coverage**: This handles BOTH the direct-learn path AND the replace-move path (Task_PartyMenuReplaceMove ultimately calls Task_LearnedMove).
+
+**Risk**: Very low — 2-line deletion, no cascading effects. Planned for Cycle 35.
+
+---
+
+## Auto-Run (Always Running) Mechanic (Cycle 34 Research)
+
+**File**: `pokeemerald/src/field_player_avatar.c`
+
+**Approximate location**: Line 658, inside the running condition.
+
+**Current condition**:
+```c
+if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
+ && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
+```
+
+**To enable auto-run**: Remove `(heldKeys & B_BUTTON) &&` from the condition.
+
+**Result**: Player always runs (when FLAG_SYS_B_DASH is set, after receiving running shoes from Mom) unless underwater or on restricted tiles.
+
+**Risk**: Low technically. Flagged as post-v1.0 QoL — changes core movement feel permanently and community feedback should guide this decision.

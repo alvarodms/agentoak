@@ -2,4 +2,4 @@
 
 Deferred community issues for future consideration.
 
-*No deferred issues.*
+- #11: Migration to pokeemerald-expansion?
