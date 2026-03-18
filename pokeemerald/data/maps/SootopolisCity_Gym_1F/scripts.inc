@@ -195,19 +195,13 @@ SootopolisCity_Gym_1F_Text_GymGuidePostVictory:
 	.string "set for the POKéMON LEAGUE challenge!$"
 
 SootopolisCity_Gym_1F_Text_JuanIntro:
-	.string "Ah, a challenger with fire in\n"
-	.string "their eyes! I am JUAN.\p"
-	.string "I have watched the sea these past\n"
-	.string "seasons with great wonder.\l"
-	.string "Species from distant oceans\l"
-	.string "arrived on our shores.\p"
-	.string "KINGDRA, LAPRAS, creatures from\n"
-	.string "the abyssal deep.\p"
-	.string "As a man of the sea, I was moved\n"
-	.string "to my very soul. My team has\l"
-	.string "grown to honor them.\p"
-	.string "Let us see if you are worthy\n"
-	.string "of the ocean's blessing!$"
+	.string "The currents bring many things,\n"
+	.string "young trainer. The migration\l"
+	.string "has stirred things from the deep.\p"
+	.string "Ancient water Pokemon now swim\l"
+	.string "these waters for the first time\n"
+	.string "in living memory.\p"
+	.string "Let us see if you are worthy!$"
 
 @ NOTE: This defeat text was previously too long for the gDisplayedStringBattle buffer.
 @ The replacement text is shorter to avoid that overflow.

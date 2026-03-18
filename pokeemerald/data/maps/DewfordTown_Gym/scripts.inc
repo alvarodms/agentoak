@@ -380,11 +380,11 @@ DewfordTown_Gym_Text_CristianPostBattle:
 	.string "Go after that BADGE!$"
 
 DewfordTown_Gym_Text_BrawlyIntro:
-	.string "The migrant POKéMON changed everything.\n"
-	.string "I used to study Fighting moves.\l"
-	.string "Now I study power itself.\p"
-	.string "Come -- show me what kind of power\n"
-	.string "you've brought into this world!$"
+	.string "The migration brought fierce\n"
+	.string "fighters right to Dewford's shores!\p"
+	.string "Machamp, Hitmonchan on our beach...\l"
+	.string "I sparred with every single one.\n"
+	.string "My fists have never hit harder!$"
 
 DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "Whoah, wow! You made a much bigger\n"

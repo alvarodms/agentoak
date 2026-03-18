@@ -546,17 +546,12 @@ MossdeepCity_Gym_Text_NicholasPostBattle:
 	.string "invincible POKéMON power next.$"
 
 MossdeepCity_Gym_Text_TateAndLizaIntro:
-	.string "We sensed your approach from\n"
-	.string "far away! Did you feel us\l"
-	.string "watching?\p"
-	.string "The migration shook the psychic\n"
-	.string "realm. Strange auras, displaced\l"
-	.string "spirits, POKéMON calling out\l"
-	.string "from places they'd never been.\p"
-	.string "Our minds grew stronger sorting\n"
-	.string "through all of it.\p"
-	.string "Twin minds, one challenger.\n"
-	.string "Begin!$"
+	.string "The migration sends ripples through\n"
+	.string "every Pokemon mind in Hoenn.\l"
+	.string "We sense them all -- every one.\p"
+	.string "Our twin bond grows stronger with\l"
+	.string "each new presence that arrives.\n"
+	.string "Can your bond match what we share?$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
 	.string "TATE: You're stronger than\n"

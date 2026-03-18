@@ -232,11 +232,12 @@ FortreeCity_Gym_Text_DariusPostBattle:
 	.string "WINONA's POKéMON are all business.$"
 
 FortreeCity_Gym_Text_WinonaIntro:
-	.string "The skies above HOENN have changed.\n"
-	.string "Migrant species ride the thermals now\l"
-	.string "alongside my POKéMON.\p"
-	.string "They've made us stronger. Faster.\n"
-	.string "Let's see if you can keep up -- up here!$"
+	.string "Three Dragonite circling Mt. Pyre.\n"
+	.string "The migration transforms our skies\l"
+	.string "every single day, young trainer.\p"
+	.string "My team has soared on new winds.\l"
+	.string "Can you rise to meet them?\n"
+	.string "The sky is my battlefield!$"
 
 FortreeCity_Gym_Text_WinonaDefeat:
 	.string "Never before have I seen a TRAINER\n"

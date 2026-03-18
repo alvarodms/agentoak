@@ -1253,11 +1253,12 @@ PetalburgCity_Gym_Text_YouHaveGottenStronger:
 	.string "that you've earned.$"
 
 PetalburgCity_Gym_Text_NormanIntro:
-	.string "Even Normal-types have had to adapt\n"
-	.string "to this new HOENN. Strength isn't\l"
-	.string "about your type -- it's about will.\p"
-	.string "You've grown strong out there.\n"
-	.string "Now face a trainer who's done the same.$"
+	.string "{PLAYER}... I've been watching\n"
+	.string "this migration as a Gym Leader.\l"
+	.string "Hoenn's routes are unrecognizable.\p"
+	.string "But a true trainer doesn't fear\n"
+	.string "change -- they adapt to it.\l"
+	.string "Let me see if you have done that.$"
 
 PetalburgCity_Gym_Text_NormanDefeat:
 	.string "…\p"
