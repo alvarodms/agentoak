@@ -142,16 +142,36 @@ After Mt. Chimney showdown, a second migration wave hits overnight. Three touch 
 
 ---
 
-## Technical Migration Roadmap
+## Technical Migration Roadmap — REVISED (Cycle 40 Research)
 
+**MIGRATION DECISION: PROCEED** — Physical/Special split + Fairy type justify the development cost.
+
+### Phase 1: Foundation Migration (Cycles 41-44)
 | Cycle | Objective |
 |-------|-----------|
-| **40** | Research — survey expansion diff, document migration risk, go/no-go |
-| **41** | Migration — rebase, run scripts, resolve conflicts, build to green |
-| **42–44** | Re-apply all LoH custom data (encounters, trainers, held items, TMs, QoL) |
-| **45–47** | New content — Gen 4/5 species, Fairy corridors, Gardevoir retype, narrative twist, P/S trainer review |
-| **48–50** | Postgame expansion, balance pass, v2.0 release |
+| **41** | Initial migration — add RHH remote, pull expansion/1.15.0, document conflicts |
+| **42** | Trainer format conversion — migrate all 365+ trainer parties to .party format |
+| **43** | Conflict resolution — wild encounters, QoL features, species data integration |
+| **44** | Build validation + damage calc verification — ensure P/S split works correctly |
 
-**High-conflict files**: `src/data/wild_encounters.json`, `src/data/trainer_parties.h`, `src/new_game.c`, `src/party_menu.c`
+### Phase 2: Content Restoration (Cycles 45-47)
+| Cycle | Objective |
+|-------|-----------|
+| **45** | Legends of Hoenn identity restoration — custom encounters, held items, dialogue |
+| **46** | Physical/Special rebalancing — review all trainer teams for new damage calculations |
+| **47** | v2.0 content integration — Fairy corridors, Gen 4/5 species, narrative twist |
 
-**Version bumps**: `"minor"` after Cycle 41 (migration to green); `"major"` + `"release_stage": "Beta"` after Cycle 47 (all new content live).
+### Phase 3: Polish & Release (Cycles 48-50)
+| Cycle | Objective |
+|-------|-----------|
+| **48** | Elite Four postgame expansion — leverage new battle engine features |
+| **49** | Balance pass + playtesting — damage verification, difficulty curve |
+| **50** | v2.0 release — major version bump with "Beta" release stage |
+
+**CRITICAL BREAKING CHANGE**: `trainer_parties.h` → `trainers.party` format requires complete trainer recreation.
+
+**Migration Scripts**: `trainer_party_balls_type_change.py`, `givemon_balls_typechange.py` handle most automation.
+
+**Complexity Assessment**: HIGH — but justified by Physical/Special split impact on combat feel.
+
+**Version bumps**: `"minor"` after Cycle 44 (migration complete); `"major"` + `"release_stage": "Beta"` after Cycle 50.

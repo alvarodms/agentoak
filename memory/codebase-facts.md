@@ -27,6 +27,85 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## pokeemerald-expansion Migration Assessment (Cycle 40)
+
+**Current Version**: pokeemerald-expansion v1.15.0 (March 2026)
+
+### Critical Breaking Changes
+
+**1. Trainer Data Format Overhaul**
+- **Old Format**: `src/data/trainer_parties.h` with C struct definitions
+- **New Format**: `src/data/trainers.party` with Pokémon Showdown syntax
+- **Impact**: ALL trainer customizations in Legends of Hoenn become invalid
+- **Migration Scripts**: `trainer_party_balls_type_change.py` handles format conversion
+
+**2. Physical/Special Split Implementation**
+- **Confirmed**: Fully implemented with `.category = DAMAGE_CATEGORY_PHYSICAL/SPECIAL` in move data
+- **Example**: MOVE_CRUNCH is now `DAMAGE_CATEGORY_PHYSICAL` (critical for Tyranitar)
+- **Behavior**: Controlled by `B_UPDATED_MOVE_DATA >= GEN_4` config flags
+- **Impact**: Every move's damage calculation changes; custom trainer teams need complete review
+
+**3. Wild Encounters Format Compatibility**
+- **Assessment**: wild_encounters.json format appears compatible
+- **Structure**: Same JSON schema, encounter rates, species/level fields
+- **Risk Level**: LOW — LoH encounter data should migrate with minimal conflicts
+
+### New Capabilities Available
+
+**1. Fairy Type Support**
+- Full type system integration with modern type chart
+- Species retypes: Gardedevoir → Psychic/Fairy automatic
+- New moves and type interactions available
+
+**2. Gen 4/5 Species Support**
+- Expanded species pool: Garchomp, Lucario, Weavile, etc.
+- Simplified species addition: ~5 files instead of 20+ in vanilla
+- DS-style sprites with 2-frame animations
+
+**3. Modern Battle Engine**
+- All mechanics up to Gen 9: Z-moves, Dynamax, Terastallization
+- Critical capture, updated experience formulas
+- Enhanced AI with expansion-aware calculations
+
+### Migration Tooling Assessment
+
+**Automated Scripts Available (v1.15)**:
+- `givemon_balls_typechange.py` — converts ITEM_* to BALL_* in scripts
+- `trainer_party_balls_type_change.py` — handles trainer .party format
+- `consolidate_easy_chat.py` — easy chat system migration
+- Incremental migration support for version-by-version updates
+
+**Manual Resolution Required**:
+- All custom trainer teams (73 battles × 5 rematches = 365+ party definitions)
+- Custom move assignments and held items
+- Species data integration (164 custom held items)
+- QoL modifications (auto-run, reusable TMs)
+
+### Risk Analysis Summary
+
+**High Complexity Areas**:
+1. Trainer data migration: Complete format overhaul required
+2. Move rebalancing: Physical/Special split changes all damage calculations
+3. Custom species integration: 164 held item assignments need verification
+
+**Medium Complexity Areas**:
+1. Script updates: Ball type conversions handled by automation
+2. Config integration: Expansion's config system vs LoH custom values
+
+**Low Complexity Areas**:
+1. Wild encounter data: JSON format compatibility high
+2. Basic file structure: Core pokeemerald organization preserved
+
+**Time Estimate**: 5-8 cycles minimum (confirmed by expansion documentation)
+
+**Go/No-Go Factors**:
+- **GO**: Physical/Special split + Fairy type = transformative gameplay upgrade
+- **GO**: Trainer .party format enables Showdown team imports
+- **RISK**: Complete trainer data recreation required
+- **RISK**: All damage calculations change — full rebalancing needed
+
+---
+
 ## Gym Leader Pre-Battle Dialogue — Confirmed File Paths (Cycle 36)
 
 **Label pattern**: `[MapName]_Text_[GymLeaderName]Intro` — used in `trainerbattle_single` or via `msgbox` + `trainerbattle_no_intro`
