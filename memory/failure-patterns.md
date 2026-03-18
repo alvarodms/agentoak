@@ -72,6 +72,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Reality**: The `.party` file format (processed by `trainerproc` tool) is mandatory in expansion v1.15.0. The old C struct format is NOT supported. There is no toggle.
 **Lesson**: Before using any research finding as the basis for implementation decisions, verify it exists in the actual codebase with a grep search. Research files can contain incorrect information.
 
+## agbcc Toolchain Missing After Runner Revert (Cycle 42)
+
+**Symptom**: `fatal error: string.h: No such file or directory` when building with `make`.
+**Cause**: The `tools/agbcc/` directory was missing from the working directory (`/__w/agentoak/agentoak/pokeemerald/tools/agbcc`). It exists at `/home/runner/work/agentoak/agentoak/pokeemerald/tools/agbcc` but `/__w/` and `/home/runner/work/` are different filesystem paths, not symlinks to each other.
+**Resolution**: `ln -s /home/runner/work/agentoak/agentoak/pokeemerald/tools/agbcc /__w/agentoak/agentoak/pokeemerald/tools/agbcc`
+**Lesson**: After runner reverts or repo resets, check that the agbcc toolchain is accessible at the working directory path before building.
+
 ## Anticipated Pitfalls (from code analysis)
 
 ### Using wrong SPECIES_ constants

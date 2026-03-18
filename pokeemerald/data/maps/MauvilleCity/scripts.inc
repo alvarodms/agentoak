@@ -670,3 +670,21 @@ MauvilleCity_Text_ExplainTV:
 
 MauvilleCity_Text_BeenCheckingOutTV:
 	.string "Hi, have you been checking out TVs?$"
+
+MauvilleCity_EventScript_SecondWaveScientist::
+	msgbox MauvilleCity_Text_SecondWaveScientist, MSGBOX_NPC
+	end
+
+MauvilleCity_Text_SecondWaveScientist:
+	.string "I set up migration sensors all\n"
+	.string "across central Hoenn.\p"
+	.string "After the Mt. Chimney incident,\n"
+	.string "the readings went haywire.\p"
+	.string "Species density doubled in\n"
+	.string "barely six hours. Doubled!\p"
+	.string "Professor Birch thinks the\n"
+	.string "legendary disturbances are\l"
+	.string "pulling them from other regions.\p"
+	.string "If this keeps up, Hoenn will\n"
+	.string "have more non-native species\l"
+	.string "than native ones.$"

@@ -130,6 +130,16 @@ Before modifying ANY pokeemerald file:
 | `data/maps/SootopolisCity/scripts.inc` | 3 NPCs — late-game flavor | 33 | |
 | `data/maps/EverGrandeCity/scripts.inc` | League entrance NPCs | 33 | |
 
+## NPC Dialogue — Second Wave (v2.0 Narrative)
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `data/maps/Route118/scripts.inc` | Fisherman NPC — second wave fishing observations | 42 | New NPC + map.json entry |
+| `data/maps/Route118/map.json` | Added fisherman object event at (30,10) | 42 | |
+| `data/maps/MauvilleCity/scripts.inc` | Scientist NPC — migration sensor readings | 42 | New NPC added after existing Cycle 29 NPCs |
+| `data/maps/MauvilleCity/map.json` | Added scientist object event at (24,7) | 42 | Near Pokemon Center |
+| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | Phoebe intro extended with second wave spirits | 33, **42** | Wove guardian/second-wave text into Cycle 33 intro |
+
 ## QoL Changes
 
 | File | What Changed | Cycle | Notes |

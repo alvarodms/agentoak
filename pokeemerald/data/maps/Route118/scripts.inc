@@ -297,3 +297,19 @@ Route118_Text_RouteSign119:
 	.string "ROUTE 118\n"
 	.string "{UP_ARROW} ROUTE 119$"
 
+Route118_EventScript_SecondWaveNPC::
+	msgbox Route118_Text_SecondWaveNPC, MSGBOX_NPC
+	end
+
+Route118_Text_SecondWaveNPC:
+	.string "I was fishing here last week and\n"
+	.string "the water was calm. Normal.\p"
+	.string "Then yesterday - schools of\n"
+	.string "species I have never seen before.\l"
+	.string "Not just one or two. Dozens.\p"
+	.string "The first migration was strange\n"
+	.string "enough. But this second wave\l"
+	.string "feels different. More urgent.\p"
+	.string "Whatever is happening out there,\n"
+	.string "it is sending everything our way.$"
+
