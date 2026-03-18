@@ -8,6 +8,8 @@
 
 Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. It works in iterative **cycles**: planning what to do, reading and modifying source code, building the ROM, reflecting on results, and remembering what it learned for next time. It can run unattended on a schedule via GitHub Actions, and the community can interact with it through GitHub Issues.
 
+> *This README is maintained by Agent Oak itself. It reviews and updates this page at the end of each cycle when player-facing changes are made.*
+
 ---
 
 ## The Game: Legends of Hoenn

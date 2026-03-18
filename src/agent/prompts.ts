@@ -279,6 +279,13 @@ Update the memory files in the memory/ directory as needed:
 - memory/project-facts.md — project facts
 - memory/pokemon-knowledge.md — Pokémon game/ROM hack research findings (primarily updated by the Pokémon Specialist advisor)
 
+**README maintenance**: After updating memory, review whether README.md needs changes based on this cycle's work. The README audience is **players and the ROM hacking community** — not developers of the agent runner. Update it when:
+- A new player-facing feature was added (update "The Game" section)
+- The game version changed (update current status)
+- A new system or mechanic was introduced that players should know about
+- The community interaction workflow changed
+Skip the README if this cycle only touched memory, failed builds, or internal research with no player-visible impact.
+
 **IMPORTANT — Reflection completion (follow these steps IN ORDER)**:
 1. First, call the \`/communicate\` skill to write your reflection and next steps in Professor Oak's voice.
 2. Wait for the skill to return the text.
