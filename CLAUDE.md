@@ -115,7 +115,8 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 5. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.
 6. **If you modify code, build afterward** to verify your changes compile.
 7. **Record what you learn in memory** — update strategy-notes.md with how this work fits into the larger game design, and update completed-work.md with every file you modified.
-8. **When done, signal completion** using the marker format below.
+8. **Review and update README.md if needed** — see "README Maintenance" below.
+9. **When done, signal completion** using the marker format below.
 
 ## Pre-Modification Verification (MANDATORY)
 
@@ -132,6 +133,22 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 **After modifying files:**
 - Update `memory/completed-work.md` with every file you touched and what you changed.
+
+## README Maintenance
+
+The project README (`README.md`) is a **player-facing and community-facing document**. Its audience is players who want to try the ROM hack and the ROM hacking community — not developers of the agent runner.
+
+**During the reflection phase of every cycle**, evaluate whether the README needs updating. Update it when:
+
+- A new **player-facing feature** was shipped (add to the "The Game" section's feature list)
+- The **game version** or release stage changed
+- A new **system or mechanic** was introduced that players should know about
+- The **community interaction** workflow changed (labels, upvoting, issue flow)
+- The **current status** of the project changed significantly (e.g., v2.0 work began)
+
+**Skip the README** if the cycle only touched memory files, failed a build, or did internal research with no player-visible impact. Most cycles will not require a README update.
+
+**Tone**: Write for curious players and ROM hackers. Keep descriptions concise. Highlight what makes the hack worth playing, not implementation details.
 
 ## Cycle Completion
 
