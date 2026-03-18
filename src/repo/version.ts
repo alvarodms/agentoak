@@ -18,6 +18,11 @@ export interface GameVersion {
   cycle: number;
   /** ISO timestamp of the last successful build */
   builtAt: string;
+  /**
+   * Optional release stage label declared by the agent (e.g. "Alpha", "Beta", "Stable").
+   * When set, this overrides the auto-computed stage in release names.
+   */
+  releaseStage?: string;
 }
 
 /** Default initial version for a fresh project */
@@ -65,14 +70,15 @@ export function recordSuccessfulBuild(cycleNumber: number): GameVersion {
 }
 
 /**
- * Apply a major or minor version bump declared by the agent.
+ * Apply a major or minor version bump declared by the agent, and optionally
+ * set a release stage label at the same time.
  * - "major": increment major, reset minor to 0.
  * - "minor": increment minor, keep major unchanged.
  *
  * Call this after recordSuccessfulBuild, once the agent's CYCLE_COMPLETE
  * marker has been parsed and a version bump has been declared.
  */
-export function applyVersionBump(bump: "major" | "minor"): GameVersion {
+export function applyVersionBump(bump: "major" | "minor", releaseStage?: string): GameVersion {
   const version = loadVersion();
 
   if (bump === "major") {
@@ -82,9 +88,28 @@ export function applyVersionBump(bump: "major" | "minor"): GameVersion {
     version.minor += 1;
   }
 
+  if (releaseStage) {
+    version.releaseStage = releaseStage;
+  }
+
   fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
   fs.writeFileSync(VERSION_FILE, JSON.stringify(version, null, 2) + "\n", "utf-8");
 
-  logger.info(`Version bump (${bump}): ${formatVersion(version)}`);
+  logger.info(`Version bump (${bump}): ${formatVersion(version)}${releaseStage ? ` [${releaseStage}]` : ""}`);
+  return version;
+}
+
+/**
+ * Set the release stage label without changing the version numbers.
+ * Use when the agent declares a stage name but no numeric bump.
+ */
+export function setReleaseStage(releaseStage: string): GameVersion {
+  const version = loadVersion();
+  version.releaseStage = releaseStage;
+
+  fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
+  fs.writeFileSync(VERSION_FILE, JSON.stringify(version, null, 2) + "\n", "utf-8");
+
+  logger.info(`Release stage set to: ${releaseStage}`);
   return version;
 }
