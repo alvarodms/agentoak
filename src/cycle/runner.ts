@@ -26,7 +26,7 @@ import {
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, postIssueClosingComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
@@ -99,6 +99,17 @@ async function runPlanningPhase(
   if (newIssueActions.length > 0) {
     log.info(`  Executing ${newIssueActions.length} issue action(s)...`);
     await executeIssueActions(newIssueActions);
+  }
+
+  // Post comments on backlog issues being accepted this cycle.
+  // These were already reviewed in a prior cycle (so executeIssueActions was skipped above),
+  // but now that the agent is picking them up we should post the acceptance/in-progress comment.
+  const backlogAcceptActions = plan.issueActions.filter(
+    (a) => !communityIssueNumbers.has(a.issueNumber) && a.action === "accept",
+  );
+  if (backlogAcceptActions.length > 0) {
+    log.info(`  Posting comments on ${backlogAcceptActions.length} backlog issue(s) being accepted...`);
+    await executeIssueActions(backlogAcceptActions);
   }
 
   // Update the deferred-issue backlog based on this cycle's actions
@@ -533,11 +544,26 @@ export async function runCycle(): Promise<void> {
       process.exitCode = 1;
     }
 
-    // Close accepted issues after successful commit (not reverted)
+    // Close accepted issues after successful commit (not reverted).
+    // Partial issues (multi-cycle work) stay open and remain in the backlog.
+    // Always post a closing comment before closing so the community knows what was done.
     if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
-      log.info(`  Closing ${acceptedIssueNumbers.length} accepted issue(s)...`);
-      for (const issueNumber of acceptedIssueNumbers) {
-        await closeIssue(issueNumber, "completed");
+      const partialNumbers = new Set(
+        plan.issueActions
+          .filter((a) => a.action === "accept" && a.partial)
+          .map((a) => a.issueNumber),
+      );
+      const closingNumbers = acceptedIssueNumbers.filter((n) => !partialNumbers.has(n));
+      if (closingNumbers.length > 0) {
+        log.info(`  Closing ${closingNumbers.length} completed issue(s)...`);
+        const closingSummary = reflection.cycleSummary || plan.objective;
+        for (const issueNumber of closingNumbers) {
+          await postIssueClosingComment(issueNumber, closingSummary);
+          await closeIssue(issueNumber, "completed");
+        }
+      }
+      if (partialNumbers.size > 0) {
+        log.info(`  Kept ${partialNumbers.size} partial issue(s) open for future cycles.`);
       }
     }
 
