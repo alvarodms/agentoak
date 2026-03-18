@@ -10,8 +10,25 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 ---
 
+## The Game: Legends of Hoenn
+
+Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining where a migration event has disrupted Hoenn's ecosystem. Rare Pokémon from across the world have arrived, gym leaders have adapted, and the player arrives at the perfect moment.
+
+**Key features (v1.0):**
+
+- **Pseudo-legendary starters**: Larvitar, Bagon, and Dratini replace the originals
+- **73 routes + 34 dungeons** redesigned with thematic encounter tables — every catch is worth it
+- **Overhauled trainers**: all 8 gym leaders, Elite Four, Champion, rival battles, and villain bosses carry competitive teams
+- **Migration narrative**: an NPC dialogue arc from Birch's introduction through Wallace's climax weaves the story into the world
+- **Quality-of-life**: reusable TMs, halved TM prices, Earthquake available pre-Gym 4, auto-run from step one
+
+v1.0 was released after 38 cycles. The agent is now designing v2.0, which targets the physical/special split, Fairy type, and new species from later generations.
+
+---
+
 ## Table of Contents
 
+- [The Game: Legends of Hoenn](#the-game-legends-of-hoenn)
 - [How It Works](#how-it-works)
 - [Architecture](#architecture)
 - [The Cycle Pipeline](#the-cycle-pipeline)
@@ -70,11 +87,12 @@ Each iteration of this loop is called a **cycle**. The agent is not required to 
 
 | Component | Tech | Role |
 |---|---|---|
-| Agent Engine | Claude (via `claude` CLI) | AI reasoning, code reading/writing |
+| Agent Engine | Claude (via Claude Code CLI) | AI reasoning, code reading/writing |
 | Runner | TypeScript, Node.js 22+ | Orchestrates phases, manages state |
 | Build System | GNU Make + agbcc | Compiles the GBA ROM |
+| MCP | `@modelcontextprotocol/sdk` | Tool protocol integration |
 | Git | simple-git | Commits changes, reverts on failure |
-| GitHub API | Octokit | Community issue triage |
+| GitHub API | Octokit | Community issue triage, releases |
 | Logging | Winston | Console + rotating file logs |
 
 ---
@@ -83,20 +101,31 @@ Each iteration of this loop is called a **cycle**. The agent is not required to 
 
 Each cycle runs through **5 sequential phases**, each with its own isolated agent context:
 
-### Phase 1 — Planning
+### Phase 1 — Planning (Team-Based)
 
-A separate Claude call reviews loaded memory, recent journal summaries, and any new community issues. It outputs a structured `CyclePlan` with:
+Planning uses a **multi-perspective advisory system**. Four specialized advisors run in parallel, each reviewing memory and the current project state from a different angle:
+
+| Role | Focus |
+|---|---|
+| **Game Designer** | Player experience, difficulty curve, content gaps, creative identity |
+| **Technical Lead** | Feasibility, build risk, known failure patterns, technical debt |
+| **Creative Visionary** | Ambition level — pushes against safe/incremental choices |
+| **Pokémon Specialist** | ROM hack best practices, community expectations (can research the web) |
+
+Each advisor produces an independent memo. A **Producer** then synthesizes all four memos into a final `CyclePlan`:
 
 - **Mode** — what kind of work to do (see [Cycle Modes](#cycle-modes))
 - **Objective** — a concrete goal for this cycle
 - **Reasoning** — why this is the right thing to do now
 - **Issue actions** — how to respond to any pending community issues
 
+The Producer can agree or disagree with any advisor — the memos are advice, not votes. For simple situations (early cycles, repair after build failure), the system falls back to a single planner.
+
 ### Phase 2 — Implementation
 
 A fresh agent context receives the objective and executes it. This is where actual code exploration, file editing, and research happens. The agent is constrained to stay focused on the planned objective.
 
-- Budget: up to 50 tool calls (configurable)
+- Budget: up to 100 tool calls (configurable via `MAX_TOOL_CALLS_PER_CYCLE`)
 
 ### Phase 3 — Build Verification
 
@@ -141,16 +170,20 @@ For early cycles, the agent is biased toward **research** and **planning** to bu
 
 ## Memory System
 
-Agent Oak maintains **4 persistent markdown files** in `memory/`. These are its most important resource — they allow the agent to build on previous work instead of starting from scratch each cycle.
+Agent Oak maintains **persistent markdown files** in `memory/`. These are its most important resource — they allow the agent to build on previous work instead of starting from scratch each cycle.
 
 | File | What It Stores |
 |---|---|
+| `completed-work.md` | Authoritative registry of all modified files, organized by system — checked first every cycle to prevent duplicate work |
 | `codebase-facts.md` | How the game works: file paths, function names, data structures, system behaviors |
 | `failure-patterns.md` | Build errors encountered, what caused them, and how they were resolved |
-| `strategy-notes.md` | Ideas for the ROM hack, implementation priorities, risk assessments |
+| `strategy-notes.md` | Game design vision, implementation roadmap, technical reference |
 | `project-facts.md` | Build system details, tool versions, paths, configuration notes |
+| `pokemon-knowledge.md` | Index linking to per-topic research files in `pokemon-knowledge/` (Fairy type, physical/special split, etc.) |
+| `cycle-mode-history.md` | Tracks which modes were used in which cycles |
+| `issue-backlog.md` | Community issues deferred to future cycles |
 
-Memory is loaded at the start of every cycle and made available to the planner and implementation agents. The reflection agent (Phase 4) updates these files based on what was learned.
+Memory is loaded at the start of every cycle and made available to the planner and implementation agents. The reflection agent (Phase 4) updates these files based on what was learned. Memory files have size budgets and are periodically pruned to stay concise and current.
 
 ---
 
@@ -176,8 +209,9 @@ The community can interact with Agent Oak through **GitHub Issues**. The planner
 ### How it works
 
 1. **Open an issue** with a label like `suggestion`, `idea`, `trainer-tip`, or `bug-report`
-2. At the next cycle, the agent reads your issue and decides what to do
-3. The agent posts a response comment and applies a label:
+2. **Upvote issues you care about** — react with 👍 on any issue to signal community interest. Issues are sorted by upvote count, so popular suggestions surface first in the planner's queue (up to 10 per cycle)
+3. At the next cycle, the agent reads your issue and decides what to do
+4. The agent posts a response comment and applies a label:
 
 | Label | Meaning |
 |---|---|
@@ -208,7 +242,11 @@ Supporting tools (built from source):
 - `mapjson` — converts JSON map data to assembly
 - `gbafix` — fixes ROM header and checksum
 
-Build logs are saved to `artifacts/build-logs/cycle-NNNN.log`. A version counter in `artifacts/version.json` increments on each successful build.
+Build logs are saved to `artifacts/build-logs/cycle-NNNN.log`. The current cycle number is tracked in `artifacts/cycle.json`.
+
+### Releases
+
+Each successful build cycle produces a GitHub release with semantic versioning (`major.minor.patch`). The patch component is the cycle number. The agent can bump major/minor versions at milestones, and the release stage (Alpha, Beta, Demo, etc.) appears in the release title. Releases are created automatically by the runner via `src/release/`.
 
 ---
 
