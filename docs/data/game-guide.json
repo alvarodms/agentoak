@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-16T05:50:37.771Z",
+  "generatedAt": "2026-03-18T04:18:29.489Z",
   "starters": [
     {
       "species": "Larvitar",
@@ -2342,86 +2342,86 @@
       "mapConst": "MAP_PETALBURG_WOODS",
       "land": [
         {
-          "species": "Poochyena",
-          "minLevel": 5,
-          "maxLevel": 5,
+          "species": "Gastly",
+          "minLevel": 10,
+          "maxLevel": 12,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Wurmple",
-          "minLevel": 5,
-          "maxLevel": 5,
+          "species": "Haunter",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 20,
           "rarity": "Common"
         },
         {
+          "species": "Heracross",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Scyther",
+          "minLevel": 12,
+          "maxLevel": 15,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Abra",
+          "minLevel": 10,
+          "maxLevel": 13,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Kadabra",
+          "minLevel": 13,
+          "maxLevel": 16,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
           "species": "Shroomish",
-          "minLevel": 5,
-          "maxLevel": 5,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Poochyena",
-          "minLevel": 6,
-          "maxLevel": 6,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Silcoon",
-          "minLevel": 5,
-          "maxLevel": 5,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Cascoon",
-          "minLevel": 5,
-          "maxLevel": 5,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Wurmple",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "minLevel": 10,
+          "maxLevel": 13,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Shroomish",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "species": "Breloom",
+          "minLevel": 13,
+          "maxLevel": 16,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Taillow",
-          "minLevel": 5,
-          "maxLevel": 5,
+          "species": "Misdreavus",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Slakoth",
-          "minLevel": 5,
-          "maxLevel": 5,
+          "species": "Sableye",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Taillow",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "species": "Larvitar",
+          "minLevel": 10,
+          "maxLevel": 13,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Slakoth",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "species": "Bagon",
+          "minLevel": 10,
+          "maxLevel": 13,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -2522,86 +2522,86 @@
       "mapConst": "MAP_GRANITE_CAVE_1F",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 7,
-          "maxLevel": 7,
+          "species": "Aron",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 8,
-          "maxLevel": 8,
+          "species": "Zubat",
+          "minLevel": 10,
+          "maxLevel": 13,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 7,
-          "maxLevel": 7,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 8,
-          "maxLevel": 8,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Makuhita",
-          "minLevel": 9,
-          "maxLevel": 9,
+          "species": "Sableye",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
           "species": "Abra",
-          "minLevel": 8,
-          "maxLevel": 8,
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Graveler",
+          "minLevel": 14,
+          "maxLevel": 17,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Geodude",
+          "minLevel": 12,
+          "maxLevel": 15,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Machop",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "species": "Kadabra",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Geodude",
-          "minLevel": 7,
-          "maxLevel": 7,
+          "species": "Snorunt",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Geodude",
-          "minLevel": 8,
-          "maxLevel": 8,
+          "species": "Sneasel",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Geodude",
-          "minLevel": 6,
-          "maxLevel": 6,
+          "species": "Larvitar",
+          "minLevel": 13,
+          "maxLevel": 16,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Geodude",
-          "minLevel": 9,
-          "maxLevel": 9,
+          "species": "Bagon",
+          "minLevel": 13,
+          "maxLevel": 16,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -2612,86 +2612,86 @@
       "mapConst": "MAP_GRANITE_CAVE_B1F",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 9,
-          "maxLevel": 9,
+          "species": "Aron",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Aron",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Zubat",
+          "minLevel": 12,
+          "maxLevel": 15,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Aron",
-          "minLevel": 9,
-          "maxLevel": 9,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Aron",
-          "minLevel": 11,
-          "maxLevel": 11,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Sableye",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
           "species": "Abra",
-          "minLevel": 9,
-          "maxLevel": 9,
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Lairon",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Geodude",
+          "minLevel": 14,
+          "maxLevel": 17,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Machop",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Makuhita",
-          "minLevel": 11,
-          "maxLevel": 11,
+          "species": "Alakazam",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Sneasel",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Misdreavus",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 9,
-          "maxLevel": 9,
+          "species": "Larvitar",
+          "minLevel": 15,
+          "maxLevel": 18,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 11,
-          "maxLevel": 11,
+          "species": "Bagon",
+          "minLevel": 15,
+          "maxLevel": 18,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -3130,86 +3130,86 @@
       "mapConst": "MAP_GRANITE_CAVE_B2F",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Aron",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Aron",
-          "minLevel": 11,
-          "maxLevel": 11,
+          "species": "Zubat",
+          "minLevel": 14,
+          "maxLevel": 17,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Aron",
-          "minLevel": 10,
-          "maxLevel": 10,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 11,
-          "maxLevel": 11,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Aron",
-          "minLevel": 12,
-          "maxLevel": 12,
+          "species": "Sableye",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
           "species": "Abra",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Sableye",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Lairon",
+          "minLevel": 18,
+          "maxLevel": 21,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Geodude",
+          "minLevel": 16,
+          "maxLevel": 19,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Machop",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 11,
-          "maxLevel": 11,
+          "species": "Alakazam",
+          "minLevel": 18,
+          "maxLevel": 21,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 12,
-          "maxLevel": 12,
+          "species": "Sneasel",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Misdreavus",
+          "minLevel": 16,
+          "maxLevel": 19,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 12,
-          "maxLevel": 12,
+          "species": "Larvitar",
+          "minLevel": 17,
+          "maxLevel": 20,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Sableye",
-          "minLevel": 10,
-          "maxLevel": 10,
+          "species": "Bagon",
+          "minLevel": 17,
+          "maxLevel": 20,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -8520,86 +8520,86 @@
       "mapConst": "MAP_CAVE_OF_ORIGIN_ENTRANCE",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 30,
-          "maxLevel": 30,
+          "species": "Dratini",
+          "minLevel": 35,
+          "maxLevel": 40,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Zubat",
-          "minLevel": 31,
-          "maxLevel": 31,
+          "species": "Dragonair",
+          "minLevel": 38,
+          "maxLevel": 43,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Zubat",
-          "minLevel": 32,
-          "maxLevel": 32,
+          "species": "Bagon",
+          "minLevel": 35,
+          "maxLevel": 40,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Zubat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Shelgon",
+          "minLevel": 38,
+          "maxLevel": 43,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Zubat",
-          "minLevel": 28,
-          "maxLevel": 28,
+          "species": "Larvitar",
+          "minLevel": 35,
+          "maxLevel": 40,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Zubat",
-          "minLevel": 29,
-          "maxLevel": 29,
+          "species": "Pupitar",
+          "minLevel": 38,
+          "maxLevel": 43,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Zubat",
-          "minLevel": 34,
-          "maxLevel": 34,
+          "species": "Absol",
+          "minLevel": 37,
+          "maxLevel": 42,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Zubat",
-          "minLevel": 35,
-          "maxLevel": 35,
+          "species": "Misdreavus",
+          "minLevel": 36,
+          "maxLevel": 41,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 34,
-          "maxLevel": 34,
+          "species": "Gengar",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 35,
-          "maxLevel": 35,
+          "species": "Dusclops",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Salamence",
+          "minLevel": 42,
+          "maxLevel": 47,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 36,
-          "maxLevel": 36,
+          "species": "Dragonite",
+          "minLevel": 43,
+          "maxLevel": 48,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -8610,86 +8610,86 @@
       "mapConst": "MAP_CAVE_OF_ORIGIN_1F",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 31,
-          "maxLevel": 31,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 33,
-          "maxLevel": 33,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
+          "species": "Dratini",
           "minLevel": 35,
-          "maxLevel": 35,
+          "maxLevel": 40,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Dragonair",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Bagon",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Shelgon",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Larvitar",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Pupitar",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 37,
+          "maxLevel": 42,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 36,
+          "maxLevel": 41,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Dusclops",
+          "minLevel": 40,
+          "maxLevel": 45,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 42,
+          "maxLevel": 47,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 36,
-          "maxLevel": 36,
+          "species": "Dragonite",
+          "minLevel": 43,
+          "maxLevel": 48,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -8700,86 +8700,86 @@
       "mapConst": "MAP_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP1",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 31,
-          "maxLevel": 31,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 33,
-          "maxLevel": 33,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
+          "species": "Dratini",
           "minLevel": 35,
-          "maxLevel": 35,
+          "maxLevel": 40,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Dragonair",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Bagon",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Shelgon",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Larvitar",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Pupitar",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 37,
+          "maxLevel": 42,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 36,
+          "maxLevel": 41,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Dusclops",
+          "minLevel": 40,
+          "maxLevel": 45,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 42,
+          "maxLevel": 47,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 36,
-          "maxLevel": 36,
+          "species": "Dragonite",
+          "minLevel": 43,
+          "maxLevel": 48,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -8790,86 +8790,86 @@
       "mapConst": "MAP_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP2",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 31,
-          "maxLevel": 31,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 33,
-          "maxLevel": 33,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
+          "species": "Dratini",
           "minLevel": 35,
-          "maxLevel": 35,
+          "maxLevel": 40,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Dragonair",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Bagon",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Shelgon",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Larvitar",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Pupitar",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 37,
+          "maxLevel": 42,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 36,
+          "maxLevel": 41,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Dusclops",
+          "minLevel": 40,
+          "maxLevel": 45,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 42,
+          "maxLevel": 47,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 36,
-          "maxLevel": 36,
+          "species": "Dragonite",
+          "minLevel": 43,
+          "maxLevel": 48,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -8880,86 +8880,86 @@
       "mapConst": "MAP_CAVE_OF_ORIGIN_UNUSED_RUBY_SAPPHIRE_MAP3",
       "land": [
         {
-          "species": "Zubat",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 31,
-          "maxLevel": 31,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 30,
-          "maxLevel": 30,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 32,
-          "maxLevel": 32,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Sableye",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 33,
-          "maxLevel": 33,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Zubat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
-          "minLevel": 34,
-          "maxLevel": 34,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Golbat",
+          "species": "Dratini",
           "minLevel": 35,
-          "maxLevel": 35,
+          "maxLevel": 40,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Dragonair",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Bagon",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Shelgon",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Larvitar",
+          "minLevel": 35,
+          "maxLevel": 40,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Pupitar",
+          "minLevel": 38,
+          "maxLevel": 43,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 37,
+          "maxLevel": 42,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 36,
+          "maxLevel": 41,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 40,
+          "maxLevel": 45,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 33,
-          "maxLevel": 33,
+          "species": "Dusclops",
+          "minLevel": 40,
+          "maxLevel": 45,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 42,
+          "maxLevel": 47,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Golbat",
-          "minLevel": 36,
-          "maxLevel": 36,
+          "species": "Dragonite",
+          "minLevel": 43,
+          "maxLevel": 48,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -13981,85 +13981,85 @@
       "land": [
         {
           "species": "Smeargle",
-          "minLevel": 40,
-          "maxLevel": 40,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 41,
-          "maxLevel": 41,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 42,
-          "maxLevel": 42,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 43,
-          "maxLevel": 43,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 44,
-          "maxLevel": 44,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 45,
-          "maxLevel": 45,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 46,
-          "maxLevel": 46,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 47,
-          "maxLevel": 47,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 48,
-          "maxLevel": 48,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 49,
-          "maxLevel": 49,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
           "minLevel": 50,
-          "maxLevel": 50,
+          "maxLevel": 58,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Smeargle",
+          "minLevel": 52,
+          "maxLevel": 60,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Sneasel",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Houndoom",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Alakazam",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Dragonite",
+          "minLevel": 55,
+          "maxLevel": 60,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 55,
+          "maxLevel": 60,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Metagross",
+          "minLevel": 55,
+          "maxLevel": 60,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 50,
-          "maxLevel": 50,
+          "species": "Tyranitar",
+          "minLevel": 55,
+          "maxLevel": 60,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -14071,85 +14071,85 @@
       "land": [
         {
           "species": "Smeargle",
-          "minLevel": 40,
-          "maxLevel": 40,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 41,
-          "maxLevel": 41,
-          "rate": 20,
-          "rarity": "Common"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 42,
-          "maxLevel": 42,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 43,
-          "maxLevel": 43,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 44,
-          "maxLevel": 44,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 45,
-          "maxLevel": 45,
-          "rate": 10,
-          "rarity": "Uncommon"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 46,
-          "maxLevel": 46,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 47,
-          "maxLevel": 47,
-          "rate": 5,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 48,
-          "maxLevel": 48,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
-          "minLevel": 49,
-          "maxLevel": 49,
-          "rate": 4,
-          "rarity": "Rare"
-        },
-        {
-          "species": "Smeargle",
           "minLevel": 50,
-          "maxLevel": 50,
+          "maxLevel": 58,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Smeargle",
+          "minLevel": 52,
+          "maxLevel": 60,
+          "rate": 20,
+          "rarity": "Common"
+        },
+        {
+          "species": "Absol",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Sneasel",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Houndoom",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Alakazam",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 10,
+          "rarity": "Uncommon"
+        },
+        {
+          "species": "Gengar",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Misdreavus",
+          "minLevel": 52,
+          "maxLevel": 57,
+          "rate": 5,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Dragonite",
+          "minLevel": 55,
+          "maxLevel": 60,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Salamence",
+          "minLevel": 55,
+          "maxLevel": 60,
+          "rate": 4,
+          "rarity": "Rare"
+        },
+        {
+          "species": "Metagross",
+          "minLevel": 55,
+          "maxLevel": 60,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 50,
-          "maxLevel": 50,
+          "species": "Tyranitar",
+          "minLevel": 55,
+          "maxLevel": 60,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -14160,86 +14160,86 @@
       "mapConst": "MAP_ALTERING_CAVE",
       "land": [
         {
-          "species": "Smeargle",
-          "minLevel": 22,
-          "maxLevel": 22,
+          "species": "Larvitar",
+          "minLevel": 40,
+          "maxLevel": 50,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 24,
-          "maxLevel": 24,
+          "species": "Bagon",
+          "minLevel": 40,
+          "maxLevel": 50,
           "rate": 20,
           "rarity": "Common"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 20,
-          "maxLevel": 20,
+          "species": "Dratini",
+          "minLevel": 40,
+          "maxLevel": 50,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 26,
-          "maxLevel": 26,
+          "species": "Dragonair",
+          "minLevel": 42,
+          "maxLevel": 52,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 22,
-          "maxLevel": 22,
+          "species": "Beldum",
+          "minLevel": 40,
+          "maxLevel": 50,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 24,
-          "maxLevel": 24,
+          "species": "Metang",
+          "minLevel": 42,
+          "maxLevel": 52,
           "rate": 10,
           "rarity": "Uncommon"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 28,
-          "maxLevel": 28,
+          "species": "Absol",
+          "minLevel": 42,
+          "maxLevel": 52,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 18,
-          "maxLevel": 18,
+          "species": "Sneasel",
+          "minLevel": 42,
+          "maxLevel": 52,
           "rate": 5,
           "rarity": "Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 20,
-          "maxLevel": 20,
+          "species": "Salamence",
+          "minLevel": 45,
+          "maxLevel": 55,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 26,
-          "maxLevel": 26,
+          "species": "Metagross",
+          "minLevel": 45,
+          "maxLevel": 55,
           "rate": 4,
           "rarity": "Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 20,
-          "maxLevel": 20,
+          "species": "Dragonite",
+          "minLevel": 48,
+          "maxLevel": 58,
           "rate": 1,
           "rarity": "Ultra-Rare"
         },
         {
-          "species": "Smeargle",
-          "minLevel": 26,
-          "maxLevel": 26,
+          "species": "Tyranitar",
+          "minLevel": 48,
+          "maxLevel": 58,
           "rate": 1,
           "rarity": "Ultra-Rare"
         }
@@ -14351,10 +14351,22 @@
           "iv": 100,
           "heldItem": "Choice Band",
           "moves": [
-            "Wing Attack",
-            "Rock Throw",
-            "Bite",
-            "Scary Face"
+            {
+              "name": "Wing Attack",
+              "type": "Flying"
+            },
+            {
+              "name": "Rock Throw",
+              "type": "Rock"
+            },
+            {
+              "name": "Bite",
+              "type": "Dark"
+            },
+            {
+              "name": "Scary Face",
+              "type": "Normal"
+            }
           ]
         },
         {
@@ -14363,10 +14375,22 @@
           "iv": 100,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Rock Throw",
-            "Magnitude",
-            "Defense Curl",
-            "Rollout"
+            {
+              "name": "Rock Throw",
+              "type": "Rock"
+            },
+            {
+              "name": "Magnitude",
+              "type": "Ground"
+            },
+            {
+              "name": "Defense Curl",
+              "type": "Normal"
+            },
+            {
+              "name": "Rollout",
+              "type": "Rock"
+            }
           ]
         },
         {
@@ -14375,10 +14399,22 @@
           "iv": 200,
           "heldItem": "Shell Bell",
           "moves": [
-            "Horn Attack",
-            "Rock Blast",
-            "Scary Face",
-            "Stomp"
+            {
+              "name": "Horn Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Rock Blast",
+              "type": "Rock"
+            },
+            {
+              "name": "Scary Face",
+              "type": "Normal"
+            },
+            {
+              "name": "Stomp",
+              "type": "Normal"
+            }
           ]
         }
       ]
@@ -14392,38 +14428,74 @@
       "party": [
         {
           "species": "Machoke",
-          "level": 16,
+          "level": 18,
           "iv": 100,
           "heldItem": "Choice Band",
           "moves": [
-            "Karate Chop",
-            "Low Kick",
-            "Seismic Toss",
-            "Bulk Up"
+            {
+              "name": "Karate Chop",
+              "type": "Fighting"
+            },
+            {
+              "name": "Low Kick",
+              "type": "Fighting"
+            },
+            {
+              "name": "Seismic Toss",
+              "type": "Fighting"
+            },
+            {
+              "name": "Bulk Up",
+              "type": "Fighting"
+            }
           ]
         },
         {
           "species": "Hitmonlee",
-          "level": 16,
+          "level": 20,
           "iv": 100,
           "heldItem": "Choice Band",
           "moves": [
-            "Double Kick",
-            "Focus Energy",
-            "Hi Jump Kick",
-            "Mind Reader"
+            {
+              "name": "Double Kick",
+              "type": "Fighting"
+            },
+            {
+              "name": "Focus Energy",
+              "type": "Normal"
+            },
+            {
+              "name": "Hi Jump Kick",
+              "type": "Fighting"
+            },
+            {
+              "name": "Mind Reader",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Heracross",
-          "level": 19,
+          "level": 25,
           "iv": 200,
           "heldItem": "Shell Bell",
           "moves": [
-            "Horn Attack",
-            "Brick Break",
-            "Counter",
-            "Endure"
+            {
+              "name": "Horn Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Brick Break",
+              "type": "Fighting"
+            },
+            {
+              "name": "Counter",
+              "type": "Fighting"
+            },
+            {
+              "name": "Endure",
+              "type": "Normal"
+            }
           ]
         }
       ]
@@ -14437,38 +14509,74 @@
       "party": [
         {
           "species": "Magneton",
-          "level": 20,
+          "level": 25,
           "iv": 200,
           "heldItem": "Shell Bell",
           "moves": [
-            "Supersonic",
-            "Shock Wave",
-            "Thunder Wave",
-            "Metal Sound"
+            {
+              "name": "Supersonic",
+              "type": "Normal"
+            },
+            {
+              "name": "Shock Wave",
+              "type": "Electric"
+            },
+            {
+              "name": "Thunder Wave",
+              "type": "Electric"
+            },
+            {
+              "name": "Metal Sound",
+              "type": "Steel"
+            }
           ]
         },
         {
           "species": "Electabuzz",
-          "level": 22,
+          "level": 27,
           "iv": 220,
           "heldItem": "Shell Bell",
           "moves": [
-            "Thunder Punch",
-            "Quick Attack",
-            "Light Screen",
-            "Swift"
+            {
+              "name": "Thunder Punch",
+              "type": "Electric"
+            },
+            {
+              "name": "Quick Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Light Screen",
+              "type": "Psychic"
+            },
+            {
+              "name": "Swift",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Jolteon",
-          "level": 24,
+          "level": 30,
           "iv": 250,
           "heldItem": "Shell Bell",
           "moves": [
-            "Thunderbolt",
-            "Quick Attack",
-            "Double Kick",
-            "Thunder Wave"
+            {
+              "name": "Thunderbolt",
+              "type": "Electric"
+            },
+            {
+              "name": "Quick Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Double Kick",
+              "type": "Fighting"
+            },
+            {
+              "name": "Thunder Wave",
+              "type": "Electric"
+            }
           ]
         }
       ]
@@ -14482,38 +14590,74 @@
       "party": [
         {
           "species": "Magmar",
-          "level": 24,
+          "level": 30,
           "iv": 200,
           "heldItem": "Shell Bell",
           "moves": [
-            "Fire Punch",
-            "Confuse Ray",
-            "Smokescreen",
-            "Sunny Day"
+            {
+              "name": "Fire Punch",
+              "type": "Fire"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            },
+            {
+              "name": "Smokescreen",
+              "type": "Normal"
+            },
+            {
+              "name": "Sunny Day",
+              "type": "Fire"
+            }
           ]
         },
         {
           "species": "Arcanine",
-          "level": 26,
+          "level": 33,
           "iv": 220,
           "heldItem": "Shell Bell",
           "moves": [
-            "Flame Wheel",
-            "Bite",
-            "Take Down",
-            "Roar"
+            {
+              "name": "Flame Wheel",
+              "type": "Fire"
+            },
+            {
+              "name": "Bite",
+              "type": "Dark"
+            },
+            {
+              "name": "Take Down",
+              "type": "Normal"
+            },
+            {
+              "name": "Roar",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Houndoom",
-          "level": 29,
+          "level": 37,
           "iv": 250,
           "heldItem": "White Herb",
           "moves": [
-            "Flamethrower",
-            "Crunch",
-            "Roar",
-            "Sunny Day"
+            {
+              "name": "Flamethrower",
+              "type": "Fire"
+            },
+            {
+              "name": "Crunch",
+              "type": "Dark"
+            },
+            {
+              "name": "Roar",
+              "type": "Normal"
+            },
+            {
+              "name": "Sunny Day",
+              "type": "Fire"
+            }
           ]
         }
       ]
@@ -14527,38 +14671,74 @@
       "party": [
         {
           "species": "Kangaskhan",
-          "level": 27,
+          "level": 37,
           "iv": 200,
           "heldItem": "Shell Bell",
           "moves": [
-            "Fake Out",
-            "Mega Punch",
-            "Bite",
-            "Dizzy Punch"
+            {
+              "name": "Fake Out",
+              "type": "Normal"
+            },
+            {
+              "name": "Mega Punch",
+              "type": "Normal"
+            },
+            {
+              "name": "Bite",
+              "type": "Dark"
+            },
+            {
+              "name": "Dizzy Punch",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Tauros",
-          "level": 29,
+          "level": 39,
           "iv": 220,
           "heldItem": "Shell Bell",
           "moves": [
-            "Horn Attack",
-            "Take Down",
-            "Swagger",
-            "Scary Face"
+            {
+              "name": "Horn Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Take Down",
+              "type": "Normal"
+            },
+            {
+              "name": "Swagger",
+              "type": "Normal"
+            },
+            {
+              "name": "Scary Face",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Blissey",
-          "level": 31,
+          "level": 43,
           "iv": 250,
           "heldItem": "Shell Bell",
           "moves": [
-            "Soft Boiled",
-            "Seismic Toss",
-            "Sing",
-            "Double Team"
+            {
+              "name": "Soft Boiled",
+              "type": "Normal"
+            },
+            {
+              "name": "Seismic Toss",
+              "type": "Fighting"
+            },
+            {
+              "name": "Sing",
+              "type": "Normal"
+            },
+            {
+              "name": "Double Team",
+              "type": "Normal"
+            }
           ]
         }
       ]
@@ -14572,38 +14752,74 @@
       "party": [
         {
           "species": "Altaria",
-          "level": 29,
+          "level": 43,
           "iv": 210,
           "heldItem": "Shell Bell",
           "moves": [
-            "Dragon Breath",
-            "Peck",
-            "Safeguard",
-            "Aerial Ace"
+            {
+              "name": "Dragon Breath",
+              "type": "Dragon"
+            },
+            {
+              "name": "Peck",
+              "type": "Flying"
+            },
+            {
+              "name": "Safeguard",
+              "type": "Normal"
+            },
+            {
+              "name": "Aerial Ace",
+              "type": "Flying"
+            }
           ]
         },
         {
           "species": "Skarmory",
-          "level": 31,
+          "level": 45,
           "iv": 220,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Steel Wing",
-            "Fury Attack",
-            "Spikes",
-            "Aerial Ace"
+            {
+              "name": "Steel Wing",
+              "type": "Steel"
+            },
+            {
+              "name": "Fury Attack",
+              "type": "Normal"
+            },
+            {
+              "name": "Spikes",
+              "type": "Ground"
+            },
+            {
+              "name": "Aerial Ace",
+              "type": "Flying"
+            }
           ]
         },
         {
           "species": "Salamence",
-          "level": 33,
+          "level": 48,
           "iv": 255,
           "heldItem": "Oran Berry",
           "moves": [
-            "Dragon Claw",
-            "Crunch",
-            "Dragon Dance",
-            "Aerial Ace"
+            {
+              "name": "Dragon Claw",
+              "type": "Dragon"
+            },
+            {
+              "name": "Crunch",
+              "type": "Dark"
+            },
+            {
+              "name": "Dragon Dance",
+              "type": "Dragon"
+            },
+            {
+              "name": "Aerial Ace",
+              "type": "Flying"
+            }
           ]
         }
       ]
@@ -14617,74 +14833,146 @@
       "party": [
         {
           "species": "Xatu",
-          "level": 40,
+          "level": 47,
           "iv": 240,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Psychic",
-            "Confuse Ray",
-            "Future Sight",
-            "Aerial Ace"
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            },
+            {
+              "name": "Future Sight",
+              "type": "Psychic"
+            },
+            {
+              "name": "Aerial Ace",
+              "type": "Flying"
+            }
           ]
         },
         {
           "species": "Hypno",
-          "level": 40,
+          "level": 47,
           "iv": 240,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Hypnosis",
-            "Psychic",
-            "Disable",
-            "Reflect"
+            {
+              "name": "Hypnosis",
+              "type": "Psychic"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Disable",
+              "type": "Normal"
+            },
+            {
+              "name": "Reflect",
+              "type": "Psychic"
+            }
           ]
         },
         {
           "species": "Slowbro",
-          "level": 40,
+          "level": 48,
           "iv": 240,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Surf",
-            "Psychic",
-            "Amnesia",
-            "Yawn"
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Amnesia",
+              "type": "Psychic"
+            },
+            {
+              "name": "Yawn",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Claydol",
-          "level": 40,
+          "level": 49,
           "iv": 240,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Earthquake",
-            "Ancient Power",
-            "Psychic",
-            "Light Screen"
+            {
+              "name": "Earthquake",
+              "type": "Ground"
+            },
+            {
+              "name": "Ancient Power",
+              "type": "Rock"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Light Screen",
+              "type": "Psychic"
+            }
           ]
         },
         {
           "species": "Alakazam",
-          "level": 42,
+          "level": 52,
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Psychic",
-            "Thunder Wave",
-            "Recover",
-            "Calm Mind"
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Thunder Wave",
+              "type": "Electric"
+            },
+            {
+              "name": "Recover",
+              "type": "Normal"
+            },
+            {
+              "name": "Calm Mind",
+              "type": "Psychic"
+            }
           ]
         },
         {
           "species": "Gardevoir",
-          "level": 42,
+          "level": 52,
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Psychic",
-            "Magical Leaf",
-            "Calm Mind",
-            "Double Team"
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Magical Leaf",
+              "type": "Grass"
+            },
+            {
+              "name": "Calm Mind",
+              "type": "Psychic"
+            },
+            {
+              "name": "Double Team",
+              "type": "Normal"
+            }
           ]
         }
       ]
@@ -14698,38 +14986,74 @@
       "party": [
         {
           "species": "Starmie",
-          "level": 41,
+          "level": 50,
           "iv": 240,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Surf",
-            "Psychic",
-            "Rapid Spin",
-            "Recover"
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Rapid Spin",
+              "type": "Normal"
+            },
+            {
+              "name": "Recover",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Kingdra",
-          "level": 43,
+          "level": 52,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Dragon Breath",
-            "Surf",
-            "Ice Beam",
-            "Double Team"
+            {
+              "name": "Dragon Breath",
+              "type": "Dragon"
+            },
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Double Team",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Lapras",
-          "level": 46,
+          "level": 55,
           "iv": 255,
           "heldItem": "Chesto Berry",
           "moves": [
-            "Surf",
-            "Ice Beam",
-            "Sing",
-            "Confuse Ray"
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Sing",
+              "type": "Normal"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            }
           ]
         }
       ]
@@ -14744,36 +15068,72 @@
           "species": "Absol",
           "level": 52,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Swords Dance",
-            "Slash",
-            "Shadow Ball",
-            "Rock Slide"
+            {
+              "name": "Swords Dance",
+              "type": "Normal"
+            },
+            {
+              "name": "Slash",
+              "type": "Normal"
+            },
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Rock Slide",
+              "type": "Rock"
+            }
           ]
         },
         {
           "species": "Houndoom",
           "level": 53,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Flamethrower",
-            "Crunch",
-            "Shadow Ball",
-            "Taunt"
+            {
+              "name": "Flamethrower",
+              "type": "Fire"
+            },
+            {
+              "name": "Crunch",
+              "type": "Dark"
+            },
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Taunt",
+              "type": "Dark"
+            }
           ]
         },
         {
           "species": "Sharpedo",
           "level": 54,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Surf",
-            "Crunch",
-            "Ice Beam",
-            "Scary Face"
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Crunch",
+              "type": "Dark"
+            },
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Scary Face",
+              "type": "Normal"
+            }
           ]
         },
         {
@@ -14782,10 +15142,22 @@
           "iv": 250,
           "heldItem": "Leftovers",
           "moves": [
-            "Toxic",
-            "Moonlight",
-            "Shadow Ball",
-            "Confuse Ray"
+            {
+              "name": "Toxic",
+              "type": "Poison"
+            },
+            {
+              "name": "Moonlight",
+              "type": "Normal"
+            },
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            }
           ]
         },
         {
@@ -14794,10 +15166,22 @@
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Crunch",
-            "Rock Slide",
-            "Earthquake",
-            "Fire Blast"
+            {
+              "name": "Crunch",
+              "type": "Dark"
+            },
+            {
+              "name": "Rock Slide",
+              "type": "Rock"
+            },
+            {
+              "name": "Earthquake",
+              "type": "Ground"
+            },
+            {
+              "name": "Fire Blast",
+              "type": "Fire"
+            }
           ]
         }
       ]
@@ -14810,48 +15194,96 @@
           "species": "Misdreavus",
           "level": 53,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Shadow Ball",
-            "Confuse Ray",
-            "Thunderbolt",
-            "Mean Look"
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            },
+            {
+              "name": "Thunderbolt",
+              "type": "Electric"
+            },
+            {
+              "name": "Mean Look",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Dusclops",
           "level": 54,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Shadow Punch",
-            "Will O Wisp",
-            "Earthquake",
-            "Confuse Ray"
+            {
+              "name": "Shadow Punch",
+              "type": "Ghost"
+            },
+            {
+              "name": "Will O Wisp",
+              "type": "Fire"
+            },
+            {
+              "name": "Earthquake",
+              "type": "Ground"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            }
           ]
         },
         {
           "species": "Sableye",
           "level": 55,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Shadow Ball",
-            "Faint Attack",
-            "Taunt",
-            "Confuse Ray"
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Faint Attack",
+              "type": "Dark"
+            },
+            {
+              "name": "Taunt",
+              "type": "Dark"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            }
           ]
         },
         {
           "species": "Gengar",
           "level": 56,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Shadow Ball",
-            "Thunderbolt",
-            "Hypnosis",
-            "Dream Eater"
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Thunderbolt",
+              "type": "Electric"
+            },
+            {
+              "name": "Hypnosis",
+              "type": "Psychic"
+            },
+            {
+              "name": "Dream Eater",
+              "type": "Psychic"
+            }
           ]
         },
         {
@@ -14860,10 +15292,22 @@
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Shadow Ball",
-            "Ice Punch",
-            "Fire Punch",
-            "Thunder Punch"
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            },
+            {
+              "name": "Ice Punch",
+              "type": "Ice"
+            },
+            {
+              "name": "Fire Punch",
+              "type": "Fire"
+            },
+            {
+              "name": "Thunder Punch",
+              "type": "Electric"
+            }
           ]
         }
       ]
@@ -14876,48 +15320,96 @@
           "species": "Jynx",
           "level": 54,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Blizzard",
-            "Lovely Kiss",
-            "Psychic",
-            "Shadow Ball"
+            {
+              "name": "Blizzard",
+              "type": "Ice"
+            },
+            {
+              "name": "Lovely Kiss",
+              "type": "Normal"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Shadow Ball",
+              "type": "Ghost"
+            }
           ]
         },
         {
           "species": "Lapras",
           "level": 55,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Ice Beam",
-            "Surf",
-            "Confuse Ray",
-            "Psychic"
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Confuse Ray",
+              "type": "Ghost"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            }
           ]
         },
         {
           "species": "Cloyster",
           "level": 56,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Surf",
-            "Blizzard",
-            "Explosion",
-            "Spike Cannon"
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Blizzard",
+              "type": "Ice"
+            },
+            {
+              "name": "Explosion",
+              "type": "Normal"
+            },
+            {
+              "name": "Spike Cannon",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Walrein",
           "level": 57,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Leftovers",
           "moves": [
-            "Blizzard",
-            "Surf",
-            "Body Slam",
-            "Sheer Cold"
+            {
+              "name": "Blizzard",
+              "type": "Ice"
+            },
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Body Slam",
+              "type": "Normal"
+            },
+            {
+              "name": "Sheer Cold",
+              "type": "Ice"
+            }
           ]
         },
         {
@@ -14926,10 +15418,22 @@
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Ice Beam",
-            "Surf",
-            "Psychic",
-            "Thunder"
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Surf",
+              "type": "Water"
+            },
+            {
+              "name": "Psychic",
+              "type": "Psychic"
+            },
+            {
+              "name": "Thunder",
+              "type": "Electric"
+            }
           ]
         }
       ]
@@ -14942,48 +15446,96 @@
           "species": "Shelgon",
           "level": 54,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Dragon Breath",
-            "Dragon Dance",
-            "Rock Tomb",
-            "Protect"
+            {
+              "name": "Dragon Breath",
+              "type": "Dragon"
+            },
+            {
+              "name": "Dragon Dance",
+              "type": "Dragon"
+            },
+            {
+              "name": "Rock Tomb",
+              "type": "Rock"
+            },
+            {
+              "name": "Protect",
+              "type": "Normal"
+            }
           ]
         },
         {
           "species": "Altaria",
           "level": 55,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Dragon Dance",
-            "Dragon Breath",
-            "Aerial Ace",
-            "Flamethrower"
+            {
+              "name": "Dragon Dance",
+              "type": "Dragon"
+            },
+            {
+              "name": "Dragon Breath",
+              "type": "Dragon"
+            },
+            {
+              "name": "Aerial Ace",
+              "type": "Flying"
+            },
+            {
+              "name": "Flamethrower",
+              "type": "Fire"
+            }
           ]
         },
         {
           "species": "Dragonair",
           "level": 56,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Lum Berry",
           "moves": [
-            "Dragon Dance",
-            "Dragon Breath",
-            "Thunder",
-            "Ice Beam"
+            {
+              "name": "Dragon Dance",
+              "type": "Dragon"
+            },
+            {
+              "name": "Dragon Breath",
+              "type": "Dragon"
+            },
+            {
+              "name": "Thunder",
+              "type": "Electric"
+            },
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            }
           ]
         },
         {
           "species": "Flygon",
           "level": 57,
           "iv": 250,
-          "heldItem": null,
+          "heldItem": "Shell Bell",
           "moves": [
-            "Earthquake",
-            "Dragon Claw",
-            "Flamethrower",
-            "Rock Slide"
+            {
+              "name": "Earthquake",
+              "type": "Ground"
+            },
+            {
+              "name": "Dragon Claw",
+              "type": "Dragon"
+            },
+            {
+              "name": "Flamethrower",
+              "type": "Fire"
+            },
+            {
+              "name": "Rock Slide",
+              "type": "Rock"
+            }
           ]
         },
         {
@@ -14992,10 +15544,22 @@
           "iv": 255,
           "heldItem": "Sitrus Berry",
           "moves": [
-            "Dragon Claw",
-            "Thunder",
-            "Ice Beam",
-            "Earthquake"
+            {
+              "name": "Dragon Claw",
+              "type": "Dragon"
+            },
+            {
+              "name": "Thunder",
+              "type": "Electric"
+            },
+            {
+              "name": "Ice Beam",
+              "type": "Ice"
+            },
+            {
+              "name": "Earthquake",
+              "type": "Ground"
+            }
           ]
         }
       ]
@@ -15008,48 +15572,96 @@
         "species": "Starmie",
         "level": 58,
         "iv": 255,
-        "heldItem": null,
+        "heldItem": "Lum Berry",
         "moves": [
-          "Surf",
-          "Psychic",
-          "Thunderbolt",
-          "Rapid Spin"
+          {
+            "name": "Surf",
+            "type": "Water"
+          },
+          {
+            "name": "Psychic",
+            "type": "Psychic"
+          },
+          {
+            "name": "Thunderbolt",
+            "type": "Electric"
+          },
+          {
+            "name": "Rapid Spin",
+            "type": "Normal"
+          }
         ]
       },
       {
         "species": "Tentacruel",
         "level": 59,
         "iv": 255,
-        "heldItem": null,
+        "heldItem": "Leftovers",
         "moves": [
-          "Toxic",
-          "Hydro Pump",
-          "Sludge Bomb",
-          "Ice Beam"
+          {
+            "name": "Toxic",
+            "type": "Poison"
+          },
+          {
+            "name": "Hydro Pump",
+            "type": "Water"
+          },
+          {
+            "name": "Sludge Bomb",
+            "type": "Poison"
+          },
+          {
+            "name": "Ice Beam",
+            "type": "Ice"
+          }
         ]
       },
       {
         "species": "Gyarados",
         "level": 60,
         "iv": 255,
-        "heldItem": null,
+        "heldItem": "Lum Berry",
         "moves": [
-          "Dragon Dance",
-          "Earthquake",
-          "Hyper Beam",
-          "Surf"
+          {
+            "name": "Dragon Dance",
+            "type": "Dragon"
+          },
+          {
+            "name": "Earthquake",
+            "type": "Ground"
+          },
+          {
+            "name": "Hyper Beam",
+            "type": "Normal"
+          },
+          {
+            "name": "Surf",
+            "type": "Water"
+          }
         ]
       },
       {
         "species": "Kingdra",
         "level": 61,
         "iv": 255,
-        "heldItem": null,
+        "heldItem": "Lum Berry",
         "moves": [
-          "Dragon Dance",
-          "Surf",
-          "Ice Beam",
-          "Smokescreen"
+          {
+            "name": "Dragon Dance",
+            "type": "Dragon"
+          },
+          {
+            "name": "Surf",
+            "type": "Water"
+          },
+          {
+            "name": "Ice Beam",
+            "type": "Ice"
+          },
+          {
+            "name": "Smokescreen",
+            "type": "Normal"
+          }
         ]
       },
       {
@@ -15058,10 +15670,22 @@
         "iv": 255,
         "heldItem": "Leftovers",
         "moves": [
-          "Recover",
-          "Surf",
-          "Ice Beam",
-          "Toxic"
+          {
+            "name": "Recover",
+            "type": "Normal"
+          },
+          {
+            "name": "Surf",
+            "type": "Water"
+          },
+          {
+            "name": "Ice Beam",
+            "type": "Ice"
+          },
+          {
+            "name": "Toxic",
+            "type": "Poison"
+          }
         ]
       },
       {
@@ -15070,10 +15694,22 @@
         "iv": 255,
         "heldItem": "Sitrus Berry",
         "moves": [
-          "Surf",
-          "Ice Beam",
-          "Psychic",
-          "Thunder"
+          {
+            "name": "Surf",
+            "type": "Water"
+          },
+          {
+            "name": "Ice Beam",
+            "type": "Ice"
+          },
+          {
+            "name": "Psychic",
+            "type": "Psychic"
+          },
+          {
+            "name": "Thunder",
+            "type": "Electric"
+          }
         ]
       }
     ]
@@ -15084,7 +15720,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 103",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15099,7 +15735,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 110",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15124,7 +15760,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 119",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15149,7 +15785,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 103",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15164,7 +15800,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 110",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15189,7 +15825,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 119",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15214,7 +15850,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 103",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15229,7 +15865,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 110",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15254,7 +15890,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Route 119",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15279,7 +15915,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 103",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15294,7 +15930,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 110",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15319,7 +15955,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 119",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15344,7 +15980,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 103",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15359,7 +15995,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 110",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15384,7 +16020,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 119",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15409,7 +16045,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 103",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15424,7 +16060,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 110",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15449,7 +16085,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Route 119",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15474,7 +16110,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Rustboro",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15494,7 +16130,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Rustboro",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15514,7 +16150,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Rustboro",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15534,7 +16170,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Rustboro",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15554,7 +16190,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Lilycove",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15584,7 +16220,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Lilycove",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15614,7 +16250,7 @@
       "rival": "Brendan",
       "name": "BRENDAN",
       "location": "Lilycove",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15644,7 +16280,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Lilycove",
-      "starterMatchup": "Mudkip",
+      "starterMatchup": "Bagon",
       "doubleBattle": false,
       "party": [
         {
@@ -15674,7 +16310,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Lilycove",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15704,7 +16340,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Lilycove",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {
@@ -15734,7 +16370,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Rustboro",
-      "starterMatchup": "Treecko",
+      "starterMatchup": "Larvitar",
       "doubleBattle": false,
       "party": [
         {
@@ -15754,7 +16390,7 @@
       "rival": "May",
       "name": "MAY",
       "location": "Rustboro",
-      "starterMatchup": "Torchic",
+      "starterMatchup": "Dratini",
       "doubleBattle": false,
       "party": [
         {

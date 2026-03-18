@@ -636,7 +636,14 @@
       const movesTd = document.createElement('td');
       movesTd.className = 'mon-moves';
       if (mon.moves && mon.moves.length) {
-        movesTd.textContent = mon.moves.join(', ');
+        mon.moves.forEach(move => {
+          const lozenge = document.createElement('span');
+          const moveName = typeof move === 'string' ? move : move.name;
+          const moveType = typeof move === 'object' ? move.type : null;
+          lozenge.className = 'move-lozenge' + (moveType ? ' move-type-' + moveType.toLowerCase() : '');
+          lozenge.textContent = moveName;
+          movesTd.appendChild(lozenge);
+        });
       } else {
         movesTd.innerHTML = '<span class="text-muted">Default</span>';
       }

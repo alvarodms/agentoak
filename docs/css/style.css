@@ -1016,6 +1016,40 @@ body::after {
   color: var(--text-muted);
 }
 
+/* ---- Move Lozenges ---- */
+.move-lozenge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  background: var(--text-muted);
+  margin: 2px 2px 2px 0;
+  white-space: nowrap;
+}
+
+.move-type-normal     { background: #a8a878; color: #fff; }
+.move-type-fighting   { background: #c03028; }
+.move-type-flying     { background: #a890f0; }
+.move-type-poison     { background: #a040a0; }
+.move-type-ground     { background: #e0c068; color: #333; }
+.move-type-rock       { background: #b8a038; }
+.move-type-bug        { background: #a8b820; }
+.move-type-ghost      { background: #705898; }
+.move-type-steel      { background: #b8b8d0; color: #333; }
+.move-type-fire       { background: #f08030; }
+.move-type-water      { background: #6890f0; }
+.move-type-grass      { background: #78c850; }
+.move-type-electric   { background: #f8d030; color: #333; }
+.move-type-psychic    { background: #f85888; }
+.move-type-ice        { background: #98d8d8; color: #333; }
+.move-type-dragon     { background: #7038f8; }
+.move-type-dark       { background: #705848; }
+
 .party-table .text-muted {
   color: var(--text-muted);
   font-style: italic;
