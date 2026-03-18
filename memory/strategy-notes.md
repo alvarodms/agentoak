@@ -2,6 +2,8 @@
 
 High-level strategies, ideas for the ROM hack, what to try next, and lessons about approach.
 
+> **Maintenance**: Keep this file under ~200 lines. Delete completed roadmap items older than 10 cycles. Remove research/analysis for decisions already made. This file is for *current* vision, *active* plans, and *live* technical reference — not a historical archive.
+
 ---
 
 # LEGENDS OF HOENN — Game Design Document
@@ -38,8 +40,6 @@ This framing explains:
 | **Bagon** | → Shelgon → Salamence | Dragon/Flying | The Dreamer — evolves into the classic powerhouse |
 | **Dratini** | → Dragonair → Dragonite | Dragon | The Legend — graceful, builds to an iconic finish |
 
-Each choice signals a different playstyle and creates a different "journey" through the hack. Tyranitar players brute-force; Salamence players speed-sweep; Dragonite players persist and endure.
-
 ### Starter → Rival Correspondence (Implemented Cycle 12)
 
 | Player Picks | VAR_STARTER_MON | Rival Gets | Rival Theme |
@@ -48,393 +48,58 @@ Each choice signals a different playstyle and creates a different "journey" thro
 | Bagon (slot 1) | 1 (Torchic slot) | Dratini | Dragon/Water — Horsea/Gyarados support |
 | Dratini (slot 2) | 2 (Mudkip slot) | Larvitar | Dark/Rock — Houndour/Murkrow support |
 
-**Files modified**: `src/starter_choose.c` (sStarterMon array), `src/data/trainer_parties.h` (10 rival party definitions for Brendan/May Torchic variants: Route103/110/119, Rustboro, Lilycove)
+---
+
+## 3. Encounter Philosophy
+
+Routes should feel like ecosystems, not random loot tables. Each route has a theme:
+- **Route 101–103**: Introduction — accessible pseudo-legendaries, first Houndour/Dratini sightings
+- **Route 104–116**: Escalation — diverse migrant species, rising power curve
+- **Route 117–123**: Peak diversity — full legendary-adjacent roster available
+- **Dungeons**: Specialist habitats — Granite Cave (Rock/Ground), Meteor Falls (Dragon), etc.
 
 ---
 
-## 3. Difficulty Philosophy
+## 4. Completion Summary
 
-### Progressive Power Scaling
+**See `memory/completed-work.md` for the authoritative file-by-file registry of all modifications.**
 
-Legends of Hoenn is harder than vanilla Emerald, but not in a cheap way. The difficulty comes from:
-
-1. **Enemy teams use competent Pokémon** — Gym leaders and key trainers field Pokémon with real offensive presence, not just thematic fillers with bad stats
-2. **Level curve is tight** — Trainers' levels are pushed up to match the player's accelerated access to powerful wild Pokémon
-3. **No easy sweeps** — Key leaders have diverse typings within their theme; you can't one-shot the whole team with one move
-
-### Difficulty Tiers
-
-| Phase | Player Level | Difficulty Feel |
-|-------|-------------|-----------------|
-| Route 101 – Gym 1 | 5–15 | Surprisingly tough early encounters; Roxanne has real Rock threats |
-| Gym 2 – Gym 4 | 20–35 | Trainers use rare Pokémon; rival is genuinely scary |
-| Gym 5 – Gym 7 | 38–52 | Full teams with held items; Tate & Liza are notorious |
-| Gym 8 – Elite Four | 52–65 | Every fight requires strategy; Champion is a real boss |
-
-### Design Rule: No Wasted Slots
-
-Every trainer Pokémon slot should be something interesting. Gym leaders should never use "filler" Pokémon that exist only for thematic padding. If a type doesn't have good representatives, use dual-types or adjacent types to keep battles interesting.
-
----
-
-## 4. Gym Leader Redesign
-
-### Philosophy
-
-Each gym leader's team should:
-- Have a clear thematic identity that extends their type
-- Use Pokémon that are genuinely threatening at that stage
-- Have their ace be something memorable and powerful
-- Include strategic coverage moves to punish type-exploiting
-
-### Gym Leader Teams (Target Design)
-
-#### Gym 1: Roxanne (Rock)
-*Theme: Ancient Stone — fossils, rock formations, earth*
-- Aerodactyl (Rock/Flying, pre-historic fossil feel)
-- Onix / Graveler (type cannon fodder, but high-level)
-- **Ace**: Tyranitar (if obtainable) OR Rhydon with Rock Blast
-- *Design note: Even at low levels, Aerodactyl's speed + Rock Slide should threaten the player*
-
-#### Gym 2: Brawly (Fighting)
-*Theme: Ocean Brawlers — coastal martial arts*
-- Machoke (Fighting staple)
-- Hitmonlee (kicking specialist)
-- **Ace**: Heracross (Bug/Fighting — unexpected coverage)
-- *Design note: Heracross at ~25 with Brick Break is a genuine threat*
-
-#### Gym 3: Wattson (Electric)
-*Theme: Industrial Thunder — machines, magnets, sparks*
-- Magneton (Electric/Steel, resists everything)
-- Electabuzz (fast, punching)
-- **Ace**: Jolteon OR Ampharos with full Electric coverage
-- *Design note: Magneton's Steel typing creates coverage problems*
-
-#### Gym 4: Flannery (Fire)
-*Theme: Volcanic Fury — magma, heat, intensity*
-- Magmar (Fire with Confuse Ray)
-- Arcanine (fast Fire)
-- **Ace**: Houndoom (Fire/Dark — Flamethrower + Crunch)
-- *Design note: Houndoom at ~38 is a powerful ace that's never a gym leader's Pokémon normally*
-
-#### Gym 5: Norman (Normal)
-*Theme: Balanced Power — the most "natural" trainer*
-- Kangaskhan (Normal with Fake Out + Return)
-- Tauros (high Attack, multi-hit moves)
-- **Ace**: Blissey (the ultimate stall) OR Slaking (double Slaking challenge)
-- *Design note: Norman representing "normal" as "overwhelming force of nature"*
-
-#### Gym 6: Winona (Flying)
-*Theme: Sky Legends — high-altitude rare birds*
-- Dragonite-adjacent: Altaria (Dragon/Flying, unexpected Dragon typing)
-- Skarmory (Steel/Flying for bulk)
-- **Ace**: Aerodactyl OR Salamence (the sky's apex predator)
-- *Design note: Salamence ace for Winona makes her terrifying — Dragon typing on a Flying gym*
-
-#### Gym 7: Tate & Liza (Psychic)
-*Theme: Twin Minds — cosmic, psychic, mysterious*
-- Xatu + Hypno (doubles pair)
-- Slowbro + Claydol (doubles pair)
-- **Ace pair**: Alakazam + Gardevoir
-- *Design note: Doubles format with complementary moves (Trick Room + high SpAtk) is brutal*
-
-#### Gym 8: Juan (Water)
-*Theme: Deep Ocean Royalty — the depths of the sea*
-- Starmie (Water/Psychic — fast and versatile)
-- Kingdra (Dragon/Water — double Dragon weakness)
-- **Ace**: Lapras (Water/Ice — the noble sea legend)
-- *Design note: Kingdra's Dragon/Water has almost no weaknesses — the real hurdle*
-
----
-
-## 5. Rival Team Design
-
-### Rival Philosophy
-
-The rival should feel like a mirror of the player's journey. They pick the starter with a type advantage, but their team grows to include powerful non-starters as the game progresses.
-
-### Rival Team Progression (if player chose Larvitar)
-
-| Battle | Level | Rival's Team |
-|--------|-------|--------------|
-| Route 103 | 7–10 | Bagon (rival starter) + Houndour |
-| Slateport | 18–22 | Bagon/Shelgon + Growlithe + Electabuzz |
-| Route 110 | 26–30 | Shelgon + Arcanine + Electabuzz + Absol |
-| Mt. Pyre | 34–38 | Shelgon/Salamence + 4 legends-tier Pokémon |
-| Lilycove | 42–46 | Salamence + full 6-Pokémon team of powerhouses |
-| Champion | 55–60 | Fully evolved, diverse team with Salamence ace |
-
-### Rival's Signature: Adaptation
-
-The rival explicitly acknowledges the changed world. His dialogue (when scripted) references how he's been catching powerful Pokémon all over Hoenn. He's not a villain, but he's a genuine rival — someone who's risen to the occasion.
-
----
-
-## 6. Elite Four Redesign
-
-### Philosophy
-
-The Elite Four should be the hardest fights in the game. Each member uses powerful, thematic Pokémon at levels 52–60, with held items and strategic movesets.
-
-### Sidney (Dark)
-*The Dark Specialist — tricky and relentless*
-- Absol (Dark, Swords Dance + Night Slash)
-- Houndoom (Dark/Fire, mixed attacker)
-- Sharpedo (Dark/Water, speed demon)
-- Umbreon (Dark, stall with Moonlight)
-- **Ace**: Tyranitar (Dark/Rock, Sand Stream, the dark rock behemoth)
-
-### Phoebe (Ghost)
-*The Ghost Master — unsettling and evasive*
-- Misdreavus (Ghost, Confuse Ray chaos)
-- Dusclops (Ghost, Will-O-Wisp + stall)
-- Gengar (Ghost/Poison, speed + Shadow Ball)
-- Sableye (Dark/Ghost — no weaknesses, infuriating)
-- **Ace**: Gengar at high level with full special coverage
-
-### Glacia (Ice)
-*The Ice Queen — brittle but devastating*
-- Jynx (Ice/Psychic, Lovely Kiss + Blizzard)
-- Lapras (Water/Ice, Sing + Ice Beam)
-- Cloyster (Water/Ice, Explosion threat)
-- Walrein (Ice/Water, the tanky ace)
-- **Ace**: Articuno-equivalent — or Lapras at level 58 with all coverage
-
-### Drake (Dragon)
-*The Dragon Elder — the ultimate test before Champion*
-- Bagon → Shelgon (early Dragon, low-level warmup)
-- Altaria (Dragon/Flying, Cotton Guard stall)
-- Flygon (Dragon/Ground, all-rounder)
-- Dragonair (Dragon, setup with Dragon Dance)
-- **Ace**: Dragonite (Dragon/Flying — the classic apex Dragon)
-
-### Wallace (Champion)
-*The Legend — a master who has adapted to the new Hoenn*
-- Starmie (Water/Psychic, fast all-rounder)
-- Tentacruel (Water/Poison, toxic stall)
-- Gyarados (Water/Flying, Dragon Dance threat)
-- Kingdra (Dragon/Water, near-impossible to counter)
-- Milotic (Water, Recover + Marvel Scale — the most beautiful and resilient)
-- **Ace**: Wailord OR Lapras at level 62 (the gentle giant of the sea)
-
-*Design note: Wallace's team should feel like "the sea has come to life." Every Pokémon is majestic and powerful.*
-
----
-
-## 7. Encounter Design Rationale
-
-### What Was Done (Cycles 3–4)
-
-All 73 encounter tables across Hoenn have been redesigned. The philosophy:
-
-**Geographic Coherence**: Every area has a personality.
-- Rocky routes (103, 111): Larvitar, Gligar, Rhyhorn lines
-- Volcanic routes (112, 113): Magmar, Houndour, Skarmory
-- Coastal routes (115, 121): Swinub, Snorunt, Lapras
-- River routes (114, 119): Dratini, Dragonair, Heracross
-- Deep ocean (124–134): Relicanth, Lapras, Milotic
-- Forests (116, 117): Gastly, Abra, Chansey (the peaceful center of Hoenn)
-
-**Rarity as Reward**: 1% encounters include Milotic, Lapras in early waters, Beldum/Bagon/Larvitar on Routes 101/102. Finding them feels like a discovery event.
-
-**No Dead Encounters**: Even common 20% slots feature interesting Pokémon — Houndour, Electabuzz, Growlithe — not Rattata or Zigzagoon.
-
-### Dungeon Encounters — COMPLETED (Cycle 9, verified/fixed Cycle 21)
-
-All key dungeon encounter tables have been overhauled:
-- **Petalburg Woods**: Gastly/Haunter (20% each!), Heracross, Scyther, Abra — rare Larvitar/Bagon ✅ verified Cycle 21 (was vanilla, now fixed)
-- **Rusturf Tunnel**: Machop/Geodude + Larvitar common (10%), rare Bagon/Graveler
-- **Granite Cave** (3 floors): Aron, Zubat, Sableye, Abra lines — rare Larvitar/Bagon per floor ✅ verified Cycle 21 (all 3 floors re-overhauled with full progression)
-- **Fiery Path**: Magmar, Houndour/Houndoom, Camerupt, rare Arcanine/Dragonair
-- **New Mauville**: Magnemite, Voltorb, Electabuzz, Jolteon, Raichu, Ampharos
-- **Meteor Falls** (4 floors): Solrock, Lunatone, Bagon line, Dragonair, Metang — rare Salamence/Metagross/Dragonite in water
-- **Shoal Cave** (4 rooms): Spheal, Snorunt, Jynx, Sneasel, Lapras (1%), Walrein — water has swimming Lapras
-- **Mt. Pyre** (5 floors): Pure ghost paradise — Haunter/Misdreavus dominant, Gengar (5%), Dusclops, Banette
-- **Seafloor Cavern** (2 rooms): Bagon/Shelgon, Camerupt, Absol, Dragonair — rare Tyranitar/Salamence
-- **Sky Pillar** (3 floors): Dragon paradise — Dragonair/Dragonite dominant, Salamence/Metagross rare
-- **Victory Road** (3 floors): Lairon/Aggron, Metang/Metagross, Alakazam, Absol, Dusclops — rare Metagross/Salamence/Tyranitar
-
-### Minor Encounters — STATUS
-
-✅ **COMPLETE** (Cycle 21):
-- **Cave of Origin** (Entrance + 1F + 3 unused RS maps): Dragon/Ghost legendary cast — Dratini, Dragonair, Bagon, Shelgon, Larvitar, Pupitar, Absol, Misdreavus, Gengar, Dusclops, rare Salamence/Dragonite
-- **Artisan Cave** (B1F + 1F): Post-game collector cave — Smeargle×2 (collectible), Absol, Sneasel, Houndoom, Alakazam, Gengar, Misdreavus, rare Dragonite/Salamence/Metagross/Tyranitar
-- **Altering Cave** (all 9 event tables): Post-game Dragon/pseudo zone — Larvitar, Bagon, Dratini, Dragonair, Beldum, Metang, Absol, Sneasel, rare Salamence/Metagross/Dragonite/Tyranitar
-
-Deferred (non-wild areas):
-- Safari Zone ✅ (Cycle 14)
-- Mt. Chimney (only trainer battles, no wild area)
-- Magma/Aqua Hideout (story areas, no wild encounters)
-
----
-
-## 8. Quality of Life Changes
-
-### Completed QoL
-
-1. **Professor Birch Opening Dialogue** — ✅ COMPLETE (Cycle 24): Opening sequence completely transformed to establish migration mystery narrative. Birch now explains the unprecedented phenomenon, rare species migrations, and ecosystem transformation. Creates compelling hook and world-in-flux atmosphere.
-2. **Move Tutor Availability** — ✅ COMPLETE (Cycle 23): Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Accessible pre-Gym 4. Learnsets updated for 19 species (all starter lines, Growlithe/Arcanine, Electabuzz, Magmar, Rhyhorn/Rhydon, Cubone/Marowak, Houndour/Houndoom). Dragon Claw already covered by Meteor Falls TM at 1,500P.
-3. **TM Prices** — ✅ COMPLETE (Cycle 22): Reduced critical TM prices by 50% (3,000→1,500P) for Dragon Claw, Earthquake, Shadow Ball, Psychic, Sludge Bomb, and Flamethrower.
-
-### Planned QoL (Remaining)
-
-1. **Pokémon Descriptions / NPC Flavor** — ✅ COMPLETE (Cycle 28): 12 NPCs updated across Routes 101–110 and Littleroot through Slateport. Each NPC plants the "world has changed" seed through personal observation. See NPC list below.
-2. **Held Items on Wild Pokémon** — Wild Pokémon could have thematic held items (Magmar holds Charcoal, Electabuzz holds Magnet)
-
-### Not Planning to Change
-
-- Core battle mechanics (too risky, low reward)
-- Overworld movement speed (requires ASM changes)
-- Experience formula (complex, risk of breaking things)
-- Physical/Special split (already in pokeemerald as optional, evaluate later)
-
----
-
-## 9. Narrative Hooks
-
-### The Migration Event
-
-*Opening text suggestion (for NPC dialogue edits):*
-
-> "Something strange is happening in Hoenn. Professor Birch has been reporting sightings of rare Pokémon from other regions — species never seen here before. Nobody knows why they've come. Some say it's the weather changes caused by Kyogre and Groudon stirring in their slumber. Others think it's something else entirely. What's certain is that Hoenn's routes are no longer safe for the unprepared."
-
-### Professor Birch's Updated Research Brief
-
-Birch should acknowledge:
-- He found three unusual Pokémon near Littleroot (Larvitar/Bagon/Beldum)
-- They appear to be juveniles of a far-traveling species group
-- He wants the player to document their journey through this changed Hoenn
-
-### Rival's Character Arc
-
-The rival starts cocky (same as vanilla), but the changed world humbles him slightly. By Mt. Pyre, he's more focused — he's been fighting seriously to keep up. By the Champion battle, he's a peer, not just a foil.
-
-### Team Magma / Aqua's Motivation Shift
-
-In Legends of Hoenn, Magma and Aqua aren't just misguided — they're reacting to the migration event. Magma wants to create more land to give the land-based migrants territory. Aqua wants to expand the seas to accommodate the ocean species pouring in. Both sides have a twisted logic that's understandable, making them more interesting villains.
-
----
-
-## 10. Multi-Cycle Implementation Roadmap
-
-### Completed
+### Major Milestones
 
 | Cycle | Achievement |
 |-------|-------------|
-| Cycle 2 | ✅ Starters changed to Larvitar / Bagon / Dratini (initially Beldum; corrected Cycle 12) |
-| Cycle 3 | ✅ Routes 101/102 encounter overhaul |
-| Cycle 4 | ✅ All 73 Hoenn route encounter tables redesigned |
-| Cycle 5 | ✅ Game Design Document created |
-| Cycle 6 | ✅ **Gym leader team overhaul** — all 8 leaders + Champion Wallace redesigned with thematic powerhouses |
-| Cycle 7 | ✅ **Rival team overhaul** — all 5 rival battles (30 party definitions) redesigned with pseudo-legendary starters + thematic supports |
-| Cycle 8 | ✅ **Elite Four + Champion overhaul** — all 4 Elite Four + Wallace redesigned; trainer arc now complete from Route 101 to Champion |
-| Cycle 9 | ✅ **Dungeon encounter tables** — 34 tables overhauled across 11 key dungeons (Petalburg Woods, Rusturf Tunnel, Granite Cave, Fiery Path, New Mauville, Meteor Falls, Shoal Cave, Mt. Pyre, Seafloor Cavern, Sky Pillar, Victory Road) |
-| Cycle 10 | ✅ **Key NPC trainer overhaul** — Maxie (3 battles), Archie, Matt, Shelly (2 battles), Tabitha (3 battles), Wally (VR1-VR5 + Mauville), Steven post-game; villain bosses upgraded to NoItemCustomMoves with strategic movesets |
-| Cycle 11 | ✅ **Admin custom moves upgrade** — Verified all Cycle 10 changes in place; upgraded Matt, Shelly (×2), Tabitha (×3), and Maxie Mt. Chimney from DefaultMoves to NoItemCustomMoves with full Gen3-valid strategic movesets |
-| Cycle 12 | ✅ **Starter overhaul finalized** — Third starter corrected from Beldum to Dratini; all 10 "Torchic" rival party definitions (Brendan + May, 5 locations each) rebuilt with Horsea/Gyarados/Seadra/Dragonair water-dragon theme |
-| Cycle 13 | ❌ **Unsubstantiated** — Professor Birch dialogue and Safari Zone not completed (cycle flagged) |
-| Cycle 14 | ✅ **Safari Zone encounter overhaul** — All six Safari Zone encounter tables updated with rare migrated species: Dratini, Gible, Horsea, Larvitar, Bagon, and other powerful Pokémon |
-| Cycle 15 | ✅ **Professor Birch + NPC dialogue edits** — Migration event narrative added: Birch's lab aide, Route 101 rescue dialogue, Littleroot Town NPCs updated to reference strange Pokémon appearances and rare migrations |
-| Cycle 16 | ⚠️ **Held items PARTIAL** — Gym leaders 1–5 (Roxanne–Norman) updated with strategic held items; Winona partial; Tate & Liza, Juan, all Elite Four, and Wallace Champion still have ITEM_NONE on non-ace mons (~26 items remaining) |
-| Cycle 17 | ✅ **Held items COMPLETE** — Finished all remaining held item assignments: Winona (Skarmory→Leftovers), Tate & Liza (4 slots), Juan (2 slots), Sidney (3 slots), Phoebe (4 slots), Glacia (4 slots), Drake (4 slots), Wallace Champion (4 slots). All 26 targeted replacements applied. |
-| Cycle 19 | ✅ **Level curve tuning** — Audit + balance pass complete. Roxanne/Elite Four/Wallace/rivals were already on target. Raised Brawly1 (16→18/20/25), Wattson1 (20→25/27/30), Flannery1 (24→30/33/37), Norman1 (27→37/39/43), Winona1 (29→43/45/48), TateAndLiza1 (40→47-49/52), Juan1 (41→50/52/55). Fixed Winona2/TateAndLiza2/Juan2 rematches that became lower than their raised primaries. |
-| Cycle 20 | ✅ **COMPREHENSIVE VALIDATION** — ROM hack tested end-to-end. All major systems validated: starters (Larvitar/Bagon/Dratini), route encounters (legendary-adjacent), trainer battles (all 8 gyms + Elite Four), rival system, migration narrative, Safari Zone, level curve. ROM builds successfully and is **READY FOR RELEASE**. Minor: some dungeon encounters may need investigation. |
-| Cycle 21 | ✅ **Dungeon encounter fixes** — Comprehensive verification and re-overhaul of all dungeon encounters. Petalburg Woods, Granite Cave (all 3 floors), and other key dungeons properly transformed from vanilla to legendary-tier. |
-| Cycle 22 | ✅ **TM accessibility overhaul** — Reduced critical TM prices by 50% (3,000→1,500P) for Dragon Claw, Earthquake, Shadow Ball, Psychic, Sludge Bomb, and Flamethrower. Made powerful moves accessible by mid-game. |
-| Cycle 23 | ✅ **Move tutor enhancement** — Fallarbor Town Mart NPC now teaches Earthquake instead of Metronome. Updated learnsets for 19 species including all starter lines. Earthquake now accessible pre-Gym 4. |
-| Cycle 24 | ✅ **Opening sequence transformation** — Professor Birch's intro dialogue completely overhauled to establish migration mystery narrative. Replaced generic "Welcome to Pokémon" with compelling hook about rare species appearing, ecosystem transformation, and mysterious migrations. Narrative foundation complete. |
-| Cycle 25 | ✅ **Rival dialogue overhaul** — Route 103, Route 110, and Lilycove rival pre-battle and post-battle dialogue updated for both Brendan and May variants. Arc: cocky discovery at Route 103 → adaptation awareness at Route 110 → mutual respect at Lilycove. Migration event woven throughout. |
-| Cycle 26 | ✅ **Villain dialogue overhaul** — Maxie (Mt. Chimney), Archie (Oceanic Museum 2F + Seafloor Cavern Room 9) dialogue updated to reference migration crisis. Maxie's rationale: land migrants need territory → volcanic power is the key. Archie's rationale: ocean migrants deserve a vast sea → Kyogre is the answer. Pre-battle intro, post-battle defeat, and in-battle defeat text all updated. Note: Slateport "Matt" scene does not exist in vanilla Emerald — the actual villain there is Archie himself at the Oceanic Museum 2F. |
-| Cycle 28 | ✅ **NPC migration flavor text** — 12 NPCs updated across Littleroot Town through Route 110 with personal, grounded observations of the ecological crisis. World now feels inhabited before any villain speech lands. |
-| Cycle 29 | ✅ **NPC mid-game flavor text** — 11 NPCs updated across Mauville through Route 119 with migration-aware observations. Thematic tension now continuous from Littleroot through Lilycove. |
-| Cycle 32 | ✅ **Gym leader pre/post-battle dialogue** — Migration-themed intro and defeat dialogue added for Roxanne, Brawly, Wattson, Flannery, Norman, Winona. Proven script-edit pattern established. |
-| Cycle 33 | ✅ **Narrative arc complete** — Elite Four (Sidney, Phoebe, Glacia, Drake) + Champion Wallace migration dialogue added; Tate & Liza and Juan gym dialogue added; late-game NPC flavor text added in Mossdeep (3 NPCs), Sootopolis (3 NPCs), and Ever Grande League entrance. Full narrative arc now runs from Birch's opening through the Champion credits. Also fixed Juan's long-standing buffer overflow in defeat text. |
+| 2, 12 | Starters: Larvitar/Bagon/Dratini |
+| 3, 4 | All 73 route encounter tables |
+| 5 | Game Design Document |
+| 6 | Gym leader teams (all 8 + Champion) |
+| 7, 12 | Rival teams (30 party definitions) |
+| 8 | Elite Four + Champion teams |
+| 9, 21 | Dungeon encounters (34 tables) |
+| 10, 11 | Villain boss + admin custom moves |
+| 14 | Safari Zone encounters |
+| 15 | First NPC migration dialogue (Birch lab, Route 101, Littleroot) |
+| 16, 17 | Held items for all trainers |
+| 19 | Level curve rebalancing |
+| 22 | TM prices halved |
+| 23 | Move tutor: Earthquake pre-Gym 4 |
+| 24 | Birch opening sequence → migration mystery |
+| 25 | Rival dialogue arc (Route 103/110/Lilycove) |
+| 27 | Villain dialogue (Maxie + Archie, all scenes) |
+| 28 | NPC flavor text: early game (12 NPCs, Littleroot→Slateport) |
+| 29 | NPC flavor text: mid-game (11 NPCs, Mauville→Lilycove) |
+| 31, 32 | Wild held items for 164 species |
+| 32 | Gym leader dialogue: Roxanne through Winona |
+| 33 | Elite Four + Champion + Tate & Liza + Juan dialogue; late-game NPCs |
+| 35 | Reusable TMs |
+| 36 | ⚠️ REWROTE gym leader/rival/villain dialogue that was already done in cycles 25/27/32/33 |
 
-### Upcoming Roadmap (Cycles 34+)
-
-| Cycle | Objective | Priority | Complexity |
-|-------|-----------|----------|------------|
-| **34** | **Release candidate validation** — End-to-end playtest of narrative arc (Birch → NPCs → rivals → villains → Elite Four → Champion credits), verify all builds cleanly, create release candidate | HIGH | Medium (testing) |
-| **35** | **Trainer balance audit** — Review critical-path trainer levels for Winona through Elite Four; ensure power curve matches wild encounter density | HIGH | High (analysis + edits) |
-
-### Cycle 6 Detailed Plan: Gym Leader Overhaul
-
-Target file: `src/data/trainer_parties.h`
-Key line numbers:
-- Roxanne: 3367 (+ rematches at 10301+)
-- Brawly: 3391
-- Wattson: 3415
-- Flannery: 3446
-- Norman: 3477
-- Winona: 3508
-- Tate & Liza: 3546
-- Juan: 3577
-- Wallace (Champion): 4414
-
-**Approach**: Edit each gym leader's party struct, changing `.species`, `.lvl`, `.heldItem`, and `.moves` fields. Use `TrainerMonItemCustomMoves` format for all gym leaders (they already use this format). Verify with `make` after each leader group.
-
-**Species to use (confirmed valid)**: Aerodactyl, Heracross, Electabuzz, Houndoom, Arcanine, Kangaskhan, Blissey, Altaria, Skarmory, Alakazam, Starmie, Kingdra, Lapras — all compile cleanly.
-
-**Moves to use** (need to verify MOVE_* constants but likely valid):
-- MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_THUNDERBOLT, MOVE_FLAMETHROWER
-- MOVE_CRUNCH, MOVE_DRAGON_CLAW, MOVE_ICE_BEAM, MOVE_PSYCHIC
-- MOVE_EARTHQUAKE, MOVE_SURF, MOVE_SHADOW_BALL, MOVE_AERIAL_ACE
-
-### Cycle 8 Completed: Elite Four + Champion Overhaul
-
-**5 party definitions updated** — all four Elite Four members plus Champion Wallace. The trainer challenge arc is now complete.
-
-**Final Elite Four Designs:**
-
-| Member | Type | Team | Levels | Ace |
-|--------|------|------|--------|-----|
-| Sidney | Dark | Absol, Houndoom, Sharpedo, Umbreon, Tyranitar | 52–58 | Tyranitar (Crunch/Rock Slide/EQ/Fire Blast) |
-| Phoebe | Ghost | Misdreavus, Dusclops, Sableye, Gengar, Gengar | 53–59 | Gengar (Shadow Ball/Ice Punch/Fire Punch/Thunder Punch) |
-| Glacia | Ice | Jynx, Lapras, Cloyster, Walrein, Lapras | 54–60 | Lapras (Ice Beam/Surf/Psychic/Thunder) |
-| Drake | Dragon | Shelgon, Altaria, Dragonair, Flygon, Dragonite | 54–62 | Dragonite (Dragon Claw/Thunder/Ice Beam/EQ) |
-| Wallace | Water | Starmie, Tentacruel, Gyarados, Kingdra, Milotic, Lapras | 58–65 | Lapras (Surf/Ice Beam/Psychic/Thunder) |
-
-**Key design choices:**
-- Sidney replaced vanilla Mightyena/Shiftry/Cacturne with true Dark legends — Tyranitar as the apex
-- Phoebe replaced two Banettes with Misdreavus (opener) and a dual-Gengar arc; ace has elemental punches
-- Glacia replaced Sealeo/Glalie spam with diverse Ice legends; Cloyster with Explosion threat
-- Drake replaced Kingdra (moved to Wallace) with Dragonair + Dragonite — proper Dragon Elder feel
-- Wallace levels bumped from 55–62 to 58–65; Kingdra moveset upgraded (Dragon Dance instead of Double Team)
-
-### Cycle 7 Completed: Rival Team Overhaul
-
-**30 party definitions updated** across 5 battle locations (Route 103, Rustboro, Route 110, Route 119, Lilycove) for both Brendan and May, with 3 variants per location based on player's starter choice.
-
-**Rival Starter Mapping** (based on `sParty_*` naming convention):
-- `*Mudkip` parties → Rival has Larvitar (player chose Beldum)
-- `*Treecko` parties → Rival has Bagon (player chose Larvitar)
-- `*Torchic` parties → Rival has Beldum (player chose Bagon)
-
-**Thematic Team Identities:**
-
-| Rival Starter | Theme | Support Pokemon |
-|---------------|-------|-----------------|
-| Larvitar line | Dark/Aggressive | Houndour→Houndoom, Murkrow, Crobat |
-| Bagon line | Fast Predators | Sneasel, Scyther, Skarmory |
-| Beldum line | Technical Precision | Magnemite→Magneton, Kadabra, Starmie |
-
-**Battle Progression:**
-
-| Location | Levels | Team Size | Starter Stage |
-|----------|--------|-----------|---------------|
-| Route 103 | 5 | 1 | Base form |
-| Rustboro | 13-15 | 2 | Base form |
-| Route 110 | 18-20 | 3 | Base (Metang for Beldum) |
-| Route 119 | 29-31 | 3 | Mid-stage (Pupitar/Shelgon/Metang) |
-| Lilycove | 31-34 | 4 | Mid-stage |
+**⚠️ CYCLE 36 WARNING**: Cycle 36 rewrote dialogue for gym leaders, rivals, and villains believing they were "still vanilla" — but they had already been updated in cycles 25, 27, 32, 33. The cycle 36 versions are now live. Future cycles MUST check `completed-work.md` and `git log` target files before modifying.
 
 ---
 
-## 11. Technical Implementation Notes
+## 5. Technical Reference
 
 ### Trainer Modification Checklist
-
-When changing gym leaders:
 1. Edit primary party struct (first battle)
 2. Edit all rematch structs (2–5, for Match Call)
 3. Ensure levels scale appropriately for rematches
@@ -443,631 +108,45 @@ When changing gym leaders:
 ### Wild Encounter JSON Rules
 - Land: 12 slots (indices 0–11), water: 5 slots (0–4), fishing: 10 slots (0–9)
 - Slot probabilities: 20/20/10/10/10/10/5/5/4/4/1/1 for land
-- Use Python inline for bulk edits: `python3 -c "import json; ..."`
 - File path: `pokeemerald/src/data/wild_encounters.json`
 
 ### Known Valid Species (confirmed compile)
 LARVITAR, BAGON, BELDUM, ELECTABUZZ, FLAAFFY, GROWLITHE, ARCANINE, MAGMAR, MAGBY, JYNX, SWINUB, SNORUNT, KANGASKHAN, GLIGAR, ABSOL, SABLEYE, CORSOLA, REMORAID, OCTILLERY, MANTINE, LANTURN, CHINCHOU, RELICANTH, MILOTIC, BLISSEY, TOGETIC, HERACROSS, SCYTHER, PINSIR, DRAGONAIR, KINGDRA, LAPRAS, CLOYSTER, SHELLDER, HOUNDOUR, HOUNDOOM, TRAPINCH, SWABLU, DRATINI, GASTLY, HAUNTER, ABRA, MISDREAVUS, DUSKULL, SNEASEL, STARMIE, ALAKAZAM
 
-### Known Risky Operations
-- Battle script edits (.s assembly)
-- NPC dialogue (event_scripts.s — 43KB of custom assembly)
-- Core game logic (battle_main.c — 194KB)
-- Graphics changes (require correct dimensions, 8x8 tiles)
-
 ---
 
-## Legacy Notes (Pre-GDD)
+## 6. v1.0 Status & Roadmap
 
-### Easiest Entry Points
-
-1. Wild Pokémon (`data/wild_encounters.json`) ✅ DONE
-2. Starters (`src/starter_choose.c`) ✅ DONE
-3. Trainer Pokémon (`src/data/trainer_parties.h`) — NEXT
-
-### Risk Assessment
-
-| Change | Risk | Notes |
-|--------|------|-------|
-| Edit `wild_encounters.json` | Very Low | JSON data only — DONE |
-| Change `sStarterMon[]` | Very Low | 3-line constant change — DONE |
-| Edit trainer parties | Low | Data change, many structs |
-| Modify battle scripts | Medium | Complex assembly scripting |
-| NPC dialogue edits | Medium | Custom .s assembly format |
-| Add new moves | High | Requires data + logic changes |
-| Modify core logic | High | Potential for subtle bugs |
-
-### Technical Lessons (Cycle 1–4)
-
-- Wild encounter path: `pokeemerald/src/data/wild_encounters.json` (NOT `data/`)
-- Starter array: `sStarterMon[STARTER_MON_COUNT]` at lines 113–118 of `src/starter_choose.c`
-- Build: `make -j$(nproc)` from `pokeemerald/` — incremental builds are fast
-- Python script approach works well for bulk JSON edits
-- C89 only in classic mode: no `//` comments, no C99 features
-- All Gen 1-3 species are available in Emerald ROM data
-
----
-
-## Gym Difficulty Audit — Cycle 27 (Read-Only Sanity Check)
-
-### Roxanne (Gym 1) — Verified
-
-**Party** (`sParty_Roxanne1`):
-- Aerodactyl, Lv 12, Choice Band: WING_ATTACK / ROCK_THROW / BITE / SCARY_FACE
-- Graveler, Lv 12, Sitrus Berry: ROCK_THROW / MAGNITUDE / DEFENSE_CURL / ROLLOUT
-- Rhydon (ace), Lv 15, Shell Bell: HORN_ATTACK / ROCK_BLAST / SCARY_FACE / STOMP
-
-**Assessment**: Genuinely threatening. Choice Band Aerodactyl at level 12 with ROCK_THROW is a real hazard — physical Rock coverage with 50 BP + 1.5x multiplier. SCARY_FACE allows speed manipulation. Rhydon at 15 with ROCK_BLAST (multi-hit, can break Sturdy) is the hard wall.
-
-**Interaction with pseudo-legendary starters**:
-- Larvitar (Rock type): ROCK_THROW neutral, WING_ATTACK neutral, BITE neutral. MAGNITUDE from Graveler is a coin flip but could OHKO. Manageable.
-- Bagon (Dragon): ROCK_THROW neutral with Choice Band hits hard. BITE is neutral. Nothing is super effective against Bagon here but the raw damage is real.
-- Dratini (Dragon): Same as Bagon — no SE hits, but Choice Band ROCK_THROW at 12 against a Dragon-type with lower base stats could 2HKO.
-
-**Verdict**: The "punishing-but-fair" promise holds. No obvious pushover and no cheese. Aerodactyl threatens without being unanswerable. A player who overlevel-grinds can muscle through; a player at the expected level will feel pressure. The Rhydon ace provides a genuine endgame challenge for the gym.
-
-**Note**: ROCK_TOMB not on Roxanne's Aerodactyl, but ROCK_THROW + SCARY_FACE achieves similar utility (speed cut via status vs direct attack). No balance concern.
-
----
-
-## NPC Migration Flavor Text — COMPLETED (Cycles 28–29)
-
-**12 NPCs updated** across early Hoenn (Littleroot through Route 110):
-
-| Map | NPC | Text label | Theme |
-|-----|-----|-----------|-------|
-| Littleroot Town | Twin (post-adventure) | `LittlerootTown_Text_GoodLuckCatchingPokemon` | Saw shimmery blue thing like Dragonair |
-| Route 101 | Youngster | `Route101_Text_TakeTiredPokemonToPokeCenter` | Dark spiky thing bit him (unfamiliar species) |
-| Oldale Town | Girl near PokeCenter | `OldaleTown_Text_SavingMyProgress` | Trainer came in burned by a Magby |
-| Petalburg City | Boy near water | `PetalburgCity_Text_WaterReflection` | Caught a Dratini in the pond |
-| Petalburg City | Gentleman | `PetalburgCity_Text_FullPartyExplanation` | Sister spotted Houndour near town |
-| Route 104 | Bug Catcher | `Route104_Text_WhatsItLikeAtBottomOfSea` | Horsea schools replaced familiar fishing |
-| Petalburg Woods | Boy1 | `PetalburgWoods_Text_StayOutOfTallGrass` | Larvitar sleeping in rainforest |
-| Rustboro City | FatMan near Devon Corp | `RustboroCity_Text_WeShortenItToDevon` | Devon tracking 42 unknown species |
-| Rustboro City | Man2 | `RustboroCity_Text_TradePokemonGrowFast` | Route 116 tunnel full of strange things |
-| Slateport City | Cook | `SlateportCity_Text_SeaweedFullOfLife` | Something enormous swam past in ocean |
-| Slateport City | Old Woman | `SlateportCity_Text_HowTownIsBornAndGrows` | Wild migrant Pokemon appearing at market |
-| Route 110 | Old Man | `Route110_Text_TwoRoads` | Lapras sighted for first time in 30 years |
-
-**Narrative throughline**: Each NPC has a personal, grounded observation — not exposition. The world feels inhabited and the ecological shift registers emotionally before the player ever meets a villain.
-
-### Mid-Game NPCs — COMPLETED (Cycle 29)
-
-| Map | NPC | Text label | Theme |
-|-----|-----|-----------|-------|
-| Mauville City | Boy (near Pokemon Center) | `MauvilleCity_Text_NurseHurtMonBackToHealth` | Treating confused Houndour burn cases from western volcanic routes |
-| Mauville City | Maniac (near Game Corner) | `MauvilleCity_Text_AllSortsOfPeopleComeThrough` | Cousin finds Dratini surfacing in his Route 117 irrigation ditches |
-| Route 117 | Little Boy (on path) | `Route117_Text_AirIsTastyHere` | Larvitar spotted in eastern rocks, looking disoriented |
-| Fallarbor Town | Gentleman | `FallarborTown_Text_HaveYouChallengedFlannery` | Houndour packs howling at Mt. Chimney every night; Cozmo dismisses it |
-| Route 113 | Gentleman (ash collector) | `Route113_Text_AshCanBeFashionedIntoGlass` | Magmar have taken over the ash route; one melted his Pokeblock mold |
-| Lavaridge Town | ExpertM (near hot springs) | `LavaridgeTown_Text_HotSpringsNeverRunDry` | Hot springs running warmer; Magby appearing in lower pools |
-| Lavaridge Town | HotSpringsOldWoman2 | `LavaridgeTown_Text_HotSpringsClaims` | Grandmother's warning: volcanic Pokemon multiplying = mountain waking |
-| Fortree City | OldMan (on platform) | `FortreeCity_Text_EveryoneHealthyAndLively` | Three Skarmory nested inland; ranger tracked formations crossing Hoenn |
-| Fortree City | Boy (in treehouse) | `FortreeCity_Text_BugPokemonComeThroughWindow` | Unknown large creature roosting in upper canopy; takes Oran Berries at dawn |
-| Lilycove City | Man3 (in town) | `LilycoveCity_Text_ContestHallInTown` | Harbormaster logged 17 uncatalogued species; something enormous in deep water |
-| Route 119 | Boy1 (in tall grass) | `Route119_Text_ThoughtFlyByCatchingBirdMons` | New Pokemon calls in the rain; Machoke has been jumpy for a week |
-
----
-
-## Villain Dialogue — COMPLETED (Cycle 27)
-
-**Status**: All six villain speech nodes written and built successfully.
-
-### What Was Written
-
-**Maxie (Mt. Chimney)**:
-- `MtChimney_Text_MaxieIntro` — migration-aware pre-battle speech: Maxie observes NUMEL/SLUGMA flooding the terrain, concludes GROUDON is the answer
-- `MtChimney_Text_MaxieDefeat` — brief in-battle defeat acknowledgment
-- `MtChimney_Text_MaxieYouHaventSeenLastOfMagma` — post-battle vow
-
-**Archie (Slateport Museum 2F)**:
-- `SlateportCity_OceanicMuseum_2F_Text_ArchieWarning` — Archie sees LAPRAS in the harbor and WAILMER in migration paths, declares the sea must reclaim Hoenn
-
-**Archie (Slateport Harbor)**:
-- `SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove` — escape line preserved with migration flavor
-
-**Archie (Seafloor Cavern Room 9)**:
-- `SeafloorCavern_Room9_Text_ArchieYouMustDisappear` — final pre-battle speech
-- `SeafloorCavern_Room9_Text_ArchieWithThisRedOrb` — post-battle (Red Orb reference PRESERVED — required for script engine to continue)
-
-### Narrative Throughline
-Same ecological crisis (migration) → two irreconcilable readings → Maxie wants land dominance, Archie wants ocean dominance. Player receives both perspectives through authentic confrontation dialogue.
-
----
-
----
-
-# POKEEMERALD-EXPANSION INTEGRATION ANALYSIS — Cycle 30
-
-*Comprehensive planning document for the physical/special split decision*
-
----
-
-## Executive Summary
-
-After 29 cycles of successful ROM hack development, we face a critical architectural decision: integrate pokeemerald-expansion for modern mechanics (particularly the physical/special split) or continue with vanilla pokeemerald. This analysis provides a complete risk/benefit assessment and implementation roadmap.
-
-**Recommendation**: **PROCEED WITH CAUTION** — Integration offers significant competitive benefits but requires a dedicated 3-4 cycle migration effort with substantial merge conflict resolution.
-
----
-
-## Current Foundation Assessment
-
-### What We've Built (29 Cycles)
-
-**Stable Systems** (Low Integration Risk):
-- **Starter system**: Larvitar/Bagon/Dratini with rival correspondence ✅
-- **Wild encounters**: 73 route + 34 dungeon tables completely overhauled ✅
-- **Trainer progression**: All 8 gyms + Elite Four + rivals redesigned ✅
-- **Narrative foundation**: Migration crisis established through Birch, NPCs, villains ✅
-- **QoL improvements**: TM prices, move tutors, held items ✅
-
-**Files Modified** (Merge Conflict Candidates):
-- `src/starter_choose.c` — Starter array modification
-- `src/data/trainer_parties.h` — Extensive trainer team edits
-- `src/data/wild_encounters.json` — Complete encounter overhaul
-- `data/text/birch_speech.inc` — Opening sequence transformation
-- `data/maps/*/scripts.inc` — 23 NPC dialogue files across Hoenn
-- `data/maps/MtChimney/scripts.inc` + villain script files — Dialogue updates
-
-**Build Status**: ✅ **STABLE** — ROM compiles cleanly to 16MB, all systems validated in Cycle 20
-
----
-
-## pokeemerald-expansion Research Findings
-
-### What It Offers
-
-**Core Features** (from RH-Hideout's official repository):
-- **Physical/Special Split**: Moves categorized individually, not by type
-- **Fairy Type**: Complete type chart integration
-- **Gen 4-8+ Pokémon**: 480+ additional species with full data
-- **Modern Battle Mechanics**: Abilities, updated move effects, critical hit formula
-- **Battle Frontier**: Gen 3 post-game facilities with modern balance
-- **QoL Improvements**: Infinite TM use, type effectiveness display, auto-run
-
-**Configuration Options**:
-- Physical/Special Split can be toggled on/off via config flags
-- Individual features can be enabled/disabled modularly
-- Backward compatibility modes available
-
-### Integration Methods
-
-**Option 1: Fresh Start Migration**
-- Create new branch from pokeemerald-expansion master
-- Re-apply our 29 cycles of changes manually
-- Advantage: Clean integration, full feature access
-- **Risk**: 2-3 cycles of pure migration work, potential data loss
-
-**Option 2: Incremental Merge**
-- Add pokeemerald-expansion as remote: `git remote add RHH https://github.com/rh-hideout/pokeemerald-expansion`
-- Pull with `git pull RHH master` and resolve merge conflicts
-- Advantage: Preserves commit history and current work
-- **Risk**: Extensive merge conflicts in modified files
-
-**Option 3: Selective Feature Porting**
-- Extract only physical/special split code from pokeemerald-expansion
-- Apply as targeted patches to our current codebase
-- Advantage: Minimal disruption, focused integration
-- **Risk**: Missing dependencies, incomplete implementation
-
----
-
-## Risk Assessment
-
-### High Risk Areas
-
-**Data Structure Conflicts**:
-- `trainer_parties.h`: Our extensive trainer edits vs expansion's trainer AI upgrades
-- `wild_encounters.json`: Our encounter tables vs expansion's species additions
-- Build system changes: Modified Makefile, linker scripts, include paths
-
-**Narrative Integration Challenges**:
-- Our migration crisis dialogue vs expansion's updated NPC text
-- Script compatibility with expansion's event system changes
-- Text formatting differences (our ASCII-safe approach vs expansion features)
-
-**Technical Risks**:
-- **Build System**: pokeemerald-expansion uses modern GCC by default vs our agbcc setup
-- **ROM Size**: Expansion adds significant data; may require ROM size increases
-- **Save Compatibility**: New mechanics may break existing save files
-- **Link Battles**: Expansion ROMs can only battle other expansion ROMs
-
-### Medium Risk Areas
-
-**Feature Conflicts**:
-- Our starter system vs expansion's starter selection features
-- Our held item assignments vs expansion's item data updates
-- Move tutor integration with expansion's move database
-
-**Testing Requirements**:
-- All 8 gym leaders + Elite Four need rebalancing for physical/special split
-- Wild encounter balance may need adjustment with new species available
-- Rival teams may need move updates for split mechanics
-
-### Low Risk Areas
-
-**Preserved Systems**:
-- Core game progression remains unchanged
-- Map layouts and geography unaffected
-- Basic dialogue editing patterns preserved
-- Build tools generally compatible
-
----
-
-## Benefit Analysis
-
-### Major Competitive Advantages
-
-**Enhanced Trainer Battles**:
-- **Gym Leader Improvement**: Roxanne's Aerodactyl gains physical Rock moves; Flannery's Houndoom gets special Dark moves
-- **Elite Four Balance**: Sidney's Tyranitar benefits from physical Crunch; Phoebe's Gengar gains special Shadow Ball power
-- **Rival Enhancement**: Pseudo-legendary starters gain access to optimal STAB moves for their stats
-
-**Specific Examples**:
-- **Tyranitar**: Gains physical Crunch (80 BP) vs special (was locked to weaker physical movepool)
-- **Salamence**: Dragon Claw becomes physical (matches 135 Attack stat)
-- **Dragonite**: Retains special Dragon Pulse for mixed sets, gains physical Dragon Rush
-- **Houndoom**: Fire moves stay special (110 SpA), Dark moves become physical (90 Atk)
-- **Gyarados**: Waterfall, Crunch become physical (125 Attack usage)
-
-**Player Experience**:
-- Every Pokémon becomes competitively viable with proper move split
-- Strategic depth increases with physical/special attackers in same type
-- Our legendary-tier encounter tables gain proper competitive movesets
-
-### Long-term Viability
-
-**Community Standards**:
-- Most 2026 ROM hacks use pokeemerald-expansion as base
-- Physical/special split considered essential for competitive balance
-- Future community tools/resources target expansion framework
-
-**Feature Completeness**:
-- Access to 480+ additional Pokémon species for future encounter updates
-- Modern battle mechanics for accurate competitive simulation
-- Infinite TM use reduces grinding, improves player experience
-
----
-
-## Migration Strategy Design
-
-### Recommended Approach: **Incremental Merge with Staged Integration**
-
-**Phase 1: Preparation (Cycle 31)**
-- Create safety branch: `git checkout -b pre-expansion-backup`
-- Document all current modifications in detail
-- Set up pokeemerald-expansion remote
-- Test expansion build on clean repository
-
-**Phase 2: Initial Integration (Cycle 32)**
-- Attempt merge: `git pull RHH master`
-- Resolve merge conflicts in order of priority:
-  1. Build system files (Makefile, linker scripts)
-  2. Core data structures (species.h, moves.h, items.h)
-  3. Wild encounter data (preserve our 73+34 table overhauls)
-  4. Trainer party data (preserve our gym/Elite Four designs)
-
-**Phase 3: Feature Validation (Cycle 33)**
-- Enable physical/special split: Set `P_SPLIT_PHYSICAL_SPECIAL` config flag
-- Test build and basic functionality
-- Validate starter system, wild encounters, trainer battles
-- Document any broken features for repair
-
-**Phase 4: Rebalancing and Polish (Cycle 34)**
-- Update trainer movesets for physical/special split
-- Rebalance gym leaders and Elite Four for new mechanics
-- Test narrative elements (Birch dialogue, NPC text, villain speeches)
-- Full integration testing and validation
-
-**Rollback Plan**:
-- If integration fails: `git checkout pre-expansion-backup`
-- Continue development on vanilla pokeemerald base
-- Revisit expansion integration in future development cycle
-
-### Alternative: **Selective Feature Porting**
-
-If full integration proves too risky:
-- Extract physical/special split code only
-- Port as minimal patch to our current codebase
-- Preserve all existing work while gaining core competitive benefits
-
----
-
-## Multi-Cycle Implementation Roadmap
-
-### Integration Track (High Reward, High Risk)
-
-**Cycle 31: Expansion Preparation**
-- Research phase completion
-- Repository backup and safety measures
-- pokeemerald-expansion environment setup
-- Initial compatibility testing
-
-**Cycle 32: Core Integration**
-- Merge pokeemerald-expansion master
-- Resolve critical merge conflicts
-- Restore build functionality
-- Validate basic systems (startup, starters, basic battles)
-
-**Cycle 33: System Restoration**
-- Restore wild encounter tables (our 73+34 overhauls)
-- Restore trainer party modifications (gyms, Elite Four, rivals)
-- Restore narrative elements (Birch, NPCs, villains)
-- Test physical/special split functionality
-
-**Cycle 34: Rebalancing and Validation**
-- Update trainer movesets for physical/special split benefits
-- Balance test all gym leaders and Elite Four
-- Full narrative playthrough testing
-- Release candidate preparation
-
-**Success Criteria**: ROM builds cleanly, all 29 cycles of work preserved, physical/special split active
-
-### Alternative Track (Low Risk, Moderate Reward)
-
-**Cycle 31: Wild Pokémon Held Items**
-- Add thematic held items to wild Pokémon encounters
-- Magmar holds Charcoal, Electabuzz holds Magnet, etc.
-- Enhances discovery layer without architectural risk
-
-**Cycle 32: Gym Leader Pre/Post Battle Dialogue**
-- Add migration-aware dialogue to Brawly through Winona
-- Creates narrative continuity from early to late game
-- Completes world-building foundation
-
-**Cycle 33: End-game Content Expansion**
-- Elite Four rematches with expanded teams
-- Champion Wallace dialogue updates
-- Post-game trainer additions
-
-**Cycle 34: Final Polish and Release**
-- Late-game NPC flavor text (Mossdeep, Sootopolis, Ever Grande)
-- Comprehensive balance testing
-- Release preparation
-
----
-
-## Decision Framework
-
-### Go Criteria (pokeemerald-expansion Integration)
-
-**Technical Requirements**:
-- ✅ Successful test merge on sample branch
-- ✅ Build system compatibility confirmed
-- ✅ Core systems (starters, encounters, trainers) restored within 2 cycles
-
-**Strategic Requirements**:
-- ✅ Physical/special split provides meaningful battle improvements
-- ✅ Integration effort justified by competitive enhancement
-- ✅ Community adoption makes expansion the standard framework
-
-### No-Go Criteria (Continue Vanilla)
-
-**Risk Triggers**:
-- ❌ Merge conflicts cannot be resolved within 2 cycles
-- ❌ Core systems (starters, encounters, trainers) broken by integration
-- ❌ Build system incompatibility requires extensive rework
-- ❌ Narrative elements (Birch, NPCs, villains) lost or severely damaged
-
-**Alternative Value**:
-- ❌ Vanilla pokeemerald provides sufficient competitive depth
-- ❌ Player experience satisfactory without modern mechanics
-- ❌ Development time better spent on new content vs integration
-
----
-
-## Final Recommendation
-
-**PROCEED WITH CAUTION**: pokeemerald-expansion integration offers substantial competitive benefits and long-term viability, but requires significant migration effort with meaningful risk to our 29-cycle foundation.
-
-**Recommended Decision Process**:
-1. **Cycle 31**: Preparation phase — test merge compatibility and create safety measures
-2. **Cycle 32**: Initial integration attempt — if successful, continue; if blocked, abort to vanilla track
-3. **Cycle 33-34**: Complete integration and validation if Path A successful
-
-**Success Probability**: **Medium-High** — Based on research, RH-Hideout's expansion is well-maintained and migration-focused, but our extensive modifications create legitimate merge conflict risk.
-
-**Fallback Position**: Strong — Our vanilla pokeemerald implementation is stable, complete, and release-ready. Expansion integration is an enhancement, not a necessity.
-
-**Long-term Impact**: High — Physical/special split would significantly enhance competitive balance for our legendary-tier trainer battles and provide future-proof foundation for continued development.
-
----
-
-Sources:
-- [GitHub - rh-hideout/pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
-- [pokeemerald-expansion Installation Guide](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/INSTALL.md)
-- [pokeemerald-expansion Wiki](https://github.com/rh-hideout/pokeemerald-expansion/wiki)
-- [Physical/Special Split Benefits Analysis](https://www.cbr.com/pokemon-gen-4-physical-special-improvements/)
-- [Smogon Physical/Special Split Analysis](https://www.smogon.com/articles/physical-special-split)
-- [Pokemon Physical Special Split Guide](https://pokepolitan.com/pokemon-physical-special-split/)
-- [Physical/Special Split Community Discussion](https://www.pokecommunity.com/threads/the-physical-special-status-split.325221/)
-
----
-
-# V1.0 FINALIZATION PLAN
-
-*Added Cycle 34 — 2026-03-18*
-
----
-
-## Narrative Arc Review Findings (Cycle 34 Spot-Check)
-
-Reviewed 8 key script files from Littleroot through Ever Grande. Findings:
-
-### Confirmed Solid
-
-**Birch Lab** (`LittlerootTown_ProfessorBirchsLab/scripts.inc`):
-- Birch intro: "With rare Pokémon migrating to Hoenn, now's the perfect time to start." — clear hook.
-- Aide: "He's studying the sudden appearance of rare Pokémon across Hoenn's habitats" — reinforces theme.
-- Grade: **A** — migration theme established cleanly from first real dialogue.
-
-**Littleroot NPCs** (`LittlerootTown/scripts.inc`):
-- Boy NPC: "PROF. BIRCH spends days in his LAB studying rare Pokémon migrations…"
-- Twin/child: "I saw something in the tall grass I've never seen before! All shimmery and blue — like a tiny Dragonair. Prof. Birch says rare Pokemon from other regions have been appearing all over Hoenn."
-- Grade: **A** — excellent world-building flavor at game start.
-
-**Route 103 Rival** (`Route103/scripts.inc`):
-- "I just caught a POKéMON I've never seen in HOENN before! It showed up near LITTLEROOT — one of those migrants BIRCH has been studying!"
-- "This migration is an opportunity. The trainer who finds the strongest migrants wins!"
-- Grade: **A** — rival immediately ties their motivation to the migration. Excellent.
-
-**Tate & Liza** (`MossdeepCity_Gym/scripts.inc`):
-- "The migration shook the psychic realm. Strange auras, displaced spirits, POKéMON calling out from places they'd never been. Our minds grew stronger sorting through all of it."
-- Grade: **A** — psychic framing is creative and thematically cohesive.
-
-**Juan** (`SootopolisCity_Gym_1F/scripts.inc`):
-- "Species from distant oceans arrived on our shores. KINGDRA, LAPRAS, creatures from the abyssal deep. As a man of the sea, I was moved to my very soul."
-- Grade: **A** — poetic and personal. Juan's water affinity makes migration resonant.
-
-**Sidney** (`EverGrandeCity_SidneysRoom/scripts.inc`):
-- "Ever since the migration hit HOENN, the wilds near VICTORY ROAD have gotten dangerous. DARK types especially — they're drawn to the chaos."
-- Grade: **A** — dark-type framing is flavorful and earned.
-
-**Wallace** (`EverGrandeCity_ChampionsRoom/scripts.inc`):
-- Intro: "When the great migration began, everyone asked what it meant. I said: watch the sea. The sea welcomed the newcomers. It made room for LAPRAS, KINGDRA, creatures from the abyssal deep. HOENN didn't break — it expanded."
-- Defeat: "You are a true product of this new HOENN — a TRAINER who rose to meet a world that raised its expectations."
-- Grade: **A+** — thematic climax. The player's journey mirrors Hoenn's own adaptation.
-
-### Minor Issues Found
-
-1. **Juan/Wallace species overlap**: Both mention "KINGDRA, LAPRAS" specifically. Not a problem — they're both water experts and it's thematically consistent — but a future polish pass could differentiate. Juan focuses on oceanic arrivals; Wallace could emphasize how Hoenn's sea "expanded" to include them. Low priority.
-
-2. **Wallace post-battle speech** (vanilla text): After defeat, Wallace delivers the vanilla "At times they danced like a spring breeze" poetic speech before the Hall of Fame walk. This is vanilla text we didn't modify — it's not wrong, but it slightly breaks the migration-voice. Could be updated in a post-v1.0 polish pass.
-
-3. **Route 110 rival** (not checked): The second rival encounter on Route 110 was not verified. This is likely still vanilla. If so, it's a narrative gap between Route 103 (strong migration dialogue) and later rival encounters. Flagged for Cycle 35 investigation.
-
-### Overall Assessment: NARRATIVE ARC IS COHERENT
-
-The migration theme runs cleanly from the first NPC encountered (Birch's aide) through the Champion battle. Every major story beat reinforces the premise. The arc is **release-ready** on narrative grounds.
-
----
-
-## v1.0 Scope Definition
+### v1.0 Scope Definition
 
 v1.0 is feature-complete when ALL of the following are true:
+- [x] Narrative arc coherent end-to-end (Birch → Wallace) — VERIFIED (Cycle 34)
+- [x] Wild held items implemented — COMPLETE (Cycles 31/32)
+- [x] Reusable TMs — COMPLETE (Cycle 35)
+- [ ] Final build compiles cleanly — PENDING
+- [ ] Release notes written — PENDING
 
-- [x] Narrative arc coherent end-to-end (Birch → Wallace) — **VERIFIED COMPLETE**
-- [x] Wild held items implemented for thematic species — **COMPLETE** (Cycle 31/32: all 164 species updated)
-- [ ] Reusable TMs implemented — **PENDING** (Cycle 35)
-- [ ] Final build compiles cleanly — **PENDING** (Cycle 37 release build)
-- [ ] Release notes written — **PENDING** (Cycle 37)
+### Current Roadmap
 
-Optional (post-v1.0):
-- [ ] Auto-run (always running without B) — medium QoL, lower priority
-- [ ] Wallace post-battle speech migration update — minor polish
-- [ ] Route 110 rival migration dialogue check/update — minor gap
+| Cycle | Objective | Priority |
+|-------|-----------|----------|
+| **37** | Final validation build + release candidate + release notes | HIGH |
+| Post-v1.0 | Auto-run QoL (field_player_avatar.c, 1-line change) | Medium |
+| Post-v1.0 | Wallace post-battle vanilla text update | Low |
+| v2.0 | pokeemerald-expansion migration (phys/special split, Fairy, etc.) | Future |
 
----
+### QoL Features Reference
 
-## QoL Feature Plan (Based on Cycle 34 Research)
+**Reusable TMs** (DONE): Deleted 2 lines in `src/party_menu.c` → TMs no longer consumed.
 
-### A. Reusable TMs — HIGH PRIORITY, IN SCOPE FOR V1.0
-
-**Feasibility**: LOW RISK
-
-**File to modify**: `pokeemerald/src/party_menu.c`
-
-**Exact location**: Function `Task_LearnedMove`, lines 4778–4780.
-
-**Current code**:
-```c
-if (item < ITEM_HM01)
-    RemoveBagItem(item, 1);
-```
-
-**Change**: Delete these 2 lines entirely.
-
-**Rationale**: `item < ITEM_HM01` is the ONLY check that distinguishes TMs (which get consumed) from HMs (which are already never consumed by this path since they're ≥ ITEM_HM01). Removing the block means TMs are never consumed — HM behavior unchanged. This is the single point of TM consumption for both the direct-learn path and the replace-move path (Task_PartyMenuReplaceMove calls Task_LearnedMove).
-
-**Risk assessment**: Very low. It's a 2-line deletion in one function. No cascading effects. TMs still work — just don't disappear from bag. HMs unaffected.
-
-**Belongs in**: v1.0 (Cycle 35)
+**Auto-Run** (post-v1.0): Remove `(heldKeys & B_BUTTON) &&` from `src/field_player_avatar.c` line 658.
 
 ---
 
-### B. Auto-Run (Always Running) — MEDIUM PRIORITY, POST-V1.0
+## 7. pokeemerald-expansion (Deferred to v2.0)
 
-**Feasibility**: LOW RISK (technically), MEDIUM PRIORITY (gameplay feel)
+Full analysis was done in Cycle 30. Key decision: **Do NOT attempt before v1.0 release.**
 
-**File to modify**: `pokeemerald/src/field_player_avatar.c`
-
-**Exact location**: Line 658, inside the running check condition.
-
-**Current code**:
-```c
-if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (heldKeys & B_BUTTON) && FlagGet(FLAG_SYS_B_DASH)
- && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
-```
-
-**Change**: Remove `(heldKeys & B_BUTTON) &&` from the condition.
-
-**Result**: Player always runs (when FLAG_SYS_B_DASH is set, i.e., after receiving running shoes from Mom) unless underwater or on restricted tiles.
-
-**Risk assessment**: Low technically, but changes core feel of movement permanently. Some players prefer optional running. Consider as v1.1 or post-v1.0 feature once community feedback is gathered.
-
-**Belongs in**: Post-v1.0 (optional QoL)
-
----
-
-### C. Wild Held Items — ALREADY COMPLETE
-
-All 164 wild encounter species have thematic held items assigned in `src/data/pokemon/species_info.h` (completed Cycles 31/32). Key species:
-- Magmar: Charcoal (common) / Fire Stone (rare)
-- Electabuzz: Magnet (common) / Thunder Stone (rare)
-- Houndour/Houndoom: Charcoal
-- Dratini/Dragonair: Dragon Scale (common) / Leftovers (rare)
-- Lapras: Nevermeltice (common) / Leftovers (rare)
-- Larvitar/Pupitar: Hard Stone (common) / Leftovers (rare)
-- Bagon/Shelgon: Dragon Fang (common) / Leftovers (rare)
-- Beldum: Metal Coat
-
-**No action needed** — system is fully implemented.
-
----
-
-## Updated Upcoming Roadmap
-
-| Cycle | Objective | Priority | Status |
-|-------|-----------|----------|--------|
-| 34 | v1.0 planning — narrative arc review, QoL research, finalization document | HIGH | ✅ COMPLETE |
-| 35 | Reusable TMs — delete 2 lines in party_menu.c; check Route 110 rival dialogue | HIGH | Pending |
-| 36 | Final validation build + release candidate prep + release notes | HIGH | Pending |
-| Post-v1.0 | Auto-run QoL patch (field_player_avatar.c, 1-line change) | Medium | Future |
-| Post-v1.0 | Wallace post-battle vanilla text update (migration-voice polish) | Low | Future |
-| v2.0 | pokeemerald-expansion migration (physical/special split, Fairy type, following Pokémon) | Future | Deferred |
-
-**Note**: Cycle count compressed from original 3-cycle plan (35/36/37) to 2 cycles (35/36) because:
-- Wild held items already complete (no separate cycle needed)
-- Narrative arc verified solid (no revision cycle needed)
-- TM patch is a 2-line change — can be combined with Route 110 check in one cycle
-
----
-
-## Post-v1.0 Vision (v2 on pokeemerald-expansion)
-
-If the project continues after v1.0 release, v2 should migrate to **pokeemerald-expansion** as the base:
-
-**Core Benefits**:
-- **Physical/Special split** transforms every trainer fight — Tyranitar's Crunch becomes physical (matching 134 Attack), Gengar's Shadow Ball stays special (matching 130 SpAtk), Salamence's Dragon Claw becomes physical (matching 135 Attack)
-- **Following Pokémon** — players walk with their Larvitar/Dratini/Beldum partner, reinforcing the bonding narrative
-- **Fairy type** — adds new late-game strategic depth; Togekiss becomes a Fairy-type wall, Gardevoir gains Fairy STAB
-- **Infinite TMs** — built into expansion by default (no separate patch needed)
-
-**Migration Path**: Clean rebase, not a mid-project graft. Port all custom data (encounter tables, trainer parties, held items, dialogue) as a series of targeted patches onto a fresh expansion clone. Estimated: 5-8 cycles to full parity + new features.
-
-**Do NOT attempt expansion migration before v1.0 release.** The 33-cycle foundation is stable and release-ready. Expansion migration is an enhancement for v2, not a prerequisite for shipping.
-
----
-
-## v1.0 Release Checklist
-
-Before tagging v1.0:
-- [ ] Reusable TMs patch applied and build verified (Cycle 35)
-- [ ] Route 110 rival dialogue verified or updated (Cycle 35)
-- [ ] Final `make` with zero errors (Cycle 36)
-- [ ] `.gba` file playable from Littleroot to Hall of Fame entry verified conceptually
-- [ ] GitHub release created with changelog listing all player-facing changes
-- [ ] Issue #11 (expansion migration) marked as v2 milestone, not v1.0
-
-**Target release**: Cycle 36
+Benefits: Physical/special split, Fairy type, 480+ species, modern mechanics.
+Approach: Clean rebase onto expansion, re-apply all custom data as targeted patches. Estimated 5-8 cycles.
+Detailed analysis archived — refer to cycle 30 journal if needed.
