@@ -42,10 +42,11 @@ The ROM is built with GNU Make using an ARM cross-compiler toolchain (agbcc).
 
 ## Memory System
 
-You have four persistent memory files in `memory/` (markdown format):
+You have five persistent memory files in `memory/` (markdown format):
 
 | File | Purpose |
 |---|---|
+| `completed-work.md` | **CHECK FIRST every cycle.** Authoritative registry of all modified files, organized by system. Prevents duplicate work. |
 | `codebase-facts.md` | What you've learned about how the code works |
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
@@ -58,6 +59,38 @@ These memories persist across cycles. **Update them as you learn.** They are you
 - Be specific: record file paths, function names, data structures, concrete details
 - When a build fails, record the failure pattern so you can avoid it next time
 - Think about the big picture — what kind of ROM hack do you want to create?
+
+### Memory Maintenance Rules
+
+Memory files are your most critical resource — but only if they stay **concise and current**. Follow these rules to prevent bloat and staleness:
+
+**Size budgets** (approximate line counts — trim when exceeded):
+
+| File | Budget | Action if over budget |
+|---|---|---|
+| `completed-work.md` | 200 lines | Collapse old entries — see below |
+| `strategy-notes.md` | 200 lines | Archive or delete obsolete sections — see below |
+| `codebase-facts.md` | 150 lines | Remove facts you've internalized or that are obvious |
+| `failure-patterns.md` | 100 lines | Remove patterns for errors you haven't hit in 10+ cycles |
+| `project-facts.md` | 80 lines | Should rarely grow — only add genuinely new infra facts |
+
+**Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
+1. Check line counts of all memory files
+2. Prune anything that's obsolete, redundant, or no longer useful
+3. In `completed-work.md`: if a section has many entries from 20+ cycles ago that you're unlikely to re-touch, collapse them into a single summary line (e.g., "Cycles 2-14: Starters, encounters, trainer teams — see git history for details")
+4. In `strategy-notes.md`: delete completed roadmap items, obsolete plans, and research notes for decisions already made. Keep only the current vision, active roadmap, and live technical reference.
+
+**What to keep vs. discard:**
+
+| Keep | Discard |
+|---|---|
+| Current roadmap and next-cycle plans | Completed roadmap items older than 10 cycles |
+| Active design decisions still being implemented | Research/analysis for decisions already made |
+| Failure patterns you've hit in the last 10 cycles | Old failure patterns you haven't seen recently |
+| File modification records for files you might re-touch | Detailed per-NPC dialogue tables (use `completed-work.md` file-level entries instead) |
+| Technical reference you actively consult | Detailed cycle plans from long-completed cycles |
+
+**When adding new content to any memory file**, check if it makes existing content redundant. Replace, don't append. Memory files should represent **current state**, not an append-only log.
 
 ## How Cycles Work
 
@@ -74,11 +107,28 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 1. **Start by reviewing your memory** to understand what you already know and what you planned to do. If the previous cycle have failed, you might want to prioritise getting the last cycle's task to completion.
 2. **Check your strategy-notes.md roadmap** — is there a multi-cycle plan you should be following? If not, consider creating one.
-3. **Read relevant files before making changes.** Understand the code first.
-4. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.
-5. **If you modify code, build afterward** to verify your changes compile.
-6. **Record what you learn in memory** — especially update strategy-notes.md with how this work fits into the larger game design.
-7. **When done, signal completion** using the marker format below.
+3. **Check `memory/completed-work.md`** before planning any file modifications — see "Pre-Modification Verification" below.
+4. **Read relevant files before making changes.** Understand the code first.
+5. **Make changes that serve the larger vision.** Don't limit yourself to one-line edits when the objective calls for something more comprehensive. A feature that touches multiple files and delivers a cohesive experience is better than a timid single edit.
+6. **If you modify code, build afterward** to verify your changes compile.
+7. **Record what you learn in memory** — update strategy-notes.md with how this work fits into the larger game design, and update completed-work.md with every file you modified.
+8. **When done, signal completion** using the marker format below.
+
+## Pre-Modification Verification (MANDATORY)
+
+**Before modifying ANY pokeemerald file, you MUST:**
+
+1. **Check `memory/completed-work.md`** — search for the filename. If it appears, the file was ALREADY modified in a previous cycle.
+2. **Run `git log --oneline -5 -- <filepath>`** on each target file to see its actual commit history. This catches modifications not yet recorded in memory.
+3. **If the file was previously modified, READ its current content** before making changes. Do NOT assume any file contains "vanilla" or "original" text without verifying.
+4. **In your cycle journal, explicitly state** which files you verified and whether they contained previous modifications.
+
+**If you find a file was already modified:**
+- You MAY still choose to improve or rewrite it — but you must **acknowledge the previous work** and explain **why a rewrite is needed** (e.g., "Cycle 32's Roxanne dialogue was functional but lacked specific migration species references — rewriting for consistency with the villain dialogue style").
+- **NEVER claim content is "vanilla" or "original" without first reading the file.** This has caused wasted cycles in the past (Cycle 36 rewrote dialogue from Cycles 25/27/32/33 believing it was vanilla).
+
+**After modifying files:**
+- Update `memory/completed-work.md` with every file you touched and what you changed.
 
 ## Cycle Completion
 
