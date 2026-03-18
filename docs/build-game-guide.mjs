@@ -202,13 +202,35 @@ async function parseWildEncounters() {
   return routes;
 }
 
+// ── Move Types ──
+
+/**
+ * Parse battle_moves.h to build a map of MOVE_NAME → type string
+ * Returns Map<moveName (display, e.g. "Dragon Claw"), typeName (e.g. "Dragon")>
+ */
+async function parseMoveTypes() {
+  const src = await readFile(join(POKE, 'src/data/battle_moves.h'), 'utf-8');
+  const moveTypeMap = new Map();
+  const moveRegex = /\[(MOVE_\w+)\]\s*=\s*\{[^}]*?\.type\s*=\s*(TYPE_\w+)/gs;
+  let m;
+  while ((m = moveRegex.exec(src)) !== null) {
+    const moveName = formatMove(m[1]);
+    if (moveName) {
+      const rawType = m[2].replace('TYPE_', '');
+      const typeName = rawType.charAt(0) + rawType.slice(1).toLowerCase();
+      moveTypeMap.set(moveName, typeName);
+    }
+  }
+  return moveTypeMap;
+}
+
 // ── Trainer Parties ──
 
 /**
  * Parse all trainer party arrays from trainer_parties.h
  * Returns Map<partyName, MonData[]>
  */
-async function parseTrainerParties() {
+async function parseTrainerParties(moveTypeMap) {
   const src = await readFile(join(POKE, 'src/data/trainer_parties.h'), 'utf-8');
   const parties = new Map();
 
@@ -251,7 +273,11 @@ async function parseTrainerParties() {
         if (movesMatch) {
           mon.moves = movesMatch[1]
             .split(',')
-            .map(m => formatMove(m.trim()))
+            .map(m => {
+              const name = formatMove(m.trim());
+              if (!name) return null;
+              return { name, type: moveTypeMap.get(name) || null };
+            })
             .filter(Boolean);
         }
       }
@@ -361,6 +387,16 @@ function assembleChampion(trainers, parties) {
 }
 
 function assembleRivals(trainers, parties, starters) {
+  // Map vanilla starter ID suffixes → the actual new player starter for that matchup.
+  // Trainer IDs like TRAINER_BRENDAN_ROUTE_103_MUDKIP were named for the vanilla rival's
+  // starter. The MUDKIP trainer is triggered when the player chose Treecko (pos 1 in vanilla),
+  // which maps to Bagon (pos 1 in new game). Similarly TREECKO→Larvitar, TORCHIC→Dratini.
+  const vanillaToPlayerStarter = {
+    MUDKIP: 'Bagon',
+    TREECKO: 'Larvitar',
+    TORCHIC: 'Dratini',
+  };
+
   // Build a set of known starter species names (uppercase) for suffix detection
   const starterNames = new Set(
     starters.map(s => s.speciesConst.replace('SPECIES_', ''))
@@ -394,7 +430,9 @@ function assembleRivals(trainers, parties, starters) {
       rival: t.id.startsWith('TRAINER_BRENDAN') ? 'Brendan' : 'May',
       name: t.name,
       location,
-      starterMatchup: starterMatch ? formatSpecies('SPECIES_' + starterMatch[1]) : null,
+      starterMatchup: starterMatch
+        ? (vanillaToPlayerStarter[starterMatch[1]] || formatSpecies('SPECIES_' + starterMatch[1]))
+        : null,
       doubleBattle: t.doubleBattle,
       party: parties.get(t.partyRef) || [],
     };
@@ -406,10 +444,11 @@ function assembleRivals(trainers, parties, starters) {
 async function main() {
   console.log('Parsing pokeemerald data...');
 
+  const moveTypeMap = await parseMoveTypes();
   const [starters, routes, parties, trainers] = await Promise.all([
     parseStarters(),
     parseWildEncounters(),
-    parseTrainerParties(),
+    parseTrainerParties(moveTypeMap),
     parseTrainers(),
   ]);
 
