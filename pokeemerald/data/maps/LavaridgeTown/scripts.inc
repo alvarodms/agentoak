@@ -368,9 +368,12 @@ LavaridgeTown_Text_PokemonNippedBackside:
 	.string "A POKéMON nipped my backside!$"
 
 LavaridgeTown_Text_OhYouLikeHotSprings:
-	.string "Oh, you like hot springs, do you?\p"
-	.string "That's surprising for one as young\n"
-	.string "as you.$"
+	.string "They say Houndour packs followed\n"
+	.string "the volcanic warmth here from the north.\l"
+	.string "First I thought it was just a rumor.\p"
+	.string "Then I saw them on the FIERY PATH --\n"
+	.string "a dozen, heading toward the crater.\l"
+	.string "Beautiful. And a little terrifying.$"
 
 LavaridgeTown_Text_BatheInHotSpringsEveryDay:
 	.string "I bathe in the hot springs every day.\p"

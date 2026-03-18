@@ -88,13 +88,12 @@ FortreeCity_Movement_KecleonFlee:
 	step_end
 
 FortreeCity_Text_SawGiganticPokemonInSky:
-	.string "No one believes me, but I saw this\n"
-	.string "gigantic POKéMON in the sky.\p"
-	.string "It seemed to squirm as it flew toward\n"
-	.string "ROUTE 131.\p"
-	.string "By the way… Sniff…\n"
-	.string "Um… You, uh…smell singed.\p"
-	.string "Were you at a volcano or something?$"
+	.string "I have catalogued bird POKéMON here\n"
+	.string "for twenty years. Last week I spotted\l"
+	.string "three Dragonite circling MT. PYRE.\p"
+	.string "Three! In twenty years, not one.\n"
+	.string "Something has shifted in this world.\l"
+	.string "I can feel it in the treetops.$"
 
 FortreeCity_Text_SomethingBlockingGym:
 	.string "I want to go to the POKéMON GYM,\n"

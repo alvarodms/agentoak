@@ -635,9 +635,12 @@ Route111_Text_ToughToKeepWinningUpTheRanks:
 	.string "any GYM LEADER.$"
 
 Route111_Text_WinstrateFamilyDestroyedMe:
-	.string "I challenged the WINSTRATE family,\n"
-	.string "but four matches in a row is tough\l"
-	.string "going… They destroyed me.$"
+	.string "MAGMA wants more land for migrants.\n"
+	.string "AQUA wants more sea.\l"
+	.string "Both say they're protecting nature.\p"
+	.string "But ask the POKéMON -- do they want\n"
+	.string "volcanoes or floods? Or just a\l"
+	.string "world wide enough for all of them?$"
 
 Route111_Text_RouteSignMauville:
 	.string "ROUTE 111\n"

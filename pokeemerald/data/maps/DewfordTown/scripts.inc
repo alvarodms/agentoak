@@ -627,9 +627,12 @@ DewfordTown_EventScript_PhraseNotTrendyEnough::
 	end
 
 DewfordTown_Text_TinyIslandCommunity:
-	.string "DEWFORD is a tiny island community.\n"
-	.string "If something gets trendy here,\l"
-	.string "everyone picks up on it right away.$"
+	.string "Brawly's been training harder than\n"
+	.string "ever. Says something surfaced near\l"
+	.string "the island at low tide last night.\p"
+	.string "None of us could name it. The old\n"
+	.string "sea charts don't help anymore --\l"
+	.string "Hoenn's waters have rewritten themselves.$"
 
 DewfordTown_Text_TownSign:
 	.string "DEWFORD TOWN\n"
