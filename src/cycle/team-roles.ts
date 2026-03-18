@@ -6,6 +6,8 @@
  * before it makes the final CyclePlan decision.
  */
 
+import { buildAdvisorContextBlock, formatPokedexToolsSection } from "../agent/prompt-sections.js";
+
 export interface TeamContext {
   cycleNumber: number;
   journalContext: string;
@@ -49,20 +51,7 @@ Your job: write a short advisory memo (200-400 words) for the Producer, who will
 
 ## Context
 
-### Last Cycle Journal
-${ctx.journalContext}
-
-### Cycle Mode History
-${ctx.modeHistorySummary}
-
-### Available Modes
-${ctx.modeList}
-
-### New Community Issues
-${ctx.issueSection ?? "No new community issues"}
-
-### Community Backlog
-${ctx.backlogSection ?? "No backlog items"}
+${buildAdvisorContextBlock(ctx)}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — it contains the game design direction, multi-cycle roadmap, and goals.
@@ -96,20 +85,7 @@ Your job: write a short advisory memo (200-400 words) for the Producer, who will
 
 ## Context
 
-### Last Cycle Journal
-${ctx.journalContext}
-
-### Cycle Mode History
-${ctx.modeHistorySummary}
-
-### Available Modes
-${ctx.modeList}
-
-### New Community Issues
-${ctx.issueSection ?? "No new community issues"}
-
-### Community Backlog
-${ctx.backlogSection ?? "No backlog items"}
+${buildAdvisorContextBlock(ctx)}
 
 ## Your Memory
 Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they contain known build issues and codebase knowledge.
@@ -144,6 +120,8 @@ You have **web search** access. Use it to research:
 ## Your ongoing research data
 You maintain a **persistent knowledge file** at \`memory/pokemon-knowledge.md\`. This is YOUR knowledge base that grows over time.
 
+${formatPokedexToolsSection()}
+
 ## Your knowledge-building process
 1. First, read \`memory/pokemon-knowledge.md\` to see what you already know.
 2. Based on the current cycle context, identify 1-2 **targeted research questions** that would inform the planning decision.
@@ -153,20 +131,7 @@ You maintain a **persistent knowledge file** at \`memory/pokemon-knowledge.md\`.
 
 ## Context
 
-### Last Cycle Journal
-${ctx.journalContext}
-
-### Cycle Mode History
-${ctx.modeHistorySummary}
-
-### Available Modes
-${ctx.modeList}
-
-### New Community Issues
-${ctx.issueSection ?? "No new community issues"}
-
-### Community Backlog
-${ctx.backlogSection ?? "No backlog items"}
+${buildAdvisorContextBlock(ctx)}
 
 ## Instructions
 1. Read \`memory/pokemon-knowledge.md\` to review your accumulated knowledge.
@@ -200,20 +165,7 @@ Your job: write a punchy advisory memo (200-350 words) for the Producer, who wil
 
 ## Context
 
-### Last Cycle Journal
-${ctx.journalContext}
-
-### Cycle Mode History
-${ctx.modeHistorySummary}
-
-### Available Modes
-${ctx.modeList}
-
-### New Community Issues
-${ctx.issueSection ?? "No new community issues"}
-
-### Community Backlog
-${ctx.backlogSection ?? "No backlog items"}
+${buildAdvisorContextBlock(ctx)}
 
 ## Your Memory
 Read \`memory/strategy-notes.md\` — look for bold ideas that have been noted but not acted on, and assess whether the current roadmap is ambitious enough.
