@@ -68,6 +68,13 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 **Gardevoir retype**: Psychic/Fairy in v2.0 (species type change only).
 
+**Implementation Status (Cycle 47)**:
+- ✅ Granite Cave B2F: Ralts level 16-19 (10% rate) — replaced ABRA slot
+- ✅ Route 118: Snubbull level 24-26 (15% rate) — replaced ELECTRIKE slot
+- ✅ Route 121: Clefairy level 26-28 (20% rate) — replaced SHUPPET slot
+- ⏳ Route 120: Togetic (planned)
+- ⏳ Route 122 (Mt. Pyre): Snubbull (planned)
+
 ---
 
 ## New Species — Gen 4/5 Migration
@@ -120,6 +127,6 @@ After Mt. Chimney showdown, a second migration wave hits. Three touch points (di
 | 2 | Physical/Special split | **DONE** (Cycle 43) — all 355 moves categorized |
 | 3 | Fairy type engine + retypes | **DONE** (Cycle 44) — TYPE_FAIRY constant, type chart, UI, 14 species retypes |
 | 3b | Fairy signature moves | **DONE** (Cycle 46) — 3 moves (Moonblast, Play Rough, Dazzling Gleam), learnsets for all 14 Fairy species |
-| 3c | Fairy encounter corridors | **NEXT** — 5 corridor locations planned (see design doc above) |
+| 3c | Fairy encounter corridors | **IN PROGRESS** — 3 of 5 corridors complete (Granite Cave B2F, Route 118, Route 121) |
 | 4 | Elite Four rematches | After corridors — Sidney/Phoebe/Glacia/Drake/Wallace upgrades |
 | 5 | Narrative polish pass | Ongoing |

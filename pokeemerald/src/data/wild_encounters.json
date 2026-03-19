@@ -1601,9 +1601,9 @@
                                 "species": "SPECIES_ZIGZAGOON"
                             },
                             {
-                                "min_level": 26,
+                                "min_level": 24,
                                 "max_level": 26,
-                                "species": "SPECIES_ELECTRIKE"
+                                "species": "SPECIES_SNUBBULL"
                             },
                             {
                                 "min_level": 26,
@@ -2452,7 +2452,7 @@
                             {
                                 "min_level": 16,
                                 "max_level": 19,
-                                "species": "SPECIES_ABRA"
+                                "species": "SPECIES_RALTS"
                             },
                             {
                                 "min_level": 18,
@@ -3719,8 +3719,8 @@
                             },
                             {
                                 "min_level": 26,
-                                "max_level": 26,
-                                "species": "SPECIES_SHUPPET"
+                                "max_level": 28,
+                                "species": "SPECIES_CLEFAIRY"
                             },
                             {
                                 "min_level": 26,

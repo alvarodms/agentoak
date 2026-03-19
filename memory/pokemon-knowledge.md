@@ -26,3 +26,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Physical/Special Split: Balance Implications for LoH | 43 | March 2026 | [physical-special-split-balance.md](pokemon-knowledge/physical-special-split-balance.md) |
 | Fairy Type Implementation: Design & Balance for LoH | 44 | March 2026 | [fairy-type-implementation.md](pokemon-knowledge/fairy-type-implementation.md) |
 | Elite Four Rematch Design & Fairy Move Implementation | 46 | March 2026 | [elite-four-rematch-design.md](pokemon-knowledge/elite-four-rematch-design.md) |
+| Encounter Design Patterns in ROM Hacks | 47 | March 2026 | [encounter-design-patterns.md](pokemon-knowledge/encounter-design-patterns.md) |
