@@ -134,7 +134,7 @@ export function formatPlannerClosingInstructions(): string {
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
-Respond with a JSON object containing mode, objective, reasoning, implementationPlan, and optionally issueActions and helpRequests.`;
+Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.`;
 }
 
 // ---------------------------------------------------------------------------
