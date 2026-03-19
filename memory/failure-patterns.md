@@ -20,6 +20,18 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components. **For multi-part objectives, create a checklist and verify each component was addressed before declaring completion.**
 **Pattern**: When objective covers multiple unrelated systems (move tutors + TM prices + held items), the agent tends to work on the easier/more familiar systems first and lose track of the harder ones.
 
+## New Move Implementation Build Failures (Cycle 45)
+
+**Symptom**: Build fails when adding new moves, despite seemingly correct constants and data structures.
+**Example**: Added 5 Fairy moves (MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_CHARM, MOVE_FAIRY_WIND, MOVE_DAZZLING_GLEAM) with proper constants in moves.h and data in battle_moves.h, but compilation failed completely.
+**Likely causes**:
+- Move effect constants don't exist or are misnamed (used EFFECT_SPECIAL_ATTACK_DOWN_HIT, EFFECT_ATTACK_DOWN_HIT, etc. without verifying they exist)
+- Move indices conflict with existing moves or exceed array bounds (added at 354-358 without checking maximum)
+- Required fields missing or have invalid values in move data structure
+- Dependencies beyond just constants and data (move descriptions, animations, battle scripts, etc.)
+**Resolution strategy**: Start with single move, verify all effect constants exist in include/constants/battle_move_effects.h, check index bounds against MOVES_COUNT, test build after each addition.
+**Pattern**: Complex game data additions require incremental testing - don't add 5 moves at once without validating each component first.
+
 ## Held Item Edit Scope Issue (Cycle 16 — RESOLVED Cycle 17)
 
 **Symptom**: Bulk replace attempt blocked (154 matches, replace_all=false), then agent manually edits one-by-one but only completes first 5 gym leaders out of 13 trainers.
