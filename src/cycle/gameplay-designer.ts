@@ -94,7 +94,7 @@ ${formatPokedexToolsSection()}
 
 ## Design Principles
 
-- **Gen 3 mechanics**: Physical/Special is determined by TYPE, not by individual move. All Fire, Water, Grass, Ice, Electric, Psychic, Dragon, Dark moves are **Special**. All Normal, Fighting, Poison, Ground, Flying, Bug, Rock, Ghost, Steel moves are **Physical**. This is critical for team design.
+- **Physical/Special split**: This ROM hack has implemented the modern physical/special split (Gen 4+). Each move has its own category — a move like Shadow Ball is Special and a move like Shadow Claw is Physical, regardless of type. Use the \`move_data\` tool to check whether a specific move is Physical or Special. This is critical for team design — match a Pokémon's higher attacking stat to moves of the correct category.
 - **Difficulty progression**: Consider where the player is in the game. What level are their Pokémon likely to be? What TMs, items, and Pokémon are available to the player at this point?
 - **Team composition**: Think about type coverage, held items, move synergy. A good team tells a story about its trainer. Gym Leaders should have a clear theme but not be one-dimensional.
 - **Smogon context**: Use smogon_sets to see competitive movesets for inspiration, but adapt for in-game context (limited move access at lower levels, AI behavior, no EVs for wild encounters).
