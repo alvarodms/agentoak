@@ -29,3 +29,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Encounter Design Patterns in ROM Hacks | 47 | March 2026 | [encounter-design-patterns.md](pokemon-knowledge/encounter-design-patterns.md) |
 | Fairy Corridor Completion & E4 Rematch Transition | 49 | March 2026 | [fairy-corridor-completion.md](pokemon-knowledge/fairy-corridor-completion.md) |
 | Postgame Player Priorities: What Makes Endgame Worth Playing | 50 | March 2026 | [postgame-player-priorities.md](pokemon-knowledge/postgame-player-priorities.md) |
+| v2.0 Progression Patterns: Community Preferences & Successful Models | 51 | March 2026 | [v2-progression-patterns.md](pokemon-knowledge/v2-progression-patterns.md) |

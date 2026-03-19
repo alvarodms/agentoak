@@ -8061,16 +8061,11 @@ static const struct TrainerMonNoItemDefaultMoves sParty_GruntSeafloorCavern5[] =
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_GruntUnused[] = {
+static const struct TrainerMonNoItemDefaultMoves sParty_GruntUnused[] = {  // Available for future use
     {
     .iv = 0,
-    .lvl = 31,
-    .species = SPECIES_WAILMER,
-    },
-    {
-    .iv = 0,
-    .lvl = 31,
-    .species = SPECIES_ZUBAT,
+    .lvl = 5,
+    .species = SPECIES_MAGIKARP,
     }
 };
 
@@ -12902,18 +12897,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Leaf[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BrendanLinkPlaceholder[] = {
+static const struct TrainerMonNoItemDefaultMoves sParty_BrendanLinkPlaceholder[] = {  // Available for future use
     {
     .iv = 0,
     .lvl = 5,
-    .species = SPECIES_GROUDON,
+    .species = SPECIES_MAGIKARP,
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_MayLinkPlaceholder[] = {
+static const struct TrainerMonNoItemDefaultMoves sParty_MayLinkPlaceholder[] = {  // Available for future use
     {
     .iv = 0,
     .lvl = 5,
-    .species = SPECIES_KYOGRE,
+    .species = SPECIES_MAGIKARP,
     }
 };

@@ -4,6 +4,14 @@ General project information — build system details, tool versions, configurati
 
 ---
 
+## Trainer System Constraints
+
+- **Trainer Flag Allocation**: 0x500-0x85F = 864 flag slots exactly
+- **Safe Trainer Limits**: MAX_TRAINERS_COUNT must not exceed 864
+- **Current Status**: 865 trainers (IDs 0-864), MAX_TRAINERS_COUNT = 864
+- **Available Slots**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) marked as available for future use
+- **Future Capacity**: Room for Gym Leader rematches without flag overflow
+
 ## Build System
 
 - **Build command**: `make` (run from `pokeemerald/` directory)

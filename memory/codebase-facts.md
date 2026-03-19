@@ -12,7 +12,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` (currently 869). `MAX_TRAINERS_COUNT` hard cap is 864 — **NOTE: TRAINERS_COUNT (869) now exceeds MAX_TRAINERS_COUNT (864).** This may need investigation; it built successfully but could cause runtime issues.
+**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` (reduced from 869 to 865 in Cycle 51). `MAX_TRAINERS_COUNT` hard cap is 864 based on trainer flag allocation (0x500-0x85F = 864 slots). **Current state: 865 trainer IDs but only 864 flag slots available — still 1 over limit.**
+
+**Three-file trainer system**: Each trainer requires entries in `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
+
+**Removed in Cycle 51**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854).
 
 ---
 

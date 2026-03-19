@@ -6937,15 +6937,15 @@ const struct Trainer gTrainers[] = {
         .party = NO_ITEM_DEFAULT_MOVES(sParty_GruntSeafloorCavern5),
     },
 
-    [TRAINER_GRUNT_UNUSED] =
+    [TRAINER_GRUNT_UNUSED] =  // Available for future use
     {
         .trainerClass = TRAINER_CLASS_TEAM_MAGMA,
         .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_AQUA,
         .trainerPic = TRAINER_PIC_AQUA_GRUNT_F,
-        .trainerName = _("GRUNT"),
+        .trainerName = _("UNUSED"),
         .items = {},
         .doubleBattle = FALSE,
-        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
+        .aiFlags = 0,
         .party = NO_ITEM_DEFAULT_MOVES(sParty_GruntUnused),
     },
 
@@ -10357,24 +10357,24 @@ const struct Trainer gTrainers[] = {
         .party = NO_ITEM_DEFAULT_MOVES(sParty_Leaf),
     },
 
-    [TRAINER_BRENDAN_PLACEHOLDER] =
+    [TRAINER_BRENDAN_PLACEHOLDER] =  // Available for future use
     {
         .trainerClass = TRAINER_CLASS_RS_PROTAG,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
         .trainerPic = TRAINER_PIC_RS_BRENDAN,
-        .trainerName = _("BRENDAN"),
+        .trainerName = _("UNUSED"),
         .items = {},
         .doubleBattle = FALSE,
         .aiFlags = 0,
         .party = NO_ITEM_DEFAULT_MOVES(sParty_BrendanLinkPlaceholder),
     },
 
-    [TRAINER_MAY_PLACEHOLDER] =
+    [TRAINER_MAY_PLACEHOLDER] =  // Available for future use
     {
         .trainerClass = TRAINER_CLASS_RS_PROTAG,
         .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_MALE,
         .trainerPic = TRAINER_PIC_RS_MAY,
-        .trainerName = _("MAY"),
+        .trainerName = _("UNUSED"),
         .items = {},
         .doubleBattle = FALSE,
         .aiFlags = 0,
