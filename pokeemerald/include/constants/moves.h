@@ -356,8 +356,11 @@
 #define MOVE_WATER_PULSE 352
 #define MOVE_DOOM_DESIRE 353
 #define MOVE_PSYCHO_BOOST 354
+#define MOVE_MOONBLAST 355
+#define MOVE_PLAY_ROUGH 356
+#define MOVE_DAZZLING_GLEAM 357
 
-#define MOVES_COUNT 355
+#define MOVES_COUNT 358
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

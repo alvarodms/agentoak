@@ -52,26 +52,22 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Move Implementation System (Cycle 45)
+## Move Implementation System (Cycles 45-46)
 
-**Move Constants**: Defined in `include/constants/moves.h` starting after last vanilla move. Must be sequential integers.
+**Adding a new move requires updating 6 files** (all arrays are sized by MOVES_COUNT):
 
-**Move Data**: Stored in `src/data/battle_moves.h` as a structured array `gBattleMoves[MOVES_COUNT]` with required fields:
-- `.effect` — battle effect constant (from `include/constants/battle_move_effects.h`)
-- `.power` — move power (0-255, 0 for non-damaging)
-- `.type` — type constant (TYPE_NORMAL, TYPE_FAIRY, etc.)
-- `.accuracy` — accuracy percentage (0-100, 0 for never-miss)
-- `.pp` — power points (1-40)
-- `.secondaryEffectChance` — chance for secondary effect (0-100)
-- `.target` — targeting type (MOVE_TARGET_SELECTED, MOVE_TARGET_BOTH, etc.)
-- `.priority` — speed priority (-7 to +7)
-- `.flags` — move properties bitfield
+1. `include/constants/moves.h` — sequential constant + update MOVES_COUNT
+2. `src/data/battle_moves.h` — `gBattleMoves[]` entry with .effect, .power, .type, .accuracy, .pp, .secondaryEffectChance, .target, .priority, .flags, .category
+3. `src/data/contest_moves.h` — `gContestMoves[]` entry with .effect, .contestCategory, .comboStarterId, .comboMoves
+4. `src/data/text/move_descriptions.h` — string definition + `gMoveDescriptionPointers[]` entry (uses `[MOVE_XXX - 1]` indexing)
+5. `src/data/text/move_names.h` — `gMoveNames[]` entry (max MOVE_NAME_LENGTH = 12 chars)
+6. `src/data/pokemon/level_up_learnsets.h` — `LEVEL_UP_MOVE(level, move)` entries in species arrays (ascending level order)
 
-**Level-up Learnsets**: Defined in `src/data/pokemon/level_up_learnsets.h` using `LEVEL_UP_MOVE(level, move)` macro. Each species has its own array (e.g. `sClefairyLevelUpLearnset[]`).
+**Effect constants**: Must exist in `include/constants/battle_move_effects.h`. Verified working: EFFECT_HIT, EFFECT_ATTACK_DOWN_HIT (68), EFFECT_SPECIAL_ATTACK_DOWN_HIT (71).
 
-**Critical requirement**: Move effect constants must exist in `include/constants/battle_move_effects.h`. Using non-existent effects will cause build failure.
+**Flags**: FLAG_KINGS_ROCK_AFFECTED (not KINGSROCK), FLAG_MAKES_CONTACT (physical contact only).
 
-**Discovered in Cycle 45**: Adding new moves requires verification of all referenced constants — effect names, targeting types, and ensuring move indices don't exceed MOVES_COUNT limit.
+**Move name max**: 12 characters. Examples of truncation: THUNDERPUNCH, SMELLINGSALT, FEATHERDANCE.
 
 ---
 

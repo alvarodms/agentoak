@@ -30,10 +30,13 @@ Physical/Special Split and Fairy Type implementations (v2.0).
 | `graphics_file_rules.mk` | Added "fairy" to types list | 44 | Builds fairy.4bpp into spritesheet |
 | `graphics/types/fairy.png` | Created (copy of psychic.png as placeholder) | 44 | Custom icon is future work |
 | `src/data/pokemon/species_info.h` | Retyped 14 species to Fairy | 31, 32, **44** | See retypes list below |
-| `include/constants/moves.h` | Added 5 Fairy move constants (355-359), updated MOVES_COUNT to 360 | **45** | MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_DAZZLING_GLEAM, MOVE_DRAINING_KISS, MOVE_DISARMING_VOICE |
-| `src/data/battle_moves.h` | Added 5 Fairy move definitions with effects, power, type, accuracy, PP, flags | **45** | Complete move implementations with proper damage/stat effects |
-| `src/data/pokemon/level_up_learnsets.h` | Added Fairy moves to 14 species learnsets | **45** | All Fairy-type species now learn signature moves |
-| `src/data/wild_encounters.json` | Added 5 Fairy encounter corridors across key locations | **45** | Granite Cave (Ralts), Route 118 (Snubbull), Route 120 (Togetic), Route 121 (Clefairy), Mt. Pyre (Snubbull) |
+| `include/constants/moves.h` | Added 3 Fairy move constants (355-357), MOVES_COUNT = 358 | **46** | MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_DAZZLING_GLEAM (Cycle 45 was reverted) |
+| `src/data/battle_moves.h` | Added 3 Fairy move definitions | **46** | Moonblast (95bp Sp, 30% SpA drop), Play Rough (90bp Ph, 10% Atk drop), Dazzling Gleam (80bp Sp, hits both) |
+| `src/data/contest_moves.h` | Added 3 Fairy contest move entries | **46** | Beauty/Cute categories |
+| `src/data/text/move_descriptions.h` | Added 3 move descriptions + pointer table entries | **46** | String defs + gMoveDescriptionPointers entries |
+| `src/data/text/move_names.h` | Added 3 move names to gMoveNames | **46** | MOONBLAST, PLAY ROUGH, DAZZLNGLEAM |
+| `src/data/pokemon/level_up_learnsets.h` | Added Fairy moves to 13 species learnsets | **46** | Ralts/Kirlia/Gardevoir, Clefairy/Clefable, Jigglypuff/Wigglytuff, Togetic, Marill/Azumarill, Snubbull/Granbull, Mawile |
+| `graphics/types/fairy.png` | Recreated placeholder (copy of psychic.png) | **46** | Lost between cycles, needed for build |
 
 ### Species Retypes (Cycle 44)
 
@@ -44,10 +47,8 @@ Physical/Special Split and Fairy Type implementations (v2.0).
 - Psychic/Fairy: Ralts, Kirlia, Gardevoir
 - Fairy/Flying: Togetic
 
-### Fairy Moves (Cycle 45)
+### Fairy Moves (Cycle 46 — Cycle 45 was reverted)
 
 - **Moonblast**: 95 power, Special, 30% chance to lower Special Attack
-- **Play Rough**: 90 power, Physical, 10% chance to lower Attack
-- **Dazzling Gleam**: 80 power, Special, hits both opponents
-- **Draining Kiss**: 50 power, Special, drains HP
-- **Disarming Voice**: 40 power, Special, never misses, hits both opponents
+- **Play Rough**: 90 power, Physical, 10% chance to lower Attack (FLAG_MAKES_CONTACT)
+- **Dazzling Gleam**: 80 power, Special, hits both opponents (MOVE_TARGET_BOTH)
