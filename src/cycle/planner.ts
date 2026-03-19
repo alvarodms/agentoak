@@ -10,6 +10,7 @@ import {
   formatJournalContext,
   buildPlannerContextSections,
   formatImplementationPlanGuidance,
+  formatGameplayDesignBriefGuidance,
   formatPlannerClosingInstructions,
 } from "../agent/prompt-sections.js";
 
@@ -18,6 +19,8 @@ export interface CyclePlan {
   objective: string;
   reasoning: string;
   implementationPlan: string;
+  /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. */
+  gameplayDesignBrief?: string;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -42,6 +45,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     implementationPlan: {
       type: "string",
       description: "Step-by-step implementation plan for the implementation agent. Be clear and actionable so the agent can execute without ambiguity. Describe: (1) logical actions to take in order, (2) what to read or understand first, (3) what kind of changes to make and where (describe patterns/conventions — no need to hard-code exact file paths), (4) how to verify the work is correct (e.g. run make, check a value in a specific system). Be concise but actionable — numbered steps work well.",
+    },
+    gameplayDesignBrief: {
+      type: "string",
+      description: "Optional brief for the Gameplay Designer agent. Set this when the cycle involves gameplay changes (trainer teams, wild encounters, difficulty tuning, etc.). The Gameplay Designer has access to Pokédex MCP tools and will produce detailed, data-driven specifications. When you set this, your implementationPlan should focus on implementation steps (which files to modify, patterns to follow) rather than exact gameplay values — the Gameplay Designer will provide those.",
     },
     issueActions: {
       type: "array",
@@ -96,6 +103,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     objective?: string;
     reasoning?: string;
     implementationPlan?: string;
+    gameplayDesignBrief?: string;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -160,13 +168,14 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       logger.info(`  Help requests: ${helpRequests.length}`);
     }
 
-    const planResult = {
+    const planResult: CyclePlan = {
       mode,
       objective: parsed.objective,
       reasoning: parsed.reasoning,
       implementationPlan: parsed.implementationPlan ?? "",
+      gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
       issueActions,
-      helpRequests
+      helpRequests,
     };
 
     logger.info(`[DONE] Final cycle plan: ${JSON.stringify(planResult, null, 2)}`);
@@ -216,6 +225,8 @@ If a previous cycle had build failures and the changes were REVERTED (look for "
 
 
 ${formatImplementationPlanGuidance()}
+
+${formatGameplayDesignBriefGuidance()}
 
 ${formatPlannerClosingInstructions()}`;
 

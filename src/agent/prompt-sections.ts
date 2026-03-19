@@ -106,6 +106,26 @@ When the plan involves game content (dialogue, encounter tables, trainer rosters
 The implementation agent's job is to locate the right files and make the necessary changes — not to design the content itself. When in doubt, over-specify.`;
 }
 
+/** Guidance for the Producer on when and how to use the gameplayDesignBrief field. */
+export function formatGameplayDesignBriefGuidance(): string {
+  return `## Gameplay Designer (optional Phase 1.5)
+
+You have access to a **Gameplay Designer** agent that can produce detailed, data-driven gameplay specifications. It has access to Pokédex MCP tools (stats, learnsets, type matchups, Smogon sets) and can reason deeply about difficulty, balance, and progression.
+
+**When to use it**: Set the \`gameplayDesignBrief\` field when this cycle involves gameplay changes — trainer teams, wild encounters, difficulty tuning, rival battles, gym leader redesigns, Elite Four, etc.
+
+**What to write in the brief**: Describe what needs designing. Be specific about constraints and context:
+- Which trainers/routes/encounters need designing
+- What point in the game this is (early/mid/late, which badges the player has)
+- Difficulty intent (challenging, balanced, tutorial-like)
+- Any thematic constraints (Gym Leader must use Rock types, rival should counter the starter)
+- References to previous design decisions if relevant
+
+**When you set a brief**: Your \`implementationPlan\` should focus on **implementation steps** (which files to modify, data format patterns, how to verify) rather than specifying exact gameplay values. The Gameplay Designer will provide the specific teams, encounters, and values.
+
+**When NOT to use it**: Research cycles, planning cycles, repairs, refactors, pure narrative/dialogue work, or any cycle that doesn't involve gameplay balancing decisions. Skip it to avoid unnecessary latency.`;
+}
+
 /** The issue-response and help-request instructions appended to planner prompts. */
 export function formatPlannerClosingInstructions(): string {
   return `If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
