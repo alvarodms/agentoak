@@ -7,7 +7,7 @@ on:
       model:
         description: "Claude model to use"
         required: false
-        default: "claude-sonnet-4-6"
+        default: "claude-opus-4-6"
       max_tool_calls:
         description: "Max tool calls per cycle"
         required: false
