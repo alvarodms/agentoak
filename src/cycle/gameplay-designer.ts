@@ -21,8 +21,8 @@ export interface GameplayDesignResult {
   tokenUsage: TokenUsage;
 }
 
-const GAMEPLAY_DESIGNER_MAX_TURNS = 30;
-const GAMEPLAY_DESIGNER_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+const GAMEPLAY_DESIGNER_MAX_TURNS = 75;
+const GAMEPLAY_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
 
 /**
  * Run the Gameplay Designer agent to produce detailed gameplay specs.
