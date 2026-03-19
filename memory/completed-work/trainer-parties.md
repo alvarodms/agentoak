@@ -16,3 +16,7 @@ Modified files related to trainer team compositions, held items, and level curve
 | `include/constants/opponents.h` | 5 new trainer IDs | 49 | TRAINER_SIDNEY_REMATCH_1 through TRAINER_WALLACE_REMATCH_1 |
 | `src/battle_setup.c` | Rematch table updated | 49 | E4 entries now use rematch 1 IDs for slots 2-5 |
 | `graphics/types/fairy.png` | Restored missing fairy type icon | 49 | Copied from normal.png as placeholder |
+| `src/data/trainer_parties.h` | E4 + Champion rematch tier 2 teams | 50 | lv72-82; Sidney swaps Mightyena for Crawdaunt, Wallace swaps Lapras for Ludicolo |
+| `src/data/trainers.h` | E4 + Champion rematch tier 2 entries | 50 | 5 new entries with 4x Full Restore |
+| `include/constants/opponents.h` | 5 more trainer IDs (860-864) | 50 | TRAINER_SIDNEY_REMATCH_2 through TRAINER_WALLACE_REMATCH_2; MAX_TRAINERS_COUNT raised to 869 |
+| `src/battle_setup.c` | Rematch table: tier 2 IDs in slots 3-5 | 50 | Tier 1 in slot 2, tier 2 in slots 3-5 |

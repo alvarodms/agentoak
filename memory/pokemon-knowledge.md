@@ -28,3 +28,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Elite Four Rematch Design & Fairy Move Implementation | 46 | March 2026 | [elite-four-rematch-design.md](pokemon-knowledge/elite-four-rematch-design.md) |
 | Encounter Design Patterns in ROM Hacks | 47 | March 2026 | [encounter-design-patterns.md](pokemon-knowledge/encounter-design-patterns.md) |
 | Fairy Corridor Completion & E4 Rematch Transition | 49 | March 2026 | [fairy-corridor-completion.md](pokemon-knowledge/fairy-corridor-completion.md) |
+| Postgame Player Priorities: What Makes Endgame Worth Playing | 50 | March 2026 | [postgame-player-priorities.md](pokemon-knowledge/postgame-player-priorities.md) |

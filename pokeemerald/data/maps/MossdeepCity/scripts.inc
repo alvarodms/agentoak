@@ -49,7 +49,16 @@ MossdeepCity_EventScript_Girl::
 	end
 
 MossdeepCity_EventScript_Woman::
-	msgbox MossdeepCity_Text_SpecialSpaceCenterRock, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_EventScript_WomanPostgame
+	msgbox MossdeepCity_Text_SpecialSpaceCenterRock, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_WomanPostgame::
+	msgbox MossdeepCity_Text_WomanPostgame, MSGBOX_DEFAULT
+	release
 	end
 
 MossdeepCity_EventScript_WhiteRock::
@@ -382,6 +391,17 @@ MossdeepCity_Text_SpecialSpaceCenterRock:
 	.string "currents worldwide.\p"
 	.string "It's bigger than any of us\n"
 	.string "imagined.$"
+
+MossdeepCity_Text_WomanPostgame:
+	.string "The SPACE CENTER satellites detected\n"
+	.string "something remarkable.\p"
+	.string "Migration patterns are concentrating\n"
+	.string "around areas with the strongest\l"
+	.string "trainers.\p"
+	.string "It is as if powerful POKéMON are\n"
+	.string "drawn to powerful opponents.\p"
+	.string "The LEAGUE has become a focal\n"
+	.string "point.$"
 
 MossdeepCity_Text_ItsAWhiteRock:
 	.string "It's a white rock.$"

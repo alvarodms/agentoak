@@ -22,11 +22,29 @@ EverGrandeCity_PokemonCenter_1F_EventScript_Nurse::
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_Woman::
-	msgbox EverGrandeCity_PokemonCenter_1F_Text_LeagueAfterVictoryRoad, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_PokemonCenter_1F_EventScript_WomanPostgame
+	msgbox EverGrandeCity_PokemonCenter_1F_Text_LeagueAfterVictoryRoad, MSGBOX_DEFAULT
+	release
+	end
+
+EverGrandeCity_PokemonCenter_1F_EventScript_WomanPostgame::
+	msgbox EverGrandeCity_PokemonCenter_1F_Text_WomanPostgame, MSGBOX_DEFAULT
+	release
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_ExpertM::
-	msgbox EverGrandeCity_PokemonCenter_1F_Text_BelieveInYourPokemon, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_PokemonCenter_1F_EventScript_ExpertMPostgame
+	msgbox EverGrandeCity_PokemonCenter_1F_Text_BelieveInYourPokemon, MSGBOX_DEFAULT
+	release
+	end
+
+EverGrandeCity_PokemonCenter_1F_EventScript_ExpertMPostgame::
+	msgbox EverGrandeCity_PokemonCenter_1F_Text_ExpertMPostgame, MSGBOX_DEFAULT
+	release
 	end
 
 EverGrandeCity_PokemonCenter_1F_EventScript_Scott::
@@ -85,6 +103,25 @@ EverGrandeCity_PokemonCenter_1F_Text_BelieveInYourPokemon:
 	.string "traveled in life…\p"
 	.string "Believe in your POKéMON and give it\n"
 	.string "your very best!$"
+
+EverGrandeCity_PokemonCenter_1F_Text_WomanPostgame:
+	.string "Champion! Have you noticed?\p"
+	.string "The migration has reached the\n"
+	.string "POKeMON LEAGUE itself.\p"
+	.string "The ELITE FOUR have been training\n"
+	.string "with species no one in HOENN has\l"
+	.string "seen before.\p"
+	.string "Each time you challenge them,\n"
+	.string "they will be stronger than the last.$"
+
+EverGrandeCity_PokemonCenter_1F_Text_ExpertMPostgame:
+	.string "I came here to challenge the LEAGUE,\n"
+	.string "but...\p"
+	.string "The wild POKeMON in VICTORY ROAD\n"
+	.string "have changed since the migration\l"
+	.string "intensified.\p"
+	.string "DRAGONITE, TYRANITAR...\n"
+	.string "I think I need to train more.$"
 
 EverGrandeCity_PokemonCenter_1F_Text_ScottHappyForYou:
 	.string "SCOTT: {PLAYER}{KUN}, you've clawed your\n"
