@@ -4,15 +4,15 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Elite Four Rematch System (Cycle 49)
+## Elite Four Rematch System (Cycles 49-50)
 
 **Rematch table**: `src/battle_setup.c` lines 260+ — `gRematchTable[]` uses `REMATCH(t1, t2, t3, t4, t5, map)` macro. Each entry holds 5 trainer IDs (base + 4 rematch tiers).
 
-**Vanilla E4 state**: All 5 rematch slots filled with the same base trainer ID (no actual rematches). To add rematches: define new trainer IDs in `opponents.h`, add party structs in `trainer_parties.h`, add trainer entries in `trainers.h`, update `gRematchTable`.
+**Current state**: Tier 1 rematch IDs in slot 2, tier 2 IDs in slots 3-5. Slots 4-5 are duplicates of tier 2 — two more tiers can be added.
 
-**Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc. already exist.
+**Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` must be incremented for each new trainer. `MAX_TRAINERS_COUNT` provides the hard upper bound (864).
+**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` (currently 869). `MAX_TRAINERS_COUNT` hard cap is 864 — **NOTE: TRAINERS_COUNT (869) now exceeds MAX_TRAINERS_COUNT (864).** This may need investigation; it built successfully but could cause runtime issues.
 
 ---
 
@@ -37,7 +37,7 @@ All 5 corridors implemented:
 
 ## pokeemerald-expansion — Incompatible (Cycles 40–41)
 
-Expansion and vanilla are architecturally incompatible at struct level. `BattleResources`, `gBattleMoves`, `gActiveBattler` etc. renamed/restructured. rsync migration fails. Options: true git merge or stay vanilla. **Decision: stay vanilla.**
+Expansion and vanilla are architecturally incompatible at struct level. **Decision: stay vanilla.**
 
 ---
 
@@ -57,6 +57,8 @@ Expansion and vanilla are architecturally incompatible at struct level. `BattleR
 **Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. ASCII only — no em dash, smart quotes.
 
 **Safety**: `MSGBOX_NPC` labels are safe to rewrite. `MSGBOX_DEFAULT` labels may have story logic — check first.
+
+**Postgame gating**: Use `checkflag FLAG_SYS_GAME_CLEAR` + `goto_if_set` to branch dialogue after Champion defeat.
 
 ---
 

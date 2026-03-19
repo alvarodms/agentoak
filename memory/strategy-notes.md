@@ -47,38 +47,46 @@ v2.0 is not a port. It is a redesign built on a new foundation.
 
 The physical/special split changes how every battle feels. Fairy type introduces genuine counterplay to the Dragon-heavy ecosystem. The expanded species pool gives the migration narrative the depth it deserves.
 
-**Three "wow moments":**
-1. Tyranitar's Crunch now hits like a freight train — physical, visceral, alarming
-2. A Togekiss on a late-game route threatens the Dragon they've been relying on
-3. The mid-game migration intensification event on Route 118 — the world shifting again
+---
+
+## Postgame — Elite Four Rematches
+
+**Tier 1 (Cycle 49)**: All 5 members have 6-mon rematch teams (lv60-71). Gen 3 only.
+
+**Tier 2 (Cycle 50)**: All 5 members have escalated teams (lv72-82). Key changes:
+
+| Leader | Tier 2 Highlights |
+|--------|-------------------|
+| Sidney | Crawdaunt(SD)/Sharpedo/Absol(CB)/Houndoom/Umbreon(trap)/Tyranitar(DD+Iron Tail ace) |
+| Phoebe | Banette(WoW)/Sableye(CM)/Misdreavus(CM)/Dusclops(Curse)/Gengar(Destiny Bond)/Gengar(Hypnosis ace) |
+| Glacia | Glalie(Explode)/Jynx(Lovely Kiss+CM)/Cloyster(Spikes+Explode)/Piloswine/Walrein(Sheer Cold)/Lapras(Sheer Cold ace) |
+| Drake | Flygon(CB)/Altaria(DD)/Kingdra(Rain)/Salamence×2(mixed+DD)/Dragonite(DD+Outrage+Liechi ace) |
+| Wallace | Starmie/Tentacruel/Ludicolo(Rain+Swift Swim)/Gyarados(DD+Waterfall)/Kingdra(Rain)/Milotic(Moonblast ace) |
+
+**Rematch table**: Tier 1 in slot 2, tier 2 in slots 3-5. Two future tiers could fill slots 4-5.
 
 ---
 
-## Fairy Type — Encounter Philosophy ("Fairy Corridors")
+## v2.0 Roadmap — Status
 
-**Proposed encounters:**
-
-| Route / Location | Species | Rate | Narrative Role |
-|-----------------|---------|------|----------------|
-| Granite Cave B2F | Ralts | 10% | Early rare — patience rewarded |
-| Route 118 | Snubbull | 15% | Second wave guardian energy |
-| Route 120 | Togetic | 10% | First Dragon-counterplay route |
-| Route 121 | Clefairy | 20% | Fairy sanctuary near Safari Zone |
-| Route 122 (Mt. Pyre) | Snubbull | 20% | Guardian of the spirit mountain |
-
-**Gardevoir retype**: Psychic/Fairy in v2.0 (species type change only).
-
-**Implementation Status (Cycle 49)**: ✅ ALL CORRIDORS COMPLETE
-- ✅ Granite Cave B2F: Ralts level 16-19 (10% rate) — replaced ABRA slot
-- ✅ Route 118: Snubbull level 24-26 (15% rate) — replaced ELECTRIKE slot
-- ✅ Route 121: Clefairy level 26-28 (20% rate) — replaced SHUPPET slot
-- ✅ Route 120: Togetic level 28-30 (1% rate) — replaced SEEDOT slot 11
-- ✅ Mt. Pyre 1F: Snubbull level 27-29 (10% rate) — replaced SHUPPET slot 5
+| Priority | Feature | Status |
+|----------|---------|--------|
+| 1 | Physical/Special split | **DONE** (Cycle 43) |
+| 2 | Fairy type engine + retypes + moves | **DONE** (Cycles 44, 46) |
+| 3 | Fairy encounter corridors | **DONE** (Cycle 49) |
+| 4 | Elite Four rematches tier 1 | **DONE** (Cycle 49) |
+| 5 | Elite Four rematches tier 2 | **DONE** (Cycle 50) |
+| 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
+| 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
+| 8 | New species (Gible, Riolu, etc.) | Not started |
+| 9 | Elite Four rematches tiers 3-4 | Not started |
+| 10 | Gym leader rematches | Not started |
 
 ---
 
-## New Species — Gen 4/5 Migration
+## Future Directions
 
+### New Species Migration (Gen 4/5)
 | Species | Location | Rate | Narrative Role |
 |---------|----------|------|----------------|
 | Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard |
@@ -86,51 +94,11 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | Riolu | Route 116 | 8% | Scout sensing disruption |
 | Weavile | Shoal Cave | 8% | Cold-zone apex hunter |
 
----
+### Narrative Enhancements
+- The Second Wave mid-game intensification event (Route 118 trigger)
+- Migration intensification on later routes
+- Postgame research quest for Birch
 
-## Narrative Twist — The Second Wave
-
-After Mt. Chimney showdown, a second migration wave hits. Three touch points (dialogue-only):
-- **Rival on Route 118**: Questions whether those who left chose to
-- **NPC near Mauville City Pokemon Center**: Instruments went haywire — density doubled in six hours
-- **Elite Four Phoebe**: First migration woke old spirits; second wave surprised even them
-
-*Implementation*: Route 118 scripts.inc, Mauville Center NPC, Phoebe dialogue edit.
-
----
-
-## Postgame — Elite Four Rematches
-
-**Tier 1 (Cycle 49)**: All 5 members have 6-mon rematch teams (lv60-71). Gen 3 only — no Dusknoir/Glaceon/Garchomp.
-
-| Leader | Tier 1 Highlights |
-|--------|-------------------|
-| Sidney | Mightyena/Absol/Sharpedo/Houndoom/Umbreon/Tyranitar (DD sweeper ace) |
-| Phoebe | Banette/Misdreavus/Sableye/Dusclops/Gengar×2 (Destiny Bond threats) |
-| Glacia | Glalie/Jynx/Cloyster/Piloswine/Walrein/Lapras (Spikes+Sheer Cold) |
-| Drake | Flygon/Altaria/Kingdra/Salamence×2/Dragonite (DD spam, Choice Band ace) |
-| Wallace | Starmie/Tentacruel/Gyarados/Kingdra/Milotic(Moonblast!)/Lapras |
-
-**Future tiers (2-4)**: Fill remaining rematch table slots with escalating teams.
-
----
-
-## v2.0 Migration Strategy — PATH A CHOSEN (Cycle 42)
-
-**Decision**: Stay on vanilla pokeemerald. The expansion migration failed (Cycle 41) and is not worth the 5-8 cycle overhead. All v2.0 features will be implemented manually on vanilla.
-
-**Physical/Special split**: Can be done on vanilla using the pret wiki guide (see `memory/pokemon-knowledge/vanilla-physical-special-split.md`). No expansion needed.
-
-**Fairy type**: Manual implementation — add TYPE_FAIRY constant, update type effectiveness table, retype species (Ralts line, Clefairy line, etc.).
-
-### v2.0 Roadmap (Cycles 43+)
-
-| Priority | Feature | Status |
-|----------|---------|--------|
-| 1 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
-| 2 | Physical/Special split | **DONE** (Cycle 43) — all 355 moves categorized |
-| 3 | Fairy type engine + retypes | **DONE** (Cycle 44) — TYPE_FAIRY constant, type chart, UI, 14 species retypes |
-| 3b | Fairy signature moves | **DONE** (Cycle 46) — 3 moves (Moonblast, Play Rough, Dazzling Gleam), learnsets for all 14 Fairy species |
-| 3c | Fairy encounter corridors | **DONE** (Cycle 49) — all 5 corridors complete |
-| 4 | Elite Four rematches (tier 1) | **DONE** (Cycle 49) — 5 new trainer IDs, 6-mon teams lv60-71, rematch table wired |
-| 5 | Narrative polish pass | Ongoing |
+### Gym Leader Rematches
+- Match Call rematches for all 8 gym leaders with post-migration teams
+- Scale from lv55-65 (tier 1) to lv75-85 (tier 4)

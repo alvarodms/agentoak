@@ -1313,10 +1313,15 @@ PetalburgCity_Gym_Text_DadGoingToKeepTraining:
 	.string "not avenge my loss to you, {PLAYER}!$"
 
 PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
-	.string "DAD: {PLAYER}, how are things going?\p"
-	.string "The world of POKéMON is deep.\p"
-	.string "I honestly think that no amount of\n"
-	.string "training would ever be enough.$"
+	.string "DAD: {PLAYER}...\p"
+	.string "You have surpassed even me, and\n"
+	.string "now you face the ELITE FOUR again\l"
+	.string "and again.\p"
+	.string "I hear they are not the same\n"
+	.string "trainers you first defeated.\p"
+	.string "The migration changed their\n"
+	.string "strategies too.\p"
+	.string "Do not underestimate them.$"
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"

@@ -282,7 +282,13 @@ LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter::
+	goto_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_ProfessorBirchsLab_EventScript_AidePostgame
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_AidePostgame::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_AidePostgame, MSGBOX_DEFAULT
 	release
 	end
 
@@ -680,6 +686,20 @@ LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo:
 	.string "and distribution of POKéMON.\p"
 	.string "The PROF enjoys {RIVAL}'s help, too.\n"
 	.string "There's a lot of love there.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_AidePostgame:
+	.string "Ah, Champion!\p"
+	.string "The PROF's research has taken an\n"
+	.string "extraordinary turn.\p"
+	.string "The migration species are not just\n"
+	.string "passing through anymore.\p"
+	.string "They are establishing territories,\n"
+	.string "competing with native species...\p"
+	.string "Even the POKéMON LEAGUE ecosystem\n"
+	.string "has shifted.\p"
+	.string "The ELITE FOUR tell me their\n"
+	.string "challengers have never been this\l"
+	.string "strong. Or this interesting.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_LikeYouToHavePokemon:
 	.string "PROF. BIRCH: So, {PLAYER}{KUN}.\p"

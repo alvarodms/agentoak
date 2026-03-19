@@ -85,6 +85,15 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 | `data/maps/SootopolisCity/scripts.inc` | 3 NPCs — late-game flavor | 33 | |
 | `data/maps/EverGrandeCity/scripts.inc` | League entrance NPCs | 33 | |
 
+## Postgame Narrative Polish (Cycle 50)
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc` | Woman + ExpertM postgame branches — E4 rematch + Victory Road migration dialogue | 50 | FLAG_SYS_GAME_CLEAR gated |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | Lab aide postgame branch — migration species establishing territories | 50 | Added after AideReceivedStarter |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman postgame text rewrite — migration changed E4 strategies | 50 | Replaced DadNoAmountOfTrainingIsEnough text |
+| `data/maps/MossdeepCity/scripts.inc` | Woman postgame branch — Space Center satellite migration patterns | 50 | FLAG_SYS_GAME_CLEAR gated |
+
 ## Second Wave (v2.0 Narrative)
 
 | File | What Changed | Cycle | Notes |
