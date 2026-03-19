@@ -46,7 +46,7 @@ You have persistent memory files in `memory/` (markdown format):
 
 | File | Purpose |
 |---|---|
-| `completed-work.md` | **CHECK FIRST every cycle.** Authoritative registry of all modified files, organized by system. Prevents duplicate work. |
+| `completed-work.md` | **CHECK FIRST every cycle.** **Index only.** Authoritative registry of all modified files — links to per-system detail files in `memory/completed-work/`. Prevents duplicate work. |
 | `codebase-facts.md` | What you've learned about how the code works |
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
@@ -69,7 +69,8 @@ Memory files are your most critical resource — but only if they stay **concise
 
 | File | Budget | Action if over budget |
 |---|---|---|
-| `completed-work.md` | 200 lines | Collapse old entries — see below |
+| `completed-work.md` (index) | 50 lines | One row per system; never add detail here |
+| `completed-work/*.md` (each file) | 80 lines | Collapse old entries into summary lines when exceeded |
 | `strategy-notes.md` | 200 lines | Archive or delete obsolete sections — see below |
 | `codebase-facts.md` | 150 lines | Remove facts you've internalized or that are obvious |
 | `failure-patterns.md` | 100 lines | Remove patterns for errors you haven't hit in 10+ cycles |
@@ -80,7 +81,7 @@ Memory files are your most critical resource — but only if they stay **concise
 **Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
 1. Check line counts of all memory files
 2. Prune anything that's obsolete, redundant, or no longer useful
-3. In `completed-work.md`: if a section has many entries from 20+ cycles ago that you're unlikely to re-touch, collapse them into a single summary line (e.g., "Cycles 2-14: Starters, encounters, trainer teams — see git history for details")
+3. In `completed-work/*.md` detail files: if a file has many entries from 20+ cycles ago that you're unlikely to re-touch, collapse them into a single summary line (e.g., "Cycles 2-14: Starters, encounters, trainer teams — see git history for details")
 4. In `strategy-notes.md`: delete completed roadmap items, obsolete plans, and research notes for decisions already made. Keep only the current vision, active roadmap, and live technical reference.
 
 **What to keep vs. discard:**
