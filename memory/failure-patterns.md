@@ -20,17 +20,19 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: Break complex objectives into explicit sub-tasks, check "Files Modified" list against all required components. **For multi-part objectives, create a checklist and verify each component was addressed before declaring completion.**
 **Pattern**: When objective covers multiple unrelated systems (move tutors + TM prices + held items), the agent tends to work on the easier/more familiar systems first and lose track of the harder ones.
 
-## New Move Implementation Build Failures (Cycle 45)
+## New Move Implementation — 6 Files Required (Cycles 45-46)
 
-**Symptom**: Build fails when adding new moves, despite seemingly correct constants and data structures.
-**Example**: Added 5 Fairy moves (MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_CHARM, MOVE_FAIRY_WIND, MOVE_DAZZLING_GLEAM) with proper constants in moves.h and data in battle_moves.h, but compilation failed completely.
-**Likely causes**:
-- Move effect constants don't exist or are misnamed (used EFFECT_SPECIAL_ATTACK_DOWN_HIT, EFFECT_ATTACK_DOWN_HIT, etc. without verifying they exist)
-- Move indices conflict with existing moves or exceed array bounds (added at 354-358 without checking maximum)
-- Required fields missing or have invalid values in move data structure
-- Dependencies beyond just constants and data (move descriptions, animations, battle scripts, etc.)
-**Resolution strategy**: Start with single move, verify all effect constants exist in include/constants/battle_move_effects.h, check index bounds against MOVES_COUNT, test build after each addition.
-**Pattern**: Complex game data additions require incremental testing - don't add 5 moves at once without validating each component first.
+**Symptom (Cycle 45)**: Build fails when adding new moves with only constants + battle data.
+**Root cause**: Cycle 45 added moves to only moves.h, battle_moves.h, and learnsets — but MISSED contest_moves.h, move_descriptions.h, and move_names.h. These arrays are sized by MOVES_COUNT and will have uninitialized/missing entries if not updated.
+**Resolution (Cycle 46)**: All 6 files must be updated for every new move:
+1. `include/constants/moves.h` — constant + MOVES_COUNT
+2. `src/data/battle_moves.h` — move data entry
+3. `src/data/contest_moves.h` — contest data entry
+4. `src/data/text/move_descriptions.h` — description string + pointer table entry
+5. `src/data/text/move_names.h` — name entry (max 12 chars)
+6. `src/data/pokemon/level_up_learnsets.h` — species learnset entries
+**Also**: fairy.png graphic must exist if TYPE_FAIRY is used (was lost between cycles).
+**Lesson**: Build and test BEFORE adding learnsets to catch missing entries early.
 
 ## Held Item Edit Scope Issue (Cycle 16 — RESOLVED Cycle 17)
 
