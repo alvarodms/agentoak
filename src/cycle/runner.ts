@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
+import type { CyclePlan } from "./planner.js";
+import { runGameplayDesigner } from "./gameplay-designer.js";
 import { getModeDescription, isCodingMode } from "./modes.js";
 import {
   buildDynamicContext,
@@ -437,10 +439,35 @@ export async function runCycle(): Promise<void> {
     // Record the chosen mode in history so future planners can see the pattern
     updateCycleModeHistory(plan.mode);
 
+    // ── Phase 1.5: Gameplay Design (conditional — only when Producer sets a brief) ──
+    let activePlan: CyclePlan = plan;
+    let gameplayDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+
+    if (plan.gameplayDesignBrief) {
+      log.info("Phase 1.5: Gameplay Design...");
+      try {
+        const designResult = await runGameplayDesigner(
+          plan.objective,
+          plan.gameplayDesignBrief,
+          plan.implementationPlan,
+        );
+        activePlan = {
+          ...plan,
+          implementationPlan: `${plan.implementationPlan}\n\n## Gameplay Specifications (from Gameplay Designer)\n\n${designResult.specs}`,
+        };
+        gameplayDesignTokenUsage = designResult.tokenUsage;
+        log.info(`  Gameplay design complete: ${designResult.toolCallCount} tool calls, ${designResult.specs.length} chars`);
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        log.warn(`  Gameplay Designer failed, proceeding with Producer's plan: ${errMsg}`);
+        // Fall through with original plan
+      }
+    }
+
     // ── Phase 2: Implementation (separate agent context) ──
     const implResult = await runImplementationPhase(
       cycleNumber,
-      plan,
+      activePlan,
       memory,
       recentJournals,
       log,
@@ -493,6 +520,7 @@ export async function runCycle(): Promise<void> {
     // ── Phase 5: Journal + Commit ──
     const allActions = [...implResult.actions, ...fixActions, ...reflection.actions];
     const totalTokenUsage = mergeTokenUsage(
+      gameplayDesignTokenUsage,
       implResult.tokenUsage,
       fixTokenUsage,
       reflection.tokenUsage,

@@ -17,6 +17,7 @@ import {
   formatBacklogSection,
   buildPlannerContextSections,
   formatImplementationPlanGuidance,
+  formatGameplayDesignBriefGuidance,
   formatPlannerClosingInstructions,
 } from "../agent/prompt-sections.js";
 
@@ -146,6 +147,8 @@ If previous cycles had build failures, consider "repair".
 
 
 ${formatImplementationPlanGuidance()}
+
+${formatGameplayDesignBriefGuidance()}
 
 ${formatPlannerClosingInstructions()}`;
 
