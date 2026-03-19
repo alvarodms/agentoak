@@ -6,17 +6,25 @@
  * (Pokémon Showdown's data layer). Optimised for Gen 3 (Pokémon Emerald)
  *
  * Tools exposed:
- *   pokemon_stats      — base stats, types, BST, tier for a single species
- *   search_pokemon     — filter species by type and/or BST range
- *   move_data          — power, accuracy, type, category for a move
- *   type_matchup       — effectiveness multiplier for an attack
- *   pokemon_learnset   — all moves a species can learn in a given gen
+ *   pokemon_stats          — base stats, types, BST, tier for a single species
+ *   search_pokemon         — filter species by type and/or BST range
+ *   move_data              — power, accuracy, type, category for a move
+ *   type_matchup           — effectiveness multiplier for an attack
+ *   pokemon_learnset       — all moves a species can learn in a given gen
+ *   smogon_sets            — competitive sets from Smogon (moves, items, EVs, nature)
+ *   smogon_format_pokemon  — list Pokémon with competitive sets in a tier/format
+ *   team_type_coverage     — analyse a team's defensive/offensive type coverage
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { Dex } from "@pkmn/dex";
 import { z } from "zod";
+import {
+  getSmogonSets,
+  listFormatPokemon,
+  listAvailableFormats,
+} from "./smogon-cache.js";
 
 const DEFAULT_GEN = 3;
 
@@ -39,7 +47,7 @@ function calcBst(baseStats: Record<string, number>): number {
 
 const server = new McpServer({
   name: "pokedex",
-  version: "1.0.0",
+  version: "2.0.0",
 });
 
 // ─── Tool: pokemon_stats ─────────────────────────────────────────────────────
@@ -395,6 +403,345 @@ server.registerTool(
     for (const [method, moves] of Object.entries(byMethod)) {
       lines.push(`\n${method.toUpperCase()} (${moves.length}):`);
       lines.push(moves.join(", "));
+    }
+
+    return {
+      content: [{ type: "text", text: lines.join("\n") }],
+    };
+  },
+);
+
+// ─── Tool: smogon_sets ──────────────────────────────────────────────────────
+
+server.registerTool(
+  "smogon_sets",
+  {
+    title: "Get Smogon Competitive Sets",
+    description:
+      "Get recommended competitive sets for a Pokémon from Smogon analyses. " +
+      "Returns named sets with moves, item, nature, EVs, ability, and strategy notes. " +
+      "Defaults to Gen 3. Optionally filter by format (ou, uu, ubers, etc.).",
+    inputSchema: z.object({
+      name: z
+        .string()
+        .describe("Pokémon name, e.g. 'salamence' or 'metagross'"),
+      format: z
+        .string()
+        .optional()
+        .describe(
+          "Competitive format to filter by, e.g. 'ou', 'uu', 'ubers'. Omit for all formats.",
+        ),
+    }),
+  },
+  async ({ name, format }) => {
+    const results = getSmogonSets(name, format);
+
+    if (results.length === 0) {
+      const formats = listAvailableFormats();
+      const fmtList = formats.map((f) => `${f.format} (${f.count} Pokémon)`).join(", ");
+      return {
+        content: [
+          {
+            type: "text",
+            text: `No Smogon sets found for "${name}"${format ? ` in format "${format}"` : ""}.\nAvailable Gen 3 formats: ${fmtList}`,
+          },
+        ],
+      };
+    }
+
+    const lines: string[] = [];
+
+    for (const { format: fmt, sets } of results) {
+      lines.push(`\n═══ Format: ${fmt} ═══`);
+
+      for (const [setName, set] of Object.entries(sets)) {
+        lines.push(`\n── ${setName} ──`);
+
+        if (set.moves) {
+          lines.push(`Moves: ${set.moves.join(", ")}`);
+        }
+        if (set.item) {
+          lines.push(`Item: ${set.item}`);
+        }
+        if (set.ability) {
+          lines.push(`Ability: ${set.ability}`);
+        }
+        if (set.nature) {
+          lines.push(`Nature: ${set.nature}`);
+        }
+        if (set.evs) {
+          const evsStr = Object.entries(set.evs)
+            .filter(([, v]) => v && v > 0)
+            .map(([k, v]) => `${v} ${k}`)
+            .join(" / ");
+          if (evsStr) lines.push(`EVs: ${evsStr}`);
+        }
+        if (set.ivs) {
+          const ivsStr = Object.entries(set.ivs)
+            .filter(([, v]) => v !== undefined && v !== 31)
+            .map(([k, v]) => `${v} ${k}`)
+            .join(" / ");
+          if (ivsStr) lines.push(`IVs: ${ivsStr}`);
+        }
+        if (set.hpType) {
+          lines.push(`Hidden Power: ${set.hpType}`);
+        }
+      }
+    }
+
+    return {
+      content: [{ type: "text", text: lines.join("\n") }],
+    };
+  },
+);
+
+// ─── Tool: smogon_format_pokemon ────────────────────────────────────────────
+
+server.registerTool(
+  "smogon_format_pokemon",
+  {
+    title: "List Pokémon in a Smogon Format",
+    description:
+      "List all Pokémon that have competitive sets in a given Smogon format/tier (e.g. 'ou', 'uu', 'ubers'). " +
+      "Returns each Pokémon with their available set names. Useful for team building and understanding tier viability.",
+    inputSchema: z.object({
+      format: z
+        .string()
+        .describe(
+          "Smogon format/tier, e.g. 'ou', 'uu', 'ru', 'nu', 'ubers', 'lc'",
+        ),
+      limit: z
+        .number()
+        .int()
+        .min(1)
+        .max(200)
+        .optional()
+        .describe("Maximum results (default: 50)"),
+    }),
+  },
+  async ({ format, limit = 50 }) => {
+    const pokemon = listFormatPokemon(format);
+
+    if (pokemon.length === 0) {
+      const formats = listAvailableFormats();
+      const fmtList = formats.map((f) => `${f.format} (${f.count} Pokémon)`).join(", ");
+      return {
+        content: [
+          {
+            type: "text",
+            text: `No Pokémon found with sets in format "${format}". Available Gen 3 formats: ${fmtList}`,
+          },
+        ],
+      };
+    }
+
+    const limited = pokemon.slice(0, limit);
+
+    const lines = [
+      `Pokémon with competitive sets in "${format}" (${pokemon.length} total, showing ${limited.length}):`,
+      "",
+    ];
+
+    for (const p of limited) {
+      lines.push(`  ${p.name}: ${p.sets.join(", ")}`);
+    }
+
+    if (pokemon.length > limit) {
+      lines.push(
+        `\n  ... and ${pokemon.length - limit} more. Increase limit to see all.`,
+      );
+    }
+
+    return {
+      content: [{ type: "text", text: lines.join("\n") }],
+    };
+  },
+);
+
+// ─── Tool: team_type_coverage ───────────────────────────────────────────────
+
+server.registerTool(
+  "team_type_coverage",
+  {
+    title: "Analyse Team Type Coverage",
+    description:
+      "Analyse a team's type coverage: defensive weaknesses, resistances, immunities, and offensive coverage. " +
+      "Helps identify gaps in team composition. Defaults to Gen 3.",
+    inputSchema: z.object({
+      team: z
+        .array(z.string())
+        .min(1)
+        .max(6)
+        .describe(
+          "Array of Pokémon names on the team, e.g. ['swampert', 'salamence', 'metagross']",
+        ),
+      gen: z
+        .number()
+        .int()
+        .min(1)
+        .max(9)
+        .optional()
+        .describe("Generation (default: 3)"),
+    }),
+  },
+  async ({ team, gen = DEFAULT_GEN }) => {
+    const dex = getDex(gen);
+    const allTypes = dex.types.all().filter((t) => t.exists);
+
+    // Resolve team members
+    const members: Array<{
+      name: string;
+      types: string[];
+    }> = [];
+    const errors: string[] = [];
+
+    for (const name of team) {
+      const species = dex.species.get(name);
+      if (!species.exists) {
+        errors.push(`Unknown Pokémon: "${name}"`);
+        continue;
+      }
+      members.push({ name: species.name, types: species.types });
+    }
+
+    if (errors.length > 0 && members.length === 0) {
+      return {
+        content: [{ type: "text", text: errors.join("\n") }],
+      };
+    }
+
+    // Defensive analysis: for each attacking type, how many team members are weak/resist/immune
+    const defensive: Array<{
+      type: string;
+      weakMembers: string[];
+      resistMembers: string[];
+      immuneMembers: string[];
+    }> = [];
+
+    for (const atkType of allTypes) {
+      const weakMembers: string[] = [];
+      const resistMembers: string[] = [];
+      const immuneMembers: string[] = [];
+
+      for (const member of members) {
+        let mult = 1;
+        for (const defTypeName of member.types) {
+          const defType = dex.types.get(defTypeName);
+          if (!defType.exists) continue;
+          const dt = defType.damageTaken[atkType.name] ?? 0;
+          mult *= DT_TO_MULT[dt] ?? 1;
+        }
+
+        if (mult === 0) immuneMembers.push(member.name);
+        else if (mult >= 2) weakMembers.push(member.name);
+        else if (mult < 1) resistMembers.push(member.name);
+      }
+
+      defensive.push({
+        type: atkType.name,
+        weakMembers,
+        resistMembers,
+        immuneMembers,
+      });
+    }
+
+    // Offensive analysis: what types can the team's STAB moves cover
+    const stabTypes = new Set<string>();
+    for (const member of members) {
+      for (const t of member.types) {
+        stabTypes.add(t);
+      }
+    }
+
+    // Find types the team cannot hit super-effectively with STAB
+    const uncoveredDefensive: string[] = [];
+    for (const defType of allTypes) {
+      let covered = false;
+      for (const stab of stabTypes) {
+        const atkType = dex.types.get(stab);
+        if (!atkType.exists) continue;
+        const dt = defType.damageTaken[atkType.name] ?? 0;
+        if (DT_TO_MULT[dt] === 2) {
+          covered = true;
+          break;
+        }
+      }
+      if (!covered) uncoveredDefensive.push(defType.name);
+    }
+
+    // Format output
+    const lines: string[] = [];
+    if (errors.length > 0) {
+      lines.push(`Warnings: ${errors.join(", ")}\n`);
+    }
+
+    lines.push(
+      `Team: ${members.map((m) => `${m.name} (${m.types.join("/")})`).join(", ")}`,
+    );
+
+    // Defensive weaknesses (types that hit 2+ members super-effectively)
+    const teamWeaknesses = defensive
+      .filter((d) => d.weakMembers.length >= 2)
+      .sort((a, b) => b.weakMembers.length - a.weakMembers.length);
+
+    const teamVulnerabilities = defensive
+      .filter(
+        (d) =>
+          d.weakMembers.length >= 1 &&
+          d.resistMembers.length === 0 &&
+          d.immuneMembers.length === 0,
+      )
+      .sort((a, b) => b.weakMembers.length - a.weakMembers.length);
+
+    lines.push("\n── Defensive Weaknesses ──");
+    if (teamWeaknesses.length === 0) {
+      lines.push("No types hit 2+ team members super-effectively. Solid!");
+    } else {
+      for (const w of teamWeaknesses) {
+        lines.push(
+          `  ${w.type}: ${w.weakMembers.length} weak (${w.weakMembers.join(", ")})` +
+            (w.resistMembers.length > 0
+              ? `, ${w.resistMembers.length} resist`
+              : "") +
+            (w.immuneMembers.length > 0
+              ? `, ${w.immuneMembers.length} immune`
+              : ""),
+        );
+      }
+    }
+
+    lines.push("\n── Unresisted Types ──");
+    lines.push(
+      "Types where no team member resists or is immune (dangerous!):",
+    );
+    if (teamVulnerabilities.length === 0) {
+      lines.push("  None — every attacking type has at least one resist/immunity.");
+    } else {
+      for (const v of teamVulnerabilities) {
+        lines.push(`  ${v.type}: weak — ${v.weakMembers.join(", ")}`);
+      }
+    }
+
+    // Immunities
+    const teamImmunities = defensive.filter((d) => d.immuneMembers.length > 0);
+    if (teamImmunities.length > 0) {
+      lines.push("\n── Team Immunities ──");
+      for (const im of teamImmunities) {
+        lines.push(`  ${im.type}: ${im.immuneMembers.join(", ")}`);
+      }
+    }
+
+    // Offensive STAB coverage
+    lines.push("\n── Offensive STAB Coverage ──");
+    lines.push(`STAB types: ${[...stabTypes].join(", ")}`);
+    if (uncoveredDefensive.length > 0) {
+      lines.push(
+        `Types not hit super-effectively by STAB: ${uncoveredDefensive.join(", ")}`,
+      );
+    } else {
+      lines.push(
+        "All types can be hit super-effectively by at least one STAB type!",
+      );
     }
 
     return {
