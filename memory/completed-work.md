@@ -27,7 +27,7 @@ Before modifying ANY pokeemerald file:
 | System | Cycles | Files | Detail |
 |--------|--------|-------|--------|
 | Starters & Core Mechanics | 2, 12, 31, 32, 35 | 3 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
-| Wild Encounters | 3, 4, 9, 14, 21 | 1 (multi-table) | [wild-encounters.md](completed-work/wild-encounters.md) |
+| Wild Encounters | 3, 4, 9, 14, 21, 47 | 1 (multi-table) | [wild-encounters.md](completed-work/wild-encounters.md) |
 | Trainer Parties | 6–12, 16, 17, 19 | 1 (multi-change) | [trainer-parties.md](completed-work/trainer-parties.md) |
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42 | ~40 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–45 | 16 | [battle-engine.md](completed-work/battle-engine.md) |

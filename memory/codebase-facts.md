@@ -4,6 +4,23 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Wild Encounter Fairy Integration (Cycle 47)
+
+**Technical validation**: All three Fairy corridor species (SPECIES_RALTS, SPECIES_SNUBBULL, SPECIES_CLEFAIRY) integrate successfully with the wild_encounters.json system.
+
+**Build compatibility**: No conflicts between the Fairy type system (Cycle 44) and wild encounter modifications. The species constants from the type retypes are fully recognized by the encounter system.
+
+**Implementation pattern**: Standard encounter slot replacement maintains JSON structure and percentage probabilities. No special handling needed for Fairy types in encounter tables.
+
+**Corridor implementation success**:
+- Granite Cave B2F: Ralts 16-19 (10% rate) replaced ABRA slot
+- Route 118: Snubbull 24-26 (15% rate) replaced ELECTRIKE slot
+- Route 121: Clefairy 26-28 (20% rate) replaced SHUPPET slot
+
+This confirms the technical foundation is solid for completing the remaining corridors (Route 120, Route 122/Mt. Pyre).
+
+---
+
 ## Wild Pokémon Held Item System (Cycle 31)
 
 **Core System**: Wild Pokémon held items are automatically assigned via the `SetWildMonHeldItem()` function in `src/pokemon.c` (lines 6664-6717).
@@ -126,7 +143,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Wild Encounter Overhaul System (Cycles 2–8, 14–15)
+## Wild Encounter Overhaul System (Cycles 2–8, 14–15, 47)
 
 **Data format**: `pokeemerald/src/data/wild_encounters.json` — parsed by build system into C data structures.
 
@@ -144,6 +161,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 **Key insight from Cycle 8**: Route-by-route manual editing scales poorly. Using probability-aware design (common/uncommon/rare species placement) creates more satisfying encounter curves.
 
 **Species validation**: All species references must use valid `SPECIES_` constants from `include/constants/species.h`.
+
+**Editing specific slots (Cycle 47)**: To replace individual encounters without changing the rate structure, identify the target slot by position and species name, then use sufficient context in Edit tool to uniquely identify the specific map/table. Multiple locations may have identical species/level combinations.
 
 ### Design Philosophy (Established Cycle 2)
 
