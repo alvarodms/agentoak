@@ -33,70 +33,56 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ### Struct Incompatibilities (Confirmed by Build Errors)
 
-**`struct BattleResources`**:
-- Vanilla has: `.battleScriptsStack`, `.flags`
-- Expansion has: `.ai`, `.battleHistory`, `.AI_ScriptsStack` (and no `.battleScriptsStack`)
+**`struct BattleResources`** (fundamental battle system structure):
+- **Vanilla**: `.battleScriptsStack` field
+- **Expansion**: `.ai`, `.battleHistory`, `.AI_ScriptsStack` fields
+- **Impact**: All battle AI code is incompatible
 
-**Removed/renamed globals in expansion**:
-- `gBattleMoves` — renamed (now accessed via a different API)
-- `gActiveBattler` — removed or renamed (was widely used in vanilla AI)
-- `gDisableStructs` — removed
-- `gTrainerBattleOpponent_A` / `_B` — removed
-- `gDynamicBasePower`, `gMoveResultFlags`, `gCritMultiplier`, `gBattleMoveDamage` — all removed
+**Global Variables Renamed**:
+- `gBattleMoves`, `gActiveBattler`, `gDisableStructs`, `gTrainerBattleOpponent_A` — renamed or removed
+- Constants like `AI_USER`, `AI_TARGET`, `EFFECT_EXPLOSION` — expansion-only
 
-**New expansion-only constants** (undefined in vanilla):
-- `AI_USER`, `AI_TARGET`, `AI_USER_PARTNER`, `AI_TARGET_PARTNER`
-- `AI_TYPE1_USER`, `AI_TYPE1_TARGET`, `AI_TYPE2_USER`, `AI_TYPE2_TARGET`, `AI_TYPE_MOVE`
-- `AI_SCRIPT_*` family (SAFARI, ROAMING, FIRST_BATTLE, etc.)
-- `AI_EFFECTIVENESS_x2/x4/x0_5/x0_25/x0/x1`
-- `AI_WEATHER_NONE/RAIN/SANDSTORM/SUN/HAIL`
-- `MOVE_MOST_POWERFUL`, `MOVE_NOT_MOST_POWERFUL`, `MOVE_POWER_OTHER`
-
-### Trainer Data Format
-
-**Old format (vanilla)**: C struct in `src/data/trainer_parties.h`
-**New format (expansion)**: `.party` files in `src/data/trainers.party`, compiled by `trainerproc` tool
-**No toggle available**: `COMPETITIVE_PARTY_SYNTAX` does NOT exist — `.party` format is mandatory in v1.15.0
-
-### Battle AI
-
-The battle AI was completely rewritten in the expansion. `src/battle_ai_script_commands.c` in vanilla is 100% incompatible with expansion headers — 200+ errors in that file alone.
-
-### Difficulty System (Expansion Only)
-
-The expansion adds a difficulty system: `enum DifficultyLevel` in `include/constants/difficulty.h` with `DIFFICULTY_COUNT`. `gTrainers[]` becomes `gTrainers[DIFFICULTY_COUNT][TRAINERS_COUNT]`. This is a fundamental change to how trainers are referenced.
+**Battle AI System**: Completely rewritten in expansion. The vanilla `src/battle_ai_script_commands.c` is 100% incompatible — 200+ compile errors.
 
 ### Migration Conclusion
 
-**The expansion is not a drop-in upgrade**. It is a separate codebase that happens to share some file paths. Migrating to it means: (1) start with a fresh expansion clone, (2) port LoH content into it (encounters, trainer parties in .party format, dialogue scripts). The reverse (grafting expansion headers onto vanilla source) does not work.
+**Not possible** via file copying (rsync). The expansion requires treating it as an entirely new codebase and **porting LoH content into it** — not overlaying expansion files on top of LoH.
+
+**Options**: (a) True `git merge` from expansion remote with full conflict resolution, or (b) Abandon expansion migration and stay on vanilla.
 
 ---
 
-## Gym Leader Pre-Battle Dialogue — Confirmed File Paths (Cycle 36)
+## Move Implementation System (Cycle 45)
 
-**Label pattern**: `[MapName]_Text_[GymLeaderName]Intro` — used in `trainerbattle_single` or via `msgbox` + `trainerbattle_no_intro`
+**Move Constants**: Defined in `include/constants/moves.h` starting after last vanilla move. Must be sequential integers.
 
-| Gym Leader | File Path | Label |
-|---|---|---|
-| Roxanne | `data/maps/RustboroCity_Gym/scripts.inc` | `RustboroCity_Gym_Text_RoxanneIntro` |
-| Brawly | `data/maps/DewfordTown_Gym/scripts.inc` | `DewfordTown_Gym_Text_BrawlyIntro` |
-| Wattson | `data/maps/MauvilleCity_Gym/scripts.inc` | `MauvilleCity_Gym_Text_WattsonIntro` |
-| Flannery | `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | `LavaridgeTown_Gym_1F_Text_FlanneryIntro` |
-| Norman | `data/maps/PetalburgCity_Gym/scripts.inc` | `PetalburgCity_Gym_Text_NormanIntro` |
-| Winona | `data/maps/FortreeCity_Gym/scripts.inc` | `FortreeCity_Gym_Text_WinonaIntro` |
-| Tate & Liza | `data/maps/MossdeepCity_Gym/scripts.inc` | `MossdeepCity_Gym_Text_TateAndLizaIntro` |
-| Juan | `data/maps/SootopolisCity_Gym_1F/scripts.inc` | `SootopolisCity_Gym_1F_Text_JuanIntro` |
+**Move Data**: Stored in `src/data/battle_moves.h` as a structured array `gBattleMoves[MOVES_COUNT]` with required fields:
+- `.effect` — battle effect constant (from `include/constants/battle_move_effects.h`)
+- `.power` — move power (0-255, 0 for non-damaging)
+- `.type` — type constant (TYPE_NORMAL, TYPE_FAIRY, etc.)
+- `.accuracy` — accuracy percentage (0-100, 0 for never-miss)
+- `.pp` — power points (1-40)
+- `.secondaryEffectChance` — chance for secondary effect (0-100)
+- `.target` — targeting type (MOVE_TARGET_SELECTED, MOVE_TARGET_BOTH, etc.)
+- `.priority` — speed priority (-7 to +7)
+- `.flags` — move properties bitfield
 
-**Gym file naming quirks**:
-- Flannery's gym is `LavaridgeTown_Gym_1F` — there is NO `LavaridgeTown_Gym` (only `_1F` and `_B1F`)
-- Juan's gym requires `_1F` suffix: `SootopolisCity_Gym_1F`
-- Norman's pre-battle uses `MSGBOX_DEFAULT` + `trainerbattle_no_intro` (two-step pattern, differs from single `trainerbattle_single`)
+**Level-up Learnsets**: Defined in `src/data/pokemon/level_up_learnsets.h` using `LEVEL_UP_MOVE(level, move)` macro. Each species has its own array (e.g. `sClefairyLevelUpLearnset[]`).
 
-**Rival label confirmed** (Cycle 36): Route 103 pre-battle label is `Route103_Text_BrendanRoute103Pokemon` (Brendan) / `Route103_Text_MayRoute103Pokemon` (May). These are shown BEFORE the rival approaches; the challenge text is `BrendanLetsBattle`/`MayLetsBattle`.
+**Critical requirement**: Move effect constants must exist in `include/constants/battle_move_effects.h`. Using non-existent effects will cause build failure.
+
+**Discovered in Cycle 45**: Adding new moves requires verification of all referenced constants — effect names, targeting types, and ensuring move indices don't exceed MOVES_COUNT limit.
 
 ---
 
-## NPC Dialogue Editing Pattern (Cycle 28)
+## Dialogue Editing System (Cycles 24–26)
+
+**System overview**: NPCs use `.string` labels that reference static text. Event scripts call `MSGBOX_NPC` or `MSGBOX_DEFAULT` commands pointing to these labels.
+
+**File locations**:
+- **Static NPC text**: Usually in the map's `scripts.inc` file
+- **Story/event text**: Can be in map scripts or dedicated `.inc` files
+- **Opening sequence**: `data/text/birch_speech.inc`
 
 **Target**: Any `.string` label in a map's `scripts.inc` used by a MSGBOX_NPC or MSGBOX_DEFAULT event script.
 
@@ -138,114 +124,117 @@ The expansion adds a difficulty system: `enum DifficultyLevel` in `include/const
 
 **File**: `pokeemerald/data/text/birch_speech.inc`
 
-**Key insight**: Text modifications can be substantial (67 lines changed) without affecting build stability. This system is robust for narrative overhauls.
+**Script breakdown**: Five major text blocks — intro, Pokémon introduction, your story beginning, new trainer setup, and world entry. Uses `\p` for page breaks and `\n` for line breaks.
+
+**Design insight**: The opening speech sets the tone for the entire game. Migration-aware text here establishes the thematic foundation for encounter changes throughout the ROM hack.
 
 ---
 
-## Move Tutor System (Cycle 23)
+## Wild Encounter Overhaul System (Cycles 2–8, 14–15)
 
-**Files**:
-- `pokeemerald/src/data/pokemon/tutor_learnsets.h` — `gTutorMoves[]` array and `sTutorLearnsets[]` bitfield
-- `pokeemerald/data/scripts/move_tutors.inc` — NPC event scripts
-- `pokeemerald/include/constants/party_menu.h` — `TUTOR_MOVE_*` constants
+**Data format**: `pokeemerald/src/data/wild_encounters.json` — parsed by build system into C data structures.
 
-**Slot 8** (`TUTOR_MOVE_METRONOME`) repurposed to Earthquake in Cycle 23 at Fallarbor Town Mart.
+### JSON Structure
 
----
+**Each route/map**: Contains `land_mons`, `water_mons`, `fishing_mons` arrays.
 
-## TM Consumption Mechanic — IMPLEMENTED (Cycle 35)
+**Land encounters**: 12 slots (indices 0–11) with probability distribution:
+- Slots 0-1: 20% each (most common)
+- Slots 2-5: 10% each
+- Slots 6-7: 5% each
+- Slots 8-9: 4% each
+- Slots 10-11: 1% each (rarest)
 
-**File**: `pokeemerald/src/party_menu.c`
-**Change**: Deleted the 2-line block `if (item < ITEM_HM01) RemoveBagItem(item, 1);` — TMs are now permanent, HMs unchanged.
+**Key insight from Cycle 8**: Route-by-route manual editing scales poorly. Using probability-aware design (common/uncommon/rare species placement) creates more satisfying encounter curves.
 
----
+**Species validation**: All species references must use valid `SPECIES_` constants from `include/constants/species.h`.
 
-## Auto-Run (Always Running) — IMPLEMENTED (Cycle 35)
+### Design Philosophy (Established Cycle 2)
 
-**File**: `pokeemerald/src/field_player_avatar.c`, Line 658
-**Change**: Removed `(heldKeys & B_BUTTON) &&` from the running condition. Player always runs once FLAG_SYS_B_DASH is set.
+**Route progression**: 101–103 (introductory), 104–116 (escalating), 117+ (peak diversity).
 
----
+**Thematic zoning**: Each route represents an ecosystem. Ocean routes favor Water-types, mountain routes favor Rock/Ground, forests favor Grass/Bug.
 
-## Wild Encounter System Architecture
-
-**File**: `pokeemerald/src/data/wild_encounters.json`
-**Land**: 12 slots, probabilities 20/20/10/10/10/10/5/5/4/4/1/1
-**Water**: 5 slots. **Fishing**: 10 slots.
+**Example ecosystem (Route 117)**: Volbeat/Illumise (common), Shedinja (rare), Masquerain (water) — unified by insect ecology.
 
 ---
 
-## Trainer Battle System Architecture
+## Trainer Battle System (Cycles 5–7, 9–10, 16–17)
 
-**File**: `pokeemerald/src/data/trainer_parties.h` (198KB, 10,000+ lines)
+**Data file**: `pokeemerald/src/data/trainer_parties.h`
 
-**Party types**: `TrainerMonNoItemDefaultMoves`, `TrainerMonItemDefaultMoves`, `TrainerMonNoItemCustomMoves`, `TrainerMonItemCustomMoves`
+### Trainer Structure
 
-**Key trainer line numbers in trainer_parties.h**:
-- Gym leaders: Roxanne (~3367), Brawly (~3391), Wattson (~3415), Flannery (~3446), Norman (~3477), Winona (~3508), Tate & Liza (~3546), Juan (~3577)
-- Elite Four: Sidney (~4344), Phoebe (~4370), Glacia (~4396), Drake (~4422), Wallace (~4414)
+**Basic format**: Species, level, held item, moves array.
 
----
+```c
+{
+    .species = SPECIES_ALAKAZAM,
+    .heldItem = ITEM_BRIGHTPOWDER,
+    .moves = {MOVE_PSYCHIC, MOVE_FUTURE_SIGHT, MOVE_RECOVER, MOVE_REFLECT}
+}
+```
 
-## Elite Four, Champion, and Late-Game Gym File Naming (Cycle 33)
+**Key insight from Cycle 16**: Held items dramatically increase trainer difficulty. Elite trainers should have purpose-built item strategies (Leftovers for walls, Choice Band for sweepers, Brightpowder for evasion).
 
-**Elite Four rooms**: `data/maps/EverGrandeCity_[Name]sRoom/scripts.inc`
-**Champion's room**: `EverGrandeCity_ChampionsRoom/scripts.inc` — NOT `WallacesRoom`
-**Defeat text**: max ~35 chars per line, max 2 lines (shown inside battle UI)
+### AI Levels (Cycles 5–6)
 
----
+**Elite trainers** (gym leaders, Elite Four): Use `.aiFlags = AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY`
 
-## Physical/Special Split System (Cycle 43)
+**Regular trainers**: Use `.aiFlags = AI_FLAG_CHECK_BAD_MOVE` (basic AI only)
 
-**Struct**: `struct BattleMove` in `include/pokemon.h` has `u8 category` field (last field).
-
-**Constants** (in `include/pokemon.h`):
-- `MOVE_CATEGORY_PHYSICAL` (0), `MOVE_CATEGORY_SPECIAL` (1), `MOVE_CATEGORY_STATUS` (2)
-
-**Macros** (in `include/battle.h`):
-- `IS_MOVE_PHYSICAL(move)`, `IS_MOVE_SPECIAL(move)`, `IS_MOVE_STATUS(move)` — take move ID, check `gBattleMoves[move].category`
-- Old `IS_TYPE_PHYSICAL`/`IS_TYPE_SPECIAL` macros kept but unused in battle logic
-
-**Damage calc** (`src/pokemon.c:CalculateBaseDamage`):
-- Physical/special branch determined by `IS_MOVE_PHYSICAL(gCurrentMove)` / `IS_MOVE_SPECIAL(gCurrentMove)`
-- Weather (rain/sun) applies based on move TYPE (not category) — outside both branches
-- Flash Fire boosts all Fire moves regardless of category — outside both branches
-- Thick Fat halves `gBattleMovePower` (works for both physical and special)
-- Type-boost held items boost both attack and spAttack (correct stat selected by branch)
-
-**Move data**: All 355 entries in `src/data/battle_moves.h` have `.category` field, sourced from Kateulator's pokeemerald-physpe (Gen IV categories).
-
-**Counter/Mirror Coat** (`src/battle_script_commands.c`): Use `IS_MOVE_PHYSICAL`/`IS_MOVE_SPECIAL` for damage tracking.
+**Battle facility/Champion**: May add `AI_FLAG_SMART_SWITCHING` for advanced tactics.
 
 ---
 
-## Fairy Type System (Cycle 44)
+## TM System (Cycles 18–22)
 
-**Constant**: `TYPE_FAIRY = 18`, `NUMBER_OF_MON_TYPES = 19` in `include/constants/pokemon.h`
+**TM data**: `pokeemerald/src/data/items.h` — contains price and description for each TM item.
 
-**Type effectiveness** (`src/battle_main.c`): `gTypeEffectiveness[372]` (was 336). 12 new entries added before TYPE_FORESIGHT sentinel. Fairy is SE vs Fighting/Dragon/Dark, NVE vs Fire/Poison/Steel. Dragon→Fairy is TYPE_MUL_NO_EFFECT (immune).
+### TM Pricing Structure (Updated Cycle 22)
 
-**Files touched for type registration** (all need entries when adding a new type):
-- `include/constants/pokemon.h` — constant + NUMBER_OF_MON_TYPES
-- `include/battle_main.h` — extern array size
-- `src/battle_main.c` — gTypeNames + gTypeEffectiveness
-- `src/battle_message.c` — sATypeMove_Table
-- `src/pokemon_summary_screen.c` — sprite anim + anim table + palette map
-- `src/pokedex.c` — sDexSearchTypeOptions + sDexSearchTypeIds
-- `src/menu.c` — sMenuInfoIcons
-- `src/data/union_room.h` — sTradingBoardTypes
-- `graphics_file_rules.mk` — types variable
-- `graphics/types/<name>.png` — icon graphic (32x16, 4bpp indexed PNG)
+**Reusable TMs**: Change in `src/party_menu.c` — deleted DestroyUsedItem() calls on TM Use and TM Teach.
 
-**Placeholder graphics**: Fairy icon is a copy of psychic.png. The menu info icon offset (0x84) also reuses Psychic's entry in `gMenuInfoElements_Gfx`.
+**Price reduction**: All TMs reduced from 3000 to 1500 Pokédollars for easier access.
 
-**Not updated**: Battle Factory script (`BattleFrontier_BattleFactoryPreBattleRoom/scripts.inc`) has no Fairy-specific opponent type message — falls through to "no common type" harmlessly.
+**Design insight**: Reusable + cheaper TMs encourage experimentation with movesets throughout the game, supporting the difficulty-focused trainer battles.
 
 ---
 
-## ROM Build System
+## Gym Leader Progression (Cycles 5–6)
 
-**Command**: `make` from `pokeemerald/` directory
-**Output**: `pokeemerald.gba` (16MB exactly = successful build)
-**Toolchain**: agbcc (C89) + ARM cross-tools
-**Success indicator**: File size exactly 16,777,216 bytes
+**Design philosophy**: Each gym leader represents a milestone in the player's journey. Teams should scale in both level and sophistication.
+
+### Gym 1–4 (Early Game)
+**Roxanne**: Nosepass focus with Rock-type coverage
+**Brawly**: Fighting-types with diverse coverage moves
+**Wattson**: Magnezone + Electrode (double battles preparation)
+**Flannery**: Arcanine ace with Fire-type support
+
+### Gym 5–8 (Late Game)
+**Norman**: Slaking + Spinda/Vigoroth (theme-breaking team)
+**Winona**: Flying aces with Hurricane/Sky Attack
+**Tate & Liza**: Synchronized Psychic powerhouse (double battle)
+**Juan**: Water specialists with diverse subtypes
+
+**Key insight from Cycle 6**: Late-game gym leaders should have teams comparable to Elite Four in strength — they're the final test before Victory Road.
+
+---
+
+## Physical/Special Split Implementation (Cycle 44)
+
+**Core System**: Moves now use individual physical/special categorization instead of being determined purely by type.
+
+**Technical Changes**:
+- **Move data**: Added `.split = SPLIT_PHYSICAL` or `.split = SPLIT_SPECIAL` to all moves in `src/data/battle_moves.h`
+- **Battle calculation**: Modified `src/battle_script_commands.c` to check move's split category instead of type
+- **Hustle ability**: Updated to only affect physical moves (checks `gCurrentMove.split == SPLIT_PHYSICAL`)
+
+**Strategic Impact**:
+- **Special Fire moves**: Overheat, Eruption now use Special Attack (previously physical due to Fire type)
+- **Physical Normal moves**: Return, Explosion now use Attack (giving Normal types proper physical options)
+- **Mixed coverage**: Pokémon can now have true mixed movesets (e.g., Salamence with physical Dragon Claw + special Fire Blast)
+
+**Compatibility**: All existing trainers and wild Pokémon automatically benefit — no need to update individual movesets.
+
+**Build verification**: Successfully compiled and tested — confirms the implementation is complete and functional.

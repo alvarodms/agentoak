@@ -166,6 +166,10 @@ Before modifying ANY pokeemerald file:
 | `graphics_file_rules.mk` | Added "fairy" to types list | 44 | Builds fairy.4bpp into spritesheet |
 | `graphics/types/fairy.png` | Created (copy of psychic.png as placeholder) | 44 | Custom icon is future work |
 | `src/data/pokemon/species_info.h` | Retyped 14 species to Fairy | 31, 32, **44** | See retypes list below |
+| `include/constants/moves.h` | Added 5 Fairy move constants (355-359), updated MOVES_COUNT to 360 | **45** | MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_DAZZLING_GLEAM, MOVE_DRAINING_KISS, MOVE_DISARMING_VOICE |
+| `src/data/battle_moves.h` | Added 5 Fairy move definitions with effects, power, type, accuracy, PP, flags | **45** | Complete move implementations with proper damage/stat effects |
+| `src/data/pokemon/level_up_learnsets.h` | Added Fairy moves to 14 species learnsets | **45** | All Fairy-type species now learn signature moves |
+| `src/data/wild_encounters.json` | Added 5 Fairy encounter corridors across key locations | **45** | Granite Cave (Ralts), Route 118 (Snubbull), Route 120 (Togetic), Route 121 (Clefairy), Mt. Pyre (Snubbull) |
 
 **Species retypes (Cycle 44):**
 - Pure Fairy: Clefairy, Clefable, Snubbull, Granbull
@@ -174,6 +178,13 @@ Before modifying ANY pokeemerald file:
 - Steel/Fairy: Mawile
 - Psychic/Fairy: Ralts, Kirlia, Gardevoir
 - Fairy/Flying: Togetic
+
+**Fairy moves implementation (Cycle 45):**
+- **Moonblast**: 95 power, Special, 30% chance to lower Special Attack
+- **Play Rough**: 90 power, Physical, 10% chance to lower Attack
+- **Dazzling Gleam**: 80 power, Special, hits both opponents
+- **Draining Kiss**: 50 power, Special, drains HP
+- **Disarming Voice**: 40 power, Special, never misses, hits both opponents
 
 ## QoL Changes
 
