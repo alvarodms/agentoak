@@ -53,6 +53,13 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Symptom**: `MOVE_THUNDERPUNCH' undeclared` — missing underscore.
 **Resolution**: Check exact spelling in `include/constants/moves.h`. Constants are format-sensitive.
 
+## Trainer ID Ceiling Issue (Cycle 51)
+
+**Symptom**: MAX_TRAINERS_COUNT (869) exceeds available trainer flag space (864 slots)
+**Cause**: Trainer flags are allocated range 0x500-0x85F (864 slots) but MAX_TRAINERS_COUNT set to 869
+**Resolution**: Reduced MAX_TRAINERS_COUNT to 864 to match flag space. Identified unused trainers (TRAINER_GRUNT_UNUSED, TRAINER_BRENDAN_PLACEHOLDER, TRAINER_MAY_PLACEHOLDER) now available for future use.
+**Technical Details**: Flag range calculation: 0x85F - 0x500 + 1 = 864 slots exactly. TRAINERS_COUNT = 865 (highest ID 864 + 1).
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`. Invalid → crash.

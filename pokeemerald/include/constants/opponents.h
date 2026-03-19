@@ -569,7 +569,7 @@
 #define TRAINER_CATHERINE_5                 565
 #define TRAINER_JULIO                       566
 #define TRAINER_GRUNT_SEAFLOOR_CAVERN_5     567
-#define TRAINER_GRUNT_UNUSED                568
+#define TRAINER_GRUNT_UNUSED                568  // Unused - available for future trainers
 #define TRAINER_GRUNT_MT_PYRE_4             569
 #define TRAINER_GRUNT_JAGGED_PASS           570
 #define TRAINER_MARC                        571
@@ -854,8 +854,8 @@
 #define TRAINER_EVERETT                     850
 #define TRAINER_RED                         851
 #define TRAINER_LEAF                        852
-#define TRAINER_BRENDAN_PLACEHOLDER         853
-#define TRAINER_MAY_PLACEHOLDER             854
+#define TRAINER_BRENDAN_PLACEHOLDER         853  // Placeholder - available for future trainers
+#define TRAINER_MAY_PLACEHOLDER             854  // Placeholder - available for future trainers
 #define TRAINER_SIDNEY_REMATCH_1            855
 #define TRAINER_PHOEBE_REMATCH_1            856
 #define TRAINER_GLACIA_REMATCH_1            857
@@ -871,7 +871,7 @@
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      865
-#define MAX_TRAINERS_COUNT                  869
+#define TRAINERS_COUNT                      865  // Count of trainer IDs (0-864)
+#define MAX_TRAINERS_COUNT                  864  // Matches trainer flag space (0x500-0x85F = 864 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H
