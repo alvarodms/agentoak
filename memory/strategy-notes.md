@@ -68,12 +68,12 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 **Gardevoir retype**: Psychic/Fairy in v2.0 (species type change only).
 
-**Implementation Status (Cycle 47)**:
+**Implementation Status (Cycle 49)**: ✅ ALL CORRIDORS COMPLETE
 - ✅ Granite Cave B2F: Ralts level 16-19 (10% rate) — replaced ABRA slot
 - ✅ Route 118: Snubbull level 24-26 (15% rate) — replaced ELECTRIKE slot
 - ✅ Route 121: Clefairy level 26-28 (20% rate) — replaced SHUPPET slot
-- ⏳ Route 120: Togetic (planned)
-- ⏳ Route 122 (Mt. Pyre): Snubbull (planned)
+- ✅ Route 120: Togetic level 28-30 (1% rate) — replaced SEEDOT slot 11
+- ✅ Mt. Pyre 1F: Snubbull level 27-29 (10% rate) — replaced SHUPPET slot 5
 
 ---
 
@@ -101,13 +101,17 @@ After Mt. Chimney showdown, a second migration wave hits. Three touch points (di
 
 ## Postgame — Elite Four Rematches
 
-| Leader | Key Upgrade |
-|--------|-------------|
-| Sidney | Absol gets Night Slash + Swords Dance |
-| Phoebe | Dusknoir joins (replaces Dusclops) |
-| Glacia | Glaceon joins; Ice Shard |
-| Drake | Garchomp added as 6th at level 60 |
-| Wallace | Milotic gets Moonblast; Kingdra → Water/Dragon |
+**Tier 1 (Cycle 49)**: All 5 members have 6-mon rematch teams (lv60-71). Gen 3 only — no Dusknoir/Glaceon/Garchomp.
+
+| Leader | Tier 1 Highlights |
+|--------|-------------------|
+| Sidney | Mightyena/Absol/Sharpedo/Houndoom/Umbreon/Tyranitar (DD sweeper ace) |
+| Phoebe | Banette/Misdreavus/Sableye/Dusclops/Gengar×2 (Destiny Bond threats) |
+| Glacia | Glalie/Jynx/Cloyster/Piloswine/Walrein/Lapras (Spikes+Sheer Cold) |
+| Drake | Flygon/Altaria/Kingdra/Salamence×2/Dragonite (DD spam, Choice Band ace) |
+| Wallace | Starmie/Tentacruel/Gyarados/Kingdra/Milotic(Moonblast!)/Lapras |
+
+**Future tiers (2-4)**: Fill remaining rematch table slots with escalating teams.
 
 ---
 
@@ -127,6 +131,6 @@ After Mt. Chimney showdown, a second migration wave hits. Three touch points (di
 | 2 | Physical/Special split | **DONE** (Cycle 43) — all 355 moves categorized |
 | 3 | Fairy type engine + retypes | **DONE** (Cycle 44) — TYPE_FAIRY constant, type chart, UI, 14 species retypes |
 | 3b | Fairy signature moves | **DONE** (Cycle 46) — 3 moves (Moonblast, Play Rough, Dazzling Gleam), learnsets for all 14 Fairy species |
-| 3c | Fairy encounter corridors | **IN PROGRESS** — 3 of 5 corridors complete (Granite Cave B2F, Route 118, Route 121) |
-| 4 | Elite Four rematches | After corridors — Sidney/Phoebe/Glacia/Drake/Wallace upgrades |
+| 3c | Fairy encounter corridors | **DONE** (Cycle 49) — all 5 corridors complete |
+| 4 | Elite Four rematches (tier 1) | **DONE** (Cycle 49) — 5 new trainer IDs, 6-mon teams lv60-71, rematch table wired |
 | 5 | Narrative polish pass | Ongoing |

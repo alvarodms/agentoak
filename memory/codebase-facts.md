@@ -4,252 +4,76 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Wild Encounter Fairy Integration (Cycle 47)
+## Elite Four Rematch System (Cycle 49)
 
-**Technical validation**: All three Fairy corridor species (SPECIES_RALTS, SPECIES_SNUBBULL, SPECIES_CLEFAIRY) integrate successfully with the wild_encounters.json system.
+**Rematch table**: `src/battle_setup.c` lines 260+ — `gRematchTable[]` uses `REMATCH(t1, t2, t3, t4, t5, map)` macro. Each entry holds 5 trainer IDs (base + 4 rematch tiers).
 
-**Build compatibility**: No conflicts between the Fairy type system (Cycle 44) and wild encounter modifications. The species constants from the type retypes are fully recognized by the encounter system.
+**Vanilla E4 state**: All 5 rematch slots filled with the same base trainer ID (no actual rematches). To add rematches: define new trainer IDs in `opponents.h`, add party structs in `trainer_parties.h`, add trainer entries in `trainers.h`, update `gRematchTable`.
 
-**Implementation pattern**: Standard encounter slot replacement maintains JSON structure and percentage probabilities. No special handling needed for Fairy types in encounter tables.
+**Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc. already exist.
 
-**Corridor implementation success**:
-- Granite Cave B2F: Ralts 16-19 (10% rate) replaced ABRA slot
-- Route 118: Snubbull 24-26 (15% rate) replaced ELECTRIKE slot
-- Route 121: Clefairy 26-28 (20% rate) replaced SHUPPET slot
+**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` must be incremented for each new trainer. `MAX_TRAINERS_COUNT` provides the hard upper bound (864).
 
-This confirms the technical foundation is solid for completing the remaining corridors (Route 120, Route 122/Mt. Pyre).
+---
+
+## Fairy Encounter Corridors — Complete (Cycles 47, 49)
+
+All 5 corridors implemented:
+- Granite Cave B2F: Ralts 16-19 (10%) — slot 8
+- Route 118: Snubbull 24-26 (15%)
+- Route 120: Togetic 28-30 (1%) — slot 11
+- Route 121: Clefairy 26-28 (20%)
+- Mt. Pyre 1F: Snubbull 27-29 (10%) — slot 5
 
 ---
 
 ## Wild Pokémon Held Item System (Cycle 31)
 
-**Core System**: Wild Pokémon held items are automatically assigned via the `SetWildMonHeldItem()` function in `src/pokemon.c` (lines 6664-6717).
+**Core**: `SetWildMonHeldItem()` in `src/pokemon.c`. Each species has `.itemCommon`/`.itemRare` in `gSpeciesInfo[]` (`src/data/pokemon/species_info.h`).
 
-**Species-based Assignment**: Each species has `.itemCommon` and `.itemRare` fields in `gSpeciesInfo[]` array defined in `src/data/pokemon/species_info.h`.
-
-**Probability System**:
-- Normal: 45% no item, 50% common item (itemCommon), 5% rare item (itemRare)
-- With Compound Eyes ability: 20% no item, 60% common item, 20% rare item
-- Special case: If itemCommon == itemRare and != ITEM_NONE, then 100% chance to hold that item
-
-**Implementation Pattern** (Cycle 31): All 164 wild encounter species updated with thematic held items:
-- **Type-based items**: Fire types get ITEM_CHARCOAL, Electric get ITEM_MAGNET, Water get ITEM_MYSTIC_WATER, etc.
-- **Pseudo-legendary special cases**: Dratini/Dragonair/Bagon/Shelgon/Larvitar/Pupitar get type boosters (common) + ITEM_LEFTOVERS (rare)
-- **Evolution items**: Magmar gets ITEM_CHARCOAL/ITEM_FIRE_STONE, Electabuzz gets ITEM_MAGNET/ITEM_THUNDER_STONE, Scyther gets ITEM_METAL_COAT
-- **Normal type fallback**: ITEM_ORAN_BERRY for Normal-type species
-
-**Key insight**: The system was already fully implemented — just needed species data updates, not code changes. No modifications to wild encounter JSON or core encounter logic required.
-
-**Automation**: Python script `update_held_items.py` successfully updated all species definitions with regex pattern matching for species types and item assignments.
+**Probabilities**: Normal: 50% common / 5% rare. With Compound Eyes: 60% common / 20% rare. If itemCommon == itemRare: 100%.
 
 ---
 
-## pokeemerald-expansion v1.15.0 — Architecture Incompatibility (Cycles 40–41)
+## pokeemerald-expansion — Incompatible (Cycles 40–41)
 
-**Critical discovery from Cycle 41**: The expansion and vanilla pokeemerald are architecturally incompatible at the C struct level. You cannot mix vanilla source files with expansion headers.
-
-### Struct Incompatibilities (Confirmed by Build Errors)
-
-**`struct BattleResources`** (fundamental battle system structure):
-- **Vanilla**: `.battleScriptsStack` field
-- **Expansion**: `.ai`, `.battleHistory`, `.AI_ScriptsStack` fields
-- **Impact**: All battle AI code is incompatible
-
-**Global Variables Renamed**:
-- `gBattleMoves`, `gActiveBattler`, `gDisableStructs`, `gTrainerBattleOpponent_A` — renamed or removed
-- Constants like `AI_USER`, `AI_TARGET`, `EFFECT_EXPLOSION` — expansion-only
-
-**Battle AI System**: Completely rewritten in expansion. The vanilla `src/battle_ai_script_commands.c` is 100% incompatible — 200+ compile errors.
-
-### Migration Conclusion
-
-**Not possible** via file copying (rsync). The expansion requires treating it as an entirely new codebase and **porting LoH content into it** — not overlaying expansion files on top of LoH.
-
-**Options**: (a) True `git merge` from expansion remote with full conflict resolution, or (b) Abandon expansion migration and stay on vanilla.
+Expansion and vanilla are architecturally incompatible at struct level. `BattleResources`, `gBattleMoves`, `gActiveBattler` etc. renamed/restructured. rsync migration fails. Options: true git merge or stay vanilla. **Decision: stay vanilla.**
 
 ---
 
-## Move Implementation System (Cycles 45-46)
+## Move Implementation — 6 Files Required (Cycles 45-46)
 
-**Adding a new move requires updating 6 files** (all arrays are sized by MOVES_COUNT):
-
-1. `include/constants/moves.h` — sequential constant + update MOVES_COUNT
-2. `src/data/battle_moves.h` — `gBattleMoves[]` entry with .effect, .power, .type, .accuracy, .pp, .secondaryEffectChance, .target, .priority, .flags, .category
-3. `src/data/contest_moves.h` — `gContestMoves[]` entry with .effect, .contestCategory, .comboStarterId, .comboMoves
-4. `src/data/text/move_descriptions.h` — string definition + `gMoveDescriptionPointers[]` entry (uses `[MOVE_XXX - 1]` indexing)
-5. `src/data/text/move_names.h` — `gMoveNames[]` entry (max MOVE_NAME_LENGTH = 12 chars)
-6. `src/data/pokemon/level_up_learnsets.h` — `LEVEL_UP_MOVE(level, move)` entries in species arrays (ascending level order)
-
-**Effect constants**: Must exist in `include/constants/battle_move_effects.h`. Verified working: EFFECT_HIT, EFFECT_ATTACK_DOWN_HIT (68), EFFECT_SPECIAL_ATTACK_DOWN_HIT (71).
-
-**Flags**: FLAG_KINGS_ROCK_AFFECTED (not KINGSROCK), FLAG_MAKES_CONTACT (physical contact only).
-
-**Move name max**: 12 characters. Examples of truncation: THUNDERPUNCH, SMELLINGSALT, FEATHERDANCE.
+1. `include/constants/moves.h` — constant + MOVES_COUNT
+2. `src/data/battle_moves.h` — gBattleMoves[] entry
+3. `src/data/contest_moves.h` — gContestMoves[] entry
+4. `src/data/text/move_descriptions.h` — string + pointer table
+5. `src/data/text/move_names.h` — name (max 12 chars)
+6. `src/data/pokemon/level_up_learnsets.h` — species learnset entries
 
 ---
 
 ## Dialogue Editing System (Cycles 24–26)
 
-**System overview**: NPCs use `.string` labels that reference static text. Event scripts call `MSGBOX_NPC` or `MSGBOX_DEFAULT` commands pointing to these labels.
+**Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. ASCII only — no em dash, smart quotes.
 
-**File locations**:
-- **Static NPC text**: Usually in the map's `scripts.inc` file
-- **Story/event text**: Can be in map scripts or dedicated `.inc` files
-- **Opening sequence**: `data/text/birch_speech.inc`
-
-**Target**: Any `.string` label in a map's `scripts.inc` used by a MSGBOX_NPC or MSGBOX_DEFAULT event script.
-
-**Safe targets**: Labels used only in `MSGBOX_NPC` (static) are purely cosmetic — safe to rewrite. Labels used in `MSGBOX_DEFAULT` inside branching event scripts may have story importance (check surrounding logic first).
-
-**Unsafe targets**: Labels shared between static NPC text AND dynamic event scripts (e.g. `PetalburgCity_Text_AreYouRookieTrainer` — used in both the GymBoy static NPC and the `ShowGymToPlayer` story trigger).
-
-**Text format rules**:
-- `\n` = line break within the same text box (2nd line)
-- `\l` = 3rd line in the same text box (soft scroll/line)
-- `\p` = press A, new text page (clear box)
-- `$` = string terminator
-- Keep display lines under ~35 chars for safety
-- ASCII only: use `--` not em-dash, use `...` not `…`, use straight quotes
+**Safety**: `MSGBOX_NPC` labels are safe to rewrite. `MSGBOX_DEFAULT` labels may have story logic — check first.
 
 ---
 
-## Villain Dialogue System (Cycle 26)
+## Wild Encounter JSON Rules
 
-**Villain script locations**:
-- `pokeemerald/data/maps/MtChimney/scripts.inc` — Maxie confrontation
-- `pokeemerald/data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc` — Archie at Museum 2F
-- `pokeemerald/data/maps/SeafloorCavern_Room9/scripts.inc` — Archie final confrontation
-
-**Script flow at Seafloor Cavern**: `ArchieHoldItRightThere` → `ArchieSoItWasYou` → `ArchieBeholdKyogre` → `ArchieYouMustDisappear` → `trainerbattle_no_intro` → `ArchieWithThisRedOrb` → orb sparkle effect → Kyogre awakening
+**File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5 slots. Fishing: 10 slots.
 
 ---
 
-## Rival Dialogue System (Cycle 25)
+## Trainer Battle System
 
-**File paths**:
-- Route 103: `pokeemerald/data/maps/Route103/scripts.inc`
-- Route 110: `pokeemerald/data/maps/Route110/scripts.inc`
-- Lilycove: `pokeemerald/data/maps/LilycoveCity/scripts.inc`
+**Party data**: `src/data/trainer_parties.h`. Struct: `TrainerMonItemCustomMoves` with `.species`, `.heldItem`, `.moves[]`.
 
----
-
-## Professor Birch Opening Sequence (Cycle 24)
-
-**File**: `pokeemerald/data/text/birch_speech.inc`
-
-**Script breakdown**: Five major text blocks — intro, Pokémon introduction, your story beginning, new trainer setup, and world entry. Uses `\p` for page breaks and `\n` for line breaks.
-
-**Design insight**: The opening speech sets the tone for the entire game. Migration-aware text here establishes the thematic foundation for encounter changes throughout the ROM hack.
+**AI flags**: Elite trainers use `AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY`. Champion adds `AI_FLAG_SMART_SWITCHING`.
 
 ---
 
-## Wild Encounter Overhaul System (Cycles 2–8, 14–15, 47)
+## Physical/Special Split (Cycle 43-44)
 
-**Data format**: `pokeemerald/src/data/wild_encounters.json` — parsed by build system into C data structures.
-
-### JSON Structure
-
-**Each route/map**: Contains `land_mons`, `water_mons`, `fishing_mons` arrays.
-
-**Land encounters**: 12 slots (indices 0–11) with probability distribution:
-- Slots 0-1: 20% each (most common)
-- Slots 2-5: 10% each
-- Slots 6-7: 5% each
-- Slots 8-9: 4% each
-- Slots 10-11: 1% each (rarest)
-
-**Key insight from Cycle 8**: Route-by-route manual editing scales poorly. Using probability-aware design (common/uncommon/rare species placement) creates more satisfying encounter curves.
-
-**Species validation**: All species references must use valid `SPECIES_` constants from `include/constants/species.h`.
-
-**Editing specific slots (Cycle 47)**: To replace individual encounters without changing the rate structure, identify the target slot by position and species name, then use sufficient context in Edit tool to uniquely identify the specific map/table. Multiple locations may have identical species/level combinations.
-
-### Design Philosophy (Established Cycle 2)
-
-**Route progression**: 101–103 (introductory), 104–116 (escalating), 117+ (peak diversity).
-
-**Thematic zoning**: Each route represents an ecosystem. Ocean routes favor Water-types, mountain routes favor Rock/Ground, forests favor Grass/Bug.
-
-**Example ecosystem (Route 117)**: Volbeat/Illumise (common), Shedinja (rare), Masquerain (water) — unified by insect ecology.
-
----
-
-## Trainer Battle System (Cycles 5–7, 9–10, 16–17)
-
-**Data file**: `pokeemerald/src/data/trainer_parties.h`
-
-### Trainer Structure
-
-**Basic format**: Species, level, held item, moves array.
-
-```c
-{
-    .species = SPECIES_ALAKAZAM,
-    .heldItem = ITEM_BRIGHTPOWDER,
-    .moves = {MOVE_PSYCHIC, MOVE_FUTURE_SIGHT, MOVE_RECOVER, MOVE_REFLECT}
-}
-```
-
-**Key insight from Cycle 16**: Held items dramatically increase trainer difficulty. Elite trainers should have purpose-built item strategies (Leftovers for walls, Choice Band for sweepers, Brightpowder for evasion).
-
-### AI Levels (Cycles 5–6)
-
-**Elite trainers** (gym leaders, Elite Four): Use `.aiFlags = AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY`
-
-**Regular trainers**: Use `.aiFlags = AI_FLAG_CHECK_BAD_MOVE` (basic AI only)
-
-**Battle facility/Champion**: May add `AI_FLAG_SMART_SWITCHING` for advanced tactics.
-
----
-
-## TM System (Cycles 18–22)
-
-**TM data**: `pokeemerald/src/data/items.h` — contains price and description for each TM item.
-
-### TM Pricing Structure (Updated Cycle 22)
-
-**Reusable TMs**: Change in `src/party_menu.c` — deleted DestroyUsedItem() calls on TM Use and TM Teach.
-
-**Price reduction**: All TMs reduced from 3000 to 1500 Pokédollars for easier access.
-
-**Design insight**: Reusable + cheaper TMs encourage experimentation with movesets throughout the game, supporting the difficulty-focused trainer battles.
-
----
-
-## Gym Leader Progression (Cycles 5–6)
-
-**Design philosophy**: Each gym leader represents a milestone in the player's journey. Teams should scale in both level and sophistication.
-
-### Gym 1–4 (Early Game)
-**Roxanne**: Nosepass focus with Rock-type coverage
-**Brawly**: Fighting-types with diverse coverage moves
-**Wattson**: Magnezone + Electrode (double battles preparation)
-**Flannery**: Arcanine ace with Fire-type support
-
-### Gym 5–8 (Late Game)
-**Norman**: Slaking + Spinda/Vigoroth (theme-breaking team)
-**Winona**: Flying aces with Hurricane/Sky Attack
-**Tate & Liza**: Synchronized Psychic powerhouse (double battle)
-**Juan**: Water specialists with diverse subtypes
-
-**Key insight from Cycle 6**: Late-game gym leaders should have teams comparable to Elite Four in strength — they're the final test before Victory Road.
-
----
-
-## Physical/Special Split Implementation (Cycle 44)
-
-**Core System**: Moves now use individual physical/special categorization instead of being determined purely by type.
-
-**Technical Changes**:
-- **Move data**: Added `.split = SPLIT_PHYSICAL` or `.split = SPLIT_SPECIAL` to all moves in `src/data/battle_moves.h`
-- **Battle calculation**: Modified `src/battle_script_commands.c` to check move's split category instead of type
-- **Hustle ability**: Updated to only affect physical moves (checks `gCurrentMove.split == SPLIT_PHYSICAL`)
-
-**Strategic Impact**:
-- **Special Fire moves**: Overheat, Eruption now use Special Attack (previously physical due to Fire type)
-- **Physical Normal moves**: Return, Explosion now use Attack (giving Normal types proper physical options)
-- **Mixed coverage**: Pokémon can now have true mixed movesets (e.g., Salamence with physical Dragon Claw + special Fire Blast)
-
-**Compatibility**: All existing trainers and wild Pokémon automatically benefit — no need to update individual movesets.
-
-**Build verification**: Successfully compiled and tested — confirms the implementation is complete and functional.
+Moves use `.split = SPLIT_PHYSICAL` or `SPLIT_SPECIAL` in `battle_moves.h`. Battle calc in `battle_script_commands.c` checks split instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
