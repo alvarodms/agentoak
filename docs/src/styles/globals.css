@@ -1388,3 +1388,366 @@ body::after {
     font-size: 11px;
   }
 }
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 24px 0 16px;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 6px 12px;
+  border: 1px solid var(--lab-panel-border);
+  border-radius: var(--radius-sm);
+  background: var(--lab-panel);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--text-accent);
+  color: var(--text-accent);
+  box-shadow: 0 0 8px rgba(79, 195, 247, 0.2);
+}
+
+.pagination-btn.active {
+  background: var(--text-accent);
+  color: var(--lab-bg);
+  border-color: var(--text-accent);
+  font-weight: 700;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+  color: var(--text-muted);
+  padding: 0 4px;
+  font-family: var(--font-mono);
+}
+
+.pagination-info {
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px 0;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   GAME GUIDE — STATS BANNER
+   ============================================================ */
+
+.guide-stats-banner {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  background: var(--lab-panel);
+  border: 1px solid var(--lab-panel-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  flex-wrap: wrap;
+}
+
+.guide-stat {
+  text-align: center;
+}
+
+.guide-stat-value {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  color: var(--green-bright);
+  margin-bottom: 4px;
+}
+
+.guide-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   GAME GUIDE — TOOLBAR (Search + Quick Nav)
+   ============================================================ */
+
+.guide-toolbar {
+  margin-bottom: 20px;
+}
+
+.guide-search-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.guide-search {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--lab-panel);
+  border: 1px solid var(--lab-panel-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.guide-search:focus {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 12px rgba(79, 195, 247, 0.15);
+}
+
+.guide-search::placeholder {
+  color: var(--text-muted);
+}
+
+.guide-search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+}
+
+.guide-search-clear:hover {
+  color: var(--text-primary);
+}
+
+.guide-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.guide-quick-nav-item {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--lab-bg-lighter);
+  border: 1px solid var(--lab-panel-border);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.guide-quick-nav-item:hover {
+  border-color: var(--text-accent);
+  color: var(--text-accent);
+}
+
+/* ============================================================
+   GAME GUIDE — PROGRESSION TIMELINE
+   ============================================================ */
+
+.progression-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progression-step {
+  border-left: 3px solid var(--lab-panel-border);
+  padding-left: 16px;
+  transition: border-color var(--transition-fast);
+}
+
+.progression-step.step-gym {
+  border-left-color: var(--yellow-bright);
+}
+
+.progression-step.step-rival {
+  border-left-color: var(--red-bright);
+}
+
+.progression-step.step-route {
+  border-left-color: var(--green-bright);
+}
+
+.progression-step.step-elite {
+  border-left-color: var(--purple-bright);
+}
+
+.progression-step.step-champion {
+  border-left-color: #ffd700;
+}
+
+.progression-step.step-starter {
+  border-left-color: var(--text-accent);
+}
+
+.progression-step.step-landmark {
+  border-left-color: var(--blue-bright);
+}
+
+.progression-step.step-chapter {
+  border-left: none;
+  padding-left: 0;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.progression-step.step-chapter:first-child {
+  margin-top: 0;
+}
+
+/* ============================================================
+   GAME GUIDE — CHAPTER HEADERS
+   ============================================================ */
+
+.progression-chapter {
+  padding: 16px 0 8px;
+}
+
+.progression-chapter-title {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--text-accent);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.progression-chapter-desc {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   GAME GUIDE — LANDMARK CARDS
+   ============================================================ */
+
+.landmark-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--lab-bg-lighter);
+  border: 1px solid var(--lab-panel-border);
+  border-radius: var(--radius-md);
+}
+
+.landmark-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.landmark-name {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.landmark-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   GAME GUIDE — ROUTE GROUP (multi-area locations)
+   ============================================================ */
+
+.route-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.route-group-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+
+/* ============================================================
+   GAME GUIDE — NEW SPECIES BADGES
+   ============================================================ */
+
+.new-species-badge {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 2px 5px;
+  margin-left: 6px;
+  background: var(--green-bright);
+  color: var(--lab-bg);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  vertical-align: middle;
+  letter-spacing: 0.5px;
+}
+
+.new-count-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  background: rgba(0, 230, 118, 0.15);
+  color: var(--green-bright);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+/* ============================================================
+   RESPONSIVE — Pagination & Guide
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .guide-stats-banner {
+    gap: 16px;
+    padding: 14px 16px;
+  }
+
+  .guide-stat-value {
+    font-size: 14px;
+  }
+
+  .guide-quick-nav-item {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .progression-step {
+    padding-left: 10px;
+  }
+
+  .progression-chapter-title {
+    font-size: 11px;
+  }
+
+  .pagination {
+    gap: 4px;
+  }
+
+  .pagination-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
