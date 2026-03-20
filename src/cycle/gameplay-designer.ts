@@ -4,7 +4,8 @@
  * using the Pokédex MCP tools.
  *
  * Runs as Phase 1.5 between Planning and Implementation, only when the
- * Producer signals gameplay design is needed via `gameplayDesignBrief`.
+ * Producer signals gameplay design is needed via `gameplayDesignBrief`
+ * or `gameplayDesignChunks` (parallel).
  */
 
 import { runClaudeCode } from "../agent/claude-cli.js";
@@ -23,6 +24,11 @@ export interface GameplayDesignResult {
 
 const GAMEPLAY_DESIGNER_MAX_TURNS = 75;
 const GAMEPLAY_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
+
+// Per-chunk limits for parallel designers (smaller scope per agent)
+const CHUNK_DESIGNER_MAX_TURNS = 40;
+const CHUNK_DESIGNER_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
+const MAX_PARALLEL_CHUNKS = 4;
 
 /**
  * Run the Gameplay Designer agent to produce detailed gameplay specs.
@@ -65,6 +71,118 @@ export async function runGameplayDesigner(
     toolCallCount: result.toolCallCount,
     tokenUsage: result.tokenUsage,
   };
+}
+
+/**
+ * Run multiple Gameplay Designer agents in parallel, one per chunk.
+ *
+ * Each chunk gets its own agent with reduced turn/timeout limits.
+ * Results are merged by concatenating specs with chunk labels as headers.
+ * If some chunks fail, successful results are still returned.
+ * If ALL chunks fail, an error is thrown (caller falls back to Producer's plan).
+ */
+export async function runGameplayDesignerParallel(
+  objective: string,
+  chunks: Array<{ label: string; brief: string }>,
+  implementationPlan: string,
+): Promise<GameplayDesignResult> {
+  // Cap the number of parallel agents
+  const activeChunks = chunks.slice(0, MAX_PARALLEL_CHUNKS);
+  if (chunks.length > MAX_PARALLEL_CHUNKS) {
+    logger.warn(
+      `[Gameplay Designer] ${chunks.length} chunks provided, capping at ${MAX_PARALLEL_CHUNKS}`,
+    );
+  }
+
+  logger.info(
+    `[Gameplay Designer] Starting parallel design: ${activeChunks.length} chunks`,
+  );
+  for (const chunk of activeChunks) {
+    logger.info(`  - ${chunk.label}: ${chunk.brief.slice(0, 100)}...`);
+  }
+
+  // Run all chunk designers in parallel
+  const results = await Promise.all(
+    activeChunks.map((chunk) => runChunkDesigner(objective, chunk, implementationPlan)),
+  );
+
+  // Merge results
+  const specParts: string[] = [];
+  let totalToolCalls = 0;
+  let successCount = 0;
+  const mergedTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+    const chunk = activeChunks[i];
+    mergedTokenUsage.inputTokens += result.tokenUsage.inputTokens;
+    mergedTokenUsage.outputTokens += result.tokenUsage.outputTokens;
+    mergedTokenUsage.totalTokens += result.tokenUsage.totalTokens;
+    totalToolCalls += result.toolCallCount;
+
+    if (result.specs.trim()) {
+      specParts.push(`## ${chunk.label}\n\n${result.specs}`);
+      successCount++;
+    } else {
+      specParts.push(`## ${chunk.label}\n\n(Designer produced no output for this chunk — implementation agent should use its own judgment for this section.)`);
+    }
+  }
+
+  if (successCount === 0) {
+    throw new Error("All parallel Gameplay Designers produced no output");
+  }
+
+  const mergedSpecs = specParts.join("\n\n---\n\n");
+
+  logger.info(
+    `[Gameplay Designer] Parallel design complete: ${successCount}/${activeChunks.length} chunks successful, ${totalToolCalls} total tool calls, ${mergedSpecs.length} chars`,
+  );
+
+  return {
+    specs: mergedSpecs,
+    toolCallCount: totalToolCalls,
+    tokenUsage: mergedTokenUsage,
+  };
+}
+
+/** Run a single chunk designer agent. Returns empty specs on failure instead of throwing. */
+async function runChunkDesigner(
+  objective: string,
+  chunk: { label: string; brief: string },
+  implementationPlan: string,
+): Promise<GameplayDesignResult> {
+  const emptyResult: GameplayDesignResult = {
+    specs: "",
+    toolCallCount: 0,
+    tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+  };
+
+  try {
+    logger.info(`[Gameplay Designer] Starting chunk: ${chunk.label}`);
+    const prompt = buildGameplayDesignerPrompt(objective, chunk.brief, implementationPlan);
+
+    const result = await runClaudeCode(prompt, {
+      maxTurns: CHUNK_DESIGNER_MAX_TURNS,
+      timeout: CHUNK_DESIGNER_TIMEOUT_MS,
+      tools: "Read",
+      model: process.env.ANTHROPIC_MODEL,
+    });
+
+    const specs = result.narrativeText || result.resultText || "";
+    logger.info(
+      `[Gameplay Designer] Chunk "${chunk.label}" complete: ${result.toolCallCount} tool calls, ${specs.length} chars`,
+    );
+
+    return {
+      specs,
+      toolCallCount: result.toolCallCount,
+      tokenUsage: result.tokenUsage,
+    };
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    logger.warn(`[Gameplay Designer] Chunk "${chunk.label}" failed: ${errMsg}`);
+    return emptyResult;
+  }
 }
 
 function buildGameplayDesignerPrompt(
