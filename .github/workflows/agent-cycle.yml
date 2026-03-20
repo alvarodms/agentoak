@@ -73,10 +73,10 @@ jobs:
 
       - name: Copy agbcc into workspace
         run: |
-          echo ls -la ${{ github.workspace }}/pokeemerald/tools/agbcc
+          echo $(ls -la ${{ github.workspace }}/pokeemerald/tools/agbcc)
           mkdir -p ${{ github.workspace }}/pokeemerald/tools/agbcc
           cp -r /opt/agbcc/* ${{ github.workspace }}/pokeemerald/tools/agbcc
-          echo ls -la /opt/agbcc
+          echo $(ls -la /opt/agbcc)
 
       - name: Cache base ROM
         uses: actions/cache@v4
