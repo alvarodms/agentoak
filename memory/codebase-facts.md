@@ -43,9 +43,9 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## Opening Experience (Cycles 52-53)
+## Opening Experience (Cycles 52-53, 58)
 
-**Birch rescue**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` — now Growlithe level 3 (was Mightyena, originally Zigzagoon).
+**Birch rescue**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` — now Poochyena level 3 (reverted from Growlithe in Cycle 58 to match overworld sprite). Route101 map.json has `OBJ_EVENT_GFX_POOCHYENA` — **species and overworld sprite must always match**.
 **Intro speech Pokemon**: `src/main_menu.c` line ~1377 — now SPECIES_BAGON (was SPECIES_LOTAD). Variable still named `tLotadSpriteId` internally.
 
 ---

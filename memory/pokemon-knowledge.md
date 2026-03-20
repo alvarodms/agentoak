@@ -36,3 +36,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Postgame Beyond Rematches: What Top Hacks Do Differently | 55 | March 2026 | [postgame-beyond-rematches.md](pokemon-knowledge/postgame-beyond-rematches.md) |
 | Battle Frontier Compatibility & Early Route Trainer Design | 56 | March 2026 | [battle-frontier-and-early-routes.md](pokemon-knowledge/battle-frontier-and-early-routes.md) |
 | Audio Speed During Emulator Fast-Forward | 57 | March 2026 | [audio-speed-emulator-limitation.md](pokemon-knowledge/audio-speed-emulator-limitation.md) |
+| Victory Road Trainer Design & Overworld Sprite Fixes | 58 | March 2026 | [victory-road-and-overworld-sprites.md](pokemon-knowledge/victory-road-and-overworld-sprites.md) |

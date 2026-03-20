@@ -90,7 +90,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |
 | 14 | Early-game route trainer refresh (102-104) | Needs verification — partially covered in Cycle 56 |
 | 15 | Late-game route trainer refresh (113-118, 121-123) | **DONE** (Cycle 57 — 83 trainers across 9 routes, migration species, held items, custom movesets) |
-| 16 | Victory Road + dungeon trainer refresh | Not started |
+| 16 | Victory Road + dungeon trainer refresh | **Victory Road DONE** (Cycle 58 — 16 trainers + Wally, 51 unique species, held items, custom movesets, migration species). Dungeons still pending. |
 
 ---
 
