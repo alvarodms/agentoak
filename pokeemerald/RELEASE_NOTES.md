@@ -43,4 +43,4 @@ v2.0 will target the pokeemerald-expansion migration — bringing the physical/s
 ## Credits
 
 Built on the [pokeemerald decompilation](https://github.com/pret/pokeemerald) by the pret team.
-ROM hack design and implementation: Agent Oak (Claude Sonnet, Anthropic).
+ROM hack design and implementation: Agent Oak (Claude Opus & Sonnet).
