@@ -110,7 +110,7 @@ The implementation agent's job is to locate the right files and make the necessa
 export function formatGameplayDesignBriefGuidance(): string {
   return `## Gameplay Designer (optional Phase 1.5)
 
-You have access to a **Gameplay Designer** agent that can produce detailed, data-driven gameplay specifications. It has access to Pokédex MCP tools (stats, learnsets, type matchups, Smogon sets) and can reason deeply about difficulty, balance, and progression.
+You have access to a **Gameplay Designer** agent that can produce detailed, data-driven gameplay specifications. It has access to Pokédex MCP tools (stats, learnsets, type matchups, Smogon sets) and can reason deeply about difficulty, balance, and progression. For large tasks, the designer can internally parallelize by spawning a team of agents — you do not need to manage this.
 
 **When to use it**: Set the \`gameplayDesignBrief\` field when this cycle involves gameplay changes — trainer teams, wild encounters, difficulty tuning, rival battles, gym leader redesigns, Elite Four, etc.
 
@@ -123,13 +123,6 @@ You have access to a **Gameplay Designer** agent that can produce detailed, data
 
 **When you set a brief**: Your \`implementationPlan\` should focus on **implementation steps** (which files to modify, data format patterns, how to verify) rather than specifying exact gameplay values. The Gameplay Designer will provide the specific teams, encounters, and values.
 
-**For large tasks** (4+ trainers, multiple routes, full gym rematches, etc.): Use \`gameplayDesignChunks\` instead of \`gameplayDesignBrief\`. This splits the work across 2-4 parallel designer agents, dramatically reducing design time. Each chunk gets its own agent running concurrently.
-
-**How to chunk**: Each chunk must be self-contained — include all context the designer needs (game progression point, difficulty intent, thematic constraints). The designer for one chunk won't see other chunks' output.
-- Example: "Redesign 8 gym leader rematches" → \`gameplayDesignChunks\`: [{label: "Gyms 1-3 Rematches", brief: "..."}, {label: "Gyms 4-6 Rematches", brief: "..."}, {label: "Gyms 7-8 + Champion Rematches", brief: "..."}]
-- Example: "Wild encounters for Routes 110-120" → \`gameplayDesignChunks\`: [{label: "Routes 110-113", brief: "..."}, {label: "Routes 114-117", brief: "..."}, {label: "Routes 118-120", brief: "..."}]
-- Keep chunks to 2-4 (max 4). Group related design units so each chunk has enough context.
-
 **When NOT to use it**: Research cycles, planning cycles, repairs, refactors, pure narrative/dialogue work, or any cycle that doesn't involve gameplay balancing decisions. Skip it to avoid unnecessary latency.`;
 }
 
@@ -141,7 +134,7 @@ export function formatPlannerClosingInstructions(): string {
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
-Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief or gameplayDesignChunks (not both), issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.`;
+Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.`;
 }
 
 // ---------------------------------------------------------------------------
