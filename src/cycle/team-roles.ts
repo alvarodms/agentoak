@@ -82,6 +82,8 @@ Your job: write a short advisory memo (200-400 words) for the Producer, who will
 - Code complexity — how many files need to change? Are there tricky dependencies?
 - Known failure patterns — have we tried something similar before and failed?
 - Technical debt — should we stabilize before adding features?
+- Codebase evolution — what refactors, abstractions, or tooling improvements would make recurring changes easier? Think configuration files, helper scripts, data-driven patterns, or structural refactors that reduce the file-touch count for common operations.
+- Engineering innovation — don't just flag problems, propose solutions. When something is complex today, how could the codebase be improved so it's simple tomorrow?
 
 ## Context
 
@@ -95,9 +97,11 @@ Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they co
 2. Consider: What is technically feasible and what is risky for the next cycle?
 3. Write a plain-text memo addressed to "Producer" with your assessment.
 4. Flag any specific risks or prerequisites. If a recent cycle failed, note whether repair should take priority.
-5. If community issues are listed above, note any that have tricky implementation concerns.
-6. Do NOT produce JSON. Just write your memo as plain text.
-7. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
+5. **For every risk or complexity concern you raise, propose at least one concrete improvement** — a refactor, a config-driven approach, a helper utility, or a structural change that would reduce that complexity for future cycles. The codebase can and should evolve.
+6. **Identify one "engineering investment" opportunity** — a change that isn't directly feature work but would pay dividends across multiple future cycles (e.g., "If we extracted move definitions into a JSON config, adding new moves would go from 6-file edits to 1-file edits").
+7. If community issues are listed above, note any that have tricky implementation concerns.
+8. Do NOT produce JSON. Just write your memo as plain text.
+9. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const pokemonSpecialistRole: TeamRole = {
