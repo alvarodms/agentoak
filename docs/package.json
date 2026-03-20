@@ -1,0 +1,22 @@
+{
+  "name": "agent-oak-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build:data": "node build-scripts/build-journals.mjs && node build-scripts/build-game-guide.mjs && node build-scripts/build-strategy.mjs",
+    "build": "npm run build:data && next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.7.0"
+  }
+}

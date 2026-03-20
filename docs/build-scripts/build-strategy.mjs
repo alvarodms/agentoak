@@ -11,9 +11,10 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..');
+const DOCS_DIR = join(__dirname, '..');
+const ROOT = join(DOCS_DIR, '..');
 const STRATEGY_FILE = join(ROOT, 'memory', 'strategy-notes.md');
-const OUTPUT_DIR = join(__dirname, 'data');
+const OUTPUT_DIR = join(DOCS_DIR, 'data');
 const OUTPUT_FILE = join(OUTPUT_DIR, 'strategy.json');
 
 async function main() {
