@@ -83,7 +83,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
 | 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
 | 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
-| 9 | New species (Gible, Riolu, etc.) | Not started |
+| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). Gible/Weavile pending. |
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
@@ -96,16 +96,15 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 ## Future Directions
 
-### New Species Pipeline (Cycle 59 Research)
-**Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~27 source files + ~14 assets per 2-species family.
-**Cycle 60 scope**: Riolu + Lucario only. First-ever species addition — expect unforeseen build issues. Get one family clean, then scale.
-**Key risks**: Cry table is position-indexed (not keyed). SPECIES_EGG must shift. NATIONAL_DEX_COUNT must update.
-**Placeholder strategy**: Copy Makuhita/Medicham graphics + cries. Replace with real art later.
+### New Species Pipeline (Proven in Cycle 60)
+**Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~29 source files per 2-species family.
+**Status**: Pipeline proven with Riolu/Lucario. Build-clean on first attempt. Ready to scale.
+**Placeholder strategy**: Copy existing graphics + cries. Replace with real art later.
 
 | Species | Location | Rate | Narrative Role |
 |---------|----------|------|----------------|
-| Riolu | Route 116 | 8% | Scout sensing disruption |
-| Lucario | (evolves from Riolu via friendship) | — | Fighting/Steel apex — 525 BST |
+| ~~Riolu~~ | Route 116 | 8% | **DONE** (Cycle 60) |
+| ~~Lucario~~ | (evolves via friendship) | — | **DONE** (Cycle 60) |
 | Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard (future) |
 | Garchomp | Victory Road B2F | 5% | Dragon apex predator (future) |
 | Weavile | Shoal Cave | 8% | Cold-zone apex hunter (future) |

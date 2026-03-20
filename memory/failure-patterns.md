@@ -61,6 +61,12 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Cause**: After many tool calls (250+), context compression evicts the file read. Edit requires a recent Read.
 **Resolution**: Re-read the file immediately before editing. For bulk updates to large files like trainers.h (~354KB), use a bash script instead of many individual Edit calls.
 
+## Missing fairy.png Graphic (Cycle 60)
+
+**Symptom**: `Failed to open "graphics/types/fairy.png" for reading` during build.
+**Cause**: The fairy type graphic file was never committed despite Fairy type being added in Cycle 44. It gets regenerated from a placeholder on clean builds but isn't in the working tree.
+**Resolution**: `cp graphics/types/psychic.png graphics/types/fairy.png` — create placeholder from another type graphic.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`. Invalid → crash.
