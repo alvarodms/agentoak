@@ -28,3 +28,6 @@ Modified files related to trainer team compositions, held items, and level curve
 | `src/data/trainer_parties.h` | Removed sParty_BrendanLinkPlaceholder | 52 | Completely removed party definition |
 | `src/data/trainer_parties.h` | Gym leader rematch teams (all 8, slots _2-_5) | 54 | Competitive 6-mon teams lv57-71, migration species, held items, .iv=200 |
 | `src/data/trainers.h` | Gym leader rematch entries (all 8, slots _2-_5) | 54 | Added AI_SCRIPT_SETUP_FIRST_TURN, 4x Full Restore |
+| `src/data/trainer_parties.h` | Mid-game route trainer refresh (Routes 110-112, 119-120) | 55 | 28 trainers redesigned: custom moves, held items, migration species (Electabuzz, Murkrow, Sneasel, Houndour, Magmar, Misdreavus, Politoed, Kingdra, Scyther); P/S split showcase |
+| `src/data/trainers.h` | Mid-game trainer entries updated | 55 | Party types changed to ItemCustomMoves/ItemDefaultMoves; route aces get SETUP_FIRST_TURN AI |
+| `graphics/types/fairy.png` | Re-restored missing fairy type icon | 55 | Copied from normal.png (was missing again) |

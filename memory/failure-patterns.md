@@ -52,6 +52,7 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 
 **Symptom**: `MOVE_THUNDERPUNCH' undeclared` — missing underscore.
 **Resolution**: Check exact spelling in `include/constants/moves.h`. Constants are format-sensitive.
+**Known tricky names**: `MOVE_SELF_DESTRUCT` (not SELFDESTRUCT), `MOVE_FAINT_ATTACK` (not FEINT_ATTACK), `MOVE_THUNDER_PUNCH` (not THUNDERPUNCH). Always grep moves.h before using.
 
 ## Trainer ID Ceiling Issue (Cycle 51)
 
