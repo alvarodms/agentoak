@@ -82,6 +82,7 @@ export async function planCycleWithTeam(
   cycleNumber: number,
   issueContext: string = "",
   issueBacklog: string = "",
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
 ): Promise<CyclePlan> {
   const model = process.env.ANTHROPIC_MODEL;
 
@@ -115,7 +116,7 @@ export async function planCycleWithTeam(
     logger.warn("[Team Planning] All advisors failed — falling back to single planner");
     // Dynamic import to avoid circular dependency with planner.ts
     const { planCycle } = await import("./planner.js");
-    return planCycle(recentJournalSummaries, cycleNumber, issueContext, issueBacklog);
+    return planCycle(recentJournalSummaries, cycleNumber, issueContext, issueBacklog, staleIssues);
   }
 
   // Phase B: Build Producer prompt (shared planner context + memos)
@@ -127,6 +128,7 @@ export async function planCycleWithTeam(
     modeHistorySummary,
     issueContext,
     issueBacklog,
+    staleIssues,
     extraMemoryFiles: [
       "`memory/pokemon-knowledge.md` — Pokémon game/ROM hack research findings (maintained by the Pokémon Specialist advisor)",
     ],

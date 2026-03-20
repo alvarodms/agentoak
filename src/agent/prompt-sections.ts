@@ -34,9 +34,28 @@ export function formatIssueSection(issueContext: string): string {
 }
 
 /** Build the "Deferred Issue Backlog" section (returns empty string if absent). */
-export function formatBacklogSection(issueBacklog: string): string {
-  if (!issueBacklog) return "";
-  return `\n\n## Deferred Issue Backlog\n\nThe following issues were deferred from earlier cycles. You may pick one up this cycle if the timing is right — include it in \`issueActions\` with action "accept" along with a brief response.\n\n${issueBacklog}\n`;
+export function formatBacklogSection(
+  issueBacklog: string,
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
+): string {
+  const hasBacklog = !!issueBacklog;
+  const hasStale = staleIssues && staleIssues.length > 0;
+  if (!hasBacklog && !hasStale) return "";
+
+  let section = "\n\n## Deferred Issue Backlog\n\n";
+
+  if (hasBacklog) {
+    section += `The following issues were deferred from earlier cycles. They will be carried forward automatically — you do **NOT** need to include them in \`issueActions\`. Only include a backlog issue in \`issueActions\` if you want to **accept** it this cycle.\n\n${issueBacklog}\n`;
+  }
+
+  if (hasStale) {
+    const staleLines = staleIssues.map(
+      (i) => `- #${i.issueNumber}: ${i.title} (deferred since cycle ${i.deferredAtCycle})`,
+    ).join("\n");
+    section += `\n### Stale Issues (deferred 10+ cycles)\n\nThese issues have been sitting in the backlog for a long time. Please re-evaluate each one and include it in \`issueActions\`:\n- **accept**: Pick it up this cycle\n- **reject**: It no longer aligns with the project direction — close it with a reason\n- **defer**: Still worth keeping — provide a brief justification for why\n\n${staleLines}\n`;
+  }
+
+  return section;
 }
 
 /** The Pokédex MCP tools reference block, used by planners and the Pokémon Specialist advisor. */
@@ -135,7 +154,12 @@ You have access to a **Gameplay Designer** agent that can produce detailed, data
 
 /** The issue-response and help-request instructions appended to planner prompts. */
 export function formatPlannerClosingInstructions(): string {
-  return `If there are community issues listed above, review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info. If an accepted issue should shape this cycle's objective, incorporate it.
+  return `**Issue handling rules:**
+- **New community issues**: Review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info.
+- **Regular backlog issues**: Do NOT include them in \`issueActions\` — they are carried forward automatically. Only include a backlog issue if you want to **accept** it this cycle.
+- **Stale backlog issues** (marked in the "Stale Issues" section): You MUST re-evaluate each one and include it in \`issueActions\` with accept, reject, or defer.
+
+If an accepted issue should shape this cycle's objective, incorporate it.
 
 **Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
 
@@ -154,6 +178,7 @@ export interface PlannerContextParams {
   modeHistorySummary: string;
   issueContext: string;
   issueBacklog: string;
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>;
   extraMemoryFiles?: string[];
 }
 
@@ -171,7 +196,7 @@ export function buildPlannerContextSections(params: PlannerContextParams): strin
   b.raw("\n" + formatPokedexToolsSection());
   b.heading("Available Modes", formatModeList());
   b.raw(formatIssueSection(params.issueContext));
-  b.raw(formatBacklogSection(params.issueBacklog));
+  b.raw(formatBacklogSection(params.issueBacklog, params.staleIssues));
   return b.build();
 }
 
