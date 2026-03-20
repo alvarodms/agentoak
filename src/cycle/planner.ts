@@ -211,11 +211,12 @@ export async function planCycle(
   cycleNumber: number,
   issueContext: string = "",
   issueBacklog: string = "",
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
 ): Promise<CyclePlan> {
   // Dispatch to team planner if conditions are met
   if (shouldUseTeamPlanning(cycleNumber, undefined, issueContext.length > 0)) {
     logger.info("[Planning] Using team planning (multi-perspective advisory)");
-    return planCycleWithTeam(recentJournalSummaries, cycleNumber, issueContext, issueBacklog);
+    return planCycleWithTeam(recentJournalSummaries, cycleNumber, issueContext, issueBacklog, staleIssues);
   }
 
   logger.info("[Planning] Using single planner");
@@ -230,6 +231,7 @@ export async function planCycle(
     modeHistorySummary,
     issueContext,
     issueBacklog,
+    staleIssues,
   });
 
   const prompt = `You are Agent Oak's planning module. Decide what the next autonomous cycle should focus on.
