@@ -12,11 +12,27 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h` (reduced from 869 to 865 in Cycle 51). `MAX_TRAINERS_COUNT` hard cap is 864 based on trainer flag allocation (0x500-0x85F = 864 slots). **Current state: 865 trainer IDs but only 864 flag slots available — still 1 over limit.**
+**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h`. `MAX_TRAINERS_COUNT` hard cap is 864 based on trainer flag allocation (0x500-0x85F = 864 slots). **Current state: 864 trainer IDs — ceiling issue resolved in Cycle 52.**
 
-**Three-file trainer system**: Each trainer requires entries in `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
+**Three-file trainer system**: Each trainer requires coordinated removal/addition across `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
 
 **Removed in Cycle 51**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854).
+**Removed in Cycle 52**: TRAINER_BRENDAN_PLACEHOLDER fully cleaned from all files.
+
+---
+
+## Build System Requirements (Cycle 52)
+
+**agbcc compiler**: Required for building. Install from pret/agbcc repo and symlink to `tools/agbcc/`.
+**Graphics dependencies**: All type graphics must exist in `graphics/types/` (including `fairy.png` for Fairy type).
+**Build command**: `make` from pokeemerald directory produces `pokeemerald.gba`.
+
+---
+
+## Birch Opening Encounter (Cycle 52)
+
+**Function**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` controls the opening Birch encounter.
+**Zigzagoon level**: Set to 5 (was 2) for better opening experience.
 
 ---
 

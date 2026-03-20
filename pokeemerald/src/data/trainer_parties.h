@@ -12897,13 +12897,6 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Leaf[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BrendanLinkPlaceholder[] = {  // Available for future use
-    {
-    .iv = 0,
-    .lvl = 5,
-    .species = SPECIES_MAGIKARP,
-    }
-};
 
 static const struct TrainerMonNoItemDefaultMoves sParty_MayLinkPlaceholder[] = {  // Available for future use
     {

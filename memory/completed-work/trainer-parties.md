@@ -23,3 +23,6 @@ Modified files related to trainer team compositions, held items, and level curve
 | `include/constants/opponents.h` | Trainer ID ceiling fix (partial) | 51 | Removed 3 unused entries: GRUNT_UNUSED (568), BRENDAN_PLACEHOLDER (853), MAY_PLACEHOLDER (854); renumbered WALLACE_REMATCH_2 to 863; TRAINERS_COUNT reduced from 869 to 865 (still 1 over 864 limit) |
 | `src/data/trainers.h` | Removed 3 unused trainer definitions | 51 | Commented out GRUNT_UNUSED, BRENDAN_PLACEHOLDER, MAY_PLACEHOLDER |
 | `src/data/trainer_parties.h` | Removed 3 unused party definitions | 51 | Commented out sParty_GruntUnused, sParty_BrendanLinkPlaceholder, sParty_MayLinkPlaceholder |
+| `include/constants/opponents.h` | Trainer ID ceiling fix (complete) | 52 | Completely removed TRAINER_BRENDAN_PLACEHOLDER; TRAINERS_COUNT reduced to 864; MAX_TRAINERS_COUNT reached |
+| `src/data/trainers.h` | Removed BRENDAN_PLACEHOLDER definition | 52 | Completely removed trainer entry |
+| `src/data/trainer_parties.h` | Removed sParty_BrendanLinkPlaceholder | 52 | Completely removed party definition |

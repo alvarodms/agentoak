@@ -854,24 +854,23 @@
 #define TRAINER_EVERETT                     850
 #define TRAINER_RED                         851
 #define TRAINER_LEAF                        852
-#define TRAINER_BRENDAN_PLACEHOLDER         853  // Placeholder - available for future trainers
-#define TRAINER_MAY_PLACEHOLDER             854  // Placeholder - available for future trainers
-#define TRAINER_SIDNEY_REMATCH_1            855
-#define TRAINER_PHOEBE_REMATCH_1            856
-#define TRAINER_GLACIA_REMATCH_1            857
-#define TRAINER_DRAKE_REMATCH_1             858
-#define TRAINER_WALLACE_REMATCH_1           859
-#define TRAINER_SIDNEY_REMATCH_2            860
-#define TRAINER_PHOEBE_REMATCH_2            861
-#define TRAINER_GLACIA_REMATCH_2            862
-#define TRAINER_DRAKE_REMATCH_2             863
-#define TRAINER_WALLACE_REMATCH_2           864
+#define TRAINER_MAY_PLACEHOLDER             853  // Placeholder - available for future trainers
+#define TRAINER_SIDNEY_REMATCH_1            854
+#define TRAINER_PHOEBE_REMATCH_1            855
+#define TRAINER_GLACIA_REMATCH_1            856
+#define TRAINER_DRAKE_REMATCH_1             857
+#define TRAINER_WALLACE_REMATCH_1           858
+#define TRAINER_SIDNEY_REMATCH_2            859
+#define TRAINER_PHOEBE_REMATCH_2            860
+#define TRAINER_GLACIA_REMATCH_2            861
+#define TRAINER_DRAKE_REMATCH_2             862
+#define TRAINER_WALLACE_REMATCH_2           863
 
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 4 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                      865  // Count of trainer IDs (0-864)
+#define TRAINERS_COUNT                      864  // Count of trainer IDs (0-863)
 #define MAX_TRAINERS_COUNT                  864  // Matches trainer flag space (0x500-0x85F = 864 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H
