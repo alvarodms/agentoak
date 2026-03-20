@@ -37,3 +37,5 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Battle Frontier Compatibility & Early Route Trainer Design | 56 | March 2026 | [battle-frontier-and-early-routes.md](pokemon-knowledge/battle-frontier-and-early-routes.md) |
 | Audio Speed During Emulator Fast-Forward | 57 | March 2026 | [audio-speed-emulator-limitation.md](pokemon-knowledge/audio-speed-emulator-limitation.md) |
 | Victory Road Trainer Design & Overworld Sprite Fixes | 58 | March 2026 | [victory-road-and-overworld-sprites.md](pokemon-knowledge/victory-road-and-overworld-sprites.md) |
+| Post-Trainer Pass Priorities | 59 | March 2026 | [post-trainer-pass-priorities.md](pokemon-knowledge/post-trainer-pass-priorities.md) |
+| Species-Addition Pipeline (Complete Checklist) | 59 | March 2026 | [species-addition-pipeline.md](pokemon-knowledge/species-addition-pipeline.md) |

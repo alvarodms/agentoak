@@ -96,13 +96,19 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 ## Future Directions
 
-### New Species Migration (Gen 4/5)
+### New Species Pipeline (Cycle 59 Research)
+**Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~27 source files + ~14 assets per 2-species family.
+**Cycle 60 scope**: Riolu + Lucario only. First-ever species addition — expect unforeseen build issues. Get one family clean, then scale.
+**Key risks**: Cry table is position-indexed (not keyed). SPECIES_EGG must shift. NATIONAL_DEX_COUNT must update.
+**Placeholder strategy**: Copy Makuhita/Medicham graphics + cries. Replace with real art later.
+
 | Species | Location | Rate | Narrative Role |
 |---------|----------|------|----------------|
-| Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard |
-| Garchomp | Victory Road B2F | 5% | Dragon apex predator |
 | Riolu | Route 116 | 8% | Scout sensing disruption |
-| Weavile | Shoal Cave | 8% | Cold-zone apex hunter |
+| Lucario | (evolves from Riolu via friendship) | — | Fighting/Steel apex — 525 BST |
+| Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard (future) |
+| Garchomp | Victory Road B2F | 5% | Dragon apex predator (future) |
+| Weavile | Shoal Cave | 8% | Cold-zone apex hunter (future) |
 
 ### Narrative Enhancements
 - The Second Wave mid-game intensification event (Route 118 trigger)
