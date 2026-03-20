@@ -24,6 +24,46 @@ import { MEMORY_DIR } from "../utils/paths.js";
 
 const BACKLOG_FILE = path.join(MEMORY_DIR, "issue-backlog.md");
 
+/** Parsed backlog entry with cycle-tracking metadata. */
+export interface BacklogEntry {
+  issueNumber: number;
+  title: string;
+  /** The cycle number when this issue was deferred. 0 if unknown (legacy entries). */
+  deferredAtCycle: number;
+}
+
+const BACKLOG_LINE_RE = /^- #(\d+):\s*(.+?)(?:\s*\(deferred: cycle (\d+)\))?$/;
+
+/** Format a single backlog entry as a markdown line. */
+function formatBacklogLine(entry: BacklogEntry): string {
+  return `- #${entry.issueNumber}: ${entry.title} (deferred: cycle ${entry.deferredAtCycle})`;
+}
+
+/**
+ * Parse the backlog file into structured entries.
+ * Legacy lines without a cycle number default to deferredAtCycle = 0.
+ */
+export function parseBacklogEntries(): BacklogEntry[] {
+  try {
+    if (!fs.existsSync(BACKLOG_FILE)) return [];
+    const entries: BacklogEntry[] = [];
+    for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
+      const match = line.match(BACKLOG_LINE_RE);
+      if (match) {
+        entries.push({
+          issueNumber: parseInt(match[1], 10),
+          title: match[2].trim(),
+          deferredAtCycle: match[3] ? parseInt(match[3], 10) : 0,
+        });
+      }
+    }
+    return entries;
+  } catch (err) {
+    logger.error(`Failed to parse issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+    return [];
+  }
+}
+
 /**
  * Read the current issue backlog file contents.
  * Returns an empty string if the file does not exist yet.
@@ -40,6 +80,15 @@ export function readIssueBacklog(): string {
 }
 
 /**
+ * Get backlog issues that have been deferred for >= threshold cycles.
+ */
+export function getStaleBacklogIssues(currentCycle: number, threshold = 10): BacklogEntry[] {
+  return parseBacklogEntries().filter(
+    (e) => currentCycle - e.deferredAtCycle >= threshold,
+  );
+}
+
+/**
  * Add a single issue to the backlog file unconditionally.
  *
  * Unlike updateIssueBacklog (which routes planning-phase actions), this is a
@@ -47,63 +96,47 @@ export function readIssueBacklog(): string {
  * Always writes the file so the change is not lost due to the "nothing changed"
  * early-return guard inside updateIssueBacklog.
  */
-export function addIssueToBacklog(issueNumber: number, title: string): void {
-  const existing = new Map<number, string>();
-  try {
-    if (fs.existsSync(BACKLOG_FILE)) {
-      for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
-        const match = line.match(/^- #(\d+):/);
-        if (match) existing.set(parseInt(match[1], 10), line);
-      }
-    }
-  } catch (err) {
-    logger.error(`Failed to parse issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+export function addIssueToBacklog(issueNumber: number, title: string, cycleNumber: number): void {
+  const existing = new Map<number, BacklogEntry>();
+  for (const entry of parseBacklogEntries()) {
+    existing.set(entry.issueNumber, entry);
   }
 
-  existing.set(issueNumber, `- #${issueNumber}: ${title}`);
+  existing.set(issueNumber, { issueNumber, title, deferredAtCycle: cycleNumber });
 
-  const header = "# Issue Backlog\n\nDeferred community issues for future consideration.\n";
-  const entries = [...existing.values()];
-  const content = header + "\n" + entries.join("\n") + "\n";
-
-  try {
-    fs.mkdirSync(path.dirname(BACKLOG_FILE), { recursive: true });
-    fs.writeFileSync(BACKLOG_FILE, content, "utf-8");
-    logger.info(`Added issue #${issueNumber} to backlog (${entries.length} item(s) total).`);
-  } catch (err) {
-    logger.error(`Failed to write issue backlog: ${err instanceof Error ? err.message : String(err)}`);
-  }
+  writeBacklogEntries([...existing.values()]);
+  logger.info(`Added issue #${issueNumber} to backlog (${existing.size} item(s) total).`);
 }
 
 /**
  * Update the issue backlog based on the planner's actions:
- * - "defer": add the issue to the backlog (if not already present)
+ * - "defer": add the issue to the backlog (if not already present), or update cycle if re-deferring a stale issue
  * - "accept" / "reject": remove the issue from the backlog
  * "need-info" leaves the backlog unchanged; the issue stays deferred if it was there.
  */
 export function updateIssueBacklog(
   actions: IssueAction[],
   issueMap: Map<number, GitHubIssue>,
+  cycleNumber: number,
+  staleIssueNumbers?: Set<number>,
 ): void {
-  // Parse existing entries keyed by issue number
-  const existing = new Map<number, string>();
-  try {
-    if (fs.existsSync(BACKLOG_FILE)) {
-      for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
-        const match = line.match(/^- #(\d+):/);
-        if (match) existing.set(parseInt(match[1], 10), line);
-      }
-    }
-  } catch (err) {
-    logger.error(`Failed to parse issue backlog: ${err instanceof Error ? err.message : String(err)}`);
+  const existing = new Map<number, BacklogEntry>();
+  for (const entry of parseBacklogEntries()) {
+    existing.set(entry.issueNumber, entry);
   }
 
   let changed = false;
   for (const action of actions) {
     if (action.action === "defer") {
       if (!existing.has(action.issueNumber)) {
+        // New deferral
         const title = issueMap.get(action.issueNumber)?.title ?? "Unknown";
-        existing.set(action.issueNumber, `- #${action.issueNumber}: ${title}`);
+        existing.set(action.issueNumber, { issueNumber: action.issueNumber, title, deferredAtCycle: cycleNumber });
+        changed = true;
+      } else if (staleIssueNumbers?.has(action.issueNumber)) {
+        // Re-deferring a stale issue — reset cycle counter
+        const entry = existing.get(action.issueNumber)!;
+        existing.set(action.issueNumber, { ...entry, deferredAtCycle: cycleNumber });
         changed = true;
       }
     } else if (action.action === "accept" || action.action === "reject") {
@@ -117,17 +150,21 @@ export function updateIssueBacklog(
 
   if (!changed && existing.size === 0) return;
 
+  writeBacklogEntries([...existing.values()]);
+  logger.info(`Updated issue backlog (${existing.size} item(s)).`);
+}
+
+/** Write backlog entries to disk. */
+function writeBacklogEntries(entries: BacklogEntry[]): void {
   const header = "# Issue Backlog\n\nDeferred community issues for future consideration.\n";
-  const entries = [...existing.values()];
   const content =
     entries.length > 0
-      ? header + "\n" + entries.join("\n") + "\n"
+      ? header + "\n" + entries.map(formatBacklogLine).join("\n") + "\n"
       : header + "\n*No deferred issues.*\n";
 
   try {
     fs.mkdirSync(path.dirname(BACKLOG_FILE), { recursive: true });
     fs.writeFileSync(BACKLOG_FILE, content, "utf-8");
-    logger.info(`Updated issue backlog (${entries.length} item(s)).`);
   } catch (err) {
     logger.error(`Failed to write issue backlog: ${err instanceof Error ? err.message : String(err)}`);
   }
