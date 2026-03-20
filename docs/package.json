@@ -2,21 +2,24 @@
   "name": "agent-oak-docs",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "vite",
     "build:data": "node build-scripts/build-journals.mjs && node build-scripts/build-game-guide.mjs && node build-scripts/build-strategy.mjs",
-    "build": "npm run build:data && next build",
-    "start": "next start"
+    "build": "npm run build:data && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "react-router-dom": "^7.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
-    "typescript": "^5.7.0"
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
   }
 }

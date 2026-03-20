@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = join(__dirname, '..');
 const ROOT = join(DOCS_DIR, '..');
 const JOURNAL_DIR = join(ROOT, 'journal');
-const OUTPUT_DIR = join(DOCS_DIR, 'data');
+const OUTPUT_DIR = join(DOCS_DIR, 'public', 'data');
 const OUTPUT_FILE = join(OUTPUT_DIR, 'journals.json');
 
 async function main() {
