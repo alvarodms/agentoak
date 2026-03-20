@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-18T04:18:29.489Z",
+  "generatedAt": "2026-03-20T01:39:40.737Z",
   "starters": [
     {
       "species": "Larvitar",
@@ -2040,8 +2040,8 @@
           "rarity": "Uncommon"
         },
         {
-          "species": "Electrike",
-          "minLevel": 26,
+          "species": "Snubbull",
+          "minLevel": 24,
           "maxLevel": 26,
           "rate": 10,
           "rarity": "Uncommon"
@@ -3151,7 +3151,7 @@
           "rarity": "Uncommon"
         },
         {
-          "species": "Abra",
+          "species": "Ralts",
           "minLevel": 16,
           "maxLevel": 19,
           "rate": 10,
@@ -4826,9 +4826,9 @@
           "rarity": "Common"
         },
         {
-          "species": "Shuppet",
+          "species": "Clefairy",
           "minLevel": 26,
-          "maxLevel": 26,
+          "maxLevel": 28,
           "rate": 20,
           "rarity": "Common"
         },

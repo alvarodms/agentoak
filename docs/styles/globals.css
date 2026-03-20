@@ -3,7 +3,7 @@
    A Pokémon Lab UI theme for Agent Oak journal entries
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts loaded via _document.tsx */
 
 /* ---- CSS Variables ---- */
 :root {
@@ -218,6 +218,7 @@ body::after {
   padding: 0 32px;
 }
 
+.header-nav a,
 .header-nav button {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -230,12 +231,15 @@ body::after {
   position: relative;
   transition: color var(--transition-fast);
   border-bottom: 2px solid transparent;
+  text-decoration: none;
 }
 
+.header-nav a:hover,
 .header-nav button:hover {
   color: var(--text-primary);
 }
 
+.header-nav a.active,
 .header-nav button.active {
   color: var(--green-bright);
   border-bottom-color: var(--green-bright);
@@ -652,24 +656,14 @@ body::after {
   100% { opacity: 0; transform: translateY(-20px); }
 }
 
-/* ---- View: Strategy ---- */
+/* ---- View Containers ---- */
 .strategy-view, .about-view, .guide-view {
-  display: none;
   position: relative;
   z-index: 5;
   max-width: 960px;
   margin: 0 auto;
   padding: 32px 24px 80px;
 }
-
-.strategy-view.active, .about-view.active, .guide-view.active {
-  display: block;
-}
-
-/* roadmap-view has its own display/layout for kanban overflow */
-
-.main-content { display: none; }
-.main-content.active { display: block; }
 
 .info-card {
   background: var(--lab-panel);
@@ -751,6 +745,19 @@ body::after {
   font-size: 48px;
   margin-bottom: 8px;
   filter: drop-shadow(0 0 8px rgba(0, 200, 83, 0.2));
+}
+
+.starter-card .pokemon-identity {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.pokemon-sprite-wrap-img {
+  width: 80px;
+  height: 80px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 10px rgba(0, 200, 83, 0.3));
 }
 
 /* ---- Responsive ---- */
@@ -1181,15 +1188,10 @@ body::after {
    ============================================================ */
 
 .roadmap-view {
-  display: none;
   position: relative;
   z-index: 5;
   padding: 32px 24px 80px;
   overflow-x: auto;
-}
-
-.roadmap-view.active {
-  display: block;
 }
 
 .roadmap-loading {
