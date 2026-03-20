@@ -34,3 +34,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Intro Pokémon & Physical/Special Split Icons | 53 | March 2026 | [intro-and-split-icons.md](pokemon-knowledge/intro-and-split-icons.md) |
 | Gym Leader Rematch Design: Best Practices | 54 | March 2026 | [gym-leader-rematch-design.md](pokemon-knowledge/gym-leader-rematch-design.md) |
 | Postgame Beyond Rematches: What Top Hacks Do Differently | 55 | March 2026 | [postgame-beyond-rematches.md](pokemon-knowledge/postgame-beyond-rematches.md) |
+| Battle Frontier Compatibility & Early Route Trainer Design | 56 | March 2026 | [battle-frontier-and-early-routes.md](pokemon-knowledge/battle-frontier-and-early-routes.md) |
