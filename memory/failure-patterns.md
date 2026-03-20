@@ -42,12 +42,6 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Symptom**: `error: unknown character U+2014` in scripts.inc
 **Resolution**: Use only ASCII in .string text. Em dash (—), smart quotes, etc. are NOT in the charmap. Ellipsis (…) and é ARE safe.
 
-## Script Macro Missing Parameters (Cycle 50)
-
-**Symptom**: `Missing value for required parameter 'dest' of macro 'goto'`
-**Cause**: Used bare `goto` without a destination label in scripts.inc.
-**Resolution**: All script macros require their parameters. Check nearby examples for correct syntax.
-
 ## Move Constant Naming
 
 **Symptom**: `MOVE_THUNDERPUNCH' undeclared` — missing underscore.
@@ -58,8 +52,14 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 
 **Symptom**: MAX_TRAINERS_COUNT (869) exceeds available trainer flag space (864 slots)
 **Cause**: Trainer flags are allocated range 0x500-0x85F (864 slots) but MAX_TRAINERS_COUNT set to 869
-**Resolution**: Reduced MAX_TRAINERS_COUNT to 864 to match flag space. Identified unused trainers (TRAINER_GRUNT_UNUSED, TRAINER_BRENDAN_PLACEHOLDER, TRAINER_MAY_PLACEHOLDER) now available for future use.
+**Resolution**: Reduced MAX_TRAINERS_COUNT to 864 to match flag space.
 **Technical Details**: Flag range calculation: 0x85F - 0x500 + 1 = 864 slots exactly. TRAINERS_COUNT = 865 (highest ID 864 + 1).
+
+## "File has not been read yet" After Context Compression (Cycle 57)
+
+**Symptom**: Edit tool returns `File has not been read yet. Read it first before writing to it.`
+**Cause**: After many tool calls (250+), context compression evicts the file read. Edit requires a recent Read.
+**Resolution**: Re-read the file immediately before editing. For bulk updates to large files like trainers.h (~354KB), use a bash script instead of many individual Edit calls.
 
 ## Anticipated Pitfalls
 
