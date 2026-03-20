@@ -29,7 +29,7 @@ import {
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
 import type { ValidationResult } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR } from "../utils/paths.js";
@@ -89,8 +89,13 @@ async function runPlanningPhase(
   const communityIssues = await fetchNewCommunityIssues();
   const issueContext = formatIssuesForPrompt(communityIssues);
   const issueBacklog = readIssueBacklog();
+  const staleIssues = getStaleBacklogIssues(cycleNumber);
 
-  const plan = await planCycle(lastJournal, cycleNumber, issueContext, issueBacklog);
+  if (staleIssues.length > 0) {
+    log.info(`  Found ${staleIssues.length} stale backlog issue(s) for re-review.`);
+  }
+
+  const plan = await planCycle(lastJournal, cycleNumber, issueContext, issueBacklog, staleIssues);
   log.info(`Plan: [${plan.mode}] ${plan.objective}`);
 
   // Execute issue actions only for newly fetched community issues — not for
@@ -105,8 +110,6 @@ async function runPlanningPhase(
   }
 
   // Post comments on backlog issues being accepted this cycle.
-  // These were already reviewed in a prior cycle (so executeIssueActions was skipped above),
-  // but now that the agent is picking them up we should post the acceptance/in-progress comment.
   const backlogAcceptActions = plan.issueActions.filter(
     (a) => !communityIssueNumbers.has(a.issueNumber) && a.action === "accept",
   );
@@ -115,10 +118,24 @@ async function runPlanningPhase(
     await executeIssueActions(backlogAcceptActions);
   }
 
+  // Post comments on stale backlog issues that the planner re-evaluated
+  // (accept is handled above; this covers reject and re-defer responses).
+  const staleIssueNumbers = new Set(staleIssues.map((i) => i.issueNumber));
+  const staleReviewActions = plan.issueActions.filter(
+    (a) =>
+      staleIssueNumbers.has(a.issueNumber) &&
+      !communityIssueNumbers.has(a.issueNumber) &&
+      a.action !== "accept", // accepts already handled above
+  );
+  if (staleReviewActions.length > 0) {
+    log.info(`  Posting comments on ${staleReviewActions.length} stale issue(s) re-reviewed...`);
+    await executeIssueActions(staleReviewActions);
+  }
+
   // Update the deferred-issue backlog based on this cycle's actions
   // (all actions, including planner decisions on backlog issues)
   const issueMap = new Map(communityIssues.map((i) => [i.number, i]));
-  updateIssueBacklog(plan.issueActions, issueMap);
+  updateIssueBacklog(plan.issueActions, issueMap, cycleNumber, staleIssueNumbers);
 
   // Any issue presented to the planner but NOT included in issueActions must
   // still be marked agent-reviewed so it doesn't resurface on the next cycle.
@@ -671,7 +688,7 @@ export async function runCycle(): Promise<void> {
           await postIssuePartialDeliveryComment(issueNumber, reason, "defer");
           await addLabelsToIssue(issueNumber, [AGENT_LABELS.deferred]);
           // Re-add to backlog so it surfaces in a future cycle
-          addIssueToBacklog(issueNumber, `Issue #${issueNumber}`);
+          addIssueToBacklog(issueNumber, `Issue #${issueNumber}`, cycleNumber);
         }
       }
 
