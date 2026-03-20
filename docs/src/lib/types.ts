@@ -105,6 +105,16 @@ export interface RoadmapUpcomingEntry {
   complexity?: string;
 }
 
+export interface ReleaseEntry {
+  tag: string;
+  name: string;
+  date: string;
+  body: string;
+  url: string;
+  ipsUrl: string | null;
+  ipsName: string | null;
+}
+
 export interface StrategyData {
   vision?: {
     title: string;

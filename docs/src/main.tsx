@@ -7,6 +7,7 @@ import GuidePage from './pages/GuidePage';
 import StrategyPage from './pages/StrategyPage';
 import RoadmapPage from './pages/RoadmapPage';
 import AboutPage from './pages/AboutPage';
+import DownloadsPage from './pages/DownloadsPage';
 import './styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/strategy" element={<StrategyPage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/downloads" element={<DownloadsPage />} />
         </Routes>
       </Layout>
     </HashRouter>

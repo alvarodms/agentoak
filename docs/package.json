@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:data": "node build-scripts/build-journals.mjs && node build-scripts/build-game-guide.mjs && node build-scripts/build-strategy.mjs",
+    "build:data": "node build-scripts/build-journals.mjs && node build-scripts/build-game-guide.mjs && node build-scripts/build-strategy.mjs && node build-scripts/build-releases.mjs",
     "build": "npm run build:data && vite build",
     "preview": "vite preview"
   },
