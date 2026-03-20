@@ -1,26 +1,17 @@
-import fs from 'fs';
-import path from 'path';
-import type { GetStaticProps } from 'next';
+import { useState, useEffect } from 'react';
 import KanbanBoard from '../components/KanbanBoard';
 import type { StrategyData } from '../lib/types';
 
-interface RoadmapPageProps {
-  data: StrategyData | null;
-}
+export default function RoadmapPage() {
+  const [data, setData] = useState<StrategyData | null>(null);
 
-export const getStaticProps: GetStaticProps<RoadmapPageProps> = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'strategy.json');
-  let data: StrategyData | null = null;
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    data = JSON.parse(raw);
-  } catch {
-    // data file may not exist
-  }
-  return { props: { data } };
-};
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'data/strategy.json')
+      .then(r => r.json())
+      .then(setData)
+      .catch(() => {});
+  }, []);
 
-export default function RoadmapPage({ data }: RoadmapPageProps) {
   if (!data?.roadmap) {
     return (
       <section className="roadmap-view active">

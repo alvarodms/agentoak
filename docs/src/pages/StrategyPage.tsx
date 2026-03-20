@@ -1,27 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import type { GetStaticProps } from 'next';
+import { useState, useEffect } from 'react';
 import PokemonSprite from '../components/PokemonSprite';
 import { TYPE_EMOJIS } from '../lib/type-utils';
 import type { StrategyData } from '../lib/types';
 
-interface StrategyPageProps {
-  data: StrategyData | null;
-}
+export default function StrategyPage() {
+  const [data, setData] = useState<StrategyData | null>(null);
 
-export const getStaticProps: GetStaticProps<StrategyPageProps> = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'strategy.json');
-  let data: StrategyData | null = null;
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    data = JSON.parse(raw);
-  } catch {
-    // data file may not exist
-  }
-  return { props: { data } };
-};
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'data/strategy.json')
+      .then(r => r.json())
+      .then(setData)
+      .catch(() => {});
+  }, []);
 
-export default function StrategyPage({ data }: StrategyPageProps) {
   if (!data) {
     return (
       <section className="strategy-view active">

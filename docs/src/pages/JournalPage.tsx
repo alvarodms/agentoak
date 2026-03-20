@@ -1,27 +1,18 @@
-import fs from 'fs';
-import path from 'path';
-import type { GetStaticProps } from 'next';
+import { useState, useEffect } from 'react';
 import StatsBanner from '../components/StatsBanner';
 import JournalCard from '../components/JournalCard';
 import type { JournalEntry } from '../lib/types';
 
-interface JournalPageProps {
-  entries: JournalEntry[];
-}
+export default function JournalPage() {
+  const [entries, setEntries] = useState<JournalEntry[]>([]);
 
-export const getStaticProps: GetStaticProps<JournalPageProps> = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'journals.json');
-  let entries: JournalEntry[] = [];
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    entries = JSON.parse(raw);
-  } catch {
-    // data file may not exist during initial setup
-  }
-  return { props: { entries } };
-};
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'data/journals.json')
+      .then(r => r.json())
+      .then(setEntries)
+      .catch(() => {});
+  }, []);
 
-export default function JournalPage({ entries }: JournalPageProps) {
   const sorted = [...entries].sort((a, b) => b.cycle - a.cycle);
 
   return (
