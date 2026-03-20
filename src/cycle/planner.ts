@@ -19,10 +19,8 @@ export interface CyclePlan {
   objective: string;
   reasoning: string;
   implementationPlan: string;
-  /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. */
+  /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. For large tasks, the designer can internally parallelize using Agent Teams. */
   gameplayDesignBrief?: string;
-  /** Optional chunked briefs for parallel Gameplay Designers. When set, multiple designer agents run concurrently. Takes precedence over gameplayDesignBrief. */
-  gameplayDesignChunks?: Array<{ label: string; brief: string }>;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -51,19 +49,6 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     gameplayDesignBrief: {
       type: "string",
       description: "Optional brief for the Gameplay Designer agent. Set this when the cycle involves gameplay changes (trainer teams, wild encounters, difficulty tuning, etc.). The Gameplay Designer has access to Pokédex MCP tools and will produce detailed, data-driven specifications. When you set this, your implementationPlan should focus on implementation steps (which files to modify, patterns to follow) rather than exact gameplay values — the Gameplay Designer will provide those.",
-    },
-    gameplayDesignChunks: {
-      type: "array",
-      description: "For large design tasks, split the work into independent chunks that run as parallel designer agents. Use INSTEAD of gameplayDesignBrief when the task involves 4+ independent design units (e.g., 8 gym leader rematches → 2-4 chunks). Each chunk gets its own designer agent running concurrently, dramatically reducing wall-clock time.",
-      items: {
-        type: "object",
-        properties: {
-          label: { type: "string", description: "Short label for this chunk (e.g., 'Gyms 1-3 Rematches')" },
-          brief: { type: "string", description: "Self-contained design brief for this chunk. Include all context the designer needs — it won't see other chunks." },
-        },
-        required: ["label", "brief"],
-        additionalProperties: false,
-      },
     },
     issueActions: {
       type: "array",
@@ -119,7 +104,6 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     reasoning?: string;
     implementationPlan?: string;
     gameplayDesignBrief?: string;
-    gameplayDesignChunks?: Array<{ label: string; brief: string }>;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -190,9 +174,6 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       reasoning: parsed.reasoning,
       implementationPlan: parsed.implementationPlan ?? "",
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
-      gameplayDesignChunks: Array.isArray(parsed.gameplayDesignChunks) && parsed.gameplayDesignChunks.length > 0
-        ? parsed.gameplayDesignChunks
-        : undefined,
       issueActions,
       helpRequests,
     };

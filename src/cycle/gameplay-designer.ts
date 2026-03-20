@@ -4,8 +4,9 @@
  * using the Pokédex MCP tools.
  *
  * Runs as Phase 1.5 between Planning and Implementation, only when the
- * Producer signals gameplay design is needed via `gameplayDesignBrief`
- * or `gameplayDesignChunks` (parallel).
+ * Producer signals gameplay design is needed via `gameplayDesignBrief`.
+ * For large tasks, the designer can internally spawn a team of agents
+ * using the Agent Teams feature (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1).
  */
 
 import { runClaudeCode } from "../agent/claude-cli.js";
@@ -22,13 +23,8 @@ export interface GameplayDesignResult {
   tokenUsage: TokenUsage;
 }
 
-const GAMEPLAY_DESIGNER_MAX_TURNS = 75;
-const GAMEPLAY_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
-
-// Per-chunk limits for parallel designers (smaller scope per agent)
-const CHUNK_DESIGNER_MAX_TURNS = 40;
-const CHUNK_DESIGNER_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
-const MAX_PARALLEL_CHUNKS = 4;
+const GAMEPLAY_DESIGNER_MAX_TURNS = 100;
+const GAMEPLAY_DESIGNER_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
 /**
  * Run the Gameplay Designer agent to produce detailed gameplay specs.
@@ -54,6 +50,9 @@ export async function runGameplayDesigner(
     timeout: GAMEPLAY_DESIGNER_TIMEOUT_MS,
     tools: "Read",
     model: process.env.ANTHROPIC_MODEL,
+    envOverrides: {
+      CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1",
+    },
   });
 
   const specs = result.narrativeText || result.resultText || "";
@@ -71,118 +70,6 @@ export async function runGameplayDesigner(
     toolCallCount: result.toolCallCount,
     tokenUsage: result.tokenUsage,
   };
-}
-
-/**
- * Run multiple Gameplay Designer agents in parallel, one per chunk.
- *
- * Each chunk gets its own agent with reduced turn/timeout limits.
- * Results are merged by concatenating specs with chunk labels as headers.
- * If some chunks fail, successful results are still returned.
- * If ALL chunks fail, an error is thrown (caller falls back to Producer's plan).
- */
-export async function runGameplayDesignerParallel(
-  objective: string,
-  chunks: Array<{ label: string; brief: string }>,
-  implementationPlan: string,
-): Promise<GameplayDesignResult> {
-  // Cap the number of parallel agents
-  const activeChunks = chunks.slice(0, MAX_PARALLEL_CHUNKS);
-  if (chunks.length > MAX_PARALLEL_CHUNKS) {
-    logger.warn(
-      `[Gameplay Designer] ${chunks.length} chunks provided, capping at ${MAX_PARALLEL_CHUNKS}`,
-    );
-  }
-
-  logger.info(
-    `[Gameplay Designer] Starting parallel design: ${activeChunks.length} chunks`,
-  );
-  for (const chunk of activeChunks) {
-    logger.info(`  - ${chunk.label}: ${chunk.brief.slice(0, 100)}...`);
-  }
-
-  // Run all chunk designers in parallel
-  const results = await Promise.all(
-    activeChunks.map((chunk) => runChunkDesigner(objective, chunk, implementationPlan)),
-  );
-
-  // Merge results
-  const specParts: string[] = [];
-  let totalToolCalls = 0;
-  let successCount = 0;
-  const mergedTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
-
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
-    const chunk = activeChunks[i];
-    mergedTokenUsage.inputTokens += result.tokenUsage.inputTokens;
-    mergedTokenUsage.outputTokens += result.tokenUsage.outputTokens;
-    mergedTokenUsage.totalTokens += result.tokenUsage.totalTokens;
-    totalToolCalls += result.toolCallCount;
-
-    if (result.specs.trim()) {
-      specParts.push(`## ${chunk.label}\n\n${result.specs}`);
-      successCount++;
-    } else {
-      specParts.push(`## ${chunk.label}\n\n(Designer produced no output for this chunk — implementation agent should use its own judgment for this section.)`);
-    }
-  }
-
-  if (successCount === 0) {
-    throw new Error("All parallel Gameplay Designers produced no output");
-  }
-
-  const mergedSpecs = specParts.join("\n\n---\n\n");
-
-  logger.info(
-    `[Gameplay Designer] Parallel design complete: ${successCount}/${activeChunks.length} chunks successful, ${totalToolCalls} total tool calls, ${mergedSpecs.length} chars`,
-  );
-
-  return {
-    specs: mergedSpecs,
-    toolCallCount: totalToolCalls,
-    tokenUsage: mergedTokenUsage,
-  };
-}
-
-/** Run a single chunk designer agent. Returns empty specs on failure instead of throwing. */
-async function runChunkDesigner(
-  objective: string,
-  chunk: { label: string; brief: string },
-  implementationPlan: string,
-): Promise<GameplayDesignResult> {
-  const emptyResult: GameplayDesignResult = {
-    specs: "",
-    toolCallCount: 0,
-    tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
-  };
-
-  try {
-    logger.info(`[Gameplay Designer] Starting chunk: ${chunk.label}`);
-    const prompt = buildGameplayDesignerPrompt(objective, chunk.brief, implementationPlan);
-
-    const result = await runClaudeCode(prompt, {
-      maxTurns: CHUNK_DESIGNER_MAX_TURNS,
-      timeout: CHUNK_DESIGNER_TIMEOUT_MS,
-      tools: "Read",
-      model: process.env.ANTHROPIC_MODEL,
-    });
-
-    const specs = result.narrativeText || result.resultText || "";
-    logger.info(
-      `[Gameplay Designer] Chunk "${chunk.label}" complete: ${result.toolCallCount} tool calls, ${specs.length} chars`,
-    );
-
-    return {
-      specs,
-      toolCallCount: result.toolCallCount,
-      tokenUsage: result.tokenUsage,
-    };
-  } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    logger.warn(`[Gameplay Designer] Chunk "${chunk.label}" failed: ${errMsg}`);
-    return emptyResult;
-  }
 }
 
 function buildGameplayDesignerPrompt(
@@ -232,5 +119,39 @@ Be complete — the implementation agent should not need to make ANY gameplay de
 ## Memory
 
 Read \`memory/strategy-notes.md\` for the game's creative vision and difficulty philosophy.
-Read \`memory/completed-work.md\` to understand what's already been modified — avoid contradicting previous design work unless the brief explicitly asks for a redesign.`;
+Read \`memory/completed-work.md\` to understand what's already been modified — avoid contradicting previous design work unless the brief explicitly asks for a redesign.
+
+## Parallel Design with Agent Teams
+
+You can create a **team of agents** to work on design tasks in parallel.
+
+**When to create a team:**
+- The brief involves 4 or more independent design units (e.g., 4+ trainer teams, multiple routes, gym rematches for several leaders)
+- The design units can be specified independently — one teammate's output does not depend on another's
+
+**When NOT to create a team:**
+- Fewer than 4 independent design units
+- Sequential reasoning needed where later decisions depend on earlier ones (e.g., designing a difficulty curve across a sequence of trainers)
+- Single focused task (one gym leader, one route, one encounter table)
+
+**How:** Use the Agent tool to spawn teammates. Each teammate should:
+1. Receive a self-contained brief with all the context it needs (game progression point, difficulty intent, thematic constraints, design principles including the physical/special split rule)
+2. Have access to the same Pokédex MCP tools you do
+3. Produce output in the same structured specification format described above
+
+**Team size** (based on scope):
+- 4-6 independent units → 2 teammates
+- 7-10 independent units → 3 teammates
+- 11+ independent units → 4 teammates
+
+**Example:** If the brief asks you to design rematches for 8 gym leaders, create a team with 3 teammates. Use Opus for each teammate:
+- Teammate 1: "Design rematch teams for Roxanne, Brawly, and Wattson" (with full context)
+- Teammate 2: "Design rematch teams for Flannery, Norman, and Winona" (with full context)
+- Teammate 3: "Design rematch teams for Tate & Liza and Wallace" (with full context)
+
+Each teammate's brief must include: the game progression point, difficulty philosophy, the physical/special split rule, and any other design constraints from your own brief. Do not assume teammates can see your prompt.
+
+After all teammates complete, combine their specifications into your final output with section headers.
+
+For smaller tasks (fewer than 4 independent units), just do the work yourself without creating a team.`;
 }
