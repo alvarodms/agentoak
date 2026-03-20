@@ -85,7 +85,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
 | 9 | New species (Gible, Riolu, etc.) | Not started |
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
-| 11 | Gym leader rematches | Not started (ceiling resolved) |
+| 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 
 ---
 
@@ -104,6 +104,19 @@ The physical/special split changes how every battle feels. Fairy type introduces
 - Migration intensification on later routes
 - Postgame research quest for Birch
 
-### Gym Leader Rematches
-- Match Call rematches for all 8 gym leaders with post-migration teams
-- Scale from lv55-65 (tier 1) to lv75-85 (tier 4)
+### Gym Leader Rematches (Cycle 54 — DONE)
+
+All 8 gym leaders redesigned with competitive migration-themed teams:
+
+| Leader | Ace (Migration) | Levels | Strategy |
+|--------|----------------|--------|----------|
+| Roxanne | Tyranitar (DD) | 57-62 | Fossil team + Steelix/Tyranitar migration |
+| Brawly | Hariyama (Bulk Up) | 57-62 | Choice Band fighters + Heracross migration |
+| Wattson | Electabuzz (coverage) | 57-62 | Rain + Baton Pass Jolteon + Electabuzz migration |
+| Flannery | Houndoom (Sun) | 57-62 | Sun team + Arcanine/Houndoom migration |
+| Norman | Slaking (ace) | 57-62 | CB Slaking + Snorlax/Blissey migration |
+| Winona | Dragonite (DD) | 57-62 | Spikes+Whirlwind + Crobat/Dragonite migration |
+| Tate&Liza | Slowking (CM) | 57-62 | CM sweepers + Alakazam/Slowking migration |
+| Juan | Starmie (BoltBeam) | 57-62 | Rain + CB Crawdaunt + Lapras/Starmie migration |
+
+4 rematch tiers: _2 (lv57-62), _3 (+3), _4 (+6), _5 (+9). All have 6 mons, held items, 4x Full Restore, smart AI.

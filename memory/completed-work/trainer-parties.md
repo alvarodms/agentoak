@@ -26,3 +26,5 @@ Modified files related to trainer team compositions, held items, and level curve
 | `include/constants/opponents.h` | Trainer ID ceiling fix (complete) | 52 | Completely removed TRAINER_BRENDAN_PLACEHOLDER; TRAINERS_COUNT reduced to 864; MAX_TRAINERS_COUNT reached |
 | `src/data/trainers.h` | Removed BRENDAN_PLACEHOLDER definition | 52 | Completely removed trainer entry |
 | `src/data/trainer_parties.h` | Removed sParty_BrendanLinkPlaceholder | 52 | Completely removed party definition |
+| `src/data/trainer_parties.h` | Gym leader rematch teams (all 8, slots _2-_5) | 54 | Competitive 6-mon teams lv57-71, migration species, held items, .iv=200 |
+| `src/data/trainers.h` | Gym leader rematch entries (all 8, slots _2-_5) | 54 | Added AI_SCRIPT_SETUP_FIRST_TURN, 4x Full Restore |

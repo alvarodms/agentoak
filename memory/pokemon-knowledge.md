@@ -32,3 +32,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v2.0 Progression Patterns: Community Preferences & Successful Models | 51 | March 2026 | [v2-progression-patterns.md](pokemon-knowledge/v2-progression-patterns.md) |
 | Polish & Playtest Feedback Integration Patterns | 52 | March 2026 | [polish-playtest-feedback.md](pokemon-knowledge/polish-playtest-feedback.md) |
 | Intro Pokémon & Physical/Special Split Icons | 53 | March 2026 | [intro-and-split-icons.md](pokemon-knowledge/intro-and-split-icons.md) |
+| Gym Leader Rematch Design: Best Practices | 54 | March 2026 | [gym-leader-rematch-design.md](pokemon-knowledge/gym-leader-rematch-design.md) |
