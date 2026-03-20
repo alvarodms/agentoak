@@ -23,10 +23,11 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | pokeemerald-expansion Migration: Planning & Design Implications | 39 | March 2026 | [expansion-migration-planning.md](pokemon-knowledge/expansion-migration-planning.md) |
 | pokeemerald-expansion Migration: Cycle 41 Practical Strategy | 41 | March 2026 | [expansion-migration-cycle41-strategy.md](pokemon-knowledge/expansion-migration-cycle41-strategy.md) |
 | Vanilla Physical/Special Split: Implementation Feasibility | 42 | March 2026 | [vanilla-physical-special-split.md](pokemon-knowledge/vanilla-physical-special-split.md) |
-| Physical/Special Split: Balance Implications for LoH | 43 | March 2026 | [physical-special-split-balance.md](pokemon-knowledge/physical-special-split-balance.md) |
+| Physical/Special Split: Balance Implications for LoH | 43 | March 2026 | [physical-special-split-balance.md](pokemon-knowledge/physical-special-split.md) |
 | Fairy Type Implementation: Design & Balance for LoH | 44 | March 2026 | [fairy-type-implementation.md](pokemon-knowledge/fairy-type-implementation.md) |
 | Elite Four Rematch Design & Fairy Move Implementation | 46 | March 2026 | [elite-four-rematch-design.md](pokemon-knowledge/elite-four-rematch-design.md) |
 | Encounter Design Patterns in ROM Hacks | 47 | March 2026 | [encounter-design-patterns.md](pokemon-knowledge/encounter-design-patterns.md) |
 | Fairy Corridor Completion & E4 Rematch Transition | 49 | March 2026 | [fairy-corridor-completion.md](pokemon-knowledge/fairy-corridor-completion.md) |
 | Postgame Player Priorities: What Makes Endgame Worth Playing | 50 | March 2026 | [postgame-player-priorities.md](pokemon-knowledge/postgame-player-priorities.md) |
 | v2.0 Progression Patterns: Community Preferences & Successful Models | 51 | March 2026 | [v2-progression-patterns.md](pokemon-knowledge/v2-progression-patterns.md) |
+| Polish & Playtest Feedback Integration Patterns | 52 | March 2026 | [polish-playtest-feedback.md](pokemon-knowledge/polish-playtest-feedback.md) |

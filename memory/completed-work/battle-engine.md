@@ -37,6 +37,7 @@ Physical/Special Split and Fairy Type implementations (v2.0).
 | `src/data/text/move_names.h` | Added 3 move names to gMoveNames | **46** | MOONBLAST, PLAY ROUGH, DAZZLNGLEAM |
 | `src/data/pokemon/level_up_learnsets.h` | Added Fairy moves to 13 species learnsets | **46** | Ralts/Kirlia/Gardevoir, Clefairy/Clefable, Jigglypuff/Wigglytuff, Togetic, Marill/Azumarill, Snubbull/Granbull, Mawile |
 | `graphics/types/fairy.png` | Recreated placeholder (copy of psychic.png) | **46** | Lost between cycles, needed for build |
+| `graphics/types/fairy.png` | Restored placeholder (copy of normal.png) | **52** | Missing again, copied from normal.png to fix build |
 
 ### Species Retypes (Cycle 44)
 
