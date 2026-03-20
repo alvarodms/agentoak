@@ -6,6 +6,8 @@ import type { RouteData, EncounterEntry } from '../lib/types';
 interface RouteCardProps {
   name: string;
   route: RouteData;
+  /** Species appearing for the first time in game progression */
+  newSpecies?: Set<string>;
 }
 
 interface DeduplicatedEncounter extends EncounterEntry {
@@ -28,7 +30,15 @@ function deduplicateEncounters(mons: EncounterEntry[]): DeduplicatedEncounter[] 
   return [...seen.values()].sort((a, b) => b.totalRate - a.totalRate);
 }
 
-function EncounterTable({ title, mons }: { title: string; mons: EncounterEntry[] }) {
+function EncounterTable({
+  title,
+  mons,
+  newSpecies,
+}: {
+  title: string;
+  mons: EncounterEntry[];
+  newSpecies?: Set<string>;
+}) {
   const deduped = deduplicateEncounters(mons);
 
   return (
@@ -49,6 +59,9 @@ function EncounterTable({ title, mons }: { title: string; mons: EncounterEntry[]
               <td className="mon-name">
                 <PokemonSprite name={m.species} className="pokemon-thumb-sm" />
                 {m.species}
+                {newSpecies?.has(m.species) && (
+                  <span className="new-species-badge">NEW</span>
+                )}
               </td>
               <td>{m.minLevel === m.maxLevel ? m.minLevel : `${m.minLevel}\u2013${m.maxLevel}`}</td>
               <td>{m.totalRate}%</td>
@@ -65,7 +78,7 @@ function EncounterTable({ title, mons }: { title: string; mons: EncounterEntry[]
   );
 }
 
-export default function RouteCard({ name, route }: RouteCardProps) {
+export default function RouteCard({ name, route, newSpecies }: RouteCardProps) {
   const [expanded, setExpanded] = useState(false);
 
   const allSpecies = new Set<string>();
@@ -81,21 +94,26 @@ export default function RouteCard({ name, route }: RouteCardProps) {
     });
   }
 
+  const newCount = newSpecies ? [...allSpecies].filter(s => newSpecies.has(s)).length : 0;
+
   return (
     <div className={`guide-card${expanded ? ' expanded' : ''}`}>
       <div className="guide-card-header" onClick={() => setExpanded(!expanded)}>
         <span className="guide-card-title">{name}</span>
         <span className="encounter-count">{allSpecies.size} species</span>
+        {newCount > 0 && (
+          <span className="new-count-badge">{newCount} new</span>
+        )}
         <span className="card-expand">{'\u25BC'}</span>
       </div>
 
       <div className="guide-card-body">
-        {route.land && <EncounterTable title="&#x1F33F; Grass / Cave" mons={route.land} />}
-        {route.water && <EncounterTable title="&#x1F30A; Surfing" mons={route.water} />}
-        {route.rockSmash && <EncounterTable title="&#x1FAA8; Rock Smash" mons={route.rockSmash} />}
-        {route.fishing?.oldRod && <EncounterTable title="&#x1F3A3; Old Rod" mons={route.fishing.oldRod} />}
-        {route.fishing?.goodRod && <EncounterTable title="&#x1F3A3; Good Rod" mons={route.fishing.goodRod} />}
-        {route.fishing?.superRod && <EncounterTable title="&#x1F3A3; Super Rod" mons={route.fishing.superRod} />}
+        {route.land && <EncounterTable title="&#x1F33F; Grass / Cave" mons={route.land} newSpecies={newSpecies} />}
+        {route.water && <EncounterTable title="&#x1F30A; Surfing" mons={route.water} newSpecies={newSpecies} />}
+        {route.rockSmash && <EncounterTable title="&#x1FAA8; Rock Smash" mons={route.rockSmash} newSpecies={newSpecies} />}
+        {route.fishing?.oldRod && <EncounterTable title="&#x1F3A3; Old Rod" mons={route.fishing.oldRod} newSpecies={newSpecies} />}
+        {route.fishing?.goodRod && <EncounterTable title="&#x1F3A3; Good Rod" mons={route.fishing.goodRod} newSpecies={newSpecies} />}
+        {route.fishing?.superRod && <EncounterTable title="&#x1F3A3; Super Rod" mons={route.fishing.superRod} newSpecies={newSpecies} />}
       </div>
     </div>
   );
