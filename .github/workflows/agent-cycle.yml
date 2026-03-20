@@ -143,11 +143,14 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install Node dependencies
+      - name: Install root dependencies
         run: npm i
 
-      - name: Build docs data
-        run: npm run build:docs
+      - name: Install docs dependencies
+        run: cd docs && npm i
+
+      - name: Build docs site
+        run: cd docs && npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -155,7 +158,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: docs/out
 
       - name: Deploy to GitHub Pages
         id: deployment
