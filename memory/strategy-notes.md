@@ -86,6 +86,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 9 | New species (Gible, Riolu, etc.) | Not started |
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
+| 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
 
 ---
 

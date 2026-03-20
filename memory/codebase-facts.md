@@ -16,8 +16,22 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file trainer system**: Each trainer requires coordinated removal/addition across `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
 
-**Removed in Cycle 51**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854).
-**Removed in Cycle 52**: TRAINER_BRENDAN_PLACEHOLDER fully cleaned from all files.
+---
+
+## Trainer Party Struct Types (Cycle 55)
+
+Four party struct types in `include/data.h`, controlled by macros used in `trainers.h`:
+
+| Struct | Macro in trainers.h | Fields |
+|---|---|---|
+| `TrainerMonNoItemDefaultMoves` | `NO_ITEM_DEFAULT_MOVES(party)` | iv, lvl, species |
+| `TrainerMonNoItemCustomMoves` | `NO_ITEM_CUSTOM_MOVES(party)` | iv, lvl, species, moves[4] |
+| `TrainerMonItemDefaultMoves` | `ITEM_DEFAULT_MOVES(party)` | iv, lvl, species, heldItem |
+| `TrainerMonItemCustomMoves` | `ITEM_CUSTOM_MOVES(party)` | iv, lvl, species, heldItem, moves[4] |
+
+**CRITICAL**: When changing a trainer's party struct type (e.g. adding held items), you must ALSO update the macro in `trainers.h` to match. Mismatch = crash or wrong data.
+
+**Large files**: `trainers.h` is ~354KB (needs offset/limit reading). `trainer_parties.h` is ~116K tokens.
 
 ---
 
