@@ -1403,14 +1403,14 @@
                                 "species": "SPECIES_TAILLOW"
                             },
                             {
-                                "min_level": 7,
-                                "max_level": 7,
-                                "species": "SPECIES_POOCHYENA"
+                                "min_level": 8,
+                                "max_level": 10,
+                                "species": "SPECIES_RIOLU"
                             },
                             {
                                 "min_level": 8,
-                                "max_level": 8,
-                                "species": "SPECIES_POOCHYENA"
+                                "max_level": 10,
+                                "species": "SPECIES_RIOLU"
                             },
                             {
                                 "min_level": 7,

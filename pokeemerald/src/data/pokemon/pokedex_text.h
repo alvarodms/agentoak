@@ -2319,3 +2319,15 @@ const u8 gDeoxysPokedexText[] = _(
     "extraterrestrial virus exposed to a laser\n"
     "beam. Its body is configured for superior\n"
     "agility and speed.");
+
+const u8 gRioluPokedexText[] = _(
+    "It uses waves called aura to\n"
+    "communicate with others of its\n"
+    "kind. Its aura intensifies when\n"
+    "it senses danger nearby.");
+
+const u8 gLucarioPokedexText[] = _(
+    "It reads the aura of all things.\n"
+    "It can understand human speech.\n"
+    "A well-trained one can sense\n"
+    "foes over half a mile away.");

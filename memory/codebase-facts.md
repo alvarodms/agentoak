@@ -121,7 +121,7 @@ Moves use `.split = SPLIT_PHYSICAL` or `SPLIT_SPECIAL` in `battle_moves.h`. Batt
 **Full checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` (25 steps, ~27 source files + ~14 assets per 2-species family).
 
 **Key structural facts**:
-- `SPECIES_EGG` (412) must always be last species. `NUM_SPECIES = SPECIES_EGG`. Unown variants defined relative to NUM_SPECIES.
+- `SPECIES_EGG` (now 414, was 412) must always be last species. `NUM_SPECIES = SPECIES_EGG`. Unown variants defined relative to NUM_SPECIES.
 - `NATIONAL_DEX_COUNT` = `NATIONAL_DEX_DEOXYS` (line 426 of pokedex.h) — must update when adding species.
 - Hoenn dex has "excluded" section after `HOENN_DEX_DEOXYS` (line 633+) for non-Hoenn species. New migrants go here.
 - `src/pokemon.c` has 4 tables needing entries: `sSpeciesToHoennPokedexNum`, `sSpeciesToNationalPokedexNum`, `sHoennToNationalOrder`, `sMonFrontAnimIdsTable` (+ optional `sMonAnimationDelayTable`).
