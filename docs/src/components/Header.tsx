@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Link, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Research Logs' },
@@ -10,7 +9,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Header() {
-  const router = useRouter();
+  const location = useLocation();
 
   return (
     <header className="lab-header">
@@ -33,8 +32,8 @@ export default function Header() {
         {NAV_ITEMS.map(item => (
           <Link
             key={item.href}
-            href={item.href}
-            className={router.pathname === item.href ? 'active' : ''}
+            to={item.href}
+            className={location.pathname === item.href ? 'active' : ''}
           >
             {item.label}
           </Link>

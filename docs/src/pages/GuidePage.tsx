@@ -1,27 +1,9 @@
-import fs from 'fs';
-import path from 'path';
-import type { GetStaticProps } from 'next';
+import { useState, useEffect } from 'react';
 import PokemonSprite from '../components/PokemonSprite';
 import TrainerCard from '../components/TrainerCard';
 import RouteCard from '../components/RouteCard';
 import { TYPE_EMOJIS } from '../lib/type-utils';
 import type { GuideData } from '../lib/types';
-
-interface GuidePageProps {
-  data: GuideData | null;
-}
-
-export const getStaticProps: GetStaticProps<GuidePageProps> = async () => {
-  const filePath = path.join(process.cwd(), 'data', 'game-guide.json');
-  let data: GuideData | null = null;
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    data = JSON.parse(raw);
-  } catch {
-    // data file may not exist
-  }
-  return { props: { data } };
-};
 
 function sortRouteNames(names: string[]): string[] {
   return names.sort((a, b) => {
@@ -34,7 +16,16 @@ function sortRouteNames(names: string[]): string[] {
   });
 }
 
-export default function GuidePage({ data }: GuidePageProps) {
+export default function GuidePage() {
+  const [data, setData] = useState<GuideData | null>(null);
+
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'data/game-guide.json')
+      .then(r => r.json())
+      .then(setData)
+      .catch(() => {});
+  }, []);
+
   if (!data) {
     return (
       <section className="guide-view active">
