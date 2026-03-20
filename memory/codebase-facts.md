@@ -113,3 +113,19 @@ Expansion and vanilla are architecturally incompatible at struct level. **Decisi
 ## Physical/Special Split (Cycle 43-44)
 
 Moves use `.split = SPLIT_PHYSICAL` or `SPLIT_SPECIAL` in `battle_moves.h`. Battle calc in `battle_script_commands.c` checks split instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
+
+---
+
+## Species-Addition Pipeline (Cycle 59)
+
+**Full checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` (25 steps, ~27 source files + ~14 assets per 2-species family).
+
+**Key structural facts**:
+- `SPECIES_EGG` (412) must always be last species. `NUM_SPECIES = SPECIES_EGG`. Unown variants defined relative to NUM_SPECIES.
+- `NATIONAL_DEX_COUNT` = `NATIONAL_DEX_DEOXYS` (line 426 of pokedex.h) — must update when adding species.
+- Hoenn dex has "excluded" section after `HOENN_DEX_DEOXYS` (line 633+) for non-Hoenn species. New migrants go here.
+- `src/pokemon.c` has 4 tables needing entries: `sSpeciesToHoennPokedexNum`, `sSpeciesToNationalPokedexNum`, `sHoennToNationalOrder`, `sMonFrontAnimIdsTable` (+ optional `sMonAnimationDelayTable`).
+- Cry pipeline: `.wav` → `wav2agb` → `.bin` (build artifact) → `.incbin` in `sound/direct_sound_data.inc` → referenced by `sound/cry_tables.inc`. Source files are `.wav` in `sound/direct_sound_samples/cries/`.
+- Cry table (`cry_tables.inc`) is **position-indexed** by species ID - 1, NOT keyed. Must match species.h order.
+- Graphics: 7 asset files per species in `graphics/pokemon/<name>/`. Build auto-converts PNG→4bpp.lz via gbagfx.
+- Front pic anims: `SINGLE_ANIMATION(Name)` macro in `front_pic_anims.h` creates `sAnims_<Name>` from `sAnim_<Name>_1`.
