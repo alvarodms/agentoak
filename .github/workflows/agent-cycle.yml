@@ -150,7 +150,7 @@ jobs:
         run: cd docs && npm i
 
       - name: Build docs site
-        run: cd docs && npm run build
+        run: cd docs && NEXT_PUBLIC_BASE_PATH=/agentoak npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
