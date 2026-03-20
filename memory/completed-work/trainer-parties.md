@@ -37,3 +37,5 @@ Modified files related to trainer team compositions, held items, and level curve
 | `src/data/trainer_parties.h` | Late-game route trainer refresh (Routes 113-118, 121-123) | 57 | 83 base trainers redesigned across 9 routes: held items on all, custom movesets on 40+, migration species (Gligar, Larvitar, Houndour/Houndoom, Phanpy, Teddiursa/Ursaring, Sneasel, Murkrow, Misdreavus, Heracross, Stantler, Togetic, Ninetales, Mareep, Scyther, Snubbull); tier 5 rematches for Jessica/Cristin upgraded |
 | `src/data/trainers.h` | Late-game route trainer entries updated | 57 | Party types changed to ItemCustomMoves/ItemDefaultMoves matching trainer_parties.h |
 | `graphics/types/fairy.png` | Re-restored missing fairy type icon | 57 | Copied from normal.png (missing again) |
+| `src/data/trainer_parties.h` | Victory Road trainer refresh (16 trainers + Wally) | **58** | All 17 Victory Road trainers: 3-mon teams (4 for Dianne, 6 for Wally), held items, custom movesets, migration species, lv54-58 |
+| `src/data/trainers.h` | Victory Road trainer entries updated | **58** | All 17 changed to ITEM_CUSTOM_MOVES, 2x Full Restore (3x for Wally), competitive AI |
