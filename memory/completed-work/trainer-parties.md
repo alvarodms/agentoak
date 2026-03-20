@@ -31,3 +31,6 @@ Modified files related to trainer team compositions, held items, and level curve
 | `src/data/trainer_parties.h` | Mid-game route trainer refresh (Routes 110-112, 119-120) | 55 | 28 trainers redesigned: custom moves, held items, migration species (Electabuzz, Murkrow, Sneasel, Houndour, Magmar, Misdreavus, Politoed, Kingdra, Scyther); P/S split showcase |
 | `src/data/trainers.h` | Mid-game trainer entries updated | 55 | Party types changed to ItemCustomMoves/ItemDefaultMoves; route aces get SETUP_FIRST_TURN AI |
 | `graphics/types/fairy.png` | Re-restored missing fairy type icon | 55 | Copied from normal.png (was missing again) |
+| `src/data/trainer_parties.h` | Water route trainer refresh (Routes 105-109) | 56 | 35 base trainers + 24 rematches redesigned: ocean migration species (Corsola, Lanturn, Qwilfish, Mantine, Octillery, Lapras, Starmie, Relicanth, Seadra, Sharpedo); 4 route aces (Imani, Beth, Matthew, Cory) with smart AI |
+| `src/data/trainers.h` | Water route trainer entries updated | 56 | Party types changed to ItemCustomMoves/ItemDefaultMoves; route aces get CHECK_VIABILITY + TRY_TO_FAINT AI |
+| `graphics/types/fairy.png` | Re-restored missing fairy type icon | 56 | Copied from normal.png (missing again after build) |

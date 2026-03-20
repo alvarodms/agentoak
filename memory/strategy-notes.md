@@ -87,6 +87,10 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
+| 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |
+| 14 | Early-game route trainer refresh (102-104) | Needs verification — partially covered in Cycle 56 |
+| 15 | Late-game route trainer refresh (113-118, 121-134) | Not started |
+| 16 | Victory Road + dungeon trainer refresh | Not started |
 
 ---
 
