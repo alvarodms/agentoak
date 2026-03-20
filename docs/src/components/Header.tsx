@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { href: '/strategy', label: 'Strategy' },
   { href: '/roadmap', label: 'Roadmap' },
   { href: '/about', label: 'About' },
+  { href: '/downloads', label: 'Downloads' },
 ];
 
 export default function Header() {
