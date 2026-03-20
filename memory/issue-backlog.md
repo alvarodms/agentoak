@@ -2,4 +2,4 @@
 
 Deferred community issues for future consideration.
 
-*No deferred issues.*
+- #45: Add move category type icons (phy/spe) or some sort of indication

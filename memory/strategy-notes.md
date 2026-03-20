@@ -37,11 +37,9 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 - **Reusable TMs**: Deleted 2 lines in `src/party_menu.c`
 - **Auto-Run**: `(heldKeys & B_BUTTON)` removed; `FlagSet(FLAG_SYS_B_DASH)` in `new_game.c`
 
-### Trainer ID Constraints (Cycle 51)
-- **Current state**: 865 trainer IDs (0-864) but only 864 flag slots available
-- **Hard ceiling**: Trainer flags occupy 0x500-0x85F = exactly 864 slots
-- **Next step**: Remove 1 more trainer entry to enable future rematch content
-- **Removed so far**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854)
+### Trainer ID Constraints (Resolved Cycle 52)
+- **Current state**: 864 trainer IDs matching 864 flag slots (0x500-0x85F) — ceiling resolved
+- **Removed**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854), + 1 more in Cycle 52
 
 ---
 
@@ -84,10 +82,10 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 5 | Elite Four rematches tier 2 | **DONE** (Cycle 50) |
 | 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
 | 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
-| 8 | Trainer ID ceiling fix | **PARTIAL** (Cycle 51 — needs 1 more removal) |
+| 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
 | 9 | New species (Gible, Riolu, etc.) | Not started |
-| 10 | Elite Four rematches tiers 3-4 | Blocked by trainer ceiling |
-| 11 | Gym leader rematches | Blocked by trainer ceiling |
+| 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
+| 11 | Gym leader rematches | Not started (ceiling resolved) |
 
 ---
 
