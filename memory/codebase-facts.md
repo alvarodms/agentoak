@@ -29,10 +29,10 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Birch Opening Encounter (Cycle 52)
+## Opening Experience (Cycles 52-53)
 
-**Function**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` controls the opening Birch encounter.
-**Zigzagoon level**: Set to 5 (was 2) for better opening experience.
+**Birch rescue**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` — now Growlithe level 3 (was Mightyena, originally Zigzagoon).
+**Intro speech Pokemon**: `src/main_menu.c` line ~1377 — now SPECIES_BAGON (was SPECIES_LOTAD). Variable still named `tLotadSpriteId` internally.
 
 ---
 
