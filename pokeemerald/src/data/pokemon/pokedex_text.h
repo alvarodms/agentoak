@@ -2337,3 +2337,15 @@ const u8 gWeavilePokedexText[] = _(
     "hunts in groups of four or five.\n"
     "Their claws are devastatingly\n"
     "sharp and cold as solid ice.");
+
+const u8 gGiblePokedexText[] = _(
+    "It nests in small, horizontal\n"
+    "holes in cave walls warmed by\n"
+    "geothermal heat. It pounces on\n"
+    "prey that strays too close.");
+
+const u8 gGabitePokedexText[] = _(
+    "It loves sparkly things. It seeks\n"
+    "out gems in caves and hoards\n"
+    "them in its nest. A GABITE's\n"
+    "collection is its prized treasure.");

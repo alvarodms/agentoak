@@ -415,4 +415,6 @@ const u16 *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_RIOLU] = sRioluLevelUpLearnset,
     [SPECIES_LUCARIO] = sLucarioLevelUpLearnset,
     [SPECIES_WEAVILE] = sWeavileLevelUpLearnset,
+    [SPECIES_GIBLE] = sGibleLevelUpLearnset,
+    [SPECIES_GABITE] = sGabiteLevelUpLearnset,
 };

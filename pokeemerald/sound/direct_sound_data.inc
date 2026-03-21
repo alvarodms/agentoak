@@ -1951,6 +1951,14 @@ Cry_Weavile::
 	.incbin "sound/direct_sound_samples/cries/weavile.bin"
 
 	.align 2
+Cry_Gible::
+	.incbin "sound/direct_sound_samples/cries/gible.bin"
+
+	.align 2
+Cry_Gabite::
+	.incbin "sound/direct_sound_samples/cries/gabite.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 

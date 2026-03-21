@@ -27,17 +27,17 @@ Single species (Sneasel already in Gen 3). Same 28 source files + Sneasel evolut
 | Evolution | Sneasel → Weavile at lv40 |
 | Assets | Copied from sneasel (placeholder) |
 
-## Gible, Gabite & Garchomp (Cycle 67)
+## Gible & Gabite (Cycle 68) — BUILD CLEAN
 
-Three-stage Dragon/Ground line. Same ~29 source files. **BUILD NOT ATTEMPTED** — must build next cycle.
+Two-species scope (Garchomp deferred to Cycle 69). Cycle 67 attempted all 3 but was **REVERTED**.
 
 | Detail | Value |
 |--------|-------|
-| Species IDs | SPECIES_GIBLE (415), SPECIES_GABITE (416), SPECIES_GARCHOMP (417), EGG→418 |
-| Stats | Garchomp: 108/130/95/80/85/102 BST 600 |
-| Encounters | Meteor Falls B1F-1R: Gible lv25-30 (slots 10-11, 2%); Victory Road B2F: Garchomp lv42-44 (slots 10-11, 2%) |
-| Evolution | Gible→Gabite (lv24), Gabite→Garchomp (lv48) |
-| Assets | Sprites fetched via fetch_pokemon_sprites; cries copied from bagon/shelgon/salamence |
-| Egg moves | Outrage, Iron Head, Dragon Breath, Sand Tomb, Scary Face |
+| Species IDs | SPECIES_GIBLE (415), SPECIES_GABITE (416), EGG→417 |
+| Stats | Gible: 58/70/45/40/45/42 BST 300; Gabite: 68/90/65/50/55/82 BST 410 |
+| Encounters | Meteor Falls B1F_1R: Gible lv25-30 (slots 10-11, 2% total) |
+| Evolution | Gible→Gabite (lv24). Gabite→Garchomp deferred to Cycle 69. |
+| Assets | Sprites fetched via fetch_pokemon_sprites; cries copied from bagon/shelgon |
+| Egg moves | Outrage, Body Slam, Scary Face, Twister, Double-Edge |
 
-**CRITICAL**: Expansion repo sprites may have >16 colors. Build may fail with palette errors. Must verify in Cycle 68.
+**Note**: Also re-fetched sprites for Riolu/Lucario/Weavile and fairy.png (missing from git).

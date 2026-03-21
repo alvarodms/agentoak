@@ -8363,14 +8363,14 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 38,
-                                "max_level": 38,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 25,
+                                "max_level": 30,
+                                "species": "SPECIES_GIBLE"
                             },
                             {
-                                "min_level": 40,
-                                "max_level": 40,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 25,
+                                "max_level": 30,
+                                "species": "SPECIES_GIBLE"
                             }
                         ]
                     },
