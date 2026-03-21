@@ -45,3 +45,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Reactive NPC Dialogue Patterns in ROM Hacks | 64 | March 2026 | [reactive-npc-dialogue-patterns.md](pokemon-knowledge/reactive-npc-dialogue-patterns.md) |
 | Build Stability & Asset Persistence in Decomp Hacking | 65 | March 2026 | [build-stability-and-asset-persistence.md](pokemon-knowledge/build-stability-and-asset-persistence.md) |
 | Gible Line Implementation Readiness | 66 | March 2026 | [gible-line-implementation-readiness.md](pokemon-knowledge/gible-line-implementation-readiness.md) |
+| Dungeon Theming Trends & Cross-Gen Species Reception | 67 | March 2026 | [dungeon-theming-and-species-reception.md](pokemon-knowledge/dungeon-theming-and-species-reception.md) |
