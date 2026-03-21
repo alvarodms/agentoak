@@ -521,6 +521,8 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(RIOLU),
     SPECIES_TO_HOENN(LUCARIO),
     SPECIES_TO_HOENN(WEAVILE),
+    SPECIES_TO_HOENN(GIBLE),
+    SPECIES_TO_HOENN(GABITE),
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -940,6 +942,8 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(RIOLU),
     SPECIES_TO_NATIONAL(LUCARIO),
     SPECIES_TO_NATIONAL(WEAVILE),
+    SPECIES_TO_NATIONAL(GIBLE),
+    SPECIES_TO_NATIONAL(GABITE),
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index
@@ -1334,6 +1338,8 @@ static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(RIOLU),
     HOENN_TO_NATIONAL(LUCARIO),
     HOENN_TO_NATIONAL(WEAVILE),
+    HOENN_TO_NATIONAL(GIBLE),
+    HOENN_TO_NATIONAL(GABITE),
     HOENN_TO_NATIONAL(OLD_UNOWN_B),
     HOENN_TO_NATIONAL(OLD_UNOWN_C),
     HOENN_TO_NATIONAL(OLD_UNOWN_D),
@@ -1802,6 +1808,8 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_RIOLU - 1]       = ANIM_V_SQUISH_AND_BOUNCE,
     [SPECIES_LUCARIO - 1]     = ANIM_V_SHAKE,
     [SPECIES_WEAVILE - 1]     = ANIM_V_SQUISH_AND_BOUNCE,
+    [SPECIES_GIBLE - 1]       = ANIM_V_SQUISH_AND_BOUNCE,
+    [SPECIES_GABITE - 1]      = ANIM_V_SQUISH_AND_BOUNCE,
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =

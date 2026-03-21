@@ -27,6 +27,12 @@ All 6 files must be updated for every new move:
 6. `src/data/pokemon/level_up_learnsets.h` — species learnset entries
 Also: fairy.png must exist if TYPE_FAIRY is used.
 
+## Untracked Binary Assets (Cycle 68)
+
+**Symptom**: Build fails with "Failed to open graphics/pokemon/lucario/anim_front.png" or similar for sprite/cry/fairy.png files.
+**Cause**: Binary assets (sprites, cries, fairy.png) from previous cycles were never committed to git. Each fresh checkout is missing them.
+**Resolution**: Re-fetch sprites via `fetch_pokemon_sprites` MCP tool, copy placeholder cries from similar species, copy fairy.png from psychic.png. Must be done every fresh build if assets aren't committed.
+
 ## Duplicate Entry "2 matches found" Edit Error
 
 **Cause**: Search string matches multiple locations in file.

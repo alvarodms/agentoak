@@ -1316,5 +1316,12 @@ const u16 gEggMoves[] = {
               MOVE_SKY_UPPERCUT,
               MOVE_MIND_READER),
 
+    egg_moves(GIBLE,
+              MOVE_OUTRAGE,
+              MOVE_BODY_SLAM,
+              MOVE_SCARY_FACE,
+              MOVE_TWISTER,
+              MOVE_DOUBLE_EDGE),
+
     EGG_MOVES_TERMINATOR
 };

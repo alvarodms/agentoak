@@ -414,4 +414,6 @@ const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1] = {
     [SPECIES_RIOLU] = _("RIOLU"),
     [SPECIES_LUCARIO] = _("LUCARIO"),
     [SPECIES_WEAVILE] = _("WEAVILE"),
+    [SPECIES_GIBLE] = _("GIBLE"),
+    [SPECIES_GABITE] = _("GABITE"),
 };
