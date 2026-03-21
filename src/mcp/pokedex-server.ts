@@ -20,11 +20,14 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { Dex } from "@pkmn/dex";
 import { z } from "zod";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   getSmogonSets,
   listFormatPokemon,
   listAvailableFormats,
 } from "./smogon-cache.js";
+import { fetchPokemonSprites, formatSpriteResult } from "./sprite-fetcher.js";
 
 const DEFAULT_GEN = 3;
 
@@ -746,6 +749,47 @@ server.registerTool(
 
     return {
       content: [{ type: "text", text: lines.join("\n") }],
+    };
+  },
+);
+
+// ─── Tool: fetch_pokemon_sprites ─────────────────────────────────────────────
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const POKEEMERALD_ROOT = path.resolve(__dirname, "../../pokeemerald");
+
+server.registerTool(
+  "fetch_pokemon_sprites",
+  {
+    title: "Fetch Pokémon Sprites from Expansion",
+    description:
+      "Download sprite files (front, back, icon, footprint, palettes) for a Pokémon from the " +
+      "pokeemerald-expansion GitHub repository and save them to pokeemerald/graphics/pokemon/<name>/. " +
+      "Also generates front.png by cropping the top half of anim_front.png. " +
+      "Use this when adding a new Pokémon species to get real sprites instead of placeholders.",
+    inputSchema: z.object({
+      name: z
+        .string()
+        .describe(
+          "Pokémon name matching the expansion repo directory name, e.g. 'lucario', 'mr_mime', 'nidoran_f'. " +
+            "Use lowercase with underscores.",
+        ),
+      overwrite: z
+        .boolean()
+        .optional()
+        .describe(
+          "If true, overwrite existing sprite files. If false (default), skip files that already exist.",
+        ),
+    }),
+  },
+  async ({ name, overwrite }) => {
+    const result = await fetchPokemonSprites(
+      name,
+      POKEEMERALD_ROOT,
+      overwrite ?? false,
+    );
+    return {
+      content: [{ type: "text", text: formatSpriteResult(result) }],
     };
   },
 );
