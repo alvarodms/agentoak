@@ -118,7 +118,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | Cycle | Scope | Status |
 |-------|-------|--------|
 | 63 | Trigger + C code + Route 118 dialogue + ALL 6 encounter tables | **DONE** — flags.h, wild_encounter.c, Route118/scripts.inc, wild_encounters.json |
-| 64 | NPC dialogue (Routes 119-121, Fortree, Mauville) — 5 scripts.inc + 2 map.json | Pending |
+| 64 | NPC dialogue (Routes 119-121, Fortree, Mauville) — 5 scripts.inc + 2 map.json | **DONE** |
 
 ### Future Narrative
 - Postgame research quest for Birch

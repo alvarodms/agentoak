@@ -100,5 +100,11 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------------|-------|-------|
 | `data/maps/Route118/scripts.inc` | Fisherman NPC — second wave fishing observations | 42, **63** | Cycle 63: converted to before/after FLAG_SECOND_WAVE, added pre-wave text, Birch PokeNav call, Girl before/after, Steven setflag |
 | `data/maps/Route118/map.json` | Added fisherman object event at (30,10) | 42 | |
-| `data/maps/MauvilleCity/scripts.inc` | Scientist NPC — migration sensor readings | 42 | New NPC added after existing Cycle 29 NPCs |
+| `data/maps/Route119/scripts.inc` | Boy NPC — before/after FLAG_SECOND_WAVE dialogue | 29, **64** | Cycle 64: converted to lock/faceplayer/goto_if_set pattern, added post-wave Heracross vs Scyther text |
+| `data/maps/Route120/scripts.inc` | Ranger NPC — before/after FLAG_SECOND_WAVE dialogue | **64** | New NPC: pre-wave peaceful forest, post-wave Murkrow/Misdreavus/Absol sightings |
+| `data/maps/Route120/map.json` | Added ranger object event at (18,24) | **64** | Near Scorched Slab area |
+| `data/maps/Route121/scripts.inc` | Pokefan NPC — before/after FLAG_SECOND_WAVE dialogue | **64** | New NPC: pre-wave Safari Zone tip, post-wave Tauros/Miltank herds |
+| `data/maps/Route121/map.json` | Added pokefan object event at (45,8) | **64** | Near Safari Zone entrance |
+| `data/maps/FortreeCity/scripts.inc` | OldMan NPC — before/after FLAG_SECOND_WAVE dialogue | 29, **64** | Cycle 64: converted to lock/faceplayer/goto_if_set, added post-wave Skarmory territory conflict text |
+| `data/maps/MauvilleCity/scripts.inc` | Scientist NPC — before/after FLAG_SECOND_WAVE dialogue | 42, **64** | Cycle 64: converted to lock/faceplayer/goto_if_set, Cycle 42 text becomes pre-wave, added post-wave "readings off the scale" text |
 | `data/maps/MauvilleCity/map.json` | Added scientist object event at (24,7) | 42 | Near Pokemon Center |
