@@ -9196,14 +9196,14 @@
                                 "species": "SPECIES_SPHEAL"
                             },
                             {
-                                "min_level": 30,
-                                "max_level": 30,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 32,
+                                "max_level": 34,
+                                "species": "SPECIES_WEAVILE"
                             },
                             {
-                                "min_level": 28,
-                                "max_level": 28,
-                                "species": "SPECIES_SNORUNT"
+                                "min_level": 34,
+                                "max_level": 36,
+                                "species": "SPECIES_WEAVILE"
                             },
                             {
                                 "min_level": 32,

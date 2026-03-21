@@ -390,6 +390,7 @@ gCryTable::
 	cry Cry_Chimecho
 	cry Cry_Riolu
 	cry Cry_Lucario
+	cry Cry_Weavile
 
 	.align 2
 gCryTable_Reverse::
@@ -783,3 +784,4 @@ gCryTable_Reverse::
 	cry_reverse Cry_Chimecho
 	cry_reverse Cry_Riolu
 	cry_reverse Cry_Lucario
+	cry_reverse Cry_Weavile

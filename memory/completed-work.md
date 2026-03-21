@@ -32,7 +32,7 @@ Before modifying ANY pokeemerald file:
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50 | ~40 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38 | 5 | [qol-and-release.md](completed-work/qol-and-release.md) |
-| New Species | **60** | 29 source + 15 assets | [new-species.md](completed-work/new-species.md) |
+| New Species | **60**, **61** | 29 source + 23 assets | [new-species.md](completed-work/new-species.md) |
 
 ---
 

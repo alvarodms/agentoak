@@ -2331,3 +2331,9 @@ const u8 gLucarioPokedexText[] = _(
     "It can understand human speech.\n"
     "A well-trained one can sense\n"
     "foes over half a mile away.");
+
+const u8 gWeavilePokedexText[] = _(
+    "It lives in snowy mountains and\n"
+    "hunts in groups of four or five.\n"
+    "Their claws are devastatingly\n"
+    "sharp and cold as solid ice.");

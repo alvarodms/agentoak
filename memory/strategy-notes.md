@@ -83,7 +83,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
 | 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
 | 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
-| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). Gible/Weavile pending. |
+| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). **Weavile DONE** (Cycle 61). Gible line pending. |
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
@@ -107,7 +107,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | ~~Lucario~~ | (evolves via friendship) | — | **DONE** (Cycle 60) |
 | Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard (future) |
 | Garchomp | Victory Road B2F | 5% | Dragon apex predator (future) |
-| Weavile | Shoal Cave | 8% | Cold-zone apex hunter (future) |
+| ~~Weavile~~ | Shoal Cave Ice Room | 8% | **DONE** (Cycle 61) — Sneasel→Weavile evo at lv40 |
 
 ### Narrative Enhancements
 - The Second Wave mid-game intensification event (Route 118 trigger)
