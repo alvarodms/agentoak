@@ -455,7 +455,16 @@ Route119_EventScript_BridgeAquaGrunt2::
 	end
 
 Route119_EventScript_Boy1::
-	msgbox Route119_Text_ThoughtFlyByCatchingBirdMons, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SECOND_WAVE, Route119_EventScript_Boy1_Post
+	msgbox Route119_Text_ThoughtFlyByCatchingBirdMons, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_EventScript_Boy1_Post::
+	msgbox Route119_Text_Boy_PostWave, MSGBOX_DEFAULT
+	release
 	end
 
 Route119_EventScript_Boy2::
@@ -607,3 +616,16 @@ Route119_Text_TrainerTipsDecoration:
 	.string "Pick your favorite items and create\n"
 	.string "your very own SECRET BASE exactly the\l"
 	.string "way you want.$"
+
+Route119_Text_Boy_PostWave:
+	.string "The jungle is ALIVE now.\n"
+	.string "Buzzing. Clicking. Roaring.\p"
+	.string "I saw an enormous beetle\n"
+	.string "the size of my arm fighting\l"
+	.string "something with scythes for\l"
+	.string "hands.\p"
+	.string "HERACROSS versus SCYTHER.\n"
+	.string "Right here. In HOENN.\p"
+	.string "The rain does not stop them.\n"
+	.string "If anything it makes them\l"
+	.string "more aggressive.$"

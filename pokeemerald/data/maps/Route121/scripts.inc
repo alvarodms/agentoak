@@ -182,7 +182,25 @@ Route121_Text_MtPyrePierSign:
 	.string "…The sign is old and worn out.\n"
 	.string "The words are barely legible…$"
 
+
 Route121_Text_SafariZoneSign:
 	.string "“Filled with rare POKéMON!”\n"
 	.string "SAFARI ZONE$"
 
+
+Route121_EventScript_SecondWavePokefan::
+	msgbox Route121_Text_SecondWavePokefan, MSGBOX_NPC
+	end
+
+Route121_Text_SecondWavePokefan:
+	.string "Oh my! Have you seen the\n"
+	.string "TAUROS herds on this route?\p"
+	.string "They just appeared three\n"
+	.string "days ago. A dozen of them\l"
+	.string "charging through the grass.\p"
+	.string "And MILTANK too! One nearly\n"
+	.string "knocked me over!\p"
+	.string "The SAFARI ZONE warden says\n"
+	.string "they are migrants. He has\l"
+	.string "never seen this many new\l"
+	.string "species arrive so fast.$"

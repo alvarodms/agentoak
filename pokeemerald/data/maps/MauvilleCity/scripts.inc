@@ -672,7 +672,16 @@ MauvilleCity_Text_BeenCheckingOutTV:
 	.string "Hi, have you been checking out TVs?$"
 
 MauvilleCity_EventScript_SecondWaveScientist::
-	msgbox MauvilleCity_Text_SecondWaveScientist, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SECOND_WAVE, MauvilleCity_EventScript_SecondWaveScientist_Post
+	msgbox MauvilleCity_Text_SecondWaveScientist, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_EventScript_SecondWaveScientist_Post::
+	msgbox MauvilleCity_Text_SecondWaveScientist_PostWave, MSGBOX_DEFAULT
+	release
 	end
 
 MauvilleCity_Text_SecondWaveScientist:
@@ -688,3 +697,20 @@ MauvilleCity_Text_SecondWaveScientist:
 	.string "If this keeps up, Hoenn will\n"
 	.string "have more non-native species\l"
 	.string "than native ones.$"
+
+MauvilleCity_Text_SecondWaveScientist_PostWave:
+	.string "The readings have gone\n"
+	.string "off the scale.\p"
+	.string "Our migration sensors on the\n"
+	.string "eastern routes are detecting\l"
+	.string "five times the biodiversity\l"
+	.string "of last month.\p"
+	.string "Evolved forms in the wild.\n"
+	.string "Species we have only seen in\l"
+	.string "foreign research papers.\p"
+	.string "PROF. BIRCH calls it a\n"
+	.string "Second Wave. I call it\l"
+	.string "unprecedented.\p"
+	.string "Whatever drove these POKeMON\n"
+	.string "from their homelands is\l"
+	.string "getting worse.$"
