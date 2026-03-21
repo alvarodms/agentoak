@@ -40,3 +40,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Post-Trainer Pass Priorities | 59 | March 2026 | [post-trainer-pass-priorities.md](pokemon-knowledge/post-trainer-pass-priorities.md) |
 | Species-Addition Pipeline (Complete Checklist) | 59 | March 2026 | [species-addition-pipeline.md](pokemon-knowledge/species-addition-pipeline.md) |
 | New Species Implementation: Riolu/Lucario Practical Advice | 60 | March 2026 | [new-species-implementation-advice.md](pokemon-knowledge/new-species-implementation-advice.md) |
+| Next Species Balance Analysis: Gible Line vs Weavile | 61 | March 2026 | [next-species-balance-analysis.md](pokemon-knowledge/next-species-balance-analysis.md) |

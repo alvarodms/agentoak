@@ -1947,6 +1947,10 @@ Cry_Lucario::
 	.incbin "sound/direct_sound_samples/cries/lucario.bin"
 
 	.align 2
+Cry_Weavile::
+	.incbin "sound/direct_sound_samples/cries/weavile.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 

@@ -47,3 +47,28 @@ First-ever new species addition to the ROM hack. Complete pipeline: constants, s
 | `sound/direct_sound_samples/cries/riolu.wav` | Copied from makuhita |
 | `sound/direct_sound_samples/cries/lucario.wav` | Copied from medicham |
 | `graphics/types/fairy.png` | Copied from psychic (pre-existing missing asset) |
+
+## Weavile (Cycle 61)
+
+Second new species. Single species addition (Sneasel already exists in Gen 3). Sneasel→Weavile evolution at level 40.
+
+### Files Modified
+
+Same 28 source files as Riolu/Lucario above, plus Sneasel's evolution entry. Key details:
+
+| File | What Changed |
+|------|-------------|
+| `include/constants/species.h` | SPECIES_WEAVILE (414), SPECIES_EGG shifted to 415 |
+| `include/constants/pokedex.h` | NATIONAL_DEX_WEAVILE, HOENN_DEX_WEAVILE, NATIONAL_DEX_COUNT updated |
+| `src/data/pokemon/species_info.h` | 70/120/65/45/85/125 BST 510, Dark/Ice, Pressure/Inner Focus |
+| `src/data/pokemon/level_up_learnsets.h` | 12 moves: Scratch→Swords Dance (48), key: Ice Punch (36), Crunch (42) |
+| `src/data/pokemon/tmhm_learnsets.h` | 30 TMs/HMs including Brick Break, Aerial Ace, Swords Dance |
+| `src/data/pokemon/evolution.h` | Added SPECIES_SNEASEL → EVO_LEVEL 40 → SPECIES_WEAVILE |
+| `src/data/wild_encounters.json` | Shoal Cave Ice Room slots 8-9: Weavile 32-36, 8% total |
+
+### Assets Created
+
+| Asset | Source (placeholder) |
+|-------|---------------------|
+| `graphics/pokemon/weavile/*` (7 files) | Copied from sneasel |
+| `sound/direct_sound_samples/cries/weavile.wav` | Copied from sneasel |
