@@ -56,6 +56,7 @@ export async function commitCycle(
     await git.add("journal/*");
     await git.add("artifacts/build-logs/*");
     await git.add("artifacts/cycle.json");
+    await git.add("artifacts/version.json");
 
     // Stage modified pokeemerald files
     for (const rawPath of filesModified) {
@@ -122,6 +123,7 @@ export async function commitJournalOnly(
   try {
     await git.add("journal/*");
     await git.add("memory/*");
+    await git.add("artifacts/version.json");
 
     const status = await git.status();
     if (status.staged.length === 0) {
