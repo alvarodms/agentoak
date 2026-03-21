@@ -98,7 +98,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/Route118/scripts.inc` | Fisherman NPC — second wave fishing observations | 42 | New NPC + map.json entry |
+| `data/maps/Route118/scripts.inc` | Fisherman NPC — second wave fishing observations | 42, **63** | Cycle 63: converted to before/after FLAG_SECOND_WAVE, added pre-wave text, Birch PokeNav call, Girl before/after, Steven setflag |
 | `data/maps/Route118/map.json` | Added fisherman object event at (30,10) | 42 | |
 | `data/maps/MauvilleCity/scripts.inc` | Scientist NPC — migration sensor readings | 42 | New NPC added after existing Cycle 29 NPCs |
 | `data/maps/MauvilleCity/map.json` | Added scientist object event at (24,7) | 42 | Near Pokemon Center |

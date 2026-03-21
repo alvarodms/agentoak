@@ -67,6 +67,21 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Cause**: The fairy type graphic file was never committed despite Fairy type being added in Cycle 44. It gets regenerated from a placeholder on clean builds but isn't in the working tree.
 **Resolution**: `cp graphics/types/psychic.png graphics/types/fairy.png` — create placeholder from another type graphic.
 
+## Missing New Species Graphics/Cries (Cycles 60-61+)
+
+**Symptom**: `Failed to open "graphics/pokemon/lucario/anim_front.png"` (or riolu, weavile, fairy.png)
+**Cause**: Placeholder graphics and cry files for new species (Riolu, Lucario, Weavile) are created during implementation cycles but lost on runner reverts or fresh checkouts. They are not committed to the repo.
+**Resolution**: Recreate placeholders before building:
+```
+cp graphics/pokemon/makuhita/* graphics/pokemon/riolu/
+cp graphics/pokemon/medicham/* graphics/pokemon/lucario/
+cp graphics/pokemon/sneasel/* graphics/pokemon/weavile/
+cp sound/direct_sound_samples/cries/makuhita.wav sound/direct_sound_samples/cries/riolu.wav
+cp sound/direct_sound_samples/cries/medicham.wav sound/direct_sound_samples/cries/lucario.wav
+cp sound/direct_sound_samples/cries/sneasel.wav sound/direct_sound_samples/cries/weavile.wav
+cp graphics/types/psychic.png graphics/types/fairy.png
+```
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`. Invalid → crash.
