@@ -44,3 +44,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Second Wave Implementation: Lessons from ROM Hack Narrative Events | 63 | March 2026 | [second-wave-implementation-lessons.md](pokemon-knowledge/second-wave-implementation-lessons.md) |
 | Reactive NPC Dialogue Patterns in ROM Hacks | 64 | March 2026 | [reactive-npc-dialogue-patterns.md](pokemon-knowledge/reactive-npc-dialogue-patterns.md) |
 | Build Stability & Asset Persistence in Decomp Hacking | 65 | March 2026 | [build-stability-and-asset-persistence.md](pokemon-knowledge/build-stability-and-asset-persistence.md) |
+| Gible Line Implementation Readiness | 66 | March 2026 | [gible-line-implementation-readiness.md](pokemon-knowledge/gible-line-implementation-readiness.md) |
