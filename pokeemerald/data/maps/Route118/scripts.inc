@@ -18,7 +18,19 @@ Route118_OnLoad:
 
 Route118_OnFrame:
 	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+	map_script_2 VAR_ROUTE118_STATE, 1, Route118_EventScript_BirchSecondWaveCall
 	.2byte 0
+
+Route118_EventScript_BirchSecondWaveCall::
+	goto_if_set FLAG_SECOND_WAVE_BIRCH_CALL, Route118_EventScript_BirchCallEnd
+	lockall
+	playse SE_POKENAV_ON
+	delay 20
+	msgbox Route118_Text_BirchSecondWaveCall, MSGBOX_DEFAULT
+	setflag FLAG_SECOND_WAVE_BIRCH_CALL
+	releaseall
+Route118_EventScript_BirchCallEnd::
+	end
 
 Route118_EventScript_GoodRodFisherman::
 	lock
@@ -48,7 +60,16 @@ Route118_EventScript_ReceivedGoodRod::
 	end
 
 Route118_EventScript_Girl::
-	msgbox Route118_Text_CanCrossRiversWithSurf, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SECOND_WAVE, Route118_EventScript_Girl_Post
+	msgbox Route118_Text_CanCrossRiversWithSurf, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_EventScript_Girl_Post::
+	msgbox Route118_Text_Girl_PostWave, MSGBOX_DEFAULT
+	release
 	end
 
 Route118_EventScript_RouteSignMauville::
@@ -98,6 +119,7 @@ Route118_EventScript_StevenTrigger::
 	call_if_eq VAR_0x8008, 1, Route118_EventScript_StevenExit1
 	call_if_eq VAR_0x8008, 2, Route118_EventScript_StevenExit2
 	setvar VAR_ROUTE118_STATE, 1
+	setflag FLAG_SECOND_WAVE
 	removeobject LOCALID_ROUTE118_STEVEN
 	releaseall
 	end
@@ -298,10 +320,29 @@ Route118_Text_RouteSign119:
 	.string "{UP_ARROW} ROUTE 119$"
 
 Route118_EventScript_SecondWaveNPC::
-	msgbox Route118_Text_SecondWaveNPC, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SECOND_WAVE, Route118_EventScript_SecondWaveNPC_Post
+	msgbox Route118_Text_SecondWaveNPC_PreWave, MSGBOX_DEFAULT
+	release
 	end
 
-Route118_Text_SecondWaveNPC:
+Route118_EventScript_SecondWaveNPC_Post::
+	msgbox Route118_Text_SecondWaveNPC_PostWave, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_Text_SecondWaveNPC_PreWave:
+	.string "I fish here every morning.\n"
+	.string "Lately the catches have been\l"
+	.string "different. Species I have never\l"
+	.string "hooked before.\p"
+	.string "PROF. BIRCH says it is part\n"
+	.string "of some big migration event.\p"
+	.string "I just hope the fishing\n"
+	.string "stays good.$"
+
+Route118_Text_SecondWaveNPC_PostWave:
 	.string "I was fishing here last week and\n"
 	.string "the water was calm. Normal.\p"
 	.string "Then yesterday - schools of\n"
@@ -312,4 +353,34 @@ Route118_Text_SecondWaveNPC:
 	.string "feels different. More urgent.\p"
 	.string "Whatever is happening out there,\n"
 	.string "it is sending everything our way.$"
+
+Route118_Text_BirchSecondWaveCall:
+	.string "... ... ... ... ... ...\p"
+	.string "PROF. BIRCH: {PLAYER}!\n"
+	.string "You are on ROUTE 118?\p"
+	.string "Listen, my sensors are going\n"
+	.string "haywire. The data from the\l"
+	.string "eastern routes is unlike\l"
+	.string "anything we have recorded.\p"
+	.string "The migration has not slowed.\n"
+	.string "It is ACCELERATING.\p"
+	.string "Evolved forms are appearing\n"
+	.string "where we only saw juveniles\l"
+	.string "before. New species entirely.\p"
+	.string "I need you to keep your eyes\n"
+	.string "open out there. Document\l"
+	.string "everything you encounter.\p"
+	.string "This is no longer just an\n"
+	.string "interesting phenomenon.\l"
+	.string "This is a Second Wave.$"
+
+Route118_Text_Girl_PostWave:
+	.string "I used to see ELECTRIKE and\n"
+	.string "not much else on this route.\p"
+	.string "Now there are POKeMON I have\n"
+	.string "never seen in any book.\l"
+	.string "Some are enormous.\p"
+	.string "My little brother wants to\n"
+	.string "catch one. I told him to wait\l"
+	.string "until he is stronger.$"
 

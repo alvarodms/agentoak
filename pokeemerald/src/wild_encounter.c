@@ -17,6 +17,7 @@
 #include "tv.h"
 #include "wild_encounter.h"
 #include "constants/abilities.h"
+#include "constants/flags.h"
 #include "constants/game_stat.h"
 #include "constants/items.h"
 #include "constants/layouts.h"
@@ -323,6 +324,21 @@ static u16 GetCurrentMapWildMonHeaderId(void)
                     alteringCaveId = 0;
 
                 i += alteringCaveId;
+            }
+
+            /* Second Wave: use alternate encounter table for eastern routes */
+            if (FlagGet(FLAG_SECOND_WAVE))
+            {
+                u16 mapKey = (gSaveBlock1Ptr->location.mapGroup << 8) | gSaveBlock1Ptr->location.mapNum;
+                if (mapKey == MAP_ROUTE118
+                 || mapKey == MAP_ROUTE119
+                 || mapKey == MAP_ROUTE120
+                 || mapKey == MAP_ROUTE121
+                 || mapKey == MAP_ROUTE123
+                 || mapKey == MAP_MT_PYRE_1F)
+                {
+                    i++;
+                }
             }
 
             return i;

@@ -100,6 +100,8 @@ Expansion and vanilla are architecturally incompatible at struct level. **Decisi
 
 **File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5 slots. Fishing: 10 slots.
 
+**Conditional encounter tables (Cycle 63)**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Altering Cave pattern: if a flag is set and map matches, `i++` to select the next JSON entry for that map. Second Wave uses same pattern for 6 routes. **Ordering in JSON is critical** — the alternate entry MUST be immediately after the base entry for that map. Map constants: `MAP_ROUTE118` etc. from auto-generated `include/constants/map_groups.h`. `constants/flags.h` must be explicitly included (not transitively available).
+
 ---
 
 ## Trainer Battle System

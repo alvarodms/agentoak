@@ -41,3 +41,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Species-Addition Pipeline (Complete Checklist) | 59 | March 2026 | [species-addition-pipeline.md](pokemon-knowledge/species-addition-pipeline.md) |
 | New Species Implementation: Riolu/Lucario Practical Advice | 60 | March 2026 | [new-species-implementation-advice.md](pokemon-knowledge/new-species-implementation-advice.md) |
 | Next Species Balance Analysis: Gible Line vs Weavile | 61 | March 2026 | [next-species-balance-analysis.md](pokemon-knowledge/next-species-balance-analysis.md) |
+| Second Wave Implementation: Lessons from ROM Hack Narrative Events | 63 | March 2026 | [second-wave-implementation-lessons.md](pokemon-knowledge/second-wave-implementation-lessons.md) |

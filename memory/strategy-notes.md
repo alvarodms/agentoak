@@ -115,11 +115,10 @@ The physical/special split changes how every battle feels. Fairy type introduces
 **Summary:** Mid-game migration intensification triggered by Route 118 Steven encounter (post-Norman). FLAG_SECOND_WAVE swaps encounter tables on 6 eastern routes, adds 14 new species to wild encounters (Gligar, Kangaskhan, Heracross, Scyther, Murkrow, Misdreavus, Tauros, Miltank, Ursaring, Donphan, Pinsir, Stantler, Nidoking, Nidoqueen), plus evolved first-wave species (Houndoom, Arcanine, Dragonair, Pupitar, Shelgon, Clefable). 8 NPCs with before/after dialogue.
 
 **Implementation roadmap:**
-| Cycle | Scope | Files |
-|-------|-------|-------|
-| 63 | Trigger mechanism + C code + Route 118 dialogue | flags.h, wild_encounter.c, Route118/scripts.inc |
-| 64 | Encounter tables (6 routes) | wild_encounters.json |
-| 65 | NPC dialogue (Routes 119-121, Fortree, Mauville) | 5 scripts.inc + 2 map.json |
+| Cycle | Scope | Status |
+|-------|-------|--------|
+| 63 | Trigger + C code + Route 118 dialogue + ALL 6 encounter tables | **DONE** — flags.h, wild_encounter.c, Route118/scripts.inc, wild_encounters.json |
+| 64 | NPC dialogue (Routes 119-121, Fortree, Mauville) — 5 scripts.inc + 2 map.json | Pending |
 
 ### Future Narrative
 - Postgame research quest for Birch
