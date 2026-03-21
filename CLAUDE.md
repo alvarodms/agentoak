@@ -40,6 +40,49 @@ The ROM is built with GNU Make using an ARM cross-compiler toolchain (agbcc).
 - The codebase is a C decompilation of Pokémon Emerald for the GBA (32-bit ARM, limited memory, tile-based graphics)
 - Files are organized by system: `src/` for C code, `include/` for headers, `data/` for scripts and game data, `graphics/` for sprites and tilesets
 
+## Pokémon Specialist Tools
+
+You have access to MCP tools that provide Pokémon data and assets. Use these during research and implementation:
+
+### Sprite Fetching — `fetch_pokemon_sprites`
+
+**When adding a new Pokémon species**, use the `fetch_pokemon_sprites` tool to download real sprite assets instead of copying placeholders from other species. This tool fetches sprites from the pokeemerald-expansion repository and saves them directly to `pokeemerald/graphics/pokemon/<name>/`.
+
+**When to use:**
+- During **Phase 6 (Graphics)** of the species addition pipeline, BEFORE creating graphics declarations
+- Call it as the **first step** of sprite work — it replaces the manual "copy from similar species" placeholder approach
+- Use it for any new species being added (e.g., Riolu, Lucario, Gible, Garchomp)
+
+**How to use:**
+```
+fetch_pokemon_sprites(name: "lucario")        # Downloads all sprite files
+fetch_pokemon_sprites(name: "lucario", overwrite: true)  # Re-downloads, replacing existing files
+```
+
+**What it provides:** `anim_front.png`, `front.png` (auto-cropped), `back.png`, `icon.png`, `normal.pal`, `shiny.pal`, `footprint.png` — all saved to `pokeemerald/graphics/pokemon/<name>/`.
+
+**The `name` parameter** uses lowercase with underscores matching the expansion repo directory names (e.g., `lucario`, `mr_mime`, `nidoran_f`).
+
+**Important notes:**
+- The downloaded sprites come from the expansion repo and may use more than 16 colors. If the build fails with palette errors, you may need to reduce the palette to 16 colors (14 colors + transparency + black).
+- Always verify sprites compile correctly by running `make` after downloading.
+- If a download fails (network issues), retry once. If it still fails, fall back to the placeholder copy approach.
+
+### Other Pokémon Data Tools
+
+You also have access to these research tools — use them when designing movesets, encounters, teams, or checking competitive data:
+
+- `pokemon_stats` — Base stats, types, abilities, BST, competitive tier
+- `search_pokemon` — Find Pokémon by type and/or BST range
+- `move_data` — Move power, accuracy, type, category, PP, description
+- `type_matchup` — Calculate type effectiveness
+- `pokemon_learnset` — All moves a Pokémon can learn (level-up, TM, egg, tutor)
+- `smogon_sets` — Competitive movesets and strategy from Smogon
+- `smogon_format_pokemon` — List all Pokémon viable in a Smogon tier
+- `team_type_coverage` — Analyse a team's defensive/offensive type coverage
+
+All tools default to Gen 3 data, which matches the pokeemerald base.
+
 ## Memory System
 
 You have persistent memory files in `memory/` (markdown format):

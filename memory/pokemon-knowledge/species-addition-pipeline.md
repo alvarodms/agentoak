@@ -123,6 +123,12 @@ Also optionally: `sMonAnimationDelayTable[]` (~line 1795) — only if delay need
 ### 14. Create Sprite Assets
 **Directory**: `graphics/pokemon/<name>/`
 
+**PREFERRED: Use the `fetch_pokemon_sprites` MCP tool** to download real sprites from the pokeemerald-expansion repo:
+```
+fetch_pokemon_sprites(name: "riolu")   # Downloads all files below automatically
+```
+This saves all required files to `graphics/pokemon/<name>/` including auto-generating `front.png` from `anim_front.png`.
+
 | File | Format | Notes |
 |------|--------|-------|
 | `front.png` | 64x64, 16-color indexed | Still front sprite |
@@ -133,7 +139,7 @@ Also optionally: `sMonAnimationDelayTable[]` (~line 1795) — only if delay need
 | `shiny.pal` | 16 entries | Shiny palette |
 | `footprint.png` | 16x16, 1bpp monochrome | Pokédex footprint |
 
-**Placeholder**: Copy from similar species (e.g., `cp -r graphics/pokemon/makuhita graphics/pokemon/riolu`)
+**Fallback**: If `fetch_pokemon_sprites` fails, copy from similar species (e.g., `cp -r graphics/pokemon/makuhita graphics/pokemon/riolu`)
 
 ### 15. Graphics Declarations
 **File**: `include/graphics.h`

@@ -28,7 +28,8 @@ Key moves Lucario should learn (all exist in Gen 3):
 
 1. **Cry file format**: Must be proper 8-bit PCM mono. Safest to copy existing cry as placeholder.
 2. **Cry table position**: MUST match species ID order exactly — insert after Chimecho, before EGG shift.
-3. **Sprite palette**: 14 colors max, indexed mode, transparency as first palette entry.
+3. **Sprite assets**: Use `fetch_pokemon_sprites` MCP tool to download real sprites instead of placeholders. If expansion sprites have >16 colors, reduce palette before build.
+4. **Sprite palette**: 14 colors max, indexed mode, transparency as first palette entry.
 4. **NUM_SPECIES**: Auto-updates via SPECIES_EGG, but verify.
 5. **Pokédex sort orders**: Hardcoded alphabetical/height/weight — must manually insert.
 6. **Build cache**: Delete .4bpp/.gbapal intermediates if sprites look wrong.

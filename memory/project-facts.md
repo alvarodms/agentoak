@@ -68,6 +68,15 @@ General project information — build system details, tool versions, configurati
 - Memory files: `/home/runner/work/agentoak/agentoak/memory/`
 - Journal files: `/home/runner/work/agentoak/agentoak/journal/`
 
+## MCP Tools — Pokémon Specialist
+
+Available via MCP server (Pokédex tools). All default to Gen 3.
+
+- `fetch_pokemon_sprites` — **Downloads real sprites** from pokeemerald-expansion to `pokeemerald/graphics/pokemon/<name>/`. Use when adding new species (Phase 6 of pipeline). Name format: lowercase with underscores (e.g., `lucario`, `mr_mime`).
+- `pokemon_stats`, `search_pokemon`, `move_data`, `type_matchup`, `pokemon_learnset` — Research tools for stats, moves, matchups
+- `smogon_sets`, `smogon_format_pokemon` — Competitive data from Smogon
+- `team_type_coverage` — Team composition analysis
+
 ## Notes
 
 - The JSON data files (`wild_encounters.json`) are processed by `mapjson` tool during build
