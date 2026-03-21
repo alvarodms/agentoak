@@ -33,7 +33,16 @@ FortreeCity_EventScript_Girl::
 	end
 
 FortreeCity_EventScript_OldMan::
-	msgbox FortreeCity_Text_EveryoneHealthyAndLively, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SECOND_WAVE, FortreeCity_EventScript_OldMan_Post
+	msgbox FortreeCity_Text_EveryoneHealthyAndLively, MSGBOX_DEFAULT
+	release
+	end
+
+FortreeCity_EventScript_OldMan_Post::
+	msgbox FortreeCity_Text_OldMan_PostWave, MSGBOX_DEFAULT
+	release
 	end
 
 FortreeCity_EventScript_Boy::
@@ -151,9 +160,22 @@ FortreeCity_Text_CitySign:
 	.string "“The treetop city that frolics with\l"
 	.string "nature.”$"
 
+
 FortreeCity_Text_GymSign:
 	.string "FORTREE CITY POKéMON GYM\n"
 	.string "LEADER: WINONA\p"
 	.string "“The bird user taking flight into\n"
-	.string "the world.”$"
 
+FortreeCity_Text_OldMan_PostWave:
+	.string "Forty years I have lived in\n"
+	.string "these trees.\p"
+	.string "The first migration was a\n"
+	.string "curiosity. Strange creatures\l"
+	.string "wandering through.\p"
+	.string "This is different. This is\n"
+	.string "an invasion. The forest\l"
+	.string "cannot hold them all.\p"
+	.string "The SKARMORY are fighting\n"
+	.string "with newcomers for roosting\l"
+	.string "space. I hear them clashing\l"
+	.string "all night.$"

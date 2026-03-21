@@ -37,10 +37,11 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Symptom**: `fatal error: string.h: No such file or directory`
 **Resolution**: `ln -s /home/runner/work/agentoak/agentoak/pokeemerald/tools/agbcc /__w/agentoak/agentoak/pokeemerald/tools/agbcc`
 
-## Unicode Character in .string Directive (Cycle 26)
+## Unicode Character in .string Directive (Cycles 26, 64, 65)
 
-**Symptom**: `error: unknown character U+2014` in scripts.inc
+**Symptom**: `error: unknown character U+2014` or `expected UTF-8 string literal` in scripts.inc
 **Resolution**: Use only ASCII in .string text. Em dash (—), smart quotes, etc. are NOT in the charmap. Ellipsis (…) and é ARE safe.
+**WARNING (Cycle 65)**: The Edit tool can silently corrupt ASCII `"` (0x22) into Unicode smart quotes `"` `"` (0xe2 0x80 0x9c / 0xe2 0x80 0x9d) when editing text near existing smart quotes. This makes `.string` directives unparseable. If editing a file that contains curly quotes as content (gym signs, city signs), verify with `grep -P '\.string \xe2\x80[\x9c\x9d]' <file>` after editing — any matches mean delimiters were corrupted. Fix by restoring from `git show HEAD:<path>` or using `cat <<'EOF'` heredoc approach instead of Edit tool.
 
 ## Move Constant Naming
 

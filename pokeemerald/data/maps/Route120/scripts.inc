@@ -427,3 +427,22 @@ Route120_Text_RouteSignFortree:
 Route120_Text_RouteSign121:
 	.string "{RIGHT_ARROW} ROUTE 121\n"
 	.string "{LEFT_ARROW} ROUTE 120$"
+
+Route120_EventScript_SecondWaveRanger::
+	msgbox Route120_Text_SecondWaveRanger, MSGBOX_NPC
+	end
+
+Route120_Text_SecondWaveRanger:
+	.string "I patrol this forest daily.\n"
+	.string "I know every tree and trail.\p"
+	.string "Something changed last week.\n"
+	.string "Black birds with red eyes\l"
+	.string "roosting in the canopy.\p"
+	.string "Wisps of light drifting\n"
+	.string "between the ancient trees\l"
+	.string "after dark.\p"
+	.string "The ABSOL are everywhere now.\n"
+	.string "That species only gathers\l"
+	.string "when it senses disaster.\p"
+	.string "I am filing a report with\n"
+	.string "the RANGER UNION.$"

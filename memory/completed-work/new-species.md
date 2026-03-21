@@ -48,6 +48,8 @@ First-ever new species addition to the ROM hack. Complete pipeline: constants, s
 | `sound/direct_sound_samples/cries/lucario.wav` | Copied from medicham |
 | `graphics/types/fairy.png` | Copied from psychic (pre-existing missing asset) |
 
+**Note (Cycle 65):** All placeholder assets above were recreated in Cycle 65 after the Cycle 64 revert lost them. These assets MUST be committed to prevent future loss.
+
 ## Weavile (Cycle 61)
 
 Second new species. Single species addition (Sneasel already exists in Gen 3). Sneasel→Weavile evolution at level 40.
