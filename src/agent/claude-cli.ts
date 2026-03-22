@@ -453,6 +453,14 @@ class StreamState {
         const path = (input.path as string) ?? ".";
         return `LS ${this.shortenPath(path)}`;
       }
+      case "fetch_pokemon_sprites": {
+        const spriteName = ((input.name as string) ?? "")
+          .toLowerCase().replace(/\s+/g, "_").replace(/-/g, "_");
+        if (spriteName) {
+          this.filesModified.add(`pokeemerald/graphics/pokemon/${spriteName}/`);
+        }
+        return `Fetch sprites: ${spriteName}`;
+      }
       default: {
         const preview = JSON.stringify(input).slice(0, 80);
         return `${name}(${preview})`;
