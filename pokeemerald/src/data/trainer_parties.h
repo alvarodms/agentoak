@@ -1692,19 +1692,44 @@ static const struct TrainerMonItemCustomMoves sParty_Tammy[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Valerie1[] = {
+static const struct TrainerMonItemCustomMoves sParty_Valerie1[] = {
     {
-    .iv = 0,
-    .lvl = 32,
+    .iv = 125,
+    .lvl = 31,
     .species = SPECIES_SABLEYE,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_FAINT_ATTACK, MOVE_NIGHT_SHADE, MOVE_KNOCK_OFF, MOVE_DETECT}
+    },
+    {
+    .iv = 125,
+    .lvl = 32,
+    .species = SPECIES_SHUPPET,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_WILL_O_WISP, MOVE_NIGHT_SHADE, MOVE_CURSE, MOVE_SPITE}
+    },
+    {
+    .iv = 125,
+    .lvl = 33,
+    .species = SPECIES_MISDREAVUS,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CONFUSE_RAY, MOVE_MEAN_LOOK}
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Tasha[] = {
+static const struct TrainerMonItemCustomMoves sParty_Tasha[] = {
     {
-    .iv = 50,
-    .lvl = 32,
+    .iv = 100,
+    .lvl = 30,
     .species = SPECIES_SHUPPET,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_NIGHT_SHADE, MOVE_WILL_O_WISP, MOVE_SCREECH, MOVE_CURSE}
+    },
+    {
+    .iv = 100,
+    .lvl = 31,
+    .species = SPECIES_MISDREAVUS,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SHADOW_BALL, MOVE_PSYBEAM, MOVE_CONFUSE_RAY, MOVE_PAIN_SPLIT}
     }
 };
 
@@ -2137,11 +2162,20 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Thalia1[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Mark[] = {
+static const struct TrainerMonItemCustomMoves sParty_Mark[] = {
     {
-    .iv = 0,
-    .lvl = 31,
-    .species = SPECIES_RHYHORN,
+    .iv = 100,
+    .lvl = 28,
+    .species = SPECIES_SHUPPET,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_NIGHT_SHADE, MOVE_KNOCK_OFF, MOVE_SCREECH, MOVE_SPITE}
+    },
+    {
+    .iv = 100,
+    .lvl = 29,
+    .species = SPECIES_VULPIX,
+    .heldItem = ITEM_RAWST_BERRY,
+    .moves = {MOVE_FLAMETHROWER, MOVE_CONFUSE_RAY, MOVE_WILL_O_WISP, MOVE_QUICK_ATTACK}
     }
 };
 
@@ -2731,11 +2765,20 @@ static const struct TrainerMonItemCustomMoves sParty_Daisuke[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Atsushi[] = {
+static const struct TrainerMonItemCustomMoves sParty_Atsushi[] = {
     {
     .iv = 100,
     .lvl = 32,
     .species = SPECIES_HARIYAMA,
+    .heldItem = ITEM_BLACK_BELT,
+    .moves = {MOVE_VITAL_THROW, MOVE_FAKE_OUT, MOVE_KNOCK_OFF, MOVE_WHIRLWIND}
+    },
+    {
+    .iv = 100,
+    .lvl = 31,
+    .species = SPECIES_MEDITITE,
+    .heldItem = ITEM_FOCUS_BAND,
+    .moves = {MOVE_BRICK_BREAK, MOVE_ROCK_TOMB, MOVE_DETECT, MOVE_CONFUSION}
     }
 };
 
@@ -3408,21 +3451,20 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Blake[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_William[] = {
+static const struct TrainerMonItemCustomMoves sParty_William[] = {
     {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_RALTS,
+    .iv = 100,
+    .lvl = 30,
+    .species = SPECIES_CHIMECHO,
+    .heldItem = ITEM_TWISTED_SPOON,
+    .moves = {MOVE_CALM_MIND, MOVE_CONFUSION, MOVE_SHADOW_BALL, MOVE_YAWN}
     },
     {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_RALTS,
-    },
-    {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_KIRLIA,
+    .iv = 100,
+    .lvl = 30,
+    .species = SPECIES_MISDREAVUS,
+    .heldItem = ITEM_PERSIM_BERRY,
+    .moves = {MOVE_SHADOW_BALL, MOVE_PSYBEAM, MOVE_CONFUSE_RAY, MOVE_MEAN_LOOK}
     }
 };
 
@@ -3541,21 +3583,20 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Maura[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Kayla[] = {
+static const struct TrainerMonItemCustomMoves sParty_Kayla[] = {
     {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_WOBBUFFET,
+    .iv = 100,
+    .lvl = 29,
+    .species = SPECIES_SHUPPET,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_NIGHT_SHADE, MOVE_CURSE, MOVE_KNOCK_OFF, MOVE_SPITE}
     },
     {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_NATU,
-    },
-    {
-    .iv = 0,
-    .lvl = 26,
-    .species = SPECIES_KADABRA,
+    .iv = 100,
+    .lvl = 30,
+    .species = SPECIES_DUSKULL,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_NIGHT_SHADE, MOVE_CONFUSE_RAY, MOVE_PURSUIT, MOVE_DISABLE}
     }
 };
 
@@ -7727,12 +7768,27 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Diana1[] = {
     }
 };
 
-static const struct TrainerMonNoItemCustomMoves sParty_Cedric[] = {
+static const struct TrainerMonItemCustomMoves sParty_Cedric[] = {
     {
-    .iv = 0,
+    .iv = 125,
     .lvl = 32,
-    .species = SPECIES_WOBBUFFET,
-    .moves = {MOVE_DESTINY_BOND, MOVE_SAFEGUARD, MOVE_COUNTER, MOVE_MIRROR_COAT}
+    .species = SPECIES_CHIMECHO,
+    .heldItem = ITEM_TWISTED_SPOON,
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_YAWN}
+    },
+    {
+    .iv = 125,
+    .lvl = 32,
+    .species = SPECIES_SABLEYE,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_FAINT_ATTACK, MOVE_SHADOW_BALL, MOVE_KNOCK_OFF, MOVE_DETECT}
+    },
+    {
+    .iv = 125,
+    .lvl = 33,
+    .species = SPECIES_DUSKULL,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_NIGHT_SHADE, MOVE_CONFUSE_RAY, MOVE_PURSUIT, MOVE_DISABLE}
     }
 };
 
@@ -10286,16 +10342,20 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Trent5[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_DezAndLuke[] = {
+static const struct TrainerMonItemCustomMoves sParty_DezAndLuke[] = {
     {
-    .iv = 0,
-    .lvl = 31,
-    .species = SPECIES_DELCATTY,
+    .iv = 75,
+    .lvl = 28,
+    .species = SPECIES_DUSKULL,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_CONFUSE_RAY, MOVE_NIGHT_SHADE, MOVE_PURSUIT, MOVE_DISABLE}
     },
     {
-    .iv = 0,
-    .lvl = 31,
-    .species = SPECIES_MANECTRIC,
+    .iv = 75,
+    .lvl = 28,
+    .species = SPECIES_MURKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_AERIAL_ACE, MOVE_PURSUIT, MOVE_NIGHT_SHADE, MOVE_HAZE}
     }
 };
 
