@@ -4703,4 +4703,16 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
+    [NATIONAL_DEX_GARCHOMP] =
+    {
+        .categoryName = _("Mach"),
+        .height = 19,
+        .weight = 950,
+        .description = gGarchompPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
 };

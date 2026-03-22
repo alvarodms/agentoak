@@ -83,7 +83,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
 | 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
 | 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
-| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). **Weavile DONE** (Cycle 61). **Gible/Gabite DONE** (Cycle 68). Garchomp pending (Cycle 69). |
+| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). **Weavile DONE** (Cycle 61). **Gible/Gabite DONE** (Cycle 68). **Garchomp DONE** (Cycle 70). |
 | 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
@@ -109,7 +109,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | Garchomp | Victory Road B2F | 5% | Dragon apex predator (future) |
 | ~~Gible~~ | Meteor Falls B1F_1R | 2% | **DONE** (Cycle 68) — Dragon/Ground, lv25-30, slots 10-11 |
 | ~~Gabite~~ | (evolves at lv24) | — | **DONE** (Cycle 68) |
-| Garchomp | Victory Road B2F | 2% | Pending (Cycle 69) — Dragon apex predator |
+| ~~Garchomp~~ | Victory Road B2F | 2% | **DONE** (Cycle 70) — Dragon/Ground, lv40-44, slots 10-11, SPECIES_GARCHOMP 417 |
 | ~~Weavile~~ | Shoal Cave Ice Room | 8% | **DONE** (Cycle 61) — Sneasel→Weavile evo at lv40 |
 
 ### Second Wave Event (Designed Cycle 62)

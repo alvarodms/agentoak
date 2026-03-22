@@ -4622,6 +4622,14 @@ static const union AnimCmd sAnim_Gabite_1[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_Garchomp_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_Egg_1[] =
 {
     ANIMCMD_FRAME(0, 6),
@@ -5268,6 +5276,7 @@ SINGLE_ANIMATION(Lucario);
 SINGLE_ANIMATION(Weavile);
 SINGLE_ANIMATION(Gible);
 SINGLE_ANIMATION(Gabite);
+SINGLE_ANIMATION(Garchomp);
 SINGLE_ANIMATION(Egg);
 SINGLE_ANIMATION(UnownB);
 SINGLE_ANIMATION(UnownC);
@@ -5716,6 +5725,7 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [SPECIES_WEAVILE]     = sAnims_Weavile,
     [SPECIES_GIBLE]       = sAnims_Gible,
     [SPECIES_GABITE]      = sAnims_Gabite,
+    [SPECIES_GARCHOMP]    = sAnims_Garchomp,
     [SPECIES_EGG]         = sAnims_Egg,
     [SPECIES_UNOWN_B]     = sAnims_UnownB,
     [SPECIES_UNOWN_C]     = sAnims_UnownC,

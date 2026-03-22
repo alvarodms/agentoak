@@ -7901,14 +7901,14 @@
                                 "species": "SPECIES_MAWILE"
                             },
                             {
-                                "min_level": 44,
+                                "min_level": 40,
                                 "max_level": 44,
-                                "species": "SPECIES_LAIRON"
+                                "species": "SPECIES_GARCHOMP"
                             },
                             {
-                                "min_level": 44,
+                                "min_level": 40,
                                 "max_level": 44,
-                                "species": "SPECIES_MAWILE"
+                                "species": "SPECIES_GARCHOMP"
                             }
                         ]
                     },

@@ -41,3 +41,19 @@ Two-species scope (Garchomp deferred to Cycle 69). Cycle 67 attempted all 3 but 
 | Egg moves | Outrage, Body Slam, Scary Face, Twister, Double-Edge |
 
 **Note**: Also re-fetched sprites for Riolu/Lucario/Weavile and fairy.png (missing from git).
+
+## Garchomp (Cycle 70) — BUILD CLEAN
+
+Final evolution of Gible line. Completes the pseudo-legendary Dragon/Ground family.
+
+| Detail | Value |
+|--------|-------|
+| Species ID | SPECIES_GARCHOMP (417), EGG→418 |
+| Stats | 108/130/95/80/85/102 BST 600, Dragon/Ground |
+| Encounter | Victory Road B2F: Garchomp lv40-44 (slots 10-11, 2% total) |
+| Evolution | Gabite→Garchomp at lv48 |
+| Learnset highlights | Dragon Claw (33), Crunch (48), Earthquake (55) |
+| TMs added vs Gabite | Hyper Beam, Brick Break |
+| Assets | Sprites fetched via fetch_pokemon_sprites; cry copied from salamence |
+
+Same ~29 source files as prior species additions.
