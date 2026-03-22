@@ -115,7 +115,8 @@ enum
     SPRITE_ARR_ID_BALL,
     SPRITE_ARR_ID_STATUS,
     SPRITE_ARR_ID_TYPE, // 2 for mon types, 5 for move types(4 moves and 1 to learn), used interchangeably, because mon types and move types aren't shown on the same screen
-    SPRITE_ARR_ID_MOVE_SELECTOR1 = SPRITE_ARR_ID_TYPE + TYPE_ICON_SPRITE_COUNT, // 10 sprites that make up the selector
+    SPRITE_ARR_ID_CATEGORY = SPRITE_ARR_ID_TYPE + TYPE_ICON_SPRITE_COUNT, // move category icon (physical/special/status)
+    SPRITE_ARR_ID_MOVE_SELECTOR1, // 10 sprites that make up the selector
     SPRITE_ARR_ID_MOVE_SELECTOR2 = SPRITE_ARR_ID_MOVE_SELECTOR1 + MOVE_SELECTOR_SPRITES_COUNT,
     SPRITE_ARR_ID_COUNT = SPRITE_ARR_ID_MOVE_SELECTOR2 + MOVE_SELECTOR_SPRITES_COUNT
 };
@@ -296,6 +297,7 @@ static void SetMonTypeIcons(void);
 static void SetMoveTypeIcons(void);
 static void SetContestMoveTypeIcons(void);
 static void SetNewMoveTypeIcon(void);
+static void SetMoveCategoryIcon(u16 move);
 static void SwapMovesTypeSprites(u8, u8);
 static u8 LoadMonGfxAndSprite(struct Pokemon *, s16 *);
 static u8 CreateMonSprite(struct Pokemon *);
@@ -754,6 +756,11 @@ static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 #define TAG_MOVE_TYPES 30002
 #define TAG_MON_MARKINGS 30003
 
+#define MOVE_CATEGORY_ICON_PHYSICAL (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT)
+#define MOVE_CATEGORY_ICON_SPECIAL  (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT + 1)
+#define MOVE_CATEGORY_ICON_STATUS   (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT + 2)
+#define NUM_MOVE_CATEGORY_ICONS 3
+
 static const struct OamData sOamData_MoveTypes =
 {
     .y = 0,
@@ -866,7 +873,19 @@ static const union AnimCmd sSpriteAnim_CategoryTough[] = {
     ANIMCMD_FRAME((CONTEST_CATEGORY_TOUGH + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
     ANIMCMD_END
 };
-static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT] = {
+static const union AnimCmd sSpriteAnim_MoveCategoryPhysical[] = {
+    ANIMCMD_FRAME(MOVE_CATEGORY_ICON_PHYSICAL * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+static const union AnimCmd sSpriteAnim_MoveCategorySpecial[] = {
+    ANIMCMD_FRAME(MOVE_CATEGORY_ICON_SPECIAL * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+static const union AnimCmd sSpriteAnim_MoveCategoryStatus[] = {
+    ANIMCMD_FRAME(MOVE_CATEGORY_ICON_STATUS * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT + NUM_MOVE_CATEGORY_ICONS] = {
     sSpriteAnim_TypeNormal,
     sSpriteAnim_TypeFighting,
     sSpriteAnim_TypeFlying,
@@ -891,12 +910,15 @@ static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES
     sSpriteAnim_CategoryCute,
     sSpriteAnim_CategorySmart,
     sSpriteAnim_CategoryTough,
+    sSpriteAnim_MoveCategoryPhysical,
+    sSpriteAnim_MoveCategorySpecial,
+    sSpriteAnim_MoveCategoryStatus,
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_MoveTypes =
 {
     .data = gMoveTypes_Gfx,
-    .size = (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT) * 0x100,
+    .size = (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT + NUM_MOVE_CATEGORY_ICONS) * 0x100,
     .tag = TAG_MOVE_TYPES
 };
 static const struct SpriteTemplate sSpriteTemplate_MoveTypes =
@@ -909,7 +931,7 @@ static const struct SpriteTemplate sSpriteTemplate_MoveTypes =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
-static const u8 sMoveTypeToOamPaletteNum[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT] =
+static const u8 sMoveTypeToOamPaletteNum[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT + NUM_MOVE_CATEGORY_ICONS] =
 {
     [TYPE_NORMAL] = 13,
     [TYPE_FIGHTING] = 13,
@@ -935,6 +957,9 @@ static const u8 sMoveTypeToOamPaletteNum[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIE
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_CUTE] = 14,
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_SMART] = 15,
     [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_TOUGH] = 13,
+    [MOVE_CATEGORY_ICON_PHYSICAL] = 13,
+    [MOVE_CATEGORY_ICON_SPECIAL] = 14,
+    [MOVE_CATEGORY_ICON_STATUS] = 13,
 };
 static const struct OamData sOamData_MoveSelector =
 {
@@ -3674,16 +3699,19 @@ static void PrintMoveDetails(u16 move)
         {
             PrintMovePowerAndAccuracy(move);
             PrintTextOnWindow(windowId, gMoveDescriptionPointers[move - 1], 6, 1, 0, 0);
+            SetMoveCategoryIcon(move);
         }
         else
         {
             PrintTextOnWindow(windowId, gContestEffectDescriptionPointers[gContestMoves[move].effect], 6, 1, 0, 0);
+            SetMoveCategoryIcon(MOVE_NONE);
         }
         PutWindowTilemap(windowId);
     }
     else
     {
         ClearWindowTilemap(windowId);
+        SetMoveCategoryIcon(MOVE_NONE);
     }
 
     ScheduleBgCopyTilemapToVram(0);
@@ -3808,6 +3836,11 @@ static void CreateMoveTypeIcons(void)
 
         SetSpriteInvisibility(i, TRUE);
     }
+
+    if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_CATEGORY] == SPRITE_NONE)
+        sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_CATEGORY] = CreateSprite(&sSpriteTemplate_MoveTypes, 0, 0, 2);
+
+    SetSpriteInvisibility(SPRITE_ARR_ID_CATEGORY, TRUE);
 }
 
 static void SetTypeSpritePosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
@@ -3818,6 +3851,28 @@ static void SetTypeSpritePosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
     sprite->x = x + 16;
     sprite->y = y + 8;
     SetSpriteInvisibility(spriteArrayId, FALSE);
+}
+
+static void SetMoveCategoryIcon(u16 move)
+{
+    if (move == MOVE_NONE)
+    {
+        SetSpriteInvisibility(SPRITE_ARR_ID_CATEGORY, TRUE);
+        return;
+    }
+
+    switch (gBattleMoves[move].category)
+    {
+    case MOVE_CATEGORY_PHYSICAL:
+        SetTypeSpritePosAndPal(MOVE_CATEGORY_ICON_PHYSICAL, 10, 104, SPRITE_ARR_ID_CATEGORY);
+        break;
+    case MOVE_CATEGORY_SPECIAL:
+        SetTypeSpritePosAndPal(MOVE_CATEGORY_ICON_SPECIAL, 10, 104, SPRITE_ARR_ID_CATEGORY);
+        break;
+    default:
+        SetTypeSpritePosAndPal(MOVE_CATEGORY_ICON_STATUS, 10, 104, SPRITE_ARR_ID_CATEGORY);
+        break;
+    }
 }
 
 static void SetMonTypeIcons(void)

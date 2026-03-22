@@ -112,9 +112,11 @@ Expansion and vanilla are architecturally incompatible at struct level. **Decisi
 
 ---
 
-## Physical/Special Split (Cycle 43-44)
+## Physical/Special Split (Cycle 43-44, 75)
 
-Moves use `.split = SPLIT_PHYSICAL` or `SPLIT_SPECIAL` in `battle_moves.h`. Battle calc in `battle_script_commands.c` checks split instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
+Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Constants defined in `include/pokemon.h` (0/1/2). Battle calc in `battle_script_commands.c` checks category instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
+
+**Summary screen category icons (Cycle 75)**: Physical/Special/Status icons displayed on battle moves page. Uses the same sprite system as type icons (shared `sSpriteTemplate_MoveTypes`). Category icon frames are appended after contest types in `move_types.4bpp`. `SPRITE_ARR_ID_CATEGORY` sprite slot. `SetMoveCategoryIcon()` called from `PrintMoveDetails()`.
 
 ---
 

@@ -91,6 +91,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 14 | Early-game route trainer refresh (102-104) | **DONE** (Cycle 74 — 11 trainers across 3 routes, 9 migration species, custom movesets, Route 103 level-adjusted for Surf access) |
 | 15 | Late-game route trainer refresh (113-118, 121-123) | **DONE** (Cycle 57 — 83 trainers across 9 routes, migration species, held items, custom movesets) |
 | 16 | Victory Road + dungeon trainer refresh | **DONE** — Victory Road (Cycle 58), villain dungeons (Cycle 72, 36 trainers), Mt. Pyre interior (Cycle 73, 8 trainers). Note: Granite Cave & Shoal Cave have zero trainers in vanilla — no refresh needed. |
+| 17 | Move category icons (Issue #45) | **DONE** (Cycle 75 — Physical/Special/Status icons on summary screen battle moves page) |
 
 ---
 
