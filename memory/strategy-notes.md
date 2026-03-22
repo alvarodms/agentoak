@@ -95,6 +95,21 @@ The physical/special split changes how every battle feels. Fairy type introduces
 
 ---
 
+## Battle Frontier Fix Plan (Cycle 76 Audit)
+
+**No crash risks found.** All Frontier code uses sentinel-terminated type tables and symbolic constants.
+
+| Fix | Priority | Effort | Cycle |
+|-----|----------|--------|-------|
+| Arena sMindRatings: +1 for 3 Fairy moves | HIGH | 1 min | Next |
+| Factory style arrays: classify 3 Fairy moves | HIGH | 2 min | Next |
+| Add Lucario/Weavile/Garchomp to Frontier mon pool | MEDIUM | 1 cycle | Future |
+| Audit 882 Frontier mons for P/S split mismatches | LOW | Multi-cycle | Future |
+
+**Quick wins (Issues 1-2)** can be bundled into any feature cycle. **Issue 3** (moveset audit) is the big one — 41 Punch move entries + ~117 Crunch/Shadow Ball entries have stat/nature mismatches under P/S split. Not game-breaking but reduces Frontier quality.
+
+---
+
 ## Future Directions
 
 ### New Species Pipeline (Proven in Cycle 60)

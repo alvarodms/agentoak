@@ -120,6 +120,24 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
+## Battle Frontier Architecture (Cycle 76)
+
+**Type effectiveness**: All facilities use centralized `gTypeEffectiveness[]` in `src/battle_main.c:335-463` — sentinel-terminated, already has Fairy. No facility has private type tables.
+
+**Palace move selection**: `GetBattlePalaceMoveGroup()` in `src/battle_gfx_sfx_util.c:296-318` — categorizes by power/target, NOT type or category. P/S split invisible to Palace.
+
+**Arena scoring**: `sMindRatings[MOVES_COUNT]` in `src/battle_arena.c:58` — indexed by move ID. New moves default to 0 if not explicitly rated.
+
+**Factory styles**: 7 `sMoves_*` arrays in `src/battle_factory.c:55-122` — hardcoded move lists for AI strategy classification.
+
+**Dome AI**: `GetTypeEffectivenessPoints()` in `src/battle_dome.c:2801-2935` — loops gTypeEffectiveness with sentinel. No move category refs.
+
+**Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Struct: `{u16 species, u16 moves[4], u8 itemTableId, u8 evSpread, u8 nature}`. Our 6 new species NOT in pool.
+
+**Pending fixes**: (1) sMindRatings needs +1 for Moonblast/Play Rough/Dazzling Gleam, (2) Factory style arrays need 3 Fairy moves, (3) 882 Frontier mons have P/S split stat mismatches (low priority).
+
+---
+
 ## Species-Addition Pipeline (Cycle 59)
 
 **Full checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` (25 steps, ~27 source files + ~14 assets per 2-species family).

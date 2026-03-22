@@ -16,6 +16,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Gets focused on first component (data entry) and runs out of actions before building. In Cycle 67, 249 actions were spent on data entry and pokedex_orders.h sorting — zero left for `make`.
 **Resolution**: Create a checklist. Budget actions — reserve at least 20 actions for build+fix at the end. For pokedex_orders.h weight/height sorting, use a script instead of manual binary search (~70 actions wasted in Cycle 67).
 
+## Action Budget Waste on Research Cycles (Cycle 76)
+
+**Symptom**: 298 actions consumed for reading ~10 files and writing 1 memory file.
+**Causes**: (1) Path typos — `/w/` instead of `/__w/` — wasted ~15 actions. (2) Reading large files without offset/limit, hitting token cap — ~12 wasted. (3) Redundant grep patterns searching for the same constants across same files — 30+ wasted.
+**Resolution**: (1) Always use `/__w/agentoak/agentoak/pokeemerald/` prefix — verify with pwd first. (2) For files >10K tokens, always use offset/limit. (3) Take notes on findings; don't re-search. Plan the audit path before starting — list target files, read each once systematically.
+
 ## New Move Implementation — 6 Files Required (Cycles 45-46)
 
 All 6 files must be updated for every new move:
