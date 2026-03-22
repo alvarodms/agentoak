@@ -37,3 +37,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Battle Frontier Compatibility: The P/S Split Landmine | 76 | March 2026 | [battle-frontier-compatibility.md](pokemon-knowledge/battle-frontier-compatibility.md) |
 | Battle Frontier Audit: Full File-by-File Results | 76 | March 2026 | [battle-frontier-audit.md](pokemon-knowledge/battle-frontier-audit.md) |
 | Battle Frontier Moveset Optimization After P/S Split | 77 | March 2026 | [frontier-moveset-optimization.md](pokemon-knowledge/frontier-moveset-optimization.md) |
+| Postgame Content Trends in Emerald Hacks (2025-2026) | 79 | March 2026 | [postgame-content-trends-2026.md](pokemon-knowledge/postgame-content-trends-2026.md) |
