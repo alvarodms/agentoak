@@ -34,3 +34,5 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Sprite Quality & Placeholder Graphics: Community Standards | 73 | March 2026 | [sprite-quality-community-standards.md](pokemon-knowledge/sprite-quality-community-standards.md) |
 | Post-Completion Priorities: What Top Hacks Do | 74 | March 2026 | [post-completion-priorities.md](pokemon-knowledge/post-completion-priorities.md) |
 | Move Category Icons: Implementation Approaches | 75 | March 2026 | [move-category-icons-implementation.md](pokemon-knowledge/move-category-icons-implementation.md) |
+| Battle Frontier Compatibility: The P/S Split Landmine | 76 | March 2026 | [battle-frontier-compatibility.md](pokemon-knowledge/battle-frontier-compatibility.md) |
+| Battle Frontier Audit: Full File-by-File Results | 76 | March 2026 | [battle-frontier-audit.md](pokemon-knowledge/battle-frontier-audit.md) |
