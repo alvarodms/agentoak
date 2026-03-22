@@ -45,12 +45,12 @@
 
 #define FLAG_SECOND_WAVE             0x20 // Second Wave migration event active
 #define FLAG_SECOND_WAVE_BIRCH_CALL  0x21 // Birch PokeNav call after Second Wave
-#define FLAG_UNUSED_0x022    0x22 // Unused Flag
-#define FLAG_UNUSED_0x023    0x23 // Unused Flag
-#define FLAG_UNUSED_0x024    0x24 // Unused Flag
-#define FLAG_UNUSED_0x025    0x25 // Unused Flag
-#define FLAG_UNUSED_0x026    0x26 // Unused Flag
-#define FLAG_UNUSED_0x027    0x27 // Unused Flag
+#define FLAG_BIRCH_QUEST_STARTED   0x22
+#define FLAG_BIRCH_QUEST_WEATHER   0x23
+#define FLAG_BIRCH_QUEST_SLAB      0x24
+#define FLAG_BIRCH_QUEST_COZMO     0x25
+#define FLAG_BIRCH_QUEST_METEOR    0x26
+#define FLAG_BIRCH_QUEST_COMPLETE  0x27
 #define FLAG_UNUSED_0x028    0x28 // Unused Flag
 #define FLAG_UNUSED_0x029    0x29 // Unused Flag
 #define FLAG_UNUSED_0x02A    0x2A // Unused Flag
