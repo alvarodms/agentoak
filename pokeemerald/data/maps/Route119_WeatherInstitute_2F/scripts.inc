@@ -199,6 +199,8 @@ Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer:
 Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	lock
 	faceplayer
+	goto_if_set FLAG_BIRCH_QUEST_WEATHER, Route119_WeatherInstitute_2F_EventScript_ScientistPostQuest
+	goto_if_set FLAG_BIRCH_QUEST_STARTED, Route119_WeatherInstitute_2F_EventScript_ScientistQuestActive
 	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_ScientistMentionWeather
 	goto Route119_WeatherInstitute_2F_EventScript_ReceiveCastform
 	end
@@ -323,4 +325,47 @@ Route119_WeatherInstitute_2F_Text_NoAbnormalWeather:
 	.string "no longer being reported.\p"
 	.string "The occasional rainfall is a blessing,\n"
 	.string "really.$"
+
+@ Pokemon Migration Research Quest
+Route119_WeatherInstitute_2F_EventScript_ScientistQuestActive::
+	msgbox Route119_WeatherInstitute_2F_Text_ScientistQuestActive, MSGBOX_DEFAULT
+	giveitem ITEM_LEFTOVERS
+	setflag FLAG_BIRCH_QUEST_WEATHER
+	release
+	end
+
+Route119_WeatherInstitute_2F_EventScript_ScientistPostQuest::
+	msgbox Route119_WeatherInstitute_2F_Text_ScientistPostQuest, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_WeatherInstitute_2F_Text_ScientistQuestActive:
+	.string "Oh! You are working with\n"
+	.string "PROF. BIRCH on the migration?\p"
+	.string "Our atmospheric sensors\n"
+	.string "detected something strange.\p"
+	.string "An electromagnetic pulse\n"
+	.string "from deep underground.\l"
+	.string "Very low frequency.\p"
+	.string "It correlates with the\n"
+	.string "migration waves. Each pulse\l"
+	.string "draws more species toward\l"
+	.string "HOENN.\p"
+	.string "The signal is strongest\n"
+	.string "toward the northwest.\l"
+	.string "Near METEOR FALLS.\p"
+	.string "Here, take this data for\n"
+	.string "the PROFESSOR.\p"
+	.string "A POKeMON left this in the\n"
+	.string "instrument room during the\l"
+	.string "Second Wave. You should\l"
+	.string "have it.$"
+
+Route119_WeatherInstitute_2F_Text_ScientistPostQuest:
+	.string "The electromagnetic pulses\n"
+	.string "are still coming. Regular\l"
+	.string "intervals, like a heartbeat.\p"
+	.string "Whatever is generating them\n"
+	.string "has been at it for a very\l"
+	.string "long time.$"
 

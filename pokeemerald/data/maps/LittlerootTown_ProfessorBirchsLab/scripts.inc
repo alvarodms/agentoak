@@ -469,6 +469,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedJohtoStarter::
 LittlerootTown_ProfessorBirchsLab_EventScript_Birch::
 	lock
 	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_ProfessorBirchsLab_EventScript_BirchQuestCheck
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
 	goto_if_unset FLAG_HAS_MATCH_CALL, LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister
@@ -1012,3 +1013,142 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "we meet. I'll be waiting!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
+
+@ Pokemon Migration Research Quest - Postgame
+LittlerootTown_ProfessorBirchsLab_EventScript_BirchQuestCheck::
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
+	goto_if_set FLAG_BIRCH_QUEST_COMPLETE, LittlerootTown_ProfessorBirchsLab_EventScript_BirchPostQuest
+	goto_if_set FLAG_BIRCH_QUEST_METEOR, LittlerootTown_ProfessorBirchsLab_EventScript_BirchRewardMasterBall
+	goto_if_set FLAG_BIRCH_QUEST_STARTED, LittlerootTown_ProfessorBirchsLab_EventScript_BirchCheckProgress
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchQuestHook, MSGBOX_DEFAULT
+	setflag FLAG_BIRCH_QUEST_STARTED
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BirchCheckProgress::
+	goto_if_unset FLAG_BIRCH_QUEST_WEATHER, LittlerootTown_ProfessorBirchsLab_EventScript_BirchRemind
+	goto_if_unset FLAG_BIRCH_QUEST_SLAB, LittlerootTown_ProfessorBirchsLab_EventScript_BirchRemind
+	goto_if_unset FLAG_BIRCH_QUEST_COZMO, LittlerootTown_ProfessorBirchsLab_EventScript_BirchRemind
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchAllThreeDone, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BirchRemind::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchRemind, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BirchRewardMasterBall::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchQuestComplete, MSGBOX_DEFAULT
+	giveitem ITEM_MASTER_BALL
+	setflag FLAG_BIRCH_QUEST_COMPLETE
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_BirchPostQuest::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchPostQuest, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_ProfessorBirchsLab_Text_BirchQuestHook:
+	.string "PROF. BIRCH: {PLAYER}! Champion!\n"
+	.string "I have been waiting for you.\p"
+	.string "While you were conquering the\n"
+	.string "POKeMON LEAGUE, I was buried\l"
+	.string "in migration data.\p"
+	.string "The patterns are extraordinary.\n"
+	.string "Species arriving in waves.\l"
+	.string "Evolved forms where there were\l"
+	.string "only juveniles months ago.\p"
+	.string "But I cannot explain the cause.\n"
+	.string "Why HERE? Why NOW?\p"
+	.string "I need field data from three\n"
+	.string "sources to triangulate the\l"
+	.string "origin.\p"
+	.string "First, the WEATHER INSTITUTE\n"
+	.string "on ROUTE 119.\p"
+	.string "Second, the SCORCHED SLAB\n"
+	.string "on ROUTE 120.\p"
+	.string "Third, PROF. COZMO in FALLARBOR.\p"
+	.string "Report back after each site.\n"
+	.string "Or visit all three and bring\l"
+	.string "everything at once.\p"
+	.string "This could be the discovery\n"
+	.string "of our careers, {PLAYER}.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BirchRemind:
+	.string "The WEATHER INSTITUTE,\n"
+	.string "SCORCHED SLAB, and PROF.\l"
+	.string "COZMO in FALLARBOR.\p"
+	.string "Any order you like. Just\n"
+	.string "bring me that data!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BirchAllThreeDone:
+	.string "You have data from all\n"
+	.string "three sites?\p"
+	.string "Let me see... atmospheric\n"
+	.string "anomalies... ancient records...\l"
+	.string "meteorite resonance...\p"
+	.string "... ... ...\p"
+	.string "{PLAYER}. They all point\n"
+	.string "to the same place.\p"
+	.string "METEOR FALLS. The deepest\n"
+	.string "chamber.\p"
+	.string "I need you to go there and\n"
+	.string "investigate. Look for\l"
+	.string "anything unusual.\p"
+	.string "Be careful. Whatever is\n"
+	.string "down there has been drawing\l"
+	.string "powerful species across\l"
+	.string "continents.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BirchQuestComplete:
+	.string "PROF. BIRCH: {PLAYER}!\n"
+	.string "You found the epicenter?\p"
+	.string "The meteorite's core in\n"
+	.string "METEOR FALLS... a cyclical\l"
+	.string "resonance drawing POKeMON\l"
+	.string "across continents...\p"
+	.string "The atmospheric data, the\n"
+	.string "cave paintings, COZMO's\l"
+	.string "analysis... it all fits.\p"
+	.string "This is not a crisis. This\n"
+	.string "is a natural cycle.\p"
+	.string "The meteorite has been\n"
+	.string "doing this for millennia.\p"
+	.string "Every few centuries, it\n"
+	.string "pulses. POKeMON hear the\l"
+	.string "call. They come to HOENN.\p"
+	.string "The ABSOL were not sensing\n"
+	.string "disaster. They were sensing\l"
+	.string "CHANGE.\p"
+	.string "And the GIBLE from SINNOH...\n"
+	.string "Dragon types, drawn across\l"
+	.string "an ocean by a song in the\l"
+	.string "stone.\p"
+	.string "{PLAYER}, we did not just\n"
+	.string "solve a mystery.\p"
+	.string "We discovered that HOENN\n"
+	.string "has been a sanctuary for\l"
+	.string "migrating POKeMON since\l"
+	.string "before recorded history.\p"
+	.string "The POKeMON LEAGUE sent\n"
+	.string "this for whoever solved\l"
+	.string "the migration mystery.\p"
+	.string "I can think of no one\n"
+	.string "more deserving.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BirchPostQuest:
+	.string "PROF. BIRCH: The migration\n"
+	.string "data is stabilizing, just\l"
+	.string "as COZMO predicted.\p"
+	.string "The new species are settling\n"
+	.string "in. Building territories.\l"
+	.string "Raising young.\p"
+	.string "HOENN's ecosystem is not\n"
+	.string "collapsing. It is GROWING.\p"
+	.string "And it is all documented\n"
+	.string "in our research paper.\l"
+	.string "Co-authored by you, of\l"
+	.string "course.$"
