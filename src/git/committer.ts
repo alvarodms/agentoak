@@ -81,6 +81,14 @@ export async function commitCycle(
       await git.add(gitPath);
     }
 
+    // Safety net: stage any new/modified sprite files not tracked by output parser
+    // (catches MCP tool outputs like fetch_pokemon_sprites, Bash cp commands, etc.)
+    try {
+      await git.add("pokeemerald/graphics/pokemon/*");
+    } catch {
+      // Ignore — no new sprite files or directory doesn't exist
+    }
+
     // Check if there's anything to commit
     const status = await git.status();
     if (status.staged.length === 0) {

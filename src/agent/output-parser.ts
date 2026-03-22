@@ -200,6 +200,21 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
           filesModified.add(input.file_path);
         }
 
+        // Track files created by fetch_pokemon_sprites MCP tool
+        if (toolName === "fetch_pokemon_sprites" && typeof input.name === "string") {
+          const spriteName = (input.name as string)
+            .toLowerCase()
+            .replace(/\s+/g, "_")
+            .replace(/-/g, "_");
+          const spriteDir = `pokeemerald/graphics/pokemon/${spriteName}`;
+          for (const f of [
+            "anim_front.png", "front.png", "back.png",
+            "icon.png", "footprint.png", "normal.pal", "shiny.pal",
+          ]) {
+            filesModified.add(`${spriteDir}/${f}`);
+          }
+        }
+
         // Detect build from Bash tool calls running `make`
         if (toolName === "Bash" && typeof input.command === "string") {
           const cmd = input.command as string;
