@@ -68,6 +68,15 @@ fetch_pokemon_sprites(name: "lucario", overwrite: true)  # Re-downloads, replaci
 - Always verify sprites compile correctly by running `make` after downloading.
 - If a download fails (network issues), retry once. If it still fails, fall back to the placeholder copy approach.
 
+**Sprite verification (mandatory):**
+After calling `fetch_pokemon_sprites`, you MUST verify the download succeeded before proceeding:
+
+1. Run `ls pokeemerald/graphics/pokemon/<name>/` to confirm all 7 files exist:
+   `anim_front.png`, `front.png`, `back.png`, `icon.png`, `footprint.png`, `normal.pal`, `shiny.pal`
+2. If any file is missing, retry with `overwrite: true`. If it still fails, copy from a similar species.
+3. Run `git add pokeemerald/graphics/pokemon/<name>/` to ensure sprites are staged for commit. Sprite files created by MCP tools are auto-staged by the runner, but this explicit step guarantees they are committed even if auto-staging fails.
+4. Do NOT consider a species addition complete until all sprite files exist on disk AND `make` succeeds.
+
 ### Other Pokémon Data Tools
 
 You also have access to these research tools — use them when designing movesets, encounters, teams, or checking competitive data:
