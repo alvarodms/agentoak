@@ -398,8 +398,13 @@ export default function GuidePage() {
             <a
               key={index}
               className="guide-quick-nav-item"
-              href={`#${step.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+              href="javascript:void(0)"
               title={step.label}
+              onClick={(e) => {
+                e.preventDefault();
+                const id = step.label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               {step.label.replace(/^Chapter \d+:\s*/, '')}
             </a>
