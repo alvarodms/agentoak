@@ -37,8 +37,8 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 - **Reusable TMs**: Deleted 2 lines in `src/party_menu.c`
 - **Auto-Run**: `(heldKeys & B_BUTTON)` removed; `FlagSet(FLAG_SYS_B_DASH)` in `new_game.c`
 
-### Trainer ID Constraints (Resolved Cycle 52)
-- **Current state**: 864 trainer IDs matching 864 flag slots (0x500-0x85F) — ceiling resolved
+### Trainer ID Constraints (Updated Cycle 71)
+- **Current state**: 874 trainer IDs (0x500-0x869) — extended in Cycle 71 for E4 rematch tiers 3-4
 - **Removed**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854), + 1 more in Cycle 52
 
 ---
@@ -90,7 +90,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |
 | 14 | Early-game route trainer refresh (102-104) | Needs verification — partially covered in Cycle 56 |
 | 15 | Late-game route trainer refresh (113-118, 121-123) | **DONE** (Cycle 57 — 83 trainers across 9 routes, migration species, held items, custom movesets) |
-| 16 | Victory Road + dungeon trainer refresh | **Victory Road DONE** (Cycle 58). **Villain dungeons DONE** (Cycle 72 — 36 trainers across Mt. Chimney, Jagged Pass, Magma Hideout, Aqua Hideout, Seafloor Cavern). Natural dungeons (Granite Cave, Mt. Pyre, Shoal Cave) still pending. |
+| 16 | Victory Road + dungeon trainer refresh | **DONE** — Victory Road (Cycle 58), villain dungeons (Cycle 72, 36 trainers), Mt. Pyre interior (Cycle 73, 8 trainers). Note: Granite Cave & Shoal Cave have zero trainers in vanilla — no refresh needed. |
 
 ---
 

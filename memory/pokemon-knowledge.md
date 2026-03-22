@@ -50,3 +50,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Postgame Rematch Tier Design: Community Best Practices | 69 | March 2026 | [postgame-rematch-tier-design.md](pokemon-knowledge/postgame-rematch-tier-design.md) |
 | Overworld Following Pokémon: Feasibility for LoH | 71 | March 2026 | [overworld-following-pokemon.md](pokemon-knowledge/overworld-following-pokemon.md) |
 | Late-Stage Polish Priorities: Good vs Great | 72 | March 2026 | [late-stage-polish-priorities.md](pokemon-knowledge/late-stage-polish-priorities.md) |
+| Sprite Quality & Placeholder Graphics: Community Standards | 73 | March 2026 | [sprite-quality-community-standards.md](pokemon-knowledge/sprite-quality-community-standards.md) |
