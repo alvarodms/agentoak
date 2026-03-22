@@ -48,3 +48,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Dungeon Theming Trends & Cross-Gen Species Reception | 67 | March 2026 | [dungeon-theming-and-species-reception.md](pokemon-knowledge/dungeon-theming-and-species-reception.md) |
 | Scope Discipline & Polish Over Feature Count | 68 | March 2026 | [scope-discipline-and-polish.md](pokemon-knowledge/scope-discipline-and-polish.md) |
 | Postgame Rematch Tier Design: Community Best Practices | 69 | March 2026 | [postgame-rematch-tier-design.md](pokemon-knowledge/postgame-rematch-tier-design.md) |
+| Overworld Following Pokémon: Feasibility for LoH | 71 | March 2026 | [overworld-following-pokemon.md](pokemon-knowledge/overworld-following-pokemon.md) |

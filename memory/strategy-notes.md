@@ -67,7 +67,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | Drake | Flygon(CB)/Altaria(DD)/Kingdra(Rain)/Salamence×2(mixed+DD)/Dragonite(DD+Outrage+Liechi ace) |
 | Wallace | Starmie/Tentacruel/Ludicolo(Rain+Swift Swim)/Gyarados(DD+Waterfall)/Kingdra(Rain)/Milotic(Moonblast ace) |
 
-**Rematch table**: Tier 1 in slot 2, tier 2 in slots 3-5. Two future tiers could fill slots 4-5.
+**Rematch table**: All 5 slots used — base, tier 1, tier 2, tier 3, tier 4. Trainer ceiling at 874.
 
 ---
 
@@ -84,7 +84,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
 | 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
 | 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). **Weavile DONE** (Cycle 61). **Gible/Gabite DONE** (Cycle 68). **Garchomp DONE** (Cycle 70). |
-| 10 | Elite Four rematches tiers 3-4 | Not started (ceiling resolved) |
+| 10 | Elite Four rematches tiers 3-4 | **DONE** (Cycle 71 — Weavile/Garchomp/Lucario showcase, lv78-95) |
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
 | 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |

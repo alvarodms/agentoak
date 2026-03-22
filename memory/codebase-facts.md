@@ -8,11 +8,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rematch table**: `src/battle_setup.c` lines 260+ — `gRematchTable[]` uses `REMATCH(t1, t2, t3, t4, t5, map)` macro. Each entry holds 5 trainer IDs (base + 4 rematch tiers).
 
-**Current state**: Tier 1 rematch IDs in slot 2, tier 2 IDs in slots 3-5. Slots 4-5 are duplicates of tier 2 — two more tiers can be added.
+**Current state**: All 5 rematch slots filled — base, tier 1, tier 2, tier 3, tier 4. No more tiers available.
 
 **Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT` in `opponents.h`. `MAX_TRAINERS_COUNT` hard cap is 864 based on trainer flag allocation (0x500-0x85F = 864 slots). **Current state: 864 trainer IDs — ceiling issue resolved in Cycle 52.**
+**Trainer ID ceiling**: `TRAINERS_COUNT`/`MAX_TRAINERS_COUNT` = 874 in `opponents.h`. Flag space 0x500-0x869. System flags shift automatically via `TRAINER_FLAGS_END` macro.
 
 **Three-file trainer system**: Each trainer requires coordinated removal/addition across `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
 
