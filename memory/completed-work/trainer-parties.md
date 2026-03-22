@@ -45,3 +45,5 @@ Modified files related to trainer team compositions, held items, and level curve
 | `include/constants/opponents.h` | Trainer ID ceiling extended to 874 | **71** | 10 new IDs: TRAINER_SIDNEY_REMATCH_3 through TRAINER_WALLACE_REMATCH_4 |
 | `src/battle_setup.c` | Rematch table: tier 3+4 IDs in slots 4-5 | **71** | All 5 E4 members now use all 5 rematch slots |
 | `include/constants/flags.h` | Updated trainer flag range comment | **71** | 0x500-0x869 (874 trainers) |
+| `src/data/trainer_parties.h` | Villain dungeon trainer refresh (36 trainers) | **72** | Mt. Chimney (2 grunts + Tabitha), Jagged Pass (1 grunt), Magma Hideout (16 grunts + Tabitha), Aqua Hideout (8 grunts + Matt), Seafloor Cavern (5 grunts + Shelly). All with custom movesets, held items, migration species (Houndour/Houndoom, Crawdaunt, Claydol, Weezing). Levels raised to match progression. |
+| `src/data/trainers.h` | Villain dungeon trainer entries updated | **72** | All 36 changed to ITEM_CUSTOM_MOVES. Grunts: CHECK_BAD_MOVE + TRY_TO_FAINT + CHECK_VIABILITY. Admins: + SETUP_FIRST_TURN + Full Restores. |
