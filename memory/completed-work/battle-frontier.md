@@ -47,3 +47,101 @@
 - ELECTABUZZ_3: Fire/Ice Punch→Thunderbolt/Psychic/Thunder Wave, Nature→Modest
 
 **No change**: AMPHAROS_4 (Fire Punch kept — only Fire coverage), BLAZIKEN_4, TYPHLOSION_4, REGISTEEL_2 (mixed sets acceptable as-is)
+
+## Cycle 85 — P/S Split Crunch/Shadow Ball/Hyper Beam Audit (65 sets modified)
+
+**File**: `src/data/battle_frontier/battle_frontier_mons.h`
+
+**Category A — Physical mons with SpA EVs: fixed EVs/nature to match physical moves**
+- POOCHYENA: EVs SpA→Atk
+- MAWILE: EVs SpA→Atk
+- MIGHTYENA_2: Shadow Ball→Return, Rock Smash added, EVs→Atk+Speed, Nature→Adamant
+- SHARPEDO_2: EVs→Atk+Speed, Nature→Adamant
+- URSARING_1: EVs→Atk+HP, Nature→Adamant
+- SALAMENCE_2: EVs→Atk+Speed, Nature→Adamant
+- SALAMENCE_3: EVs→Atk+Speed, Nature→Adamant
+- FLYGON_4: EVs→Atk+Speed, Nature→Adamant
+- URSARING_7: EVs→Atk+HP, Nature→Adamant
+- URSARING_8: EVs→Atk+HP, Nature→Adamant
+- TYRANITAR_2: EVs→Atk+Speed, Nature→Adamant
+- TYRANITAR_9: EVs→Atk+Speed, Nature→Adamant
+- FERALIGATR_3: EVs→Atk+HP, Nature→Adamant
+- GRANBULL_4: Shadow Ball→Rock Slide, EVs→Atk+Speed, Nature→Adamant
+- SALAMENCE_7: EVs→Atk+Speed, Nature→Adamant
+- SALAMENCE_8: EVs→Atk+Speed, Nature→Adamant
+- ARCANINE_3: EVs→Atk+Speed, Nature→Adamant (Overheat as one special nuke)
+- ARCANINE_4: EVs→Atk+Speed, Nature→Adamant
+- SCEPTILE_4: Crunch→Aerial Ace, Giga Drain kept, EVs→Atk+Speed, Nature→Adamant
+
+**Category B — Special mons: Crunch replaced with special moves**
+- HOUNDOUR: Crunch→Shadow Ball
+- GIRAFARIG_2: Crunch→Thunderbolt
+- GLALIE_1: Crunch→Shadow Ball
+- MANECTRIC_2: Crunch→Shadow Ball
+- MANECTRIC_4: Crunch→Shadow Ball
+- HOUNDOOM_2: Crunch→Shadow Ball
+- HOUNDOOM_4: Crunch→Shadow Ball
+- FLYGON_2: Crunch→Protect (Sunny Day set)
+- NIDOQUEEN_3: Crunch→Sludge Bomb (Poison STAB)
+- ARCANINE_2: Crunch→Solar Beam (Sunny Day synergy)
+- TYRANITAR_4: Crunch→Surf (all-special coverage set)
+
+**Category C — Physical mons: Shadow Ball replaced with physical moves**
+- LICKITUNG_2: Shadow Ball→Brick Break
+- RATICATE_2: Shadow Ball→Facade
+- FURRET_2: Shadow Ball→Brick Break
+- QWILFISH_2: Shadow Ball→Waterfall (Water STAB)
+- VIGOROTH_2: Shadow Ball→Brick Break
+- ZANGOOSE_2: Shadow Ball→Return
+- STANTLER_2: Shadow Ball→Earthquake
+- ABSOL_2: Shadow Ball→Brick Break
+- SWALOT_2: Shadow Ball→Earthquake
+- KANGASKHAN_2: Shadow Ball→Brick Break
+- KANGASKHAN_4: Shadow Ball→Rock Slide
+- MILTANK_1: Shadow Ball→Brick Break
+- MILTANK_2: Shadow Ball→Body Slam
+- MILTANK_3: Shadow Ball→Rock Slide
+- NIDOKING_2: Shadow Ball→Rock Slide
+- SNORLAX_1: Shadow Ball→Earthquake
+- SNORLAX_3: Shadow Ball→Earthquake
+- SNORLAX_4: Shadow Ball→Earthquake
+- SNORLAX_5: Shadow Ball→Earthquake
+- SNORLAX_6: Shadow Ball→Rock Slide
+- SNORLAX_8: Shadow Ball→Earthquake
+- GRANBULL_2: Shadow Ball→Rock Slide (prev modified Cycle 80)
+- SLAKING_2: Shadow Ball→Earthquake
+- SLAKING_3: Shadow Ball→Return (CB set)
+- HYPNO_3: Shadow Ball→Brick Break
+- WEEZING_4: Shadow Ball→Will-O-Wisp
+- CROBAT_3: Shadow Ball→Bite
+- CROBAT_4: Shadow Ball→Bite
+- CLAYDOL_4: Shadow Ball→Rock Slide
+- FLAREON_3: Shadow Ball→Return, Nature→Adamant
+- KECLEON_2: Shadow Ball→Return (CB set)
+
+**Category D — Ghost/special mons: fixed natures/EVs to match Shadow Ball**
+- GOLBAT_2: EVs Atk→SpA, Nature Adamant→Modest (3 special moves in split)
+- BANETTE_2: Frustration→Thunderbolt, EVs→SpA+Speed, Nature→Modest
+- MISDREAVUS_1: Nature Impish→Bold (keeps Def, doesn't penalize SpA)
+- GENGAR_2: EVs Atk→SpA, Nature Adamant→Timid
+- EXPLOUD_1: EVs Atk→SpA, Nature Impish→Modest
+- WEEZING_1: EVs Atk→SpA, Nature Adamant→Bold
+- PORYGON2_1: Aerial Ace→Thunderbolt, EVs→SpA, Nature→Modest
+- DUSCLOPS_3: Nature Adamant→Hardy (neutral, preserves Shadow Ball STAB)
+- DUSCLOPS_4: Nature Adamant→Hardy
+
+**Category E — Hyper Beam replaced with physical Normal moves**
+- SNORLAX_7: Hyper Beam→Return, Shadow Ball→Rock Slide
+- AERODACTYL_2: Hyper Beam→Double-Edge, Ancient Power→Rock Slide
+- URSARING_6: Hyper Beam→Return
+- REGIROCK_5: Hyper Beam→Double-Edge
+- DRAGONITE_3: Hyper Beam→Double-Edge
+- DRAGONITE_4: Hyper Beam→Return
+
+**Category F — Latias/Latios: Shadow Ball replaced on physical sets**
+- LATIAS_7: Shadow Ball→Dragon Claw
+- LATIOS_7: Shadow Ball→Dragon Claw
+
+**Also fixed (build prerequisite):**
+- Created `graphics/types/fairy.png`, `physical.png`, `special.png`, `status.png` (placeholder type icons)
+- Created 6 cry WAV placeholders for new species (Lucario, Weavile, Riolu, Gible, Gabite, Garchomp)

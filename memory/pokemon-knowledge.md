@@ -41,3 +41,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Frontier Audit: Community Precedent & Completion Strategy | 81 | March 2026 | [frontier-audit-community-precedent.md](pokemon-knowledge/frontier-audit-community-precedent.md) |
 | Postgame Quest & Narrative Design Patterns | 82 | March 2026 | [postgame-quest-narrative-design.md](pokemon-knowledge/postgame-quest-narrative-design.md) |
 | Quest Implementation Priorities After Lost Cycles | 84 | March 2026 | [quest-implementation-priorities.md](pokemon-knowledge/quest-implementation-priorities.md) |
+| Battle Frontier P/S Split: Community Complaints | 85 | March 2026 | [frontier-split-community-complaints.md](pokemon-knowledge/frontier-split-community-complaints.md) |

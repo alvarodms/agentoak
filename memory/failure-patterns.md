@@ -37,7 +37,7 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 
 **Symptom**: Build fails with "Failed to open graphics/pokemon/lucario/anim_front.png" or similar for sprite/cry/fairy.png files.
 **Cause**: Binary assets (sprites, cries, fairy.png) from previous cycles were never committed to git. Each fresh checkout is missing them.
-**Resolution**: Re-fetch sprites via `fetch_pokemon_sprites` MCP tool, copy placeholder cries from similar species, copy fairy.png from psychic.png. Must be done every fresh build if assets aren't committed.
+**Resolution**: Re-fetch sprites via `fetch_pokemon_sprites` MCP tool, copy placeholder cries from similar species, copy fairy.png from normal.png. Also need physical.png, special.png, status.png (move category icons from P/S split). Must be done every fresh build if assets aren't committed.
 
 ## Duplicate Entry "2 matches found" Edit Error
 
