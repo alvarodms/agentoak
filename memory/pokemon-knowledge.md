@@ -39,3 +39,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Battle Frontier Moveset Optimization After P/S Split | 77 | March 2026 | [frontier-moveset-optimization.md](pokemon-knowledge/frontier-moveset-optimization.md) |
 | Postgame Content Trends in Emerald Hacks (2025-2026) | 79 | March 2026 | [postgame-content-trends-2026.md](pokemon-knowledge/postgame-content-trends-2026.md) |
 | Frontier Audit: Community Precedent & Completion Strategy | 81 | March 2026 | [frontier-audit-community-precedent.md](pokemon-knowledge/frontier-audit-community-precedent.md) |
+| Postgame Quest & Narrative Design Patterns | 82 | March 2026 | [postgame-quest-narrative-design.md](pokemon-knowledge/postgame-quest-narrative-design.md) |
