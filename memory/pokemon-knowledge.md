@@ -49,3 +49,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Scope Discipline & Polish Over Feature Count | 68 | March 2026 | [scope-discipline-and-polish.md](pokemon-knowledge/scope-discipline-and-polish.md) |
 | Postgame Rematch Tier Design: Community Best Practices | 69 | March 2026 | [postgame-rematch-tier-design.md](pokemon-knowledge/postgame-rematch-tier-design.md) |
 | Overworld Following Pokémon: Feasibility for LoH | 71 | March 2026 | [overworld-following-pokemon.md](pokemon-knowledge/overworld-following-pokemon.md) |
+| Late-Stage Polish Priorities: Good vs Great | 72 | March 2026 | [late-stage-polish-priorities.md](pokemon-knowledge/late-stage-polish-priorities.md) |
