@@ -134,7 +134,7 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Struct: `{u16 species, u16 moves[4], u8 itemTableId, u8 evSpread, u8 nature}`. Our 6 new species NOT in pool.
 
-**Pending fixes**: (1) sMindRatings needs +1 for Moonblast/Play Rough/Dazzling Gleam, (2) Factory style arrays need 3 Fairy moves, (3) 882 Frontier mons have P/S split stat mismatches (low priority).
+**Completed fixes (Cycle 77)**: (1) sMindRatings +1 for Moonblast/Play Rough/Dazzling Gleam, (2) Factory style arrays now include 3 Fairy moves, (3) Lucario/Weavile/Garchomp added to pool (indices 882-893, 4 sets each). **Pending**: 882 original Frontier mons have P/S split stat mismatches (low priority). **UNVERIFIED** — no build was run in Cycle 77.
 
 ---
 
