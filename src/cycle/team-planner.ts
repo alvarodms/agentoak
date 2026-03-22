@@ -159,7 +159,7 @@ ${formatPlannerClosingInstructions()}`;
 
   const result = await runClaudeCode(prompt, {
     maxTurns: 50,
-    timeout: 5 * 60 * 1000,
+    timeout: 10 * 60 * 1000,
     model,
     jsonSchema: CYCLE_PLAN_SCHEMA,
   });
