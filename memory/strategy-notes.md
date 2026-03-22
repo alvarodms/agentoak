@@ -88,7 +88,7 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
 | 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
 | 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |
-| 14 | Early-game route trainer refresh (102-104) | Needs verification — partially covered in Cycle 56 |
+| 14 | Early-game route trainer refresh (102-104) | **DONE** (Cycle 74 — 11 trainers across 3 routes, 9 migration species, custom movesets, Route 103 level-adjusted for Surf access) |
 | 15 | Late-game route trainer refresh (113-118, 121-123) | **DONE** (Cycle 57 — 83 trainers across 9 routes, migration species, held items, custom movesets) |
 | 16 | Victory Road + dungeon trainer refresh | **DONE** — Victory Road (Cycle 58), villain dungeons (Cycle 72, 36 trainers), Mt. Pyre interior (Cycle 73, 8 trainers). Note: Granite Cave & Shoal Cave have zero trainers in vanilla — no refresh needed. |
 
