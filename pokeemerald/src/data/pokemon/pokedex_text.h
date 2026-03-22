@@ -2349,3 +2349,9 @@ const u8 gGabitePokedexText[] = _(
     "out gems in caves and hoards\n"
     "them in its nest. A GABITE's\n"
     "collection is its prized treasure.");
+
+const u8 gGarchompPokedexText[] = _(
+    "It flies at the speed of a jet\n"
+    "plane. When it folds its body\n"
+    "and spreads its wings, it looks\n"
+    "like a fighter jet in flight.");

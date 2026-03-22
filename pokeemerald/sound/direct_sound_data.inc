@@ -1959,6 +1959,10 @@ Cry_Gabite::
 	.incbin "sound/direct_sound_samples/cries/gabite.bin"
 
 	.align 2
+Cry_Garchomp::
+	.incbin "sound/direct_sound_samples/cries/garchomp.bin"
+
+	.align 2
 DirectSoundWaveData_register_noise::
 	.incbin "sound/direct_sound_samples/register_noise.bin"
 
