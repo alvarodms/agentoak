@@ -104,9 +104,9 @@ The physical/special split changes how every battle feels. Fairy type introduces
 | Arena sMindRatings: +1 for 3 Fairy moves | HIGH | 1 min | **DONE** (Cycle 78) |
 | Factory style arrays: not needed (standard moves) | HIGH | — | **DONE** (Cycle 78 — confirmed no classification needed) |
 | Add Lucario/Weavile/Garchomp to Frontier mon pool | MEDIUM | 1 cycle | **DONE** (Cycle 78 — 12 sets, indices 882-893) |
-| Audit 882 Frontier mons for P/S split mismatches | LOW | Multi-cycle | Future |
+| Audit 882 Frontier mons for P/S split mismatches | LOW | Multi-cycle | **Punch batch DONE** (Cycle 80) |
 
-**Remaining work**: The 882-mon P/S split audit (41 Punch entries + ~117 Crunch/Shadow Ball entries with stat/nature mismatches). Not game-breaking but reduces Frontier quality.
+**Remaining work**: Punch moves batch complete (Cycle 80 — 25 sets fixed). ~117 Crunch/Shadow Ball entries remain for a future cycle.
 
 ---
 
