@@ -6,17 +6,11 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 
 ---
 
-# LEGENDS OF HOENN — v1.0 (Complete)
+# LEGENDS OF HOENN — Vision
 
-**Vision**: Pokémon Emerald reimagined with powerful migrant species on every route. Starters: Larvitar/Bagon/Dratini (pseudo-legendary lines). Every encounter worth catching. Every trainer a real fight.
+**v1.0**: Pokémon Emerald reimagined with powerful migrant species on every route. Starters: Larvitar/Bagon/Dratini. Every encounter worth catching. Every trainer a real fight. **Released.**
 
-**Thematic conceit**: A migration event has disrupted Hoenn's ecosystem. Rare Pokémon from across the world have arrived. Gym leaders adapted. Birch is studying it. The player arrived at the perfect moment.
-
-**Starter → Rival correspondence** (Cycle 12): Larvitar→rival gets Bagon; Bagon→rival gets Dratini; Dratini→rival gets Larvitar.
-
-**Encounter philosophy**: Routes as ecosystems. 101–103 introductory, 104–116 escalating, 117–123 peak diversity. Dungeons are specialist habitats.
-
-**Cycles 2–38 scope** (see `completed-work.md` for files): All encounters (73 routes + 34 dungeons), gym/Elite Four/rival/villain teams, trainer + wild held items (164 species), NPC migration dialogue arc (Birch→Wallace), reusable TMs, TM prices halved, Earthquake pre-Gym 4, auto-run from first step. **v1.0 released.**
+**v2.0**: Physical/special split, Fairy type, 4 new species (Riolu/Lucario/Weavile/Gible/Gabite/Garchomp), all trainers refreshed, Second Wave event, Battle Frontier fixes, move category icons. **All 17 roadmap items complete.** See `completed-work.md` for file-level detail.
 
 ---
 
@@ -37,125 +31,123 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 - **Reusable TMs**: Deleted 2 lines in `src/party_menu.c`
 - **Auto-Run**: `(heldKeys & B_BUTTON)` removed; `FlagSet(FLAG_SYS_B_DASH)` in `new_game.c`
 
-### Trainer ID Constraints (Updated Cycle 71)
-- **Current state**: 874 trainer IDs (0x500-0x869) — extended in Cycle 71 for E4 rematch tiers 3-4
-- **Removed**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854), + 1 more in Cycle 52
+### Trainer ID Constraints
+- **Current state**: 874 trainer IDs (0x500-0x869)
+- Rematch table: all 5 E4 slots used. Gym leaders: 4 tiers each.
 
 ---
 
-# LEGENDS OF HOENN v2.0 — Game Design Document
+## Remaining Polish
 
-## Creative Manifesto
+### Battle Frontier P/S Split Audit
+~117 Crunch/Shadow Ball Frontier entries remain for a future cycle. Punch batch done (Cycle 80).
 
-v2.0 is not a port. It is a redesign built on a new foundation.
+### New Species Pipeline
+**Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~29 source files per 2-species family. All planned species shipped.
 
-The physical/special split changes how every battle feels. Fairy type introduces genuine counterplay to the Dragon-heavy ecosystem. The expanded species pool gives the migration narrative the depth it deserves.
-
----
-
-## Postgame — Elite Four Rematches
-
-**Tier 1 (Cycle 49)**: All 5 members have 6-mon rematch teams (lv60-71). Gen 3 only.
-
-**Tier 2 (Cycle 50)**: All 5 members have escalated teams (lv72-82). Key changes:
-
-| Leader | Tier 2 Highlights |
-|--------|-------------------|
-| Sidney | Crawdaunt(SD)/Sharpedo/Absol(CB)/Houndoom/Umbreon(trap)/Tyranitar(DD+Iron Tail ace) |
-| Phoebe | Banette(WoW)/Sableye(CM)/Misdreavus(CM)/Dusclops(Curse)/Gengar(Destiny Bond)/Gengar(Hypnosis ace) |
-| Glacia | Glalie(Explode)/Jynx(Lovely Kiss+CM)/Cloyster(Spikes+Explode)/Piloswine/Walrein(Sheer Cold)/Lapras(Sheer Cold ace) |
-| Drake | Flygon(CB)/Altaria(DD)/Kingdra(Rain)/Salamence×2(mixed+DD)/Dragonite(DD+Outrage+Liechi ace) |
-| Wallace | Starmie/Tentacruel/Ludicolo(Rain+Swift Swim)/Gyarados(DD+Waterfall)/Kingdra(Rain)/Milotic(Moonblast ace) |
-
-**Rematch table**: All 5 slots used — base, tier 1, tier 2, tier 3, tier 4. Trainer ceiling at 874.
+### Second Wave Event
+**Full spec:** `memory/second-wave-design.md`. All implementation complete (Cycles 63-65).
 
 ---
 
-## v2.0 Roadmap — Status
+# Birch Postgame Research Quest — Design Document
 
-| Priority | Feature | Status |
-|----------|---------|--------|
-| 1 | Physical/Special split | **DONE** (Cycle 43) |
-| 2 | Fairy type engine + retypes + moves | **DONE** (Cycles 44, 46) |
-| 3 | Fairy encounter corridors | **DONE** (Cycle 49) |
-| 4 | Elite Four rematches tier 1 | **DONE** (Cycle 49) |
-| 5 | Elite Four rematches tier 2 | **DONE** (Cycle 50) |
-| 6 | Second Wave dialogue (3 NPCs) | **DONE** (Cycle 42) |
-| 7 | Postgame narrative polish (5 NPCs) | **DONE** (Cycle 50) |
-| 8 | Trainer ID ceiling fix | **DONE** (Cycle 52 — 864 IDs = 864 flag slots) |
-| 9 | New species (Gible, Riolu, etc.) | **Riolu/Lucario DONE** (Cycle 60). **Weavile DONE** (Cycle 61). **Gible/Gabite DONE** (Cycle 68). **Garchomp DONE** (Cycle 70). |
-| 10 | Elite Four rematches tiers 3-4 | **DONE** (Cycle 71 — Weavile/Garchomp/Lucario showcase, lv78-95) |
-| 11 | Gym leader rematches tier 1 | **DONE** (Cycle 54 — all 8 leaders, lv57-71, 4 tiers) |
-| 12 | Mid-game route trainer refresh (110-112, 119-120) | **DONE** (Cycle 55 — 28 trainers, migration species, P/S split showcase) |
-| 13 | Water route trainer refresh (105-109) | **DONE** (Cycle 56 — 35 trainers + 24 rematches, ocean migration corridor, 4 route aces) |
-| 14 | Early-game route trainer refresh (102-104) | **DONE** (Cycle 74 — 11 trainers across 3 routes, 9 migration species, custom movesets, Route 103 level-adjusted for Surf access) |
-| 15 | Late-game route trainer refresh (113-118, 121-123) | **DONE** (Cycle 57 — 83 trainers across 9 routes, migration species, held items, custom movesets) |
-| 16 | Victory Road + dungeon trainer refresh | **DONE** — Victory Road (Cycle 58), villain dungeons (Cycle 72, 36 trainers), Mt. Pyre interior (Cycle 73, 8 trainers). Note: Granite Cave & Shoal Cave have zero trainers in vanilla — no refresh needed. |
-| 17 | Move category icons (Issue #45) | **DONE** (Cycle 75 — Physical/Special/Status icons on summary screen battle moves page) |
+## Overview
 
----
+**Trigger**: Talk to Birch after becoming Champion (`FLAG_SYS_GAME_CLEAR` set).
+**Theme**: Birch asks the player to investigate the migration's cause — field data from three sites, then a discovery at Meteor Falls.
+**Structure**: 4 investigation stages + final report = 5 interactions. Stages 1-3 are non-linear; Stage 4 requires all three; Stage 5 requires Stage 4.
 
-## Battle Frontier Fix Plan (Cycle 76 Audit)
+**Resolution**: The migration is a natural, cyclical phenomenon. The Meteor Falls meteorite emits a resonance every few centuries that draws Dragon-type and high-BST species to Hoenn. The Absol sensed change, not disaster. Hoenn is a sanctuary, not a crisis zone. The migration will stabilize on its own.
 
-**No crash risks found.** All Frontier code uses sentinel-terminated type tables and symbolic constants.
+## Flags (6 total — verified available in flags.h)
 
-| Fix | Priority | Effort | Cycle |
-|-----|----------|--------|-------|
-| Arena sMindRatings: +1 for 3 Fairy moves | HIGH | 1 min | **DONE** (Cycle 78) |
-| Factory style arrays: not needed (standard moves) | HIGH | — | **DONE** (Cycle 78 — confirmed no classification needed) |
-| Add Lucario/Weavile/Garchomp to Frontier mon pool | MEDIUM | 1 cycle | **DONE** (Cycle 78 — 12 sets, indices 882-893) |
-| Audit 882 Frontier mons for P/S split mismatches | LOW | Multi-cycle | **Punch batch DONE** (Cycle 80) |
+| Flag | Hex | Purpose |
+|------|-----|---------|
+| `FLAG_BIRCH_QUEST_STARTED` | 0x022 | Quest hook given |
+| `FLAG_BIRCH_QUEST_WEATHER` | 0x023 | Weather Institute done |
+| `FLAG_BIRCH_QUEST_SLAB` | 0x024 | Scorched Slab done |
+| `FLAG_BIRCH_QUEST_COZMO` | 0x025 | Prof. Cozmo done |
+| `FLAG_BIRCH_QUEST_METEOR` | 0x026 | Meteor Falls discovery done |
+| `FLAG_BIRCH_QUEST_COMPLETE` | 0x027 | Final reward given |
 
-**Remaining work**: Punch moves batch complete (Cycle 80 — 25 sets fixed). ~117 Crunch/Shadow Ball entries remain for a future cycle.
+## Quest Stages
 
----
+### Stage 0: Quest Hook — Birch's Lab
+**Insert point**: `EventScript_Birch` line 474, before `goto_if_unset FLAG_HAS_MATCH_CALL`. Add: `goto_if_set FLAG_SYS_GAME_CLEAR, EventScript_BirchQuestCheck`. The quest check handler branches on all 6 flags in priority order (complete → meteor → all-3 → started → hook).
+**Dialogue**: Birch congratulates Champion, reveals migration data is extraordinary, asks player to investigate 3 sites (Weather Institute, Scorched Slab, Prof. Cozmo). Non-linear — any order.
 
-## Future Directions
+### Stage 1: Weather Institute 2F — Atmospheric Data
+**Map**: `Route119_WeatherInstitute_2F`. Reuse existing scientist NPC.
+**Gate**: STARTED set, WEATHER not set.
+**Clue**: Electromagnetic pulse from underground, strongest toward northwest/Meteor Falls. Correlates with migration waves.
+**Reward**: Leftovers (ITEM_LEFTOVERS).
 
-### New Species Pipeline (Proven in Cycle 60)
-**Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~29 source files per 2-species family.
-**Status**: Pipeline proven with Riolu/Lucario. Build-clean on first attempt. Ready to scale.
-**Placeholder strategy**: Copy existing graphics + cries. Replace with real art later.
+### Stage 2: Scorched Slab — Ancient Records
+**Map**: `ScoredSlab`. **New NPC**: Hiker (OBJ_EVENT_GFX_HIKER), visibility gated on FLAG_SYS_GAME_CLEAR.
+**Gate**: STARTED set, SLAB not set.
+**Clue**: Cave paintings showing Pokémon crossing seas toward Hoenn, a star falling into a mountain — cyclical, every few centuries.
+**Reward**: TM02 Dragon Claw (thematic — Dragon migration).
 
-| Species | Location | Rate | Narrative Role |
-|---------|----------|------|----------------|
-| ~~Riolu~~ | Route 116 | 8% | **DONE** (Cycle 60) |
-| ~~Lucario~~ | (evolves via friendship) | — | **DONE** (Cycle 60) |
-| Gible | Meteor Falls B1F-2R | 8% | Garchomp's vanguard (future) |
-| Garchomp | Victory Road B2F | 5% | Dragon apex predator (future) |
-| ~~Gible~~ | Meteor Falls B1F_1R | 2% | **DONE** (Cycle 68) — Dragon/Ground, lv25-30, slots 10-11 |
-| ~~Gabite~~ | (evolves at lv24) | — | **DONE** (Cycle 68) |
-| ~~Garchomp~~ | Victory Road B2F | 2% | **DONE** (Cycle 70) — Dragon/Ground, lv40-44, slots 10-11, SPECIES_GARCHOMP 417 |
-| ~~Weavile~~ | Shoal Cave Ice Room | 8% | **DONE** (Cycle 61) — Sneasel→Weavile evo at lv40 |
+### Stage 3: Fallarbor Town — Meteorite Analysis
+**Map**: `FallarborTown_CozmosLab`. Reuse existing Cozmo NPC.
+**Gate**: STARTED set, COZMO not set.
+**Clue**: Meteorite fragments emit resonance activating Dragon-types. Cyclical — ~300 year period. Current cycle began ~18 months ago. Source: deep Meteor Falls.
+**Reward**: PP Max (ITEM_PP_MAX).
 
-### Second Wave Event (Designed Cycle 62)
+### Stage 4: Meteor Falls B1F_1R — The Discovery
+**Map**: `MeteorFalls_B1F_1R` (where Gible appears at 2%). **New NPC**: Researcher (OBJ_EVENT_GFX_SCIENTIST_1), visibility gated on FLAG_BIRCH_QUEST_STARTED.
+**Gate**: All three investigation flags set, METEOR not set.
+**Discovery**: Gible from Sinnoh gathered around the meteorite's glowing core — drawn across an ocean. The meteorite is a "heartbeat," not a weapon. This is the migration's epicenter.
+**Reward**: Rare Candy x3.
 
-**Full spec:** `memory/second-wave-design.md`
-**Summary:** Mid-game migration intensification triggered by Route 118 Steven encounter (post-Norman). FLAG_SECOND_WAVE swaps encounter tables on 6 eastern routes, adds 14 new species to wild encounters (Gligar, Kangaskhan, Heracross, Scyther, Murkrow, Misdreavus, Tauros, Miltank, Ursaring, Donphan, Pinsir, Stantler, Nidoking, Nidoqueen), plus evolved first-wave species (Houndoom, Arcanine, Dragonair, Pupitar, Shelgon, Clefable). 8 NPCs with before/after dialogue.
+### Stage 5: Report to Birch — Quest Complete
+**Map**: `LittlerootTown_ProfessorBirchsLab`.
+**Gate**: METEOR set, COMPLETE not set.
+**Resolution**: Birch synthesizes all data — cyclical meteorite resonance, ancient paintings confirm millennia of migrations, Absol sensed change not disaster. Hoenn is a sanctuary. Migration will stabilize.
+**Reward**: Master Ball (ITEM_MASTER_BALL) — "The League sent this for whoever solved the migration mystery."
 
-**Implementation roadmap:**
-| Cycle | Scope | Status |
-|-------|-------|--------|
-| 63 | Trigger + C code + Route 118 dialogue + ALL 6 encounter tables | **DONE** — flags.h, wild_encounter.c, Route118/scripts.inc, wild_encounters.json |
-| 64 | NPC dialogue (Routes 119-121, Fortree, Mauville) — 5 scripts.inc + 2 map.json | **REVERTED** (build failed — missing assets + smart-quote encoding) |
-| 65 | Re-land NPC dialogue + fix asset persistence + fix encoding | **DONE** — all 5 scripts + 2 map.json + placeholder assets committed |
+## Narrative Continuity
 
-### Future Narrative
-- Postgame research quest for Birch
+Builds on: Second Wave Birch call ("migration is ACCELERATING"), Mauville Scientist ("readings off the scale"), Route 120 Absol swarm (20% post-Wave), Gible in Meteor Falls (Cycle 68), lab aide postgame ("migration species establishing territories"). Contradicts nothing. Recontextualizes Absol from disaster omen → change sensor.
 
-### Gym Leader Rematches (Cycle 54 — DONE)
+## Technical Requirements
 
-All 8 gym leaders redesigned with competitive migration-themed teams:
+| Map | Changes | New NPCs |
+|-----|---------|----------|
+| `LittlerootTown_ProfessorBirchsLab` | Birch quest dialogue (6 branches) | 0 |
+| `Route119_WeatherInstitute_2F` | Scientist quest branch | 0 |
+| `ScoredSlab` | Hiker NPC + script | **1** (map.json entry needed) |
+| `FallarborTown_CozmosLab` | Cozmo quest branch | 0 |
+| `MeteorFalls_B1F_1R` | Researcher NPC + script | **1** (map.json entry needed) |
 
-| Leader | Ace (Migration) | Levels | Strategy |
-|--------|----------------|--------|----------|
-| Roxanne | Tyranitar (DD) | 57-62 | Fossil team + Steelix/Tyranitar migration |
-| Brawly | Hariyama (Bulk Up) | 57-62 | Choice Band fighters + Heracross migration |
-| Wattson | Electabuzz (coverage) | 57-62 | Rain + Baton Pass Jolteon + Electabuzz migration |
-| Flannery | Houndoom (Sun) | 57-62 | Sun team + Arcanine/Houndoom migration |
-| Norman | Slaking (ace) | 57-62 | CB Slaking + Snorlax/Blissey migration |
-| Winona | Dragonite (DD) | 57-62 | Spikes+Whirlwind + Crobat/Dragonite migration |
-| Tate&Liza | Slowking (CM) | 57-62 | CM sweepers + Alakazam/Slowking migration |
-| Juan | Starmie (BoltBeam) | 57-62 | Rain + CB Crawdaunt + Lapras/Starmie migration |
+**Script pattern** (each investigation site):
+```
+lock → faceplayer → goto_if_set STAGE_FLAG (post-completion) → goto_if_set STARTED (quest active: dialogue + giveitem + setflag) → default dialogue
+```
 
-4 rematch tiers: _2 (lv57-62), _3 (+3), _4 (+6), _5 (+9). All have 6 mons, held items, 4x Full Restore, smart AI.
+**Birch priority order**: COMPLETE → METEOR (give Master Ball, set COMPLETE) → all-3-set (unlock Meteor Falls) → STARTED (remind) → GAME_CLEAR (hook, set STARTED) → existing flow.
+
+## Implementation Roadmap
+
+### Cycle 82: Flags + Birch Lab Scripts
+- `include/constants/flags.h` — rename 6 flags
+- `LittlerootTown_ProfessorBirchsLab/scripts.inc` — full quest dialogue tree
+- **Build risk**: Low (script additions, existing flag slots)
+
+### Cycle 83: Investigation Sites 1-3
+- `Route119_WeatherInstitute_2F/scripts.inc` — scientist branch
+- `ScoredSlab/scripts.inc` + `map.json` — new Hiker NPC
+- `FallarborTown_CozmosLab/scripts.inc` — Cozmo branch
+- **Build risk**: Low (1 new NPC, 2 dialogue branches)
+
+### Cycle 84: Meteor Falls + Quest Verification
+- `MeteorFalls_B1F_1R/scripts.inc` + `map.json` — new Researcher NPC
+- Verify full quest flag flow across all scripts
+- **Build risk**: Low (1 new NPC)
+
+**Dependencies**: Cycle 83-84 both depend on Cycle 82 (flags). They are independent of each other.
+
+## Full Dialogue
+
+Complete draft dialogue for all stages is in `memory/birch-quest-dialogue.md`.
