@@ -33,3 +33,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Late-Stage Polish Priorities: Good vs Great | 72 | March 2026 | [late-stage-polish-priorities.md](pokemon-knowledge/late-stage-polish-priorities.md) |
 | Sprite Quality & Placeholder Graphics: Community Standards | 73 | March 2026 | [sprite-quality-community-standards.md](pokemon-knowledge/sprite-quality-community-standards.md) |
 | Post-Completion Priorities: What Top Hacks Do | 74 | March 2026 | [post-completion-priorities.md](pokemon-knowledge/post-completion-priorities.md) |
+| Move Category Icons: Implementation Approaches | 75 | March 2026 | [move-category-icons-implementation.md](pokemon-knowledge/move-category-icons-implementation.md) |
