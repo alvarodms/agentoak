@@ -4153,6 +4153,126 @@ const struct Trainer gTrainers[] = {
         .party = ITEM_CUSTOM_MOVES(sParty_WallaceRematch2),
     },
 
+    [TRAINER_SIDNEY_REMATCH_3] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_SIDNEY,
+        .trainerName = _("SIDNEY"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_SidneyRematch3),
+    },
+
+    [TRAINER_PHOEBE_REMATCH_3] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_PHOEBE,
+        .trainerName = _("PHOEBE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_PhoebeRematch3),
+    },
+
+    [TRAINER_GLACIA_REMATCH_3] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_GLACIA,
+        .trainerName = _("GLACIA"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_GlaciaRematch3),
+    },
+
+    [TRAINER_DRAKE_REMATCH_3] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_DRAKE,
+        .trainerName = _("DRAKE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_DrakeRematch3),
+    },
+
+    [TRAINER_WALLACE_REMATCH_3] =
+    {
+        .trainerClass = TRAINER_CLASS_CHAMPION,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
+        .trainerPic = TRAINER_PIC_CHAMPION_WALLACE,
+        .trainerName = _("WALLACE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_WallaceRematch3),
+    },
+
+    [TRAINER_SIDNEY_REMATCH_4] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_SIDNEY,
+        .trainerName = _("SIDNEY"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_SidneyRematch4),
+    },
+
+    [TRAINER_PHOEBE_REMATCH_4] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_PHOEBE,
+        .trainerName = _("PHOEBE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_PhoebeRematch4),
+    },
+
+    [TRAINER_GLACIA_REMATCH_4] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_GLACIA,
+        .trainerName = _("GLACIA"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_GlaciaRematch4),
+    },
+
+    [TRAINER_DRAKE_REMATCH_4] =
+    {
+        .trainerClass = TRAINER_CLASS_ELITE_FOUR,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
+        .trainerPic = TRAINER_PIC_ELITE_FOUR_DRAKE,
+        .trainerName = _("DRAKE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_DrakeRematch4),
+    },
+
+    [TRAINER_WALLACE_REMATCH_4] =
+    {
+        .trainerClass = TRAINER_CLASS_CHAMPION,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
+        .trainerPic = TRAINER_PIC_CHAMPION_WALLACE,
+        .trainerName = _("WALLACE"),
+        .items = {ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE, ITEM_FULL_RESTORE},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY | AI_SCRIPT_SETUP_FIRST_TURN,
+        .party = ITEM_CUSTOM_MOVES(sParty_WallaceRematch4),
+    },
+
     [TRAINER_ANDREW] =
     {
         .trainerClass = TRAINER_CLASS_FISHERMAN,

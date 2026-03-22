@@ -39,3 +39,9 @@ Modified files related to trainer team compositions, held items, and level curve
 | `graphics/types/fairy.png` | Re-restored missing fairy type icon | 57 | Copied from normal.png (missing again) |
 | `src/data/trainer_parties.h` | Victory Road trainer refresh (16 trainers + Wally) | **58** | All 17 Victory Road trainers: 3-mon teams (4 for Dianne, 6 for Wally), held items, custom movesets, migration species, lv54-58 |
 | `src/data/trainers.h` | Victory Road trainer entries updated | **58** | All 17 changed to ITEM_CUSTOM_MOVES, 2x Full Restore (3x for Wally), competitive AI |
+| `src/data/trainer_parties.h` | E4 + Champion rematch tier 3 teams | **71** | lv78-88; Weavile on Sidney/Glacia, Garchomp on Drake, .iv=250 |
+| `src/data/trainer_parties.h` | E4 + Champion rematch tier 4 teams | **71** | lv85-95; Lucario on Phoebe/Wallace, Garchomp ace on Drake, .iv=255 |
+| `src/data/trainers.h` | E4 + Champion rematch tier 3+4 entries | **71** | 10 new entries (IDs 864-873), 4x Full Restore, competitive AI |
+| `include/constants/opponents.h` | Trainer ID ceiling extended to 874 | **71** | 10 new IDs: TRAINER_SIDNEY_REMATCH_3 through TRAINER_WALLACE_REMATCH_4 |
+| `src/battle_setup.c` | Rematch table: tier 3+4 IDs in slots 4-5 | **71** | All 5 E4 members now use all 5 rematch slots |
+| `include/constants/flags.h` | Updated trainer flag range comment | **71** | 0x500-0x869 (874 trainers) |

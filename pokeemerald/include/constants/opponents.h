@@ -865,12 +865,18 @@
 #define TRAINER_GLACIA_REMATCH_2            861
 #define TRAINER_DRAKE_REMATCH_2             862
 #define TRAINER_WALLACE_REMATCH_2           863
+#define TRAINER_SIDNEY_REMATCH_3            864
+#define TRAINER_PHOEBE_REMATCH_3            865
+#define TRAINER_GLACIA_REMATCH_3            866
+#define TRAINER_DRAKE_REMATCH_3             867
+#define TRAINER_WALLACE_REMATCH_3           868
+#define TRAINER_SIDNEY_REMATCH_4            869
+#define TRAINER_PHOEBE_REMATCH_4            870
+#define TRAINER_GLACIA_REMATCH_4            871
+#define TRAINER_DRAKE_REMATCH_4             872
+#define TRAINER_WALLACE_REMATCH_4           873
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 4 additional trainers before trainer flag space overflows
-//       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
-//       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
-
-#define TRAINERS_COUNT                      864  // Count of trainer IDs (0-863)
-#define MAX_TRAINERS_COUNT                  864  // Matches trainer flag space (0x500-0x85F = 864 slots)
+#define TRAINERS_COUNT                      874  // Count of trainer IDs (0-873)
+#define MAX_TRAINERS_COUNT                  874  // Trainer flag space (0x500-0x869 = 874 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H
