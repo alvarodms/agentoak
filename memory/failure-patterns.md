@@ -10,10 +10,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The agent runner checks for the existence of `pokeemerald.gba` after each cycle. If no build was attempted, the file doesn't exist and the runner reports failure.
 **Resolution**: This is expected for exploration-only cycles. Not a real failure.
 
-## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67)
+## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77)
 
 **Symptom**: Agent completes only part of a multi-component objective.
-**Cause**: Gets focused on first component (data entry) and runs out of actions before building. In Cycle 67, 249 actions were spent on data entry and pokedex_orders.h sorting — zero left for `make`.
+**Cause**: Gets focused on data entry and memory updates, skipping the build. Cycle 67: 249 actions on data entry. Cycle 77: only 28 actions used but all spent on edits+memory — `make` never run despite having budget remaining.
 **Resolution**: Create a checklist. Budget actions — reserve at least 20 actions for build+fix at the end. For pokedex_orders.h weight/height sorting, use a script instead of manual binary search (~70 actions wasted in Cycle 67).
 
 ## Action Budget Waste on Research Cycles (Cycle 76)

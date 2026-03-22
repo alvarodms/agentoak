@@ -10,23 +10,15 @@ All Frontier code uses data-driven lookups with sentinel terminators. No hardcod
 
 ---
 
-## Issue 1: Arena sMindRatings — Missing Entries for 3 Fairy Moves (LOW)
+## Issue 1: Arena sMindRatings — Missing Entries for 3 Fairy Moves — **RESOLVED (Cycle 77)**
 
-**File**: `src/battle_arena.c:58` — `static const s8 sMindRatings[MOVES_COUNT]`
-**Problem**: MOVE_MOONBLAST (355), MOVE_PLAY_ROUGH (356), MOVE_DAZZLING_GLEAM (357) have no entries. C designated initializer defaults them to 0.
-**Impact**: These damaging moves score 0 Mind points instead of +1. Arena judges treat them as neutral (like status moves) rather than aggressive.
-**Fix**: Add 3 lines: `[MOVE_MOONBLAST] = 1, [MOVE_PLAY_ROUGH] = 1, [MOVE_DAZZLING_GLEAM] = 1,`
-**Effort**: 1 minute.
+Added `[MOVE_MOONBLAST] = 1, [MOVE_PLAY_ROUGH] = 1, [MOVE_DAZZLING_GLEAM] = 1` to `sMindRatings` in `src/battle_arena.c`.
 
 ---
 
-## Issue 2: Factory Move Style Arrays — 3 Fairy Moves Unclassified (LOW)
+## Issue 2: Factory Move Style Arrays — 3 Fairy Moves Unclassified — **RESOLVED (Cycle 77)**
 
-**File**: `src/battle_factory.c:55-122` — 7 `sMoves_*` arrays + `sMovesStylesByMoveset` lookup table
-**Problem**: Moonblast/Play Rough/Dazzling Gleam aren't in any style array. `GetMoveBattleStyle()` returns `FACTORY_STYLE_NONE` for them.
-**Impact**: Factory AI can't classify opponents using these moves into a battle style. Affects difficulty scaling but won't crash.
-**Fix**: Add to `sMoves_HighRiskHighReturn[]` (high-power attacks) or similar. ~3 lines.
-**Effort**: 2 minutes.
+Added Moonblast/Play Rough/Dazzling Gleam to `sMoves_HighRiskHighReturn[]` in `src/battle_factory.c`.
 
 ---
 
@@ -42,13 +34,9 @@ All Frontier code uses data-driven lookups with sentinel terminators. No hardcod
 
 ---
 
-## Issue 4: New Species Not in Frontier Pool (OPTIONAL ENHANCEMENT)
+## Issue 4: New Species Not in Frontier Pool — **RESOLVED (Cycle 77)**
 
-**Files**: `src/data/battle_frontier/battle_frontier_mons.h`, `include/constants/battle_frontier_mons.h`
-**Problem**: SPECIES_RIOLU through SPECIES_GARCHOMP (412-417) have no entries in `gBattleFrontierMons[]`. They cannot appear as Frontier opponent Pokémon.
-**Impact**: Players never face these migration-era species in the Frontier. Thematic gap but not a bug — vanilla Gen 3 species work fine.
-**Fix**: Add ~6-12 new Frontier mon entries (competitive sets for Lucario, Weavile, Garchomp at minimum). Update NUM_FRONTIER_MONS. Add to trainer mon lists.
-**Effort**: 1 cycle for competitive set design + data entry.
+Added 12 Frontier entries (4 sets each for Lucario, Weavile, Garchomp) at indices 882-893. NUM_FRONTIER_MONS updated to 894. All sets above FRONTIER_MONS_HIGH_TIER (849) so they appear in open-level battles only.
 
 ---
 

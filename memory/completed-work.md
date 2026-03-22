@@ -33,6 +33,7 @@ Before modifying ANY pokeemerald file:
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, **75** | 6 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
+| Battle Frontier Fixes | **77** | 4 | [battle-frontier.md](completed-work/battle-frontier.md) |
 
 ---
 
