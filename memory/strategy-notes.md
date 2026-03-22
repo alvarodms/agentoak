@@ -40,7 +40,7 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 ## Completed Features (Reference Only)
 
 ### Battle Frontier P/S Split Audit
-~117 Crunch/Shadow Ball Frontier entries remain for a future cycle. Punch batch done (Cycle 80).
+Punch batch done (Cycle 80). Crunch/Shadow Ball/Hyper Beam batch done (Cycle 85, 65 sets). Complete audit finished.
 
 ### New Species Pipeline
 **Checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` — 25 steps, ~29 source files per 2-species family. All planned species shipped.
@@ -55,6 +55,6 @@ High-level strategies, ideas for the ROM hack, what to try next, and lessons abo
 
 ## Future Directions
 
-- Battle Frontier P/S split remaining entries (Crunch/Shadow Ball)
+- ~~Battle Frontier P/S split remaining entries (Crunch/Shadow Ball)~~ **COMPLETE (Cycle 85)**
 - Additional postgame content building on the quest framework
 - Polish pass: trainer held items audit, wild held items
