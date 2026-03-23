@@ -629,3 +629,33 @@ bool8 IsSpecialSEPlaying(void)
         return FALSE;
     return TRUE;
 }
+
+static void ScalePlayerTempo(struct MusicPlayerInfo *player, u8 divisor)
+{
+    if (player->status & MUSICPLAYER_STATUS_TRACK)
+    {
+        u16 normalTempoI = (player->tempoD * player->tempoU) >> 8;
+        player->tempoI = normalTempoI / divisor;
+    }
+}
+
+void ApplyMusicSpeedSetting(void)
+{
+    struct SoundInfo *soundInfo = SOUND_INFO_PTR;
+    u8 divisor = gSaveBlock2Ptr->optionsMusicSpeed + 1;
+
+    if (divisor > 1)
+    {
+        ScalePlayerTempo(&gMPlayInfo_BGM, divisor);
+        ScalePlayerTempo(&gMPlayInfo_SE1, divisor);
+        ScalePlayerTempo(&gMPlayInfo_SE2, divisor);
+        ScalePlayerTempo(&gMPlayInfo_SE3, divisor);
+    }
+
+    // Scale the mixer's master pitch divisor so that note frequencies are
+    // divided by the speed factor.  When the emulator runs at Nx, the DAC
+    // plays samples Nx faster, raising pitch by Nx.  Dividing divFreq by N
+    // lowers the mixer's pitch by N, cancelling the emulator's effect.
+    // When divisor == 1 this restores the normal value.
+    soundInfo->divFreq = ((16777216 / soundInfo->pcmFreq + 1) >> 1) / divisor;
+}
