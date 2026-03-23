@@ -16,13 +16,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Gets focused on data entry and memory updates, skipping the build.
 **Resolution**: Budget actions — reserve at least 20 actions for build+fix at the end. Re-read files immediately before editing to avoid context eviction.
 
-## Untracked Binary Assets (Cycles 68, 91) — CRITICAL
+## Untracked Binary Assets (Cycles 68, 91, 92) — CRITICAL
 
 **Symptom**: Build fails with "Failed to open" for fairy.png, species sprites, or cry WAVs.
 **Cause**: Binary assets from previous cycles aren't committed to git. Fresh checkouts miss them.
 **Resolution**: Copy placeholders — fairy/physical/special/status.png from normal.png, cries from similar species, sprites via `fetch_pokemon_sprites`.
-**PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits. Cycle 91 wasted 60 actions (~67% of budget) diagnosing these failures mid-build. Fix asset gaps first, then do real work.
-**Known missing cries**: gabite, garchomp, gible, lucario, riolu, weavile — copy from similar species each build.
+**PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits. Cycle 92 proved this works — asset fixes took ~44% of actions (11/25) vs 67% in cycle 91.
+**Known missing assets**: fairy.png, physical.png, special.png, status.png (copy from normal.png); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
 
 ## Duplicate Entry "2 matches found" Edit Error
 

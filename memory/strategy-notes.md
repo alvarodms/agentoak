@@ -176,7 +176,7 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 | **89** | ~~Gym 1-5 + Rival 1-3 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
 | **90** | ~~Gym 6-8 + E4 + Champion + Rival 4 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
 | **91** | ~~Mid-game encounter audit (Routes 110-113)~~ DONE | P2 | wild_encounters.json |
-| **92** | Mid-game encounter audit (Routes 119-120) + level curve | P2 | wild_encounters.json |
+| **92** | ~~Mid-game encounter audit (Routes 119-120)~~ DONE | P2 | wild_encounters.json |
 | **93** | Wild held items — early + mid game species | P3 | species_info.h |
 | **94** | Wild held items — late game + dungeon species | P3 | species_info.h |
 | **95** | Mid-game narrative NPCs (Lavaridge + Fortree) + 2 doubles | P2 | scripts.inc ×4 |
