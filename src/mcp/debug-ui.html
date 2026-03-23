@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP Debug UI — Pokédex Server</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #1a1a2e;
+    --bg-panel: #16213e;
+    --bg-card: #1c2a4a;
+    --bg-input: #0f1729;
+    --border: #2a3a5c;
+    --text: #e0e0e0;
+    --text-dim: #8892a8;
+    --accent: #e63946;
+    --accent-hover: #ff4d5a;
+    --accent-soft: rgba(230, 57, 70, 0.15);
+    --green: #2ecc71;
+    --blue: #3498db;
+    --radius: 8px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace;
+  }
+
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  .sidebar-header p {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .tool-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .tool-item {
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-bottom: 2px;
+  }
+  .tool-item:hover { background: var(--bg-card); }
+  .tool-item.active { background: var(--accent-soft); border-left: 3px solid var(--accent); }
+  .tool-item .tool-name {
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text);
+  }
+  .tool-item .tool-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Main */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .main-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel);
+  }
+  .main-header h2 {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--text);
+  }
+  .main-header .desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .main-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 28px;
+  }
+
+  /* Form */
+  .form-section {
+    padding: 20px 0 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .form-section h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .form-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text);
+  }
+  .field label .optional {
+    font-weight: 400;
+    color: var(--text-dim);
+    font-family: var(--font);
+  }
+  .field label .field-type {
+    font-weight: 400;
+    color: var(--blue);
+    font-size: 11px;
+    margin-left: 4px;
+  }
+  .field .field-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.3;
+  }
+  .field input[type="text"],
+  .field input[type="number"] {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .field input::placeholder { color: var(--text-dim); opacity: 0.5; }
+
+  .field-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  .field-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+    align-items: center;
+  }
+  .btn {
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { color: var(--text); border-color: var(--text-dim); }
+
+  .status-indicator {
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Output */
+  .output-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 20px;
+    min-height: 0;
+  }
+  .output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+	  flex-shrink: 0;
+  }
+  .output-header h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+  .output-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    gap: 12px;
+  }
+  .output-meta .time { color: var(--green); }
+  .output-meta .copy-btn {
+    background: none;
+    border: none;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 11px;
+    font-family: var(--font);
+    padding: 0;
+  }
+  .output-meta .copy-btn:hover { text-decoration: underline; }
+  .output-box {
+    flex: 1;
+    min-height: 0;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    overflow: auto;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text);
+  }
+  .output-box.error { color: var(--accent); }
+  .output-box .json-key { color: #82aaff; }
+  .output-box .json-string { color: #c3e88d; }
+  .output-box .json-number { color: #f78c6c; }
+  .output-box .json-bool { color: #c792ea; }
+  .output-box .json-null { color: #546e7a; }
+
+  /* Empty state */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-dim);
+    gap: 12px;
+  }
+  .empty-state .pokeball {
+    width: 64px;
+    height: 64px;
+    opacity: 0.3;
+  }
+  .empty-state p { font-size: 14px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>MCP Debug UI</h1>
+    <p>Pokédex Server — Tool Explorer</p>
+  </div>
+  <div class="tool-list" id="toolList">
+    <div class="empty-state" style="padding: 40px 0">
+      <div class="spinner"></div>
+      <p style="font-size: 12px">Loading tools...</p>
+    </div>
+  </div>
+</aside>
+
+<main class="main" id="mainPanel">
+  <div class="empty-state">
+    <svg class="pokeball" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+      <circle cx="50" cy="50" r="46"/>
+      <line x1="4" y1="50" x2="34" y2="50"/>
+      <line x1="66" y1="50" x2="96" y2="50"/>
+      <circle cx="50" cy="50" r="16"/>
+      <circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.3"/>
+    </svg>
+    <p>Select a tool from the sidebar to get started</p>
+  </div>
+</main>
+
+<script>
+const API = '';
+let tools = [];
+let selectedTool = null;
+let isLoading = false;
+let lastResult = null;
+let lastDuration = null;
+
+async function fetchTools() {
+  try {
+    const res = await fetch(`${API}/api/tools`);
+    tools = await res.json();
+    renderToolList();
+    if (tools.length > 0) selectTool(tools[0].name);
+  } catch (err) {
+    document.getElementById('toolList').innerHTML =
+      `<div class="empty-state" style="padding:40px 16px"><p style="font-size:12px;color:var(--accent)">Failed to connect to MCP server.<br>Is it running?</p></div>`;
+  }
+}
+
+function renderToolList() {
+  const el = document.getElementById('toolList');
+  el.innerHTML = tools.map(t => `
+    <div class="tool-item ${selectedTool?.name === t.name ? 'active' : ''}"
+         onclick="selectTool('${t.name}')">
+      <div class="tool-name">${t.name}</div>
+      <div class="tool-desc">${escapeHtml(t.description || '')}</div>
+    </div>
+  `).join('');
+}
+
+function selectTool(name) {
+  selectedTool = tools.find(t => t.name === name);
+  lastResult = null;
+  lastDuration = null;
+  renderToolList();
+  renderMain();
+}
+
+function renderMain() {
+  const panel = document.getElementById('mainPanel');
+  if (!selectedTool) {
+    panel.innerHTML = `<div class="empty-state">
+      <p>Select a tool from the sidebar</p>
+    </div>`;
+    return;
+  }
+
+  const schema = selectedTool.inputSchema;
+  const properties = schema?.properties || {};
+  const required = schema?.required || [];
+
+  panel.innerHTML = `
+    <div class="main-header">
+      <h2>${selectedTool.name}</h2>
+      <div class="desc">${escapeHtml(selectedTool.description || '')}</div>
+    </div>
+    <div class="main-body">
+      <div class="form-section">
+        <h3>Parameters</h3>
+        <div class="form-fields" id="formFields">
+          ${Object.keys(properties).length === 0
+            ? '<p style="color:var(--text-dim);font-size:13px">This tool takes no parameters.</p>'
+            : Object.entries(properties).map(([key, prop]) => renderField(key, prop, required.includes(key))).join('')}
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="callBtn" onclick="callTool()">Call Tool</button>
+          <button class="btn btn-secondary" onclick="clearForm()">Clear</button>
+          <div class="status-indicator" id="status"></div>
+        </div>
+      </div>
+      <div class="output-section">
+        <div class="output-header">
+          <h3>Response</h3>
+          <div class="output-meta" id="outputMeta">
+            ${lastDuration != null ? `<span class="time">${lastDuration}ms</span>` : ''}
+            ${lastResult != null ? `<button class="copy-btn" onclick="copyOutput()">Copy</button>` : ''}
+          </div>
+        </div>
+        <div class="output-box" id="outputBox">${
+          lastResult != null ? formatOutput(lastResult) : '<span style="color:var(--text-dim)">Response will appear here...</span>'
+        }</div>
+      </div>
+    </div>`;
+}
+
+function renderField(name, prop, isRequired) {
+  const type = resolveType(prop);
+  const desc = prop.description || '';
+  const isOptional = !isRequired;
+  const optLabel = isOptional ? ' <span class="optional">(optional)</span>' : '';
+  const typeLabel = `<span class="field-type">${type}</span>`;
+
+  if (type === 'boolean') {
+    return `<div class="field field-checkbox">
+      <input type="checkbox" id="field-${name}" data-field="${name}" data-type="boolean">
+      <label for="field-${name}">${name}${typeLabel}${optLabel}</label>
+      ${desc ? `<span class="field-desc">${escapeHtml(desc)}</span>` : ''}
+    </div>`;
+  }
+
+  if (type === 'array') {
+    const placeholder = prop.items?.type === 'string'
+      ? 'Comma-separated values, e.g. swampert, salamence'
+      : 'Comma-separated values';
+    return `<div class="field">
+      <label for="field-${name}">${name}${typeLabel}${optLabel}</label>
+      ${desc ? `<span class="field-desc">${escapeHtml(desc)}</span>` : ''}
+      <input type="text" id="field-${name}" data-field="${name}" data-type="array"
+             placeholder="${placeholder}">
+    </div>`;
+  }
+
+  const inputType = type === 'number' || type === 'integer' ? 'number' : 'text';
+  const extras = [];
+  if (prop.minimum != null) extras.push(`min="${prop.minimum}"`);
+  if (prop.maximum != null) extras.push(`max="${prop.maximum}"`);
+  const placeholder = prop.default != null ? `Default: ${prop.default}` : '';
+
+  return `<div class="field">
+    <label for="field-${name}">${name}${typeLabel}${optLabel}</label>
+    ${desc ? `<span class="field-desc">${escapeHtml(desc)}</span>` : ''}
+    <input type="${inputType}" id="field-${name}" data-field="${name}" data-type="${type}"
+           placeholder="${escapeHtml(placeholder)}" ${extras.join(' ')}>
+  </div>`;
+}
+
+function resolveType(prop) {
+  if (prop.type) return prop.type;
+  if (prop.anyOf) {
+    const types = prop.anyOf.map(s => s.type).filter(Boolean);
+    return types.find(t => t !== 'null') || types[0] || 'string';
+  }
+  return 'string';
+}
+
+function collectArgs() {
+  const args = {};
+  const fields = document.querySelectorAll('[data-field]');
+  for (const el of fields) {
+    const name = el.dataset.field;
+    const type = el.dataset.type;
+
+    if (type === 'boolean') {
+      if (el.checked) args[name] = true;
+      continue;
+    }
+
+    const val = el.value.trim();
+    if (!val) continue;
+
+    if (type === 'array') {
+      args[name] = val.split(',').map(s => s.trim()).filter(Boolean);
+    } else if (type === 'number' || type === 'integer') {
+      const n = Number(val);
+      if (!isNaN(n)) args[name] = n;
+    } else {
+      args[name] = val;
+    }
+  }
+  return args;
+}
+
+async function callTool() {
+  if (!selectedTool || isLoading) return;
+  isLoading = true;
+  const btn = document.getElementById('callBtn');
+  const status = document.getElementById('status');
+  btn.disabled = true;
+  status.innerHTML = '<div class="spinner"></div> Calling...';
+
+  const args = collectArgs();
+  const start = performance.now();
+
+  try {
+    const res = await fetch(`${API}/api/call`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: selectedTool.name, arguments: args }),
+    });
+    lastResult = await res.json();
+    lastDuration = Math.round(performance.now() - start);
+
+    const outputBox = document.getElementById('outputBox');
+    const outputMeta = document.getElementById('outputMeta');
+    outputBox.className = 'output-box' + (lastResult.error ? ' error' : '');
+    outputBox.innerHTML = formatOutput(lastResult);
+    outputMeta.innerHTML = `
+      <span class="time">${lastDuration}ms</span>
+      <button class="copy-btn" onclick="copyOutput()">Copy</button>
+    `;
+  } catch (err) {
+    lastResult = { error: err.message };
+    lastDuration = Math.round(performance.now() - start);
+    const outputBox = document.getElementById('outputBox');
+    outputBox.className = 'output-box error';
+    outputBox.textContent = `Error: ${err.message}`;
+  } finally {
+    isLoading = false;
+    btn.disabled = false;
+    status.innerHTML = '';
+  }
+}
+
+function clearForm() {
+  document.querySelectorAll('[data-field]').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else el.value = '';
+  });
+}
+
+function copyOutput() {
+  if (lastResult == null) return;
+  const text = typeof lastResult === 'string' ? lastResult : JSON.stringify(lastResult, null, 2);
+  navigator.clipboard.writeText(text);
+  const btn = document.querySelector('.copy-btn');
+  if (btn) {
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  }
+}
+
+function formatOutput(data) {
+  if (data.error) return `<span class="json-string">Error: ${escapeHtml(String(data.error))}</span>`;
+
+  if (data.content && Array.isArray(data.content)) {
+    return data.content.map(item => {
+      if (item.type === 'text') {
+        try {
+          const parsed = JSON.parse(item.text);
+          return syntaxHighlight(JSON.stringify(parsed, null, 2));
+        } catch {
+          return escapeHtml(item.text);
+        }
+      }
+      return syntaxHighlight(JSON.stringify(item, null, 2));
+    }).join('\n\n');
+  }
+
+  return syntaxHighlight(JSON.stringify(data, null, 2));
+}
+
+function syntaxHighlight(json) {
+  return escapeHtml(json).replace(
+    /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\bnull\b)/g,
+    match => {
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) return `<span class="json-key">${match}</span>`;
+        return `<span class="json-string">${match}</span>`;
+      }
+      if (/true|false/.test(match)) return `<span class="json-bool">${match}</span>`;
+      if (/null/.test(match)) return `<span class="json-null">${match}</span>`;
+      return `<span class="json-number">${match}</span>`;
+    }
+  );
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) callTool();
+});
+
+fetchTools();
+</script>
+</body>
+</html>
