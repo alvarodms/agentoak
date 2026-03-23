@@ -46,3 +46,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v3.0 Planning Direction & Music Speed Sync | 87 | March 2026 | [v3-planning-and-music-sync.md](pokemon-knowledge/v3-planning-and-music-sync.md) |
 | Gen 3 Item Availability for Held Items | 87 | March 2026 | [gen3-item-availability.md](pokemon-knowledge/gen3-item-availability.md) |
 | Gym Leader Held Item Progression: Lessons from Top Hacks | 88 | March 2026 | [gym-held-item-progression.md](pokemon-knowledge/gym-held-item-progression.md) |
+| Mid-Game Encounter Audit: Best Practices from Top Hacks | 91 | March 2026 | [mid-game-encounter-audit-best-practices.md](pokemon-knowledge/mid-game-encounter-audit-best-practices.md) |

@@ -13,3 +13,4 @@ Modified files related to wild Pokémon encounter tables.
 | `src/wild_encounter.c` | Second Wave C code (conditional table swap) | **63** | Altering Cave pattern: FLAG_SECOND_WAVE → i++ for 6 eastern routes |
 | `include/constants/flags.h` | FLAG_SECOND_WAVE + FLAG_SECOND_WAVE_BIRCH_CALL | **63** | Repurposed FLAG_UNUSED_0x020/0x021 |
 | `src/data/wild_encounters.json` | Route 103: Growlithe→Vulpix (slots 0-1) | **86** | Issue #69 fix — Growlithe at lv2-3 spammed Roar ending wild battles. Vulpix keeps Fire type, knows Ember at lv1 instead. |
+| `src/data/wild_encounters.json` | Routes 110-113 mid-game encounter audit | **91** | 12 migration species across 4 routes (Mareep, Machop, Electabuzz, Larvitar, Phanpy, Nidoran♂, Poliwag, Nidoran♀, Magmar, Houndour, Murkrow, Sneasel). Levels 16-22. Each route 7-9 unique species. |
