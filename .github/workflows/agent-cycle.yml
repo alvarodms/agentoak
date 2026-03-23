@@ -151,6 +151,13 @@ jobs:
       - name: Install docs dependencies
         run: cd docs && npm i
 
+      - name: Fetch release data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p docs/public/data
+          node docs/build-scripts/build-releases.mjs
+
       - name: Build docs site
         run: cd docs && npm run build
 
