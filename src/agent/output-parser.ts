@@ -225,8 +225,17 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
         }
 
         // Capture StructuredOutput tool input as resultText (--json-schema uses this tool)
-        if (toolName === "StructuredOutput" && !resultText) {
-          resultText = JSON.stringify(input);
+        // Merge all StructuredOutput inputs — Claude sometimes splits across multiple calls
+        if (toolName === "StructuredOutput") {
+          try {
+            const existing = resultText ? JSON.parse(resultText) : {};
+            Object.assign(existing, input);
+            resultText = JSON.stringify(existing);
+          } catch {
+            if (!resultText) {
+              resultText = JSON.stringify(input);
+            }
+          }
         }
       }
 

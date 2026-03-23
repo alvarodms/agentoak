@@ -118,17 +118,22 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     }
   }
 
+  // Fallback: merge ALL StructuredOutput inputs (Claude sometimes splits across multiple calls)
+  if (!parsed) {
+    const merged: PlanJson = {};
+    for (const action of result.actions) {
+      if (action.tool === "StructuredOutput" && action.input) {
+        Object.assign(merged, action.input as PlanJson);
+      }
+    }
+    if (merged.mode && merged.objective) {
+      parsed = merged;
+    }
+  }
+
   // Fallback: look through action results for valid JSON
   if (!parsed) {
     for (const action of result.actions) {
-      // Check StructuredOutput tool input directly (contains the plan object)
-      if (action.tool === "StructuredOutput" && action.input) {
-        const candidate = action.input as PlanJson;
-        if (candidate?.mode && candidate?.objective) {
-          parsed = candidate;
-          break;
-        }
-      }
       if (action.result) {
         try {
           const candidate = JSON.parse(action.result) as PlanJson;
