@@ -2,4 +2,4 @@
 
 Deferred community issues for future consideration.
 
-*No deferred issues.*
+- #71: In-game battle speed up setting (deferred: cycle 86)

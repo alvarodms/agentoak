@@ -12,3 +12,4 @@ Modified files related to wild Pokémon encounter tables.
 | `src/data/wild_encounters.json` | Second Wave encounter tables (6 routes) | **63** | Routes 118-121, 123, Mt. Pyre 1F — alternate tables with 14 new species + evolved first-wave forms |
 | `src/wild_encounter.c` | Second Wave C code (conditional table swap) | **63** | Altering Cave pattern: FLAG_SECOND_WAVE → i++ for 6 eastern routes |
 | `include/constants/flags.h` | FLAG_SECOND_WAVE + FLAG_SECOND_WAVE_BIRCH_CALL | **63** | Repurposed FLAG_UNUSED_0x020/0x021 |
+| `src/data/wild_encounters.json` | Route 103: Growlithe→Vulpix (slots 0-1) | **86** | Issue #69 fix — Growlithe at lv2-3 spammed Roar ending wild battles. Vulpix keeps Fire type, knows Ember at lv1 instead. |

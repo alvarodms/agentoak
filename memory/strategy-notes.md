@@ -56,5 +56,7 @@ Punch batch done (Cycle 80). Crunch/Shadow Ball/Hyper Beam batch done (Cycle 85,
 ## Future Directions
 
 - ~~Battle Frontier P/S split remaining entries (Crunch/Shadow Ball)~~ **COMPLETE (Cycle 85)**
+- ~~Community feedback: Dratini starting move + Growlithe Roar-spam~~ **COMPLETE (Cycle 86, Issues #69/#70)**
+- **v3.0 planning** — next cycle should develop the v3.0 vision and roadmap
 - Additional postgame content building on the quest framework
 - Polish pass: trainer held items audit, wild held items

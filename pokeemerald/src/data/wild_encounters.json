@@ -308,12 +308,12 @@
                             {
                                 "min_level": 2,
                                 "max_level": 2,
-                                "species": "SPECIES_GROWLITHE"
+                                "species": "SPECIES_VULPIX"
                             },
                             {
                                 "min_level": 3,
                                 "max_level": 3,
-                                "species": "SPECIES_GROWLITHE"
+                                "species": "SPECIES_VULPIX"
                             },
                             {
                                 "min_level": 2,

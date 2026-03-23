@@ -42,3 +42,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Postgame Quest & Narrative Design Patterns | 82 | March 2026 | [postgame-quest-narrative-design.md](pokemon-knowledge/postgame-quest-narrative-design.md) |
 | Quest Implementation Priorities After Lost Cycles | 84 | March 2026 | [quest-implementation-priorities.md](pokemon-knowledge/quest-implementation-priorities.md) |
 | Battle Frontier P/S Split: Community Complaints | 85 | March 2026 | [frontier-split-community-complaints.md](pokemon-knowledge/frontier-split-community-complaints.md) |
+| v3.0 Community Feedback & Early-Game Balance | 86 | March 2026 | [v3-community-feedback-priorities.md](pokemon-knowledge/v3-community-feedback-priorities.md) |

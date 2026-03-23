@@ -2035,6 +2035,7 @@ static const u16 sMoltresLevelUpLearnset[] = {
 };
 
 static const u16 sDratiniLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_DRAGON_BREATH),
     LEVEL_UP_MOVE( 1, MOVE_WRAP),
     LEVEL_UP_MOVE( 1, MOVE_LEER),
     LEVEL_UP_MOVE( 8, MOVE_THUNDER_WAVE),
@@ -2049,6 +2050,7 @@ static const u16 sDratiniLevelUpLearnset[] = {
 };
 
 static const u16 sDragonairLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_DRAGON_BREATH),
     LEVEL_UP_MOVE( 1, MOVE_WRAP),
     LEVEL_UP_MOVE( 1, MOVE_LEER),
     LEVEL_UP_MOVE( 1, MOVE_THUNDER_WAVE),
@@ -2065,6 +2067,7 @@ static const u16 sDragonairLevelUpLearnset[] = {
 };
 
 static const u16 sDragoniteLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_DRAGON_BREATH),
     LEVEL_UP_MOVE( 1, MOVE_WRAP),
     LEVEL_UP_MOVE( 1, MOVE_LEER),
     LEVEL_UP_MOVE( 1, MOVE_THUNDER_WAVE),
