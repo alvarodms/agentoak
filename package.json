@@ -6,7 +6,8 @@
   "scripts": {
     "cycle": "tsx src/index.ts",
     "build:check": "tsc --noEmit",
-    "build:docs": "cd docs && npm run build"
+    "build:docs": "cd docs && npm run build",
+    "debug:mcp": "tsx src/mcp/debug-ui.ts"
   },
   "engines": {
     "node": ">=20.0.0"
