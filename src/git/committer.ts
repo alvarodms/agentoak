@@ -51,7 +51,8 @@ export async function commitCycle(
   const paddedCycle = String(cycleNumber).padStart(4, "0");
 
   try {
-    // Stage memory, journal, build logs, and cycle counter
+    // Stage README, memory, journal, build logs, and cycle counter
+    await git.add("README.md");
     await git.add("memory/*");
     await git.add("journal/*");
     await git.add("artifacts/build-logs/*");
