@@ -26,3 +26,5 @@ Modified files related to trainer team compositions, held items, and level curve
 
 | `src/data/trainer_parties.h` | v3.0 held item overhaul: Gyms 1-5 + Rival Routes 110/119 | **89** | Tier progression (Oran→Sitrus→type boost→puzzle items); Houndoom gets Overheat+White Herb, Tauros gets CB+Return/EQ, Arcanine gets ExtremeSpeed |
 | `src/data/trainers.h` | Rival Route 110/119 party type → ITEM_DEFAULT_MOVES | **89** | 12 entries (6 Brendan + 6 May) converted from NoItem to Item struct |
+| `src/data/trainer_parties.h` | v3.0 held item overhaul: Gyms 6-8, E4, Champion, Rival Lilycove | **90** | Winona (Leftovers/Sharp Beak/Lum), T&L (Twisted Spoon/Leftovers on aces), Juan (Sitrus ace), Sidney (Scope Lens/Focus Band/CB Tyranitar), Phoebe (Spell Tag/Lum), Glacia (Focus Band/Shell Bell/Leftovers ace), Drake (Sitrus/Leftovers/Dragon Fang/CB Flygon/Lum Dragonite), Wallace (Mystic Water/Shell Bell/Sitrus/Scope Lens ace), 6 Lilycove rival parties get first items |
+| `src/data/trainers.h` | Rival Lilycove party type → ITEM_DEFAULT_MOVES | **90** | 6 entries (3 Brendan + 3 May) converted from NoItem to Item struct |

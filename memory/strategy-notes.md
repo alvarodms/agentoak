@@ -25,7 +25,7 @@ The migration isn't over — it's intensifying. Trainers adapt. New artifacts ar
 
 ---
 
-## Pillar 1 — Trainer Held Items Audit
+## Pillar 1 — Trainer Held Items Audit ✅ COMPLETE (Cycles 89-90)
 
 ### Philosophy (Progression Tiers)
 
@@ -174,7 +174,7 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 | Cycle | Objective | Pillar | Key Files |
 |-------|-----------|--------|-----------|
 | **89** | ~~Gym 1-5 + Rival 1-3 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
-| **90** | Gym 6-8 + E4 + Champion + Rival 4-5 held items | P1 | trainer_parties.h, trainers.h |
+| **90** | ~~Gym 6-8 + E4 + Champion + Rival 4 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
 | **91** | Mid-game encounter audit (Routes 110-113) | P2 | wild_encounters.json |
 | **92** | Mid-game encounter audit (Routes 119-120) + level curve | P2 | wild_encounters.json |
 | **93** | Wild held items — early + mid game species | P3 | species_info.h |

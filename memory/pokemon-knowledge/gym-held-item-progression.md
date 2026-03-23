@@ -1,6 +1,6 @@
 # Gym Leader Held Item Progression: Lessons from Top Hacks
 
-**Cycle**: 89 | **Date**: March 2026
+**Cycle**: 90 | **Date**: March 2026
 
 ---
 
@@ -29,6 +29,14 @@ Key insight: IE scales *both* items and stat quality (IVs/EVs) together, not jus
 1. Items create *micro-puzzles*, not stat inflation — "oh, that's clever" not "that's unfair"
 2. Berry progression: Oran → Sitrus → type boosts → competitive items
 3. Each "puzzle item" (White Herb, Lum Berry, Choice Band) should appear first on a gym leader so the player learns about it in a scripted fight
+
+## E4/Champion Item Design (Community Consensus, 2025-2026)
+
+The ROM hack community values E4 difficulty from **smart strategy, not cheap tricks**:
+- **Good**: Competitive items the player has already seen (Leftovers, Choice Band, Lum Berry) used in smarter combinations
+- **Bad**: Haze/Pressure stalling, excessive Leftovers on every mon ("boring to fight"), items the player can't access
+- **Best practice**: Each E4 member should have 1 "signature" item interaction. E.g., Dusclops (130/130 defenses) + Leftovers = a genuine wall puzzle; Absol (130 Atk) + Choice Band = raw power threat
+- Variety matters: avoid 3+ Leftovers across the E4. Mix Leftovers, Choice Band, Lum Berry, Scope Lens, Shell Bell
 
 ## LoH Context (Gen 3 Limitations)
 
