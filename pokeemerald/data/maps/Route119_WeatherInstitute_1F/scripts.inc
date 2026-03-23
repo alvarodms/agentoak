@@ -131,3 +131,20 @@ Route119_WeatherInstitute_1F_Text_TakeRestInBed:
 	.string "There's a bed…\n"
 	.string "Let's take a rest.$"
 
+Route119_WeatherInstitute_1F_EventScript_MigrationScientist::
+	msgbox Route119_WeatherInstitute_1F_Text_MigrationScientist, MSGBOX_NPC
+	end
+
+Route119_WeatherInstitute_1F_Text_MigrationScientist:
+	.string "Our instruments picked up something\n"
+	.string "I can not explain.\p"
+	.string "Energy readings from the CAVE OF\n"
+	.string "ORIGIN have tripled since POKEMON\l"
+	.string "from other regions started arriving.\p"
+	.string "TYRANITAR on ROUTE 119, DRAGONITE\n"
+	.string "near METEOR FALLS... these species\l"
+	.string "have never been recorded in HOENN.\p"
+	.string "Something deep underground is\n"
+	.string "pulling them here. I only wish\l"
+	.string "I knew what.$"
+

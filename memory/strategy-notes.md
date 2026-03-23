@@ -42,11 +42,11 @@ The migration isn't over — it's intensifying. Trainers adapt. New artifacts ar
 
 ---
 
-## Pillar 2 — Mid-Game Journey Polish (IN PROGRESS)
+## Pillar 2 — Mid-Game Journey Polish ✅ COMPLETE (Cycles 91-95)
 
-### Target Level Curve
+### Actual Level Curve (verified Cycle 95)
 
-Badges 1-3: Lv12→19. Badge 4 (Flannery 29): 26-29. Badge 5 (Norman 31): 28-31. Badge 6 (Winona 33): 30-33. Badges 7-8: 37-46. E4: 48-55 vs leaders at 56-58.
+Badges 1-3: Lv12→19. Badge 4 (Flannery 33): 26-33. Badge 5 (Norman 39): 35-39. Badge 6 (Winona 45): 40-45. Badges 7-8: 37-46. E4: 48-55 vs leaders at 56-58.
 
 ### Encounter Audit ✅ DONE (Cycles 91-92)
 Routes 110-113, 119-120 audited. 8+ species per route, 2+ migrants, good level spread.
@@ -57,12 +57,12 @@ Routes 110-113, 119-120 audited. 8+ species per route, 2+ migrants, good level s
 
 **Beat 2 — Fortree City** ✅ DONE (Cycle 94): Bird keeper notes Murkrow/Skarmory displacing native Swellow.
 
-**Beat 3 — Weather Institute**: Scientist detects energy signature from Cave of Origin. Foreshadows postgame quest. **TODO — Cycle 95.**
+**Beat 3 — Weather Institute** ✅ DONE (Cycle 95): Scientist detects Cave of Origin energy readings tripling since migration. Foreshadows postgame quest.
 
 ### Double Battles ✅ DONE (Cycle 94)
 
 - **Route 110**: Twins Mia & Lily — Growlithe Lv16 + Poliwag Lv16
-- **Route 119**: Sr. and Jr. Lila & Roy — Houndour Lv27 + Snubbull Lv27
+- **Route 119**: Sr. and Jr. June & Vic — Houndour Lv27 + Snubbull Lv27
 
 ---
 
@@ -105,7 +105,7 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 | **92** | Mid-game encounter audit (Routes 119-120) | P2 | ✅ DONE |
 | **93** | Wild held items — ALL 19 migration species | P3 | ✅ DONE |
 | **94** | Mid-game narrative NPCs + 2 double battles | P2 | ✅ DONE |
-| **95** | Weather Institute narrative + mid-game polish | P2 | TODO |
+| **95** | Weather Institute narrative + mid-game polish | P2 | ✅ DONE |
 | **96** | Migration Tracker Quest (all 3 stages) | P4 | TODO |
 | **97** | Polish pass + community triage | All | TODO |
 | **98** | Buffer / stretch goals | All | TODO |

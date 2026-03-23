@@ -64,6 +64,8 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 | Cycles 29: MauvilleCity, Route117, FallarborTown, Route113, LavaridgeTown, FortreeCity, Route119 | Migration flavor | 29 | |
 | `data/maps/LavaridgeTown/scripts.inc` | New researcher NPC — 3 new species near hot springs | 29, **94** | Cycle 94: added migration researcher, cataloguing first-wave species |
 | `data/maps/FortreeCity/scripts.inc` | New bird keeper NPC — foreign species in canopy | 29, 65, **94** | Cycle 94: added bird keeper who notes Murkrow/Skarmory displacing Swellow |
+| `data/maps/Route119_WeatherInstitute_1F/scripts.inc` | Migration scientist NPC — Cave of Origin energy readings | **95** | Beat 3: ominous foreshadowing, links migration to Cave of Origin |
+| `data/maps/Route119_WeatherInstitute_1F/map.json` | Added scientist object event at (13,4) | **95** | OBJ_EVENT_GFX_SCIENTIST_1, FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS |
 
 ## Flavor Text — Late Game
 
