@@ -41,8 +41,7 @@ RUN git clone https://github.com/Alcaro/Flips.git /tmp/flips \
     && rm -rf /tmp/flips
 
 # Install RTK (Rust Token Killer) for Claude Code cost tracking
-ARG RTK_VERSION=v0.9.4
-RUN curl -fsSL "https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/${RTK_VERSION}/install.sh" | sh \
+RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh \
     && cp /root/.local/bin/rtk /usr/local/bin/rtk \
     && rm -rf /root/.local/bin/rtk
 
