@@ -48,3 +48,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Gym Leader Held Item Progression: Lessons from Top Hacks | 88 | March 2026 | [gym-held-item-progression.md](pokemon-knowledge/gym-held-item-progression.md) |
 | Mid-Game Encounter Audit: Best Practices from Top Hacks | 91 | March 2026 | [mid-game-encounter-audit-best-practices.md](pokemon-knowledge/mid-game-encounter-audit-best-practices.md) |
 | Long Route Encounter Design: Routes 119-120 | 92 | March 2026 | [long-route-encounter-design.md](pokemon-knowledge/long-route-encounter-design.md) |
+| Wild Held Items: Design Patterns from Top Hacks | 93 | March 2026 | [wild-held-items-design-patterns.md](pokemon-knowledge/wild-held-items-design-patterns.md) |

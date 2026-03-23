@@ -102,7 +102,7 @@ Badges 1-3: Lv12→19. Badge 4 (Flannery 29): 26-29. Badge 5 (Norman 31): 28-31.
 
 ---
 
-## Pillar 3 — Wild Held Items (Migration Species)
+## Pillar 3 — Wild Held Items (Migration Species) ✅ COMPLETE (Cycle 93)
 
 Only non-Hoenn migrants get thematic held items. Items useful at the game stage where found.
 
@@ -177,12 +177,12 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 | **90** | ~~Gym 6-8 + E4 + Champion + Rival 4 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
 | **91** | ~~Mid-game encounter audit (Routes 110-113)~~ DONE | P2 | wild_encounters.json |
 | **92** | ~~Mid-game encounter audit (Routes 119-120)~~ DONE | P2 | wild_encounters.json |
-| **93** | Wild held items — early + mid game species | P3 | species_info.h |
-| **94** | Wild held items — late game + dungeon species | P3 | species_info.h |
-| **95** | Mid-game narrative NPCs (Lavaridge + Fortree) + 2 doubles | P2 | scripts.inc ×4 |
-| **96** | Weather Institute narrative + mid-game polish | P2 | scripts.inc |
-| **97** | Migration Tracker Quest (all 3 stages) | P4 | flags.h, scripts.inc |
-| **98** | Polish pass + community triage | All | various |
+| **93** | ~~Wild held items — ALL 19 migration species~~ DONE | P3 | species_info.h |
+| **94** | Mid-game narrative NPCs (Lavaridge + Fortree) + 2 doubles | P2 | scripts.inc ×4 |
+| **95** | Weather Institute narrative + mid-game polish | P2 | scripts.inc |
+| **96** | Migration Tracker Quest (all 3 stages) | P4 | flags.h, scripts.inc |
+| **97** | Polish pass + community triage (issues #71/#73) | All | various |
+| **98** | Buffer / stretch goals | All | various |
 
 **Version bumps**: Minor after Cycle 90 (all trainer items). Minor after Cycle 98 (v3.0 complete).
 **Flex**: Community feedback can swap any cycle 91-94. Cycle 98 reserves time for issue triage.
