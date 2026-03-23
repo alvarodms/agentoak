@@ -10,11 +10,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The agent runner checks for the existence of `pokeemerald.gba` after each cycle. If no build was attempted, the file doesn't exist and the runner reports failure.
 **Resolution**: This is expected for exploration-only cycles. Not a real failure.
 
-## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77)
+## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88)
 
 **Symptom**: Agent completes only part of a multi-component objective.
-**Cause**: Gets focused on data entry and memory updates, skipping the build. Cycle 67: 249 actions on data entry. Cycle 77: only 28 actions used but all spent on edits+memory — `make` never run despite having budget remaining.
-**Resolution**: Create a checklist. Budget actions — reserve at least 20 actions for build+fix at the end. For pokedex_orders.h weight/height sorting, use a script instead of manual binary search (~70 actions wasted in Cycle 67).
+**Cause**: Gets focused on data entry and memory updates, skipping the build. Cycle 67: 249 actions on data entry. Cycle 77: only 28 actions used but all spent on edits+memory — `make` never run despite having budget remaining. Cycle 88: 25 successful edits + 12 wasted on "file not read" errors + memory updates = no build. All pokeemerald edits reverted.
+**Resolution**: Create a checklist. Budget actions — reserve at least 20 actions for build+fix at the end. For large file edits, re-read immediately before editing to avoid context eviction. For pokedex_orders.h weight/height sorting, use a script instead of manual binary search.
 
 ## Action Budget Waste on Research Cycles (Cycle 76)
 
@@ -60,23 +60,17 @@ Also: fairy.png must exist if TYPE_FAIRY is used.
 **Symptom**: `MOVE_THUNDERPUNCH' undeclared` — missing underscore.
 **Resolution**: Check exact spelling in `include/constants/moves.h`. Known tricky: `MOVE_SELF_DESTRUCT`, `MOVE_FAINT_ATTACK`, `MOVE_THUNDER_PUNCH`.
 
-## "File has not been read yet" After Context Compression (Cycle 57, 67)
+## "File has not been read yet" After Context Compression (Cycle 57, 67, 88)
 
 **Symptom**: Edit tool returns `File has not been read yet. Read it first before writing to it.`
 **Cause**: After many tool calls (200+), context compression evicts the file read. Edit requires a recent Read.
-**Resolution**: Re-read the file immediately before editing. For bulk updates, use bash scripts instead of many individual Edit calls.
+**Resolution**: Re-read the file immediately before editing. For bulk updates, use bash scripts instead of many individual Edit calls. In Cycle 88, 12 consecutive edits failed this way — wasting 20% of the action budget.
 
 ## Missing New Species Graphics/Cries (Cycles 60-61+)
 
 **Symptom**: `Failed to open "graphics/pokemon/lucario/anim_front.png"` etc.
 **Cause**: Placeholder graphics for new species lost on reverts or fresh checkouts.
-**Resolution**: Recreate placeholders before building. For Gible line (Cycle 67), sprites were fetched via fetch_pokemon_sprites — may have >16 color palette issues.
-
-## Expansion Repo Sprites — Palette Issues (Anticipated, Cycle 67)
-
-**Symptom**: Build error about too many colors in PNG sprite
-**Cause**: fetch_pokemon_sprites downloads from pokeemerald-expansion which uses extended palettes (>16 colors)
-**Resolution**: Reduce palette to 16 colors (14 + transparency + black) or fall back to placeholder copy approach.
+**Resolution**: Recreate placeholders before building.
 
 ## Anticipated Pitfalls
 

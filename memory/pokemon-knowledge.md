@@ -45,3 +45,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v3.0 Community Feedback & Early-Game Balance | 86 | March 2026 | [v3-community-feedback-priorities.md](pokemon-knowledge/v3-community-feedback-priorities.md) |
 | v3.0 Planning Direction & Music Speed Sync | 87 | March 2026 | [v3-planning-and-music-sync.md](pokemon-knowledge/v3-planning-and-music-sync.md) |
 | Gen 3 Item Availability for Held Items | 87 | March 2026 | [gen3-item-availability.md](pokemon-knowledge/gen3-item-availability.md) |
+| Gym Leader Held Item Progression: Lessons from Top Hacks | 88 | March 2026 | [gym-held-item-progression.md](pokemon-knowledge/gym-held-item-progression.md) |

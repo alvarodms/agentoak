@@ -12,7 +12,7 @@
 
 ---
 
-# v3.0 — "The Migration Deepens" (Cycles 88-97)
+# v3.0 — "The Migration Deepens" (Cycles 89-97)
 
 The migration isn't over — it's intensifying. Trainers adapt. New artifacts arrive. Researchers race to understand.
 
@@ -38,15 +38,17 @@ The migration isn't over — it's intensifying. Trainers adapt. New artifacts ar
 
 **Rule: Hard = Smart, Not Cheap.** No Bright Powder evasion. Items reward reading the situation.
 
-### Gym Leader Spec (review current items first — Cycles 16-17 added items)
+### Gym Leader Spec — Badges 1-5 (RETRY in Cycle 89)
+
+Actual teams differ from original spec (Cycle 6 teams, not vanilla). Items adapted to actual species.
 
 | Leader | Ace | Ace Item | Key Non-Ace Item | Notes |
 |--------|-----|----------|-------------------|-------|
-| Roxanne | Nosepass | Sitrus Berry | Oran Berry | T1. First "won't go down easy" moment |
-| Brawly | Hariyama | Sitrus Berry | Oran Berry | T1. Ace is bulkier |
-| Wattson | Manectric | Magnet | Sitrus Berry (Magneton) | T2. First damage-boosted ace |
-| Flannery | Torkoal | White Herb | Charcoal (Camerupt) | T3. White Herb + Overheat = teaching moment |
-| Norman | Slaking | Choice Band | Sitrus (Vigoroth), Lum (Spinda) | T3. CB Slaking = mid-game skill check |
+| Roxanne | Rhydon | Sitrus Berry | Oran (Aerodactyl) | T1. Bulky ace survives longer |
+| Brawly | Heracross | Sitrus Berry | Oran (Hitmonlee) | T1. Counter+Endure trap |
+| Wattson | Jolteon | Magnet | Sitrus (Magneton) | T2. First type-boosted ace |
+| Flannery | Houndoom | White Herb | Charcoal (Arcanine) | T3. Overheat+WH teaching moment; ExtremeSpeed on Arcanine |
+| Norman | Tauros=CB, Blissey=Lum | Choice Band/Lum Berry | Sitrus (Kangaskhan) | T3. CB lock-in puzzle + Toxic stall wall |
 | Winona | Altaria | Leftovers | Sharp Beak (Skarmory) | T3. DD + Leftovers = setup sweeper |
 | Tate&Liza | Solrock | Lum Berry | Leftovers (Claydol) | T3 doubles |
 | Juan | Kingdra | Lum Berry | Leftovers (Milotic) | Late T3. Two bulky aces |
@@ -171,8 +173,7 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 
 | Cycle | Objective | Pillar | Key Files |
 |-------|-----------|--------|-----------|
-| **88** | Gym Leader held items (Badges 1-5) | P1 | trainer_parties.h |
-| **89** | Gym Leader + E4 + Champion + Rival held items (Badges 6-8, E4) | P1 | trainer_parties.h |
+| **89** | Gym Leader held items (all 8) + E4 + Champion + Rival (retry from 88) | P1 | trainer_parties.h, trainers.h |
 | **90** | Mid-game encounter audit (Routes 110-113) | P2 | wild_encounters.json |
 | **91** | Mid-game encounter audit (Routes 119-120) + level curve check | P2 | wild_encounters.json |
 | **92** | Wild held items — early + mid game species | P3 | species_info.h |
