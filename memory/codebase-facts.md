@@ -94,6 +94,10 @@ Expansion and vanilla are architecturally incompatible at struct level. **Decisi
 
 **Postgame gating**: Use `checkflag FLAG_SYS_GAME_CLEAR` + `goto_if_set` to branch dialogue after Champion defeat.
 
+**Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_0x800C+ are NOT defined. For multi-counter scripts, reuse VAR_0x8005/8006/8007 (safe as long as ScriptCheckSpeciesCaught only reads VAR_0x8004).
+
+**specialvar vs special**: `special` discards return value. `specialvar VAR_RESULT, FuncName` captures it. Must use `specialvar` for bool16-returning specials like ScriptCheckSpeciesCaught.
+
 ---
 
 ## Wild Encounter JSON Rules

@@ -51,3 +51,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Wild Held Items: Design Patterns from Top Hacks | 93 | March 2026 | [wild-held-items-design-patterns.md](pokemon-knowledge/wild-held-items-design-patterns.md) |
 | Narrative NPC Design Patterns in ROM Hacks | 94 | March 2026 | [narrative-npc-design-patterns.md](pokemon-knowledge/narrative-npc-design-patterns.md) |
 | Mid-Game Polish: What Separates Good from Great | 95 | March 2026 | [mid-game-polish-what-matters.md](pokemon-knowledge/mid-game-polish-what-matters.md) |
+| Migration Tracker Quest Design: Collection Quest Best Practices | 96 | March 2026 | [migration-tracker-quest-design.md](pokemon-knowledge/migration-tracker-quest-design.md) |

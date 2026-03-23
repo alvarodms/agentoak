@@ -1047,7 +1047,10 @@ LittlerootTown_ProfessorBirchsLab_EventScript_BirchRewardMasterBall::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_BirchPostQuest::
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_BirchPostQuest, MSGBOX_DEFAULT
+	goto_if_set FLAG_MIGRATION_TRACKER_STAGE3, BirchLab_EventScript_MigrationComplete
+	goto_if_set FLAG_MIGRATION_TRACKER_STARTED, BirchLab_EventScript_MigrationCheckProgress
+	msgbox BirchLab_Text_MigrationTrackerHook, MSGBOX_DEFAULT
+	setflag FLAG_MIGRATION_TRACKER_STARTED
 	release
 	end
 
@@ -1139,16 +1142,362 @@ LittlerootTown_ProfessorBirchsLab_Text_BirchQuestComplete:
 	.string "I can think of no one\n"
 	.string "more deserving.$"
 
-LittlerootTown_ProfessorBirchsLab_Text_BirchPostQuest:
-	.string "PROF. BIRCH: The migration\n"
-	.string "data is stabilizing, just\l"
-	.string "as COZMO predicted.\p"
-	.string "The new species are settling\n"
-	.string "in. Building territories.\l"
-	.string "Raising young.\p"
-	.string "HOENN's ecosystem is not\n"
-	.string "collapsing. It is GROWING.\p"
-	.string "And it is all documented\n"
-	.string "in our research paper.\l"
-	.string "Co-authored by you, of\l"
-	.string "course.$"
+@ =============================================================
+@ Migration Tracker Quest — 3-stage postgame collection quest
+@ =============================================================
+
+@ --- Progress Router ---
+BirchLab_EventScript_MigrationCheckProgress::
+	goto_if_set FLAG_MIGRATION_TRACKER_STAGE2, BirchLab_EventScript_MigrationCheckS3
+	goto_if_set FLAG_MIGRATION_TRACKER_STAGE1, BirchLab_EventScript_MigrationCheckS2
+	goto BirchLab_EventScript_MigrationCheckS1
+
+@ --- Stage 1: First Wave Pioneers (catch 5 of 10) ---
+BirchLab_EventScript_MigrationCheckS1::
+	setvar VAR_0x800B, 0
+	setvar VAR_0x8004, SPECIES_GROWLITHE
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip1
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip1::
+	setvar VAR_0x8004, SPECIES_VULPIX
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip2
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip2::
+	setvar VAR_0x8004, SPECIES_MEOWTH
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip3
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip3::
+	setvar VAR_0x8004, SPECIES_POLIWAG
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip4
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip4::
+	setvar VAR_0x8004, SPECIES_NIDORAN_M
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip5
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip5::
+	setvar VAR_0x8004, SPECIES_TEDDIURSA
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip6
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip6::
+	setvar VAR_0x8004, SPECIES_PHANPY
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip7
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip7::
+	setvar VAR_0x8004, SPECIES_MAREEP
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip8
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip8::
+	setvar VAR_0x8004, SPECIES_MACHOP
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip9
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip9::
+	setvar VAR_0x8004, SPECIES_HOUNDOUR
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS1_Skip10
+	addvar VAR_0x800B, 1
+BirchLab_MigS1_Skip10::
+	compare VAR_0x800B, 5
+	goto_if_ge BirchLab_EventScript_MigrationS1Complete
+	buffernumberstring STR_VAR_1, VAR_0x800B
+	msgbox BirchLab_Text_MigrationS1Progress, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_MigrationS1Complete::
+	setflag FLAG_MIGRATION_TRACKER_STAGE1
+	msgbox BirchLab_Text_MigrationS1Complete, MSGBOX_DEFAULT
+	giveitem ITEM_RARE_CANDY, 3
+	release
+	end
+
+@ --- Stage 2: Apex Predators (catch 3 of 6) ---
+BirchLab_EventScript_MigrationCheckS2::
+	setvar VAR_0x800B, 0
+	setvar VAR_0x8004, SPECIES_TYRANITAR
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip1
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip1::
+	setvar VAR_0x8004, SPECIES_DRAGONITE
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip2
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip2::
+	setvar VAR_0x8004, SPECIES_SALAMENCE
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip3
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip3::
+	setvar VAR_0x8004, SPECIES_GARCHOMP
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip4
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip4::
+	setvar VAR_0x8004, SPECIES_LUCARIO
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip5
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip5::
+	setvar VAR_0x8004, SPECIES_WEAVILE
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS2_Skip6
+	addvar VAR_0x800B, 1
+BirchLab_MigS2_Skip6::
+	compare VAR_0x800B, 3
+	goto_if_ge BirchLab_EventScript_MigrationS2Complete
+	buffernumberstring STR_VAR_1, VAR_0x800B
+	msgbox BirchLab_Text_MigrationS2Progress, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_MigrationS2Complete::
+	setflag FLAG_MIGRATION_TRACKER_STAGE2
+	msgbox BirchLab_Text_MigrationS2Complete, MSGBOX_DEFAULT
+	giveitem ITEM_PP_MAX, 2
+	release
+	end
+
+@ --- Stage 3: Regional Specialists (1 water + 1 cave + 1 forest) ---
+BirchLab_EventScript_MigrationCheckS3::
+	setvar VAR_0x8005, 0
+	setvar VAR_0x8006, 0
+	setvar VAR_0x8007, 0
+	@ Water: Corsola or Lanturn
+	setvar VAR_0x8004, SPECIES_CORSOLA
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipW1
+	setvar VAR_0x8005, 1
+BirchLab_MigS3_SkipW1::
+	setvar VAR_0x8004, SPECIES_LANTURN
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipW2
+	setvar VAR_0x8005, 1
+BirchLab_MigS3_SkipW2::
+	@ Cave: Riolu or Gible
+	setvar VAR_0x8004, SPECIES_RIOLU
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipC1
+	setvar VAR_0x8006, 1
+BirchLab_MigS3_SkipC1::
+	setvar VAR_0x8004, SPECIES_GIBLE
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipC2
+	setvar VAR_0x8006, 1
+BirchLab_MigS3_SkipC2::
+	@ Forest: Scyther or Heracross
+	setvar VAR_0x8004, SPECIES_SCYTHER
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipF1
+	setvar VAR_0x8007, 1
+BirchLab_MigS3_SkipF1::
+	setvar VAR_0x8004, SPECIES_HERACROSS
+	specialvar VAR_RESULT, ScriptCheckSpeciesCaught
+	compare VAR_RESULT, 1
+	goto_if_ne BirchLab_MigS3_SkipF2
+	setvar VAR_0x8007, 1
+BirchLab_MigS3_SkipF2::
+	@ Check all three habitats
+	compare VAR_0x8005, 1
+	goto_if_ne BirchLab_EventScript_MigrationS3NotYet
+	compare VAR_0x8006, 1
+	goto_if_ne BirchLab_EventScript_MigrationS3NotYet
+	compare VAR_0x8007, 1
+	goto_if_ne BirchLab_EventScript_MigrationS3NotYet
+	goto BirchLab_EventScript_MigrationS3Complete
+
+BirchLab_EventScript_MigrationS3NotYet::
+	msgbox BirchLab_Text_MigrationS3Progress, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_MigrationS3Complete::
+	setflag FLAG_MIGRATION_TRACKER_STAGE3
+	msgbox BirchLab_Text_MigrationS3Complete, MSGBOX_DEFAULT
+	giveitem ITEM_SHELL_BELL
+	release
+	end
+
+@ --- Post-Completion ---
+BirchLab_EventScript_MigrationComplete::
+	msgbox BirchLab_Text_MigrationPostComplete, MSGBOX_DEFAULT
+	release
+	end
+
+@ =============================================================
+@ Migration Tracker Quest — Dialogue Text
+@ =============================================================
+
+BirchLab_Text_MigrationTrackerHook:
+	.string "PROF. BIRCH: {PLAYER}! Our\n"
+	.string "research paper made waves\l"
+	.string "in the scientific community.\p"
+	.string "Other professors want to\n"
+	.string "replicate our findings.\l"
+	.string "But they need more data.\p"
+	.string "I want to publish a complete\n"
+	.string "field guide to every\l"
+	.string "migrant species in HOENN.\p"
+	.string "The first wave... the apex\n"
+	.string "predators... the habitat\l"
+	.string "specialists...\p"
+	.string "Would you help me catalogue\n"
+	.string "them? Catch the migrants\l"
+	.string "and bring me your data.\p"
+	.string "Start with the FIRST WAVE\n"
+	.string "pioneers. Catch any 5 of\l"
+	.string "the common migrants.\p"
+	.string "GROWLITHE, VULPIX, MEOWTH,\n"
+	.string "POLIWAG, NIDORAN, TEDDIURSA,\l"
+	.string "PHANPY, MAREEP, MACHOP,\l"
+	.string "or HOUNDOUR.\p"
+	.string "Every species you catalogue\n"
+	.string "brings us closer to\l"
+	.string "understanding the full\l"
+	.string "scope of this migration.$"
+
+BirchLab_Text_MigrationS1Progress:
+	.string "PROF. BIRCH: You have caught\n"
+	.string "{STR_VAR_1} of the 5 first-wave\l"
+	.string "pioneers I need.\p"
+	.string "Keep looking! GROWLITHE,\n"
+	.string "VULPIX, MEOWTH, POLIWAG,\l"
+	.string "NIDORAN, TEDDIURSA, PHANPY,\l"
+	.string "MAREEP, MACHOP, HOUNDOUR.\p"
+	.string "Any 5 will do.$"
+
+BirchLab_Text_MigrationS1Complete:
+	.string "PROF. BIRCH: Five pioneer\n"
+	.string "species catalogued!\p"
+	.string "Look at the data, {PLAYER}.\n"
+	.string "All five arrived from the\l"
+	.string "east, from JOHTO and beyond.\p"
+	.string "As if something was pulling\n"
+	.string "them toward HOENN.\p"
+	.string "Phase one of the field guide\n"
+	.string "is complete. Take these as\l"
+	.string "thanks for your work.\p"
+	.string "Now, the APEX PREDATORS.\n"
+	.string "The evolved powerhouses\l"
+	.string "that followed the pioneers.\p"
+	.string "TYRANITAR, DRAGONITE,\n"
+	.string "SALAMENCE, GARCHOMP,\l"
+	.string "LUCARIO, or WEAVILE.\p"
+	.string "Catch any 3. These will\n"
+	.string "not be easy to find.$"
+
+BirchLab_Text_MigrationS2Progress:
+	.string "PROF. BIRCH: You have caught\n"
+	.string "{STR_VAR_1} of the 3 apex\l"
+	.string "predators I need.\p"
+	.string "TYRANITAR, DRAGONITE,\n"
+	.string "SALAMENCE, GARCHOMP,\l"
+	.string "LUCARIO, or WEAVILE.\p"
+	.string "Any 3 will complete this\n"
+	.string "phase of the field guide.$"
+
+BirchLab_Text_MigrationS2Complete:
+	.string "PROF. BIRCH: Three apex\n"
+	.string "predators documented!\p"
+	.string "This confirms what I\n"
+	.string "suspected, {PLAYER}.\p"
+	.string "The predators did not wander\n"
+	.string "here randomly. They followed\l"
+	.string "their prey chains.\p"
+	.string "TYRANITAR followed the\n"
+	.string "LARVITAR colonies.\l"
+	.string "DRAGONITE followed the\l"
+	.string "DRATINI in the rivers.\p"
+	.string "This is not random dispersal.\n"
+	.string "It is an ecological cascade.\p"
+	.string "The CAVE OF ORIGIN energy\n"
+	.string "drew the pioneers. The\l"
+	.string "pioneers drew the predators.\p"
+	.string "One final stage remains.\n"
+	.string "The REGIONAL SPECIALISTS.\p"
+	.string "Catch one WATER migrant,\n"
+	.string "one CAVE migrant, and\l"
+	.string "one FOREST migrant.\p"
+	.string "Water: CORSOLA or LANTURN.\n"
+	.string "Cave: RIOLU or GIBLE.\l"
+	.string "Forest: SCYTHER or HERACROSS.\p"
+	.string "This will prove the migration\n"
+	.string "has reshaped every habitat\l"
+	.string "in HOENN.$"
+
+BirchLab_Text_MigrationS3Progress:
+	.string "PROF. BIRCH: For the final\n"
+	.string "stage I need proof from\l"
+	.string "three habitats.\p"
+	.string "Water: CORSOLA or LANTURN.\n"
+	.string "Cave: RIOLU or GIBLE.\l"
+	.string "Forest: SCYTHER or HERACROSS.\p"
+	.string "One from each habitat will\n"
+	.string "complete the field guide.$"
+
+BirchLab_Text_MigrationS3Complete:
+	.string "PROF. BIRCH: Water... cave...\n"
+	.string "forest... All three habitats\l"
+	.string "documented.\p"
+	.string "{PLAYER}. Do you understand\n"
+	.string "what we have proven?\p"
+	.string "The migration has not just\n"
+	.string "brought new species to\l"
+	.string "HOENN. It has woven them\l"
+	.string "into every ecosystem.\p"
+	.string "The rivers, the caves, the\n"
+	.string "forests... they are all\l"
+	.string "richer now.\p"
+	.string "I am going to publish this\n"
+	.string "as the HOENN MIGRATION\l"
+	.string "FIELD GUIDE.\p"
+	.string "Co-authored by {PLAYER},\n"
+	.string "POKeMON CHAMPION and\l"
+	.string "field researcher.\p"
+	.string "Every trainer in HOENN will\n"
+	.string "know what you discovered.\p"
+	.string "Take this SHELL BELL. It\n"
+	.string "resonates with the same\l"
+	.string "energy as the CAVE OF\l"
+	.string "ORIGIN. A fitting memento.$"
+
+BirchLab_Text_MigrationPostComplete:
+	.string "PROF. BIRCH: The HOENN\n"
+	.string "MIGRATION FIELD GUIDE is\l"
+	.string "selling out in LILYCOVE.\p"
+	.string "Trainers from KANTO and\n"
+	.string "JOHTO are visiting to see\l"
+	.string "the migrants for themselves.\p"
+	.string "You made this possible,\n"
+	.string "{PLAYER}. Our research\l"
+	.string "changed how the world sees\l"
+	.string "HOENN.$"

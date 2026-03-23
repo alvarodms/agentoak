@@ -34,7 +34,7 @@ Before modifying ANY pokeemerald file:
 | QoL Changes & Release | 22, 23, 37, 38, **75** | 6 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
-| Birch Postgame Quest | **84** | 8 (flags + 5 scripts + 2 map.json) | [birch-quest.md](completed-work/birch-quest.md) |
+| Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
 
 ---

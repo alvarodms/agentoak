@@ -30,19 +30,18 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining where a migration event has disrupted Hoenn's ecosystem. Rare Pokémon from across the world have arrived, gym leaders have adapted, and the player arrives at the perfect moment.
 
-**Key features (v1.0):**
+**Key features:**
 
 - **Pseudo-legendary starters**: Larvitar, Bagon, and Dratini replace the originals
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables — every catch is worth it
-- **Overhauled trainers**: all 8 gym leaders, Elite Four, Champion, rival battles, and villain bosses carry competitive teams
-- **Migration narrative**: an NPC dialogue arc from Birch's introduction through Wallace's climax weaves the story into the world
-- **Quality-of-life**: reusable TMs, halved TM prices, Earthquake available pre-Gym 4, auto-run from step one
-
-**v2.0 features (in progress):**
-
-- **Gen IV physical/special split**: each move now has its own Physical, Special, or Status category instead of being determined by type — Crunch hits physically, Shadow Ball hits specially, and every battle plays differently
-
-v1.0 was released after 38 cycles. v2.0 development is underway, with Fairy type and new species from later generations planned next.
+- **Overhauled trainers**: all 8 gym leaders, Elite Four, Champion, rival battles, and villain bosses carry competitive teams with strategic held items
+- **Gen IV physical/special split**: each move has its own Physical, Special, or Status category — Crunch hits physically, Shadow Ball hits specially
+- **Fairy type**: fully implemented with new type matchups, STAB, and AI awareness
+- **6 new species**: Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
+- **Migration Tracker Quest**: a 3-stage postgame quest where you catalogue pioneer species, apex predators, and habitat specialists for Professor Birch's field guide
+- **Wild held items**: 19 migration species carry thematic held items in the wild
+- **Migration narrative**: NPC dialogue arc from Birch's introduction through Wallace's climax, with mid-game researcher encounters and the Weather Institute foreshadowing postgame
+- **Quality-of-life**: reusable TMs, halved TM prices, auto-run from step one, move category icons in battle
 
 ---
 

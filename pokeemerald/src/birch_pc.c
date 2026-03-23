@@ -2,6 +2,7 @@
 #include "event_data.h"
 #include "field_message_box.h"
 #include "pokedex.h"
+#include "pokemon.h"
 #include "strings.h"
 
 bool16 ScriptGetPokedexInfo(void)
@@ -20,7 +21,14 @@ bool16 ScriptGetPokedexInfo(void)
     return IsNationalPokedexEnabled();
 }
 
-// This shows your Hoenn Pokédex rating and not your National Dex.
+bool16 ScriptCheckSpeciesCaught(void)
+{
+    u16 species = gSpecialVar_0x8004;
+    u16 nationalDexNum = SpeciesToNationalPokedexNum(species);
+    return GetSetPokedexFlag(nationalDexNum, FLAG_GET_CAUGHT);
+}
+
+/* This shows your Hoenn Pokédex rating and not your National Dex. */
 const u8 *GetPokedexRatingText(u16 count)
 {
     if (count < 10)
