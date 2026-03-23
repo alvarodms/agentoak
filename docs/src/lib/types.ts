@@ -86,25 +86,6 @@ export interface GuideData {
   routes: Record<string, RouteData>;
 }
 
-export interface StrategyStarter {
-  name: string;
-  types: string;
-  identity: string;
-}
-
-export interface RoadmapCompletedEntry {
-  cycle: number;
-  status: string;
-  description: string;
-}
-
-export interface RoadmapUpcomingEntry {
-  cycle: number;
-  objective: string;
-  priority?: string;
-  complexity?: string;
-}
-
 export interface ReleaseEntry {
   tag: string;
   name: string;
@@ -115,14 +96,3 @@ export interface ReleaseEntry {
   ipsName: string | null;
 }
 
-export interface StrategyData {
-  vision?: {
-    title: string;
-    description: string;
-  };
-  starters?: StrategyStarter[];
-  roadmap?: {
-    completed?: RoadmapCompletedEntry[];
-    upcoming?: RoadmapUpcomingEntry[];
-  };
-}

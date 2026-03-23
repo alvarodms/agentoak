@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 const NAV_ITEMS = [
   { href: '/', label: 'Research Logs' },
   { href: '/guide', label: 'Game Guide' },
-  { href: '/strategy', label: 'Strategy' },
-  { href: '/roadmap', label: 'Roadmap' },
   { href: '/about', label: 'About' },
   { href: '/downloads', label: 'Downloads' },
 ];
