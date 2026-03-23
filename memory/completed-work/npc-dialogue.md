@@ -32,79 +32,56 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/RustboroCity_Gym/scripts.inc` | Roxanne pre-battle dialogue | 32, **36** | Cycle 36 rewrote (was already migration-themed) |
-| `data/maps/DewfordTown_Gym/scripts.inc` | Brawly pre-battle dialogue | 32, **36** | Cycle 36 rewrote |
-| `data/maps/MauvilleCity_Gym/scripts.inc` | Wattson pre-battle dialogue | 32, **36** | Cycle 36 rewrote |
-| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | Flannery pre-battle dialogue | 32, **36** | Cycle 36 rewrote |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman pre-battle dialogue | 32, **36** | Cycle 36 rewrote |
-| `data/maps/FortreeCity_Gym/scripts.inc` | Winona pre-battle dialogue | 32, **36** | Cycle 36 rewrote |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | Tate & Liza pre-battle dialogue | 33, **36** | Cycle 36 rewrote |
-| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | Juan pre-battle dialogue | 33, **36** | Cycle 36 rewrote |
+| `data/maps/RustboroCity_Gym/scripts.inc` | Roxanne pre-battle dialogue | 32, **36** | |
+| `data/maps/DewfordTown_Gym/scripts.inc` | Brawly pre-battle dialogue | 32, **36** | |
+| `data/maps/MauvilleCity_Gym/scripts.inc` | Wattson pre-battle dialogue | 32, **36** | |
+| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | Flannery pre-battle dialogue | 32, **36** | |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman pre-battle dialogue | 32, **36** | |
+| `data/maps/FortreeCity_Gym/scripts.inc` | Winona pre-battle dialogue | 32, **36** | |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | Tate & Liza pre-battle dialogue | 33, **36** | |
+| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | Juan pre-battle dialogue | 33, **36** | |
 
 ## Elite Four & Champion
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | Sidney pre-battle dialogue | 33 | Dark types drawn to migration chaos |
-| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | Phoebe pre-battle dialogue | 33, **42** | Wove guardian/second-wave text into Cycle 33 intro |
-| `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | Glacia pre-battle dialogue | 33 | Ice migration framing |
-| `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | Drake pre-battle dialogue | 33 | Dragon elder migration framing |
-| `data/maps/EverGrandeCity_ChampionsRoom/scripts.inc` | Champion Wallace dialogue | 33 | Thematic climax — "Hoenn expanded" |
+| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | Sidney pre-battle | 33 | |
+| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | Phoebe pre-battle | 33, **42** | |
+| `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | Glacia pre-battle | 33 | |
+| `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | Drake pre-battle | 33 | |
+| `data/maps/EverGrandeCity_ChampionsRoom/scripts.inc` | Wallace dialogue | 33 | |
 
-## Flavor Text — Early Game (Littleroot → Slateport)
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/LittlerootTown/scripts.inc` | Town NPCs — migration observations | 15, 28 | Twin saw Dragonair, boy mentions Birch |
-| `data/maps/Route101/scripts.inc` | Youngster — dark spiky creature bit him | 15, 28 | Houndour reference |
-| `data/maps/OldaleTown/scripts.inc` | Girl — trainer burned by Magby | 28 | |
-| `data/maps/PetalburgCity/scripts.inc` | Boy + Gentleman — Dratini, Houndour | 15, 28 | |
-| `data/maps/Route104/scripts.inc` | Bug Catcher — Horsea schools | 28 | |
-| `data/maps/PetalburgWoods/scripts.inc` | Boy — Larvitar sleeping | 28 | |
-| `data/maps/RustboroCity/scripts.inc` | Devon Corp NPCs — 42 unknown species | 28 | |
-| `data/maps/SlateportCity/scripts.inc` | Cook + Old Woman — harbor sightings | 27, 28 | Cycle 27 villain text, 28 NPC flavor |
-| `data/maps/Route110/scripts.inc` | Old Man — Lapras sighted | 25, 28, **36** | Multiple cycles touched this file |
-
-## Flavor Text — Mid-Game (Mauville → Lilycove)
+## Flavor Text — Early Game
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/MauvilleCity/scripts.inc` | Boy + Maniac — Houndour burns, Dratini | 29 | |
-| `data/maps/Route117/scripts.inc` | Little Boy — disoriented Larvitar | 29 | |
-| `data/maps/FallarborTown/scripts.inc` | Gentleman — Houndour at Mt. Chimney | 29 | |
-| `data/maps/Route113/scripts.inc` | Gentleman — Magmar melted mold | 29 | |
-| `data/maps/LavaridgeTown/scripts.inc` | ExpertM + OldWoman — Magby, hot springs | 29 | |
-| `data/maps/FortreeCity/scripts.inc` | OldMan + Boy — Skarmory, unknown creature | 29 | |
-| `data/maps/Route119/scripts.inc` | Boy — new Pokemon calls in rain | 29 | |
+| Cycles 15, 28: LittlerootTown, Route101, OldaleTown, PetalburgCity, Route104, PetalburgWoods, RustboroCity, SlateportCity, Route110 | Migration sightings NPCs | 15, 28, 36 | See git history |
+
+## Flavor Text — Mid-Game
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| Cycles 29: MauvilleCity, Route117, FallarborTown, Route113, LavaridgeTown, FortreeCity, Route119 | Migration flavor | 29 | |
+| `data/maps/LavaridgeTown/scripts.inc` | New researcher NPC — 3 new species near hot springs | 29, **94** | Cycle 94: added migration researcher, cataloguing first-wave species |
+| `data/maps/FortreeCity/scripts.inc` | New bird keeper NPC — foreign species in canopy | 29, 65, **94** | Cycle 94: added bird keeper who notes Murkrow/Skarmory displacing Swellow |
 
 ## Flavor Text — Late Game
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/MossdeepCity/scripts.inc` | 3 NPCs — late-game flavor | 33 | |
-| `data/maps/SootopolisCity/scripts.inc` | 3 NPCs — late-game flavor | 33 | |
-| `data/maps/EverGrandeCity/scripts.inc` | League entrance NPCs | 33 | |
+| Cycles 33: MossdeepCity, SootopolisCity, EverGrandeCity | Late-game flavor | 33 | |
 
-## Postgame Narrative Polish (Cycle 50)
+## Postgame Narrative (Cycle 50) + Second Wave (Cycles 42, 63, 65)
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc` | Woman + ExpertM postgame branches — E4 rematch + Victory Road migration dialogue | 50 | FLAG_SYS_GAME_CLEAR gated |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | Lab aide postgame branch — migration species establishing territories | 50 | Added after AideReceivedStarter |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman postgame text rewrite — migration changed E4 strategies | 50 | Replaced DadNoAmountOfTrainingIsEnough text |
-| `data/maps/MossdeepCity/scripts.inc` | Woman postgame branch — Space Center satellite migration patterns | 50 | FLAG_SYS_GAME_CLEAR gated |
+| Cycles 42, 50, 63, 65: Various postgame + second-wave NPCs | See git history for details | 42-65 | |
 
-## Second Wave (v2.0 Narrative)
+## Mid-Game Double Battle Trainers (Cycle 94)
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/Route118/scripts.inc` | Fisherman NPC — second wave fishing observations | 42, **63** | Cycle 63: converted to before/after FLAG_SECOND_WAVE, added pre-wave text, Birch PokeNav call, Girl before/after, Steven setflag |
-| `data/maps/Route118/map.json` | Added fisherman object event at (30,10) | 42 | |
-| `data/maps/Route119/scripts.inc` | Boy NPC — before/after FLAG_SECOND_WAVE dialogue | 29, **65** | Cycle 65: converted to lock/faceplayer/goto_if_set pattern, added post-wave Heracross vs Scyther text |
-| `data/maps/Route120/scripts.inc` | Ranger NPC — post-wave only dialogue | **65** | New NPC: Absol/Murkrow/Misdreavus sightings, RANGER UNION report |
-| `data/maps/Route120/map.json` | Added ranger object event at (18,24) | **65** | Near Scorched Slab area, FLAG_SECOND_WAVE gated |
-| `data/maps/Route121/scripts.inc` | Pokefan NPC — post-wave only dialogue | **65** | New NPC: Tauros/Miltank herds near Safari Zone |
-| `data/maps/Route121/map.json` | Added pokefan object event at (45,8) | **65** | Near Safari Zone entrance, FLAG_SECOND_WAVE gated |
-| `data/maps/FortreeCity/scripts.inc` | OldMan NPC — before/after FLAG_SECOND_WAVE dialogue | 29, **65** | Cycle 65: converted to lock/faceplayer/goto_if_set, added post-wave Skarmory territory conflict text. Fixed GymSign smart-quote encoding from cycle 64. |
-| `data/maps/MauvilleCity/scripts.inc` | Scientist NPC — before/after FLAG_SECOND_WAVE dialogue | 42, **65** | Cycle 65: converted to lock/faceplayer/goto_if_set, Cycle 42 text becomes pre-wave, added post-wave "readings off the scale" text |
-| `data/maps/MauvilleCity/map.json` | Added scientist object event at (24,7) | 42 | Near Pokemon Center |
+| `data/maps/Route110/scripts.inc` | Twins Mia & Lily double battle — Growlithe+Poliwag Lv16 | **94** | Migration Fire/Water combo |
+| `data/maps/Route110/map.json` | Added twin NPCs at (44,11) and (45,11) | **94** | Near Cycling Road |
+| `data/maps/Route119/scripts.inc` | Sr. and Jr. Lila & Roy double battle — Houndour+Snubbull Lv27 | **94** | Dark/Fairy migration pair |
+| `data/maps/Route119/map.json` | Added Sr/Jr NPCs at (13,38) and (14,38) | **94** | Jungle route |

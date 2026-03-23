@@ -989,3 +989,43 @@ Route110_Text_KeepAnEyeOutForRival:
 	.string "Well, I had better get going.\n"
 	.string "See you again, {PLAYER}{KUN}!$"
 
+Route110_EventScript_MigrationTwinMia::
+	trainerbattle_double TRAINER_MIA_AND_LIA_1, Route110_Text_MiaIntro, Route110_Text_MiaDefeat, Route110_Text_MiaNotEnoughMons
+	msgbox Route110_Text_MigrationTwinsPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_EventScript_MigrationTwinLia::
+	trainerbattle_double TRAINER_MIA_AND_LIA_1, Route110_Text_LiaIntro, Route110_Text_LiaDefeat, Route110_Text_LiaNotEnoughMons
+	msgbox Route110_Text_MigrationTwinsPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_Text_MiaIntro:
+	.string "This GROWLITHE followed us home\n"
+	.string "from the volcano path!\p"
+	.string "Let's battle together, sis!$"
+
+Route110_Text_MiaDefeat:
+	.string "Our new POKeMON are still getting\n"
+	.string "used to HOENN, just like us!$"
+
+Route110_Text_MiaNotEnoughMons:
+	.string "You need at least two POKeMON\n"
+	.string "to battle both of us!$"
+
+Route110_Text_LiaIntro:
+	.string "My sister found the GROWLITHE, and\n"
+	.string "I found a POLIWAG by the river!\p"
+	.string "Let's show them off together!$"
+
+Route110_Text_LiaDefeat:
+	.string "Aww... but we just started\n"
+	.string "training them!$"
+
+Route110_Text_LiaNotEnoughMons:
+	.string "You only have one POKeMON?\n"
+	.string "We need a double battle!$"
+
+Route110_Text_MigrationTwinsPostBattle:
+	.string "Have you seen other new POKeMON\n"
+	.string "around? There are so many now!$"
+

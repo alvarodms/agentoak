@@ -179,3 +179,18 @@ FortreeCity_Text_OldMan_PostWave:
 	.string "with newcomers for roosting\l"
 	.string "space. I hear them clashing\l"
 	.string "all night.$"
+
+FortreeCity_EventScript_MigrationBirdKeeper::
+	msgbox FortreeCity_Text_MigrationBirdKeeper, MSGBOX_NPC
+	end
+
+FortreeCity_Text_MigrationBirdKeeper:
+	.string "Twenty years I've kept birds in\n"
+	.string "this canopy. Never seen anything\l"
+	.string "like what's happening now.\p"
+	.string "TAILLOW and SWELLOW are losing\n"
+	.string "their nesting sites to foreign\l"
+	.string "species moving in from outside.\p"
+	.string "Even WINONA's rethinking her\n"
+	.string "gym strategy. The skies over\l"
+	.string "HOENN aren't what they used to be.$"

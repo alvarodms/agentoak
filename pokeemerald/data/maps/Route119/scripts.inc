@@ -629,3 +629,46 @@ Route119_Text_Boy_PostWave:
 	.string "The rain does not stop them.\n"
 	.string "If anything it makes them\l"
 	.string "more aggressive.$"
+
+Route119_EventScript_MigrationSrJune::
+	trainerbattle_double TRAINER_JUNE_AND_VIC_1, Route119_Text_JuneIntro, Route119_Text_JuneDefeat, Route119_Text_JuneNotEnoughMons
+	msgbox Route119_Text_MigrationSrJrPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route119_EventScript_MigrationJrVic::
+	trainerbattle_double TRAINER_JUNE_AND_VIC_1, Route119_Text_VicIntro, Route119_Text_VicDefeat, Route119_Text_VicNotEnoughMons
+	msgbox Route119_Text_MigrationSrJrPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route119_Text_JuneIntro:
+	.string "My grandson found this SNUBBULL\n"
+	.string "in the tall grass.\p"
+	.string "And I caught a HOUNDOUR near\n"
+	.string "the Weather Institute! Battle us!$"
+
+Route119_Text_JuneDefeat:
+	.string "These foreign POKeMON have such\n"
+	.string "spirit! No wonder they traveled\l"
+	.string "so far to reach HOENN.$"
+
+Route119_Text_JuneNotEnoughMons:
+	.string "Come back with two POKeMON and\n"
+	.string "we'll have a double battle!$"
+
+Route119_Text_VicIntro:
+	.string "Grandma said I could keep the\n"
+	.string "SNUBBULL if I beat a trainer!\p"
+	.string "Come on, let's double battle!$"
+
+Route119_Text_VicDefeat:
+	.string "That was fun! Grandma's HOUNDOUR\n"
+	.string "is really strong, too!$"
+
+Route119_Text_VicNotEnoughMons:
+	.string "We need two against two!\n"
+	.string "Bring another POKeMON!$"
+
+Route119_Text_MigrationSrJrPostBattle:
+	.string "A breeder told me these species\n"
+	.string "are from distant regions. They're\l"
+	.string "breeding well in HOENN's climate.$"

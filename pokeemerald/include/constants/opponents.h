@@ -875,8 +875,10 @@
 #define TRAINER_GLACIA_REMATCH_4            871
 #define TRAINER_DRAKE_REMATCH_4             872
 #define TRAINER_WALLACE_REMATCH_4           873
+#define TRAINER_MIA_AND_LIA_1              874
+#define TRAINER_JUNE_AND_VIC_1             875
 
-#define TRAINERS_COUNT                      874  // Count of trainer IDs (0-873)
-#define MAX_TRAINERS_COUNT                  874  // Trainer flag space (0x500-0x869 = 874 slots)
+#define TRAINERS_COUNT                      876  // Count of trainer IDs (0-875)
+#define MAX_TRAINERS_COUNT                  876  // Trainer flag space (0x500-0x86B = 876 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

@@ -408,3 +408,17 @@ LavaridgeTown_Text_HerbShopSign:
 	.string "POKéMON HERB SHOP\n"
 	.string "“Bitter taste--better cure!”$"
 
+LavaridgeTown_EventScript_MigrationResearcher::
+	msgbox LavaridgeTown_Text_MigrationResearcher, MSGBOX_NPC
+	end
+
+LavaridgeTown_Text_MigrationResearcher:
+	.string "I've catalogued three new species\n"
+	.string "near the hot springs this week.\l"
+	.string "More than all of last year!\p"
+	.string "First it was GROWLITHE pups and\n"
+	.string "HOUNDOUR on the mountain trails.\p"
+	.string "Now I'm finding signs of their\n"
+	.string "evolved forms nearby. Something\l"
+	.string "is driving them here in waves...$"
+

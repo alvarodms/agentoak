@@ -28,8 +28,8 @@ Before modifying ANY pokeemerald file:
 |--------|--------|-------|--------|
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
 | Wild Encounters | 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, **92** | 3 (JSON + C + flags) | [wild-encounters.md](completed-work/wild-encounters.md) |
-| Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, **89**, **90** | 5 (parties, trainers, opponents, battle_setup, flags) | [trainer-parties.md](completed-work/trainer-parties.md) |
-| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, **65** | ~40 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
+| Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, **94** | 5 (parties, trainers, opponents, battle_setup, flags) | [trainer-parties.md](completed-work/trainer-parties.md) |
+| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, **94** | ~40 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, **75** | 6 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
@@ -44,14 +44,17 @@ Before modifying ANY pokeemerald file:
 These files have been touched in multiple cycles and are at highest risk of accidental regression:
 
 - **Route103/scripts.inc**: Cycles 25, 36, 38
-- **Route110/scripts.inc**: Cycles 25, 28, 36, 38
+- **Route110/scripts.inc**: Cycles 25, 28, 36, 38, **94**
+- **Route119/scripts.inc**: Cycles 29, 65, **94**
 - **LilycoveCity/scripts.inc**: Cycles 25, 29, 36
 - **MtChimney/scripts.inc**: Cycles 27, 36, 38
 - **LittlerootTown/scripts.inc**: Cycles 15, 28
 - **SlateportCity/scripts.inc**: Cycles 27, 28
-- **src/data/trainer_parties.h**: Cycles 6–12, 16, 17, 19, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74
-- **src/data/trainers.h**: Cycles 6–12, 16, 17, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74
-- **include/constants/opponents.h**: Cycles 6–11, 49, 50, 51, 71
+- **LavaridgeTown/scripts.inc**: Cycles 29, **94**
+- **FortreeCity/scripts.inc**: Cycles 29, 65, **94**
+- **src/data/trainer_parties.h**: Cycles 6–12, 16, 17, 19, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74, 89, 90, **94**
+- **src/data/trainers.h**: Cycles 6–12, 16, 17, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74, 89, 90, **94**
+- **include/constants/opponents.h**: Cycles 6–11, 49, 50, 51, 71, **94**
 - **src/battle_setup.c**: Cycles 6, 49, 50, 71
 - **PetalburgCity_Gym/scripts.inc**: Cycles 32, 36, 50
 - **MossdeepCity/scripts.inc**: Cycles 33, 50

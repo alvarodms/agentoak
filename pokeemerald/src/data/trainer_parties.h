@@ -14799,3 +14799,29 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayLinkPlaceholder[] = {
     .species = SPECIES_MAGIKARP,
     }
 };
+
+static const struct TrainerMonNoItemDefaultMoves sParty_MiaAndLia1[] = {
+    {
+    .iv = 0,
+    .lvl = 16,
+    .species = SPECIES_GROWLITHE,
+    },
+    {
+    .iv = 0,
+    .lvl = 16,
+    .species = SPECIES_POLIWAG,
+    }
+};
+
+static const struct TrainerMonNoItemDefaultMoves sParty_JuneAndVic1[] = {
+    {
+    .iv = 50,
+    .lvl = 27,
+    .species = SPECIES_HOUNDOUR,
+    },
+    {
+    .iv = 50,
+    .lvl = 27,
+    .species = SPECIES_SNUBBULL,
+    }
+};
