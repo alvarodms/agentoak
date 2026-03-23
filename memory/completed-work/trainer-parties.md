@@ -24,4 +24,5 @@ Modified files related to trainer team compositions, held items, and level curve
 | `src/data/trainer_parties.h` | Mt. Pyre interior (8 trainers) | **73** | Ghost-themed migration |
 | `src/data/trainer_parties.h` | Early-game routes 102-104 (11 trainers) | **74** | Migration species introduction |
 
-**Note**: Cycle 88 attempted Gym Leader 1-5 held item overhaul + Rival Route 110/119 items, but changes were **REVERTED** (build never run). Must retry in next cycle.
+| `src/data/trainer_parties.h` | v3.0 held item overhaul: Gyms 1-5 + Rival Routes 110/119 | **89** | Tier progression (Oran→Sitrus→type boost→puzzle items); Houndoom gets Overheat+White Herb, Tauros gets CB+Return/EQ, Arcanine gets ExtremeSpeed |
+| `src/data/trainers.h` | Rival Route 110/119 party type → ITEM_DEFAULT_MOVES | **89** | 12 entries (6 Brendan + 6 May) converted from NoItem to Item struct |

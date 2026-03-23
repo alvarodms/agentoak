@@ -1,6 +1,6 @@
 # Gym Leader Held Item Progression: Lessons from Top Hacks
 
-**Cycle**: 88 | **Date**: March 2026
+**Cycle**: 89 | **Date**: March 2026
 
 ---
 
@@ -12,26 +12,31 @@ Even Gym 1 (Brock) uses strategic held items — not just berries:
 - **Oran Berry** on Archen/Vulpix (simple sustain)
 
 By Gym 2 (Misty): **Eviolite**, **Sitrus Berry**, **Mystic Water** — more diverse.
-By Gym 3 (Lt. Surge): **Expert Belt**, **Occa Berry** (weakness reduction), **Electric Seed** + terrain.
+By Gym 3 (Lt. Surge): **Expert Belt**, **Occa Berry**, **Electric Seed** + terrain.
 By Gym 4 (Erika): **Focus Sash**, **Life Orb**, **Terrain Extender**, **Grassy Seed**.
 
-### Key Pattern
-Items aren't just stat boosts — they create *puzzle moments*:
-- Sturdy + Berry Juice = "I need to hit this twice, then once more"
-- Custap Berry = "It's going to get a revenge hit before it drops"
-- Occa Berry = "My super-effective hit didn't OHKO — what happened?"
+## Inclement Emerald's Approach
 
-### LoH Context (Gen 3 Limitations)
-Radical Red uses Gen 8+ items (Eviolite, Seeds, Focus Sash). LoH must work within Gen 3.
+Follows a cleaner tier progression (Challenge Mode):
+- **Roxanne**: Anorith (Water Gem), Lileep (Oran Berry), Nosepass (Berry Juice) — recovery-focused
+- **Rival Route 110**: Starters hold Sitrus Berry, IVs scale to 25
+- **Late game**: Full 252 EV spreads, Lum Berry, Assault Vest, Mega Stones, all 31 IVs
 
-**Available puzzle items for early gyms:**
-- Berry Juice (full HP heal at <50%, but only once — exists as ITEM_BERRY_JUICE? needs verify)
-- Oran Berry (simple, teaches items exist)
-- Sitrus Berry (bigger heal, mid-game)
+Key insight: IE scales *both* items and stat quality (IVs/EVs) together, not just items alone.
+
+## Key Design Patterns (Confirmed Across Both Hacks)
+
+1. Items create *micro-puzzles*, not stat inflation — "oh, that's clever" not "that's unfair"
+2. Berry progression: Oran → Sitrus → type boosts → competitive items
+3. Each "puzzle item" (White Herb, Lum Berry, Choice Band) should appear first on a gym leader so the player learns about it in a scripted fight
+
+## LoH Context (Gen 3 Limitations)
+
+Gen 3 lacks Eviolite, Seeds, Focus Sash. Available puzzle items:
+- Berry Juice, Oran Berry, Sitrus Berry (healing tier)
 - White Herb (stat drop reset — pairs with Overheat/Superpower)
-- Lum Berry (status cure — reward for status strategy attempts)
+- Lum Berry (status cure — punishes status strategies)
+- Choice Band (lock-in puzzle — Norman's Tauros)
+- Type-boost items (Charcoal, Magnet, etc.)
 
-**The gap**: Gen 3 lacks Eviolite, Seeds, Focus Sash. This means early gym "puzzles" must rely more on Berry timing and type-boost surprises. The planned Tier 1-2 progression (Oran → Sitrus → type boosts) is solid but could benefit from White Herb appearing as early as Flannery (Badge 4) for a wow moment.
-
-## Design Principle Confirmed
-Top hacks use held items to create *micro-puzzles*, not just stat inflation. Each item should make the player think "oh, that's clever" rather than "that's unfair."
+The Tier 1→4 progression in strategy-notes.md is well-aligned with community standards.

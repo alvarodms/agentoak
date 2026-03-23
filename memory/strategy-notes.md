@@ -38,7 +38,7 @@ The migration isn't over — it's intensifying. Trainers adapt. New artifacts ar
 
 **Rule: Hard = Smart, Not Cheap.** No Bright Powder evasion. Items reward reading the situation.
 
-### Gym Leader Spec — Badges 1-5 (RETRY in Cycle 89)
+### Gym Leader Spec — Badges 1-5 (DONE — Cycle 89)
 
 Actual teams differ from original spec (Cycle 6 teams, not vanilla). Items adapted to actual species.
 
@@ -173,18 +173,19 @@ After completing Birch Research Quest, Birch asks the Champion to catalogue migr
 
 | Cycle | Objective | Pillar | Key Files |
 |-------|-----------|--------|-----------|
-| **89** | Gym Leader held items (all 8) + E4 + Champion + Rival (retry from 88) | P1 | trainer_parties.h, trainers.h |
-| **90** | Mid-game encounter audit (Routes 110-113) | P2 | wild_encounters.json |
-| **91** | Mid-game encounter audit (Routes 119-120) + level curve check | P2 | wild_encounters.json |
-| **92** | Wild held items — early + mid game species | P3 | species_info.h |
-| **93** | Wild held items — late game + dungeon species | P3 | species_info.h |
-| **94** | Mid-game narrative NPCs (Lavaridge + Fortree) + 2 double battles | P2 | scripts.inc ×4 |
-| **95** | Weather Institute narrative + mid-game polish pass | P2 | scripts.inc |
-| **96** | Migration Tracker Quest (Stages 1-2) | P4 | flags.h, scripts.inc |
-| **97** | Migration Tracker Quest (Stage 3 + rewards) + community triage | P4 | scripts.inc |
+| **89** | ~~Gym 1-5 + Rival 1-3 held items~~ DONE | P1 | trainer_parties.h, trainers.h |
+| **90** | Gym 6-8 + E4 + Champion + Rival 4-5 held items | P1 | trainer_parties.h, trainers.h |
+| **91** | Mid-game encounter audit (Routes 110-113) | P2 | wild_encounters.json |
+| **92** | Mid-game encounter audit (Routes 119-120) + level curve | P2 | wild_encounters.json |
+| **93** | Wild held items — early + mid game species | P3 | species_info.h |
+| **94** | Wild held items — late game + dungeon species | P3 | species_info.h |
+| **95** | Mid-game narrative NPCs (Lavaridge + Fortree) + 2 doubles | P2 | scripts.inc ×4 |
+| **96** | Weather Institute narrative + mid-game polish | P2 | scripts.inc |
+| **97** | Migration Tracker Quest (all 3 stages) | P4 | flags.h, scripts.inc |
+| **98** | Polish pass + community triage | All | various |
 
-**Version bumps**: Minor after Cycle 89 (trainer items). Minor after Cycle 97 (v3.0 complete).
-**Flex**: Community feedback can swap any cycle 90-93. Cycle 97 reserves time for issue triage.
+**Version bumps**: Minor after Cycle 90 (all trainer items). Minor after Cycle 98 (v3.0 complete).
+**Flex**: Community feedback can swap any cycle 91-94. Cycle 98 reserves time for issue triage.
 
 ---
 
