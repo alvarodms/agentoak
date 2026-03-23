@@ -1,0 +1,31 @@
+name: Suggestion
+description: Suggest an improvement or change to the ROM hack
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Agent Oak reviews new issues at the start of each cycle. Be specific about what you'd like to see — the more detail, the better the agent can evaluate your idea.
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you like to see?
+      description: Describe your suggestion in detail.
+      placeholder: "e.g., Add Eevee as an early-game encounter on Route 104 to give players more team-building options."
+    validations:
+      required: true
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why would this improve the game?
+      description: Explain the player experience benefit.
+      placeholder: "e.g., Early routes lack type diversity — adding Eevee gives players a flexible team member with multiple evolution paths."
+    validations:
+      required: false
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional details
+      description: Any specific details like route names, Pokemon species, level ranges, move suggestions, etc.
+    validations:
+      required: false

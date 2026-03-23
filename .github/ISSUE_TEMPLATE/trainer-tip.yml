@@ -1,0 +1,23 @@
+name: Trainer Tip
+description: Suggest a specific gameplay balance change
+labels: ["trainer-tip"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a specific balance suggestion? Trainer tips are focused gameplay tweaks — think move changes, level adjustments, encounter rate tuning, or team composition ideas.
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What's your balance suggestion?
+      description: Be specific — mention Pokemon names, moves, levels, routes, trainers, etc.
+      placeholder: "e.g., Roxanne's Nosepass should know Rock Tomb instead of Rock Throw to make the fight more strategic."
+    validations:
+      required: true
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why would this improve balance?
+      description: Explain the competitive or difficulty reasoning.
+    validations:
+      required: false

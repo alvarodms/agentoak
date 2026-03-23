@@ -21,8 +21,10 @@ RUN apt-get update -qq && apt-get install -y -qq \
 # install.sh expects a pokeemerald root and creates <dir>/tools/agbcc/ inside it,
 # so we use a staging dir then move the nested result to /opt/agbcc.
 # The workflow copies /opt/agbcc to pokeemerald/tools/agbcc after checkout.
-RUN git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc \
+ARG AGBCC_COMMIT=da598c1d918402c42c0c0d7128ba14567f3175e9
+RUN git clone https://github.com/pret/agbcc.git /tmp/agbcc \
     && cd /tmp/agbcc \
+    && git checkout $AGBCC_COMMIT \
     && ./build.sh \
     && mkdir -p /tmp/agbcc-staging \
     && ./install.sh /tmp/agbcc-staging \
@@ -30,14 +32,17 @@ RUN git clone --depth 1 https://github.com/pret/agbcc.git /tmp/agbcc \
     && rm -rf /tmp/agbcc /tmp/agbcc-staging
 
 # Build Flips (IPS patcher) from source — flatpak is not usable in containers
-RUN git clone --depth 1 https://github.com/Alcaro/Flips.git /tmp/flips \
+ARG FLIPS_COMMIT=ff216a75df0987047a67d7923567dc4482ce07ac
+RUN git clone https://github.com/Alcaro/Flips.git /tmp/flips \
     && cd /tmp/flips \
+    && git checkout $FLIPS_COMMIT \
     && TARGET=cli make flips \
     && cp flips /usr/local/bin/flips \
     && rm -rf /tmp/flips
 
 # Install RTK (Rust Token Killer) for Claude Code cost tracking
-RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh \
+ARG RTK_VERSION=v0.9.4
+RUN curl -fsSL "https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/${RTK_VERSION}/install.sh" | sh \
     && cp /root/.local/bin/rtk /usr/local/bin/rtk \
     && rm -rf /root/.local/bin/rtk
 

@@ -17,6 +17,11 @@ export default function Layout({ children }: LayoutProps) {
         <a href="https://github.com/alvarodms/agentoak" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
+        <br />
+        <small>
+          Sprites by <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokeAPI</a>.
+          Pok&eacute;mon is &copy; Nintendo/Creatures Inc./GAME FREAK Inc.
+        </small>
       </footer>
       <Particles />
     </>

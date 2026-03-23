@@ -258,4 +258,8 @@ Each successful build cycle produces a GitHub release with semantic versioning (
 
 ## License
 
-This project uses the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. See that project for its licensing terms. The agent runner code in `src/` is part of this repository.
+The **agent runner code** (`src/`, `docs/`, `.github/`, and root configuration files) is released under the [MIT License](LICENSE).
+
+The **`pokeemerald/` directory** contains a decompilation of Pokemon Emerald by the [pret](https://github.com/pret/pokeemerald) community. Pokemon Emerald is copyright Nintendo, Creatures Inc., and GAME FREAK Inc. The decompilation is provided for educational and research purposes. Built ROM files contain copyrighted game assets — distributing them is your own responsibility.
+
+Pokemon sprites displayed on the docs site are served by [PokeAPI](https://pokeapi.co/) and are copyright Nintendo/Creatures Inc./GAME FREAK Inc.

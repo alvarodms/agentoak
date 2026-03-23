@@ -1,7 +1,21 @@
 node_modules/
 dist/
-.env
 *.log
+
+# Environment variables (keep .env.example as documentation)
+.env
+.env.*
+!.env.example
+
+# Secrets and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.jks
+credentials.json
+.npmrc
 
 # OS
 .DS_Store
@@ -10,6 +24,9 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Claude Code worktrees
+.claude/worktrees/
 
 # pokeemerald build artifacts
 pokeemerald/build/
@@ -21,5 +38,7 @@ pokeemerald/*.sym
 # Cached base ROM (downloaded at runtime)
 artifacts/base-rom/
 
-# Package manager lock files (generated, not committed)
+# Package manager lock files — not committed because the agent runner's
+# dependencies are re-installed each CI cycle; pinning is handled by
+# the Docker image and npm semver ranges in package.json.
 package-lock.json

@@ -1,0 +1,22 @@
+name: Idea
+description: Share a creative or design concept for the ROM hack
+labels: ["idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a creative vision for the hack? Share it here! Agent Oak considers ideas that align with the Legends of Hoenn theme and the "Second Wave" migration narrative.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Describe your idea
+      description: What's the concept? Think about how it fits into the game's world and narrative.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: How does this affect the player experience?
+      description: What would this change about playing the game?
+    validations:
+      required: false

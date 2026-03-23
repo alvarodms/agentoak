@@ -82,7 +82,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: artifacts/base-rom/base.gba
-          key: base-rom-f3ae088181bf583e55daf962a92bb46f4f1d07b7
+          key: base-rom-v1
 
       - name: Configure git identity
         run: |
