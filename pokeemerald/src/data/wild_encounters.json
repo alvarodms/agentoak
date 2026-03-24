@@ -7782,19 +7782,19 @@
                                 "species": "SPECIES_HARIYAMA"
                             },
                             {
-                                "min_level": 42,
-                                "max_level": 42,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 38,
+                                "max_level": 40,
+                                "species": "SPECIES_PUPITAR"
                             },
                             {
-                                "min_level": 42,
-                                "max_level": 42,
-                                "species": "SPECIES_HARIYAMA"
+                                "min_level": 38,
+                                "max_level": 40,
+                                "species": "SPECIES_SNEASEL"
                             },
                             {
-                                "min_level": 42,
-                                "max_level": 42,
-                                "species": "SPECIES_LAIRON"
+                                "min_level": 38,
+                                "max_level": 40,
+                                "species": "SPECIES_SHELGON"
                             },
                             {
                                 "min_level": 38,
@@ -7802,9 +7802,9 @@
                                 "species": "SPECIES_MAWILE"
                             },
                             {
-                                "min_level": 42,
+                                "min_level": 40,
                                 "max_level": 42,
-                                "species": "SPECIES_LAIRON"
+                                "species": "SPECIES_WEAVILE"
                             },
                             {
                                 "min_level": 38,
@@ -8036,8 +8036,8 @@
                             },
                             {
                                 "min_level": 18,
-                                "max_level": 18,
-                                "species": "SPECIES_SOLROCK"
+                                "max_level": 22,
+                                "species": "SPECIES_ARON"
                             },
                             {
                                 "min_level": 14,
@@ -8045,9 +8045,9 @@
                                 "species": "SPECIES_SOLROCK"
                             },
                             {
-                                "min_level": 19,
-                                "max_level": 19,
-                                "species": "SPECIES_ZUBAT"
+                                "min_level": 16,
+                                "max_level": 20,
+                                "species": "SPECIES_LARVITAR"
                             },
                             {
                                 "min_level": 20,
@@ -8055,9 +8055,9 @@
                                 "species": "SPECIES_ZUBAT"
                             },
                             {
-                                "min_level": 19,
-                                "max_level": 19,
-                                "species": "SPECIES_ZUBAT"
+                                "min_level": 28,
+                                "max_level": 32,
+                                "species": "SPECIES_PUPITAR"
                             },
                             {
                                 "min_level": 20,

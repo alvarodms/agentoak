@@ -16,13 +16,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Gets focused on data entry and memory updates, skipping the build.
 **Resolution**: Budget actions — reserve at least 20 actions for build+fix at the end. Re-read files immediately before editing to avoid context eviction.
 
-## Untracked Binary Assets (Cycles 68, 91, 92, 94) — CRITICAL
+## Untracked Binary Assets (Cycles 68, 91, 92, 94, 100) — CRITICAL
 
-**Symptom**: Build fails with "Failed to open" for fairy.png, species sprites, or cry WAVs.
+**Symptom**: Build fails with "Failed to open" for fairy.png, species sprites, or cry WAVs. In cycle 100, the `graphics/types/` directory didn't even exist at checkout.
 **Cause**: Binary assets from previous cycles aren't committed to git. Fresh checkouts miss them.
 **Resolution**: Copy placeholders — fairy/physical/special/status.png from normal.png, cries from similar species, sprites via `fetch_pokemon_sprites`.
 **PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits.
 **Known missing assets**: fairy.png, physical.png, special.png, status.png (copy from normal.png); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
+**Note**: The `graphics/types/` directory is created by the build process itself. On fresh checkout it may not exist — create it with `mkdir -p` before copying placeholder PNGs.
 
 ## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94) — CRITICAL
 
@@ -57,3 +58,4 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **JSON errors**: `wild_encounters.json` processed by `mapjson`. Validate JSON syntax after editing.
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
+- **No python3**: Use `node -e` for JSON validation (python3 not installed on runner).

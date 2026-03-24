@@ -33,7 +33,7 @@ The migration transformed Hoenn's routes but left caves, mountains, and deep wat
 
 ## Pillars
 
-### Pillar 1: Dungeon Encounter Overhaul (Cycles 98-100)
+### Pillar 1: Dungeon Encounter Overhaul (Cycles 98-100) ✅ COMPLETE
 
 Replace 2-4 slots per floor with thematically appropriate migration species at low rates (5%, 4%, 1%). Keep dungeon identity.
 
@@ -83,7 +83,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 |-------|--------|-----------------|
 | **98** | ~~Pillar 1a: Route 104 + Route 123 + Mt. Pyre 2F-Summit~~ | **DONE** — 8 encounter tables (R104, R123, Mt. Pyre 2F-6F + Summit) |
 | **99** | ~~Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville~~ | **DONE** — 10 encounter tables (8 Seafloor + 2 New Mauville) |
-| **100** | Pillar 1c: Meteor Falls + Victory Road B1F + polish | 3+ encounter tables. Pillar 1 complete. |
+| **100** | ~~Pillar 1c: Meteor Falls + Victory Road B1F + polish~~ | **DONE** — 2 encounter tables (Meteor Falls 1F, Victory Road B1F). Pillar 1 COMPLETE. |
 | **101** | Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches | 4 leaders × 4 tiers |
 | **102** | Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches | 4 leaders × 4 tiers |
 | **103** | Pillar 2c: Rematch polish + narrative gym dialogue | Pillar 2 complete. |
