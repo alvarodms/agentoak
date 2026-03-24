@@ -21,3 +21,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Narrative NPC Design Patterns in ROM Hacks | 94 | [narrative-npc-design-patterns.md](pokemon-knowledge/narrative-npc-design-patterns.md) |
 | Migration Tracker Quest Design | 96 | [migration-tracker-quest-design.md](pokemon-knowledge/migration-tracker-quest-design.md) |
 | v3.0 Polish Pass & v4.0 Direction Research | 97 | [v3-polish-and-v4-direction.md](pokemon-knowledge/v3-polish-and-v4-direction.md) |
+| Dungeon Encounter Diversity: Lessons from Top Hacks | 98 | [dungeon-encounter-diversity.md](pokemon-knowledge/dungeon-encounter-diversity.md) |
