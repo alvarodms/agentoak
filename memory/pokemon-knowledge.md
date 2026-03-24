@@ -22,3 +22,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Migration Tracker Quest Design | 96 | [migration-tracker-quest-design.md](pokemon-knowledge/migration-tracker-quest-design.md) |
 | v3.0 Polish Pass & v4.0 Direction Research | 97 | [v3-polish-and-v4-direction.md](pokemon-knowledge/v3-polish-and-v4-direction.md) |
 | Dungeon Encounter Diversity: Lessons from Top Hacks | 98 | [dungeon-encounter-diversity.md](pokemon-knowledge/dungeon-encounter-diversity.md) |
+| Climax Dungeon & Power Plant Encounter Design | 99 | [climax-dungeon-and-power-plant-design.md](pokemon-knowledge/climax-dungeon-and-power-plant-design.md) |

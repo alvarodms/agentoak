@@ -3509,9 +3509,9 @@
                                 "species": "SPECIES_VOLTORB"
                             },
                             {
-                                "min_level": 26,
+                                "min_level": 25,
                                 "max_level": 26,
-                                "species": "SPECIES_MAGNEMITE"
+                                "species": "SPECIES_FLAAFFY"
                             },
                             {
                                 "min_level": 22,
@@ -3519,9 +3519,9 @@
                                 "species": "SPECIES_VOLTORB"
                             },
                             {
-                                "min_level": 22,
-                                "max_level": 22,
-                                "species": "SPECIES_MAGNEMITE"
+                                "min_level": 26,
+                                "max_level": 26,
+                                "species": "SPECIES_ELECTABUZZ"
                             },
                             {
                                 "min_level": 26,
@@ -3529,9 +3529,9 @@
                                 "species": "SPECIES_ELECTRODE"
                             },
                             {
-                                "min_level": 26,
-                                "max_level": 26,
-                                "species": "SPECIES_MAGNETON"
+                                "min_level": 24,
+                                "max_level": 24,
+                                "species": "SPECIES_RIOLU"
                             }
                         ]
                     }
@@ -6170,14 +6170,14 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 33,
-                                "max_level": 33,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 30,
+                                "max_level": 31,
+                                "species": "SPECIES_ARON"
                             },
                             {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 30,
+                                "max_level": 31,
+                                "species": "SPECIES_LARVITAR"
                             }
                         ]
                     }
@@ -6239,14 +6239,14 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 33,
-                                "max_level": 33,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 31,
+                                "max_level": 32,
+                                "species": "SPECIES_LARVITAR"
                             },
                             {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 30,
+                                "max_level": 31,
+                                "species": "SPECIES_ARON"
                             }
                         ]
                     }
@@ -6303,9 +6303,9 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 35,
-                                "max_level": 35,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 32,
+                                "max_level": 33,
+                                "species": "SPECIES_ARON"
                             },
                             {
                                 "min_level": 33,
@@ -6313,9 +6313,9 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 32,
+                                "max_level": 33,
+                                "species": "SPECIES_LARVITAR"
                             }
                         ]
                     }
@@ -6372,14 +6372,14 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 35,
-                                "max_level": 35,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 32,
+                                "max_level": 33,
+                                "species": "SPECIES_LARVITAR"
                             },
                             {
                                 "min_level": 33,
-                                "max_level": 33,
-                                "species": "SPECIES_GOLBAT"
+                                "max_level": 34,
+                                "species": "SPECIES_ARON"
                             },
                             {
                                 "min_level": 36,
@@ -6431,9 +6431,9 @@
                                 "species": "SPECIES_ZUBAT"
                             },
                             {
-                                "min_level": 35,
-                                "max_level": 35,
-                                "species": "SPECIES_ZUBAT"
+                                "min_level": 33,
+                                "max_level": 34,
+                                "species": "SPECIES_SNEASEL"
                             },
                             {
                                 "min_level": 34,
@@ -6441,9 +6441,9 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 35,
+                                "min_level": 34,
                                 "max_level": 35,
-                                "species": "SPECIES_GOLBAT"
+                                "species": "SPECIES_LAIRON"
                             },
                             {
                                 "min_level": 33,
@@ -6451,9 +6451,9 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 34,
+                                "max_level": 35,
+                                "species": "SPECIES_PUPITAR"
                             }
                         ]
                     }
@@ -6500,14 +6500,14 @@
                                 "species": "SPECIES_ZUBAT"
                             },
                             {
-                                "min_level": 35,
+                                "min_level": 34,
                                 "max_level": 35,
-                                "species": "SPECIES_ZUBAT"
+                                "species": "SPECIES_LAIRON"
                             },
                             {
-                                "min_level": 34,
+                                "min_level": 33,
                                 "max_level": 34,
-                                "species": "SPECIES_GOLBAT"
+                                "species": "SPECIES_SNEASEL"
                             },
                             {
                                 "min_level": 35,
@@ -6520,9 +6520,9 @@
                                 "species": "SPECIES_GOLBAT"
                             },
                             {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "min_level": 34,
+                                "max_level": 35,
+                                "species": "SPECIES_PUPITAR"
                             }
                         ]
                     },
@@ -6649,9 +6649,9 @@
                                 "species": "SPECIES_ZUBAT"
                             },
                             {
-                                "min_level": 34,
-                                "max_level": 34,
-                                "species": "SPECIES_ZUBAT"
+                                "min_level": 35,
+                                "max_level": 36,
+                                "species": "SPECIES_LAIRON"
                             },
                             {
                                 "min_level": 35,
@@ -6660,23 +6660,23 @@
                             },
                             {
                                 "min_level": 34,
-                                "max_level": 34,
-                                "species": "SPECIES_GOLBAT"
+                                "max_level": 35,
+                                "species": "SPECIES_PUPITAR"
                             },
                             {
                                 "min_level": 35,
                                 "max_level": 35,
                                 "species": "SPECIES_GOLBAT"
+                            },
+                            {
+                                "min_level": 35,
+                                "max_level": 36,
+                                "species": "SPECIES_SNEASEL"
                             },
                             {
                                 "min_level": 33,
-                                "max_level": 33,
-                                "species": "SPECIES_GOLBAT"
-                            },
-                            {
-                                "min_level": 36,
-                                "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "max_level": 34,
+                                "species": "SPECIES_LARVITAR"
                             }
                         ]
                     },
@@ -6803,14 +6803,14 @@
                                 "species": "SPECIES_ZUBAT"
                             },
                             {
-                                "min_level": 34,
-                                "max_level": 34,
-                                "species": "SPECIES_ZUBAT"
+                                "min_level": 35,
+                                "max_level": 36,
+                                "species": "SPECIES_PUPITAR"
                             },
                             {
                                 "min_level": 35,
-                                "max_level": 35,
-                                "species": "SPECIES_ZUBAT"
+                                "max_level": 36,
+                                "species": "SPECIES_SNEASEL"
                             },
                             {
                                 "min_level": 34,
@@ -6819,8 +6819,8 @@
                             },
                             {
                                 "min_level": 35,
-                                "max_level": 35,
-                                "species": "SPECIES_GOLBAT"
+                                "max_level": 36,
+                                "species": "SPECIES_LAIRON"
                             },
                             {
                                 "min_level": 33,
@@ -6830,7 +6830,7 @@
                             {
                                 "min_level": 36,
                                 "max_level": 36,
-                                "species": "SPECIES_GOLBAT"
+                                "species": "SPECIES_PUPITAR"
                             }
                         ]
                     }
@@ -7311,9 +7311,19 @@
                                 "species": "SPECIES_VOLTORB"
                             },
                             {
+                                "min_level": 25,
+                                "max_level": 26,
+                                "species": "SPECIES_FLAAFFY"
+                            },
+                            {
+                                "min_level": 22,
+                                "max_level": 22,
+                                "species": "SPECIES_VOLTORB"
+                            },
+                            {
                                 "min_level": 26,
                                 "max_level": 26,
-                                "species": "SPECIES_MAGNEMITE"
+                                "species": "SPECIES_ELECTABUZZ"
                             },
                             {
                                 "min_level": 22,
@@ -7321,19 +7331,9 @@
                                 "species": "SPECIES_VOLTORB"
                             },
                             {
-                                "min_level": 22,
-                                "max_level": 22,
-                                "species": "SPECIES_MAGNEMITE"
-                            },
-                            {
-                                "min_level": 22,
-                                "max_level": 22,
-                                "species": "SPECIES_VOLTORB"
-                            },
-                            {
-                                "min_level": 22,
-                                "max_level": 22,
-                                "species": "SPECIES_MAGNEMITE"
+                                "min_level": 24,
+                                "max_level": 24,
+                                "species": "SPECIES_RIOLU"
                             }
                         ]
                     }

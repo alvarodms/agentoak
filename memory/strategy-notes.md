@@ -82,7 +82,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | Cycle | Target | Key Deliverable |
 |-------|--------|-----------------|
 | **98** | ~~Pillar 1a: Route 104 + Route 123 + Mt. Pyre 2F-Summit~~ | **DONE** — 8 encounter tables (R104, R123, Mt. Pyre 2F-6F + Summit) |
-| **99** | Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville | 9 encounter tables |
+| **99** | ~~Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville~~ | **DONE** — 10 encounter tables (8 Seafloor + 2 New Mauville) |
 | **100** | Pillar 1c: Meteor Falls + Victory Road B1F + polish | 3+ encounter tables. Pillar 1 complete. |
 | **101** | Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches | 4 leaders × 4 tiers |
 | **102** | Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches | 4 leaders × 4 tiers |
