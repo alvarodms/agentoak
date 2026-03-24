@@ -69,20 +69,7 @@ All 5 corridors implemented:
 
 ---
 
-## pokeemerald-expansion — Incompatible (Cycles 40–41)
-
-Expansion and vanilla are architecturally incompatible at struct level. **Decision: stay vanilla.**
-
----
-
-## Move Implementation — 6 Files Required (Cycles 45-46)
-
-1. `include/constants/moves.h` — constant + MOVES_COUNT
-2. `src/data/battle_moves.h` — gBattleMoves[] entry
-3. `src/data/contest_moves.h` — gContestMoves[] entry
-4. `src/data/text/move_descriptions.h` — string + pointer table
-5. `src/data/text/move_names.h` — name (max 12 chars)
-6. `src/data/pokemon/level_up_learnsets.h` — species learnset entries
+## pokeemerald-expansion — Incompatible. Decision: stay vanilla.
 
 ---
 

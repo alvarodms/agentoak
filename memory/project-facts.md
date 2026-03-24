@@ -41,19 +41,7 @@ General project information — build system details, tool versions, configurati
 
 ### Build Tools (in `tools/`)
 
-- `gbagfx` — PNG → .1bpp/.4bpp/.8bpp/compressed formats
-- `mid2agb` — MIDI → GBA M4A sound format
-- `scaninc` — dependency scanner (for incremental builds)
-- `preproc` — preprocessor (custom)
-- `mapjson` — map JSON → assembly data processor
-- `gbafix` — ROM header checksum fixer
-
-### Memory Map
-
-- ROM base: `0x08000000`
-- IWRAM: 32KB (instruction work RAM — fast, for critical code)
-- EWRAM: 256KB (external work RAM — slower, for data/stacks)
-- Linker scripts: `ld_script.ld` (classic), `ld_script_modern.ld` (modern)
+`gbagfx` (PNG→4bpp), `mid2agb` (MIDI→M4A), `scaninc`, `preproc`, `mapjson` (JSON→asm), `gbafix`.
 
 ## Game Identity
 
