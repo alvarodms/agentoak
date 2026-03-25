@@ -32,14 +32,14 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `data/maps/RustboroCity_Gym/scripts.inc` | Roxanne pre-battle dialogue | 32, **36** | |
-| `data/maps/DewfordTown_Gym/scripts.inc` | Brawly pre-battle dialogue | 32, **36** | |
-| `data/maps/MauvilleCity_Gym/scripts.inc` | Wattson pre-battle dialogue | 32, **36** | |
-| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | Flannery pre-battle dialogue | 32, **36** | |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman pre-battle dialogue | 32, **36** | |
-| `data/maps/FortreeCity_Gym/scripts.inc` | Winona pre-battle dialogue | 32, **36** | |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | Tate & Liza pre-battle dialogue | 33, **36** | |
-| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | Juan pre-battle dialogue | 33, **36** | |
+| `data/maps/RustboroCity_Gym/scripts.inc` | Roxanne pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Larvitar, rock adaptations) |
+| `data/maps/DewfordTown_Gym/scripts.inc` | Brawly pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Machop colony, surfer voice) |
+| `data/maps/MauvilleCity_Gym/scripts.inc` | Wattson pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Electabuzz, New Mauville) |
+| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | Flannery pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Houndour pack, Mt. Chimney) |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Ursaring, father's resolve) |
+| `data/maps/FortreeCity_Gym/scripts.inc` | Winona pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Murkrow, aerial cunning) |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | Tate & Liza pre-battle + rematch dialogue | 33, 36, **103** | C103: migration-themed rematch (Misdreavus, twin bond) |
+| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | Juan pre-battle + rematch dialogue | 33, 36, **103** | C103: migration-themed rematch (Poliwrath, ocean depths) |
 
 ## Elite Four & Champion
 

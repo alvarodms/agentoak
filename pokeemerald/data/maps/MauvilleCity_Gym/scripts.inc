@@ -384,32 +384,26 @@ MauvilleCity_Gym_Text_GymStatueCertified:
 	.string "{PLAYER}$"
 
 MauvilleCity_Gym_Text_WattsonPreRematch:
-	.string "WATTSON: Ah-ha! Here at last!\n"
-	.string "I know what you want.\l"
-	.string "You want to battle my POKéMON!\p"
-	.string "Wahahahaha!\p"
-	.string "I'll make sparks fly from you!\n"
-	.string "Don't say I didn't warn you!$"
+	.string "Wahahahah! {PLAYER}!\n"
+	.string "You've come back for more, have you?\p"
+	.string "An Electabuzz wandered into NEW\n"
+	.string "MAUVILLE the other day!\p"
+	.string "The old power plant is buzzing with\n"
+	.string "new energy -- and so am I!\n"
+	.string "Wahahahah!$"
 
 MauvilleCity_Gym_Text_WattsonRematchDefeat:
-	.string "Oof…\n"
-	.string "Our batteries ran dry…$"
+	.string "Wahahahah!\n"
+	.string "You've short-circuited me again!$"
 
 MauvilleCity_Gym_Text_WattsonPostRematch:
-	.string "WATTSON: We'll have to recharge our\n"
-	.string "batteries again.\p"
-	.string "When we're fully charged up, we'll\n"
-	.string "gladly accept your challenge.\p"
-	.string "So, come back again sometime,\n"
-	.string "won't you?$"
+	.string "These migration POKéMON have\n"
+	.string "brought fresh electricity to MAUVILLE!\p"
+	.string "Wahahahah! An old man can still\n"
+	.string "learn new tricks!$"
 
 MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
-	.string "WATTSON: Ah-ha! Here at last!\n"
-	.string "I know what you want.\l"
-	.string "You want to battle my POKéMON!\p"
-	.string "Wahahahaha!\p"
-	.string "Oops! Wait!\n"
-	.string "You've only one POKéMON with you!\p"
-	.string "Come see me with two or more\n"
-	.string "POKéMON, all right?$"
+	.string "Wahahahah! Hold on there!\n"
+	.string "You'll need at least two POKéMON\n"
+	.string "for this jolt!$"
 

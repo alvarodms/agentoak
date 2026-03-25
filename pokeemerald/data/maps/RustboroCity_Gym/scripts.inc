@@ -251,31 +251,25 @@ RustboroCity_Gym_Text_RegisteredRoxanne:
 	.string "in the POKéNAV.$"
 
 RustboroCity_Gym_Text_RoxannePreRematch:
-	.string "ROXANNE: I'm so glad to see you again.\n"
-	.string "I'm ROXANNE, the GYM LEADER here.\p"
-	.string "I'm sure we've both experienced many\n"
-	.string "battles since we last met.\p"
-	.string "I would like to see how much better\n"
-	.string "we've become. Let us battle!$"
+	.string "{PLAYER}! I've been studying the migration\n"
+	.string "species that have arrived in Hoenn.\p"
+	.string "A Larvitar from distant mountains found\n"
+	.string "its way to my training grounds.\p"
+	.string "Let me show you how much my research\n"
+	.string "has improved my battling!$"
 
 RustboroCity_Gym_Text_RoxanneRematchDefeat:
-	.string "Grr…\n"
-	.string "Again, I have lost…$"
+	.string "Your strength exceeds my research\n"
+	.string "again… but I've learned so much!$"
 
 RustboroCity_Gym_Text_RoxannePostRematch:
-	.string "ROXANNE: I still have much to learn\n"
-	.string "when it comes to battling POKéMON.\p"
-	.string "That awareness makes me love battling\n"
-	.string "all that much more!$"
+	.string "The migration has taught me that\n"
+	.string "ROCK-type POKéMON from other lands\n"
+	.string "have remarkable adaptations.\p"
+	.string "I'll keep studying… and growing\n"
+	.string "stronger alongside them!$"
 
 RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
-	.string "ROXANNE: I'm so glad to see you again.\n"
-	.string "I'm ROXANNE, the GYM LEADER here.\p"
-	.string "I'm sure we've both experienced many\n"
-	.string "battles since we last met.\p"
-	.string "I would like to see how much better\n"
-	.string "we've become…\p"
-	.string "Oh, no…\n"
-	.string "You only have one POKéMON with you?\p"
-	.string "Please return with at least one more\n"
-	.string "POKéMON.$"
+	.string "Oh, {PLAYER}! I'd love to battle,\n"
+	.string "but you'll need at least two POKéMON\n"
+	.string "for the challenge I have prepared.$"

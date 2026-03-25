@@ -430,28 +430,26 @@ DewfordTown_Gym_Text_GymStatueCertified:
 	.string "{PLAYER}$"
 
 DewfordTown_Gym_Text_BrawlyPreRematch:
-	.string "BRAWLY: A wave may draw back, but it\n"
-	.string "always returns to the shore.\p"
-	.string "A giant wave of a talent like you…\n"
-	.string "I knew you would return!\p"
-	.string "Show me how much higher\n"
-	.string "you've gone!$"
+	.string "Hey, {PLAYER}! Dude, you won't\n"
+	.string "believe it!\p"
+	.string "A Machop colony migrated to the\n"
+	.string "caves near Dewford.\p"
+	.string "Training with them has taken my\n"
+	.string "team to a whole new level!\n"
+	.string "Let's ride this wave!$"
 
 DewfordTown_Gym_Text_BrawlyRematchDefeat:
-	.string "Wow!\n"
-	.string "Swamped again!$"
+	.string "Whoa… wiped out again!\n"
+	.string "You're like a rogue wave, {PLAYER}!$"
 
 DewfordTown_Gym_Text_BrawlyPostRematch:
-	.string "BRAWLY: Battling is vast and it's deep.\n"
-	.string "You can't see the bottom.\l"
-	.string "It's just like the sea of HOENN!$"
+	.string "The migration brought fighters\n"
+	.string "from all over the world to Dewford.\p"
+	.string "Training with foreign species…\n"
+	.string "it's like surfing a new break\n"
+	.string "every day!$"
 
 DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons:
-	.string "BRAWLY: A wave may draw back, but it\n"
-	.string "always returns to the shore.\p"
-	.string "A giant wave of a talent like you…\n"
-	.string "I knew you would return!\p"
-	.string "Oh? You only have one POKéMON\n"
-	.string "that can battle.\p"
-	.string "I'm sorry, but I'd like you to come back\n"
-	.string "with at least two POKéMON.$"
+	.string "Yo, {PLAYER}! I'm stoked to\n"
+	.string "battle, but bring at least two\n"
+	.string "POKéMON, yeah?$"

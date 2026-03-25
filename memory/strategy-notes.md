@@ -49,22 +49,9 @@ Replace 2-4 slots per floor with thematically appropriate migration species at l
 
 **Design rules**: 80%+ native species preserved. Migration at 5% slots (6-7) and 1% slots (10-11). Levels match existing tables. Deeper floors = evolved forms.
 
-### Pillar 2: Gym Leader Rematches (Cycles 101-103)
+### Pillar 2: Gym Leader Rematches (Cycles 101-103) ✅ COMPLETE
 
-Redesign all 8 gym leaders' rematch teams (4 tiers each). Each tier 4 team includes 1-2 migration species. All use `ITEM_CUSTOM_MOVES` with competitive items.
-
-| Leader | Type | Migration Species for Tier 4 |
-|--------|------|------------------------------|
-| Roxanne | Rock | Tyranitar (Dragon Dance + Sand Stream) |
-| Brawly | Fighting | Machamp, Lucario |
-| Wattson | Electric | Electabuzz, Ampharos |
-| Flannery | Fire | Houndoom, Ninetales |
-| Norman | Normal | Tauros, Ursaring |
-| Winona | Flying | Murkrow (T2-T3 only, 405 BST cap) |
-| Tate & Liza | Psychic | Misdreavus (Ghost/Levitate doubles partner) |
-| Juan | Water | Poliwrath (T4+, Water/Fighting) |
-
-**Technical note**: 3 unused trainer IDs available (568, 853, 854). Gym rematches use existing rematch table slots — no new IDs needed (they reuse REMATCH macro tiers).
+Redesign all 8 gym leaders' rematch teams (4 tiers each) + narrative dialogue. Each tier 4 team includes 1-2 migration species. All use `ITEM_CUSTOM_MOVES` with competitive items. Cycle 103 replaced all 32 rematch dialogue strings (4 per leader × 8 leaders) with migration-themed text referencing specific team species.
 
 ### Pillar 3: Rival Arc Enhancement (Cycle 104)
 
@@ -86,7 +73,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | **100** | ~~Pillar 1c: Meteor Falls + Victory Road B1F + polish~~ | **DONE** — 2 encounter tables (Meteor Falls 1F, Victory Road B1F). Pillar 1 COMPLETE. |
 | **101** | ~~Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches~~ | **DONE** — 16 rematch parties redesigned with tiered IVs/levels, migration species, competitive items |
 | **102** | ~~Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches~~ | **DONE** — 16 rematch parties redesigned. Migration: Tauros/Ursaring (Norman), Murkrow (Winona T2-3), Misdreavus (T&L), Poliwrath (Juan). Key strats: Belly Drum Linoone, Guts Ursaring/Swellow, Levitate EQ+Perish Song doubles, Rain Dance Kingdra. |
-| **103** | Pillar 2c: Rematch polish + narrative gym dialogue | Pillar 2 complete. |
+| **103** | ~~Pillar 2c: Rematch polish + narrative gym dialogue~~ | **DONE** — 32 rematch dialogue strings replaced across all 8 gym leaders. Also fixed missing fairy/physical/special/status type PNGs. Pillar 2 COMPLETE. |
 | **104** | Pillar 3: Rival arc enhancement | 3 dialogue touchpoints |
 | **105** | Pillar 4: Battle Speed QoL (Issue #71) | Options menu C mod |
 | **106** | Full regression + balance pass | Polish |
