@@ -84,7 +84,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | **98** | ~~Pillar 1a: Route 104 + Route 123 + Mt. Pyre 2F-Summit~~ | **DONE** — 8 encounter tables (R104, R123, Mt. Pyre 2F-6F + Summit) |
 | **99** | ~~Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville~~ | **DONE** — 10 encounter tables (8 Seafloor + 2 New Mauville) |
 | **100** | ~~Pillar 1c: Meteor Falls + Victory Road B1F + polish~~ | **DONE** — 2 encounter tables (Meteor Falls 1F, Victory Road B1F). Pillar 1 COMPLETE. |
-| **101** | Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches | 4 leaders × 4 tiers |
+| **101** | ~~Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches~~ | **DONE** — 16 rematch parties redesigned with tiered IVs/levels, migration species, competitive items |
 | **102** | Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches | 4 leaders × 4 tiers |
 | **103** | Pillar 2c: Rematch polish + narrative gym dialogue | Pillar 2 complete. |
 | **104** | Pillar 3: Rival arc enhancement | 3 dialogue touchpoints |

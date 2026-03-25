@@ -24,3 +24,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Dungeon Encounter Diversity: Lessons from Top Hacks | 98 | [dungeon-encounter-diversity.md](pokemon-knowledge/dungeon-encounter-diversity.md) |
 | Climax Dungeon & Power Plant Encounter Design | 99 | [climax-dungeon-and-power-plant-design.md](pokemon-knowledge/climax-dungeon-and-power-plant-design.md) |
 | Victory Road & Meteor Falls Design in Top Hacks | 100 | [victory-road-meteor-falls-design.md](pokemon-knowledge/victory-road-meteor-falls-design.md) |
+| Gym Rematch Tier Design Patterns from Top Hacks | 101 | [gym-rematch-tier-design-patterns.md](pokemon-knowledge/gym-rematch-tier-design-patterns.md) |
