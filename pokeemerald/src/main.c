@@ -164,6 +164,7 @@ void AgbMain(void)
 
         PlayTimeCounter_Update();
         MapMusicMain();
+        ApplyMusicSpeedSetting();
         WaitForVBlank();
     }
 }
