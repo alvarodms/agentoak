@@ -66,6 +66,8 @@ function buildMemoSection(
 
 Before making your decision, consider these perspectives from your advisory team. You may agree or disagree with any advisor — the final decision is yours. In your \`reasoning\` field, briefly note which perspectives influenced your decision.
 
+**Engineering investments**: If the Technical Lead proposes an engineering improvement (tooling, abstractions, config-driven patterns), you must either (a) incorporate it into this cycle's objective, (b) capture it in the \`engineeringInvestment\` field so it is preserved for a future cycle, or (c) explain in your \`reasoning\` why it is not worth pursuing. Do not silently ignore engineering suggestions — they compound across cycles.
+
 ${parts.join("\n\n")}`;
 }
 
@@ -147,6 +149,9 @@ Decide: What mode should this cycle use, and what should the objective be?
 
 If previous cycles had build failures, consider "repair".
 
+## Engineering Investment (optional field)
+
+Even when the main objective is content work, capture any valuable engineering improvement opportunity in the \`engineeringInvestment\` field. This is persisted in a tech debt backlog across cycles, building a visible record of deferred infrastructure work. Engineering investments that reduce file-touch counts or automate repetitive operations accelerate all future content cycles — they are not in opposition to the creative vision, they are force multipliers for it.
 
 ${formatImplementationPlanGuidance()}
 

@@ -77,6 +77,7 @@ export function formatMemoryFilesSection(extraFiles?: string[]): string {
     "`memory/codebase-facts.md` — discovered facts about the pokeemerald codebase",
     "`memory/failure-patterns.md` — build failures encountered and their solutions",
     "`memory/project-facts.md` — build system details and configuration notes",
+    "`memory/tech-debt-backlog.md` — accumulated engineering investment opportunities proposed by the Tech Lead across cycles (tooling, abstractions, config-driven patterns that would accelerate future content work)",
   ];
   if (extraFiles) {
     base.push(...extraFiles);

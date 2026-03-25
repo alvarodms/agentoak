@@ -21,6 +21,8 @@ export interface CyclePlan {
   implementationPlan: string;
   /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. For large tasks, the designer can internally parallelize using Agent Teams. */
   gameplayDesignBrief?: string;
+  /** Optional engineering investment recommended by the Tech Lead. Captured even when the cycle's main objective is content work, so it can be persisted in the tech debt backlog for future cycles. */
+  engineeringInvestment?: string;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -49,6 +51,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     gameplayDesignBrief: {
       type: "string",
       description: "Optional brief for the Gameplay Designer agent. Set this when the cycle involves gameplay changes (trainer teams, wild encounters, difficulty tuning, etc.). The Gameplay Designer has access to Pokédex MCP tools and will produce detailed, data-driven specifications. When you set this, your implementationPlan should focus on implementation steps (which files to modify, patterns to follow) rather than exact gameplay values — the Gameplay Designer will provide those.",
+    },
+    engineeringInvestment: {
+      type: "string",
+      description: "Optional engineering investment opportunity identified by the Tech Lead or your own analysis. Capture it here even if this cycle focuses on content — it will be persisted in the tech debt backlog so future cycles can act on it. Examples: 'Extract wild encounter tables into a JSON config so adding species to a route is a 1-file edit instead of 3', 'Create a helper script that auto-generates species constant boilerplate'.",
     },
     issueActions: {
       type: "array",
@@ -104,6 +110,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     reasoning?: string;
     implementationPlan?: string;
     gameplayDesignBrief?: string;
+    engineeringInvestment?: string;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -179,6 +186,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       reasoning: parsed.reasoning,
       implementationPlan: parsed.implementationPlan ?? "",
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
+      engineeringInvestment: parsed.engineeringInvestment || undefined,
       issueActions,
       helpRequests,
     };

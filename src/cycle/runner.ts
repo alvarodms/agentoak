@@ -32,9 +32,32 @@ import type { ValidationResult } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
-import { PROJECT_ROOT, ARTIFACTS_DIR } from "../utils/paths.js";
+import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
+
+const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
+
+/** Append an engineering investment to the persistent tech debt backlog. */
+function persistEngineeringInvestment(
+  cycleNumber: number,
+  investment: string,
+): void {
+  const header = "# Tech Debt Backlog\n\nEngineering investment opportunities identified by the Tech Lead across cycles.\nThe Producer should review this list when planning — picking up even one item per few cycles compounds over time.\n\n| Cycle | Investment | Status |\n|-------|-----------|--------|\n";
+
+  let content: string;
+  if (fs.existsSync(TECH_DEBT_BACKLOG_PATH)) {
+    content = fs.readFileSync(TECH_DEBT_BACKLOG_PATH, "utf-8");
+  } else {
+    fs.mkdirSync(MEMORY_DIR, { recursive: true });
+    content = header;
+  }
+
+  // Append the new investment as a table row
+  const sanitized = investment.replace(/\|/g, "—").replace(/\n/g, " ").trim();
+  content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
+  fs.writeFileSync(TECH_DEBT_BACKLOG_PATH, content, "utf-8");
+}
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
 const MAX_COMMIT_FIX_ATTEMPTS = 3;
@@ -455,6 +478,12 @@ export async function runCycle(): Promise<void> {
 
     // Record the chosen mode in history so future planners can see the pattern
     updateCycleModeHistory(plan.mode);
+
+    // Persist any engineering investment to the tech debt backlog
+    if (plan.engineeringInvestment) {
+      persistEngineeringInvestment(cycleNumber, plan.engineeringInvestment);
+      log.info(`  Engineering investment captured: ${plan.engineeringInvestment.slice(0, 100)}...`);
+    }
 
     // ── Phase 1.5: Gameplay Design (conditional — only when Producer sets a brief) ──
     let activePlan: CyclePlan = plan;
