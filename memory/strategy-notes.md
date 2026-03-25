@@ -60,9 +60,9 @@ Redesign all 8 gym leaders' rematch teams (4 tiers each). Each tier 4 team inclu
 | Wattson | Electric | Electabuzz, Ampharos |
 | Flannery | Fire | Houndoom, Ninetales |
 | Norman | Normal | Tauros, Ursaring |
-| Winona | Flying | Murkrow/Honchkrow, Togetic |
-| Tate & Liza | Psychic | Misdreavus (Ghost coverage) |
-| Juan | Water | Poliwrath, Corsola |
+| Winona | Flying | Murkrow (T2-T3 only, 405 BST cap) |
+| Tate & Liza | Psychic | Misdreavus (Ghost/Levitate doubles partner) |
+| Juan | Water | Poliwrath (T4+, Water/Fighting) |
 
 **Technical note**: 3 unused trainer IDs available (568, 853, 854). Gym rematches use existing rematch table slots — no new IDs needed (they reuse REMATCH macro tiers).
 
@@ -85,7 +85,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | **99** | ~~Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville~~ | **DONE** — 10 encounter tables (8 Seafloor + 2 New Mauville) |
 | **100** | ~~Pillar 1c: Meteor Falls + Victory Road B1F + polish~~ | **DONE** — 2 encounter tables (Meteor Falls 1F, Victory Road B1F). Pillar 1 COMPLETE. |
 | **101** | ~~Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches~~ | **DONE** — 16 rematch parties redesigned with tiered IVs/levels, migration species, competitive items |
-| **102** | Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches | 4 leaders × 4 tiers |
+| **102** | ~~Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches~~ | **DONE** — 16 rematch parties redesigned. Migration: Tauros/Ursaring (Norman), Murkrow (Winona T2-3), Misdreavus (T&L), Poliwrath (Juan). Key strats: Belly Drum Linoone, Guts Ursaring/Swellow, Levitate EQ+Perish Song doubles, Rain Dance Kingdra. |
 | **103** | Pillar 2c: Rematch polish + narrative gym dialogue | Pillar 2 complete. |
 | **104** | Pillar 3: Rival arc enhancement | 3 dialogue touchpoints |
 | **105** | Pillar 4: Battle Speed QoL (Issue #71) | Options menu C mod |

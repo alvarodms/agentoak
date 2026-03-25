@@ -1,6 +1,6 @@
 # Gym Rematch Tier Design Patterns from Top Hacks
 
-**Cycle**: 101 | **Date**: March 2026
+**Cycle**: 102 | **Date**: March 2026
 
 ---
 
@@ -18,7 +18,7 @@
 - Elite Redux: every rematch **individually crafted** (not formulaic level scaling)
 - No day-wait for rematches (QoL improvement)
 - Singles or Doubles choice for rematches
-- Considers all new abilities/moves from engine changes in team design
+- Norman rematch in IE: **Swellow** (Guts + Flame Orb), **Tauros** (Sheer Force + Life Orb), **Linoone** (Gluttony + Belly Drum) — creative Normal-type archetypes
 
 ### Emerald Azure (2025-2026)
 - All trainers EV-trained; player expected to assign EVs too
@@ -32,3 +32,11 @@
 3. **Migration species as surprises**: Tyranitar on Roxanne Tier 4 is a 600 BST pseudo-legendary — it should feel like a genuine threat, not a filler slot.
 4. **Item variety across tiers**: Tier 1 = Oran/Sitrus. Tier 2 = type-boost items. Tier 3 = Lum Berry/White Herb. Tier 4 = Choice Band/Leftovers.
 5. Community strongly prefers **crafted variety** over formulaic scaling.
+
+## BST Concerns for Pillar 2b Migration Species (RESOLVED in Cycle 102)
+
+Honchkrow, Togetic, and Corsola were dropped. Final selections:
+- **Norman**: Tauros (T3+, Intimidate pivot), Ursaring (T4+, Guts+Flame Orb)
+- **Winona**: Murkrow (T2-T3 only, Mean Look/Perish Song gimmick)
+- **Tate & Liza**: Misdreavus (T3+, Levitate+Ghost for EQ-immune doubles partner)
+- **Juan**: Poliwrath (T4+, Water/Fighting dual STAB)

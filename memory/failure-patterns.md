@@ -22,7 +22,8 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Binary assets from previous cycles aren't committed to git. Fresh checkouts miss them.
 **Resolution**: Copy placeholders — fairy/physical/special/status.png from normal.png, cries from similar species, sprites via `fetch_pokemon_sprites`.
 **PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits.
-**Known missing assets**: fairy.png, physical.png, special.png, status.png (copy from normal.png); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
+**Known missing assets**: fairy.png (copy from normal.png if Fairy type re-added); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
+**Fixed in C102**: Removed `move_categories` (physical/special/status) from `graphics_file_rules.mk` — these are expansion-only assets that don't exist in vanilla pokeemerald. The fix is to remove the makefile rule, NOT to create placeholder PNGs.
 **Note**: The `graphics/types/` directory is created by the build process itself. On fresh checkout it may not exist — create it with `mkdir -p` before copying placeholder PNGs.
 
 ## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94) — CRITICAL
