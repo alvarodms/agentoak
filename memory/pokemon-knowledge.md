@@ -26,3 +26,4 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Victory Road & Meteor Falls Design in Top Hacks | 100 | [victory-road-meteor-falls-design.md](pokemon-knowledge/victory-road-meteor-falls-design.md) |
 | Gym Rematch Tier Design Patterns from Top Hacks | 101 | [gym-rematch-tier-design-patterns.md](pokemon-knowledge/gym-rematch-tier-design-patterns.md) |
 | Gym Rematch Narrative Dialogue Design | 103 | [gym-rematch-narrative-dialogue.md](pokemon-knowledge/gym-rematch-narrative-dialogue.md) |
+| Rival Dialogue Design Patterns in ROM Hacks | 104 | [rival-dialogue-design-patterns.md](pokemon-knowledge/rival-dialogue-design-patterns.md) |

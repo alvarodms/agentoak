@@ -53,12 +53,9 @@ Replace 2-4 slots per floor with thematically appropriate migration species at l
 
 Redesign all 8 gym leaders' rematch teams (4 tiers each) + narrative dialogue. Each tier 4 team includes 1-2 migration species. All use `ITEM_CUSTOM_MOVES` with competitive items. Cycle 103 replaced all 32 rematch dialogue strings (4 per leader × 8 leaders) with migration-themed text referencing specific team species.
 
-### Pillar 3: Rival Arc Enhancement (Cycle 104)
+### Pillar 3: Rival Arc Enhancement (Cycle 104) ✅ COMPLETE
 
-Add 2-3 migration-specific dialogue lines to existing Brendan/May encounters:
-- Route 119 (post-Weather Institute): mention Chinchou sighting
-- Lilycove: reference catching a migration species (Sneasel)
-- Postgame: reference Migration Tracker if player started it
+Route 119 rival dialogue (6 strings: May/Brendan intro, defeat, post-battle) → migration-themed with Chinchou river reference. Lilycove postgame text (2 strings: May/Brendan Battle Frontier path) → Migration Tracker reference. Combined with existing Lilycove battle dialogue (Cycles 25-36), this completes the rival's migration narrative arc across 3 touchpoints.
 
 ### Pillar 4: Battle Speed QoL — Issue #71 (Cycle 105)
 
@@ -74,7 +71,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | **101** | ~~Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches~~ | **DONE** — 16 rematch parties redesigned with tiered IVs/levels, migration species, competitive items |
 | **102** | ~~Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches~~ | **DONE** — 16 rematch parties redesigned. Migration: Tauros/Ursaring (Norman), Murkrow (Winona T2-3), Misdreavus (T&L), Poliwrath (Juan). Key strats: Belly Drum Linoone, Guts Ursaring/Swellow, Levitate EQ+Perish Song doubles, Rain Dance Kingdra. |
 | **103** | ~~Pillar 2c: Rematch polish + narrative gym dialogue~~ | **DONE** — 32 rematch dialogue strings replaced across all 8 gym leaders. Also fixed missing fairy/physical/special/status type PNGs. Pillar 2 COMPLETE. |
-| **104** | Pillar 3: Rival arc enhancement | 3 dialogue touchpoints |
+| **104** | ~~Pillar 3: Rival arc enhancement~~ | **DONE** — 8 rival dialogue strings (Route 119 + Lilycove postgame) rewritten with migration themes |
 | **105** | Pillar 4: Battle Speed QoL (Issue #71) | Options menu C mod |
 | **106** | Full regression + balance pass | Polish |
 | **107** | v4.0 release prep, README, version bump | Ship v1.0 or Demo |

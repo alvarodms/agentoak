@@ -17,7 +17,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------------|-------|-------|
 | `data/maps/Route103/scripts.inc` | Rival encounter 1 — cocky discovery | 25, 36, **38** | Cycle 38 added Horsea species name to pre-battle line |
 | `data/maps/Route110/scripts.inc` | Rival encounter 2 — growing awareness | 25, 36, **38** | Cycle 38 added "no joke" + team-changed-since-103 line |
-| `data/maps/LilycoveCity/scripts.inc` | Rival encounter 3 — mutual respect | 25, 29, **36** | Cycle 29 added NPCs; cycle 36 rewrote rival text |
+| `data/maps/LilycoveCity/scripts.inc` | Rival encounter 3 — mutual respect + postgame | 25, 29, 36, **104** | C104: postgame Battle Frontier path → Migration Tracker reference |
 
 ## Villains (Maxie & Archie)
 
@@ -85,5 +85,5 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------------|-------|-------|
 | `data/maps/Route110/scripts.inc` | Twins Mia & Lily double battle — Growlithe+Poliwag Lv16 | **94** | Migration Fire/Water combo |
 | `data/maps/Route110/map.json` | Added twin NPCs at (44,11) and (45,11) | **94** | Near Cycling Road |
-| `data/maps/Route119/scripts.inc` | Sr. and Jr. Lila & Roy double battle — Houndour+Snubbull Lv27 | **94** | Dark/Fairy migration pair |
+| `data/maps/Route119/scripts.inc` | Sr. and Jr. double battle + rival dialogue | 94, **104** | C104: rival intro/defeat/post-battle → migration-themed (Chinchou reference) |
 | `data/maps/Route119/map.json` | Added Sr/Jr NPCs at (13,38) and (14,38) | **94** | Jungle route |

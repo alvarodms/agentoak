@@ -467,14 +467,15 @@ LilycoveCity_Text_MayYouGoingToPokemonLeague:
 	.string "See you!$"
 
 LilycoveCity_Text_MayYouGoingToBattleFrontier:
-	.string "{PLAYER}{KUN}, what are you going to do?\p"
-	.string "Are you taking the BATTLE FRONTIER\n"
-	.string "challenge?\p"
-	.string "Or, are you going to complete your\n"
-	.string "POKéDEX?\p"
-	.string "I might've lost to you in battling,\n"
-	.string "but I'll finish my POKéDEX before you!\p"
-	.string "See you!$"
+	.string "{PLAYER}{KUN}, what are you\n"
+	.string "going to do?\p"
+	.string "The BATTLE FRONTIER? Or\n"
+	.string "filling out the MIGRATION\l"
+	.string "TRACKER for Dad?\p"
+	.string "Either way, this new HOENN\n"
+	.string "has so much left to explore.\p"
+	.string "I'll finish my POKéDEX\n"
+	.string "before you! See you!$"
 
 LilycoveCity_Text_BrendanShoppingLetsBattle:
 	.string "Hey {PLAYER}! This whole journey\n"
@@ -528,18 +529,16 @@ LilycoveCity_Text_BrendanYouGoingToPokemonLeague:
 	.string "Well, anyway, hang in there!$"
 
 LilycoveCity_Text_BrendanYouGoingToBattleFrontier:
-	.string "{PLAYER}, what are you going to do?\p"
-	.string "Are you taking the BATTLE FRONTIER\n"
-	.string "challenge?\p"
-	.string "Or, are you going to complete your\n"
-	.string "POKéDEX?\p"
-	.string "Since you're that strong, you should\n"
-	.string "consider the BATTLE FRONTIER.\p"
-	.string "Heh, if I train my POKéMON a bit more,\n"
-	.string "I'll get stronger than you, {PLAYER}.\p"
-	.string "Maybe I should go to the BATTLE\n"
-	.string "FRONTIER.\p"
-	.string "Well, anyway, hang in there!$"
+	.string "{PLAYER}, what are you\n"
+	.string "going to do?\p"
+	.string "The BATTLE FRONTIER? Or\n"
+	.string "tracking down every new\l"
+	.string "species for the MIGRATION\l"
+	.string "TRACKER?\p"
+	.string "Heh, this new HOENN keeps\n"
+	.string "surprising us.\p"
+	.string "If I train a bit more, I'll\n"
+	.string "catch up to you, {PLAYER}!$"
 
 LilycoveCity_Text_MovedLootIntoHideoutToday:
 	.string "Fufufu…\p"

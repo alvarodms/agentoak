@@ -486,22 +486,27 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 
 Route119_Text_MayIntro:
 	.string "MAY: {PLAYER}{KUN}!\n"
-	.string "Where were you? I was looking for you!\p"
-	.string "How much stronger have you gotten?\n"
-	.string "Let me check for you!\p"
-	.string "Ready with your POKéMON?\n"
-	.string "Of course you are! Go!$"
+	.string "Have you seen the new POKéMON\l"
+	.string "around here?\p"
+	.string "I spotted a CHINCHOU in the\n"
+	.string "river! Never seen one in\l"
+	.string "HOENN before.\p"
+	.string "But first - let me see how\n"
+	.string "strong you've gotten!\p"
+	.string "Ready? Of course you are!\n"
+	.string "Go!$"
 
 Route119_Text_MayDefeat:
-	.string "Achah!\n"
-	.string "{PLAYER}{KUN}, you're strong!\p"
-	.string "I was worried that you might be\n"
-	.string "struggling with your training.$"
+	.string "Wow...\n"
+	.string "You've been catching those\l"
+	.string "new POKéMON, haven't you?$"
 
 Route119_Text_MayPresentForYou:
-	.string "MAY: But I had absolutely nothing to\n"
-	.string "worry about! Keep it up!\p"
-	.string "And, here! I have a present for you.$"
+	.string "MAY: That was a great battle!\n"
+	.string "Those migration POKéMON really\l"
+	.string "made your team shine.\p"
+	.string "Oh! And here - a present\n"
+	.string "for you.$"
 
 Route119_Text_MayExplainFly:
 	.string "MAY: Use FLY, and your POKéMON will\n"
@@ -517,22 +522,27 @@ Route119_Text_MayExplainFly:
 	.string "Well, let's meet again somewhere!$"
 
 Route119_Text_BrendanIntro:
-	.string "BRENDAN: {PLAYER}! So this is where\n"
-	.string "you've been looking for POKéMON?\p"
-	.string "Let me see how good you got.\n"
-	.string "I'll test you!\p"
-	.string "Now!\n"
-	.string "It's a battle, so battle!$"
+	.string "BRENDAN: {PLAYER}! Have you\n"
+	.string "seen the new POKéMON around\l"
+	.string "here?\p"
+	.string "There's CHINCHOU in the\n"
+	.string "river. Dad's migration\l"
+	.string "research was right!\p"
+	.string "But enough about that -\n"
+	.string "let me test your skills!\p"
+	.string "Come on!\n"
+	.string "Let's battle!$"
 
 Route119_Text_BrendanDefeat:
-	.string "Hmm…\n"
-	.string "You've gotten pretty darn decent.$"
+	.string "Hmm...\n"
+	.string "Those migration POKéMON are\l"
+	.string "giving you a real edge.$"
 
 Route119_Text_BrendanIllGiveYouThis:
-	.string "BRENDAN: I'd say you're good enough\n"
-	.string "to search for POKéMON anywhere.\p"
-	.string "Here, I'll give you this.\n"
-	.string "Try it out.$"
+	.string "BRENDAN: You've gotten strong.\n"
+	.string "The migration's changed how\l"
+	.string "we all train, hasn't it?\p"
+	.string "Here, I'll give you this.$"
 
 Route119_Text_BrendanExplainFly:
 	.string "BRENDAN: Use FLY, and your POKéMON\n"
