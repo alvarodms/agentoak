@@ -30,7 +30,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 **PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits.
 **Known missing assets**: fairy.png, physical.png, special.png, status.png (copy from normal.png); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
 **Fixed in C103**: Created placeholder PNGs for fairy/physical/special/status type icons by copying normal.png. These must be committed to prevent future build failures.
-**STILL BROKEN as of C107**: PNGs exist in working directory but remain UNTRACKED. Every cycle recreates them but never commits them. Next cycle MUST: git add pokeemerald/graphics/types/{fairy,physical,special,status}.png and commit.
+**RESOLVED in C108**: PNGs committed to git. Verified in git diff: 4 files, 221 bytes each (placeholder copies of normal.png).
 **Note**: The `graphics/types/` directory is created by the build process itself. On fresh checkout it may not exist — create it with `mkdir -p` before copying placeholder PNGs.
 
 ## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94) — CRITICAL

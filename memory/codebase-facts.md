@@ -117,19 +117,15 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
-## Roaming Pokémon System (Cycle 106 Research)
+## Roaming Pokémon System (Cycle 108 Deep Dive)
 
-**File**: `src/roamer.c`. Single roamer slot via `gSaveBlock1Ptr->roamer` (struct Roamer at offset 0x31DC in SaveBlock1).
+**Full technical reference**: `memory/pokemon-knowledge/roamer-implementation-patterns.md`
 
-**Struct Roamer** (28 bytes, `include/global.h:608`): ivs(u32), personality(u32), species(u16), hp(u16), level(u8), status(u8), cool/beauty/cute/smart/tough(u8 each), active(bool8), filler[8].
+**Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). Hardcoded Latias/Latios in `roamer.c:67,87-89`. AI flees every turn via `AI_Roaming` in `battle_ai_scripts.s:3211` — no turn counter. 4 wild encounter integration points in `wild_encounter.c`. Pokédex area screen shows active roamer location. 30+ unused system flags available for beast tracking (0x881-0x887, 0x8E5-0x91F).
 
-**Key functions**: `InitRoamer()` — called from `data/scripts/players_house.inc:474` after TV multichoice (Latias/Latios). `CreateInitialRoamerMon()` — creates Lv.40 mon, sets random location. `TryStartRoamerEncounter()` — 25% chance when on roamer's route, called from wild_encounter.c (4 places: land, water, rock smash, fishing). `RoamerMove()` — 1/16 chance jump to random set, else move within adjacency table.
+**Species**: SPECIES_RAIKOU(243), SPECIES_ENTEI(244), SPECIES_SUICUNE(245) already exist — no species addition needed.
 
-**Location table**: `sRoamerLocations[][6]` — 20 route sets + sentinel. Routes 110-134 only (central/east Hoenn). Hard-coded to map group 0.
-
-**Sequential beast design**: Only 1 roamer slot exists. To support 3 beasts sequentially: after catching/defeating beast N, set roamer inactive → script triggers next beast via modified `InitRoamer()` or new init function. Need flags to track which beast is current (FLAG_ROAMER_BEAST_1_DONE, etc.). No save struct expansion needed.
-
-**Migration corridor aspiration**: Could weight `sRoamerLocations` toward migration routes, but vanilla table already covers Routes 110-134 which overlap heavily with our migration routes. Default table is acceptable.
+**Files to modify (Cycle 111)**: `roamer.c`, `roamer.h`, `battle_ai_scripts.s`, `flags.h`, `battle_main.c`, `players_house.inc`. **Cycle 112**: Birch Lab scripts, NPC dialogue.
 
 ---
 

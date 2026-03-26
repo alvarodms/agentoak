@@ -51,17 +51,22 @@ This avoids save struct expansion (the main technical risk). Each Birch visit is
 
 ### Technical Plan
 
-**Species needed**: SPECIES_RAIKOU, SPECIES_ENTEI, SPECIES_SUICUNE (full species pipeline — stats, learnsets, sprites, cries, Pokédex entries). These are Gen 2 legendaries, so base stats and learnsets are well-documented.
+**Species needed**: SPECIES_RAIKOU(243), SPECIES_ENTEI(244), SPECIES_SUICUNE(245) — **already exist in vanilla** with full stats, learnsets, sprites, cries, dex entries. NO species addition pipeline needed. Cycles 109-110 are freed up.
 
 **Roamer system changes** (`src/roamer.c`):
-- Modify `ClearRoamerData()` / `CreateInitialRoamerMon()` to accept any species (not just Latias/Latios)
-- Add 3 new flags: `FLAG_ROAMER_RAIKOU_DONE`, `FLAG_ROAMER_ENTEI_DONE`, `FLAG_ROAMER_SUICUNE_DONE`
-- Add a new special or modify `InitRoamer` to init specific beast based on flag state
-- `SetRoamerInactive()` already exists — call it when beast is caught/defeated
+- Modify `ClearRoamerData()` line 67: remove hardcoded `SPECIES_LATIAS`
+- Modify `CreateInitialRoamerMon()` lines 84-105: accept species param instead of bool16
+- Add `InitNextBeast()` special: checks DONE flags → inits next beast or signals all caught
+- 6 new flags (use FLAG_UNUSED_0x881-0x886): 3 DONE + 3 KO flags
+- Modify `battle_main.c:5250-5260`: distinguish KO vs caught when deactivating
+
+**Battle AI change** (`data/battle_ai_scripts.s:3211`):
+- Add turn counter check before `flee` — use `gBattleResults.battleTurnCounter`, flee only if ≥3
 
 **Script changes**:
-- `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc`: New postgame dialogue branch after Migration Tracker completion. Birch tells player about legendary sightings, triggers first roamer.
-- NPC sighting scripts (2-3 locations): Conditional text based on which beast is active.
+- `data/scripts/players_house.inc:455-481`: Gate vanilla Lati trigger or repurpose for Legends narrative
+- Birch Lab: New postgame dialogue branch after Migration Tracker completion
+- NPC sighting scripts (2-3 locations): Conditional text based on which beast is active
 
 **No save struct expansion**: The existing `struct Roamer` (28 bytes) is sufficient. We reuse the single slot sequentially. Flags track completion state.
 
@@ -76,21 +81,20 @@ A scripted scene where migration species gather en masse at a specific location 
 | Cycle | Target | Deliverable |
 |-------|--------|-------------|
 | **107** | v1.0 release prep | **PARTIAL** — README rewrite done, smoke build passed, but type icon PNGs NOT committed (still untracked). Version bump deferred. |
-| **108** | Research: roamer hooks | Deep dive into wild_encounter.c roamer calls, players_house.inc trigger script, save/load for roamer state. Map all touchpoints. |
-| **109** | Species: Raikou + Entei | Full pipeline — constants, stats, learnsets, sprites, cries, dex entries (2 of 3 beasts) |
-| **110** | Species: Suicune + flags | Complete third beast. Add FLAG_ROAMER_*_DONE flags. Verify all 3 species build. |
-| **111** | Roamer system | Modify roamer.c for sequential beast release. Add Birch trigger script. Wire InitRoamer to accept beast species. |
-| **112** | NPC sightings + polish | 2-3 NPCs with conditional beast-sighting dialogue. Test roamer encounters. |
-| **113** | Balance + regression | Smoke test all roamer states. Check encounter rates. Verify flag persistence across save/load. |
-| **114** | Migration Event Climax OR community requests | If Feature B designed, implement. Otherwise, address Issue backlog. |
-| **115** | v5.0 release prep | README, version bump, final polish |
-| **116** | Buffer | Community feedback, hotfixes, deferred issues |
+| **108** | Research: roamer hooks | ✅ Done. Full system mapped. Species already exist — no addition needed. |
+| **109** | Roamer system core | Modify roamer.c (beast-aware init), flags.h (6 flags), battle_main.c (KO vs caught), battle_ai_scripts.s (3-turn flee). |
+| **110** | Birch trigger + wiring | Birch Lab script for sequential beast release. Gate/repurpose vanilla Lati trigger. End-to-end test. |
+| **111** | NPC sightings + polish | 2-3 NPCs with conditional beast-sighting dialogue. Route encounter testing. |
+| **112** | Balance + regression | Smoke test all roamer states. Check encounter rates. Verify flag persistence across save/load. |
+| **113** | Migration Event Climax OR community requests | If Feature B designed, implement. Otherwise, address Issue backlog. |
+| **114** | v5.0 release prep | README, version bump, final polish |
+| **115** | Buffer | Community feedback, hotfixes, deferred issues |
 
 ## Dependencies
 
-- Cycles 109-110 must complete before 111 (species must exist before roamer can reference them)
-- Cycle 108 research informs 111 implementation (understand all touchpoints before modifying)
-- Feature B design can happen during 109-112 without blocking Feature A
+- Cycle 108 research (✅ complete) informs 109 implementation
+- Species already exist — no blocking dependency on species pipeline
+- Feature B design can happen during 110-111 without blocking Feature A
 
 ---
 
