@@ -31,7 +31,7 @@ Before modifying ANY pokeemerald file:
 | Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, **101**, **102** | 5 (parties, trainers, opponents, battle_setup, flags) | [trainer-parties.md](completed-work/trainer-parties.md) |
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, **104** | ~42 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
-| QoL Changes & Release | 22, 23, 37, 38, 75, **105** | 12 | [qol-and-release.md](completed-work/qol-and-release.md) |
+| QoL Changes & Release | 22, 23, 37, 38, 75, 105, **107** | 13 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |

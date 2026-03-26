@@ -1,6 +1,6 @@
 # Roaming Legendaries & v1.0 Release Polish Patterns
 
-**Cycle**: 106 | **Date**: March 2026
+**Cycle**: 107 | **Date**: March 2026
 
 ---
 
@@ -29,3 +29,14 @@ Synthesized from Emerald Imperium, Contemporary Emerald, Re:Emerald, Randolocke 
 6. **Text polish**: Typos, grammar, decapitalization
 
 **Common pattern**: Developers spend 1-3 update cycles on bug fixes before adding new content. Most bugs surface in first week of public release.
+
+## Community Expectations for v1.0 (2025-2026 Landscape)
+
+From PokéCommunity and ROM hack community analysis (C107 research):
+
+- **QoL is table stakes**: Reusable TMs, faster gameplay, modern conveniences are expected, not bonus features. Legends of Hoenn already has reusable TMs, auto-run, and battle speed toggle — this is a strength.
+- **Meaningful changes over vanilla**: Players criticize hacks that only rebalance stats without changing maps/story. Our migration narrative, new species, Fairy type, and P/S split differentiate us strongly.
+- **Documentation matters**: Players want to know encounter locations, learnsets, TM lists. A README or in-game Pokédex coverage helps adoption.
+- **Complete experience**: v1.0 implies the main story is fully playable start-to-finish. Our hack layers on top of vanilla Emerald's complete story, so this is satisfied.
+- **Fair difficulty increase**: "The game puts up a fight now" — not Kaizo-level, but trainers with real movesets and full teams. Our gym leader overhauls, held items, and rival arc deliver this.
+- **Recent comparable releases**: Phoenix Red (Mar 2026), Complete Crystal (2026), Ocean Blue — all emphasize exploration, balance, and QoL over extreme difficulty.

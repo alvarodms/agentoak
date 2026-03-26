@@ -75,7 +75,7 @@ A scripted scene where migration species gather en masse at a specific location 
 
 | Cycle | Target | Deliverable |
 |-------|--------|-------------|
-| **107** | v4.0 release prep | README update, version bump to v1.0, regression spot-checks |
+| **107** | v1.0 release prep | **PARTIAL** — README rewrite done, smoke build passed, but type icon PNGs NOT committed (still untracked). Version bump deferred. |
 | **108** | Research: roamer hooks | Deep dive into wild_encounter.c roamer calls, players_house.inc trigger script, save/load for roamer state. Map all touchpoints. |
 | **109** | Species: Raikou + Entei | Full pipeline — constants, stats, learnsets, sprites, cries, dex entries (2 of 3 beasts) |
 | **110** | Species: Suicune + flags | Complete third beast. Add FLAG_ROAMER_*_DONE flags. Verify all 3 species build. |

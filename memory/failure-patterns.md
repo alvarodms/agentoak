@@ -10,6 +10,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The agent runner checks for the existence of `pokeemerald.gba` after each cycle. If no build was attempted, the file doesn't exist and the runner reports failure.
 **Resolution**: This is expected for exploration-only cycles. Not a real failure.
 
+## Claiming Completion Without Git Changes (Cycle 107)
+
+**Symptom**: Cycle summary claims work is done ("type icons committed", "version bumped") but git diff shows 0 pokeemerald/ changes. Validator flags as UNSUBSTANTIATED.
+**Cause**: Working-directory changes (cp, mkdir) succeed but files are never staged/committed. Memory and summary are updated as if work shipped.
+**Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/` that changes are actually staged. Only update strategy-notes status AFTER commit.
+
 ## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88)
 
 **Symptom**: Agent completes only part of a multi-component objective.
@@ -24,6 +30,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 **PREVENTION**: Run `make` as a **smoke test at cycle start** BEFORE making any edits.
 **Known missing assets**: fairy.png, physical.png, special.png, status.png (copy from normal.png); gabite, garchomp, gible, lucario, riolu, weavile cries (copy from similar species).
 **Fixed in C103**: Created placeholder PNGs for fairy/physical/special/status type icons by copying normal.png. These must be committed to prevent future build failures.
+**STILL BROKEN as of C107**: PNGs exist in working directory but remain UNTRACKED. Every cycle recreates them but never commits them. Next cycle MUST: git add pokeemerald/graphics/types/{fairy,physical,special,status}.png and commit.
 **Note**: The `graphics/types/` directory is created by the build process itself. On fresh checkout it may not exist — create it with `mkdir -p` before copying placeholder PNGs.
 
 ## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94) — CRITICAL

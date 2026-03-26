@@ -28,20 +28,44 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 ## The Game: Legends of Hoenn
 
-Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining where a migration event has disrupted Hoenn's ecosystem. Rare Pokémon from across the world have arrived, gym leaders have adapted, and the player arrives at the perfect moment.
+Hoenn's ecosystem is changing. A migration event has drawn rare Pokémon from distant regions — Larvitar scaling Mt. Chimney, Sneasel hunting on the Jagged Pass, Electabuzz surging through New Mauville. Gym leaders have adapted their teams. The player arrives at the perfect moment.
 
-**Key features:**
+**Legends of Hoenn** is a complete reimagining of Pokémon Emerald, built one cycle at a time by an autonomous AI. Every route, every gym, every rival battle has been redesigned around a single premise: what happens when the whole world's Pokémon come to Hoenn?
 
-- **Pseudo-legendary starters**: Larvitar, Bagon, and Dratini replace the originals
-- **73 routes + 34 dungeons** redesigned with thematic encounter tables — every catch is worth it
-- **Overhauled trainers**: all 8 gym leaders, Elite Four, Champion, rival battles, and villain bosses carry competitive teams with strategic held items
-- **Gen IV physical/special split**: each move has its own Physical, Special, or Status category — Crunch hits physically, Shadow Ball hits specially
-- **Fairy type**: fully implemented with new type matchups, STAB, and AI awareness
-- **6 new species**: Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
-- **Migration Tracker Quest**: a 3-stage postgame quest where you catalogue pioneer species, apex predators, and habitat specialists for Professor Birch's field guide
-- **Wild held items**: 19 migration species carry thematic held items in the wild
-- **Migration narrative**: NPC dialogue arc from Birch's introduction through Wallace's climax, with mid-game researcher encounters and the Weather Institute foreshadowing postgame
-- **Quality-of-life**: reusable TMs, halved TM prices, auto-run from step one, move category icons in battle, battle speed toggle
+### The Migration
+
+- **Pseudo-legendary starters** — Larvitar, Bagon, and Dratini replace the originals
+- **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology
+- **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
+- **19 migration species** carry thematic wild held items
+- **Migration narrative arc** — NPC dialogue from Birch's introduction through Wallace's climax, with mid-game researcher encounters and Weather Institute foreshadowing
+
+### Battle System Upgrades
+
+- **Gen IV physical/special split** — each move has its own Physical, Special, or Status category (Crunch hits physically, Shadow Ball hits specially)
+- **Move category icons** in the battle UI so you always know what you're picking
+- **Fairy type** fully implemented with type matchups, STAB, and AI awareness
+
+### Trainer Overhaul
+
+- **All 8 gym leaders** redesigned with competitive teams, strategic held items, and 4-tier rematch progression
+- **Elite Four and Champion** carry full competitive rosters
+- **Rival arc** redesigned across all 5 battles with migration-themed team building
+- **Villain bosses** (Maxie, Archie, Magma/Aqua admins) carry held items and coverage moves
+
+### Postgame
+
+- **Migration Tracker Quest** — a 3-stage field guide for Professor Birch (pioneer species, apex predators, habitat specialists)
+- **Gym leader rematches** with escalating difficulty across 4 tiers
+
+### Quality of Life
+
+- **Reusable TMs** with halved prices
+- **Auto-run** from step one
+- **Battle speed toggle** — instant, fast, or normal
+- **Move category icons** in the battle UI
+
+**Coming next** — *v2.0: The Legends Awaken.* The migration has drawn something greater to Hoenn. Three legendary Pokémon, displaced from distant Johto, now roam the routes. The title earns its name.
 
 ---
 

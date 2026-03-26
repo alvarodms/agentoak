@@ -30,3 +30,8 @@ Quality-of-life improvements and release artifacts.
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
 | `pokeemerald/RELEASE_NOTES.md` | v1.0 release notes created | 37 | Full feature list, v2.0 preview, credits |
+| `README.md` (project root) | Full rewrite of "The Game" section as player-facing sales pitch | 107 | v1.0 Beta release. Organized by category: Migration, Battle System, Trainers, Postgame, QoL |
+| `pokeemerald/graphics/types/fairy.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
+| `pokeemerald/graphics/types/physical.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
+| `pokeemerald/graphics/types/special.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
+| `pokeemerald/graphics/types/status.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
