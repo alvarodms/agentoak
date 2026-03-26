@@ -6,84 +6,43 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 ## Professor Birch
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/text/birch_speech.inc` | Opening sequence → migration mystery | 24 | "Greatest migration event in recorded history" |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | Lab aide + Birch rescue dialogue | 15 | Migration references added |
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15 | Lab aide + Birch rescue dialogue |
 
 ## Rival (Brendan/May)
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/Route103/scripts.inc` | Rival encounter 1 — cocky discovery | 25, 36, **38** | Cycle 38 added Horsea species name to pre-battle line |
-| `data/maps/Route110/scripts.inc` | Rival encounter 2 — growing awareness | 25, 36, **38** | Cycle 38 added "no joke" + team-changed-since-103 line |
-| `data/maps/LilycoveCity/scripts.inc` | Rival encounter 3 — mutual respect + postgame | 25, 29, 36, **104** | C104: postgame Battle Frontier path → Migration Tracker reference |
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/Route103/scripts.inc` | 25, 36, 38 | Rival encounter 1 — cocky discovery |
+| `data/maps/Route110/scripts.inc` | 25, 36, 38, 94 | Rival encounter 2 + double battle trainers |
+| `data/maps/LilycoveCity/scripts.inc` | 25, 29, 36, 104 | Rival encounter 3 + postgame Migration Tracker ref |
+| `data/maps/Route119/scripts.inc` | 29, 65, 94, 104 | Rival mid-game + Sr/Jr trainers + migration dialogue |
 
 ## Villains (Maxie & Archie)
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/MtChimney/scripts.inc` | Maxie pre/post-battle dialogue | 27, 36, **38** | Cycle 38 added Tentacruel/Gyarados + Groudon urgency |
-| `data/maps/SeafloorCavern_Room9/scripts.inc` | Archie pre/post-battle dialogue | 27, **36** | Cycle 36 rewrote (was already migration-themed) |
-| `data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc` | Archie museum warning | 27 | Migration-flavored |
-| `data/maps/SlateportCity_Harbor/scripts.inc` | Archie escape line | 27 | Migration flavor preserved |
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/MtChimney/scripts.inc` | 27, 36, 38 | Maxie pre/post-battle |
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | 27, 36 | Archie pre/post-battle |
+| `data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc` | 27 | Archie museum warning |
+| `data/maps/SlateportCity_Harbor/scripts.inc` | 27 | Archie escape line |
 
-## Gym Leaders
+## Gym Leaders — All 8 rematch dialogues rewritten Cycle 103
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/RustboroCity_Gym/scripts.inc` | Roxanne pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Larvitar, rock adaptations) |
-| `data/maps/DewfordTown_Gym/scripts.inc` | Brawly pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Machop colony, surfer voice) |
-| `data/maps/MauvilleCity_Gym/scripts.inc` | Wattson pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Electabuzz, New Mauville) |
-| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | Flannery pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Houndour pack, Mt. Chimney) |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | Norman pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Ursaring, father's resolve) |
-| `data/maps/FortreeCity_Gym/scripts.inc` | Winona pre-battle + rematch dialogue | 32, 36, **103** | C103: migration-themed rematch (Murkrow, aerial cunning) |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | Tate & Liza pre-battle + rematch dialogue | 33, 36, **103** | C103: migration-themed rematch (Misdreavus, twin bond) |
-| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | Juan pre-battle + rematch dialogue | 33, 36, **103** | C103: migration-themed rematch (Poliwrath, ocean depths) |
+| File | Cycle | Notes |
+|------|-------|-------|
+| Roxanne, Brawly, Wattson, Flannery, Norman, Winona, Tate&Liza, Juan | 32, 36, 103 | Pre-battle (C32/36) + migration-themed rematch dialogue (C103) |
 
-## Elite Four & Champion
+## Elite Four & Champion — Cycle 33
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | Sidney pre-battle | 33 | |
-| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | Phoebe pre-battle | 33, **42** | |
-| `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | Glacia pre-battle | 33 | |
-| `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | Drake pre-battle | 33 | |
-| `data/maps/EverGrandeCity_ChampionsRoom/scripts.inc` | Wallace dialogue | 33 | |
+All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 
-## Flavor Text — Early Game
+## Flavor NPCs
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| Cycles 15, 28: LittlerootTown, Route101, OldaleTown, PetalburgCity, Route104, PetalburgWoods, RustboroCity, SlateportCity, Route110 | Migration sightings NPCs | 15, 28, 36 | See git history |
-
-## Flavor Text — Mid-Game
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| Cycles 29: MauvilleCity, Route117, FallarborTown, Route113, LavaridgeTown, FortreeCity, Route119 | Migration flavor | 29 | |
-| `data/maps/LavaridgeTown/scripts.inc` | New researcher NPC — 3 new species near hot springs | 29, **94** | Cycle 94: added migration researcher, cataloguing first-wave species |
-| `data/maps/FortreeCity/scripts.inc` | New bird keeper NPC — foreign species in canopy | 29, 65, **94** | Cycle 94: added bird keeper who notes Murkrow/Skarmory displacing Swellow |
-| `data/maps/Route119_WeatherInstitute_1F/scripts.inc` | Migration scientist NPC — Cave of Origin energy readings | **95** | Beat 3: ominous foreshadowing, links migration to Cave of Origin |
-| `data/maps/Route119_WeatherInstitute_1F/map.json` | Added scientist object event at (13,4) | **95** | OBJ_EVENT_GFX_SCIENTIST_1, FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS |
-
-## Flavor Text — Late Game
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| Cycles 33: MossdeepCity, SootopolisCity, EverGrandeCity | Late-game flavor | 33 | |
-
-## Postgame Narrative (Cycle 50) + Second Wave (Cycles 42, 63, 65)
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| Cycles 42, 50, 63, 65: Various postgame + second-wave NPCs | See git history for details | 42-65 | |
-
-## Mid-Game Double Battle Trainers (Cycle 94)
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/maps/Route110/scripts.inc` | Twins Mia & Lily double battle — Growlithe+Poliwag Lv16 | **94** | Migration Fire/Water combo |
-| `data/maps/Route110/map.json` | Added twin NPCs at (44,11) and (45,11) | **94** | Near Cycling Road |
-| `data/maps/Route119/scripts.inc` | Sr. and Jr. double battle + rival dialogue | 94, **104** | C104: rival intro/defeat/post-battle → migration-themed (Chinchou reference) |
-| `data/maps/Route119/map.json` | Added Sr/Jr NPCs at (13,38) and (14,38) | **94** | Jungle route |
+- **Early game** (C15, 28, 36): LittlerootTown through Route110 — migration sightings
+- **Mid-game** (C29, 94, 95): MauvilleCity through FortreeCity + Weather Institute scientist
+- **Late game** (C33): MossdeepCity, SootopolisCity, EverGrandeCity
+- **Postgame** (C42, 50, 63, 65): Second Wave NPCs — see git history
+- **Mid-game trainers** (C94): Route 110 twins, Route 119 Sr/Jr double battles

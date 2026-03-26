@@ -5,5 +5,5 @@ The Producer should review this list when planning — picking up even one item 
 
 | Cycle | Investment | Status |
 |-------|-----------|--------|
-| 104 | Dialogue integrity checker script (scripts/check_dialogue.sh): grep all .inc files for common dialogue errors — non-ASCII/smart quotes, missing $ terminators, lines over 35 chars. Would catch the #1 recurring build failure class (smart quote corruption, seen in Cycles 26, 64, 65, 94) before make is even run. ~15 min to implement. Proposed by Tech Lead in Cycle 104. | pending |
-| 105 | Dialogue integrity checker script (scripts/check_dialogue.sh): grep all .inc files for common dialogue errors — non-ASCII/smart quotes, missing $ terminators, lines over 35 chars. Would catch the #1 recurring build failure class (smart quote corruption, seen in Cycles 26, 64, 65, 94) before make runs. ~15 min to implement. Originally proposed Cycle 104, deferred once. | pending |
+| 104 | Dialogue integrity checker script (scripts/check_dialogue.sh): grep all .inc files for smart quotes, missing $ terminators, lines >35 chars. Catches #1 recurring build failure class. ~15 min to implement. | pending |
+| 106 | Trainer data consolidation: 3-file system (opponents.h + trainers.h + trainer_parties.h) → unified format. Highest-friction edit pattern across 20+ cycles. Would pay off if v5.0 adds trainers. | pending |

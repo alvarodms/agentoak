@@ -9,77 +9,88 @@
 **v1.0** (Cycles 2-23): Starters, migration species on routes, trainers refreshed. Complete.
 **v2.0** (Cycles 24-86): P/S split, Fairy type, 6 new species, Second Wave, Battle Frontier, QoL. Complete.
 **v3.0** (Cycles 89-96): Trainer held items, mid-game encounters/narrative, wild held items, Migration Tracker Quest. Complete.
+**v4.0** (Cycles 98-105): Dungeon encounters, gym rematch redesign+dialogue, rival arc, Battle Speed QoL. Complete. Build green as of C106.
 
 ---
 
-# v4.0 — "The Migration Reaches Everywhere" (Cycles 98-107)
+# v5.0 — "The Legends Awaken" (Cycles 107-116)
 
 ## Creative Thesis
 
-The migration transformed Hoenn's routes but left caves, mountains, and deep waters frozen in time. v4.0 fills every remaining vanilla pocket — dungeons, gap routes, gym rematches, rival dialogue. A player should never enter a space and forget the migration happened.
+The migration drew rare species to Hoenn — Larvitar in caves, Sneasel on mountains, Electabuzz in power plants. Now it draws something greater. Three legendary Pokémon, displaced from distant Johto by the same ecological upheaval, follow the migration corridors into Hoenn. The player doesn't just observe the migration anymore — they become part of its most dramatic chapter.
 
-## v3.0 Audit Summary (Cycle 97)
+The word "Legends" in the title finally earns its meaning.
 
-**Strong**: Routes 101-103, 110-121 fully migrated. All gym/E4/Champion teams overhauled with held items. Postgame quests complete. Battle Frontier functional.
+## Feature A: Roaming Migration Legendaries (Primary)
 
-**Gaps found**:
-- Route 104: Zero migration species (jarring between migrated 101-103 and Petalburg Woods)
-- Route 123 base: 100% vanilla (only Second Wave table has migration)
-- Mt. Pyre 2F-6F + Summit: 100% Shuppet/Duskull. Zero migration.
-- Seafloor Cavern (8 rooms): 100% Zubat/Golbat. The climax dungeon has zero migration.
-- Meteor Falls 1F: 100% Zubat/Solrock.
-- Victory Road B1F: 100% vanilla (B2F has Garchomp at 2%)
-- New Mauville: 100% Voltorb/Magnemite.
+### Design Decisions
 
-## Pillars
+**Which legendaries**: Raikou, Entei, Suicune — the Legendary Beasts of Johto. They are:
+- Iconic roamers (HGSS/FRLG/GSC precedent — players expect this gameplay)
+- Thematically tied to natural forces (lightning, fire, water/wind) that mirror Hoenn's ecological disruption
+- Story-compatible: displaced from Johto's Burned Tower region by the migration upheaval
+- Technically feasible: pokeemerald has roaming infrastructure for 1 species at a time
 
-### Pillar 1: Dungeon Encounter Overhaul (Cycles 98-100) ✅ COMPLETE
+**Trigger condition**: After Champion + Migration Tracker completion (talk to Birch after logging all migration species). Birch reports "extraordinary Pokémon" drawn to Hoenn. This gates the feature behind deep engagement — only players who explored the migration fully unlock the legendary chapter.
 
-Replace 2-4 slots per floor with thematically appropriate migration species at low rates (5%, 4%, 1%). Keep dungeon identity.
+**Release sequence**: One beast at a time, reusing the single roamer slot:
+1. After Tracker completion → Raikou released (electric storms reported)
+2. After Raikou caught/defeated → visit Birch → Entei released (volcanic heat surges)
+3. After Entei caught/defeated → visit Birch → Suicune released (purified waters sighted)
 
-| Dungeon | Theme | Migration Species | Cycle |
-|---------|-------|-------------------|-------|
-| Mt. Pyre 2F-6F, Summit | Wandering spirits | Misdreavus, Murkrow, Sneasel, Houndour | 98 |
-| Route 104 | First signs | Meowth, Vulpix, Mareep, Aron | 98 |
-| Route 123 base | Dark ripples | Houndour, Murkrow, Sneasel, Misdreavus | 98 |
-| Seafloor Cavern (8 rooms) | Deep earth | Aron, Lairon, Pupitar, Sneasel, Larvitar | 99 |
-| New Mauville | Power plant | Electabuzz, Mareep, Flaaffy | 99 |
-| Meteor Falls 1F | Mountain caves | Aron, Larvitar, Sneasel, Pupitar | 100 |
-| Victory Road B1F | The gauntlet | Pupitar, Sneasel, Shelgon, Weavile | 100 |
+This avoids save struct expansion (the main technical risk). Each Birch visit is a narrative beat.
 
-**Design rules**: 80%+ native species preserved. Migration at 5% slots (6-7) and 1% slots (10-11). Levels match existing tables. Deeper floors = evolved forms.
+**Levels**: All Lv.40, matching vanilla Latias/Latios precedent.
 
-### Pillar 2: Gym Leader Rematches (Cycles 101-103) ✅ COMPLETE
+**Roaming behavior**: Use vanilla `sRoamerLocations` table (Routes 110-134). These routes already overlap heavily with our migration corridors. No custom weighting needed — the existing table is thematically appropriate.
 
-Redesign all 8 gym leaders' rematch teams (4 tiers each) + narrative dialogue. Each tier 4 team includes 1-2 migration species. All use `ITEM_CUSTOM_MOVES` with competitive items. Cycle 103 replaced all 32 rematch dialogue strings (4 per leader × 8 leaders) with migration-themed text referencing specific team species.
+**NPC sightings** (2-3 NPCs): Location hints that update based on current beast:
+- Route 118 fisherman: "Lightning/fire/aurora on the water last night!"
+- Fortree City bird keeper: References the current roaming beast
+- Weather Institute scientist (already exists from C95): Could tie sightings to "energy readings"
 
-### Pillar 3: Rival Arc Enhancement (Cycle 104) ✅ COMPLETE
+### Technical Plan
 
-Route 119 rival dialogue (6 strings: May/Brendan intro, defeat, post-battle) → migration-themed with Chinchou river reference. Lilycove postgame text (2 strings: May/Brendan Battle Frontier path) → Migration Tracker reference. Combined with existing Lilycove battle dialogue (Cycles 25-36), this completes the rival's migration narrative arc across 3 touchpoints.
+**Species needed**: SPECIES_RAIKOU, SPECIES_ENTEI, SPECIES_SUICUNE (full species pipeline — stats, learnsets, sprites, cries, Pokédex entries). These are Gen 2 legendaries, so base stats and learnsets are well-documented.
 
-### Pillar 4: Battle Speed QoL — Issue #71 (Cycle 105) ✅ COMPLETE
+**Roamer system changes** (`src/roamer.c`):
+- Modify `ClearRoamerData()` / `CreateInitialRoamerMon()` to accept any species (not just Latias/Latios)
+- Add 3 new flags: `FLAG_ROAMER_RAIKOU_DONE`, `FLAG_ROAMER_ENTEI_DONE`, `FLAG_ROAMER_SUICUNE_DONE`
+- Add a new special or modify `InitRoamer` to init specific beast based on flag state
+- `SetRoamerInactive()` already exists — call it when beast is caught/defeated
 
-Added "BATTLE SPEED" toggle (NORMAL/FAST) to Options menu. When FAST, sets HITMARKER_NO_ANIMATIONS to skip battle animations. Touches 5 files: option_menu.c, battle_main.c, global.h, constants/global.h, strings.c/strings.h.
+**Script changes**:
+- `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc`: New postgame dialogue branch after Migration Tracker completion. Birch tells player about legendary sightings, triggers first roamer.
+- NPC sighting scripts (2-3 locations): Conditional text based on which beast is active.
 
-## Cycle-by-Cycle Roadmap
+**No save struct expansion**: The existing `struct Roamer` (28 bytes) is sufficient. We reuse the single slot sequentially. Flags track completion state.
 
-| Cycle | Target | Key Deliverable |
-|-------|--------|-----------------|
-| **98** | ~~Pillar 1a: Route 104 + Route 123 + Mt. Pyre 2F-Summit~~ | **DONE** — 8 encounter tables (R104, R123, Mt. Pyre 2F-6F + Summit) |
-| **99** | ~~Pillar 1b: Seafloor Cavern (8 rooms) + New Mauville~~ | **DONE** — 10 encounter tables (8 Seafloor + 2 New Mauville) |
-| **100** | ~~Pillar 1c: Meteor Falls + Victory Road B1F + polish~~ | **DONE** — 2 encounter tables (Meteor Falls 1F, Victory Road B1F). Pillar 1 COMPLETE. |
-| **101** | ~~Pillar 2a: Roxanne, Brawly, Wattson, Flannery rematches~~ | **DONE** — 16 rematch parties redesigned with tiered IVs/levels, migration species, competitive items |
-| **102** | ~~Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches~~ | **DONE** — 16 rematch parties redesigned. Migration: Tauros/Ursaring (Norman), Murkrow (Winona T2-3), Misdreavus (T&L), Poliwrath (Juan). Key strats: Belly Drum Linoone, Guts Ursaring/Swellow, Levitate EQ+Perish Song doubles, Rain Dance Kingdra. |
-| **103** | ~~Pillar 2c: Rematch polish + narrative gym dialogue~~ | **DONE** — 32 rematch dialogue strings replaced across all 8 gym leaders. Also fixed missing fairy/physical/special/status type PNGs. Pillar 2 COMPLETE. |
-| **104** | ~~Pillar 3: Rival arc enhancement~~ | **DONE** — 8 rival dialogue strings (Route 119 + Lilycove postgame) rewritten with migration themes |
-| **105** | ~~Pillar 4: Battle Speed QoL (Issue #71)~~ | **DONE** — Options menu toggle + battle_main.c hook |
-| **106** | Full regression + balance pass | Polish |
-| **107** | v4.0 release prep, README, version bump | Ship v1.0 or Demo |
+## Feature B: Migration Event Climax (Stretch Goal)
 
-## Version Strategy
+A scripted scene where migration species gather en masse at a specific location — perhaps Meteor Falls or Route 119 — triggered after catching all three beasts. A visual payoff showing the migration at its peak. This is a cinematic reward, not gameplay-critical.
 
-- Cycle 97: Bump `minor` → v0.4.97 to mark v3.0 completion
-- Cycle 107: Evaluate `major` bump → v1.0 if game feels complete start-to-finish
+**Deferred until after Feature A is complete.** If cycles run short, this becomes v6.0.
+
+## v5.0 Cycle Roadmap
+
+| Cycle | Target | Deliverable |
+|-------|--------|-------------|
+| **107** | v4.0 release prep | README update, version bump to v1.0, regression spot-checks |
+| **108** | Research: roamer hooks | Deep dive into wild_encounter.c roamer calls, players_house.inc trigger script, save/load for roamer state. Map all touchpoints. |
+| **109** | Species: Raikou + Entei | Full pipeline — constants, stats, learnsets, sprites, cries, dex entries (2 of 3 beasts) |
+| **110** | Species: Suicune + flags | Complete third beast. Add FLAG_ROAMER_*_DONE flags. Verify all 3 species build. |
+| **111** | Roamer system | Modify roamer.c for sequential beast release. Add Birch trigger script. Wire InitRoamer to accept beast species. |
+| **112** | NPC sightings + polish | 2-3 NPCs with conditional beast-sighting dialogue. Test roamer encounters. |
+| **113** | Balance + regression | Smoke test all roamer states. Check encounter rates. Verify flag persistence across save/load. |
+| **114** | Migration Event Climax OR community requests | If Feature B designed, implement. Otherwise, address Issue backlog. |
+| **115** | v5.0 release prep | README, version bump, final polish |
+| **116** | Buffer | Community feedback, hotfixes, deferred issues |
+
+## Dependencies
+
+- Cycles 109-110 must complete before 111 (species must exist before roamer can reference them)
+- Cycle 108 research informs 111 implementation (understand all touchpoints before modifying)
+- Feature B design can happen during 109-112 without blocking Feature A
 
 ---
 

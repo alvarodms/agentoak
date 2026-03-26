@@ -35,12 +35,6 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## Build System Requirements (Cycle 52)
-
-**agbcc compiler**: Required for building. Install from pret/agbcc repo and symlink to `tools/agbcc/`.
-**Graphics dependencies**: All type graphics must exist in `graphics/types/` (including `fairy.png` for Fairy type).
-**Build command**: `make` from pokeemerald directory produces `pokeemerald.gba`.
-
 ---
 
 ## Options Menu System (Cycle 105)
@@ -55,22 +49,6 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## Opening Experience (Cycles 52-53, 58)
-
-**Birch rescue**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` — now Poochyena level 3 (reverted from Growlithe in Cycle 58 to match overworld sprite). Route101 map.json has `OBJ_EVENT_GFX_POOCHYENA` — **species and overworld sprite must always match**.
-**Intro speech Pokemon**: `src/main_menu.c` line ~1377 — now SPECIES_BAGON (was SPECIES_LOTAD). Variable still named `tLotadSpriteId` internally.
-
----
-
-## Fairy Encounter Corridors — Complete (Cycles 47, 49)
-
-All 5 corridors implemented:
-- Granite Cave B2F: Ralts 16-19 (10%) — slot 8
-- Route 118: Snubbull 24-26 (15%)
-- Route 120: Togetic 28-30 (1%) — slot 11
-- Route 121: Clefairy 26-28 (20%)
-- Mt. Pyre 1F: Snubbull 27-29 (10%) — slot 5
-
 ---
 
 ## Wild Pokémon Held Item System (Cycle 31)
@@ -80,8 +58,6 @@ All 5 corridors implemented:
 **Probabilities**: Normal: 50% common / 5% rare. With Compound Eyes: 60% common / 20% rare. If itemCommon == itemRare: 100%.
 
 ---
-
-## pokeemerald-expansion — Incompatible. Decision: stay vanilla.
 
 ---
 
@@ -103,7 +79,7 @@ All 5 corridors implemented:
 
 **File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5 slots. Fishing: 10 slots.
 
-**Conditional encounter tables (Cycle 63)**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Altering Cave pattern: if a flag is set and map matches, `i++` to select the next JSON entry for that map. Second Wave uses same pattern for 6 routes. **Ordering in JSON is critical** — the alternate entry MUST be immediately after the base entry for that map. Map constants: `MAP_ROUTE118` etc. from auto-generated `include/constants/map_groups.h`. `constants/flags.h` must be explicitly included (not transitively available).
+**Conditional encounter tables**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Altering Cave pattern: flag set + map match → `i++` to next JSON entry. Second Wave uses same pattern for 6 routes. **Ordering in JSON is critical** — alternate entry MUST follow base entry for that map.
 
 ---
 
@@ -138,6 +114,22 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 **Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Struct: `{u16 species, u16 moves[4], u8 itemTableId, u8 evSpread, u8 nature}`. Our 6 new species NOT in pool.
 
 **Completed fixes (Cycle 77)**: (1) sMindRatings +1 for Moonblast/Play Rough/Dazzling Gleam, (2) Factory style arrays now include 3 Fairy moves, (3) Lucario/Weavile/Garchomp added to pool (indices 882-893, 4 sets each). **Pending**: 882 original Frontier mons have P/S split stat mismatches (low priority). **UNVERIFIED** — no build was run in Cycle 77.
+
+---
+
+## Roaming Pokémon System (Cycle 106 Research)
+
+**File**: `src/roamer.c`. Single roamer slot via `gSaveBlock1Ptr->roamer` (struct Roamer at offset 0x31DC in SaveBlock1).
+
+**Struct Roamer** (28 bytes, `include/global.h:608`): ivs(u32), personality(u32), species(u16), hp(u16), level(u8), status(u8), cool/beauty/cute/smart/tough(u8 each), active(bool8), filler[8].
+
+**Key functions**: `InitRoamer()` — called from `data/scripts/players_house.inc:474` after TV multichoice (Latias/Latios). `CreateInitialRoamerMon()` — creates Lv.40 mon, sets random location. `TryStartRoamerEncounter()` — 25% chance when on roamer's route, called from wild_encounter.c (4 places: land, water, rock smash, fishing). `RoamerMove()` — 1/16 chance jump to random set, else move within adjacency table.
+
+**Location table**: `sRoamerLocations[][6]` — 20 route sets + sentinel. Routes 110-134 only (central/east Hoenn). Hard-coded to map group 0.
+
+**Sequential beast design**: Only 1 roamer slot exists. To support 3 beasts sequentially: after catching/defeating beast N, set roamer inactive → script triggers next beast via modified `InitRoamer()` or new init function. Need flags to track which beast is current (FLAG_ROAMER_BEAST_1_DONE, etc.). No save struct expansion needed.
+
+**Migration corridor aspiration**: Could weight `sRoamerLocations` toward migration routes, but vanilla table already covers Routes 110-134 which overlap heavily with our migration routes. Default table is acceptable.
 
 ---
 
