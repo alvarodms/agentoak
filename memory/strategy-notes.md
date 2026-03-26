@@ -57,9 +57,9 @@ Redesign all 8 gym leaders' rematch teams (4 tiers each) + narrative dialogue. E
 
 Route 119 rival dialogue (6 strings: May/Brendan intro, defeat, post-battle) → migration-themed with Chinchou river reference. Lilycove postgame text (2 strings: May/Brendan Battle Frontier path) → Migration Tracker reference. Combined with existing Lilycove battle dialogue (Cycles 25-36), this completes the rival's migration narrative arc across 3 touchpoints.
 
-### Pillar 4: Battle Speed QoL — Issue #71 (Cycle 105)
+### Pillar 4: Battle Speed QoL — Issue #71 (Cycle 105) ✅ COMPLETE
 
-Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses existing BATTLE_ANIM infrastructure. C modification to `src/battle_main.c` or options menu. Deferred to after Pillars 1-3 for risk management.
+Added "BATTLE SPEED" toggle (NORMAL/FAST) to Options menu. When FAST, sets HITMARKER_NO_ANIMATIONS to skip battle animations. Touches 5 files: option_menu.c, battle_main.c, global.h, constants/global.h, strings.c/strings.h.
 
 ## Cycle-by-Cycle Roadmap
 
@@ -72,7 +72,7 @@ Add "Fast Battles" option to Options menu — skip anims + speed text. Reuses ex
 | **102** | ~~Pillar 2b: Norman, Winona, Tate&Liza, Juan rematches~~ | **DONE** — 16 rematch parties redesigned. Migration: Tauros/Ursaring (Norman), Murkrow (Winona T2-3), Misdreavus (T&L), Poliwrath (Juan). Key strats: Belly Drum Linoone, Guts Ursaring/Swellow, Levitate EQ+Perish Song doubles, Rain Dance Kingdra. |
 | **103** | ~~Pillar 2c: Rematch polish + narrative gym dialogue~~ | **DONE** — 32 rematch dialogue strings replaced across all 8 gym leaders. Also fixed missing fairy/physical/special/status type PNGs. Pillar 2 COMPLETE. |
 | **104** | ~~Pillar 3: Rival arc enhancement~~ | **DONE** — 8 rival dialogue strings (Route 119 + Lilycove postgame) rewritten with migration themes |
-| **105** | Pillar 4: Battle Speed QoL (Issue #71) | Options menu C mod |
+| **105** | ~~Pillar 4: Battle Speed QoL (Issue #71)~~ | **DONE** — Options menu toggle + battle_main.c hook |
 | **106** | Full regression + balance pass | Polish |
 | **107** | v4.0 release prep, README, version bump | Ship v1.0 or Demo |
 

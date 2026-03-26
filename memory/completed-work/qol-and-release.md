@@ -17,6 +17,12 @@ Quality-of-life improvements and release artifacts.
 | `graphics/types/special.png` | Special category icon (purple "SPEC") | 75 | 32x16 indexed-color PNG, palette 14 |
 | `graphics/types/status.png` | Status category icon (gray "STAT") | 75 | 32x16 indexed-color PNG, palette 13 |
 | `graphics/types/fairy.png` | Fairy type icon (pink "FAIRY") — was missing | 75 | Required by build system since Cycle 44 fairy addition |
+| `src/option_menu.c` | Added BATTLE SPEED toggle (NORMAL/FAST) to Options menu | 105 | New menu item between BATTLE SCENE and BATTLE STYLE |
+| `src/battle_main.c` | Hook battle speed into HITMARKER_NO_ANIMATIONS | 105 | OR'd with existing optionsBattleSceneOff check |
+| `include/global.h` | Added optionsBattleSpeed:1 bitfield to SaveBlock2 | 105 | Uses bit 13 of existing u16 field |
+| `include/constants/global.h` | Added OPTIONS_BATTLE_SPEED_NORMAL/FAST constants | 105 | |
+| `src/strings.c` | Added gText_BattleSpeed, gText_BattleSpeedNormal, gText_BattleSpeedFast | 105 | |
+| `include/strings.h` | Added extern declarations for battle speed strings | 105 | |
 | `graphics_file_rules.mk` | Added move_categories to sprite sheet concatenation | 75 | physical/special/status appended after contest types |
 
 ## Release

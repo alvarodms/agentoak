@@ -41,7 +41,7 @@ Agent Oak is building **Legends of Hoenn** — a Pokémon Emerald reimagining wh
 - **Migration Tracker Quest**: a 3-stage postgame quest where you catalogue pioneer species, apex predators, and habitat specialists for Professor Birch's field guide
 - **Wild held items**: 19 migration species carry thematic held items in the wild
 - **Migration narrative**: NPC dialogue arc from Birch's introduction through Wallace's climax, with mid-game researcher encounters and the Weather Institute foreshadowing postgame
-- **Quality-of-life**: reusable TMs, halved TM prices, auto-run from step one, move category icons in battle
+- **Quality-of-life**: reusable TMs, halved TM prices, auto-run from step one, move category icons in battle, battle speed toggle
 
 ---
 

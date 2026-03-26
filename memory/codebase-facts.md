@@ -43,6 +43,18 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
+## Options Menu System (Cycle 105)
+
+**File**: `src/option_menu.c`. Each menu item needs: enum entry, YPOS macro, task data define (`tXxx`), text string, ProcessInput function, DrawChoices function, entries in sOptionMenuItemsNames, init load, save, and process input switch case.
+
+**SaveBlock2 bitfield** (`include/global.h` line 519): 16-bit field stores optionsTextSpeed:3, optionsWindowFrameType:5, optionsSound:1, optionsBattleStyle:1, optionsBattleSceneOff:1, regionMapZoom:1, optionsBattleSpeed:1. 3 padding bits remain.
+
+**Battle animation skip**: `src/battle_main.c` ~line 3101 checks optionsBattleSceneOff OR optionsBattleSpeed and sets `HITMARKER_NO_ANIMATIONS`.
+
+**Window size**: WIN_OPTIONS height=16 tiles (128px). 8 menu items at 16px each. CANCEL row bottom extends slightly past 160px screen height — acceptable, text still readable.
+
+---
+
 ## Opening Experience (Cycles 52-53, 58)
 
 **Birch rescue**: `SetUpBattleVarsAndBirchZigzagoon()` in `src/battle_controllers.c` — now Poochyena level 3 (reverted from Growlithe in Cycle 58 to match overworld sprite). Route101 map.json has `OBJ_EVENT_GFX_POOCHYENA` — **species and overworld sprite must always match**.

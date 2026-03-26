@@ -19,15 +19,17 @@
 #define tMenuSelection data[0]
 #define tTextSpeed data[1]
 #define tBattleSceneOff data[2]
-#define tBattleStyle data[3]
-#define tSound data[4]
-#define tButtonMode data[5]
-#define tWindowFrameType data[6]
+#define tBattleSpeed data[3]
+#define tBattleStyle data[4]
+#define tSound data[5]
+#define tButtonMode data[6]
+#define tWindowFrameType data[7]
 
 enum
 {
     MENUITEM_TEXTSPEED,
     MENUITEM_BATTLESCENE,
+    MENUITEM_BATTLESPEED,
     MENUITEM_BATTLESTYLE,
     MENUITEM_SOUND,
     MENUITEM_BUTTONMODE,
@@ -44,6 +46,7 @@ enum
 
 #define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * 16)
 #define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * 16)
+#define YPOS_BATTLESPEED  (MENUITEM_BATTLESPEED * 16)
 #define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * 16)
 #define YPOS_SOUND        (MENUITEM_SOUND * 16)
 #define YPOS_BUTTONMODE   (MENUITEM_BUTTONMODE * 16)
@@ -58,6 +61,8 @@ static u8 TextSpeed_ProcessInput(u8 selection);
 static void TextSpeed_DrawChoices(u8 selection);
 static u8 BattleScene_ProcessInput(u8 selection);
 static void BattleScene_DrawChoices(u8 selection);
+static u8 BattleSpeed_ProcessInput(u8 selection);
+static void BattleSpeed_DrawChoices(u8 selection);
 static u8 BattleStyle_ProcessInput(u8 selection);
 static void BattleStyle_DrawChoices(u8 selection);
 static u8 Sound_ProcessInput(u8 selection);
@@ -80,6 +85,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 {
     [MENUITEM_TEXTSPEED]   = gText_TextSpeed,
     [MENUITEM_BATTLESCENE] = gText_BattleScene,
+    [MENUITEM_BATTLESPEED] = gText_BattleSpeed,
     [MENUITEM_BATTLESTYLE] = gText_BattleStyle,
     [MENUITEM_SOUND]       = gText_Sound,
     [MENUITEM_BUTTONMODE]  = gText_ButtonMode,
@@ -103,7 +109,7 @@ static const struct WindowTemplate sOptionMenuWinTemplates[] =
         .tilemapLeft = 2,
         .tilemapTop = 5,
         .width = 26,
-        .height = 14,
+        .height = 16,
         .paletteNum = 1,
         .baseBlock = 0x36
     },
@@ -230,6 +236,7 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tMenuSelection = 0;
         gTasks[taskId].tTextSpeed = gSaveBlock2Ptr->optionsTextSpeed;
         gTasks[taskId].tBattleSceneOff = gSaveBlock2Ptr->optionsBattleSceneOff;
+        gTasks[taskId].tBattleSpeed = gSaveBlock2Ptr->optionsBattleSpeed;
         gTasks[taskId].tBattleStyle = gSaveBlock2Ptr->optionsBattleStyle;
         gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
@@ -237,6 +244,7 @@ void CB2_InitOptionMenu(void)
 
         TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
         BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
+        BattleSpeed_DrawChoices(gTasks[taskId].tBattleSpeed);
         BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
         Sound_DrawChoices(gTasks[taskId].tSound);
         ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
@@ -308,6 +316,13 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             if (previousOption != gTasks[taskId].tBattleSceneOff)
                 BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
             break;
+        case MENUITEM_BATTLESPEED:
+            previousOption = gTasks[taskId].tBattleSpeed;
+            gTasks[taskId].tBattleSpeed = BattleSpeed_ProcessInput(gTasks[taskId].tBattleSpeed);
+
+            if (previousOption != gTasks[taskId].tBattleSpeed)
+                BattleSpeed_DrawChoices(gTasks[taskId].tBattleSpeed);
+            break;
         case MENUITEM_BATTLESTYLE:
             previousOption = gTasks[taskId].tBattleStyle;
             gTasks[taskId].tBattleStyle = BattleStyle_ProcessInput(gTasks[taskId].tBattleStyle);
@@ -352,6 +367,7 @@ static void Task_OptionMenuSave(u8 taskId)
 {
     gSaveBlock2Ptr->optionsTextSpeed = gTasks[taskId].tTextSpeed;
     gSaveBlock2Ptr->optionsBattleSceneOff = gTasks[taskId].tBattleSceneOff;
+    gSaveBlock2Ptr->optionsBattleSpeed = gTasks[taskId].tBattleSpeed;
     gSaveBlock2Ptr->optionsBattleStyle = gTasks[taskId].tBattleStyle;
     gSaveBlock2Ptr->optionsSound = gTasks[taskId].tSound;
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
@@ -462,6 +478,29 @@ static void BattleScene_DrawChoices(u8 selection)
 
     DrawOptionMenuChoice(gText_BattleSceneOn, 104, YPOS_BATTLESCENE, styles[0]);
     DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_BATTLESCENE, styles[1]);
+}
+
+static u8 BattleSpeed_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void BattleSpeed_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_BattleSpeedNormal, 104, YPOS_BATTLESPEED, styles[0]);
+    DrawOptionMenuChoice(gText_BattleSpeedFast, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSpeedFast, 198), YPOS_BATTLESPEED, styles[1]);
 }
 
 static u8 BattleStyle_ProcessInput(u8 selection)
