@@ -82,7 +82,7 @@ A scripted scene where migration species gather en masse at a specific location 
 |-------|--------|-------------|
 | **107** | v1.0 release prep | **PARTIAL** — README rewrite done, smoke build passed, but type icon PNGs NOT committed (still untracked). Version bump deferred. |
 | **108** | Research: roamer hooks | ✅ Done. Full system mapped. Species already exist — no addition needed. |
-| **109** | Roamer system core | Modify roamer.c (beast-aware init), flags.h (6 flags), battle_main.c (KO vs caught), battle_ai_scripts.s (3-turn flee). |
+| **109** | Roamer system core | ✅ Done. Beast-aware roamer.c, 6 flags, KO/caught distinction, 3-turn flee delay, InitNextBeast special. |
 | **110** | Birch trigger + wiring | Birch Lab script for sequential beast release. Gate/repurpose vanilla Lati trigger. End-to-end test. |
 | **111** | NPC sightings + polish | 2-3 NPCs with conditional beast-sighting dialogue. Route encounter testing. |
 | **112** | Balance + regression | Smoke test all roamer states. Check encounter rates. Verify flag persistence across save/load. |

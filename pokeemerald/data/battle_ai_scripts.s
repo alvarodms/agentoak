@@ -3209,6 +3209,8 @@ AI_TrySunnyDayStart_End:
 	end
 
 AI_Roaming:
+	get_turn_count
+	if_less_than 3, AI_Roaming_End
 	if_status2 AI_USER, STATUS2_WRAPPED, AI_Roaming_End
 	if_status2 AI_USER, STATUS2_ESCAPE_PREVENTION, AI_Roaming_End
 	get_ability AI_TARGET

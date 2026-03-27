@@ -1,6 +1,6 @@
 # Roaming Legendaries & v1.0 Release Polish Patterns
 
-**Cycle**: 107 | **Date**: March 2026
+**Cycle**: 109 | **Date**: March 2026
 
 ---
 
@@ -10,12 +10,18 @@ Top hacks treat legendaries as **postgame rewards**, not core content:
 
 - **Unbound**: Legendaries gated behind postgame side quests with narrative context (multiverse missions). Considered gold standard for postgame legendary design.
 - **Glazed**: Legendaries scattered across 3 regions as exploration rewards. Roaming + fixed encounters.
-- **Radical Red / Roaring Red**: All legendaries catchable, mostly in postgame Sevii Islands content.
+- **Radical Red**: All roaming legendaries (Raikou, Entei, Suicune, genies, Lati twins, etc.) unlocked after 8 badges via Oak's aide. **Key QoL: roamers visible on the town map** so players know which route to visit. Encounter rate still low, but eliminates blind searching.
 - **Emerald Crest**: Extensive legendary quest system with progressive unlocks.
+- **CosmicEmerald**: Raised roaming legendary catch rate from 3 to 5 to reduce frustration.
 
-**Key pattern**: Roaming legendaries work best when tied to narrative. "Random roaming Latias" is forgettable; "migration-displaced legendary seeking a new territory" tells a story.
+**Key patterns**:
+- Roaming legendaries work best when tied to narrative, not just randomly appearing
+- **Map visibility** is the #1 QoL improvement — Radical Red's approach is widely praised
+- Players universally hate vanilla's blind-search-and-flee-turn-1 loop
+- The Gen 3 roamer IV glitch (only HP IV saved correctly) is a known frustration; pokeemerald's `#ifdef BUGFIX` addresses this
+- Some hacks eliminate roaming entirely in favor of fixed encounters to avoid frustration
 
-**Technical note**: pokeemerald already has roaming Latias/Latios infrastructure (roamer.c). Adding more roamers would extend existing systems rather than building from scratch.
+**Design consensus from community**: Give players 2-3 turns before flee, show location on map, tie to narrative progression. The "hunt" should feel rewarding, not tedious.
 
 ## v1.0 Release Polish Priorities (from community examples)
 
@@ -28,15 +34,9 @@ Synthesized from Emerald Imperium, Contemporary Emerald, Re:Emerald, Randolocke 
 5. **Visual bugs**: Tileset/sprite issues
 6. **Text polish**: Typos, grammar, decapitalization
 
-**Common pattern**: Developers spend 1-3 update cycles on bug fixes before adding new content. Most bugs surface in first week of public release.
+## Community Expectations (2025-2026 Landscape)
 
-## Community Expectations for v1.0 (2025-2026 Landscape)
-
-From PokéCommunity and ROM hack community analysis (C107 research):
-
-- **QoL is table stakes**: Reusable TMs, faster gameplay, modern conveniences are expected, not bonus features. Legends of Hoenn already has reusable TMs, auto-run, and battle speed toggle — this is a strength.
-- **Meaningful changes over vanilla**: Players criticize hacks that only rebalance stats without changing maps/story. Our migration narrative, new species, Fairy type, and P/S split differentiate us strongly.
-- **Documentation matters**: Players want to know encounter locations, learnsets, TM lists. A README or in-game Pokédex coverage helps adoption.
-- **Complete experience**: v1.0 implies the main story is fully playable start-to-finish. Our hack layers on top of vanilla Emerald's complete story, so this is satisfied.
-- **Fair difficulty increase**: "The game puts up a fight now" — not Kaizo-level, but trainers with real movesets and full teams. Our gym leader overhauls, held items, and rival arc deliver this.
-- **Recent comparable releases**: Phoenix Red (Mar 2026), Complete Crystal (2026), Ocean Blue — all emphasize exploration, balance, and QoL over extreme difficulty.
+- **QoL is table stakes**: Reusable TMs, faster gameplay, modern conveniences expected
+- **Meaningful changes over vanilla**: Players criticize hacks that only rebalance stats
+- **Fair difficulty increase**: Not Kaizo-level, but trainers with real movesets and full teams
+- **Documentation matters**: Players want encounter locations, learnsets, TM lists

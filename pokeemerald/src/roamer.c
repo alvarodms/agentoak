@@ -1,4 +1,6 @@
 #include "global.h"
+#include "constants/flags.h"
+#include "constants/species.h"
 #include "event_data.h"
 #include "pokemon.h"
 #include "random.h"
@@ -7,6 +9,13 @@
 // Despite having a variable to track it, the roamer is
 // hard-coded to only ever be in map group 0
 #define ROAMER_MAP_GROUP 0
+
+// Legendary Beast sequential release data
+// Order: Raikou → Entei → Suicune (matching Johto Burned Tower lore)
+static const u16 sLegendaryBeasts[] = { SPECIES_RAIKOU, SPECIES_ENTEI, SPECIES_SUICUNE };
+static const u16 sBeastDoneFlags[] = { FLAG_BEAST_RAIKOU_DONE, FLAG_BEAST_ENTEI_DONE, FLAG_BEAST_SUICUNE_DONE };
+static const u16 sBeastKOFlags[] = { FLAG_BEAST_RAIKOU_KO, FLAG_BEAST_ENTEI_KO, FLAG_BEAST_SUICUNE_KO };
+#define NUM_BEASTS ARRAY_COUNT(sLegendaryBeasts)
 
 enum
 {
@@ -64,7 +73,6 @@ static const u8 sRoamerLocations[][6] =
 void ClearRoamerData(void)
 {
     memset(ROAMER, 0, sizeof(*ROAMER));
-    ROAMER->species = SPECIES_LATIAS;
 }
 
 void ClearRoamerLocationData(void)
@@ -81,14 +89,10 @@ void ClearRoamerLocationData(void)
     sRoamerLocation[MAP_NUM] = 0;
 }
 
-static void CreateInitialRoamerMon(bool16 createLatios)
+static void CreateInitialRoamerMon(u16 species)
 {
-    if (!createLatios)
-        ROAMER->species = SPECIES_LATIAS;
-    else
-        ROAMER->species = SPECIES_LATIOS;
-
-    CreateMon(&gEnemyParty[0], ROAMER->species, 40, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    ROAMER->species = species;
+    CreateMon(&gEnemyParty[0], species, 40, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
     ROAMER->level = 40;
     ROAMER->status = 0;
     ROAMER->active = TRUE;
@@ -104,12 +108,46 @@ static void CreateInitialRoamerMon(bool16 createLatios)
     sRoamerLocation[MAP_NUM] = sRoamerLocations[Random() % NUM_LOCATION_SETS][0];
 }
 
-// gSpecialVar_0x8004 here corresponds to the options in the multichoice MULTI_TV_LATI (0 for 'Red', 1 for 'Blue')
+// gSpecialVar_0x8004 = species to create as roamer
 void InitRoamer(void)
 {
     ClearRoamerData();
     ClearRoamerLocationData();
     CreateInitialRoamerMon(gSpecialVar_0x8004);
+}
+
+// Called as a special from Birch Lab script.
+// Checks beast flags and initializes the next uncaught beast as the roamer.
+// Sets gSpecialVar_Result:
+//   0 = beast released successfully
+//   1 = all beasts caught (none remaining)
+//   2 = a KO'd beast was re-released (player must beat E4 to trigger)
+void InitNextBeast(void)
+{
+    u8 i;
+
+    for (i = 0; i < NUM_BEASTS; i++)
+    {
+        if (!FlagGet(sBeastDoneFlags[i]))
+        {
+            ClearRoamerData();
+            ClearRoamerLocationData();
+            CreateInitialRoamerMon(sLegendaryBeasts[i]);
+
+            if (FlagGet(sBeastKOFlags[i]))
+            {
+                FlagClear(sBeastKOFlags[i]);
+                gSpecialVar_Result = 2;
+            }
+            else
+            {
+                gSpecialVar_Result = 0;
+            }
+            return;
+        }
+    }
+
+    gSpecialVar_Result = 1;
 }
 
 void UpdateLocationHistoryForRoamer(void)
@@ -197,14 +235,8 @@ void CreateRoamerMonInstance(void)
     struct Pokemon *mon = &gEnemyParty[0];
     ZeroEnemyPartyMons();
     CreateMonWithIVsPersonality(mon, ROAMER->species, ROAMER->level, ROAMER->ivs, ROAMER->personality);
-// The roamer's status field is u8, but SetMonData expects status to be u32, so will set the roamer's status
-// using the status field and the following 3 bytes (cool, beauty, and cute).
-#ifdef BUGFIX
     status = ROAMER->status;
     SetMonData(mon, MON_DATA_STATUS, &status);
-#else
-    SetMonData(mon, MON_DATA_STATUS, &ROAMER->status);
-#endif
     SetMonData(mon, MON_DATA_HP, &ROAMER->hp);
     SetMonData(mon, MON_DATA_COOL, &ROAMER->cool);
     SetMonData(mon, MON_DATA_BEAUTY, &ROAMER->beauty);
@@ -237,6 +269,32 @@ void UpdateRoamerHPStatus(struct Pokemon *mon)
 void SetRoamerInactive(void)
 {
     ROAMER->active = FALSE;
+}
+
+void SetRoamerCaughtFlag(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_BEASTS; i++)
+    {
+        if (ROAMER->species == sLegendaryBeasts[i])
+        {
+            FlagSet(sBeastDoneFlags[i]);
+            return;
+        }
+    }
+}
+
+void SetRoamerKOFlag(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_BEASTS; i++)
+    {
+        if (ROAMER->species == sLegendaryBeasts[i])
+        {
+            FlagSet(sBeastKOFlags[i]);
+            return;
+        }
+    }
 }
 
 void GetRoamerLocation(u8 *mapGroup, u8 *mapNum)

@@ -36,6 +36,7 @@ Before modifying ANY pokeemerald file:
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
+| Roamer System (Beast Core) | **109** | 6 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc) | [roamer-system.md](completed-work/roamer-system.md) |
 
 ---
 

@@ -117,15 +117,17 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
-## Roaming Pokémon System (Cycle 108 Deep Dive)
+## Roaming Pokémon System (Cycle 108 Research, Cycle 109 Implementation)
 
 **Full technical reference**: `memory/pokemon-knowledge/roamer-implementation-patterns.md`
 
-**Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). Hardcoded Latias/Latios in `roamer.c:67,87-89`. AI flees every turn via `AI_Roaming` in `battle_ai_scripts.s:3211` — no turn counter. 4 wild encounter integration points in `wild_encounter.c`. Pokédex area screen shows active roamer location. 30+ unused system flags available for beast tracking (0x881-0x887, 0x8E5-0x91F).
+**Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). **Beast system implemented (C109)**: `roamer.c` now has `InitNextBeast()` special that sequentially releases Raikou→Entei→Suicune using 6 flags (DONE+KO per beast). `CreateInitialRoamerMon(u16 species)` accepts any species. Battle end in `battle_main.c` distinguishes caught (sets DONE flag) vs KO'd (sets KO flag). AI_Roaming has 3-turn flee delay before attempting escape.
 
-**Species**: SPECIES_RAIKOU(243), SPECIES_ENTEI(244), SPECIES_SUICUNE(245) already exist — no species addition needed.
+**Species**: SPECIES_RAIKOU(243), SPECIES_ENTEI(244), SPECIES_SUICUNE(245) already exist.
 
-**Files to modify (Cycle 111)**: `roamer.c`, `roamer.h`, `battle_ai_scripts.s`, `flags.h`, `battle_main.c`, `players_house.inc`. **Cycle 112**: Birch Lab scripts, NPC dialogue.
+**Beast flags**: FLAG_BEAST_RAIKOU_DONE/KO, FLAG_BEAST_ENTEI_DONE/KO, FLAG_BEAST_SUICUNE_DONE/KO (system flags 0x881-0x886).
+
+**Remaining work (C110)**: Birch Lab trigger script to call `InitNextBeast`, gate/repurpose vanilla Lati trigger in `players_house.inc`. **C111**: NPC sighting dialogue.
 
 ---
 
