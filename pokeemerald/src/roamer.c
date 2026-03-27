@@ -297,6 +297,11 @@ void SetRoamerKOFlag(void)
     }
 }
 
+void IsRoamerActive(void)
+{
+    gSpecialVar_Result = ROAMER->active;
+}
+
 void GetRoamerLocation(u8 *mapGroup, u8 *mapNum)
 {
     *mapGroup = sRoamerLocation[MAP_GRP];

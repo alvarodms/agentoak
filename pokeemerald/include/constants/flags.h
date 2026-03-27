@@ -1393,7 +1393,7 @@
 #define FLAG_BEAST_ENTEI_KO                         (SYSTEM_FLAGS + 0x24) // Entei KO'd (respawn needed)
 #define FLAG_BEAST_SUICUNE_DONE                     (SYSTEM_FLAGS + 0x25) // Suicune caught
 #define FLAG_BEAST_SUICUNE_KO                       (SYSTEM_FLAGS + 0x26) // Suicune KO'd (respawn needed)
-#define FLAG_UNUSED_0x887                           (SYSTEM_FLAGS + 0x27) // Unused Flag
+#define FLAG_LEGENDS_AWAKENED                       (SYSTEM_FLAGS + 0x27) // Beast release sequence started
 
 #define FLAG_SYS_USE_FLASH                          (SYSTEM_FLAGS + 0x28)
 #define FLAG_SYS_USE_STRENGTH                       (SYSTEM_FLAGS + 0x29)
