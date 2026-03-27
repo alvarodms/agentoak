@@ -4,7 +4,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111) — ACTIVE
+## Research Phase Consuming Implementation Budget (Cycles 110, 111) — RESOLVED C112
 
 **Symptom**: Objective calls for script content (map scripts, NPC dialogues) but cycle ends with only C-side infrastructure. 25+ actions spent reading/searching before any edits begin.
 **Cause**: Agent defaults to deep research even when the system is already well-understood from prior cycles. Memory files contain all needed context.

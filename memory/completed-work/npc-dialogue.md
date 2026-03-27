@@ -46,3 +46,4 @@ All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 - **Late game** (C33): MossdeepCity, SootopolisCity, EverGrandeCity
 - **Postgame** (C42, 50, 63, 65): Second Wave NPCs — see git history
 - **Mid-game trainers** (C94): Route 110 twins, Route 119 Sr/Jr double battles
+- **Beast sightings** (C112): Route 118 fisherman + Fortree City woman — conditional on roamer active

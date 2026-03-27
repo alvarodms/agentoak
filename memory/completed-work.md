@@ -36,7 +36,7 @@ Before modifying ANY pokeemerald file:
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
-| Roamer System (Beast Core) | **109**, **111** | 6 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc) | [roamer-system.md](completed-work/roamer-system.md) |
+| Roamer System (Beast Core) | **109**, **111**, **112** | 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) | [roamer-system.md](completed-work/roamer-system.md) |
 
 ---
 
@@ -52,7 +52,7 @@ These files have been touched in multiple cycles and are at highest risk of acci
 - **LittlerootTown/scripts.inc**: Cycles 15, 28
 - **SlateportCity/scripts.inc**: Cycles 27, 28
 - **LavaridgeTown/scripts.inc**: Cycles 29, **94**
-- **FortreeCity/scripts.inc**: Cycles 29, 65, **94**
+- **FortreeCity/scripts.inc**: Cycles 29, 65, **94**, **112**
 - **src/data/trainer_parties.h**: Cycles 6–12, 16, 17, 19, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74, 89, 90, **94**
 - **src/data/trainers.h**: Cycles 6–12, 16, 17, 49, 50, 51, 54, 55, 56, 57, 58, 71, 72, 73, 74, 89, 90, **94**
 - **include/constants/opponents.h**: Cycles 6–11, 49, 50, 51, 71, **94**

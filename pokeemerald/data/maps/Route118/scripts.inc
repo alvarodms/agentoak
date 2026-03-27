@@ -55,7 +55,13 @@ Route118_EventScript_DeclineGoodRod::
 	end
 
 Route118_EventScript_ReceivedGoodRod::
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, Route118_EventScript_FishermanBeastSighting
 	msgbox Route118_Text_TryCatchingMonWithGoodRod, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_EventScript_FishermanBeastSighting::
+	msgbox Route118_Text_FishermanBeastSighting, MSGBOX_DEFAULT
 	release
 	end
 
@@ -383,4 +389,15 @@ Route118_Text_Girl_PostWave:
 	.string "My little brother wants to\n"
 	.string "catch one. I told him to wait\l"
 	.string "until he is stronger.$"
+
+Route118_Text_FishermanBeastSighting:
+	.string "Strangest thing happened yesterday.\n"
+	.string "I was fishing right here, clear sky,\l"
+	.string "not a cloud in sight.\p"
+	.string "Then I heard thunder. LOUD thunder.\n"
+	.string "Rolled across the water like\l"
+	.string "something was running on the waves.\p"
+	.string "My POKeMON would not come out of\n"
+	.string "their POKe BALLS for an hour after.\l"
+	.string "Never seen anything like it.$"
 

@@ -55,20 +55,10 @@ Deferred until after Feature A is complete. If cycles run short, becomes v6.0.
 | **109** | Roamer system core | ✅ Done. C infrastructure complete. |
 | **110** | Birch trigger + wiring | ❌ Crashed — no script changes shipped |
 | **111** | NPC sightings + C plumbing | PARTIAL — 8 lines of C plumbing shipped. No scripts, no NPCs, no Lati gating. |
-| **112** | **MUST SHIP**: Birch trigger script + Lati gating + 2 NPC sightings | Script-first approach. Skip research, jump to writing. Budget 35+ actions for scripts. |
+| **112** | Birch trigger + Lati gating + 2 NPC sightings | ✅ Done. All 4 deliverables shipped. Build passes. |
 | **113** | Balance + regression testing | Smoke test all roamer states. |
 | **114** | v5.0 release prep | README, version bump, final polish |
 | **115** | Buffer | Community feedback, hotfixes |
-
-### C112 Action Plan (CRITICAL)
-
-The C infrastructure is DONE. C112 must be 100% script content:
-1. Write Birch Lab beast trigger dialogue + `special InitNextBeast` call (~15 actions)
-2. Gate Lati trigger in `tv.inc` behind `FLAG_BEAST_SUICUNE_DONE` (~5 actions)
-3. Write 2 NPC sighting dialogues on Route 118 + Fortree (~10 actions)
-4. Commit `check_dialogue.sh` (~2 actions)
-5. Build + fix (~10 actions)
-**Total budget**: ~42 actions. NO research phase needed.
 
 ---
 

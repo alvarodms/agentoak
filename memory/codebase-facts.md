@@ -144,3 +144,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 - Cry table (`cry_tables.inc`) is **position-indexed** by species ID - 1, NOT keyed. Must match species.h order.
 - Graphics: 7 asset files per species in `graphics/pokemon/<name>/`. Build auto-converts PNG→4bpp.lz via gbagfx.
 - Front pic anims: `SINGLE_ANIMATION(Name)` macro in `front_pic_anims.h` creates `sAnims_<Name>` from `sAnim_<Name>_1`.
+
+---
+
+## ShakeCamera Special (C112)
+
+`special ShakeCamera` requires 4 vars set before call: `VAR_0x8004` (vertical pan), `VAR_0x8005` (horizontal pan), `VAR_0x8006` (num shakes), `VAR_0x8007` (shake delay). Must `waitstate` after. See `data/scripts/cave_of_origin.inc` for reference usage.

@@ -18,8 +18,14 @@ FortreeCity_EventScript_Man::
 FortreeCity_EventScript_Woman::
 	lock
 	faceplayer
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, FortreeCity_EventScript_WomanBeastSighting
 	goto_if_set FLAG_KECLEON_FLED_FORTREE, FortreeCity_EventScript_WomanGymAccessible
 	msgbox FortreeCity_Text_SomethingBlockingGym, MSGBOX_DEFAULT
+	release
+	end
+
+FortreeCity_EventScript_WomanBeastSighting::
+	msgbox FortreeCity_Text_WomanBeastSighting, MSGBOX_DEFAULT
 	release
 	end
 
@@ -194,3 +200,14 @@ FortreeCity_Text_MigrationBirdKeeper:
 	.string "Even WINONA's rethinking her\n"
 	.string "gym strategy. The skies over\l"
 	.string "HOENN aren't what they used to be.$"
+
+FortreeCity_Text_WomanBeastSighting:
+	.string "My POKeMON have been restless\n"
+	.string "for days now. Pacing, whimpering,\l"
+	.string "staring off toward the routes.\p"
+	.string "The wild POKeMON feel it too.\n"
+	.string "The SWABLU will not even land in\l"
+	.string "the trees anymore.\p"
+	.string "Something powerful is moving\n"
+	.string "through Hoenn. I can feel it\l"
+	.string "in my bones.$"

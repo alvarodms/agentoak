@@ -1347,9 +1347,44 @@ BirchLab_EventScript_MigrationS3Complete::
 	release
 	end
 
-@ --- Post-Completion ---
+@ --- Post-Completion: Beast Trigger System ---
 BirchLab_EventScript_MigrationComplete::
-	msgbox BirchLab_Text_MigrationPostComplete, MSGBOX_DEFAULT
+	lock
+	faceplayer
+	goto_if_set FLAG_BEAST_SUICUNE_DONE, BirchLab_EventScript_AllBeastsDone
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, BirchLab_EventScript_BeastActive
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, BirchLab_EventScript_NextBeastArrived
+	@ First trigger - cinematic scene
+	msgbox BirchLab_Text_BeastTrigger1, MSGBOX_DEFAULT
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 6
+	setvar VAR_0x8007, 4
+	special ShakeCamera
+	waitstate
+	msgbox BirchLab_Text_BeastTrigger2, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_BeastTrigger3, MSGBOX_DEFAULT
+	special InitNextBeast
+	playmoncry SPECIES_RAIKOU, CRY_MODE_ENCOUNTER
+	waitmoncry
+	msgbox BirchLab_Text_BeastTrigger4, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_NextBeastArrived::
+	msgbox BirchLab_Text_NextBeast, MSGBOX_DEFAULT
+	special InitNextBeast
+	msgbox BirchLab_Text_NextBeastGo, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_BeastActive::
+	msgbox BirchLab_Text_BeastStillOut, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_AllBeastsDone::
+	msgbox BirchLab_Text_AllBeastsDone, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1501,3 +1536,65 @@ BirchLab_Text_MigrationPostComplete:
 	.string "{PLAYER}. Our research\l"
 	.string "changed how the world sees\l"
 	.string "HOENN.$"
+
+@ =============================================================
+@ Beast Trigger - Dialogue Text
+@ =============================================================
+
+BirchLab_Text_BeastTrigger1:
+	.string "Ah, {PLAYER}! Perfect timing.\p"
+	.string "Your Migration Tracker data has been\n"
+	.string "remarkable. The patterns suggest\l"
+	.string "something unprecedented...$"
+
+BirchLab_Text_BeastTrigger2:
+	.string "Wh-what was that?!\p"
+	.string "The instruments - look at these\n"
+	.string "readings! I have never seen energy\l"
+	.string "signatures like this in thirty\l"
+	.string "years of research!$"
+
+BirchLab_Text_BeastTrigger3:
+	.string "Wait... these match the old Johto\n"
+	.string "field reports. The legendary beasts -\l"
+	.string "Raikou, Entei, Suicune.\p"
+	.string "The migration did not just draw\n"
+	.string "ordinary POKeMON to Hoenn.\l"
+	.string "It drew THEM.$"
+
+BirchLab_Text_BeastTrigger4:
+	.string "Did you hear that?! That cry came\n"
+	.string "from somewhere to the east!\p"
+	.string "One of them is already out there,\n"
+	.string "roaming the routes of Hoenn.\p"
+	.string "{PLAYER}, this is a once-in-a-lifetime\n"
+	.string "discovery. No - once in HISTORY.\p"
+	.string "Get out there and find it.\n"
+	.string "Be careful - these POKeMON will not\l"
+	.string "stay in one place for long.$"
+
+BirchLab_Text_NextBeast:
+	.string "Extraordinary! Your encounter data\n"
+	.string "is invaluable, {PLAYER}!\p"
+	.string "But look - the instruments are\n"
+	.string "picking up a NEW signature.\l"
+	.string "Another beast has entered Hoenn!$"
+
+BirchLab_Text_NextBeastGo:
+	.string "The migration corridors are still\n"
+	.string "active. Get back out there!$"
+
+BirchLab_Text_BeastStillOut:
+	.string "The instruments are still tracking\n"
+	.string "abnormal energy across Hoenn.\p"
+	.string "That legendary beast is out there\n"
+	.string "somewhere. Keep searching!$"
+
+BirchLab_Text_AllBeastsDone:
+	.string "Raikou, Entei, and Suicune...\n"
+	.string "all three legendary beasts,\l"
+	.string "drawn to Hoenn by the migration.\p"
+	.string "This will rewrite every textbook\n"
+	.string "on POKeMON ecology. And it was\l"
+	.string "your fieldwork that made it possible.\p"
+	.string "I could not be more proud, {PLAYER}.$"

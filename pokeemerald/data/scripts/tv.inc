@@ -4,7 +4,7 @@ EventScript_TV::
 	special ResetTVShowState
 	specialvar VAR_RESULT, CheckForPlayersHouseNews
 	goto_if_eq VAR_RESULT, PLAYERS_HOUSE_TV_MOVIE, EventScript_PlayersHouseMovie
-	goto_if_eq VAR_RESULT, PLAYERS_HOUSE_TV_LATI, EventScript_PlayersHouseLatiNewsFlash
+	goto_if_eq VAR_RESULT, PLAYERS_HOUSE_TV_LATI, EventScript_CheckBeastsBeforeLati
 	goto_if_unset FLAG_SYS_TV_START, EventScript_MomDadMightLikeThis1
 	goto_if_set FLAG_SYS_TV_WATCH, EventScript_MomDadMightLikeThis1
 	specialvar VAR_RESULT, IsGabbyAndTyShowOnTheAir
@@ -37,6 +37,10 @@ EventScript_PlayersHouseMovie::
 @ special InitRoamer is a junk call. Its input var (VAR_0x8004) hasn't been set, and
 @ It's called again when Mom actually asks for the color, overwriting
 @ whatever it does here.
+EventScript_CheckBeastsBeforeLati::
+	goto_if_unset FLAG_BEAST_SUICUNE_DONE, EventScript_MomDadMightLikeThis1
+	goto EventScript_PlayersHouseLatiNewsFlash
+
 EventScript_PlayersHouseLatiNewsFlash::
 	msgbox PlayersHouse_1F_Text_LatiEmergencyNewsFlash, MSGBOX_DEFAULT
 	special InitRoamer
