@@ -32,23 +32,90 @@ The word "Legends" in the title finally earns its meaning.
 
 **No save struct expansion**: Existing `struct Roamer` (28 bytes) is sufficient.
 
-## Feature B: Migration Event Climax (Stretch Goal)
+## Feature B: Migration Event Climax — DESIGN DOCUMENT (C114)
 
-Deferred until after Feature A is complete. If cycles run short, becomes v6.0.
+### Narrative Premise
 
-## v5.0 Cycle Roadmap
+In Johto lore, Ho-Oh resurrected three nameless Pokémon from the Burned Tower, creating Raikou, Entei, and Suicune. They are its guardians. When the ecological upheaval drove the beasts along migration corridors into Hoenn, Ho-Oh followed — drawn both by its bond to the beasts and by a resonance it sensed from the Cave of Origin, a place where legendary energy pools beneath Sootopolis.
 
-| Cycle | Target | Status |
-|-------|--------|--------|
-| **107** | v1.0 release prep | PARTIAL — README done, type icons untracked |
-| **108** | Research: roamer hooks | ✅ Done |
-| **109** | Roamer system core | ✅ Done. C infrastructure complete. |
-| **110** | Birch trigger + wiring | ❌ Crashed — no script changes shipped |
-| **111** | NPC sightings + C plumbing | PARTIAL — 8 lines of C plumbing shipped. |
-| **112** | Birch trigger + Lati gating + 2 NPC sightings | ✅ Done. All 4 deliverables shipped. |
-| **113** | Beast sighting NPC expansion (4 new NPCs) + README | ✅ Done. 6 total sighting NPCs. README updated for v5.0. |
-| **114** | TV broadcasts for beast sightings OR v5.0 polish | TV system or begin v6.0 scoping |
-| **115** | Buffer | Community feedback, hotfixes |
+The player catches/defeats all three beasts. The "AllBeastsDone" dialogue in Birch Lab currently ends with a congratulations. Feature B replaces that with a revelation: the beasts were harbingers. Their master has arrived.
+
+### Trigger Conditions
+
+- **Gate**: All 3 DONE flags set (`FLAG_BEAST_RAIKOU_DONE`, `FLAG_BEAST_ENTEI_DONE`, `FLAG_BEAST_SUICUNE_DONE`)
+- **Location**: Player speaks to Birch in his lab after all 3 are done
+- **Flow**: `BirchLab_EventScript_AllBeastsDone` → Birch revelation scene → sets `FLAG_MIGRATION_CLIMAX_READY` (reuse `FLAG_LEGENDS_AWAKENED` at SYSTEM_FLAGS+0x27) → unlocks Cave of Origin depth access
+- **No new C code needed**: Uses existing `seteventmon` + `BattleSetup_StartLegendaryBattle` specials (same pattern as Navel Rock)
+
+### Birch Revelation Scene (Script Outline)
+
+1. Birch congratulates player on all three beasts (existing text, shortened)
+2. Lab instruments spike again — `ShakeCamera` + dramatic pause
+3. Birch: "Wait... these readings are different. Stronger. The beasts weren't just migrating — they were *scouts*."
+4. Birch explains: In Johto legends, Ho-Oh created the three beasts. They share a bond. If the beasts were drawn here, their master may have followed.
+5. Birch: "The energy is concentrated beneath Sootopolis — the Cave of Origin. I've contacted the Sootopolis Gym Leader. He'll grant you access to the deeper chambers."
+6. Sets `FLAG_MIGRATION_CLIMAX_READY` + plays Ho-Oh cry
+7. Player must travel to Cave of Origin to find Ho-Oh
+
+### Encounter Design: Ho-Oh
+
+**Location**: `CaveOfOrigin_UnusedRubySapphireMap3` — an empty unused RS map, perfect for repurposing. The deepest chamber of the Cave of Origin.
+
+**Species**: Ho-Oh (SPECIES_HO_OH, #250)
+**Level**: 70 (matches Navel Rock precedent)
+**Stats**: 106/130/90/110/154/90 (BST 680), Fire/Flying, Pressure
+
+**Moveset** (level-up + TM moves available in Gen 3):
+| Move | Type | Power | Acc | Why |
+|------|------|-------|-----|-----|
+| Sacred Fire | Fire | 100 | 95 | Signature move, 50% burn chance |
+| Recover | Normal | — | — | Sustain makes it a long fight |
+| Earthquake | Ground | 100 | 100 | Coverage vs Rock/Electric counters |
+| Calm Mind | Psychic | — | — | Setup threat; punishes passive play |
+
+**Held Item**: None (Gen 3 — no Sacred Ash as held item)
+
+**Script template**: Navel Rock (`NavelRock_Top_EventScript_HoOh`) — cinematic entrance with wing flap SE, camera pan, weather clear, cry, then `seteventmon`/`BattleSetup_StartLegendaryBattle`. Adapt for cave setting (no wing flaps; use earthquake rumble + golden light flash instead).
+
+**Flags**: Reuse vanilla `FLAG_CAUGHT_HO_OH` and `FLAG_DEFEATED_HO_OH` (already defined). Ho-Oh respawns on re-entry if defeated but not caught (standard legendary behavior).
+
+### Cave of Origin Access Gating
+
+- `CaveOfOrigin_Entrance` script: add check — if `FLAG_MIGRATION_CLIMAX_READY` is set, allow passage to `UnusedRubySapphireMap3` via a new warp or NPC guide
+- Simplest implementation: an NPC (Sootopolis elder or Wallace aide) appears at the entrance only when the flag is set, and leads the player deeper
+- Alternative: a blocked passage that clears when the flag is set (visual: rocks crumble)
+
+### Post-Climax Changes
+
+- **Birch Lab**: New dialogue branch when `FLAG_CAUGHT_HO_OH` is set — Birch marvels at the discovery, references the player's complete journey
+- **Sighting NPCs** (2-3 of the 6): Update dialogue to reference Ho-Oh or the migration's conclusion ("The skies have been calm since that golden light appeared over Sootopolis...")
+- **Lati trigger**: Already gated behind `FLAG_BEAST_SUICUNE_DONE` — Latias/Latios appears as the final roamer after the beasts, unaffected by Ho-Oh
+
+### Reward
+
+The encounter itself IS the reward — a 680 BST Uber-tier legendary. No additional item/gift needed. The narrative closure (Birch's final dialogue) provides emotional payoff. This also naturally sets up v6.0 potential: if the migration drew Ho-Oh to Hoenn, what else might follow?
+
+### Implementation Roadmap
+
+| Cycle | Target | Deliverables |
+|-------|--------|-------------|
+| **114** | Design (this cycle) | Feature B game design document |
+| **115** | Climax trigger + encounter | Birch revelation script, Cave of Origin access gate, Ho-Oh encounter script, battle flags |
+| **116** | Polish + wrap v5.0 | Post-climax NPC dialogue updates (Birch + 2-3 sighting NPCs), README update, version bump |
+
+### File Modification Plan
+
+**C115 (core):**
+- `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` — rewrite `AllBeastsDone` into revelation scene
+- `data/maps/CaveOfOrigin_Entrance/scripts.inc` — add climax-gated NPC or passage
+- `data/maps/CaveOfOrigin_UnusedRubySapphireMap3/scripts.inc` — Ho-Oh encounter (template from Navel Rock)
+- `data/maps/CaveOfOrigin_UnusedRubySapphireMap3/map.json` — add Ho-Oh object event
+- `include/constants/flags.h` — only if new flags needed (likely not — reuse existing)
+
+**C116 (polish):**
+- `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` — post-catch Birch dialogue
+- 2-3 sighting NPC scripts — post-climax dialogue branches
+- `README.md` — v5.0 feature list update
 
 ---
 

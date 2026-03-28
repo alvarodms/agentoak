@@ -15,5 +15,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Legendary Event Presentation | 110 | [legendary-event-presentation.md](pokemon-knowledge/legendary-event-presentation.md) |
 | NPC Sighting Systems | 111 | [npc-sighting-systems.md](pokemon-knowledge/npc-sighting-systems.md) |
 | Roamer Polish & QoL | 113 | [roamer-polish-and-qol.md](pokemon-knowledge/roamer-polish-and-qol.md) |
+| TV Tracking & Climax Design | 114 | [tv-tracking-and-climax-design.md](pokemon-knowledge/tv-tracking-and-climax-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
