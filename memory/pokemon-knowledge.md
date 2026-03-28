@@ -12,7 +12,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Battle Frontier P/S Split Audit | 76 | [battle-frontier-audit.md](pokemon-knowledge/battle-frontier-audit.md) |
 | Roaming Legendaries & Release Polish | 106 | [roaming-legendaries-and-release-polish.md](pokemon-knowledge/roaming-legendaries-and-release-polish.md) |
 | Roamer Implementation Patterns | 108 | [roamer-implementation-patterns.md](pokemon-knowledge/roamer-implementation-patterns.md) |
-| Legendary Event Presentation | 110 | [legendary-event-presentation.md](pokemon-knowledge/legendary-event-presentation.md) |
+| Legendary Event Presentation | 110-115 | [legendary-event-presentation.md](pokemon-knowledge/legendary-event-presentation.md) |
 | NPC Sighting Systems | 111 | [npc-sighting-systems.md](pokemon-knowledge/npc-sighting-systems.md) |
 | Roamer Polish & QoL | 113 | [roamer-polish-and-qol.md](pokemon-knowledge/roamer-polish-and-qol.md) |
 | TV Tracking & Climax Design | 114 | [tv-tracking-and-climax-design.md](pokemon-knowledge/tv-tracking-and-climax-design.md) |

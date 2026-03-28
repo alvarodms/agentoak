@@ -1351,6 +1351,7 @@ BirchLab_EventScript_MigrationS3Complete::
 BirchLab_EventScript_MigrationComplete::
 	lock
 	faceplayer
+	goto_if_set FLAG_LEGENDS_AWAKENED, BirchLab_EventScript_ClimaxReminder
 	goto_if_set FLAG_BEAST_SUICUNE_DONE, BirchLab_EventScript_AllBeastsDone
 	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, BirchLab_EventScript_BeastActive
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, BirchLab_EventScript_NextBeastArrived
@@ -1384,7 +1385,28 @@ BirchLab_EventScript_BeastActive::
 	end
 
 BirchLab_EventScript_AllBeastsDone::
-	msgbox BirchLab_Text_AllBeastsDone, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_AllBeastsDoneIntro, MSGBOX_DEFAULT
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 6
+	setvar VAR_0x8007, 4
+	special ShakeCamera
+	waitstate
+	playse SE_M_EXPLOSION
+	waitse
+	delay 40
+	msgbox BirchLab_Text_BirchRevelation1, MSGBOX_DEFAULT
+	playmoncry SPECIES_HO_OH, CRY_MODE_ENCOUNTER
+	waitmoncry
+	delay 20
+	msgbox BirchLab_Text_BirchRevelation2, MSGBOX_DEFAULT
+	setflag FLAG_LEGENDS_AWAKENED
+	msgbox BirchLab_Text_BirchRevelation3, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_ClimaxReminder::
+	msgbox BirchLab_Text_ClimaxReminder, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1590,11 +1612,44 @@ BirchLab_Text_BeastStillOut:
 	.string "That legendary beast is out there\n"
 	.string "somewhere. Keep searching!$"
 
-BirchLab_Text_AllBeastsDone:
+BirchLab_Text_AllBeastsDoneIntro:
 	.string "Raikou, Entei, and Suicune...\n"
-	.string "all three legendary beasts,\l"
-	.string "drawn to Hoenn by the migration.\p"
+	.string "You have done it, {PLAYER}.\l"
+	.string "All three legendary beasts.\p"
 	.string "This will rewrite every textbook\n"
-	.string "on POKeMON ecology. And it was\l"
-	.string "your fieldwork that made it possible.\p"
-	.string "I could not be more proud, {PLAYER}.$"
+	.string "on POKeMON ecology.$"
+
+BirchLab_Text_BirchRevelation1:
+	.string "Wait... What was that?\p"
+	.string "These readings... they are\n"
+	.string "completely different. Stronger.\p"
+	.string "The beasts were not just\n"
+	.string "migrating, {PLAYER}.\l"
+	.string "They were scouts.$"
+
+BirchLab_Text_BirchRevelation2:
+	.string "In Johto legend, the three beasts\n"
+	.string "were created by a great and\l"
+	.string "ancient POKeMON called HO-OH.\p"
+	.string "They share a sacred bond.\n"
+	.string "Where the beasts go...\l"
+	.string "their master follows.$"
+
+BirchLab_Text_BirchRevelation3:
+	.string "The energy is concentrated\n"
+	.string "beneath Sootopolis City.\l"
+	.string "The Cave of Origin.\p"
+	.string "I have contacted WALLACE.\n"
+	.string "He will grant you access to\l"
+	.string "the deepest chambers.\p"
+	.string "Be careful, {PLAYER}.\n"
+	.string "What awaits you down there\l"
+	.string "is beyond anything we have\l"
+	.string "encountered before.$"
+
+BirchLab_Text_ClimaxReminder:
+	.string "The Cave of Origin, {PLAYER}.\n"
+	.string "HO-OH awaits in the deepest\l"
+	.string "chamber beneath Sootopolis.\p"
+	.string "WALLACE has cleared the way.\n"
+	.string "You need only descend.$"

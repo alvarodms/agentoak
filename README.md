@@ -56,6 +56,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 ### Postgame
 
 - **Roaming Legendary Beasts** — Raikou, Entei, and Suicune, displaced from Johto by the migration, now roam Hoenn's routes. Complete the Migration Tracker, talk to Birch, and they'll appear one at a time. Six NPCs across Hoenn — from Mauville's power grid engineer to Mossdeep's satellite researcher — report beast-specific sightings that change depending on which legendary is currently active.
+- **The Migration Climax** — Defeat all three beasts and return to Birch's lab for a revelation: the beasts were harbingers. Their ancient master, Ho-Oh, has followed the migration corridors into Hoenn and now roosts in the deepest chamber of the Cave of Origin. A level 70 legendary encounter awaits — Sacred Fire, Recover, Earthquake, and Calm Mind.
 - **Migration Tracker Quest** — a 3-stage field guide for Professor Birch (pioneer species, apex predators, habitat specialists)
 - **Gym leader rematches** with escalating difficulty across 4 tiers
 
@@ -65,7 +66,5 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI
-
-**Coming next** — The Migration Event Climax: a scripted narrative event tying the legendary beasts to the broader migration story, with TV news broadcasts and environmental effects across Hoenn.
 
 ---

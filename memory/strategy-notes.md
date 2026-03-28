@@ -32,7 +32,7 @@ The word "Legends" in the title finally earns its meaning.
 
 **No save struct expansion**: Existing `struct Roamer` (28 bytes) is sufficient.
 
-## Feature B: Migration Event Climax — DESIGN DOCUMENT (C114)
+## Feature B: Migration Event Climax — COMPLETE (C115)
 
 ### Narrative Premise
 
