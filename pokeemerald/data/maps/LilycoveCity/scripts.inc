@@ -755,3 +755,70 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 	.string "POKéMON as soon as we arrived.\p"
 	.string "I mean, we are totally happy!$"
 
+LilycoveCity_EventScript_BeastSighting::
+	lock
+	faceplayer
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, LilycoveCity_EventScript_BeastSighting_Active
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, LilycoveCity_EventScript_BeastSighting_AllDone
+	goto_if_set FLAG_BEAST_RAIKOU_KO, LilycoveCity_EventScript_BeastSighting_AllDone
+	msgbox LilycoveCity_Text_BeastSighting_Default, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_BeastSighting_AllDone::
+	msgbox LilycoveCity_Text_BeastSighting_AllDone, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_BeastSighting_Active::
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, LilycoveCity_EventScript_BeastSighting_NotRaikou
+	goto_if_set FLAG_BEAST_RAIKOU_KO, LilycoveCity_EventScript_BeastSighting_NotRaikou
+	msgbox LilycoveCity_Text_BeastSighting_Raikou, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_BeastSighting_NotRaikou::
+	goto_if_set FLAG_BEAST_ENTEI_DONE, LilycoveCity_EventScript_BeastSighting_Suicune
+	goto_if_set FLAG_BEAST_ENTEI_KO, LilycoveCity_EventScript_BeastSighting_Suicune
+	msgbox LilycoveCity_Text_BeastSighting_Entei, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_BeastSighting_Suicune::
+	msgbox LilycoveCity_Text_BeastSighting_Suicune, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_Text_BeastSighting_Default:
+	.string "The seas have been calm lately.\n"
+	.string "Good weather for sailing.$"
+
+LilycoveCity_Text_BeastSighting_Raikou:
+	.string "Came in from ROUTE 124 last night\n"
+	.string "and the whole horizon was lit up.\p"
+	.string "Not lightning from clouds, mind you.\n"
+	.string "It was running ACROSS the land.\p"
+	.string "The old salts say it's a beast from\n"
+	.string "across the sea. I believe them.$"
+
+LilycoveCity_Text_BeastSighting_Entei:
+	.string "Fishermen on ROUTE 124 say the\n"
+	.string "water near shore has been warm.\p"
+	.string "Not hot spring warm, more like\n"
+	.string "something on the coast is radiating\l"
+	.string "heat across entire routes.$"
+
+LilycoveCity_Text_BeastSighting_Suicune:
+	.string "You know the murky stretch off\n"
+	.string "ROUTE 124? Crystal clear now.\p"
+	.string "My crew swears they saw something\n"
+	.string "blue and graceful running across\l"
+	.string "the water's surface at dawn.$"
+
+LilycoveCity_Text_BeastSighting_AllDone:
+	.string "The seas are back to normal, but\n"
+	.string "I'll never forget those strange\l"
+	.string "weeks.\p"
+	.string "Legendary creatures, roaming\n"
+	.string "HOENN… What a time to be a sailor.$"
+

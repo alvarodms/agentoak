@@ -29,7 +29,7 @@ Before modifying ANY pokeemerald file:
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
 | Wild Encounters | 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, 92, 98, 99, **100** | 3 (JSON + C + flags) | [wild-encounters.md](completed-work/wild-encounters.md) |
 | Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, **101**, **102** | 5 (parties, trainers, opponents, battle_setup, flags) | [trainer-parties.md](completed-work/trainer-parties.md) |
-| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, **104** | ~42 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
+| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, **113** | ~46 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, **107** | 13 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
@@ -47,7 +47,7 @@ These files have been touched in multiple cycles and are at highest risk of acci
 - **Route103/scripts.inc**: Cycles 25, 36, 38
 - **Route110/scripts.inc**: Cycles 25, 28, 36, 38, **94**
 - **Route119/scripts.inc**: Cycles 29, 65, 94, **104**
-- **LilycoveCity/scripts.inc**: Cycles 25, 29, 36, **104**
+- **LilycoveCity/scripts.inc**: Cycles 25, 29, 36, 104, **113**
 - **MtChimney/scripts.inc**: Cycles 27, 36, 38
 - **LittlerootTown/scripts.inc**: Cycles 15, 28
 - **SlateportCity/scripts.inc**: Cycles 27, 28
@@ -58,7 +58,7 @@ These files have been touched in multiple cycles and are at highest risk of acci
 - **include/constants/opponents.h**: Cycles 6–11, 49, 50, 51, 71, **94**
 - **src/battle_setup.c**: Cycles 6, 49, 50, 71
 - **PetalburgCity_Gym/scripts.inc**: Cycles 32, 36, 50
-- **MossdeepCity/scripts.inc**: Cycles 33, 50
+- **MossdeepCity/scripts.inc**: Cycles 33, 50, **113**
 - **include/constants/species.h**: Cycles 60, 61, 68, 70
 - **include/constants/pokedex.h**: Cycles 60, 61, 68, 70
 - **src/data/wild_encounters.json**: Cycles 3, 4, 9, 14, 21, 47, 49, 52, 60, 61, 63, 68, 70, 91, 98, 99, **100**

@@ -671,6 +671,76 @@ MauvilleCity_Text_ExplainTV:
 MauvilleCity_Text_BeenCheckingOutTV:
 	.string "Hi, have you been checking out TVs?$"
 
+MauvilleCity_EventScript_BeastSighting::
+	lock
+	faceplayer
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MauvilleCity_EventScript_BeastSighting_Active
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, MauvilleCity_EventScript_BeastSighting_AllDone
+	goto_if_set FLAG_BEAST_RAIKOU_KO, MauvilleCity_EventScript_BeastSighting_AllDone
+	msgbox MauvilleCity_Text_BeastSighting_Default, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_EventScript_BeastSighting_AllDone::
+	msgbox MauvilleCity_Text_BeastSighting_AllDone, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_EventScript_BeastSighting_Active::
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, MauvilleCity_EventScript_BeastSighting_NotRaikou
+	goto_if_set FLAG_BEAST_RAIKOU_KO, MauvilleCity_EventScript_BeastSighting_NotRaikou
+	msgbox MauvilleCity_Text_BeastSighting_Raikou, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_EventScript_BeastSighting_NotRaikou::
+	goto_if_set FLAG_BEAST_ENTEI_DONE, MauvilleCity_EventScript_BeastSighting_Suicune
+	goto_if_set FLAG_BEAST_ENTEI_KO, MauvilleCity_EventScript_BeastSighting_Suicune
+	msgbox MauvilleCity_Text_BeastSighting_Entei, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_EventScript_BeastSighting_Suicune::
+	msgbox MauvilleCity_Text_BeastSighting_Suicune, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_Text_BeastSighting_Default:
+	.string "The power grid has been stable\n"
+	.string "lately.\p"
+	.string "No unusual surges to report.$"
+
+MauvilleCity_Text_BeastSighting_Raikou:
+	.string "Something is causing massive\n"
+	.string "electrical surges across the grid!\p"
+	.string "Our instruments are detecting a\n"
+	.string "huge energy source moving between\l"
+	.string "routes.\p"
+	.string "Whatever it is, it's generating\n"
+	.string "more voltage than our entire plant!$"
+
+MauvilleCity_Text_BeastSighting_Entei:
+	.string "The temperature readings near\n"
+	.string "ROUTE 118 have been off the charts.\p"
+	.string "I thought our sensors were broken,\n"
+	.string "but people are reporting scorched\l"
+	.string "grass along the walking paths.$"
+
+MauvilleCity_Text_BeastSighting_Suicune:
+	.string "The water table readings are strange.\n"
+	.string "Streams are running clearer than ever.\p"
+	.string "Our monitoring stations detect\n"
+	.string "something purifying the water as it\l"
+	.string "moves through the region.$"
+
+MauvilleCity_Text_BeastSighting_AllDone:
+	.string "The power grid is back to normal,\n"
+	.string "but our data logs from the past\l"
+	.string "weeks are incredible.\p"
+	.string "Those legendary creatures left\n"
+	.string "quite an impression on HOENN's\l"
+	.string "ecology.$"
+
 MauvilleCity_EventScript_SecondWaveScientist::
 	lock
 	faceplayer

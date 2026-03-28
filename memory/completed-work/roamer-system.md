@@ -13,9 +13,10 @@
 | `data/maps/Route118/scripts.inc` | **112** | Fisherman beast-sighting conditional dialogue when roamer active |
 | `data/maps/FortreeCity/scripts.inc` | **112** | Woman NPC beast-sighting conditional dialogue when roamer active |
 
-## Status: COMPLETE (C112)
+## Status: COMPLETE (C112+C113)
 
 All components delivered:
 - C infrastructure (C109/C111): roamer.c, flags, battle integration, AI flee delay
 - Script layer (C112): Birch trigger, Lati gating, 2 NPC sighting dialogues
-- Untracked: `pokeemerald/scripts/check_dialogue.sh` — dialogue integrity checker (not committed)
+- Sighting NPCs expanded (C113): 4 new beast-specific conditional NPCs (Mauville, Lilycove, Route 121, Mossdeep) — total 6 sighting NPCs across Hoenn
+- Dialogue checker: `pokeemerald/scripts/check_dialogue.sh` committed C112

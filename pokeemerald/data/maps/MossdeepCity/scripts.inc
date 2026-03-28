@@ -442,3 +442,74 @@ MossdeepCity_Text_SootopolisNewGymLeader:
 	.string "People tell me the new LEADER once\n"
 	.string "mentored WALLACE.$"
 
+MossdeepCity_EventScript_BeastSighting::
+	lock
+	faceplayer
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MossdeepCity_EventScript_BeastSighting_Active
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, MossdeepCity_EventScript_BeastSighting_AllDone
+	goto_if_set FLAG_BEAST_RAIKOU_KO, MossdeepCity_EventScript_BeastSighting_AllDone
+	msgbox MossdeepCity_Text_BeastSighting_Default, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_BeastSighting_AllDone::
+	msgbox MossdeepCity_Text_BeastSighting_AllDone, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_BeastSighting_Active::
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, MossdeepCity_EventScript_BeastSighting_NotRaikou
+	goto_if_set FLAG_BEAST_RAIKOU_KO, MossdeepCity_EventScript_BeastSighting_NotRaikou
+	msgbox MossdeepCity_Text_BeastSighting_Raikou, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_BeastSighting_NotRaikou::
+	goto_if_set FLAG_BEAST_ENTEI_DONE, MossdeepCity_EventScript_BeastSighting_Suicune
+	goto_if_set FLAG_BEAST_ENTEI_KO, MossdeepCity_EventScript_BeastSighting_Suicune
+	msgbox MossdeepCity_Text_BeastSighting_Entei, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_BeastSighting_Suicune::
+	msgbox MossdeepCity_Text_BeastSighting_Suicune, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_Text_BeastSighting_Default:
+	.string "Our satellite data is all nominal.\n"
+	.string "Nothing unusual to report.$"
+
+MossdeepCity_Text_BeastSighting_Raikou:
+	.string "Our satellite picked up an enormous\n"
+	.string "electromagnetic signature moving\l"
+	.string "across HOENN!\p"
+	.string "It's not a storm. It's a single\n"
+	.string "point source, moving faster than\l"
+	.string "any known POKeMON species.$"
+
+MossdeepCity_Text_BeastSighting_Entei:
+	.string "Thermal imaging from orbit shows\n"
+	.string "a heat signature roaming the\l"
+	.string "mainland.\p"
+	.string "It's hotter than a volcano vent\n"
+	.string "but it's MOVING. Our models\l"
+	.string "can't explain it.$"
+
+MossdeepCity_Text_BeastSighting_Suicune:
+	.string "This is fascinating! Our water\n"
+	.string "purity sensors across HOENN are\l"
+	.string "all spiking.\p"
+	.string "Something is systematically\n"
+	.string "purifying every waterway it\l"
+	.string "passes through.\p"
+	.string "The data suggests a single entity\n"
+	.string "moving between routes.$"
+
+MossdeepCity_Text_BeastSighting_AllDone:
+	.string "The data we collected during those\n"
+	.string "weeks is extraordinary.\p"
+	.string "Three legendary POKeMON, migrating\n"
+	.string "through HOENN one after another.\p"
+	.string "This will be studied for decades.$"
+

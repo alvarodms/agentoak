@@ -55,7 +55,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 
 ### Postgame
 
-- **Roaming Legendary Beasts** — Raikou, Entei, and Suicune, displaced from Johto by the migration, now roam Hoenn's routes. Complete the Migration Tracker, talk to Birch, and they'll appear one at a time. NPCs across Hoenn report sightings.
+- **Roaming Legendary Beasts** — Raikou, Entei, and Suicune, displaced from Johto by the migration, now roam Hoenn's routes. Complete the Migration Tracker, talk to Birch, and they'll appear one at a time. Six NPCs across Hoenn — from Mauville's power grid engineer to Mossdeep's satellite researcher — report beast-specific sightings that change depending on which legendary is currently active.
 - **Migration Tracker Quest** — a 3-stage field guide for Professor Birch (pioneer species, apex predators, habitat specialists)
 - **Gym leader rematches** with escalating difficulty across 4 tiers
 
@@ -66,6 +66,6 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI
 
-**Coming next** — TV news broadcasts tracking beast sightings across Hoenn, and additional NPC reactions as the legendary migration unfolds.
+**Coming next** — The Migration Event Climax: a scripted narrative event tying the legendary beasts to the broader migration story, with TV news broadcasts and environmental effects across Hoenn.
 
 ---

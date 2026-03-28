@@ -204,3 +204,79 @@ Route121_Text_SecondWavePokefan:
 	.string "they are migrants. He has\l"
 	.string "never seen this many new\l"
 	.string "species arrive so fast.$"
+
+Route121_EventScript_BeastSighting::
+	lock
+	faceplayer
+	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, Route121_EventScript_BeastSighting_Active
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, Route121_EventScript_BeastSighting_AllDone
+	goto_if_set FLAG_BEAST_RAIKOU_KO, Route121_EventScript_BeastSighting_AllDone
+	msgbox Route121_Text_BeastSighting_Default, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_BeastSighting_AllDone::
+	msgbox Route121_Text_BeastSighting_AllDone, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_BeastSighting_Active::
+	goto_if_set FLAG_BEAST_RAIKOU_DONE, Route121_EventScript_BeastSighting_NotRaikou
+	goto_if_set FLAG_BEAST_RAIKOU_KO, Route121_EventScript_BeastSighting_NotRaikou
+	msgbox Route121_Text_BeastSighting_Raikou, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_BeastSighting_NotRaikou::
+	goto_if_set FLAG_BEAST_ENTEI_DONE, Route121_EventScript_BeastSighting_Suicune
+	goto_if_set FLAG_BEAST_ENTEI_KO, Route121_EventScript_BeastSighting_Suicune
+	msgbox Route121_Text_BeastSighting_Entei, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_BeastSighting_Suicune::
+	msgbox Route121_Text_BeastSighting_Suicune, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_Text_BeastSighting_Default:
+	.string "Just came from the SAFARI ZONE.\n"
+	.string "The POKeMON there are as lively\l"
+	.string "as ever.$"
+
+Route121_Text_BeastSighting_Raikou:
+	.string "Don't go near the tall grass\n"
+	.string "at night!\p"
+	.string "I saw something huge crackling\n"
+	.string "with electricity bolt across\l"
+	.string "the path.\p"
+	.string "It was gone in a flash.\n"
+	.string "Literally. Fastest thing\l"
+	.string "I have ever seen.$"
+
+Route121_Text_BeastSighting_Entei:
+	.string "The ground was warm under my\n"
+	.string "boots this morning. Not from\l"
+	.string "the sun.\p"
+	.string "Found scorched patches in the\n"
+	.string "grass that were not there\l"
+	.string "yesterday.\p"
+	.string "Something big and burning\n"
+	.string "passed through here.$"
+
+Route121_Text_BeastSighting_Suicune:
+	.string "The stream by the SAFARI ZONE\n"
+	.string "is flowing cleaner than I have\l"
+	.string "ever seen.\p"
+	.string "A graceful creature was spotted\n"
+	.string "at the water's edge at dawn.\p"
+	.string "By the time anyone got close,\n"
+	.string "it had vanished like morning\l"
+	.string "mist.$"
+
+Route121_Text_BeastSighting_AllDone:
+	.string "Those legendary beasts shook up\n"
+	.string "every trail in HOENN.\p"
+	.string "The SAFARI ZONE POKeMON are\n"
+	.string "still a bit restless from\l"
+	.string "it all.$"
