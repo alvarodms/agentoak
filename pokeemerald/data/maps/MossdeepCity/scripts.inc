@@ -445,6 +445,7 @@ MossdeepCity_Text_SootopolisNewGymLeader:
 MossdeepCity_EventScript_BeastSighting::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_HO_OH, MossdeepCity_EventScript_BeastSightingPostClimax
 	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MossdeepCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, MossdeepCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, MossdeepCity_EventScript_BeastSighting_AllDone
@@ -512,4 +513,22 @@ MossdeepCity_Text_BeastSighting_AllDone:
 	.string "Three legendary POKeMON, migrating\n"
 	.string "through HOENN one after another.\p"
 	.string "This will be studied for decades.$"
+
+MossdeepCity_EventScript_BeastSightingPostClimax::
+	msgbox MossdeepCity_Text_BeastSightingPostClimax, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_Text_BeastSightingPostClimax:
+	.string "We captured the entire event\n"
+	.string "on satellite. Three beasts,\l"
+	.string "one after another, followed\l"
+	.string "by HO-OH itself.\p"
+	.string "The thermal bloom over the\n"
+	.string "CAVE OF ORIGIN was visible\l"
+	.string "from orbit.\p"
+	.string "This data will take years\n"
+	.string "to fully analyze. You have\l"
+	.string "given us a lifetime of\l"
+	.string "research, {PLAYER}.$"
 

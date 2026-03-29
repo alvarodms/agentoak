@@ -1351,6 +1351,7 @@ BirchLab_EventScript_MigrationS3Complete::
 BirchLab_EventScript_MigrationComplete::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_HO_OH, BirchLab_EventScript_HoOhCaught
 	goto_if_set FLAG_LEGENDS_AWAKENED, BirchLab_EventScript_ClimaxReminder
 	goto_if_set FLAG_BEAST_SUICUNE_DONE, BirchLab_EventScript_AllBeastsDone
 	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, BirchLab_EventScript_BeastActive
@@ -1407,6 +1408,11 @@ BirchLab_EventScript_AllBeastsDone::
 
 BirchLab_EventScript_ClimaxReminder::
 	msgbox BirchLab_Text_ClimaxReminder, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_HoOhCaught::
+	msgbox BirchLab_Text_HoOhCaught, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1653,3 +1659,32 @@ BirchLab_Text_ClimaxReminder:
 	.string "chamber beneath Sootopolis.\p"
 	.string "WALLACE has cleared the way.\n"
 	.string "You need only descend.$"
+
+BirchLab_Text_HoOhCaught:
+	.string "PROF. BIRCH: {PLAYER}...\n"
+	.string "You actually did it.\p"
+	.string "HO-OH. The sacred guardian\n"
+	.string "that created the three beasts.\l"
+	.string "Captured by a trainer from\l"
+	.string "little LITTLEROOT TOWN.\p"
+	.string "When I started studying this\n"
+	.string "migration, I thought we were\l"
+	.string "tracking a few displaced\l"
+	.string "species.\p"
+	.string "Instead, we uncovered\n"
+	.string "something that rewrites\l"
+	.string "everything we know about\l"
+	.string "POKeMON ecology.\p"
+	.string "The beasts came as harbingers.\n"
+	.string "Their master followed.\l"
+	.string "And you met them all.\p"
+	.string "...\p"
+	.string "Though I must confess,\n"
+	.string "the instruments have not\l"
+	.string "fully quieted.\p"
+	.string "There are new readings.\n"
+	.string "Faint. Different from the\l"
+	.string "beasts. Deeper.\p"
+	.string "The migration is not over,\n"
+	.string "{PLAYER}. I suspect it is\l"
+	.string "only deepening.$"

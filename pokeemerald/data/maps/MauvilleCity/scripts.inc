@@ -674,6 +674,7 @@ MauvilleCity_Text_BeenCheckingOutTV:
 MauvilleCity_EventScript_BeastSighting::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_HO_OH, MauvilleCity_EventScript_BeastSightingPostClimax
 	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MauvilleCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, MauvilleCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, MauvilleCity_EventScript_BeastSighting_AllDone
@@ -740,6 +741,24 @@ MauvilleCity_Text_BeastSighting_AllDone:
 	.string "Those legendary creatures left\n"
 	.string "quite an impression on HOENN's\l"
 	.string "ecology.$"
+
+MauvilleCity_EventScript_BeastSightingPostClimax::
+	msgbox MauvilleCity_Text_BeastSightingPostClimax, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_Text_BeastSightingPostClimax:
+	.string "Ever since that golden light\n"
+	.string "appeared over SOOTOPOLIS,\l"
+	.string "the power grid has been\l"
+	.string "perfectly stable.\p"
+	.string "No surges, no anomalies.\n"
+	.string "Whatever you did down there\l"
+	.string "settled the whole region.\p"
+	.string "Though... my instruments\n"
+	.string "are picking up something\l"
+	.string "new. Very faint. Almost\l"
+	.string "like a deep hum.$"
 
 MauvilleCity_EventScript_SecondWaveScientist::
 	lock

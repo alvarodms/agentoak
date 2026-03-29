@@ -758,6 +758,7 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 LilycoveCity_EventScript_BeastSighting::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_HO_OH, LilycoveCity_EventScript_BeastSightingPostClimax
 	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, LilycoveCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, LilycoveCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, LilycoveCity_EventScript_BeastSighting_AllDone
@@ -820,5 +821,21 @@ LilycoveCity_Text_BeastSighting_AllDone:
 	.string "I'll never forget those strange\l"
 	.string "weeks.\p"
 	.string "Legendary creatures, roaming\n"
-	.string "HOENN… What a time to be a sailor.$"
+	.string "HOENN... What a time to be a sailor.$"
+
+LilycoveCity_EventScript_BeastSightingPostClimax::
+	msgbox LilycoveCity_Text_BeastSightingPostClimax, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_Text_BeastSightingPostClimax:
+	.string "The night HO-OH arrived,\n"
+	.string "the whole sky turned gold.\l"
+	.string "Saw it from the harbor.\p"
+	.string "My crew and I just stood\n"
+	.string "there, silent.\l"
+	.string "Nothing to say.\p"
+	.string "The seas are calm now.\n"
+	.string "Calmer than they have been\l"
+	.string "in years, actually.$"
 

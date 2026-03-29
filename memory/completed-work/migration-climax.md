@@ -6,9 +6,16 @@
 | `data/maps/CaveOfOrigin_UnusedRubySapphireMap3/scripts.inc` | **115** | Full Ho-Oh legendary encounter script modeled on NavelRock_Top. White fadescreen reveal, ShakeCamera, seteventmon SPECIES_HO_OH lv70, StartLegendaryBattle. Handles caught/defeated/ran outcomes. Access gate: setwarp back to Map2 if FLAG_LEGENDS_AWAKENED not set. OnResume removes Ho-Oh sprite after catch. |
 | `data/maps/CaveOfOrigin_UnusedRubySapphireMap3/map.json` | **115** | Added Ho-Oh object event (OBJ_EVENT_GFX_HOOH at 9,3, FLAG_HIDE_HO_OH), coord_event trigger (9,7 VAR_TEMP_1), disabled flash requirement, disabled cycling. |
 
-## Status: COMPLETE (C115)
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **116** | Added `FLAG_CAUGHT_HO_OH` check before `FLAG_LEGENDS_AWAKENED` in `BirchLab_EventScript_MigrationComplete`. New `BirchLab_EventScript_HoOhCaught` script + `BirchLab_Text_HoOhCaught` — Birch reflects on the journey, seeds v6.0 hook ("the instruments have not fully quieted... new readings... deeper"). |
+| `data/maps/MauvilleCity/scripts.inc` | **116** | Added `FLAG_CAUGHT_HO_OH` check at top of `MauvilleCity_EventScript_BeastSighting`. New post-climax script+text — engineer notes stable grid, hints at "deep hum" (v6.0 seed). |
+| `data/maps/LilycoveCity/scripts.inc` | **116** | Added `FLAG_CAUGHT_HO_OH` check at top of `LilycoveCity_EventScript_BeastSighting`. New post-climax script+text — sailor describes golden sky, calm seas. |
+| `data/maps/MossdeepCity/scripts.inc` | **116** | Added `FLAG_CAUGHT_HO_OH` check at top of `MossdeepCity_EventScript_BeastSighting`. New post-climax script+text — researcher describes satellite capture of entire event. |
 
-All three phases of Feature B delivered:
-- Birch revelation scene with cinematic effects
-- Ho-Oh encounter in Cave of Origin depths (vanilla unused RS map repurposed)
-- Access gate via FLAG_LEGENDS_AWAKENED + setwarp fallback
+## Status: COMPLETE (C115-116)
+
+v5.0 "The Legends Awaken" fully delivered:
+- Birch revelation scene with cinematic effects (C115)
+- Ho-Oh encounter in Cave of Origin depths (C115)
+- Access gate via FLAG_LEGENDS_AWAKENED + setwarp fallback (C115)
+- Post-catch dialogue: Birch + 3 sighting NPCs acknowledge Ho-Oh capture (C116)
+- v6.0 narrative hook seeded in Birch + Mauville post-catch text (C116)

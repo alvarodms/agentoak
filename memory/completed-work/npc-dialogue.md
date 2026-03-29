@@ -48,3 +48,4 @@ All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 - **Mid-game trainers** (C94): Route 110 twins, Route 119 Sr/Jr double battles
 - **Beast sightings** (C112): Route 118 fisherman + Fortree City woman — conditional on roamer active
 - **Beast sightings expanded** (C113): Mauville engineer, Lilycove sailor, Route 121 hiker, Mossdeep researcher — beast-specific conditional dialogue (Raikou/Entei/Suicune + all-done variants)
+- **Post-climax reactions** (C116): Birch (post-Ho-Oh-catch reflection + v6.0 hook), Mauville engineer (stable grid + "deep hum" v6.0 seed), Lilycove sailor (golden sky, calm seas), Mossdeep researcher (satellite data, lifetime of research). All gated on `FLAG_CAUGHT_HO_OH`.
