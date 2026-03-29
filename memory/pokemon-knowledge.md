@@ -17,5 +17,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Roamer Polish & QoL | 113 | [roamer-polish-and-qol.md](pokemon-knowledge/roamer-polish-and-qol.md) |
 | TV Tracking & Climax Design | 114 | [tv-tracking-and-climax-design.md](pokemon-knowledge/tv-tracking-and-climax-design.md) |
 | Post-v5.0 Direction & Community Expectations | 116 | [post-v5-direction.md](pokemon-knowledge/post-v5-direction.md) |
+| v6.0 Postgame & Second-Arc Design Patterns | 117 | [v6-postgame-design-patterns.md](pokemon-knowledge/v6-postgame-design-patterns.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

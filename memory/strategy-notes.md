@@ -9,42 +9,150 @@
 **v1.0** (Cycles 2-23): Starters, migration species on routes, trainers refreshed. Complete.
 **v2.0** (Cycles 24-86): P/S split, Fairy type, 6 new species, Second Wave, Battle Frontier, QoL. Complete.
 **v3.0** (Cycles 89-96): Trainer held items, mid-game encounters/narrative, wild held items, Migration Tracker Quest. Complete.
-**v4.0** (Cycles 98-105): Dungeon encounters, gym rematch redesign+dialogue, rival arc, Battle Speed QoL. Complete. Build green as of C106.
+**v4.0** (Cycles 98-105): Dungeon encounters, gym rematch redesign+dialogue, rival arc, Battle Speed QoL. Complete.
+**v5.0** (Cycles 107-116): "The Legends Awaken" — Roaming Raikou/Entei/Suicune, 6 NPC sighting network, Ho-Oh climax in Cave of Origin, post-catch world reaction. Complete. See git history for design docs.
 
 ---
 
-# v5.0 — "The Legends Awaken" (Cycles 107-116)
+# v6.0 — "The Primal Stirring" (Cycles 118-125)
 
 ## Creative Thesis
 
-The migration drew rare species to Hoenn — Larvitar in caves, Sneasel on mountains, Electabuzz in power plants. Now it draws something greater. Three legendary Pokémon, displaced from distant Johto by the same ecological upheaval, follow the migration corridors into Hoenn. The player doesn't just observe the migration anymore — they become part of its most dramatic chapter.
+Catching Ho-Oh — the apex of the migration — released enough sacred fire energy to disturb ancient forces sleeping beneath Hoenn. Groudon and Kyogre, dormant for millennia since Rayquaza silenced their war, begin to stir. The "deeper readings" Birch detected in C116 are seismic and tidal anomalies caused by this awakening. The Regi golems, ancient resonance anchors placed to keep the primals dormant, are weakening under the strain.
 
-The word "Legends" in the title finally earns its meaning.
+**Player fantasy**: "I caused this. Now I have to fix it." The player transitions from migration observer to the person who must prevent a primal catastrophe — a consequence of their own success.
 
-## Feature A: Roaming Migration Legendaries — COMPLETE
+**Thematic pillars**:
+- **Consequence**: The migration has side effects. Capturing legendaries wasn't free.
+- **Hoenn's mythology made real**: Groudon/Kyogre aren't just story devices — they're ecological forces the player must confront as a direct result of their actions.
+- **Escalation**: From tracking beasts to preventing regional disaster.
+- **Resolution through understanding**: Birch's research is the thread. Science, not just battling, drives the narrative forward.
 
-**C infrastructure (DONE — C109+C111)**: `InitNextBeast` special, 6 beast flags, KO/caught distinction, 3-turn flee delay, battle AI.
+## Arc Structure — 8 Cycles
 
-**Script work (DONE — C112+C113)**:
-- ✅ Birch Lab: Postgame dialogue calling `special InitNextBeast` after Migration Tracker completion (C112)
-- ✅ Vanilla Lati trigger gated behind beast flags (C112)
-- ✅ 6 NPC sighting scripts: Petalburg, Slateport (C112), Mauville, Lilycove, Route 121, Mossdeep (C113)
+### Act 1 — Signs (C118-119)
 
-**No save struct expansion**: Existing `struct Roamer` (28 bytes) is sufficient.
+**Cycle 118: Engineering + Groundwork**
+- Build trainer validation script (`scripts/check_trainers.sh`) — pending since C106
+- Add v6.0 progression flags to `flags.h` (use unused block 0x264+):
+  - `FLAG_PRIMAL_STIRRING_STARTED` — Birch sends player to investigate
+  - `FLAG_TREMORS_INVESTIGATED` — Lavaridge/Fiery Path tremor check
+  - `FLAG_TIDES_INVESTIGATED` — Dewford/Slateport tidal anomaly check
+  - `FLAG_REGI_RESONANCE_CHECKED` — Player visited a Regi tomb
+  - `FLAG_ALL_SIGNS_REPORTED` — All 3 anomalies reported to Birch
+  - `FLAG_PRIMAL_GROUDON_AVAILABLE` — Groudon encounter unlocked
+  - `FLAG_PRIMAL_KYOGRE_AVAILABLE` — Kyogre encounter unlocked
+  - `FLAG_DEFEATED_PRIMAL_GROUDON` / `FLAG_CAUGHT_PRIMAL_GROUDON`
+  - `FLAG_DEFEATED_PRIMAL_KYOGRE` / `FLAG_CAUGHT_PRIMAL_KYOGRE`
+  - `FLAG_PRIMAL_CRISIS_RESOLVED` — Both primals dealt with
+- Add Birch Lab "emergency research" dialogue: after Ho-Oh is caught, Birch's instruments spike — "unprecedented seismic and tidal readings." Sends player to investigate 3 anomaly sites.
 
-## Feature B: Migration Event Climax — COMPLETE (C115-116)
+**Cycle 119: Environmental Storytelling — NPC Sighting Network**
+- 6-8 NPCs across Hoenn report strange phenomena (dialogue-only, no C code):
+  - **Lavaridge Town**: Hot springs boiling hotter; ground trembling at night
+  - **Fiery Path**: Hiker reports cave walls cracking, new heat vents
+  - **Dewford Town**: Fisherman says tides are wrong — too high, too fast
+  - **Slateport City**: Harbor master reports unusual currents pulling ships south
+  - **Route 111 Desert**: Sandstorm intensity increasing (desert researcher)
+  - **Pacifidlog Town**: Elder says the currents that keep town afloat are shifting
+- Each NPC's dialogue gates behind `FLAG_PRIMAL_STIRRING_STARTED`
+- Reporting back to Birch after visiting Lavaridge+Dewford sets `FLAG_ALL_SIGNS_REPORTED`
 
-Birch revelation scene, Ho-Oh encounter in Cave of Origin depths, 6 sighting NPCs, post-catch dialogue for Birch + 3 NPCs. See git history for full design docs (C114) and implementation details (C115-116).
+### Act 2 — Investigation (C120-122)
 
----
+**Cycle 120: Regi Resonance**
+- The three Regi tombs (Island Cave, Desert Ruins, Ancient Tomb) get new script layers:
+  - After `FLAG_ALL_SIGNS_REPORTED`, entering a Regi tomb triggers a "resonance event" — the sealed chamber hums, the Regi statue glows
+  - NPC researcher at each tomb explains: the Regis were placed as anchors to keep primal energy dormant. The migration's energy has weakened them.
+  - Optional: enhanced Regi re-battles (Lv60, held items, custom moves) for players who already caught them — the Regis are "testing" the trainer's worthiness
+- Sets `FLAG_REGI_RESONANCE_CHECKED` after visiting any tomb
 
-# v6.0 — Direction (Planning Needed)
+**Cycle 121: Terra Cave & Seafloor Cavern Revival**
+- Revitalize encounter tables for Terra Cave and Seafloor Cavern:
+  - **Terra Cave**: Ground/Fire migration species — Numel, Slugma, Geodude lines + rare Larvitar (ties to migration theme). Levels 38-45.
+  - **Seafloor Cavern**: Water/Ice types — Spheal, Clamperl, Relicanth + rare Sneasel encounter (migration). Levels 38-45.
+- New investigation NPCs inside each dungeon (scientists studying the disturbance)
+- These areas now feel alive and worth revisiting, not just one-and-done story maps
 
-**Narrative hook seeded in C116**: Birch's post-Ho-Oh dialogue ends with "the instruments have not fully quieted... new readings, faint, different from the beasts, deeper." Mauville engineer echoes this: "my instruments are picking up something new... almost like a deep hum."
+**Cycle 122: Magma/Aqua Remnant Encounters**
+- 2-3 trainer battles with Magma/Aqua remnants who've noticed the disturbance:
+  - **Terra Cave Entrance**: Magma Grunt + Admin with Ground/Fire teams trying to harness Groudon's stirring energy
+  - **Seafloor Cavern Room 5-6**: Aqua Grunt + Admin with Water teams near Kyogre's chamber
+- Trainers have dialogue explaining their faction noticed the anomalies and came to exploit them — mirrors the original game's conflict
+- Requires trainer validation script from C118 for safe trainer ID allocation
 
-**Next planning cycle should**: Design v6.0 around this mystery. What follows the beasts? The "deeper" readings suggest something subterranean or oceanic — could tie into Hoenn's native legendaries (Groudon/Kyogre lore), new migration waves, or an entirely new threat. This is intentionally open-ended to allow creative freedom.
+### Act 3 — Climax (C123-124)
 
-**Engineering first**: Before content work, address the trainer validation script (tech-debt-backlog, pending since C106) if v6.0 involves trainer modifications.
+**Cycle 123: The Primal Awakening — Groudon**
+- After all investigation flags are set + Regi resonance checked, Birch reveals: "The anchors can't hold. Groudon is waking in Terra Cave."
+- Terra Cave End gets a static Groudon encounter:
+  - Level 70, custom moveset: Earthquake, Fire Blast, Solar Beam, Bulk Up
+  - Held item: None (vanilla-authentic)
+  - Weather effect: permanent sun in the encounter room
+  - Uses v5.0's Ho-Oh encounter template pattern (white flash, cry, static battle)
+- Post-catch: Birch says "one stabilized — but the ocean readings are worse now"
+
+**Cycle 124: The Primal Awakening — Kyogre**
+- Kyogre encounter unlocks after Groudon is caught/defeated
+- Seafloor Cavern Room 9 gets a static Kyogre encounter:
+  - Level 70, custom moveset: Hydro Pump, Ice Beam, Thunder, Calm Mind
+  - Weather effect: permanent rain in the encounter room
+  - Same encounter template as Groudon
+- Post-catch: global weather normalizes, Birch's instruments finally quiet
+
+### Act 4 — Resolution (C125)
+
+**Cycle 125: World Reaction + v6.0 Ship**
+- Post-crisis NPC dialogue updates (6-8 NPCs acknowledge the crisis is over):
+  - Lavaridge: springs return to normal, town grateful
+  - Dewford: tides stable, fisherman relieved
+  - Regi tomb researchers: anchors re-stabilized
+  - Birch: comprehensive analysis — the migration, the beasts, Ho-Oh, and now the primals were all connected. "Hoenn's ecosystem has been tested, and it survived — because of you."
+- v7.0 narrative hook: Birch mentions Rayquaza — "the mediator hasn't shown itself yet. If both primals stirred, the sky pillar should have responded. But it's silent. That concerns me."
+- README update, version bump (`minor` → v0.6.x)
+- Final polish pass on any dialogue issues
+
+## Scope Boundaries
+
+### In Scope
+- ~20-25 new NPC dialogue branches (reusing existing maps)
+- 2 revitalized encounter tables (Terra Cave, Seafloor Cavern)
+- 2 static legendary encounters (Groudon Lv70, Kyogre Lv70)
+- 4-6 trainer battles (Magma/Aqua remnants)
+- ~10 new flags for progression
+- 1 engineering script (trainer validation)
+- Flag-based linear progression (similar to beast flags from v5.0)
+
+### Out of Scope (v7.0+)
+- Rayquaza encounter (v7.0 — Sky Pillar arc)
+- Difficulty modes (requires significant C engine work)
+- New maps or regions
+- New species additions
+- Battle Frontier legendary policy changes
+- Reusable TMs or major QoL overhauls
+- Primal Reversion mechanic (Gen 6, not implementable in Gen 3 engine)
+
+## Technical Notes
+
+### Flag Plan
+Use unused block starting at `0x264` (88 consecutive flags available). Need ~10 flags for full v6.0 progression. Beast flags (SYSTEM_FLAGS + 0x21-0x27) remain untouched.
+
+### Maps to Modify
+- `LittlerootTown_ProfessorBirchsLab/scripts.inc` — Birch dialogue (ALREADY modified 5x — read first!)
+- `LavaridgeTown/scripts.inc` — tremor NPC (modified C29, C94)
+- `DewfordTown/scripts.inc` — tidal NPC
+- `SlateportCity/scripts.inc` — harbor NPC (modified C27, C28)
+- `PacifidlogTown/scripts.inc` — elder NPC
+- `IslandCave/scripts.inc`, `DesertRuins/scripts.inc`, `AncientTomb/scripts.inc` — Regi tombs
+- `TerraCave_End/scripts.inc` — Groudon encounter
+- `SeafloorCavern_Room9/scripts.inc` — Kyogre encounter
+- `TerraCave_Entrance/scripts.inc`, `SeafloorCavern_Room5/scripts.inc` — Magma/Aqua trainers
+
+### Encounter Template Reuse
+v5.0's Ho-Oh encounter (CaveOfOrigin_UnusedRubySapphireMap3) is the template. If adding both Groudon + Kyogre, consider extracting a parameterized script template (tech-debt item from C115) in C123 to avoid duplicating ~60 lines.
+
+### Trainer System
+C122 adds 4-6 new trainers. Trainer validation script (C118) must be built first. Use available trainer slots: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) + allocate new IDs.
 
 ---
 

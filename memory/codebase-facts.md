@@ -35,8 +35,6 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
----
-
 ## Options Menu System (Cycle 105)
 
 **File**: `src/option_menu.c`. Each menu item needs: enum entry, YPOS macro, task data define (`tXxx`), text string, ProcessInput function, DrawChoices function, entries in sOptionMenuItemsNames, init load, save, and process input switch case.
@@ -44,10 +42,6 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 **SaveBlock2 bitfield** (`include/global.h` line 519): 16-bit field stores optionsTextSpeed:3, optionsWindowFrameType:5, optionsSound:1, optionsBattleStyle:1, optionsBattleSceneOff:1, regionMapZoom:1, optionsBattleSpeed:1. 3 padding bits remain.
 
 **Battle animation skip**: `src/battle_main.c` ~line 3101 checks optionsBattleSceneOff OR optionsBattleSpeed and sets `HITMARKER_NO_ANIMATIONS`.
-
-**Window size**: WIN_OPTIONS height=16 tiles (128px). 8 menu items at 16px each. CANCEL row bottom extends slightly past 160px screen height — acceptable, text still readable.
-
----
 
 ---
 
@@ -59,9 +53,7 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
----
-
-## Dialogue Editing System (Cycles 24–26)
+## Dialogue Editing System (Cycles 24-26)
 
 **Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. ASCII only — no em dash, smart quotes.
 
@@ -95,7 +87,7 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Constants defined in `include/pokemon.h` (0/1/2). Battle calc in `battle_script_commands.c` checks category instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
 
-**Summary screen category icons (Cycle 75)**: Physical/Special/Status icons displayed on battle moves page. Uses the same sprite system as type icons (shared `sSpriteTemplate_MoveTypes`). Category icon frames are appended after contest types in `move_types.4bpp`. `SPRITE_ARR_ID_CATEGORY` sprite slot. `SetMoveCategoryIcon()` called from `PrintMoveDetails()`.
+**Summary screen category icons (Cycle 75)**: Physical/Special/Status icons displayed on battle moves page.
 
 ---
 
@@ -103,47 +95,37 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Type effectiveness**: All facilities use centralized `gTypeEffectiveness[]` in `src/battle_main.c:335-463` — sentinel-terminated, already has Fairy. No facility has private type tables.
 
-**Palace move selection**: `GetBattlePalaceMoveGroup()` in `src/battle_gfx_sfx_util.c:296-318` — categorizes by power/target, NOT type or category. P/S split invisible to Palace.
-
-**Arena scoring**: `sMindRatings[MOVES_COUNT]` in `src/battle_arena.c:58` — indexed by move ID. New moves default to 0 if not explicitly rated.
-
-**Factory styles**: 7 `sMoves_*` arrays in `src/battle_factory.c:55-122` — hardcoded move lists for AI strategy classification.
-
-**Dome AI**: `GetTypeEffectivenessPoints()` in `src/battle_dome.c:2801-2935` — loops gTypeEffectiveness with sentinel. No move category refs.
-
-**Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Struct: `{u16 species, u16 moves[4], u8 itemTableId, u8 evSpread, u8 nature}`. Our 6 new species NOT in pool.
-
-**Completed fixes (Cycle 77)**: (1) sMindRatings +1 for Moonblast/Play Rough/Dazzling Gleam, (2) Factory style arrays now include 3 Fairy moves, (3) Lucario/Weavile/Garchomp added to pool (indices 882-893, 4 sets each). **Pending**: 882 original Frontier mons have P/S split stat mismatches (low priority). **UNVERIFIED** — no build was run in Cycle 77.
+**Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Our 6 new species added (indices 882-893, Cycle 77).
 
 ---
 
-## Roaming Pokémon System (Cycle 108 Research, Cycle 109 Implementation)
+## Roaming Pokemon System (Cycle 108-109)
 
 **Full technical reference**: `memory/pokemon-knowledge/roamer-implementation-patterns.md`
 
-**Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). **Beast system implemented (C109)**: `roamer.c` now has `InitNextBeast()` special that sequentially releases Raikou→Entei→Suicune using 6 flags (DONE+KO per beast). `CreateInitialRoamerMon(u16 species)` accepts any species. Battle end in `battle_main.c` distinguishes caught (sets DONE flag) vs KO'd (sets KO flag). AI_Roaming has 3-turn flee delay before attempting escape.
-
-**Species**: SPECIES_RAIKOU(243), SPECIES_ENTEI(244), SPECIES_SUICUNE(245) already exist.
+**Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). Beast system: `roamer.c` has `InitNextBeast()` special that sequentially releases Raikou→Entei→Suicune using 6 flags.
 
 **Beast flags**: FLAG_BEAST_RAIKOU_DONE/KO, FLAG_BEAST_ENTEI_DONE/KO, FLAG_BEAST_SUICUNE_DONE/KO (system flags 0x881-0x886).
 
-**Remaining work (C110)**: Birch Lab trigger script to call `InitNextBeast`, gate/repurpose vanilla Lati trigger in `players_house.inc`. **C111**: NPC sighting dialogue.
+---
+
+## Flag System Layout (Cycle 117 Research)
+
+**File**: `include/constants/flags.h`
+
+**Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x869) → System flags (TRAINER_FLAGS_END+1 = 0x860+) → Daily flags (0x972+)
+
+**Available unused flags**: 0x02C, 0x02D, and many others in the 0x000-0x2FF range. v6.0 will use a block starting at 0x264 (~88 consecutive unused flags available).
+
+**Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
+
+**Cave of Origin maps**: CaveOfOrigin, CaveOfOrigin_1F, CaveOfOrigin_B1F, CaveOfOrigin_Entrance, CaveOfOrigin_UnusedRubySapphireMap1/2/3 — unused RS maps available for repurposing.
 
 ---
 
 ## Species-Addition Pipeline (Cycle 59)
 
 **Full checklist**: `memory/pokemon-knowledge/species-addition-pipeline.md` (25 steps, ~27 source files + ~14 assets per 2-species family).
-
-**Key structural facts**:
-- `SPECIES_EGG` (now 414, was 412) must always be last species. `NUM_SPECIES = SPECIES_EGG`. Unown variants defined relative to NUM_SPECIES.
-- `NATIONAL_DEX_COUNT` = `NATIONAL_DEX_DEOXYS` (line 426 of pokedex.h) — must update when adding species.
-- Hoenn dex has "excluded" section after `HOENN_DEX_DEOXYS` (line 633+) for non-Hoenn species. New migrants go here.
-- `src/pokemon.c` has 4 tables needing entries: `sSpeciesToHoennPokedexNum`, `sSpeciesToNationalPokedexNum`, `sHoennToNationalOrder`, `sMonFrontAnimIdsTable` (+ optional `sMonAnimationDelayTable`).
-- Cry pipeline: `.wav` → `wav2agb` → `.bin` (build artifact) → `.incbin` in `sound/direct_sound_data.inc` → referenced by `sound/cry_tables.inc`. Source files are `.wav` in `sound/direct_sound_samples/cries/`.
-- Cry table (`cry_tables.inc`) is **position-indexed** by species ID - 1, NOT keyed. Must match species.h order.
-- Graphics: 7 asset files per species in `graphics/pokemon/<name>/`. Build auto-converts PNG→4bpp.lz via gbagfx.
-- Front pic anims: `SINGLE_ANIMATION(Name)` macro in `front_pic_anims.h` creates `sAnims_<Name>` from `sAnim_<Name>_1`.
 
 ---
 
