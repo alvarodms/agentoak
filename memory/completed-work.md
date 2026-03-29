@@ -37,7 +37,7 @@ Before modifying ANY pokeemerald file:
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
 | Roamer System (Beast Core) | **109**, **111**, **112** | 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) | [roamer-system.md](completed-work/roamer-system.md) |
-| Migration Climax (Ho-Oh Encounter) | 115, **116** | 3+3 (BirchLab/scripts.inc, CaveOfOrigin scripts+map, MauvilleCity+LilycoveCity+MossdeepCity scripts) | [migration-climax.md](completed-work/migration-climax.md) |
+| Migration Climax + Primal Stirring | 115, 116, **118** | 3+3+2 (BirchLab/scripts.inc, CaveOfOrigin scripts+map, 3 city scripts, flags.h, check_trainers.sh) | [migration-climax.md](completed-work/migration-climax.md) |
 
 ---
 
@@ -51,7 +51,7 @@ These files have been touched in multiple cycles and are at highest risk of acci
 - **LilycoveCity/scripts.inc**: Cycles 25, 29, 36, 104, 113, **116**
 - **MtChimney/scripts.inc**: Cycles 27, 36, 38
 - **LittlerootTown/scripts.inc**: Cycles 15, 28
-- **LittlerootTown_ProfessorBirchsLab/scripts.inc**: Cycles 84, 96, 112, 115, **116**
+- **LittlerootTown_ProfessorBirchsLab/scripts.inc**: Cycles 84, 96, 112, 115, 116, **118**
 - **SlateportCity/scripts.inc**: Cycles 27, 28
 - **LavaridgeTown/scripts.inc**: Cycles 29, **94**
 - **FortreeCity/scripts.inc**: Cycles 29, 65, **94**, **112**

@@ -1412,7 +1412,36 @@ BirchLab_EventScript_ClimaxReminder::
 	end
 
 BirchLab_EventScript_HoOhCaught::
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, BirchLab_EventScript_PrimalProgress
+	@ First visit after Ho-Oh caught — full reaction + primal trigger
 	msgbox BirchLab_Text_HoOhCaught, MSGBOX_DEFAULT
+	@ Dramatic pause, then instruments spike
+	delay 30
+	setvar VAR_0x8004, 2
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 5
+	special ShakeCamera
+	waitstate
+	playse SE_M_EXPLOSION
+	waitse
+	delay 20
+	msgbox BirchLab_Text_PrimalStirring1, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_PrimalStirring2, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_PrimalStirring3, MSGBOX_DEFAULT
+	setflag FLAG_PRIMAL_STIRRING_STARTED
+	release
+	end
+
+BirchLab_EventScript_PrimalProgress::
+	goto_if_set FLAG_ALL_SIGNS_REPORTED, BirchLab_EventScript_PrimalNextPhase
+	msgbox BirchLab_Text_PrimalReminder, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_PrimalNextPhase::
+	@ Placeholder for C120+ content (Regi resonance reveal)
+	msgbox BirchLab_Text_PrimalNextPhase, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1688,3 +1717,72 @@ BirchLab_Text_HoOhCaught:
 	.string "The migration is not over,\n"
 	.string "{PLAYER}. I suspect it is\l"
 	.string "only deepening.$"
+
+@ =============================================================
+@ v6.0: The Primal Stirring - Birch Dialogue
+@ =============================================================
+
+BirchLab_Text_PrimalStirring1:
+	.string "PROF. BIRCH: Wait -\n"
+	.string "{PLAYER}, the instruments!\p"
+	.string "These readings are not\n"
+	.string "from the migration.\l"
+	.string "This is seismic. Deep.\p"
+	.string "The tremor signatures are\n"
+	.string "coming from beneath HOENN\l"
+	.string "itself.$"
+
+BirchLab_Text_PrimalStirring2:
+	.string "Sacred fire energy...\n"
+	.string "When you captured HO-OH,\l"
+	.string "the energy it released\l"
+	.string "resonated downward.\p"
+	.string "Into chambers sealed since\n"
+	.string "the ancient war between\l"
+	.string "GROUDON and KYOGRE.\p"
+	.string "Those creatures have slept\n"
+	.string "for millennia. RAYQUAZA\l"
+	.string "silenced them long ago.\p"
+	.string "But if these readings are\n"
+	.string "right... they are stirring\l"
+	.string "again. Because of us.$"
+
+BirchLab_Text_PrimalStirring3:
+	.string "I am reading anomalies at\n"
+	.string "three sites across HOENN.\p"
+	.string "Seismic tremors near\n"
+	.string "LAVARIDGE TOWN.\l"
+	.string "Tidal disruptions around\l"
+	.string "DEWFORD.\l"
+	.string "And a strange resonance\l"
+	.string "from the ancient REGI\l"
+	.string "ruins.\p"
+	.string "{PLAYER}, I need you to\n"
+	.string "investigate all three.\l"
+	.string "Talk to the locals.\l"
+	.string "Report what you find.\p"
+	.string "If what I fear is true...\n"
+	.string "we may have woken something\l"
+	.string "that should have stayed\l"
+	.string "asleep.$"
+
+BirchLab_Text_PrimalReminder:
+	.string "PROF. BIRCH: The readings\n"
+	.string "grow stronger by the hour.\p"
+	.string "Have you checked all three\n"
+	.string "anomaly sites yet?\l"
+	.string "LAVARIDGE for the tremors.\l"
+	.string "DEWFORD for the tides.\l"
+	.string "The REGI ruins for that\l"
+	.string "strange resonance.\p"
+	.string "Report back once you have\n"
+	.string "seen them all, {PLAYER}.$"
+
+BirchLab_Text_PrimalNextPhase:
+	.string "PROF. BIRCH: You have seen\n"
+	.string "the signs for yourself.\p"
+	.string "HOENN is in trouble,\n"
+	.string "{PLAYER}. We need to\l"
+	.string "understand what is\l"
+	.string "happening beneath us\l"
+	.string "before it is too late.$"

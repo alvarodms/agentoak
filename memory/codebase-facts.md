@@ -33,6 +33,10 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 **Large files**: `trainers.h` is ~354KB (needs offset/limit reading). `trainer_parties.h` is ~116K tokens.
 
+**Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files, reports mismatches. Run after any trainer changes.
+
+**trainers.h parsing**: Entries are multi-line — `[TRAINER_NAME]` on one line, party macro on a subsequent line. Requires multi-line awk (not single-line grep) to extract trainer→party mappings.
+
 ---
 
 ## Options Menu System (Cycle 105)
@@ -109,13 +113,13 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
-## Flag System Layout (Cycle 117 Research)
+## Flag System Layout (Cycle 117-118)
 
 **File**: `include/constants/flags.h`
 
 **Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x869) → System flags (TRAINER_FLAGS_END+1 = 0x860+) → Daily flags (0x972+)
 
-**Available unused flags**: 0x02C, 0x02D, and many others in the 0x000-0x2FF range. v6.0 will use a block starting at 0x264 (~88 consecutive unused flags available).
+**v6.0 flags (C118)**: 12 flags at 0x264-0x26F — FLAG_PRIMAL_STIRRING_STARTED, FLAG_VISITED_LAVARIDGE_TREMORS, FLAG_VISITED_DEWFORD_TIDES, FLAG_ALL_SIGNS_REPORTED, FLAG_REGI_RESONANCE_CHECKED, FLAG_TERRA_CAVE_INVESTIGATED, FLAG_SEAFLOOR_CAVERN_INVESTIGATED, FLAG_PRIMAL_GROUDON_AWAKENED, FLAG_PRIMAL_KYOGRE_AWAKENED, FLAG_PRIMAL_CRISIS_RESOLVED, FLAG_VISITED_DESERT_ANOMALY, FLAG_VISITED_PACIFIDLOG_CURRENTS.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 

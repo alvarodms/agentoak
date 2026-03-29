@@ -32,20 +32,10 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 
 ### Act 1 — Signs (C118-119)
 
-**Cycle 118: Engineering + Groundwork**
-- Build trainer validation script (`scripts/check_trainers.sh`) — pending since C106
-- Add v6.0 progression flags to `flags.h` (use unused block 0x264+):
-  - `FLAG_PRIMAL_STIRRING_STARTED` — Birch sends player to investigate
-  - `FLAG_TREMORS_INVESTIGATED` — Lavaridge/Fiery Path tremor check
-  - `FLAG_TIDES_INVESTIGATED` — Dewford/Slateport tidal anomaly check
-  - `FLAG_REGI_RESONANCE_CHECKED` — Player visited a Regi tomb
-  - `FLAG_ALL_SIGNS_REPORTED` — All 3 anomalies reported to Birch
-  - `FLAG_PRIMAL_GROUDON_AVAILABLE` — Groudon encounter unlocked
-  - `FLAG_PRIMAL_KYOGRE_AVAILABLE` — Kyogre encounter unlocked
-  - `FLAG_DEFEATED_PRIMAL_GROUDON` / `FLAG_CAUGHT_PRIMAL_GROUDON`
-  - `FLAG_DEFEATED_PRIMAL_KYOGRE` / `FLAG_CAUGHT_PRIMAL_KYOGRE`
-  - `FLAG_PRIMAL_CRISIS_RESOLVED` — Both primals dealt with
-- Add Birch Lab "emergency research" dialogue: after Ho-Oh is caught, Birch's instruments spike — "unprecedented seismic and tidal readings." Sends player to investigate 3 anomaly sites.
+**Cycle 118: Engineering + Groundwork** ✓ COMPLETE
+- ✓ Trainer validation script (`scripts/check_trainers.sh`) — batch awk approach, 0 errors/0 warnings on current codebase
+- ✓ 12 v6.0 progression flags added to `flags.h` (0x264-0x26F)
+- ✓ Birch "Primal Stirring" trigger dialogue: camera shake + SFX, 3-part revelation, sets FLAG_PRIMAL_STIRRING_STARTED, reminder + next-phase placeholders
 
 **Cycle 119: Environmental Storytelling — NPC Sighting Network**
 - 6-8 NPCs across Hoenn report strange phenomena (dialogue-only, no C code):
