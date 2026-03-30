@@ -21,5 +21,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Consequence Narrative & Organic Quest Progression | 118 | [consequence-narrative-patterns.md](pokemon-knowledge/consequence-narrative-patterns.md) |
 | Environmental NPC Dialogue Patterns | 119 | [environmental-npc-dialogue-patterns.md](pokemon-knowledge/environmental-npc-dialogue-patterns.md) |
 | Dungeon Encounter Revitalization | 121 | [dungeon-encounter-revitalization.md](pokemon-knowledge/dungeon-encounter-revitalization.md) |
+| Villain Remnant Trainer Design | 122 | [villain-remnant-trainer-design.md](pokemon-knowledge/villain-remnant-trainer-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

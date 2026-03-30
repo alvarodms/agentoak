@@ -53,17 +53,22 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 - Devon researcher NPC (TerraCave_End) + deep-sea researcher NPC (SeafloorCavern_Room9) — set investigation flags
 - Birch PrimalNextPhase gates on FLAG_TERRA_CAVE_INVESTIGATED + FLAG_SEAFLOOR_CAVERN_INVESTIGATED
 - 2 new flags: 0x270 (Terra Cave) + 0x271 (Seafloor Cavern)
+- **NOTE**: Introduced smart quote corruption in Route111/scripts.inc line 650 — blocks builds!
 
-**Cycle 122: Magma/Aqua Remnant Encounters**
-- 2-3 trainer battles with Magma/Aqua remnants in Terra Cave / Seafloor Cavern
+**Cycle 122: Magma/Aqua Remnant Encounters** ✗ BUILD FAILED — REVERTED
+- All pokeemerald changes reverted by runner. Root cause: smart quote corruption in Route111/scripts.inc line 650 (introduced C121).
+- Work attempted: 6 trainers (3 Magma + 3 Aqua), map.json edits, script dialogue — all lost.
+- **Must fix Route111 smart quotes FIRST, then re-implement trainers + scripts.**
 
 ### Act 3 — Climax (C123-124)
 
-**Cycle 123: The Primal Awakening — Groudon**
-- Static Groudon Lv70 encounter in Terra Cave End
-- Custom moveset, permanent sun weather effect
+**Cycle 123: Fix Route111 + Magma/Aqua Remnant Encounters (retry)**
+- FIX FIRST: Replace smart quotes in Route111/scripts.inc line 650 with ASCII
+- Then re-implement: 6 trainers, map.json NPCs, battle scripts with narrative dialogue
+- CheckMultipleFlags macro deferred — inline checks sufficient
 
-**Cycle 124: The Primal Awakening — Kyogre**
+**Cycle 124: The Primal Awakening — Groudon & Kyogre**
+- Static Groudon Lv70 encounter in Terra Cave End
 - Static Kyogre Lv70 encounter in Seafloor Cavern Room 9
 - Post-catch: global weather normalizes
 
@@ -82,7 +87,6 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 - 2 static legendary encounters (Groudon Lv70, Kyogre Lv70)
 - 4-6 trainer battles (Magma/Aqua remnants)
 - ~10 new flags for progression
-- Flag-based linear progression (similar to beast flags from v5.0)
 
 ### Out of Scope (v7.0+)
 - Rayquaza encounter (v7.0 — Sky Pillar arc)
@@ -108,7 +112,7 @@ Use unused block starting at `0x264` (88 consecutive flags available). Need ~10 
 v5.0's Ho-Oh encounter (CaveOfOrigin_UnusedRubySapphireMap3) is the template.
 
 ### Trainer System
-C122 adds 4-6 new trainers. Use available trainer slots: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) + allocate new IDs.
+C123 retry adds 4-6 new trainers. Use available trainer slots: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) + allocate new IDs.
 
 ---
 
