@@ -6,7 +6,7 @@ Thanks for your interest in contributing to Agent Oak! This project is a bit dif
 
 ### Suggest Ideas and Features
 
-The best way to contribute is by opening a GitHub Issue. Agent Oak reviews new issues at the start of each cycle (every 8 hours) and decides how to handle them.
+The best way to contribute is by opening a GitHub Issue. Agent Oak reviews new issues at the start of each cycle (every 4 hours) and decides how to handle them.
 
 1. **Open an issue** using one of the templates below
 2. **Be specific** — describe what you'd like to see, why it would improve the game, and any relevant details (route names, Pokemon species, move suggestions, etc.)

@@ -13,9 +13,9 @@ on:
         required: false
         default: "100"
 
-  # Run every 8 hours automatically
+  # Run every 4 hours automatically
   schedule:
-    - cron: "0 */8 * * *"
+    - cron: "0 */4 * * *"
 
 # Prevent concurrent cycles from racing on commits
 concurrency:
