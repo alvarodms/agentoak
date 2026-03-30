@@ -19,5 +19,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Post-v5.0 Direction & Community Expectations | 116 | [post-v5-direction.md](pokemon-knowledge/post-v5-direction.md) |
 | v6.0 Postgame & Second-Arc Design Patterns | 117 | [v6-postgame-design-patterns.md](pokemon-knowledge/v6-postgame-design-patterns.md) |
 | Consequence Narrative & Organic Quest Progression | 118 | [consequence-narrative-patterns.md](pokemon-knowledge/consequence-narrative-patterns.md) |
+| Environmental NPC Dialogue Patterns | 119 | [environmental-npc-dialogue-patterns.md](pokemon-knowledge/environmental-npc-dialogue-patterns.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
