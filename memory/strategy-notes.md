@@ -47,9 +47,12 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 
 ### Act 2 — Investigation (C121-122)
 
-**Cycle 121: Terra Cave & Seafloor Cavern Revival**
-- Revitalize encounter tables for Terra Cave and Seafloor Cavern
-- New investigation NPCs inside each dungeon
+**Cycle 121: Terra Cave & Seafloor Cavern Revival** ✓ COMPLETE
+- Terra Cave: brand-new encounter tables (Entrance + End) — Camerupt/Donphan/Claydol theme, Lv38-45
+- Seafloor Cavern: full encounter overhaul (Rooms 1-9 + Entrance) — Tentacruel/Sharpedo/Relicanth/Huntail/Gorebyss theme, Lv38-45
+- Devon researcher NPC (TerraCave_End) + deep-sea researcher NPC (SeafloorCavern_Room9) — set investigation flags
+- Birch PrimalNextPhase gates on FLAG_TERRA_CAVE_INVESTIGATED + FLAG_SEAFLOOR_CAVERN_INVESTIGATED
+- 2 new flags: 0x270 (Terra Cave) + 0x271 (Seafloor Cavern)
 
 **Cycle 122: Magma/Aqua Remnant Encounters**
 - 2-3 trainer battles with Magma/Aqua remnants in Terra Cave / Seafloor Cavern

@@ -27,7 +27,7 @@ Before modifying ANY pokeemerald file:
 | System | Cycles | Files | Detail |
 |--------|--------|-------|--------|
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
-| Wild Encounters | 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, 92, 98, 99, **100** | 3 (JSON + C + flags) | [wild-encounters.md](completed-work/wild-encounters.md) |
+| Wild Encounters | 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, 92, 98, 99, 100, **121** | 3 (JSON + C + flags) | [wild-encounters.md](completed-work/wild-encounters.md) |
 | Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, **101**, **102** | 5 (parties, trainers, opponents, battle_setup, flags) | [trainer-parties.md](completed-work/trainer-parties.md) |
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, **120** | ~52 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy Type) | 43–46, 52 | 17 | [battle-engine.md](completed-work/battle-engine.md) |
@@ -37,7 +37,7 @@ Before modifying ANY pokeemerald file:
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
 | Roamer System (Beast Core) | **109**, **111**, **112** | 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) | [roamer-system.md](completed-work/roamer-system.md) |
-| Migration Climax + Primal Stirring | 115, 116, 118, **120** | 3+3+2+13 (BirchLab, CaveOfOrigin, 3 city scripts, flags.h, 6 NPC scripts+maps) | [migration-climax.md](completed-work/migration-climax.md) |
+| Migration Climax + Primal Stirring | 115, 116, 118, 120, **121** | 3+3+2+13+6 (BirchLab, CaveOfOrigin, 3 city scripts, flags.h, 6 NPC scripts+maps, TerraCave+SeafloorCavern scripts+maps) | [migration-climax.md](completed-work/migration-climax.md) |
 
 ---
 
@@ -63,4 +63,4 @@ These files have been touched in multiple cycles and are at highest risk of acci
 - **MossdeepCity/scripts.inc**: Cycles 33, 50, 113, **116**
 - **include/constants/species.h**: Cycles 60, 61, 68, 70
 - **include/constants/pokedex.h**: Cycles 60, 61, 68, 70
-- **src/data/wild_encounters.json**: Cycles 3, 4, 9, 14, 21, 47, 49, 52, 60, 61, 63, 68, 70, 91, 98, 99, **100**
+- **src/data/wild_encounters.json**: Cycles 3, 4, 9, 14, 21, 47, 49, 52, 60, 61, 63, 68, 70, 91, 98, 99, 100, **121**

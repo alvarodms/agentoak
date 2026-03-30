@@ -59,6 +59,36 @@ TerraCave_End_EventScript_RanFromGroudon::
 	goto Common_EventScript_LegendaryFlewAway
 	end
 
+@ === Devon Corporation Researcher (Primal Stirring investigation) ===
+
+TerraCave_End_EventScript_DevonResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_TERRA_CAVE_INVESTIGATED, TerraCave_End_EventScript_DevonResearcherShort
+	msgbox TerraCave_End_Text_DevonResearcherFull, MSGBOX_DEFAULT
+	setflag FLAG_TERRA_CAVE_INVESTIGATED
+	release
+	end
+
+TerraCave_End_EventScript_DevonResearcherShort::
+	msgbox TerraCave_End_Text_DevonResearcherShort, MSGBOX_DEFAULT
+	release
+	end
+
+TerraCave_End_Text_DevonResearcherFull:
+	.string "The seismic readings in here are\n"
+	.string "unlike anything on record!\p"
+	.string "The energy signature matches\n"
+	.string "GROUDON's ancient profile...\p"
+	.string "Whatever's stirring down here,\n"
+	.string "it's been dormant for millennia.\p"
+	.string "PROF. BIRCH needs to know\n"
+	.string "about this immediately!$"
+
+TerraCave_End_Text_DevonResearcherShort:
+	.string "My instruments are still going\n"
+	.string "haywire. Be careful down here.$"
+
 TerraCave_End_Movement_GroudonApproach:
 	init_affine_anim
 	walk_down_start_affine

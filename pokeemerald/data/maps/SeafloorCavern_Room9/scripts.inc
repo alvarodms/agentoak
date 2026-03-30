@@ -1,6 +1,38 @@
 SeafloorCavern_Room9_MapScripts::
 	.byte 0
 
+@ === Deep-Sea Researcher (Primal Stirring investigation) ===
+
+SeafloorCavern_Room9_EventScript_DeepSeaResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_SEAFLOOR_CAVERN_INVESTIGATED, SeafloorCavern_Room9_EventScript_DeepSeaResearcherShort
+	msgbox SeafloorCavern_Room9_Text_DeepSeaResearcherFull, MSGBOX_DEFAULT
+	setflag FLAG_SEAFLOOR_CAVERN_INVESTIGATED
+	release
+	end
+
+SeafloorCavern_Room9_EventScript_DeepSeaResearcherShort::
+	msgbox SeafloorCavern_Room9_Text_DeepSeaResearcherShort, MSGBOX_DEFAULT
+	release
+	end
+
+SeafloorCavern_Room9_Text_DeepSeaResearcherFull:
+	.string "The ocean currents have reversed\n"
+	.string "in the cavern depths!\p"
+	.string "Species that haven't been seen\n"
+	.string "at this depth in centuries are\l"
+	.string "emerging from the abyss.\p"
+	.string "This matches the ancient texts -\n"
+	.string "KYOGRE's domain is awakening.\p"
+	.string "PROF. BIRCH must hear of this!\n"
+	.string "The primal tides are rising!$"
+
+SeafloorCavern_Room9_Text_DeepSeaResearcherShort:
+	.string "The water pressure keeps\n"
+	.string "fluctuating. Something massive\l"
+	.string "is moving in the deep.$"
+
 SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre::
 	lockall
 	setvar VAR_0x8004, LOCALID_SEAFLOOR_CAVERN_ARCHIE

@@ -1459,7 +1459,15 @@ BirchLab_EventScript_PrimalRemindTides::
 	end
 
 BirchLab_EventScript_PrimalNextPhase::
+	goto_if_unset FLAG_TERRA_CAVE_INVESTIGATED, BirchLab_EventScript_PrimalInvestigateCaves
+	goto_if_unset FLAG_SEAFLOOR_CAVERN_INVESTIGATED, BirchLab_EventScript_PrimalInvestigateCaves
+	@ Both caves investigated — proceed to Regi directive
 	msgbox BirchLab_Text_PrimalNextPhase, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_PrimalInvestigateCaves::
+	msgbox BirchLab_Text_PrimalInvestigateCaves, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1795,6 +1803,16 @@ BirchLab_Text_PrimalReminder:
 	.string "strange resonance.\p"
 	.string "Report back once you have\n"
 	.string "seen them all, {PLAYER}.$"
+
+BirchLab_Text_PrimalInvestigateCaves:
+	.string "PROF. BIRCH: The primal energy\n"
+	.string "readings are strongest at\l"
+	.string "TERRA CAVE and the\l"
+	.string "SEAFLOOR CAVERN.\p"
+	.string "I need someone to investigate\n"
+	.string "those sites firsthand.\p"
+	.string "Would you be willing to check\n"
+	.string "them out for me, {PLAYER}?$"
 
 BirchLab_Text_PrimalNextPhase:
 	.string "PROF. BIRCH: The data from\n"

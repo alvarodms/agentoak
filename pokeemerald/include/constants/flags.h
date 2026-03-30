@@ -669,8 +669,8 @@
 #define FLAG_DEFEATED_PRIMAL_KYOGRE      0x26D // Kyogre defeated (not caught)
 #define FLAG_CAUGHT_PRIMAL_KYOGRE        0x26E // Kyogre caught
 #define FLAG_PRIMAL_CRISIS_RESOLVED      0x26F // Both primals dealt with
-#define FLAG_UNUSED_0x270  0x270 // Unused Flag
-#define FLAG_UNUSED_0x271  0x271 // Unused Flag
+#define FLAG_TERRA_CAVE_INVESTIGATED     0x270 // Player investigated Terra Cave (Devon researcher)
+#define FLAG_SEAFLOOR_CAVERN_INVESTIGATED 0x271 // Player investigated Seafloor Cavern (deep-sea researcher)
 #define FLAG_UNUSED_0x272  0x272 // Unused Flag
 #define FLAG_UNUSED_0x273  0x273 // Unused Flag
 #define FLAG_UNUSED_0x274  0x274 // Unused Flag

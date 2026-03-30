@@ -32,4 +32,15 @@
 | `data/maps/PacifidlogTown/map.json` | **120** | Added object event: OBJ_EVENT_GFX_OLD_MAN at (13,19) |
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **120** | Expanded `PrimalProgress` — checks FLAG_TREMORS/TIDES_INVESTIGATED, revelation scene with AllSignsIntro/Reveal/Directive, sets FLAG_ALL_SIGNS_REPORTED. Updated PrimalNextPhase text (Regi directive). |
 
-## Status: v6.0 Act 1 COMPLETE — sighting network + Birch report-back deployed
+## C121 — Terra Cave & Seafloor Cavern Investigation NPCs
+
+| File | Cycle | Changes |
+|------|-------|---------|
+| `data/maps/TerraCave_End/scripts.inc` | **121** | Added `DevonResearcher` NPC — dual dialogue (full/short), sets `FLAG_TERRA_CAVE_INVESTIGATED` (0x270) |
+| `data/maps/TerraCave_End/map.json` | **121** | Added object event: OBJ_EVENT_GFX_SCIENTIST_1 at (7,6) |
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | **121** | Added `DeepSeaResearcher` NPC — dual dialogue, sets `FLAG_SEAFLOOR_CAVERN_INVESTIGATED` (0x271) |
+| `data/maps/SeafloorCavern_Room9/map.json` | **121** | Added object event: OBJ_EVENT_GFX_SCIENTIST_2 at (8,6) |
+| `include/constants/flags.h` | **121** | Replaced 0x270-0x271 unused flags with investigation flags |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **121** | PrimalNextPhase now gates on both investigation flags; new `PrimalInvestigateCaves` dialogue directs player to Terra Cave + Seafloor Cavern |
+
+## Status: v6.0 Act 2 IN PROGRESS — dungeon encounters + investigation NPCs deployed
