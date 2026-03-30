@@ -43,22 +43,26 @@
 | `include/constants/flags.h` | **121** | Replaced 0x270-0x271 unused flags with investigation flags |
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **121** | PrimalNextPhase now gates on both investigation flags; new `PrimalInvestigateCaves` dialogue directs player to Terra Cave + Seafloor Cavern |
 
-## C122 — Magma/Aqua Remnant Trainers
+## C122 — Magma/Aqua Remnant Trainers (REVERTED — build failed)
+
+C122 attempted 6 trainers but was reverted. C123 re-implemented successfully.
+
+## C123 — Magma/Aqua Remnant Trainers (re-implemented, clean build)
 
 | File | Cycle | Changes |
 |------|-------|---------|
-| `data/maps/TerraCave_Entrance/map.json` | **122** | Added Magma Grunt 1 object event (10,10) — TRAINER_TYPE_NORMAL, sight 4 |
-| `data/maps/TerraCave_Entrance/scripts.inc` | **122** | Magma Grunt 1 trainer battle + 3 text blocks (intro/defeat/post) |
-| `data/maps/TerraCave_End/map.json` | **122** | Added Magma Grunt 2 (10,12) + Magma Admin (8,8) object events |
-| `data/maps/TerraCave_End/scripts.inc` | **122** | Magma Grunt 2 + Admin Courtney trainer battles + 6 text blocks. Admin dialogue references player's role, foreshadows Rayquaza |
-| `data/maps/SeafloorCavern_Room1/map.json` | **122** | Added Aqua Grunt 1 object event (10,13) |
-| `data/maps/SeafloorCavern_Room1/scripts.inc` | **122** | Aqua Grunt 1 trainer battle + 3 text blocks |
-| `data/maps/SeafloorCavern_Room5/map.json` | **122** | Added Aqua Grunt 2 object event (8,10) |
-| `data/maps/SeafloorCavern_Room5/scripts.inc` | **122** | Aqua Grunt 2 trainer battle + 3 text blocks |
-| `data/maps/SeafloorCavern_Room9/map.json` | **122** | Added Aqua Admin object event (11,8) |
-| `data/maps/SeafloorCavern_Room9/scripts.inc` | **122** | Admin Amber trainer battle + 3 text blocks. References Ho-Oh awakening, Kyogre's song, foreshadows Rayquaza |
-| `include/constants/opponents.h` | **122** | 6 new IDs (876-881), TRAINERS_COUNT→882 |
-| `src/data/trainer_parties.h` | **122** | 6 party arrays: grunt teams 3 mons each w/ held items, admin teams 4 mons each w/ custom movesets |
-| `src/data/trainers.h` | **122** | 6 trainer entries: grunts (standard AI), admins (SETUP_FIRST_TURN + FULL_RESTORE) |
+| `data/maps/TerraCave_Entrance/map.json` | **123** | Added Magma Grunt 1 object event (10,10) — TRAINER_TYPE_NORMAL, sight 4 |
+| `data/maps/TerraCave_Entrance/scripts.inc` | **123** | Magma Grunt 1 trainer battle + 3 text blocks (intro/defeat/post) |
+| `data/maps/TerraCave_End/map.json` | **123** | Added Magma Grunt 2 (12,12) + Magma Admin (15,18) object events |
+| `data/maps/TerraCave_End/scripts.inc` | **123** | Magma Grunt 2 + Admin Courtney trainer battles + 7 text blocks. Admin has 2 post-battle messages seeding Rayquaza |
+| `data/maps/SeafloorCavern_Room9/map.json` | **123** | Added 3 Aqua object events: Grunt 1 (10,8), Grunt 2 (14,15), Admin (11,25) |
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | **123** | 3 Aqua trainer battles + 9 text blocks. Admin Amber has 2 post-battle messages seeding Rayquaza |
+| `include/constants/opponents.h` | **123** | 6 new IDs (876-881), TRAINERS_COUNT→882, MAX_TRAINERS_COUNT→882 |
+| `src/data/trainer_parties.h` | **123** | 6 party arrays: grunts 2 mons each, admins 4 mons each. All with held items + custom movesets |
+| `src/data/trainers.h` | **123** | 6 trainer entries: grunts (CHECK_BAD_MOVE + TRY_TO_FAINT + CHECK_VIABILITY), admins (+SETUP_FIRST_TURN + HP_AWARE + 2x FULL_RESTORE) |
+
+### Also fixed in C123:
+| `data/maps/SlateportCity/scripts.inc` | **123** | Added missing HarborWatcher script (C120 map.json referenced it but script was lost in revert) |
+| `data/maps/Route111/scripts.inc` | **123** | Added missing DesertResearcher script (same issue as above) |
 
 ## Status: v6.0 Act 2 COMPLETE — dungeon encounters, investigation NPCs, and remnant trainers deployed

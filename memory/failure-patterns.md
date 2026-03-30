@@ -32,13 +32,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `error: expected UTF-8 string literal` or `no mapping exists for double quote`
 **Cause**: Edit tool silently corrupts existing Unicode smart quotes (`\u201c\u201d`) when they appear in the `old_string` match. The replacement changes their byte encoding even if the text looks identical.
 **Resolution**: For files containing smart quotes (DewfordTown, PacifidlogTown, SlateportCity, Route111, BirchLab, etc.), use `cat >> file << 'HEREDOC'` to APPEND new content instead of the Edit tool. Only use Edit tool if the target `old_string` range contains NO non-ASCII characters.
-**ACTIVE BUG (C121→C122)**: Route111/scripts.inc line 650 has corrupted smart quotes in `Route111_Text_WinstrateHouseSign`. This blocks ALL builds. Must fix at start of C123 by replacing with ASCII double quotes.
+**C123 CORRECTION**: Route111 line 650 smart quotes (U+201C/U+201D) are NOT corrupted — they're valid charmap entries (B1/B2). The "no mapping exists for double quote" error only occurs when these are REPLACED with ASCII `"`. Never replace smart quotes with ASCII quotes — the charmap has no entry for ASCII `"`.
+**Actual C122 failure cause**: Missing script references (HarborWatcher, DesertResearcher) from C120 map.json edits whose scripts were lost during a prior revert. Fixed in C123.
 
-## Pre-existing Build Blockers Cause Cascade Reverts (NEW — C122)
+## Pre-existing Build Blockers Cause Cascade Reverts (C122)
 
-**Symptom**: Cycle makes valid changes to files X, Y, Z but build fails due to pre-existing corruption in unrelated file W. Runner reverts ALL pokeemerald changes including the valid ones.
-**Cause**: C121 introduced smart quote corruption in Route111. C122 didn't touch Route111 but inherited the broken state.
-**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first. This prevents wasting an entire cycle of work to a known pre-existing issue.
+**Symptom**: Cycle makes valid changes but build fails due to pre-existing issue in unrelated file.
+**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first.
 
 ## agbcc Toolchain Missing After Runner Revert (Cycle 42+)
 

@@ -56,18 +56,20 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 - **NOTE**: Introduced smart quote corruption in Route111/scripts.inc line 650 — blocks builds!
 
 **Cycle 122: Magma/Aqua Remnant Encounters** ✗ BUILD FAILED — REVERTED
-- All pokeemerald changes reverted by runner. Root cause: smart quote corruption in Route111/scripts.inc line 650 (introduced C121).
-- Work attempted: 6 trainers (3 Magma + 3 Aqua), map.json edits, script dialogue — all lost.
-- **Must fix Route111 smart quotes FIRST, then re-implement trainers + scripts.**
 
-### Act 3 — Climax (C123-124)
+**Cycle 123: Magma/Aqua Remnant Encounters (retry)** ✓ COMPLETE
+- Root cause of C122 failure: NOT smart quotes on line 650 (those are valid charmap entries U+201C/U+201D → B1/B2). Actual issue was missing script references (HarborWatcher, DesertResearcher) from C120 map.json entries whose scripts were lost.
+- Fixed missing C120 scripts in SlateportCity and Route111
+- 6 remnant trainers deployed: 2 grunts + 1 admin per dungeon
+  - Terra Cave: Grunt 1 (Entrance), Grunt 2 + Admin Courtney (End)
+  - Seafloor Cavern Room9: Grunt 1, Grunt 2, Admin Amber
+  - Grunts: 2 mons each, admins: 4 mons each, all with held items + custom movesets
+  - Admin AI: SETUP_FIRST_TURN + HP_AWARE + 2x FULL_RESTORE
+- Rayquaza seed planted: both admins' post-battle dialogue directs player to "the sky dragon"
 
-**Cycle 123: Fix Route111 + Magma/Aqua Remnant Encounters (retry)**
-- FIX FIRST: Replace smart quotes in Route111/scripts.inc line 650 with ASCII
-- Then re-implement: 6 trainers, map.json NPCs, battle scripts with narrative dialogue
-- CheckMultipleFlags macro deferred — inline checks sufficient
+### Act 3 — Climax (C124)
 
-**Cycle 124: The Primal Awakening — Groudon & Kyogre**
+**Cycle 124: The Primal Awakening — Groudon & Kyogre (NEXT)**
 - Static Groudon Lv70 encounter in Terra Cave End
 - Static Kyogre Lv70 encounter in Seafloor Cavern Room 9
 - Post-catch: global weather normalizes

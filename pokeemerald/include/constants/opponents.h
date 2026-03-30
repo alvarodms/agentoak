@@ -877,8 +877,14 @@
 #define TRAINER_WALLACE_REMATCH_4           873
 #define TRAINER_MIA_AND_LIA_1              874
 #define TRAINER_JUNE_AND_VIC_1             875
+#define TRAINER_MAGMA_GRUNT_TERRA_CAVE_1   876
+#define TRAINER_MAGMA_GRUNT_TERRA_CAVE_2   877
+#define TRAINER_MAGMA_ADMIN_TERRA_CAVE     878
+#define TRAINER_AQUA_GRUNT_SEAFLOOR_1      879
+#define TRAINER_AQUA_GRUNT_SEAFLOOR_2      880
+#define TRAINER_AQUA_ADMIN_SEAFLOOR        881
 
-#define TRAINERS_COUNT                      876  // Count of trainer IDs (0-875)
-#define MAX_TRAINERS_COUNT                  876  // Trainer flag space (0x500-0x86B = 876 slots)
+#define TRAINERS_COUNT                      882  // Count of trainer IDs (0-881)
+#define MAX_TRAINERS_COUNT                  882  // Trainer flag space (0x500-0x871 = 882 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

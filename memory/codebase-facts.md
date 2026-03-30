@@ -59,7 +59,7 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ## Dialogue Editing System (Cycles 24-26)
 
-**Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. ASCII only — no em dash, smart quotes.
+**Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. Smart quotes (“”) are valid (charmap B1/B2). ASCII double quote (0x22) is NOT in charmap and causes build errors.
 
 **Safety**: `MSGBOX_NPC` labels are safe to rewrite. `MSGBOX_DEFAULT` labels may have story logic — check first.
 

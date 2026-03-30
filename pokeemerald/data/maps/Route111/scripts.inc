@@ -722,3 +722,29 @@ Route111_Text_TrainerHillSign:
 	.string "“Scale the heights, you hot-blooded\n"
 	.string "TRAINERS!”$"
 
+
+@ === Desert Researcher (Primal Stirring flavor NPC — C120) ===
+
+Route111_EventScript_DesertResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, Route111_EventScript_DesertResearcherStirring
+	msgbox Route111_Text_DesertResearcherNormal, MSGBOX_DEFAULT
+	release
+	end
+
+Route111_EventScript_DesertResearcherStirring::
+	msgbox Route111_Text_DesertResearcherStirring, MSGBOX_DEFAULT
+	release
+	end
+
+Route111_Text_DesertResearcherNormal:
+	.string "I'm studying the desert's expansion\n"
+	.string "patterns. Fascinating stuff!$"
+
+Route111_Text_DesertResearcherStirring:
+	.string "The sandstorms are intensifying\n"
+	.string "beyond any recorded precedent!\p"
+	.string "It's as if the desert itself is\n"
+	.string "responding to something deep\l"
+	.string "underground.$"
