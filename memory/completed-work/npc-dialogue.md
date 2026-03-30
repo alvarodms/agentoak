@@ -50,4 +50,5 @@ All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 - **Beast sightings expanded** (C113): Mauville engineer, Lilycove sailor, Route 121 hiker, Mossdeep researcher — beast-specific conditional dialogue (Raikou/Entei/Suicune + all-done variants)
 - **Post-climax reactions** (C116): Birch, Mauville engineer, Lilycove sailor, Mossdeep researcher. All gated on `FLAG_CAUGHT_HO_OH`.
 - **Primal Stirring trigger** (C118): Birch Lab — instruments spike, 3 anomaly sites. Sets `FLAG_PRIMAL_STIRRING_STARTED`.
-- **Primal Sighting Network** (C119): ✗ BUILD FAILED — all changes reverted. Must retry C120.
+- **Primal Sighting Network** (C120): 6 environmental NPCs across Hoenn reporting primal disturbances — Lavaridge attendant (sets FLAG_TREMORS_INVESTIGATED), Dewford fisherman (sets FLAG_TIDES_INVESTIGATED), Fiery Path hiker, Slateport harbor master, Route 111 researcher, Pacifidlog elder. All gated on `FLAG_PRIMAL_STIRRING_STARTED`.
+- **Birch report-back** (C120): Expanded `BirchLab_EventScript_PrimalProgress` — checks both investigate flags, triggers revelation scene (migration-as-response lore), sets `FLAG_ALL_SIGNS_REPORTED`. Updated `PrimalNextPhase` to direct player to Regi ruins.

@@ -38,17 +38,14 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 - ✓ Birch "Primal Stirring" trigger dialogue: camera shake + SFX, 3-part revelation, sets FLAG_PRIMAL_STIRRING_STARTED, reminder + next-phase placeholders
 
 **Cycle 119: NPC Sighting Network** ✗ BUILD FAILED — REVERTED
-- Content was written for 6 NPCs + Birch report-back but build failed: `DewfordTown/scripts.inc:639: junk at end of line`
-- All ROM changes reverted. No git commit exists for C119.
-- Also missing: `BirchLab_Text_PrimalNextPhase` text label (referenced but never defined)
-- **C120 must retry this objective**, building after EACH map script edit
 
-### Act 2 — Investigation (C120-122)
+**Cycle 120: NPC Sighting Network (retry)** ✓ COMPLETE
+- 6 environmental NPCs: Lavaridge attendant, Dewford fisherman, Fiery Path hiker, Slateport harbor master, Route 111 researcher, Pacifidlog elder
+- Birch report-back: checks FLAG_TREMORS/TIDES_INVESTIGATED → revelation scene (migration-as-response lore) → sets FLAG_ALL_SIGNS_REPORTED
+- Updated PrimalNextPhase to direct player to Regi ruins
+- Key lesson: use `cat >>` instead of Edit tool for files with smart quotes
 
-**Cycle 120: Retry NPC Sighting Network + Regi Resonance (if time)**
-- Re-implement 6 NPC scripts + map.json entries + Birch report-back
-- Build incrementally after each map edit
-- If time remains: begin Regi tomb script layers
+### Act 2 — Investigation (C121-122)
 
 **Cycle 121: Terra Cave & Seafloor Cavern Revival**
 - Revitalize encounter tables for Terra Cave and Seafloor Cavern

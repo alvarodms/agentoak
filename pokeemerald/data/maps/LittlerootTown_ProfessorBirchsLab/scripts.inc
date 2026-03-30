@@ -1435,12 +1435,30 @@ BirchLab_EventScript_HoOhCaught::
 
 BirchLab_EventScript_PrimalProgress::
 	goto_if_set FLAG_ALL_SIGNS_REPORTED, BirchLab_EventScript_PrimalNextPhase
+	goto_if_unset FLAG_TREMORS_INVESTIGATED, BirchLab_EventScript_PrimalRemindTremors
+	goto_if_unset FLAG_TIDES_INVESTIGATED, BirchLab_EventScript_PrimalRemindTides
+	@ Both flags set - player has investigated both sites
+	msgbox BirchLab_Text_AllSignsIntro, MSGBOX_DEFAULT
+	playse SE_PIN
+	waitse
+	delay 20
+	msgbox BirchLab_Text_AllSignsReveal, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_AllSignsDirective, MSGBOX_DEFAULT
+	setflag FLAG_ALL_SIGNS_REPORTED
+	release
+	end
+
+BirchLab_EventScript_PrimalRemindTremors::
 	msgbox BirchLab_Text_PrimalReminder, MSGBOX_DEFAULT
 	release
 	end
 
+BirchLab_EventScript_PrimalRemindTides::
+	msgbox BirchLab_Text_RemindTidesOnly, MSGBOX_DEFAULT
+	release
+	end
+
 BirchLab_EventScript_PrimalNextPhase::
-	@ Placeholder for C120+ content (Regi resonance reveal)
 	msgbox BirchLab_Text_PrimalNextPhase, MSGBOX_DEFAULT
 	release
 	end
@@ -1779,10 +1797,71 @@ BirchLab_Text_PrimalReminder:
 	.string "seen them all, {PLAYER}.$"
 
 BirchLab_Text_PrimalNextPhase:
-	.string "PROF. BIRCH: You have seen\n"
-	.string "the signs for yourself.\p"
-	.string "HOENN is in trouble,\n"
-	.string "{PLAYER}. We need to\l"
-	.string "understand what is\l"
-	.string "happening beneath us\l"
-	.string "before it is too late.$"
+	.string "PROF. BIRCH: The data from\n"
+	.string "the field confirms it.\p"
+	.string "GROUDON and KYOGRE stir\n"
+	.string "beneath us. But there may\l"
+	.string "yet be time.\p"
+	.string "The ancient REGI ruins hold\n"
+	.string "the key. Investigate them\l"
+	.string "when you are ready,\l"
+	.string "{PLAYER}.$"
+
+BirchLab_Text_RemindTidesOnly:
+	.string "PROF. BIRCH: You have\n"
+	.string "confirmed the tremors.\l"
+	.string "Good work.\p"
+	.string "But the tidal anomalies\n"
+	.string "around DEWFORD still need\l"
+	.string "investigation.\p"
+	.string "Talk to the locals there\n"
+	.string "and at SLATEPORT. Report\l"
+	.string "back with what you find.$"
+
+BirchLab_Text_AllSignsIntro:
+	.string "PROF. BIRCH: {PLAYER}!\n"
+	.string "You have seen them all.\p"
+	.string "Tremors at LAVARIDGE.\n"
+	.string "Tidal surges at DEWFORD.\l"
+	.string "Exactly as I feared.\p"
+	.string "But your field reports\n"
+	.string "reveal something I did\l"
+	.string "not expect.$"
+
+BirchLab_Text_AllSignsReveal:
+	.string "PROF. BIRCH: The migration\n"
+	.string "species... RAIKOU, ENTEI,\l"
+	.string "SUICUNE, HO-OH...\p"
+	.string "I assumed they came to\n"
+	.string "HOENN by chance. That the\l"
+	.string "beasts were scouts and\l"
+	.string "HO-OH followed.\p"
+	.string "But what if it was the\n"
+	.string "other way around?\p"
+	.string "What if they sensed the\n"
+	.string "primals stirring FIRST?\l"
+	.string "The migration was not a\l"
+	.string "random event.\p"
+	.string "It was a response.\n"
+	.string "Nature sending its\l"
+	.string "guardians to HOENN because\l"
+	.string "something ancient was\l"
+	.string "waking up.$"
+
+BirchLab_Text_AllSignsDirective:
+	.string "PROF. BIRCH: This changes\n"
+	.string "everything, {PLAYER}.\p"
+	.string "Capturing HO-OH did not\n"
+	.string "cause the stirring. The\l"
+	.string "stirring was already\l"
+	.string "happening.\p"
+	.string "HO-OH came to help.\n"
+	.string "And now it is with you.\p"
+	.string "There is one more anomaly\n"
+	.string "to investigate. The ancient\l"
+	.string "REGI ruins.\p"
+	.string "The golems were placed as\n"
+	.string "seals. If they are\l"
+	.string "weakening... we will know\l"
+	.string "how much time we have.\p"
+	.string "Be careful out there.$"

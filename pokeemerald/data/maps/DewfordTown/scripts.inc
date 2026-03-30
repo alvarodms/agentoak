@@ -791,3 +791,50 @@ DewfordTown_Text_YeahDefinitionOfInRightNow:
 	.string "Yeah, absolutely right!\p"
 	.string "“{STR_VAR_1}” is the\n"
 	.string "definition of “in” right now.$"
+
+@ =============================================
+@ Primal Sighting Network - Fisherman
+@ =============================================
+
+DewfordTown_EventScript_TideWatcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, DewfordTown_EventScript_TideReport
+	msgbox DewfordTown_Text_TideNormal, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_EventScript_TideReport::
+	setflag FLAG_TIDES_INVESTIGATED
+	msgbox DewfordTown_Text_TideReport, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_Text_TideNormal:
+	.string "The fishing has been great\n"
+	.string "this season. TENTACOOL\l"
+	.string "everywhere you look.\p"
+	.string "My granddad says the sea\n"
+	.string "has moods. Right now she\l"
+	.string "is in a fine one.$"
+
+DewfordTown_Text_TideReport:
+	.string "Something is wrong with\n"
+	.string "the tides, friend.\p"
+	.string "I fish these waters every\n"
+	.string "morning. I know the rhythm\l"
+	.string "of the sea like my own\l"
+	.string "heartbeat.\p"
+	.string "Two days ago the tide pulled\n"
+	.string "out farther than I have ever\l"
+	.string "seen. Exposed rocks that\l"
+	.string "should never see daylight.\p"
+	.string "Then it surged back in,\n"
+	.string "higher than any storm tide.\l"
+	.string "No storm. Clear skies.\p"
+	.string "The WAILMER have gone quiet.\n"
+	.string "When WAILMER stop singing,\l"
+	.string "old sailors know to worry.\p"
+	.string "My granddad would say the\n"
+	.string "sea is holding its breath.\l"
+	.string "Waiting for something.$"

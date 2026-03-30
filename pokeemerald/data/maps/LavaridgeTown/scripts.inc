@@ -422,3 +422,47 @@ LavaridgeTown_Text_MigrationResearcher:
 	.string "evolved forms nearby. Something\l"
 	.string "is driving them here in waves...$"
 
+@ =============================================
+@ Primal Sighting Network - Hot Spring Attendant
+@ =============================================
+
+LavaridgeTown_EventScript_TremorWatcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, LavaridgeTown_EventScript_TremorReport
+	msgbox LavaridgeTown_Text_TremorNormal, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_EventScript_TremorReport::
+	setflag FLAG_TREMORS_INVESTIGATED
+	msgbox LavaridgeTown_Text_TremorReport, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_Text_TremorNormal:
+	.string "The hot springs have been\n"
+	.string "wonderfully calm lately.\p"
+	.string "Perfect temperature, steady\n"
+	.string "flow. The WINGULL love it.$"
+
+LavaridgeTown_Text_TremorReport:
+	.string "You are here about the\n"
+	.string "tremors too?\p"
+	.string "I have managed these springs\n"
+	.string "for twenty years. I know\l"
+	.string "every bubble, every shift\l"
+	.string "in temperature.\p"
+	.string "Three days ago, the water\n"
+	.string "turned scalding hot. The\l"
+	.string "NUMEL fled the hillside.\p"
+	.string "Then came the shaking.\n"
+	.string "Deep. Not like an earthquake.\l"
+	.string "More like something turning\l"
+	.string "over in its sleep.\p"
+	.string "The old stories say a great\n"
+	.string "beast of the land sleeps\l"
+	.string "beneath HOENN.\p"
+	.string "I used to think those were\n"
+	.string "just stories.$"
+

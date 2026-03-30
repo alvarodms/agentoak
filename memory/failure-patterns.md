@@ -29,11 +29,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Resolution**: Copy placeholders or use `fetch_pokemon_sprites`. Run `make` smoke test at cycle start.
 **RESOLVED in C108**: PNGs committed to git.
 
-## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94) — CRITICAL
+## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94, 119, 120) — CRITICAL
 
 **Symptom**: `error: expected UTF-8 string literal`
-**Cause**: Edit tool can silently introduce Unicode smart quotes.
-**Resolution**: NEVER do blanket find-replace. Only fix quotes in NEWLY-ADDED text.
+**Cause**: Edit tool silently corrupts existing Unicode smart quotes (`""`) when they appear in the `old_string` match. The replacement changes their byte encoding even if the text looks identical.
+**Resolution**: For files containing smart quotes (DewfordTown, PacifidlogTown, SlateportCity, Route111, BirchLab, etc.), use `cat >> file << 'HEREDOC'` to APPEND new content instead of the Edit tool. Only use Edit tool if the target `old_string` range contains NO non-ASCII characters.
 
 ## agbcc Toolchain Missing After Runner Revert (Cycle 42+)
 

@@ -52,3 +52,51 @@ PacifidlogTown_Text_TownSign:
 	.string "“Where the morning sun smiles upon\n"
 	.string "the waters.”$"
 
+
+@ =============================================
+@ Primal Sighting Network - Elder
+@ =============================================
+
+PacifidlogTown_EventScript_TideElder::
+	lock
+	faceplayer
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, PacifidlogTown_EventScript_ElderReport
+	msgbox PacifidlogTown_Text_ElderNormal, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_ElderReport::
+	msgbox PacifidlogTown_Text_ElderReport, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_Text_ElderNormal:
+	.string "PACIFIDLOG drifts where the\n"
+	.string "currents take us. We have\l"
+	.string "lived on the sea for\l"
+	.string "generations.\p"
+	.string "The ocean provides, and we\n"
+	.string "are grateful.$"
+
+PacifidlogTown_Text_ElderReport:
+	.string "In all my years on this\n"
+	.string "ocean, I have never been\l"
+	.string "afraid of the water.\p"
+	.string "Until now.\p"
+	.string "The town drifts on\n"
+	.string "CORSOLA colonies. They\l"
+	.string "anchor us to the seafloor.\l"
+	.string "Steady as stone.\p"
+	.string "But the CORSOLA are\n"
+	.string "stressed. Bleaching.\l"
+	.string "The water beneath us\l"
+	.string "grows warmer every night.\p"
+	.string "And the currents...\n"
+	.string "they circle now. Like a\l"
+	.string "drain. Like something is\l"
+	.string "pulling from below.\p"
+	.string "The old songs speak of\n"
+	.string "a beast that ruled the\l"
+	.string "seas. KYOGRE.\p"
+	.string "I pray those are just\n"
+	.string "songs.$"

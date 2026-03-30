@@ -14,15 +14,22 @@
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **118** | Extended `BirchLab_EventScript_HoOhCaught` with Primal Stirring trigger: camera shake + explosion SFX, 3-part dialogue (instruments spike, sacred fire resonated down, 3 anomaly sites to investigate), sets `FLAG_PRIMAL_STIRRING_STARTED`. Added `BirchLab_EventScript_PrimalProgress` (reminder dialogue) and `BirchLab_EventScript_PrimalNextPhase` (placeholder for C120+). 6 new text blocks. |
 | `include/constants/flags.h` | **118** | Replaced unused flags 0x264-0x26F with 12 named v6.0 progression flags: `FLAG_PRIMAL_STIRRING_STARTED` through `FLAG_PRIMAL_CRISIS_RESOLVED`. |
 
-## C119 — BUILD FAILED, ALL CHANGES REVERTED
+## C120 — Primal Sighting Network DEPLOYED
 
-C119 attempted to add 6 NPC scripts + map.json entries + Birch report-back but failed with `DewfordTown/scripts.inc:639: junk at end of line`. No git commit. Must retry in C120.
+| File | Cycle | Changes |
+|------|-------|---------|
+| `data/maps/LavaridgeTown/scripts.inc` | **120** | Added `TremorWatcher` NPC — dual dialogue (normal/stirring), sets `FLAG_TREMORS_INVESTIGATED` |
+| `data/maps/LavaridgeTown/map.json` | **120** | Added object event: OBJ_EVENT_GFX_WOMAN_2 at (7,5) |
+| `data/maps/DewfordTown/scripts.inc` | **120** | Added `TideWatcher` NPC — dual dialogue, sets `FLAG_TIDES_INVESTIGATED` |
+| `data/maps/DewfordTown/map.json` | **120** | Added object event: OBJ_EVENT_GFX_FISHERMAN at (14,11) |
+| `data/maps/FieryPath/scripts.inc` | **120** | Added `TremorHiker` NPC — dual dialogue (flavor, no flag) |
+| `data/maps/FieryPath/map.json` | **120** | Added object event: OBJ_EVENT_GFX_HIKER at (12,15) |
+| `data/maps/SlateportCity/scripts.inc` | **120** | Added `HarborWatcher` NPC — dual dialogue (flavor, no flag) |
+| `data/maps/SlateportCity/map.json` | **120** | Added object event: OBJ_EVENT_GFX_FAT_MAN at (27,25) |
+| `data/maps/Route111/scripts.inc` | **120** | Added `DesertResearcher` NPC — dual dialogue (flavor, no flag) |
+| `data/maps/Route111/map.json` | **120** | Added object event: OBJ_EVENT_GFX_SCIENTIST_1 at (18,62) |
+| `data/maps/PacifidlogTown/scripts.inc` | **120** | Added `TideElder` NPC — dual dialogue (flavor, no flag) |
+| `data/maps/PacifidlogTown/map.json` | **120** | Added object event: OBJ_EVENT_GFX_OLD_MAN at (13,19) |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **120** | Expanded `PrimalProgress` — checks FLAG_TREMORS/TIDES_INVESTIGATED, revelation scene with AllSignsIntro/Reveal/Directive, sets FLAG_ALL_SIGNS_REPORTED. Updated PrimalNextPhase text (Regi directive). |
 
-**Design notes preserved from C119** (for retry):
-- 6 NPCs: Lavaridge attendant, Dewford fisherman, Fiery Path hiker, Slateport harbor master, Route 111 researcher, Pacifidlog elder
-- Each has dual dialogue (normal / stirring) gated on `FLAG_PRIMAL_STIRRING_STARTED`
-- Lavaridge sets `FLAG_TREMORS_INVESTIGATED`, Dewford sets `FLAG_TIDES_INVESTIGATED`
-- Birch report-back: checks both investigate flags → AllSignsReported → sets `FLAG_ALL_SIGNS_REPORTED`
-- Must also define `BirchLab_Text_PrimalNextPhase` (was missing in C119 attempt)
-
-## Status: v6.0 Act 1 INCOMPLETE — C119 must be retried
+## Status: v6.0 Act 1 COMPLETE — sighting network + Birch report-back deployed
