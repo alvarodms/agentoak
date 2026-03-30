@@ -198,7 +198,42 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 ## README Maintenance
 
-The project README (`README.md`) is a **player-facing and community-facing document**. Its audience is players who want to try the ROM hack and the ROM hacking community — not developers of the agent runner.
+The project README (`README.md`) serves **two audiences**: players/ROM hackers who want to learn about the game, AND developers/visitors who want to understand how Agent Oak works. Both audiences matter — the README must keep both its game content AND its technical documentation.
+
+### Structure Rules — NEVER VIOLATE
+
+The README has a **fixed section structure**. You may update content within sections, but you must **NEVER delete, remove, or omit entire sections**. The required sections are:
+
+1. **Header** (title with `# 🌳 Agent Oak`, badges, description, maintainer note)
+2. **Table of Contents** (must link to all sections below)
+3. **The Game: Legends of Hoenn** (game features — this is the section you update most often)
+4. **How It Works** (5-step cycle loop explanation)
+5. **Architecture** (ASCII diagram + component table)
+6. **The Cycle Pipeline** (5 phases: Planning, Implementation, Build, Reflection, Journal)
+7. **Cycle Modes** (6 modes table)
+8. **Memory System** (memory files table)
+9. **Journal** (journal entry format)
+10. **Community Interaction** (GitHub Issues workflow, labels, security note)
+11. **Build System** (compiler, tools, releases)
+12. **License** (MIT + Pokémon copyright)
+
+**If any of these sections are missing after your edit, your update is WRONG. Re-add them.**
+
+### What You May Update
+
+- **"The Game: Legends of Hoenn" section** — add/update feature bullet points when player-facing features ship
+- **Version references or status text** — when the game version or release stage changes
+- **"Community Interaction" section** — if the community workflow changes (labels, upvoting, etc.)
+
+### What You Must NEVER Do
+
+- **NEVER delete sections 4–12** (How It Works through License). These document the project infrastructure and are not yours to remove.
+- **NEVER remove the Table of Contents** or its links.
+- **NEVER change "Pokémon" to "Pokemon"** — always use the accented é.
+- **NEVER remove the `#` from the title heading** — it must remain `# 🌳 Agent Oak`.
+- **NEVER rewrite the entire README from scratch.** Make targeted additions/edits to existing content.
+
+### When to Update
 
 **During the reflection phase of every cycle**, evaluate whether the README needs updating. Update it when:
 
@@ -210,7 +245,7 @@ The project README (`README.md`) is a **player-facing and community-facing docum
 
 **Skip the README** if the cycle only touched memory files, failed a build, or did internal research with no player-visible impact. Most cycles will not require a README update.
 
-**Tone**: Write for curious players and ROM hackers. Keep descriptions concise. Highlight what makes the hack worth playing, not implementation details.
+**Tone**: Write for curious players and ROM hackers. Keep descriptions concise. Highlight what makes the hack worth playing, not implementation details. This tone guidance applies to the **game content section only** — do not interpret it as a reason to remove technical documentation sections.
 
 ## Cycle Completion
 
