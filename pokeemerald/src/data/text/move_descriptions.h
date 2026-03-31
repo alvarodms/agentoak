@@ -1429,6 +1429,86 @@ static const u8 sDazzlingGleamDescription[] = _(
     "Damages foes by emitting\n"
     "a bright flash of light.");
 
+static const u8 sNightSlashDescription[] = _(
+    "Slashes the foe under\n"
+    "cover of darkness.");
+
+static const u8 sBraveBirdDescription[] = _(
+    "A reckless diving attack.\n"
+    "Also hurts the user.");
+
+static const u8 sFlareBlitzDescription[] = _(
+    "A blazing charge attack.\n"
+    "Also hurts the user.");
+
+static const u8 sStoneEdgeDescription[] = _(
+    "Sharpened stones stab the\n"
+    "foe. High critical-hit ratio.");
+
+static const u8 sDragonPulseDescription[] = _(
+    "Generates a shock wave to\n"
+    "damage the foe.");
+
+static const u8 sCloseCombatDescription[] = _(
+    "A reckless close-range\n"
+    "attack that lowers defenses.");
+
+static const u8 sAquaTailDescription[] = _(
+    "Swings a broad tail to\n"
+    "attack the foe.");
+
+static const u8 sAuraSphereDescription[] = _(
+    "An aura blast that cannot\n"
+    "miss the foe.");
+
+static const u8 sSuckerPunchDescription[] = _(
+    "Strikes first if the foe\n"
+    "is readying an attack.");
+
+static const u8 sWildChargeDescription[] = _(
+    "An electric tackle. Also\n"
+    "hurts the user a little.");
+
+static const u8 sXScissorDescription[] = _(
+    "Slashes the foe with\n"
+    "crossed scythes or claws.");
+
+static const u8 sPoisonJabDescription[] = _(
+    "A stabbing attack that\n"
+    "may poison the foe.");
+
+static const u8 sIceShardDescription[] = _(
+    "Hurls a chunk of ice that\n"
+    "always strikes first.");
+
+static const u8 sEnergyBallDescription[] = _(
+    "Draws power from nature to\n"
+    "attack. May lower SP.DEF.");
+
+static const u8 sShadowClawDescription[] = _(
+    "Strikes with a sharp claw\n"
+    "of shadows. High crit ratio.");
+
+static const u8 sFlashCannonDescription[] = _(
+    "Focuses light energy on the\n"
+    "foe. May lower SP.DEF.");
+
+static const u8 sNastyPlotDescription[] = _(
+    "Stimulates the brain for\n"
+    "a sharp SP.ATK boost.");
+
+static const u8 sCrossPoisonDescription[] = _(
+    "A poisoned slash attack.\n"
+    "May also poison the foe.");
+
+static const u8 sIronHeadDescription[] = _(
+    "Slams the foe with a\n"
+    "steel-hard head.");
+
+static const u8 sZenHeadbuttDescription[] = _(
+    "Focuses willpower and\n"
+    "headbutts. May cause flinch.");
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1789,4 +1869,24 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_MOONBLAST - 1] = sMoonblastDescription,
     [MOVE_PLAY_ROUGH - 1] = sPlayRoughDescription,
     [MOVE_DAZZLING_GLEAM - 1] = sDazzlingGleamDescription,
+    [MOVE_NIGHT_SLASH - 1] = sNightSlashDescription,
+    [MOVE_BRAVE_BIRD - 1] = sBraveBirdDescription,
+    [MOVE_FLARE_BLITZ - 1] = sFlareBlitzDescription,
+    [MOVE_STONE_EDGE - 1] = sStoneEdgeDescription,
+    [MOVE_DRAGON_PULSE - 1] = sDragonPulseDescription,
+    [MOVE_CLOSE_COMBAT - 1] = sCloseCombatDescription,
+    [MOVE_AQUA_TAIL - 1] = sAquaTailDescription,
+    [MOVE_AURA_SPHERE - 1] = sAuraSphereDescription,
+    [MOVE_SUCKER_PUNCH - 1] = sSuckerPunchDescription,
+    [MOVE_WILD_CHARGE - 1] = sWildChargeDescription,
+    [MOVE_X_SCISSOR - 1] = sXScissorDescription,
+    [MOVE_POISON_JAB - 1] = sPoisonJabDescription,
+    [MOVE_ICE_SHARD - 1] = sIceShardDescription,
+    [MOVE_ENERGY_BALL - 1] = sEnergyBallDescription,
+    [MOVE_SHADOW_CLAW - 1] = sShadowClawDescription,
+    [MOVE_FLASH_CANNON - 1] = sFlashCannonDescription,
+    [MOVE_NASTY_PLOT - 1] = sNastyPlotDescription,
+    [MOVE_CROSS_POISON - 1] = sCrossPoisonDescription,
+    [MOVE_IRON_HEAD - 1] = sIronHeadDescription,
+    [MOVE_ZEN_HEADBUTT - 1] = sZenHeadbuttDescription,
 };

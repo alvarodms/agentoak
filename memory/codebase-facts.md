@@ -93,7 +93,7 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Move data format** (`src/data/battle_moves.h`): `gBattleMoves[MOVES_COUNT]` array indexed by move constant. Fields: `.effect`, `.power`, `.type`, `.accuracy`, `.pp`, `.secondaryEffectChance`, `.target`, `.priority`, `.flags`, `.category`.
 
-**Current state (C128)**: MOVES_COUNT = 358 (IDs 0-357). Last vanilla move = MOVE_PSYCHO_BOOST (354). Custom moves: MOVE_MOONBLAST (355), MOVE_PLAY_ROUGH (356), MOVE_DAZZLING_GLEAM (357).
+**Current state (C129)**: MOVES_COUNT = 378 (IDs 0-377). Last vanilla move = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5 moves: MOVE_NIGHT_SLASH (358) through MOVE_ZEN_HEADBUTT (377).
 
 **Move constants**: `include/constants/moves.h`. New moves go at end. MOVES_COUNT must be updated.
 

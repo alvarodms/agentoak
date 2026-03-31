@@ -359,8 +359,28 @@
 #define MOVE_MOONBLAST 355
 #define MOVE_PLAY_ROUGH 356
 #define MOVE_DAZZLING_GLEAM 357
+#define MOVE_NIGHT_SLASH    358
+#define MOVE_BRAVE_BIRD     359
+#define MOVE_FLARE_BLITZ    360
+#define MOVE_STONE_EDGE     361
+#define MOVE_DRAGON_PULSE   362
+#define MOVE_CLOSE_COMBAT   363
+#define MOVE_AQUA_TAIL      364
+#define MOVE_AURA_SPHERE    365
+#define MOVE_SUCKER_PUNCH   366
+#define MOVE_WILD_CHARGE    367
+#define MOVE_X_SCISSOR      368
+#define MOVE_POISON_JAB     369
+#define MOVE_ICE_SHARD      370
+#define MOVE_ENERGY_BALL    371
+#define MOVE_SHADOW_CLAW    372
+#define MOVE_FLASH_CANNON   373
+#define MOVE_NASTY_PLOT     374
+#define MOVE_CROSS_POISON   375
+#define MOVE_IRON_HEAD      376
+#define MOVE_ZEN_HEADBUTT   377
 
-#define MOVES_COUNT 358
+#define MOVES_COUNT 378
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

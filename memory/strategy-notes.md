@@ -89,7 +89,7 @@ Full team compositions (species, levels, items, moves) in `memory/pokemon-knowle
 
 ## Implementation Roadmap
 
-**C129 — Move Infrastructure**: Add 20 moves to `battle_moves.h` + `moves.h`. Implement simple+moderate moves first (14 reusing existing effects). Attempt Flare Blitz and Close Combat new effects. Defer Sucker Punch/Cross Poison if complex. Build test.
+**C129 — Move Infrastructure**: COMPLETE. All 20 moves added (IDs 358-377, MOVES_COUNT=378). All reuse existing effects. Flare Blitz=DOUBLE_EDGE, Close Combat=SUPERPOWER, Sucker Punch=priority+1 HIT, Cross Poison=POISON_HIT.
 
 **C130 — Gym Leaders 1-4**: Roxanne, Brawly, Wattson, Flannery in `trainer_parties.h`. 3 mons each = 12 total. Simplest changes. Build test.
 

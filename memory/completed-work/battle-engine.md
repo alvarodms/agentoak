@@ -53,3 +53,35 @@ Physical/Special Split and Fairy Type implementations (v2.0).
 - **Moonblast**: 95 power, Special, 30% chance to lower Special Attack
 - **Play Rough**: 90 power, Physical, 10% chance to lower Attack (FLAG_MAKES_CONTACT)
 - **Dazzling Gleam**: 80 power, Special, hits both opponents (MOVE_TARGET_BOTH)
+
+## Gen 4/5 Move Additions (Cycle 129)
+
+Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files:
+- `include/constants/moves.h` — 20 new #define constants
+- `src/data/battle_moves.h` — 20 gBattleMoves entries
+- `src/data/text/move_names.h` — 20 gMoveNames entries
+- `src/data/text/move_descriptions.h` — 20 static strings + 20 pointer table entries
+- `src/data/contest_moves.h` — 20 gContestMoves entries
+
+| Move | ID | Type | BP | Cat | Effect | Notes |
+|------|-----|------|-----|------|--------|-------|
+| Night Slash | 358 | Dark | 70 | Phys | HIGH_CRITICAL | Contact |
+| Brave Bird | 359 | Flying | 120 | Phys | DOUBLE_EDGE | 1/3 recoil |
+| Flare Blitz | 360 | Fire | 120 | Phys | DOUBLE_EDGE | 1/3 recoil (no burn) |
+| Stone Edge | 361 | Rock | 100 | Phys | HIGH_CRITICAL | No contact |
+| Dragon Pulse | 362 | Dragon | 90 | Spec | HIT | |
+| Close Combat | 363 | Fight | 120 | Phys | SUPERPOWER | Lowers Atk/Def |
+| Aqua Tail | 364 | Water | 90 | Phys | HIT | 90 acc |
+| Aura Sphere | 365 | Fight | 90 | Spec | HIT | Never miss (acc=0) |
+| Sucker Punch | 366 | Dark | 80 | Phys | HIT | Priority +1 (simplified) |
+| Wild Charge | 367 | Electric | 90 | Phys | RECOIL | 1/4 recoil |
+| X-Scissor | 368 | Bug | 80 | Phys | HIT | |
+| Poison Jab | 369 | Poison | 80 | Phys | POISON_HIT | 30% poison |
+| Ice Shard | 370 | Ice | 40 | Phys | HIT | Priority +1 |
+| Energy Ball | 371 | Grass | 80 | Spec | SPD_DOWN_HIT | 10% SpDef drop |
+| Shadow Claw | 372 | Ghost | 70 | Phys | HIGH_CRITICAL | |
+| Flash Cannon | 373 | Steel | 80 | Spec | SPD_DOWN_HIT | 10% SpDef drop |
+| Nasty Plot | 374 | Dark | -- | Status | SP_ATK_UP_2 | Self-target |
+| Cross Poison | 375 | Poison | 70 | Phys | POISON_HIT | 10% poison |
+| Iron Head | 376 | Steel | 80 | Phys | FLINCH_HIT | 30% flinch |
+| Zen Headbutt | 377 | Psychic | 80 | Phys | FLINCH_HIT | 20% flinch |
