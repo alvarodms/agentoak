@@ -2,4 +2,4 @@
 
 Deferred community issues for future consideration.
 
-*No deferred issues.*
+- #77: Integrate map editing abilities (deferred: cycle 125)

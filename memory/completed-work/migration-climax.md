@@ -82,4 +82,16 @@ C122 attempted 6 trainers but was reverted. C123 re-implemented successfully.
 | `data/maps/SeafloorCavern_Room9/scripts.inc` | **124** | Replaced empty MapScripts with ON_TRANSITION + ON_RESUME. TryShowPrimalKyogre: gates on primal flags + investigation flags, controls Kyogre visibility + VAR_TEMP_1. TryRemoveKyogre: post-catch sprite removal. New PrimalKyogre encounter: weather→RAIN, SE_M_HYDRO_PUMP, ShakeCamera, cinematic text, setwildbattle Lv70. Caught/defeated/fled branches. 3 text blocks |
 | `data/maps/SeafloorCavern_Room9/map.json` | **124** | Added coord_event at (17,42) VAR_TEMP_1=0 → PrimalKyogre script |
 
-## Status: v6.0 Act 3 COMPLETE — Primal Groudon and Kyogre encounters deployed with cinematic presentation
+## C125 — World Reaction + v6.0 Ship
+
+| File | Cycle | Changes |
+|------|-------|---------|
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **125** | Added `BirchLab_EventScript_PrimalDebrief` (cinematic debrief scene: stabilized readings, responsibility reflection, Rayquaza atmospheric anomaly tease), `BirchLab_EventScript_PrimalResolved` (repeat visit), `BirchLab_EventScript_CheckKyogre` (both-primals-done gate). Sets `FLAG_PRIMAL_CRISIS_RESOLVED`. 6 new text blocks. |
+| `data/maps/LavaridgeTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorWatcher + `TremorWatcherResolved` script+text (hot springs calm) |
+| `data/maps/DewfordTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideWatcher + `TideWatcherResolved` script+text (seas settled) |
+| `data/maps/FieryPath/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorHiker + `TremorHikerResolved` script+text (ground stopped shaking) |
+| `data/maps/SlateportCity/scripts.inc` | **125** | Added complete `HarborWatcher` NPC script (base script was missing from C120/C124) with normal/stirring/resolved variants |
+| `data/maps/Route111/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to DesertResearcher + `DesertResearcherResolved` script+text (seismic baseline) |
+| `data/maps/PacifidlogTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideElder + `TideElderResolved` script+text (old tales were true) |
+
+## Status: v6.0 COMPLETE — "The Primal Stirring" arc shipped with world reaction and Rayquaza v7.0 hook

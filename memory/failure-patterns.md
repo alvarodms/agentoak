@@ -22,29 +22,21 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Gets focused on early phases (research, C plumbing) and runs out of actions before script content.
 **Resolution**: Budget actions — reserve at least 30 actions for script writing and build. Start edits by action 15.
 
-## Untracked Binary Assets (Cycles 68, 91, 92, 94, 100) — RESOLVED C108
+## Non-ASCII Characters in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125) — CRITICAL
 
-**Symptom**: Build fails with "Failed to open" for sprites or PNGs.
-**Resolution**: PNGs committed to git in C108.
-
-## Smart Quote Corruption in .string Directives (Cycles 26, 64, 65, 94, 119, 120, 121, 122) — CRITICAL
-
-**Symptom**: `error: expected UTF-8 string literal` or `no mapping exists for double quote`
-**Cause**: Edit tool silently corrupts existing Unicode smart quotes (`\u201c\u201d`) when they appear in the `old_string` match. The replacement changes their byte encoding even if the text looks identical.
-**Resolution**: For files containing smart quotes (DewfordTown, PacifidlogTown, SlateportCity, Route111, BirchLab, etc.), use `cat >> file << 'HEREDOC'` to APPEND new content instead of the Edit tool. Only use Edit tool if the target `old_string` range contains NO non-ASCII characters.
-**C123 CORRECTION**: Route111 line 650 smart quotes (U+201C/U+201D) are NOT corrupted — they're valid charmap entries (B1/B2). The "no mapping exists for double quote" error only occurs when these are REPLACED with ASCII `"`. Never replace smart quotes with ASCII quotes — the charmap has no entry for ASCII `"`.
-**Actual C122 failure cause**: Missing script references (HarborWatcher, DesertResearcher) from C120 map.json edits whose scripts were lost during a prior revert. Fixed in C123.
+**Symptom**: `error: unknown character U+XXXX` or `no mapping exists for...`
+**Cause 1 (Edit tool)**: Edit tool silently corrupts existing Unicode smart quotes when in `old_string`.
+**Cause 2 (Content)**: Em dashes (U+2014), smart quotes, and other non-ASCII characters in NEW content written via Edit or `cat >>`. C125 failed on an em dash in Birch dialogue.
+**Resolution**:
+- Use `cat >> file << 'HEREDOC'` for files with existing smart quotes (avoids Edit tool corruption).
+- **VALIDATE all new .string content**: Run `grep -P '[\x80-\xFF]' <file>` on every modified .inc file BEFORE `make`. Replace em dashes with `--`, curly quotes with `'`, etc.
+- Smart quotes U+201C/U+201D in existing vanilla text are VALID charmap entries (B1/B2) — do NOT replace those.
+- **C125 failure**: `U+2014` em dash in BirchLab scripts.inc line 1940. Fix: replace with `--`.
 
 ## Pre-existing Build Blockers Cause Cascade Reverts (C122, C124)
 
 **Symptom**: Cycle makes valid changes but build fails due to pre-existing issue in unrelated file.
-**C124 instance**: C123 claimed "clean build" but left 6 missing trainer party arrays (trainer_parties.h) + 6 missing trainer battle scripts (scripts.inc) + 1 missing NPC script (SlateportCity). The trainers.h entries and map.json refs existed but their dependencies did not.
-**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first. Never trust previous cycle's "clean build" claim without verifying.
-
-## agbcc Toolchain Missing After Runner Revert (Cycle 42+)
-
-**Symptom**: `fatal error: string.h: No such file or directory`
-**Resolution**: `ln -s` the agbcc tools directory.
+**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first.
 
 ## "File has not been read yet" After Context Compression (Cycles 57, 67, 88)
 
