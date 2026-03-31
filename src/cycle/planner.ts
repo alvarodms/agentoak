@@ -66,15 +66,34 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
           action: {
             type: "string",
             enum: ["accept", "defer", "reject", "need-info"],
-            description: "What to do with the issue",
+            description: "What to do with the issue. For multi-item issues, use the dominant action: accept if any item is accepted, defer if all deferred, reject if all rejected.",
           },
           response: {
             type: "string",
-            description: "A brief, friendly response to post as a comment on the issue",
+            description: "A brief, friendly response to post as a comment on the issue. For multi-item issues, this is a summary — per-item detail goes in items[].",
           },
           partial: {
             type: "boolean",
-            description: "Set to true when accepting a complex issue that will require multiple cycles to fully implement. The issue will stay open and remain in the backlog so you can continue working on it next cycle. Only valid with action 'accept'.",
+            description: "Set to true when accepting a complex issue that will require multiple cycles to fully implement. The issue will stay open and remain in the backlog so you can continue working on it next cycle. Only valid with action 'accept'. For multi-item issues, set this if ANY item is partial.",
+          },
+          items: {
+            type: "array",
+            description: "Per-item breakdown when an issue contains multiple distinct asks (bugs, feature requests, balance complaints, etc.). Each item gets its own action and response. Omit entirely for single-ask issues.",
+            items: {
+              type: "object",
+              properties: {
+                label: { type: "string", description: "Short name for this item (e.g., 'Dragon Rage damage bug')" },
+                action: {
+                  type: "string",
+                  enum: ["accept", "defer", "reject", "need-info"],
+                  description: "What to do with this specific item",
+                },
+                response: { type: "string", description: "Brief response for this specific item" },
+                partial: { type: "boolean", description: "This item needs multi-cycle work" },
+              },
+              required: ["label", "action", "response"],
+              additionalProperties: false,
+            },
           },
         },
         required: ["issueNumber", "action", "response"],
