@@ -33,14 +33,29 @@ export interface GitHubComment {
   createdAt: string;
 }
 
+/** A per-item action within a multi-item issue */
+export interface IssueActionItem {
+  /** Short label identifying the item (e.g., "Dragon Rage damage bug") */
+  label: string;
+  action: "accept" | "defer" | "reject" | "need-info";
+  response: string;
+  /** When true, this item requires multiple cycles to complete. */
+  partial?: boolean;
+}
+
 /** An action the planner decided to take on a community issue */
 export interface IssueAction {
   issueNumber: number;
+  /** Overall action for the issue. For multi-item issues, this is the "dominant" action:
+   *  accept if any item is accepted, defer if all deferred, reject if all rejected. */
   action: "accept" | "defer" | "reject" | "need-info";
   response: string;
   /** When true, the issue requires multiple cycles to complete. The issue stays open and
    *  remains in the backlog for future cycles. Only meaningful with action "accept". */
   partial?: boolean;
+  /** Optional per-item breakdown for issues containing multiple distinct asks.
+   *  When present, each item gets its own action and response. */
+  items?: IssueActionItem[];
 }
 
 /** A help request the agent wants to raise */

@@ -36,7 +36,7 @@ export function formatIssueSection(issueContext: string): string {
 /** Build the "Deferred Issue Backlog" section (returns empty string if absent). */
 export function formatBacklogSection(
   issueBacklog: string,
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; pendingItems?: string[] }>,
 ): string {
   const hasBacklog = !!issueBacklog;
   const hasStale = staleIssues && staleIssues.length > 0;
@@ -49,9 +49,13 @@ export function formatBacklogSection(
   }
 
   if (hasStale) {
-    const staleLines = staleIssues.map(
-      (i) => `- #${i.issueNumber}: ${i.title} (deferred since cycle ${i.deferredAtCycle})`,
-    ).join("\n");
+    const staleLines = staleIssues.map((i) => {
+      let line = `- #${i.issueNumber}: ${i.title} (deferred since cycle ${i.deferredAtCycle})`;
+      if (i.pendingItems && i.pendingItems.length > 0) {
+        line += ` — Pending items: ${i.pendingItems.join(", ")}`;
+      }
+      return line;
+    }).join("\n");
     section += `\n### Stale Issues (deferred 10+ cycles)\n\nThese issues have been sitting in the backlog for a long time. Please re-evaluate each one and include it in \`issueActions\`:\n- **accept**: Pick it up this cycle\n- **reject**: It no longer aligns with the project direction — close it with a reason\n- **defer**: Still worth keeping — provide a brief justification for why\n\n${staleLines}\n`;
   }
 
@@ -150,6 +154,7 @@ You have access to a **Gameplay Designer** agent that can produce detailed, data
 export function formatPlannerClosingInstructions(): string {
   return `**Issue handling rules:**
 - **New community issues**: Review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info.
+- **Multi-item issues**: If an issue contains multiple distinct asks (bugs + features, etc.), use the \`items\` array within your issueAction to give each item its own action and response. Set the top-level \`action\` to the dominant one (accept if any is accepted, defer if all deferred, reject if all rejected). For single-ask issues, omit \`items\`.
 - **Regular backlog issues**: Do NOT include them in \`issueActions\` — they are carried forward automatically. Only include a backlog issue if you want to **accept** it this cycle.
 - **Stale backlog issues** (marked in the "Stale Issues" section): You MUST re-evaluate each one and include it in \`issueActions\` with accept, reject, or defer.
 
@@ -172,7 +177,7 @@ export interface PlannerContextParams {
   modeHistorySummary: string;
   issueContext: string;
   issueBacklog: string;
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>;
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; pendingItems?: string[] }>;
   extraMemoryFiles?: string[];
 }
 

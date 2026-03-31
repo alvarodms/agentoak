@@ -12,7 +12,7 @@ import {
   buildCommitFixPrompt,
 } from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
-import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import type { ClaudeCodeResult, IssueOutcome } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { runBuild, saveBuildLog } from "../repo/build.js";
@@ -669,7 +669,15 @@ export async function runCycle(): Promise<void> {
         }
         const outcome = outcomeMap.get(issueNumber);
         if (outcome?.status === "partial") {
-          if ((outcome.decision ?? "defer") === "reject") {
+          // For multi-item issues, check if there are remaining items
+          const resolution = resolveMultiItemOutcome(outcome);
+          if (resolution.canClose) {
+            if (resolution.closingReason === "not_planned") {
+              rejectNumbers.push(issueNumber);
+            } else {
+              closingNumbers.push(issueNumber);
+            }
+          } else if ((outcome.decision ?? "defer") === "reject") {
             rejectNumbers.push(issueNumber);
           } else {
             deferNumbers.push(issueNumber);
@@ -685,7 +693,9 @@ export async function runCycle(): Promise<void> {
         log.info(`  Closing ${closingNumbers.length} completed issue(s)...`);
         const closingSummary = reflection.cycleSummary || plan.objective;
         for (const issueNumber of closingNumbers) {
-          await postIssueClosingComment(issueNumber, closingSummary);
+          const outcome = outcomeMap.get(issueNumber);
+          const closingComment = formatClosingCommentWithItems(closingSummary, outcome);
+          await postIssueClosingComment(issueNumber, closingComment);
           await closeIssue(issueNumber, "completed");
         }
       }
@@ -696,10 +706,23 @@ export async function runCycle(): Promise<void> {
         for (const issueNumber of deferNumbers) {
           const outcome = outcomeMap.get(issueNumber)!;
           const reason = outcome.reason ?? "This cycle's work partially addressed this issue.";
-          await postIssuePartialDeliveryComment(issueNumber, reason, "defer");
+          const resolution = resolveMultiItemOutcome(outcome);
+          const partialComment = formatPartialCommentWithItems(reason, outcome);
+          await postIssuePartialDeliveryComment(issueNumber, partialComment, "defer");
           await addLabelsToIssue(issueNumber, [AGENT_LABELS.deferred]);
-          // Re-add to backlog so it surfaces in a future cycle
+          // Re-add to backlog with remaining items tracked
           addIssueToBacklog(issueNumber, `Issue #${issueNumber}`, cycleNumber);
+          // If there are remaining items, update the backlog entry with pending items
+          if (resolution.remainingItems.length > 0) {
+            const { parseBacklogEntries } = await import("../github/issues.js");
+            const entries = parseBacklogEntries();
+            const entry = entries.find((e) => e.issueNumber === issueNumber);
+            if (entry) {
+              entry.pendingItems = resolution.remainingItems;
+              // Re-write backlog with updated pending items
+              addIssueToBacklog(issueNumber, entry.title, cycleNumber);
+            }
+          }
         }
       }
 
@@ -709,7 +732,8 @@ export async function runCycle(): Promise<void> {
         for (const issueNumber of rejectNumbers) {
           const outcome = outcomeMap.get(issueNumber)!;
           const reason = outcome.reason ?? "This cycle's work only partially addressed this issue, and the remaining work will not be pursued.";
-          await postIssuePartialDeliveryComment(issueNumber, reason, "reject");
+          const rejectComment = formatPartialCommentWithItems(reason, outcome);
+          await postIssuePartialDeliveryComment(issueNumber, rejectComment, "reject");
           await addLabelsToIssue(issueNumber, [AGENT_LABELS.rejected]);
           await closeIssue(issueNumber, "not_planned");
         }
@@ -787,4 +811,80 @@ export async function runCycle(): Promise<void> {
 
     throw err;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Multi-item issue outcome helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Resolve whether a multi-item issue can be closed, and which items remain.
+ * For single-item issues (no itemOutcomes), falls through to existing behavior.
+ */
+function resolveMultiItemOutcome(outcome: IssueOutcome): {
+  canClose: boolean;
+  remainingItems: string[];
+  closingReason: "completed" | "not_planned";
+} {
+  if (!outcome.itemOutcomes || outcome.itemOutcomes.length === 0) {
+    // Single-item fallback
+    return {
+      canClose: outcome.status === "complete" || outcome.decision === "reject",
+      remainingItems: [],
+      closingReason: outcome.decision === "reject" ? "not_planned" : "completed",
+    };
+  }
+
+  const remaining = outcome.itemOutcomes.filter(
+    (i) =>
+      i.status === "not-started" ||
+      (i.status === "partial" && (i.decision ?? "defer") === "defer"),
+  );
+
+  const allRejected = outcome.itemOutcomes.every(
+    (i) => i.decision === "reject",
+  );
+
+  return {
+    canClose: remaining.length === 0,
+    remainingItems: remaining.map((i) => i.label),
+    closingReason: allRejected ? "not_planned" : "completed",
+  };
+}
+
+/**
+ * Format a closing comment with per-item detail for multi-item issues.
+ * Falls back to plain summary for single-item issues.
+ */
+function formatClosingCommentWithItems(summary: string, outcome?: IssueOutcome): string {
+  if (!outcome?.itemOutcomes || outcome.itemOutcomes.length === 0) {
+    return summary;
+  }
+
+  const itemLines = outcome.itemOutcomes.map((item) => {
+    if (item.status === "complete") return `- ✅ **${item.label}** — Done`;
+    if (item.decision === "reject") return `- ❌ **${item.label}** — Declined${item.reason ? `: ${item.reason}` : ""}`;
+    return `- ⏳ **${item.label}** — ${item.reason ?? "Pending"}`;
+  });
+
+  return `${summary}\n\n**Item breakdown:**\n${itemLines.join("\n")}`;
+}
+
+/**
+ * Format a partial delivery comment with per-item detail for multi-item issues.
+ * Falls back to plain reason for single-item issues.
+ */
+function formatPartialCommentWithItems(reason: string, outcome: IssueOutcome): string {
+  if (!outcome.itemOutcomes || outcome.itemOutcomes.length === 0) {
+    return reason;
+  }
+
+  const itemLines = outcome.itemOutcomes.map((item) => {
+    if (item.status === "complete") return `- ✅ **${item.label}** — Done`;
+    if (item.status === "not-started") return `- ⬜ **${item.label}** — Not started${item.reason ? `: ${item.reason}` : ""}`;
+    if (item.decision === "reject") return `- ❌ **${item.label}** — Declined${item.reason ? `: ${item.reason}` : ""}`;
+    return `- ⏳ **${item.label}** — Partially done${item.reason ? `: ${item.reason}` : ""}`;
+  });
+
+  return `${reason}\n\n**Item breakdown:**\n${itemLines.join("\n")}`;
 }

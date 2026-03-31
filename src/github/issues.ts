@@ -18,7 +18,7 @@ import {
   AGENT_LABELS,
   COMMUNITY_LABELS,
 } from "./client.js";
-import type { GitHubIssue, IssueAction, HelpRequest } from "./client.js";
+import type { GitHubIssue, IssueAction, IssueActionItem, HelpRequest } from "./client.js";
 import { logger } from "../utils/logger.js";
 import { MEMORY_DIR } from "../utils/paths.js";
 
@@ -30,13 +30,19 @@ export interface BacklogEntry {
   title: string;
   /** The cycle number when this issue was deferred. 0 if unknown (legacy entries). */
   deferredAtCycle: number;
+  /** For multi-item issues: labels of items still pending. Omitted for single-item issues. */
+  pendingItems?: string[];
 }
 
-const BACKLOG_LINE_RE = /^- #(\d+):\s*(.+?)(?:\s*\(deferred: cycle (\d+)\))?$/;
+const BACKLOG_LINE_RE = /^- #(\d+):\s*(.+?)(?:\s*\(deferred: cycle (\d+)\))?(?:\s*\|\s*pending:\s*(.+))?$/;
 
 /** Format a single backlog entry as a markdown line. */
 function formatBacklogLine(entry: BacklogEntry): string {
-  return `- #${entry.issueNumber}: ${entry.title} (deferred: cycle ${entry.deferredAtCycle})`;
+  let line = `- #${entry.issueNumber}: ${entry.title} (deferred: cycle ${entry.deferredAtCycle})`;
+  if (entry.pendingItems && entry.pendingItems.length > 0) {
+    line += ` | pending: ${entry.pendingItems.join("; ")}`;
+  }
+  return line;
 }
 
 /**
@@ -50,10 +56,14 @@ export function parseBacklogEntries(): BacklogEntry[] {
     for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
       const match = line.match(BACKLOG_LINE_RE);
       if (match) {
+        const pendingItems = match[4]
+          ? match[4].split(";").map((s) => s.trim()).filter(Boolean)
+          : undefined;
         entries.push({
           issueNumber: parseInt(match[1], 10),
           title: match[2].trim(),
           deferredAtCycle: match[3] ? parseInt(match[3], 10) : 0,
+          pendingItems,
         });
       }
     }
@@ -127,21 +137,50 @@ export function updateIssueBacklog(
 
   let changed = false;
   for (const action of actions) {
+    // For multi-item issues, compute which items are deferred
+    const deferredItemLabels = action.items
+      ?.filter((item) => item.action === "defer" || (item.action === "accept" && item.partial))
+      .map((item) => item.label);
+
     if (action.action === "defer") {
+      const title = issueMap.get(action.issueNumber)?.title ?? existing.get(action.issueNumber)?.title ?? "Unknown";
       if (!existing.has(action.issueNumber)) {
         // New deferral
-        const title = issueMap.get(action.issueNumber)?.title ?? "Unknown";
-        existing.set(action.issueNumber, { issueNumber: action.issueNumber, title, deferredAtCycle: cycleNumber });
+        existing.set(action.issueNumber, {
+          issueNumber: action.issueNumber,
+          title,
+          deferredAtCycle: cycleNumber,
+          pendingItems: deferredItemLabels?.length ? deferredItemLabels : undefined,
+        });
         changed = true;
       } else if (staleIssueNumbers?.has(action.issueNumber)) {
         // Re-deferring a stale issue — reset cycle counter
         const entry = existing.get(action.issueNumber)!;
-        existing.set(action.issueNumber, { ...entry, deferredAtCycle: cycleNumber });
+        existing.set(action.issueNumber, {
+          ...entry,
+          deferredAtCycle: cycleNumber,
+          pendingItems: deferredItemLabels?.length ? deferredItemLabels : entry.pendingItems,
+        });
         changed = true;
       }
-    } else if (action.action === "accept" || action.action === "reject") {
-      // Keep in backlog when it's a partial (multi-cycle) accept — the work isn't done yet
-      if (existing.has(action.issueNumber) && !(action.action === "accept" && action.partial)) {
+    } else if (action.action === "accept") {
+      if (action.items && action.items.length > 0 && deferredItemLabels && deferredItemLabels.length > 0) {
+        // Multi-item: some items accepted, some deferred — track deferred items in backlog
+        const title = issueMap.get(action.issueNumber)?.title ?? existing.get(action.issueNumber)?.title ?? "Unknown";
+        existing.set(action.issueNumber, {
+          issueNumber: action.issueNumber,
+          title,
+          deferredAtCycle: cycleNumber,
+          pendingItems: deferredItemLabels,
+        });
+        changed = true;
+      } else if (existing.has(action.issueNumber) && !action.partial) {
+        // Single-item accept (not partial) — remove from backlog
+        existing.delete(action.issueNumber);
+        changed = true;
+      }
+    } else if (action.action === "reject") {
+      if (existing.has(action.issueNumber)) {
         existing.delete(action.issueNumber);
         changed = true;
       }
@@ -258,6 +297,8 @@ For each issue, decide one of:
 
 Include your decisions in the \`issueActions\` array in your response.
 
+If an issue contains **multiple distinct asks** (e.g., several bugs, a mix of bugs and feature requests), use the \`items\` array within your issueAction to give each item its own action and response. Set the top-level \`action\` to the dominant one (accept if any item is accepted). For single-ask issues, omit \`items\` entirely.
+
 ${formatted.join("\n\n---\n\n")}`;
 }
 
@@ -279,6 +320,35 @@ const ACTION_PREFIX_MAP: Record<IssueAction["action"], string> = {
 
 const PARTIAL_ACCEPT_PREFIX = "🤖 **Agent Oak — In Progress**\n\n";
 
+/** Action emoji for multi-item comment formatting */
+const ITEM_ACTION_EMOJI: Record<IssueActionItem["action"], string> = {
+  accept: "✅ Accepted",
+  defer: "⏳ Deferred",
+  reject: "❌ Declined",
+  "need-info": "❓ Need Info",
+};
+
+/**
+ * Format a multi-item issue response as a checklist-style comment.
+ * Each item gets its own row with action indicator and response.
+ */
+function formatMultiItemComment(items: IssueActionItem[], overallResponse: string): string {
+  const rows = items.map((item) => {
+    const actionStr = item.partial
+      ? `${ITEM_ACTION_EMOJI[item.action]} (multi-cycle)`
+      : ITEM_ACTION_EMOJI[item.action];
+    return `| **${item.label}** | ${actionStr} | ${item.response} |`;
+  });
+
+  return `🤖 **Agent Oak — Review**
+
+${overallResponse}
+
+| Item | Decision | Notes |
+|------|----------|-------|
+${rows.join("\n")}`;
+}
+
 /**
  * Execute the planner's decisions on community issues.
  *
@@ -294,25 +364,33 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
   for (const action of actions) {
     try {
       // Post the agent's response as a comment
-      const prefix = (action.action === "accept" && action.partial)
-        ? PARTIAL_ACCEPT_PREFIX
-        : (ACTION_PREFIX_MAP[action.action] ?? "");
-      await commentOnIssue(action.issueNumber, prefix + action.response);
+      if (action.items && action.items.length > 0) {
+        // Multi-item issue: checklist-style comment
+        const body = formatMultiItemComment(action.items, action.response);
+        await commentOnIssue(action.issueNumber, body);
+      } else {
+        // Single-item issue: existing format
+        const prefix = (action.action === "accept" && action.partial)
+          ? PARTIAL_ACCEPT_PREFIX
+          : (ACTION_PREFIX_MAP[action.action] ?? "");
+        await commentOnIssue(action.issueNumber, prefix + action.response);
+      }
 
-      // Add the action label + reviewed label
+      // Add the action label + reviewed label (based on dominant action)
       const actionLabel = ACTION_LABEL_MAP[action.action];
       const labels: string[] = [AGENT_LABELS.reviewed];
       if (actionLabel) labels.push(actionLabel);
 
       await addLabelsToIssue(action.issueNumber, labels);
 
-      // Close rejected issues immediately — the decision is final
+      // Close rejected issues immediately — only if ALL items are rejected
+      // (for multi-item issues, action === "reject" means every item was rejected)
       if (action.action === "reject") {
         await closeIssue(action.issueNumber, "not_planned");
       }
 
       logger.info(
-        `Issue #${action.issueNumber}: ${action.action} — labels: [${labels.join(", ")}]`,
+        `Issue #${action.issueNumber}: ${action.action}${action.items ? ` (${action.items.length} items)` : ""} — labels: [${labels.join(", ")}]`,
       );
     } catch (err) {
       logger.error(

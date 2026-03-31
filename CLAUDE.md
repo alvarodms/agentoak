@@ -283,6 +283,7 @@ Each outcome object has these fields:
 | `status` | yes | `"complete"` or `"partial"` | Was the ask fully implemented? |
 | `decision` | if partial | `"defer"` or `"reject"` | What to do with the remaining work |
 | `reason` | if partial | string | Plain-English explanation posted as a comment on the issue |
+| `item_outcomes` | if multi-item | array | Per-item outcomes for issues with multiple distinct asks (see below) |
 
 **Rules:**
 - `"complete"` — the issue's ask was fully implemented. The runner will close the issue.
@@ -306,6 +307,24 @@ Each outcome object has these fields:
 ```json
 {"number": 7, "status": "partial", "decision": "reject", "reason": "Implemented the sprite recolour as asked. The second part of the request (adding new animations) is out of scope for the current project direction."}
 ```
+
+**Example — multi-item issue with per-item outcomes:**
+```json
+{
+  "number": 42,
+  "status": "partial",
+  "decision": "defer",
+  "reason": "Completed 2 of 4 items. Remaining items deferred.",
+  "item_outcomes": [
+    {"label": "Dragon Rage bug", "status": "complete"},
+    {"label": "Lapras duplication", "status": "complete"},
+    {"label": "Add Emboar", "status": "partial", "decision": "reject", "reason": "Out of scope for current gen"},
+    {"label": "Level curve", "status": "not-started", "decision": "defer", "reason": "Needs a dedicated tuning cycle"}
+  ]
+}
+```
+
+Each `item_outcomes` entry has: `label` (matching the label from planning), `status` (`"complete"`, `"partial"`, or `"not-started"`), and optionally `decision` and `reason`. The issue is only closed when ALL items are resolved (complete or rejected).
 
 ## Public Communication
 
@@ -342,6 +361,14 @@ Agent Oak can interact with the community through GitHub issues. At the start of
 | `agent-rejected` | Not aligned with the project direction |
 | `agent-needs-info` | You asked the author a clarifying question |
 | `agent-help-request` | Issues YOU create when you need human input |
+
+### Multi-Item Issues
+
+Some community issues contain multiple distinct asks (e.g., several bugs plus a feature request). When you encounter these during planning, use the `items` array in your `issueActions` entry to give each item its own action and response. The runner will format your response as a checklist so each contributor knows exactly what happened to each part of their issue.
+
+Set the top-level `action` to the dominant one: `accept` if any item is accepted, `defer` if all are deferred, `reject` if all are rejected. Set `partial` to `true` if any item requires multi-cycle work. For single-ask issues, omit `items` entirely.
+
+During CYCLE_COMPLETE, report per-item outcomes using the `item_outcomes` array within `issue_outcomes`. The runner uses this to track which items are still pending and only closes the issue when all items are resolved.
 
 ### Security Rules — CRITICAL
 

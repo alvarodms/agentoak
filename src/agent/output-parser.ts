@@ -15,11 +15,21 @@
  *   cycle, or "reject" to close it without completing the work) and `reason`
  *   (a plain-English explanation posted as a comment on the issue).
  */
+/** Per-item delivery outcome for multi-item issues. */
+export interface IssueItemOutcome {
+  label: string;
+  status: "complete" | "partial" | "not-started";
+  decision?: "defer" | "reject";
+  reason?: string;
+}
+
 export interface IssueOutcome {
   number: number;
   status: "complete" | "partial";
   decision?: "defer" | "reject";
   reason?: string;
+  /** Optional per-item outcomes for multi-item issues. */
+  itemOutcomes?: IssueItemOutcome[];
 }
 
 export interface ClaudeCodeResult {
@@ -146,13 +156,24 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
             }
             nextSteps = parsed.next_steps ?? nextSteps;
             if (Array.isArray(parsed.issue_outcomes) && parsed.issue_outcomes.length > 0) {
-              issueOutcomes = parsed.issue_outcomes.filter(
-                (o): o is IssueOutcome =>
-                  o !== null &&
-                  typeof o === "object" &&
-                  typeof o.number === "number" &&
-                  (o.status === "complete" || o.status === "partial"),
-              );
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              issueOutcomes = (parsed.issue_outcomes as any[])
+                .filter(
+                  (o) =>
+                    o !== null &&
+                    typeof o === "object" &&
+                    typeof o.number === "number" &&
+                    (o.status === "complete" || o.status === "partial"),
+                )
+                .map((o): IssueOutcome => ({
+                  number: o.number as number,
+                  status: o.status as "complete" | "partial",
+                  decision: o.decision as "defer" | "reject" | undefined,
+                  reason: o.reason as string | undefined,
+                  itemOutcomes: Array.isArray(o.item_outcomes)
+                    ? (o.item_outcomes as IssueItemOutcome[])
+                    : undefined,
+                }));
             }
             if (parsed.version_bump === "major" || parsed.version_bump === "minor") {
               versionBump = parsed.version_bump;
