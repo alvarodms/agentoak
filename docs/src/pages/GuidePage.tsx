@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import PokemonSprite from '../components/PokemonSprite';
 import TrainerCard from '../components/TrainerCard';
+import RivalBattleCard from '../components/RivalBattleCard';
 import RouteCard from '../components/RouteCard';
 import TypeBadge from '../components/TypeBadge';
 import { TYPE_EMOJIS } from '../lib/type-utils';
@@ -175,24 +176,24 @@ function StepRenderer({
       });
       if (battles.length === 0) return null;
 
-      // Group by rival name, show all starter matchups
+      // Group by rival name, render one tabbed card per rival
+      const byRival = new Map<string, typeof battles>();
+      for (const b of battles) {
+        const group = byRival.get(b.rival) ?? [];
+        group.push(b);
+        byRival.set(b.rival, group);
+      }
+
       return (
         <>
-          {battles
-            .sort((a, b) => {
-              const maxA = Math.max(...a.party.map(p => p.level));
-              const maxB = Math.max(...b.party.map(p => p.level));
-              return maxA - maxB;
-            })
-            .map((battle, i) => (
-              <TrainerCard
-                key={i}
-                title={`${battle.rival} \u2014 ${battle.location}`}
-                subtitle={battle.starterMatchup ? `If player chose: ${battle.starterMatchup}` : ''}
-                typeBadge="Rival"
-                party={battle.party}
-              />
-            ))}
+          {[...byRival.entries()].map(([rival, group]) => (
+            <RivalBattleCard
+              key={rival}
+              rival={rival}
+              location={group[0].location}
+              battles={group}
+            />
+          ))}
         </>
       );
     }

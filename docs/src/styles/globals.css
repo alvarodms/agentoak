@@ -1049,6 +1049,58 @@ body::after {
   transform: rotate(180deg);
 }
 
+/* ---- Rival Starter Tabs ---- */
+.rival-starter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px 10px;
+  flex-wrap: wrap;
+}
+
+.rival-tabs-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-right: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rival-starter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border: 1px solid var(--lab-panel-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.rival-starter-tab:hover {
+  border-color: var(--pokeball-red);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rival-starter-tab.active {
+  border-color: var(--pokeball-red);
+  background: rgba(228, 55, 55, 0.12);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.starter-tab-sprite {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+}
+
 /* ---- Encounter Count Badge ---- */
 .encounter-count {
   font-family: var(--font-mono);
