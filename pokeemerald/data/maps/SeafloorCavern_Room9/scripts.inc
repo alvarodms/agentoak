@@ -1,5 +1,35 @@
 SeafloorCavern_Room9_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeafloorCavern_Room9_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SeafloorCavern_Room9_OnResume
 	.byte 0
+
+SeafloorCavern_Room9_OnTransition:
+	call SeafloorCavern_Room9_EventScript_TryShowPrimalKyogre
+	end
+
+SeafloorCavern_Room9_EventScript_TryShowPrimalKyogre::
+	goto_if_set FLAG_CAUGHT_PRIMAL_KYOGRE, SeafloorCavern_Room9_EventScript_HidePrimalKyogre
+	goto_if_set FLAG_DEFEATED_PRIMAL_KYOGRE, SeafloorCavern_Room9_EventScript_HidePrimalKyogre
+	goto_if_unset FLAG_ALL_SIGNS_REPORTED, SeafloorCavern_Room9_EventScript_HidePrimalKyogre
+	goto_if_unset FLAG_SEAFLOOR_CAVERN_INVESTIGATED, SeafloorCavern_Room9_EventScript_HidePrimalKyogre
+	clearflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE
+	setvar VAR_TEMP_1, 0
+	return
+
+SeafloorCavern_Room9_EventScript_HidePrimalKyogre::
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE
+	setvar VAR_TEMP_1, 1
+	return
+
+SeafloorCavern_Room9_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, SeafloorCavern_Room9_EventScript_TryRemoveKyogre
+	end
+
+SeafloorCavern_Room9_EventScript_TryRemoveKyogre::
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject LOCALID_SEAFLOOR_CAVERN_KYOGRE
+	return
 
 @ === Deep-Sea Researcher (Primal Stirring investigation) ===
 
@@ -354,3 +384,140 @@ SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue:
 SeafloorCavern_Room9_Text_MaxieComeOnPlayer:
 	.string "MAXIE: {PLAYER}, come on, you have\n"
 	.string "to get out of here, too!$"
+
+@ === Primal Kyogre Encounter (v6.0 Primal Awakening) ===
+
+SeafloorCavern_Room9_EventScript_PrimalKyogre::
+	lockall
+	setvar VAR_TEMP_1, 1
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	setweather WEATHER_RAIN
+	doweather
+	playse SE_M_HYDRO_PUMP
+	setvar VAR_0x8004, 2
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 6
+	setvar VAR_0x8007, 2
+	special ShakeCamera
+	waitstate
+	delay 20
+	msgbox SeafloorCavern_Room9_Text_PrimalKyogreAwakens, MSGBOX_DEFAULT
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setvar VAR_LAST_TALKED, LOCALID_SEAFLOOR_CAVERN_KYOGRE
+	setwildbattle SPECIES_KYOGRE, 70
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SeafloorCavern_Room9_EventScript_PrimalKyogreDefeated
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SeafloorCavern_Room9_EventScript_PrimalKyogreFled
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SeafloorCavern_Room9_EventScript_PrimalKyogreFled
+	@ Caught
+	setflag FLAG_CAUGHT_PRIMAL_KYOGRE
+	setweather WEATHER_NONE
+	doweather
+	msgbox SeafloorCavern_Room9_Text_KyogreCaught, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SeafloorCavern_Room9_EventScript_PrimalKyogreDefeated::
+	setflag FLAG_DEFEATED_PRIMAL_KYOGRE
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE
+	setweather WEATHER_NONE
+	doweather
+	msgbox SeafloorCavern_Room9_Text_KyogreFled, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SeafloorCavern_Room9_EventScript_PrimalKyogreFled::
+	setflag FLAG_DEFEATED_PRIMAL_KYOGRE
+	setflag FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE
+	setweather WEATHER_NONE
+	doweather
+	msgbox SeafloorCavern_Room9_Text_KyogreFled, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SeafloorCavern_Room9_Text_PrimalKyogreAwakens:
+	.string "The cavern floods with surging water!\n"
+	.string "A deafening roar echoes from the\l"
+	.string "depths as ancient power awakens...$"
+
+SeafloorCavern_Room9_Text_KyogreCaught:
+	.string "The churning waters grow calm.\n"
+	.string "The crushing pressure lifts.\p"
+	.string "The sea basin POKéMON rests within\n"
+	.string "your POKé BALL, its endless\l"
+	.string "tempest finally stilled.$"
+
+SeafloorCavern_Room9_Text_KyogreFled:
+	.string "The waters recede slowly.\n"
+	.string "The ancient presence fades...\p"
+	.string "But the ocean still churns\n"
+	.string "with restless energy.$"
+
+@ === Team Aqua Remnant Trainers (C123) ===
+
+SeafloorCavern_Room9_EventScript_AquaGrunt1::
+	trainerbattle_single TRAINER_AQUA_GRUNT_SEAFLOOR_1, SeafloorCavern_Room9_Text_AquaGrunt1Intro, SeafloorCavern_Room9_Text_AquaGrunt1Defeat
+	msgbox SeafloorCavern_Room9_Text_AquaGrunt1Post, MSGBOX_AUTOCLOSE
+	end
+
+SeafloorCavern_Room9_Text_AquaGrunt1Intro:
+	.string "The ocean called us back here.\n"
+	.string "KYOGRE's presence is undeniable!\p"
+	.string "TEAM AQUA's dream lives on!$"
+
+SeafloorCavern_Room9_Text_AquaGrunt1Defeat:
+	.string "The current swept me away...$"
+
+SeafloorCavern_Room9_Text_AquaGrunt1Post:
+	.string "We came to witness KYOGRE's\n"
+	.string "return. The tides are changing\l"
+	.string "whether you like it or not.$"
+
+SeafloorCavern_Room9_EventScript_AquaGrunt2::
+	trainerbattle_single TRAINER_AQUA_GRUNT_SEAFLOOR_2, SeafloorCavern_Room9_Text_AquaGrunt2Intro, SeafloorCavern_Room9_Text_AquaGrunt2Defeat
+	msgbox SeafloorCavern_Room9_Text_AquaGrunt2Post, MSGBOX_AUTOCLOSE
+	end
+
+SeafloorCavern_Room9_Text_AquaGrunt2Intro:
+	.string "Can you feel it? The water pressure\n"
+	.string "is rising. Something ancient is\l"
+	.string "waking up down here!$"
+
+SeafloorCavern_Room9_Text_AquaGrunt2Defeat:
+	.string "You're strong... but the sea\n"
+	.string "is stronger.$"
+
+SeafloorCavern_Room9_Text_AquaGrunt2Post:
+	.string "ARCHIE always said the ocean\n"
+	.string "would reclaim what was taken.\l"
+	.string "Maybe he was right all along.$"
+
+SeafloorCavern_Room9_EventScript_AquaAdmin::
+	trainerbattle_single TRAINER_AQUA_ADMIN_SEAFLOOR, SeafloorCavern_Room9_Text_AquaAdminIntro, SeafloorCavern_Room9_Text_AquaAdminDefeat
+	msgbox SeafloorCavern_Room9_Text_AquaAdminPost, MSGBOX_AUTOCLOSE
+	end
+
+SeafloorCavern_Room9_Text_AquaAdminIntro:
+	.string "I'm AMBER, Admin of TEAM AQUA.\p"
+	.string "The migration proved ARCHIE right.\n"
+	.string "The ocean is alive and angry.\p"
+	.string "KYOGRE will rise again, and this\n"
+	.string "time, nothing will stop it!$"
+
+SeafloorCavern_Room9_Text_AquaAdminDefeat:
+	.string "You fight like the sea itself...\n"
+	.string "Relentless.$"
+
+SeafloorCavern_Room9_Text_AquaAdminPost:
+	.string "KYOGRE doesn't need our help\n"
+	.string "to awaken. The primal stirring\l"
+	.string "is bigger than any of us.\p"
+	.string "Are you prepared for what waits\n"
+	.string "in the deepest chamber?$"

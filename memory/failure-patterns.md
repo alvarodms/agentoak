@@ -35,10 +35,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **C123 CORRECTION**: Route111 line 650 smart quotes (U+201C/U+201D) are NOT corrupted — they're valid charmap entries (B1/B2). The "no mapping exists for double quote" error only occurs when these are REPLACED with ASCII `"`. Never replace smart quotes with ASCII quotes — the charmap has no entry for ASCII `"`.
 **Actual C122 failure cause**: Missing script references (HarborWatcher, DesertResearcher) from C120 map.json edits whose scripts were lost during a prior revert. Fixed in C123.
 
-## Pre-existing Build Blockers Cause Cascade Reverts (C122)
+## Pre-existing Build Blockers Cause Cascade Reverts (C122, C124)
 
 **Symptom**: Cycle makes valid changes but build fails due to pre-existing issue in unrelated file.
-**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first.
+**C124 instance**: C123 claimed "clean build" but left 6 missing trainer party arrays (trainer_parties.h) + 6 missing trainer battle scripts (scripts.inc) + 1 missing NPC script (SlateportCity). The trainers.h entries and map.json refs existed but their dependencies did not.
+**Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first. Never trust previous cycle's "clean build" claim without verifying.
 
 ## agbcc Toolchain Missing After Runner Revert (Cycle 42+)
 

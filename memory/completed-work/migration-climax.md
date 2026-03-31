@@ -47,22 +47,39 @@
 
 C122 attempted 6 trainers but was reverted. C123 re-implemented successfully.
 
-## C123 — Magma/Aqua Remnant Trainers (re-implemented, clean build)
+## C123 — Magma/Aqua Remnant Trainers (partial — trainer entries + map.json only)
 
 | File | Cycle | Changes |
 |------|-------|---------|
 | `data/maps/TerraCave_Entrance/map.json` | **123** | Added Magma Grunt 1 object event (10,10) — TRAINER_TYPE_NORMAL, sight 4 |
-| `data/maps/TerraCave_Entrance/scripts.inc` | **123** | Magma Grunt 1 trainer battle + 3 text blocks (intro/defeat/post) |
 | `data/maps/TerraCave_End/map.json` | **123** | Added Magma Grunt 2 (12,12) + Magma Admin (15,18) object events |
-| `data/maps/TerraCave_End/scripts.inc` | **123** | Magma Grunt 2 + Admin Courtney trainer battles + 7 text blocks. Admin has 2 post-battle messages seeding Rayquaza |
 | `data/maps/SeafloorCavern_Room9/map.json` | **123** | Added 3 Aqua object events: Grunt 1 (10,8), Grunt 2 (14,15), Admin (11,25) |
-| `data/maps/SeafloorCavern_Room9/scripts.inc` | **123** | 3 Aqua trainer battles + 9 text blocks. Admin Amber has 2 post-battle messages seeding Rayquaza |
 | `include/constants/opponents.h` | **123** | 6 new IDs (876-881), TRAINERS_COUNT→882, MAX_TRAINERS_COUNT→882 |
-| `src/data/trainer_parties.h` | **123** | 6 party arrays: grunts 2 mons each, admins 4 mons each. All with held items + custom movesets |
-| `src/data/trainers.h` | **123** | 6 trainer entries: grunts (CHECK_BAD_MOVE + TRY_TO_FAINT + CHECK_VIABILITY), admins (+SETUP_FIRST_TURN + HP_AWARE + 2x FULL_RESTORE) |
+| `src/data/trainers.h` | **123** | 6 trainer entries (struct only — party arrays were NOT added) |
 
-### Also fixed in C123:
-| `data/maps/SlateportCity/scripts.inc` | **123** | Added missing HarborWatcher script (C120 map.json referenced it but script was lost in revert) |
-| `data/maps/Route111/scripts.inc` | **123** | Added missing DesertResearcher script (same issue as above) |
+**NOTE**: C123 claimed "clean build" but was actually broken — trainer party arrays (trainer_parties.h) and battle scripts (scripts.inc) were NOT committed. Fixed in C124.
 
-## Status: v6.0 Act 2 COMPLETE — dungeon encounters, investigation NPCs, and remnant trainers deployed
+## C124 — Primal Awakening: Groudon & Kyogre Static Encounters + C123 Build Fixes
+
+### C123 Build Fixes (prerequisite)
+| File | Cycle | Changes |
+|------|-------|---------|
+| `src/data/trainer_parties.h` | **124** | Added all 6 missing C123 party arrays: MagmaGruntTerraCave1/2, MagmaAdminTerraCave, AquaGruntSeafloor1/2, AquaAdminSeafloor. Grunts: 2 mons Lv44-46, Admins: 3 mons Lv47-48 with custom movesets |
+| `data/maps/TerraCave_Entrance/scripts.inc` | **124** | Added missing MagmaGrunt1 trainer battle script + 3 text blocks |
+| `data/maps/TerraCave_End/scripts.inc` | **124** | Added missing MagmaGrunt2 + MagmaAdmin (Courtney) trainer battle scripts + 7 text blocks |
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | **124** | Added missing AquaGrunt1/2 + AquaAdmin (Amber) trainer battle scripts + 9 text blocks |
+| `data/maps/SlateportCity/scripts.inc` | **124** | Added missing HarborWatcher NPC script + text (primal stirring flavor) |
+
+### Primal Groudon Encounter (Terra Cave End)
+| File | Cycle | Changes |
+|------|-------|---------|
+| `data/maps/TerraCave_End/scripts.inc` | **124** | Modified OnTransition: added `TryShowPrimalGroudon` — gates on FLAG_ALL_SIGNS_REPORTED + FLAG_TERRA_CAVE_INVESTIGATED, sets VAR_TEMP_1=2. New `PrimalGroudon` encounter script: weather→SUNNY, SE_M_EARTHQUAKE, ShakeCamera, cinematic text, setwildbattle Lv70. Caught/defeated/fled branches set primal flags + normalize weather. 3 text blocks (awaken/caught/fled) |
+| `data/maps/TerraCave_End/map.json` | **124** | Added second coord_event at (17,26) VAR_TEMP_1=2 → PrimalGroudon script |
+
+### Primal Kyogre Encounter (Seafloor Cavern Room 9)
+| File | Cycle | Changes |
+|------|-------|---------|
+| `data/maps/SeafloorCavern_Room9/scripts.inc` | **124** | Replaced empty MapScripts with ON_TRANSITION + ON_RESUME. TryShowPrimalKyogre: gates on primal flags + investigation flags, controls Kyogre visibility + VAR_TEMP_1. TryRemoveKyogre: post-catch sprite removal. New PrimalKyogre encounter: weather→RAIN, SE_M_HYDRO_PUMP, ShakeCamera, cinematic text, setwildbattle Lv70. Caught/defeated/fled branches. 3 text blocks |
+| `data/maps/SeafloorCavern_Room9/map.json` | **124** | Added coord_event at (17,42) VAR_TEMP_1=0 → PrimalKyogre script |
+
+## Status: v6.0 Act 3 COMPLETE — Primal Groudon and Kyogre encounters deployed with cinematic presentation

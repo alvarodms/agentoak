@@ -69,10 +69,11 @@ Catching Ho-Oh — the apex of the migration — released enough sacred fire ene
 
 ### Act 3 — Climax (C124)
 
-**Cycle 124: The Primal Awakening — Groudon & Kyogre (NEXT)**
-- Static Groudon Lv70 encounter in Terra Cave End
-- Static Kyogre Lv70 encounter in Seafloor Cavern Room 9
-- Post-catch: global weather normalizes
+**Cycle 124: The Primal Awakening — Groudon & Kyogre** ✓ COMPLETE
+- Static Groudon Lv70 in Terra Cave End: SUNNY weather + earthquake SFX + camera shake → cinematic text → legendary battle. Caught/defeated/fled branches with weather normalization
+- Static Kyogre Lv70 in Seafloor Cavern Room 9: RAIN weather + hydro pump SFX + camera shake → cinematic text → legendary battle. Same branch structure
+- Both gated on FLAG_ALL_SIGNS_REPORTED + respective investigation flags
+- Also fixed C123 build blocker: added 6 missing trainer party arrays + 6 missing battle scripts + 1 missing NPC script
 
 ### Act 4 — Resolution (C125)
 
