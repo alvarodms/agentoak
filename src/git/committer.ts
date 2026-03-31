@@ -186,6 +186,26 @@ export async function getDiff(): Promise<string> {
   }
 }
 
+/**
+ * Get added lines from the memory/strategy-notes.md diff (staged + unstaged vs HEAD).
+ * Used to capture plan output for planning cycles.
+ */
+export async function getStrategyNotesDiff(): Promise<string> {
+  try {
+    const diff = await git.diff(["HEAD", "--", "memory/strategy-notes.md"]);
+    if (!diff) return "";
+    // Extract only added lines (skip diff headers)
+    return diff
+      .split("\n")
+      .filter((line) => line.startsWith("+") && !line.startsWith("+++"))
+      .map((line) => line.slice(1))
+      .join("\n")
+      .trim();
+  } catch {
+    return "";
+  }
+}
+
 export interface DiffStats {
   filesChanged: number;
   insertions: number;
