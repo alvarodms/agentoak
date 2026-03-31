@@ -70,6 +70,9 @@ export function formatPokedexToolsSection(): string {
 - \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
 - \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
 - \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
+- \`smogon_sets(name, format?)\` — competitive movesets and strategy from Smogon (moves, item, nature, EVs). Defaults to Gen 3.
+- \`smogon_format_pokemon(format, limit?)\` — list all Pokémon with competitive sets in a Smogon tier (ou, uu, ubers, etc.)
+- \`team_type_coverage(team[], gen?)\` — analyse a team's defensive weaknesses, resistances, immunities, and offensive coverage
 
 Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.`;
 }

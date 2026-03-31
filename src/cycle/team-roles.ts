@@ -26,8 +26,8 @@ export interface TeamRole {
   maxTurns: number;
   /** Timeout in milliseconds */
   timeout: number;
-  /** Comma-separated tool list (advisors are read-only) */
-  tools: string;
+  /** Comma-separated tool list — omit to allow all tools (including MCP) */
+  tools?: string;
   /** Build the full prompt for this advisor given shared context */
   buildPrompt: (ctx: TeamContext) => string;
 }
@@ -109,7 +109,6 @@ const pokemonSpecialistRole: TeamRole = {
   label: "Pokémon Specialist",
   maxTurns: 15,
   timeout: 4 * 60 * 1000,
-  tools: "Read,Write,WebSearch",
   buildPrompt: (ctx) => `You are the **Pokémon Specialist** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
 Your job: research what makes great Pokémon ROM hacks, understand community expectations, and write a short advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.

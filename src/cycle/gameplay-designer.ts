@@ -48,7 +48,6 @@ export async function runGameplayDesigner(
   const result = await runClaudeCode(prompt, {
     maxTurns: GAMEPLAY_DESIGNER_MAX_TURNS,
     timeout: GAMEPLAY_DESIGNER_TIMEOUT_MS,
-    tools: "Read",
     model: process.env.ANTHROPIC_MODEL,
     envOverrides: {
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1",
