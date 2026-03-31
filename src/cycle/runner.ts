@@ -24,6 +24,7 @@ import {
   getHeadSha,
   revertPokeemerald,
   getDiffStats,
+  getStrategyNotesDiff,
   getGitStatusText,
   getRecentGitLogText,
 } from "../git/committer.js";
@@ -579,6 +580,12 @@ export async function runCycle(): Promise<void> {
     fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
     fs.writeFileSync(cycleJsonPath, JSON.stringify({ cycle: String(cycleNumber).padStart(4, "0") }, null, 2) + "\n", "utf-8");
 
+    // For planning cycles, capture the strategy-notes additions as plan output
+    let planOutput: string | undefined;
+    if (plan.mode === "planning") {
+      planOutput = await getStrategyNotesDiff() || undefined;
+    }
+
     log.info("Phase 5: Writing journal entry...");
     const journalFile = writeJournalEntry({
       cycleNumber,
@@ -603,6 +610,7 @@ export async function runCycle(): Promise<void> {
       toolCallCount: implResult.toolCallCount + fixActions.length,
       issueActions: plan.issueActions.length > 0 ? plan.issueActions : undefined,
       helpRequests: plan.helpRequests.length > 0 ? plan.helpRequests : undefined,
+      planOutput,
     });
 
     // Apply agent-declared version bump / release stage before committing

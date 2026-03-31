@@ -24,6 +24,8 @@ export interface JournalData {
   helpRequests?: HelpRequest[];
   validationWarnings?: string[];
   validationStatus?: string;
+  /** For planning cycles: the content added to strategy-notes.md (the plan output) */
+  planOutput?: string;
 }
 
 /** Write a journal entry for a completed cycle */
@@ -50,6 +52,9 @@ export function writeJournalEntry(data: JournalData): string {
 
   const issueSection = formatIssueSection(data.issueActions, data.helpRequests);
   const validationSection = formatValidationSection(data.validationWarnings, data.validationStatus);
+  const planOutputSection = data.planOutput
+    ? `\n## Plan Output\n\n${data.planOutput}\n`
+    : "";
 
   const content = `# Cycle ${paddedNumber}
 
@@ -72,7 +77,7 @@ ${buildSection}
 ## Summary
 
 ${data.cycleSummary || "No summary provided."}
-${validationSection}
+${planOutputSection}${validationSection}
 ## Reflection
 
 ${data.reflectionText || "No reflection generated."}

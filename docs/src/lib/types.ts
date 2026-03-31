@@ -13,6 +13,8 @@ export interface JournalEntry {
   stats?: {
     tokensUsed?: number;
   };
+  /** Strategy-notes additions for planning cycles — the actual plan output */
+  planOutput?: string;
 }
 
 export interface Move {

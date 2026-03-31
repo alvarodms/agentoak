@@ -8,6 +8,7 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execSync } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = join(__dirname, '..');
@@ -62,6 +63,12 @@ function parseJournal(md, filename) {
   const nextSteps = (sections['Next Steps'] || '').trim();
   const stats = parseStats(sections['Stats'] || '');
 
+  // Plan output: first try the journal section, then fall back to git diff
+  let planOutput = (sections['Plan Output'] || '').trim();
+  if (!planOutput && mode === 'planning') {
+    planOutput = extractPlanOutputFromGit(cycle);
+  }
+
   return {
     cycle,
     date,
@@ -73,6 +80,7 @@ function parseJournal(md, filename) {
     summary,
     nextSteps,
     stats,
+    ...(planOutput ? { planOutput } : {}),
   };
 }
 
@@ -153,6 +161,37 @@ function parseStats(text) {
   if (tokensMatch) stats.tokensUsed = parseInt(tokensMatch[1].replace(/,/g, ''), 10);
 
   return Object.keys(stats).length > 0 ? stats : null;
+}
+
+/**
+ * For planning cycles without a ## Plan Output section in the journal,
+ * extract the strategy-notes additions from the git diff of that cycle's commit.
+ */
+function extractPlanOutputFromGit(cycle) {
+  try {
+    const padded = String(cycle).padStart(4, '0');
+    const hash = execSync(
+      `git log --all --format=%H --grep="cycle ${padded}" -- journal/`,
+      { cwd: ROOT, encoding: 'utf-8', timeout: 10000 },
+    ).trim().split('\n')[0];
+    if (!hash) return '';
+
+    const diff = execSync(
+      `git diff ${hash}^..${hash} -- memory/strategy-notes.md`,
+      { cwd: ROOT, encoding: 'utf-8', timeout: 10000 },
+    );
+    if (!diff) return '';
+
+    // Extract only added lines (skip diff headers like +++ and @@)
+    return diff
+      .split('\n')
+      .filter(line => line.startsWith('+') && !line.startsWith('+++'))
+      .map(line => line.slice(1))
+      .join('\n')
+      .trim();
+  } catch {
+    return '';
+  }
 }
 
 main().catch(err => {
