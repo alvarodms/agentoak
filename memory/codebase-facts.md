@@ -87,11 +87,21 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## Physical/Special Split (Cycle 43-44, 75)
+## Physical/Special Split & Move System (Cycle 43-44, 75, 128)
 
-Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Constants defined in `include/pokemon.h` (0/1/2). Battle calc in `battle_script_commands.c` checks category instead of type. All 355 moves categorized. Fairy type added as TYPE_FAIRY with full type chart.
+Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Constants defined in `include/pokemon.h` (0/1/2). Battle calc in `battle_script_commands.c` checks category instead of type. Fairy type added as TYPE_FAIRY with full type chart.
 
-**Summary screen category icons (Cycle 75)**: Physical/Special/Status icons displayed on battle moves page.
+**Move data format** (`src/data/battle_moves.h`): `gBattleMoves[MOVES_COUNT]` array indexed by move constant. Fields: `.effect`, `.power`, `.type`, `.accuracy`, `.pp`, `.secondaryEffectChance`, `.target`, `.priority`, `.flags`, `.category`.
+
+**Current state (C128)**: MOVES_COUNT = 358 (IDs 0-357). Last vanilla move = MOVE_PSYCHO_BOOST (354). Custom moves: MOVE_MOONBLAST (355), MOVE_PLAY_ROUGH (356), MOVE_DAZZLING_GLEAM (357).
+
+**Move constants**: `include/constants/moves.h`. New moves go at end. MOVES_COUNT must be updated.
+
+**Recoil effects**: EFFECT_RECOIL = 1/4 (Take Down). EFFECT_DOUBLE_EDGE = 1/3 (Double-Edge). Brave Bird/Flare Blitz can reuse EFFECT_DOUBLE_EDGE.
+
+**EFFECT_SUPERPOWER**: Lowers user's Atk and Def by 1 stage. Battle script at `data/battle_scripts_1.s`. Close Combat needs adapted version (lower Def + SpD instead).
+
+**Species NOT in codebase**: Mismagius, Mamoswine, Weavile (Gen 4 evolutions never added). Garchomp, Lucario, Riolu ARE present (added C60-70).
 
 ---
 
