@@ -60,6 +60,7 @@ PacifidlogTown_Text_TownSign:
 PacifidlogTown_EventScript_TideElder::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, PacifidlogTown_EventScript_TideElderResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, PacifidlogTown_EventScript_ElderReport
 	msgbox PacifidlogTown_Text_ElderNormal, MSGBOX_DEFAULT
 	release
@@ -100,3 +101,17 @@ PacifidlogTown_Text_ElderReport:
 	.string "seas. KYOGRE.\p"
 	.string "I pray those are just\n"
 	.string "songs.$"
+
+PacifidlogTown_EventScript_TideElderResolved::
+	msgbox PacifidlogTown_Text_TideElderResolved, MSGBOX_NPC
+	end
+
+PacifidlogTown_Text_TideElderResolved:
+	.string "The old tales were true, then.\n"
+	.string "When land and sea clash, the world\l"
+	.string "trembles.\p"
+	.string "But the trembling has stopped.\n"
+	.string "Someone restored the balance.\p"
+	.string "The elders always said a brave\n"
+	.string "soul would rise when needed.\l"
+	.string "I believe that soul is you.$"

@@ -24,5 +24,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Villain Remnant Trainer Design | 122 | [villain-remnant-trainer-design.md](pokemon-knowledge/villain-remnant-trainer-design.md) |
 | Primal Static Encounter Design | 124 | [primal-static-encounter-design.md](pokemon-knowledge/primal-static-encounter-design.md) |
 | Arc Conclusion & World Reaction Patterns | 125 | [arc-conclusion-world-reaction.md](pokemon-knowledge/arc-conclusion-world-reaction.md) |
+| README & Community Documentation Patterns | 126 | [readme-community-docs.md](pokemon-knowledge/readme-community-docs.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

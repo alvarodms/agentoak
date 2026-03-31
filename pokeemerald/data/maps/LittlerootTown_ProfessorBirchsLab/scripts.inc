@@ -1459,9 +1459,22 @@ BirchLab_EventScript_PrimalRemindTides::
 	end
 
 BirchLab_EventScript_PrimalNextPhase::
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, BirchLab_EventScript_PrimalResolved
 	goto_if_unset FLAG_TERRA_CAVE_INVESTIGATED, BirchLab_EventScript_PrimalInvestigateCaves
 	goto_if_unset FLAG_SEAFLOOR_CAVERN_INVESTIGATED, BirchLab_EventScript_PrimalInvestigateCaves
-	@ Both caves investigated — proceed to Regi directive
+	@ Check Groudon dealt with (caught OR defeated)
+	goto_if_set FLAG_CAUGHT_PRIMAL_GROUDON, BirchLab_EventScript_CheckKyogre
+	goto_if_set FLAG_DEFEATED_PRIMAL_GROUDON, BirchLab_EventScript_CheckKyogre
+	@ Groudon not dealt with yet -- show Regi directive
+	msgbox BirchLab_Text_PrimalNextPhase, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_EventScript_CheckKyogre::
+	@ Check Kyogre dealt with (caught OR defeated)
+	goto_if_set FLAG_CAUGHT_PRIMAL_KYOGRE, BirchLab_EventScript_PrimalDebrief
+	goto_if_set FLAG_DEFEATED_PRIMAL_KYOGRE, BirchLab_EventScript_PrimalDebrief
+	@ Kyogre not dealt with yet -- show Regi directive
 	msgbox BirchLab_Text_PrimalNextPhase, MSGBOX_DEFAULT
 	release
 	end
@@ -1883,3 +1896,79 @@ BirchLab_Text_AllSignsDirective:
 	.string "weakening... we will know\l"
 	.string "how much time we have.\p"
 	.string "Be careful out there.$"
+
+@ =============================================================
+@ v6.0 Resolution -- Primal Crisis Debrief
+@ =============================================================
+
+BirchLab_EventScript_PrimalDebrief::
+	lock
+	faceplayer
+	playse SE_PIN
+	waitse
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox BirchLab_Text_PrimalDebrief1, MSGBOX_DEFAULT
+	delay 30
+	playse SE_M_EARTHQUAKE
+	waitse
+	special ShakeCamera
+	msgbox BirchLab_Text_PrimalDebrief2, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_PrimalDebrief3, MSGBOX_DEFAULT
+	setflag FLAG_PRIMAL_CRISIS_RESOLVED
+	release
+	end
+
+BirchLab_EventScript_PrimalResolved::
+	lock
+	faceplayer
+	msgbox BirchLab_Text_PrimalResolved, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_Text_PrimalDebrief1:
+	.string "PROF. BIRCH: {PLAYER}! The readings\n"
+	.string "have stabilized completely!\p"
+	.string "Both GROUDON and KYOGRE have\n"
+	.string "returned to dormancy. The primal\l"
+	.string "energies are fading back to\l"
+	.string "baseline.$"
+
+BirchLab_Text_PrimalDebrief2:
+	.string "PROF. BIRCH: I have to be honest\n"
+	.string "with you.\p"
+	.string "When those readings spiked, I\n"
+	.string "feared the worst. HO-OH's capture\l"
+	.string "awakened something ancient.\p"
+	.string "Something that was never meant\n"
+	.string "to stir again.\p"
+	.string "But you confronted it head-on.\n"
+	.string "You restored the balance.$"
+
+BirchLab_Text_PrimalDebrief3:
+	.string "PROF. BIRCH: Though... there is\n"
+	.string "one thing that puzzles me.\p"
+	.string "The seismic and tidal readings\n"
+	.string "have normalized, yes. But my\l"
+	.string "atmospheric sensors are picking\l"
+	.string "up something new.\p"
+	.string "A disturbance high above us.\n"
+	.string "In the ozone layer itself.\p"
+	.string "The legends speak of a guardian\n"
+	.string "of the sky -- one that mediates\l"
+	.string "between land and sea.\p"
+	.string "If GROUDON and KYOGRE have\n"
+	.string "stirred... perhaps their ancient\l"
+	.string "arbiter has taken notice as well.\p"
+	.string "Keep your eyes skyward, {PLAYER}.\n"
+	.string "I have a feeling this story\l"
+	.string "is not over yet.$"
+
+BirchLab_Text_PrimalResolved:
+	.string "PROF. BIRCH: The primal readings\n"
+	.string "remain stable. GROUDON and KYOGRE\l"
+	.string "are at rest.\p"
+	.string "But those atmospheric anomalies\n"
+	.string "continue to intrigue me.\p"
+	.string "Something is stirring in the sky\n"
+	.string "above HOENN. I can feel it.$"

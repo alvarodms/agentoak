@@ -1354,3 +1354,49 @@ SlateportCity_Text_TakingBattleTentChallenge:
 	.string "After all, a tough TRAINER is\n"
 	.string "the perfect fit for the BATTLE TENT!\p"
 	.string "Give it your best effort!$"
+
+@ === Harbor Watcher (Primal Stirring flavor NPC -- C120/C126) ===
+
+SlateportCity_EventScript_HarborWatcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, SlateportCity_EventScript_HarborWatcherResolved
+	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, SlateportCity_EventScript_HarborWatcherStirring
+	msgbox SlateportCity_Text_HarborWatcherNormal, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_EventScript_HarborWatcherStirring::
+	msgbox SlateportCity_Text_HarborWatcherStirring, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_EventScript_HarborWatcherResolved::
+	msgbox SlateportCity_Text_HarborWatcherResolved, MSGBOX_NPC
+	end
+
+SlateportCity_Text_HarborWatcherNormal:
+	.string "I watch the ships come and go\n"
+	.string "every day. The harbor is always\l"
+	.string "busy this time of year.\p"
+	.string "Ferries, cargo ships, fishing\n"
+	.string "boats... SLATEPORT never sleeps.$"
+
+SlateportCity_Text_HarborWatcherStirring:
+	.string "The waves have been acting\n"
+	.string "strange lately. Swells coming\l"
+	.string "from nowhere, no wind at all.\p"
+	.string "The fishing boats came back\n"
+	.string "early yesterday. The captain\l"
+	.string "said the sea felt angry.\p"
+	.string "I have worked this harbor for\n"
+	.string "twenty years. Never seen\l"
+	.string "anything like it.$"
+
+SlateportCity_Text_HarborWatcherResolved:
+	.string "The harbor is calm as glass today.\n"
+	.string "Hard to believe those waves were\l"
+	.string "nearly capsizing boats last week.\p"
+	.string "The sailors are saying someone\n"
+	.string "calmed the sea itself. Was that\l"
+	.string "you, kid?$"

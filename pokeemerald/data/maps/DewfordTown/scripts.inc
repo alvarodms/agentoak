@@ -799,6 +799,7 @@ DewfordTown_Text_YeahDefinitionOfInRightNow:
 DewfordTown_EventScript_TideWatcher::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, DewfordTown_EventScript_TideWatcherResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, DewfordTown_EventScript_TideReport
 	msgbox DewfordTown_Text_TideNormal, MSGBOX_DEFAULT
 	release
@@ -838,3 +839,16 @@ DewfordTown_Text_TideReport:
 	.string "My granddad would say the\n"
 	.string "sea is holding its breath.\l"
 	.string "Waiting for something.$"
+
+DewfordTown_EventScript_TideWatcherResolved::
+	msgbox DewfordTown_Text_TideWatcherResolved, MSGBOX_NPC
+	end
+
+DewfordTown_Text_TideWatcherResolved:
+	.string "The tides have settled back to\n"
+	.string "their normal patterns.\p"
+	.string "For a while there, the currents\n"
+	.string "were wild. Fish were surfacing\l"
+	.string "in places I had never seen them.\p"
+	.string "Feels like the sea itself let\n"
+	.string "out a long sigh of relief.$"

@@ -723,11 +723,12 @@ Route111_Text_TrainerHillSign:
 	.string "TRAINERS!”$"
 
 
-@ === Desert Researcher (Primal Stirring flavor NPC — C120) ===
+@ === Desert Researcher (Primal Stirring flavor NPC -- C120) ===
 
 Route111_EventScript_DesertResearcher::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, Route111_EventScript_DesertResearcherResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, Route111_EventScript_DesertResearcherStirring
 	msgbox Route111_Text_DesertResearcherNormal, MSGBOX_DEFAULT
 	release
@@ -748,3 +749,17 @@ Route111_Text_DesertResearcherStirring:
 	.string "It's as if the desert itself is\n"
 	.string "responding to something deep\l"
 	.string "underground.$"
+
+Route111_EventScript_DesertResearcherResolved::
+	msgbox Route111_Text_DesertResearcherResolved, MSGBOX_NPC
+	end
+
+Route111_Text_DesertResearcherResolved:
+	.string "Fascinating! My seismograph has\n"
+	.string "returned to baseline readings.\p"
+	.string "The tremor frequency dropped from\n"
+	.string "twelve per hour to nearly zero\l"
+	.string "overnight.\p"
+	.string "Whatever geological event was\n"
+	.string "building has completely dissipated.\l"
+	.string "Remarkable.$"

@@ -16,13 +16,7 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 - [The Game: Legends of Hoenn](#the-game-legends-of-hoenn)
 - [How It Works](#how-it-works)
-- [Architecture](#architecture)
-- [The Cycle Pipeline](#the-cycle-pipeline)
-- [Cycle Modes](#cycle-modes)
-- [Memory System](#memory-system)
-- [Journal](#journal)
 - [Community Interaction](#community-interaction)
-- [Build System](#build-system)
 
 ---
 
@@ -69,3 +63,49 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Move category icons** in the battle UI
 
 ---
+
+## How It Works
+
+Agent Oak runs in **cycles** — autonomous work sessions triggered by GitHub Actions on a schedule or manually. Each cycle, the agent:
+
+1. **Reviews memory** from previous cycles to understand what has been done
+2. **Plans** what to work on next, guided by its creative vision and community suggestions
+3. **Reads and modifies** the pokeemerald source code (C, assembly, JSON, map data)
+4. **Builds the ROM** to verify changes compile correctly
+5. **Reflects** on what worked and what to try next, then saves findings to persistent memory
+
+Every successful cycle produces a new GBA ROM available as a [GitHub Release](../../releases). The agent decides its own priorities — from designing encounter tables to writing NPC dialogue to implementing battle engine changes. It can research game systems, plan multi-cycle arcs, and fix its own build errors.
+
+The agent's memory, journals, and strategy notes are all visible in this repository. Nothing is hidden — you can read exactly how Agent Oak thinks, plans, and learns.
+
+---
+
+## Community Interaction
+
+Agent Oak reads and responds to GitHub Issues filed by the community. This is how players and ROM hackers can influence the direction of the game.
+
+### How It Works
+
+1. **You file an issue** using one of the available labels: `suggestion`, `trainer-tip`, `bug-report`, or `idea`
+2. **At the start of each cycle**, the agent reviews all new (unreviewed) issues
+3. **The agent decides** whether to accept, defer, reject, or ask for more information — based on its own understanding of the project goals and creative vision
+4. **If accepted**, your suggestion becomes part of that cycle's objective and gets implemented
+5. **The agent responds** with a comment explaining its decision in Professor Oak's voice
+
+### Decision Philosophy
+
+Agent Oak is autonomous — it is not an instruction-following bot. Community suggestions are treated as *input to a creative process*, not commands. The agent weighs each suggestion against:
+
+- The current game design vision and multi-cycle roadmap
+- Technical feasibility within the pokeemerald codebase
+- Whether the suggestion enhances the player experience
+- How it fits with recently completed or planned work
+
+Good suggestions that do not fit the current cycle are **deferred** to the backlog for future consideration. Suggestions that conflict with the project direction are **rejected** with an explanation.
+
+### How to Make a Great Suggestion
+
+- **Be specific** — "Route 119 should have rain-themed encounters" is better than "make encounters better"
+- **Explain why** — what player experience problem does your idea solve?
+- **Think thematically** — suggestions that fit the migration narrative tend to resonate
+- **Check the releases** — look at recent changes to avoid suggesting something already done

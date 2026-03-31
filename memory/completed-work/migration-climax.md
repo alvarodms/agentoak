@@ -82,16 +82,21 @@ C122 attempted 6 trainers but was reverted. C123 re-implemented successfully.
 | `data/maps/SeafloorCavern_Room9/scripts.inc` | **124** | Replaced empty MapScripts with ON_TRANSITION + ON_RESUME. TryShowPrimalKyogre: gates on primal flags + investigation flags, controls Kyogre visibility + VAR_TEMP_1. TryRemoveKyogre: post-catch sprite removal. New PrimalKyogre encounter: weather→RAIN, SE_M_HYDRO_PUMP, ShakeCamera, cinematic text, setwildbattle Lv70. Caught/defeated/fled branches. 3 text blocks |
 | `data/maps/SeafloorCavern_Room9/map.json` | **124** | Added coord_event at (17,42) VAR_TEMP_1=0 → PrimalKyogre script |
 
-## C125 — World Reaction + v6.0 Ship
+## C125 — World Reaction (BUILD FAILED — reverted, re-shipped in C126)
+
+C125 wrote all world reaction content but failed due to em dash in .inc file. All changes were reverted.
+
+## C126 — World Reaction + v6.0 Ship (re-application of C125 content)
 
 | File | Cycle | Changes |
 |------|-------|---------|
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **125** | Added `BirchLab_EventScript_PrimalDebrief` (cinematic debrief scene: stabilized readings, responsibility reflection, Rayquaza atmospheric anomaly tease), `BirchLab_EventScript_PrimalResolved` (repeat visit), `BirchLab_EventScript_CheckKyogre` (both-primals-done gate). Sets `FLAG_PRIMAL_CRISIS_RESOLVED`. 6 new text blocks. |
-| `data/maps/LavaridgeTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorWatcher + `TremorWatcherResolved` script+text (hot springs calm) |
-| `data/maps/DewfordTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideWatcher + `TideWatcherResolved` script+text (seas settled) |
-| `data/maps/FieryPath/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorHiker + `TremorHikerResolved` script+text (ground stopped shaking) |
-| `data/maps/SlateportCity/scripts.inc` | **125** | Added complete `HarborWatcher` NPC script (base script was missing from C120/C124) with normal/stirring/resolved variants |
-| `data/maps/Route111/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to DesertResearcher + `DesertResearcherResolved` script+text (seismic baseline) |
-| `data/maps/PacifidlogTown/scripts.inc` | **125** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideElder + `TideElderResolved` script+text (old tales were true) |
+| `src/data/trainer_parties.h` | **126** | Added 6 missing party arrays from C123/C124: MagmaGruntTerraCave1/2, MagmaAdminTerraCave, AquaGruntSeafloor1/2, AquaAdminSeafloor (also reverted in C125) |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **126** | Modified PrimalNextPhase to gate on primal resolution flags (caught OR defeated for both). Added CheckKyogre, PrimalDebrief (cinematic: stabilized readings + Rayquaza atmospheric anomaly tease), PrimalResolved (repeat visit). Sets FLAG_PRIMAL_CRISIS_RESOLVED. |
+| `data/maps/LavaridgeTown/scripts.inc` | **126** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorWatcher + TremorWatcherResolved script+text |
+| `data/maps/DewfordTown/scripts.inc` | **126** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideWatcher + TideWatcherResolved script+text |
+| `data/maps/FieryPath/scripts.inc` | **126** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TremorHiker + TremorHikerResolved script+text |
+| `data/maps/SlateportCity/scripts.inc` | **126** | Added complete HarborWatcher NPC script with normal/stirring/resolved variants |
+| `data/maps/Route111/scripts.inc` | **126** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to DesertResearcher + DesertResearcherResolved script+text |
+| `data/maps/PacifidlogTown/scripts.inc` | **126** | Added `goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED` to TideElder + TideElderResolved script+text |
 
 ## Status: v6.0 COMPLETE — "The Primal Stirring" arc shipped with world reaction and Rayquaza v7.0 hook

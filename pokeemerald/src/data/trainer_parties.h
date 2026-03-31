@@ -14654,3 +14654,123 @@ static const struct TrainerMonNoItemDefaultMoves sParty_JuneAndVic1[] = {
     .species = SPECIES_SNUBBULL,
     }
 };
+
+// === Terra Cave — Team Magma Remnants (C123/C126) ===
+
+static const struct TrainerMonItemCustomMoves sParty_MagmaGruntTerraCave1[] = {
+    {
+    .iv = 100,
+    .lvl = 44,
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_TAKE_DOWN, MOVE_SWAGGER, MOVE_ROAR}
+    },
+    {
+    .iv = 100,
+    .lvl = 45,
+    .species = SPECIES_CAMERUPT,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_FLAMETHROWER, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_TAKE_DOWN}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MagmaGruntTerraCave2[] = {
+    {
+    .iv = 100,
+    .lvl = 44,
+    .species = SPECIES_NUMEL,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_FLAMETHROWER, MOVE_EARTHQUAKE, MOVE_TAKE_DOWN, MOVE_AMNESIA}
+    },
+    {
+    .iv = 100,
+    .lvl = 46,
+    .species = SPECIES_GOLBAT,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_AIR_CUTTER, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_POISON_FANG}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MagmaAdminTerraCave[] = {
+    {
+    .iv = 150,
+    .lvl = 47,
+    .species = SPECIES_CAMERUPT,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_FLAMETHROWER, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_TOXIC}
+    },
+    {
+    .iv = 150,
+    .lvl = 47,
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_SHADOW_BALL, MOVE_IRON_TAIL, MOVE_SWAGGER}
+    },
+    {
+    .iv = 150,
+    .lvl = 48,
+    .species = SPECIES_NINETALES,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_FLAMETHROWER, MOVE_WILL_O_WISP, MOVE_CONFUSE_RAY, MOVE_QUICK_ATTACK}
+    }
+};
+
+// === Seafloor Cavern — Team Aqua Remnants (C123/C126) ===
+
+static const struct TrainerMonItemCustomMoves sParty_AquaGruntSeafloor1[] = {
+    {
+    .iv = 100,
+    .lvl = 44,
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_TAKE_DOWN, MOVE_SWAGGER, MOVE_ROAR}
+    },
+    {
+    .iv = 100,
+    .lvl = 45,
+    .species = SPECIES_SHARPEDO,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_SLASH, MOVE_SCARY_FACE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_AquaGruntSeafloor2[] = {
+    {
+    .iv = 100,
+    .lvl = 44,
+    .species = SPECIES_CARVANHA,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_SCARY_FACE, MOVE_SWAGGER}
+    },
+    {
+    .iv = 100,
+    .lvl = 46,
+    .species = SPECIES_GOLBAT,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_AIR_CUTTER, MOVE_BITE, MOVE_CONFUSE_RAY, MOVE_POISON_FANG}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_AquaAdminSeafloor[] = {
+    {
+    .iv = 150,
+    .lvl = 47,
+    .species = SPECIES_SHARPEDO,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_SLASH, MOVE_EARTHQUAKE}
+    },
+    {
+    .iv = 150,
+    .lvl = 47,
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_CRUNCH, MOVE_SHADOW_BALL, MOVE_IRON_TAIL, MOVE_SWAGGER}
+    },
+    {
+    .iv = 150,
+    .lvl = 48,
+    .species = SPECIES_CRAWDAUNT,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_BRICK_BREAK, MOVE_SWORDS_DANCE}
+    }
+};

@@ -19,6 +19,7 @@ FieryPath_EventScript_MoveScottToFallarbor::
 FieryPath_EventScript_TremorHiker::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, FieryPath_EventScript_TremorHikerResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, FieryPath_EventScript_TremorHikerReport
 	msgbox FieryPath_Text_HikerNormal, MSGBOX_DEFAULT
 	release
@@ -54,4 +55,15 @@ FieryPath_Text_HikerReport:
 	.string "They keep pressing against\l"
 	.string "the south wall, like they\l"
 	.string "are drawn to something.$"
+
+FieryPath_EventScript_TremorHikerResolved::
+	msgbox FieryPath_Text_TremorHikerResolved, MSGBOX_NPC
+	end
+
+FieryPath_Text_TremorHikerResolved:
+	.string "The ground finally stopped shaking!\n"
+	.string "I was starting to think\l"
+	.string "MT. CHIMNEY might actually blow.\p"
+	.string "Whatever happened down there,\n"
+	.string "I am glad it is over.$"
 

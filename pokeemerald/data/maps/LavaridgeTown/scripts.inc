@@ -429,6 +429,7 @@ LavaridgeTown_Text_MigrationResearcher:
 LavaridgeTown_EventScript_TremorWatcher::
 	lock
 	faceplayer
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, LavaridgeTown_EventScript_TremorWatcherResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, LavaridgeTown_EventScript_TremorReport
 	msgbox LavaridgeTown_Text_TremorNormal, MSGBOX_DEFAULT
 	release
@@ -465,4 +466,16 @@ LavaridgeTown_Text_TremorReport:
 	.string "beneath HOENN.\p"
 	.string "I used to think those were\n"
 	.string "just stories.$"
+
+LavaridgeTown_EventScript_TremorWatcherResolved::
+	msgbox LavaridgeTown_Text_TremorWatcherResolved, MSGBOX_NPC
+	end
+
+LavaridgeTown_Text_TremorWatcherResolved:
+	.string "The hot springs have calmed down\n"
+	.string "completely. The water temperature\l"
+	.string "is back to normal.\p"
+	.string "Whatever was stirring beneath us\n"
+	.string "has gone quiet. I can finally\l"
+	.string "relax again.$"
 

@@ -14,7 +14,7 @@
 
 ---
 
-# v6.0 — "The Primal Stirring" (Cycles 118-125+)
+# v6.0 — "The Primal Stirring" (Cycles 118-126) ✓ COMPLETE
 
 ## Arc Structure
 
@@ -29,10 +29,8 @@
 ### Act 3 — Climax (C124) ✓ COMPLETE
 - Static Groudon Lv70 + Kyogre Lv70 encounters with cinematic presentation
 
-### Act 4 — Resolution (C125) ✗ BUILD FAILED
-- Content WRITTEN but not shipped: Birch debrief + 6 NPC post-crisis dialogue + Rayquaza v7.0 hook + README update
-- **Failure cause**: em dash (U+2014) in BirchLab scripts.inc line 1940
-- **Next cycle**: Fix the em dash, validate with `grep -P`, rebuild. Should be a quick fix.
+### Act 4 — Resolution (C125→C126) ✓ COMPLETE
+- C125 failed (em dash in .inc), C126 re-shipped: Birch debrief, 6 NPC post-crisis dialogue, Rayquaza v7.0 hook, README update, trainer party fix
 
 ---
 
@@ -42,7 +40,7 @@
 Birch's atmospheric anomaly readings point to Rayquaza — the ancient mediator. Sky Pillar arc: investigate ozone disturbances, climb Sky Pillar, confront Rayquaza Lv70.
 
 ## Key Setup Already Planted
-- Birch debrief mentions "a third anomaly... above us" + "guardian of the ozone" (in C125 content, pending rebuild)
+- Birch debrief mentions "a third anomaly... above us" + "guardian of the ozone" (shipped C126)
 - Magma/Aqua admin post-battle dialogue mentions "the sky dragon"
 - Pacifidlog elder already references Sky Pillar
 
