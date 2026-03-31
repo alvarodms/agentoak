@@ -161,8 +161,21 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare
+.PHONY: all rom modern compare check_trainers check_ascii
 .PHONY: $(RULES_NO_SCAN)
+
+# Trainer data validation
+check_trainers:
+	@bash scripts/check_trainers.sh
+
+# Non-ASCII guard for .inc data files
+check_ascii:
+	@if grep -rPn '[^\x00-\x7F]' data/ --include='*.inc'; then \
+		echo "ERROR: Non-ASCII characters found in .inc files"; \
+		exit 1; \
+	else \
+		echo "check_ascii: all .inc files clean"; \
+	fi
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

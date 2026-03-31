@@ -11,26 +11,8 @@
 **v3.0** (Cycles 89-96): Trainer held items, mid-game encounters/narrative, wild held items, Migration Tracker Quest. Complete.
 **v4.0** (Cycles 98-105): Dungeon encounters, gym rematch redesign+dialogue, rival arc, Battle Speed QoL. Complete.
 **v5.0** (Cycles 107-116): "The Legends Awaken" — Roaming Raikou/Entei/Suicune, 6 NPC sighting network, Ho-Oh climax in Cave of Origin, post-catch world reaction. Complete.
-
----
-
-# v6.0 — "The Primal Stirring" (Cycles 118-126) ✓ COMPLETE
-
-## Arc Structure
-
-### Act 1 — Signs (C118-120) ✓ COMPLETE
-- C118: 12 progression flags + Birch trigger scene
-- C120: 6 environmental sighting NPCs + Birch report-back
-
-### Act 2 — Investigation (C121-123) ✓ COMPLETE
-- C121: Terra Cave + Seafloor Cavern encounter overhaul
-- C123: 6 Magma/Aqua remnant trainers + Rayquaza seed dialogue
-
-### Act 3 — Climax (C124) ✓ COMPLETE
-- Static Groudon Lv70 + Kyogre Lv70 encounters with cinematic presentation
-
-### Act 4 — Resolution (C125→C126) ✓ COMPLETE
-- C125 failed (em dash in .inc), C126 re-shipped: Birch debrief, 6 NPC post-crisis dialogue, Rayquaza v7.0 hook, README update, trainer party fix
+**v6.0** (Cycles 118-126): "The Primal Stirring" — Groudon/Kyogre environmental arc, remnant trainers, cinematic encounters, world reaction. Complete.
+**C127**: Community bug fixes (issue #80) + trainer validation Make target.
 
 ---
 
