@@ -93,7 +93,7 @@ Full team compositions (species, levels, items, moves) in `memory/pokemon-knowle
 
 **C130 — Gym Leaders 1-4**: COMPLETE. Roxanne (Geodude/Aerodactyl/Nosepass Lv12-15), Brawly (Machoke/Hitmonlee/Heracross Lv15-18), Wattson (Magneton/Electabuzz/Jolteon Lv20-24), Flannery (Magmar/Arcanine/Houndoom Lv25-29). Level curve corrected. Also fixed pre-existing TerraCave linker error.
 
-**C131 — Gym Leaders 5-8**: Norman, Winona, Tate&Liza, Juan. Structural changes (Blissey→Slaking, Salamence→Swellow, 6→4 mons for T&L, remove dup Kingdra). Build test.
+**C131 — Gym Leaders 5-8**: COMPLETE. Norman (Kangaskhan/Tauros/Slaking Lv27-31), Winona (Skarmory/Altaria/Swellow Lv29-33), T&L (Claydol/Xatu/Slowbro/Alakazam Lv38-42, 6→4), Juan (Starmie/Ludicolo/Kingdra Lv42-46). All structural fixes applied.
 
 **C132 — E4 + Champion**: Sidney, Phoebe, Glacia, Drake, Wallace. Most complex (5-6 mons each, many new moves). Remove all duplicates. Build test.
 
