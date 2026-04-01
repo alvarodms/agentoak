@@ -12,3 +12,4 @@ The Producer should review this list when planning — picking up even one item 
 | 121 | CheckMultipleFlags script macro (data/scripts/legend_macros.inc): reusable macro for N-flag checks. Marginal benefit until patterns exceed 3 flags. | deferred |
 | 126–127 | ASCII validation guard in Makefile: pre-build scan of .inc files for non-ASCII characters. Eliminates most persistent failure class. | done (C127) |
 | 129–133 | Move constant validator script (check_moves.sh): proposed C129, deferred through C132, dropped C133. Window passed — trainer overhaul complete, inline grep validation sufficed for learnset work. | dropped (C133) |
+| 115–134 | Legendary Encounter Template: Extract parameterized macros from v5/v6 encounters into data/scripts/legend_macros.inc. Reduces Rayquaza script from ~80 to ~20 lines. **Ship in C137** alongside Rayquaza encounter implementation — the ideal time to extract while building a new consumer. | pending |

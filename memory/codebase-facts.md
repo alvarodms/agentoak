@@ -59,15 +59,15 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ## Dialogue Editing System (Cycles 24-26)
 
-**Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. Smart quotes (“”) are valid (charmap B1/B2). ASCII double quote (0x22) is NOT in charmap and causes build errors.
+**Files**: Map `scripts.inc` files. Text format: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars per display line. Smart quotes are valid (charmap B1/B2). ASCII double quote (0x22) is NOT in charmap and causes build errors.
 
 **Safety**: `MSGBOX_NPC` labels are safe to rewrite. `MSGBOX_DEFAULT` labels may have story logic — check first.
 
 **Postgame gating**: Use `checkflag FLAG_SYS_GAME_CLEAR` + `goto_if_set` to branch dialogue after Champion defeat.
 
-**Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_0x800C+ are NOT defined. For multi-counter scripts, reuse VAR_0x8005/8006/8007 (safe as long as ScriptCheckSpeciesCaught only reads VAR_0x8004).
+**Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_0x800C+ are NOT defined.
 
-**specialvar vs special**: `special` discards return value. `specialvar VAR_RESULT, FuncName` captures it. Must use `specialvar` for bool16-returning specials like ScriptCheckSpeciesCaught.
+**specialvar vs special**: `special` discards return value. `specialvar VAR_RESULT, FuncName` captures it.
 
 ---
 
@@ -75,7 +75,7 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 **File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5 slots. Fishing: 10 slots.
 
-**Conditional encounter tables**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Altering Cave pattern: flag set + map match → `i++` to next JSON entry. Second Wave uses same pattern for 6 routes. **Ordering in JSON is critical** — alternate entry MUST follow base entry for that map.
+**Conditional encounter tables**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Altering Cave pattern: flag set + map match → `i++` to next JSON entry. **Ordering in JSON is critical** — alternate entry MUST follow base entry for that map.
 
 ---
 
@@ -89,25 +89,17 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ## Physical/Special Split & Move System (Cycle 43-44, 75, 128)
 
-Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Constants defined in `include/pokemon.h` (0/1/2). Battle calc in `battle_script_commands.c` checks category instead of type. Fairy type added as TYPE_FAIRY with full type chart.
-
-**Move data format** (`src/data/battle_moves.h`): `gBattleMoves[MOVES_COUNT]` array indexed by move constant. Fields: `.effect`, `.power`, `.type`, `.accuracy`, `.pp`, `.secondaryEffectChance`, `.target`, `.priority`, `.flags`, `.category`.
+Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Fairy type added as TYPE_FAIRY with full type chart.
 
 **Current state (C129)**: MOVES_COUNT = 378 (IDs 0-377). Last vanilla move = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5 moves: MOVE_NIGHT_SLASH (358) through MOVE_ZEN_HEADBUTT (377).
 
-**Move constants**: `include/constants/moves.h`. New moves go at end. MOVES_COUNT must be updated.
+**Recoil effects**: EFFECT_RECOIL = 1/4 (Take Down). EFFECT_DOUBLE_EDGE = 1/3 (Double-Edge).
 
-**Recoil effects**: EFFECT_RECOIL = 1/4 (Take Down). EFFECT_DOUBLE_EDGE = 1/3 (Double-Edge). Brave Bird/Flare Blitz can reuse EFFECT_DOUBLE_EDGE.
-
-**EFFECT_SUPERPOWER**: Lowers user's Atk and Def by 1 stage. Battle script at `data/battle_scripts_1.s`. Close Combat needs adapted version (lower Def + SpD instead).
-
-**Species NOT in codebase**: Mismagius, Mamoswine, Weavile (Gen 4 evolutions never added). Garchomp, Lucario, Riolu ARE present (added C60-70).
+**Species NOT in codebase**: Mismagius, Mamoswine, Weavile. Garchomp, Lucario, Riolu ARE present (added C60-70).
 
 ---
 
 ## Battle Frontier Architecture (Cycle 76)
-
-**Type effectiveness**: All facilities use centralized `gTypeEffectiveness[]` in `src/battle_main.c:335-463` — sentinel-terminated, already has Fairy. No facility has private type tables.
 
 **Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Our 6 new species added (indices 882-893, Cycle 77).
 
@@ -119,8 +111,6 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Summary**: Single roamer slot (`struct Roamer`, 28 bytes at SaveBlock1 offset 0x31DC). Beast system: `roamer.c` has `InitNextBeast()` special that sequentially releases Raikou→Entei→Suicune using 6 flags.
 
-**Beast flags**: FLAG_BEAST_RAIKOU_DONE/KO, FLAG_BEAST_ENTEI_DONE/KO, FLAG_BEAST_SUICUNE_DONE/KO (system flags 0x881-0x886).
-
 ---
 
 ## Flag System Layout (Cycle 117-118)
@@ -129,11 +119,29 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x869) → System flags (TRAINER_FLAGS_END+1 = 0x860+) → Daily flags (0x972+)
 
-**v6.0 flags (C118)**: 12 flags at 0x264-0x26F — FLAG_PRIMAL_STIRRING_STARTED, FLAG_VISITED_LAVARIDGE_TREMORS, FLAG_VISITED_DEWFORD_TIDES, FLAG_ALL_SIGNS_REPORTED, FLAG_REGI_RESONANCE_CHECKED, FLAG_TERRA_CAVE_INVESTIGATED, FLAG_SEAFLOOR_CAVERN_INVESTIGATED, FLAG_PRIMAL_GROUDON_AWAKENED, FLAG_PRIMAL_KYOGRE_AWAKENED, FLAG_PRIMAL_CRISIS_RESOLVED, FLAG_VISITED_DESERT_ANOMALY, FLAG_VISITED_PACIFIDLOG_CURRENTS.
+**v6.0 flags (C118)**: 12 flags at 0x264-0x26F — FLAG_PRIMAL_STIRRING_STARTED through FLAG_VISITED_PACIFIDLOG_CURRENTS.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
-**Cave of Origin maps**: CaveOfOrigin, CaveOfOrigin_1F, CaveOfOrigin_B1F, CaveOfOrigin_Entrance, CaveOfOrigin_UnusedRubySapphireMap1/2/3 — unused RS maps available for repurposing.
+**Cave of Origin maps**: CaveOfOrigin_UnusedRubySapphireMap1/2/3 — unused RS maps available for repurposing.
+
+---
+
+## Sky Pillar System (Cycle 134)
+
+**Maps**: 7 directories — SkyPillar_Outside, SkyPillar_Entrance, SkyPillar_1F through SkyPillar_5F, SkyPillar_Top.
+
+**State var**: `VAR_SKY_PILLAR_STATE` controls progression gating across floors.
+
+**Cracked floors**: 2F and 4F use `CaveHole_CheckFallDownHole` (MAP_SCRIPT_ON_FRAME_TABLE).
+
+**SkyPillar_Top**: Rayquaza encounter uses `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50).
+
+**SkyPillar_Outside**: Checks `FLAG_SYS_WEATHER_CTRL` for weather gating.
+
+**Legendary battle pattern** (TerraCave/SeafloorCavern reference): `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
+
+**Pacifidlog NPCs**: House2 (FanClubYoungster), House4 (LittleGirl) — simple vanilla scripts, good candidates for elder/lore NPCs.
 
 ---
 
@@ -145,4 +153,4 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ## ShakeCamera Special (C112)
 
-`special ShakeCamera` requires 4 vars set before call: `VAR_0x8004` (vertical pan), `VAR_0x8005` (horizontal pan), `VAR_0x8006` (num shakes), `VAR_0x8007` (shake delay). Must `waitstate` after. See `data/scripts/cave_of_origin.inc` for reference usage.
+`special ShakeCamera` requires 4 vars: `VAR_0x8004` (vertical), `VAR_0x8005` (horizontal), `VAR_0x8006` (num shakes), `VAR_0x8007` (delay). Must `waitstate` after.
