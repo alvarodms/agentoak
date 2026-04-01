@@ -43,6 +43,18 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: `map.json` object event references a script label never defined in `scripts.inc` (e.g. TerraCave MagmaGrunt1 from v6.0 work).
 **Resolution**: Add the missing script to `scripts.inc` or fix the reference in `map.json`. Smoke build at cycle start catches these.
 
+## Bash-Modified Files Not Tracked by Validator (Cycle 133)
+
+**Symptom**: Validator says "no pokeemerald/ files modified" even though git diff shows 81 insertions. Agent marked INCOMPLETE.
+**Cause**: Used a Node.js script via Bash to modify `level_up_learnsets.h` instead of the Edit tool. Validator tracks Edit/Write tool calls, not Bash file modifications.
+**Resolution**: After Bash-based file modification, always run `git status` to verify. Also ALWAYS run `make` — C133 skipped the build entirely.
+
+## Skipped Build Verification (Cycle 133)
+
+**Symptom**: Learnset changes added via script but never compiled. Unknown if changes build successfully.
+**Cause**: Agent spent too many actions on research and README updates, ran out of budget for `make`.
+**Resolution**: Build verification is NON-NEGOTIABLE for any pokeemerald/ file modification. Reserve at least 5 actions for build at end of cycle.
+
 ## "File has not been read yet" After Context Compression (Cycles 57, 67, 88)
 
 **Symptom**: Edit tool returns `File has not been read yet.`

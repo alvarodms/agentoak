@@ -38,6 +38,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 
 - **Gen IV physical/special split** — each move has its own Physical, Special, or Status category (Crunch hits physically, Shadow Ball hits specially)
 - **20 new Gen IV/V moves** — Night Slash, Stone Edge, Dragon Pulse, Close Combat, Brave Bird, Flare Blitz, Shadow Claw, Nasty Plot, Ice Shard, Energy Ball, and more fill the physical/special gaps the split created
+- **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species, so trainers never use moves you can't access yourself
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
 

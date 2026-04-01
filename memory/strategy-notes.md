@@ -97,7 +97,9 @@ Full team compositions (species, levels, items, moves) in `memory/pokemon-knowle
 
 **C132 — E4 + Champion**: COMPLETE. Sidney (Absol/Houndoom/Sharpedo/Umbreon/Tyranitar Lv44-48), Phoebe (Banette×2/Dusclops/Sableye/Gengar Lv46-50), Glacia (Jynx/Cloyster/Piloswine/Walrein/Lapras Lv48-52), Drake (Altaria/Flygon/Salamence/Garchomp/Dragonite Lv51-55), Wallace (Starmie/Tentacruel/Gyarados/Ludicolo/Kingdra/Milotic Lv53-58). All duplicates removed. v7.1 trainer overhaul complete.
 
-**C133 — Rematch Tier Update + Polish**: Update rematch teams (tiers 1-4) to match new base teams. Run `make check_trainers`. README update with v7.1 changelog.
+**C133 — Learnset Distribution**: COMPLETE. Distributed all 20 new moves across 58 species (81 new LEVEL_UP_MOVE entries). Every trainer-used move now learnable by players. Resolves Issue #90 fairness gap.
+
+**C134 — v7.0 "Sky Guardian" Planning + Rematch Polish**: Plan Rayquaza/Sky Pillar arc. Update rematch teams (tiers 1-4) to match new base teams. README update with v7.1 changelog.
 
 ---
 
