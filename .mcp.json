@@ -3,6 +3,10 @@
     "pokedex": {
       "command": "npx",
       "args": ["tsx", "src/mcp/pokedex-server.ts"]
+    },
+    "porymap": {
+      "command": "npx",
+      "args": ["tsx", "src/mcp/porymap-server.ts"]
     }
   }
 }
