@@ -37,8 +37,3 @@ pokeemerald/*.sym
 
 # Cached base ROM (downloaded at runtime)
 artifacts/base-rom/
-
-# Package manager lock files — not committed because the agent runner's
-# dependencies are re-installed each CI cycle; pinning is handled by
-# the Docker image and npm semver ranges in package.json.
-package-lock.json
