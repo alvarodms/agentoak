@@ -9,8 +9,8 @@
  * using the Agent Teams feature (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1).
  */
 
-import { runClaudeCode } from "../agent/claude-cli.js";
-import { formatPokedexToolsSection } from "../agent/prompt-sections.js";
+import { runClaudeCode, extractMcpTools } from "../agent/claude-cli.js";
+import { ALL_POKEDEX_TOOLS, formatPokedexToolsSection } from "../agent/prompt-sections.js";
 import { logger } from "../utils/logger.js";
 import type { TokenUsage } from "../memory/types.js";
 
@@ -25,6 +25,12 @@ export interface GameplayDesignResult {
 
 const GAMEPLAY_DESIGNER_MAX_TURNS = 100;
 const GAMEPLAY_DESIGNER_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
+
+/** Built-in + MCP tools the Gameplay Designer is allowed to use. */
+const GAMEPLAY_DESIGNER_TOOLS = [
+  "Read",
+  ...ALL_POKEDEX_TOOLS,
+].join(",");
 
 /**
  * Run the Gameplay Designer agent to produce detailed gameplay specs.
@@ -48,7 +54,7 @@ export async function runGameplayDesigner(
   const result = await runClaudeCode(prompt, {
     maxTurns: GAMEPLAY_DESIGNER_MAX_TURNS,
     timeout: GAMEPLAY_DESIGNER_TIMEOUT_MS,
-    tools: "Read",
+    tools: GAMEPLAY_DESIGNER_TOOLS,
     model: process.env.ANTHROPIC_MODEL,
     envOverrides: {
       CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: "1",
@@ -93,7 +99,7 @@ ${implementationPlan}
 
 ## Your Tools
 
-${formatPokedexToolsSection()}
+${formatPokedexToolsSection(extractMcpTools(GAMEPLAY_DESIGNER_TOOLS))}
 
 **USE THESE TOOLS.** Don't guess stats, learnsets, or type matchups — look them up. Your value is in making data-informed decisions that the Producer alone cannot make.
 

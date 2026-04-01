@@ -6,7 +6,8 @@
  * before it makes the final CyclePlan decision.
  */
 
-import { buildAdvisorContextBlock, formatPokedexToolsSection } from "../agent/prompt-sections.js";
+import { buildAdvisorContextBlock, ALL_POKEDEX_TOOLS, formatPokedexToolsSection } from "../agent/prompt-sections.js";
+import { extractMcpTools } from "../agent/claude-cli.js";
 
 export interface TeamContext {
   cycleNumber: number;
@@ -26,8 +27,8 @@ export interface TeamRole {
   maxTurns: number;
   /** Timeout in milliseconds */
   timeout: number;
-  /** Comma-separated tool list (advisors are read-only) */
-  tools: string;
+  /** Comma-separated tool list — omit to allow all tools (including MCP) */
+  tools?: string;
   /** Build the full prompt for this advisor given shared context */
   buildPrompt: (ctx: TeamContext) => string;
 }
@@ -104,12 +105,20 @@ Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they co
 9. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
+/** Built-in + MCP tools the Pokémon Specialist advisor is allowed to use. */
+const POKEMON_SPECIALIST_TOOLS = [
+  "Read",
+  "Write",
+  "WebSearch",
+  ...ALL_POKEDEX_TOOLS,
+].join(",");
+
 const pokemonSpecialistRole: TeamRole = {
   name: "pokemon-specialist",
   label: "Pokémon Specialist",
   maxTurns: 15,
   timeout: 4 * 60 * 1000,
-  tools: "Read,Write,WebSearch",
+  tools: POKEMON_SPECIALIST_TOOLS,
   buildPrompt: (ctx) => `You are the **Pokémon Specialist** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
 Your job: research what makes great Pokémon ROM hacks, understand community expectations, and write a short advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
@@ -127,7 +136,7 @@ You maintain a **persistent knowledge base** split across multiple files:
 - \`memory/pokemon-knowledge.md\` — an **index only**: a table of research topics, each linking to its own file.
 - \`memory/pokemon-knowledge/*.md\` — one file per topic, containing the full research findings.
 
-${formatPokedexToolsSection()}
+${formatPokedexToolsSection(extractMcpTools(POKEMON_SPECIALIST_TOOLS))}
 
 ## Your knowledge-building process
 1. **Read the index** at \`memory/pokemon-knowledge.md\` to see what topics you've already researched.

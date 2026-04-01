@@ -4,6 +4,20 @@ import { PROJECT_ROOT } from "../utils/paths.js";
 import { parseClaudeOutput } from "./output-parser.js";
 import type { ClaudeCodeResult } from "./output-parser.js";
 
+/** Prefix used by Claude Code for MCP tool names: mcp__<server>__<tool> */
+const MCP_TOOL_PREFIX = "mcp__";
+
+/**
+ * Extract MCP tool names from a comma-separated tools string.
+ * Returns only the entries that start with "mcp__".
+ */
+export function extractMcpTools(tools: string): string[] {
+  return tools
+    .split(",")
+    .map((t) => t.trim())
+    .filter((t) => t.startsWith(MCP_TOOL_PREFIX));
+}
+
 export interface ClaudeCodeOptions {
   /** Replace the entire system prompt (mutually exclusive with appendSystemPrompt) */
   systemPrompt?: string;
@@ -13,7 +27,15 @@ export interface ClaudeCodeOptions {
   maxTurns?: number;
   /** Maximum dollar budget for this invocation */
   maxBudgetUsd?: number;
-  /** Restrict available tools (e.g. "Bash,Read,Edit,Write,Grep") — empty string disables all */
+  /**
+   * Restrict available tools.
+   *
+   * Built-in tool names (e.g. "Bash,Read,Edit") are enforced via --tools.
+   * MCP tool names (e.g. "mcp__pokedex__smogon_sets") are included for
+   * declaration purposes — they control which tools appear in the agent's
+   * prompt documentation. The --tools CLI flag only filters built-in tools;
+   * MCP tools cannot be restricted via CLI flags.
+   */
   tools?: string;
   /** Timeout in milliseconds (default: 10 minutes) */
   timeout?: number;
@@ -105,7 +127,13 @@ function buildArgs(opts: {
   }
 
   if (opts.tools != null) {
-    args.push("--tools", opts.tools);
+    // --tools only accepts built-in tool names; filter out MCP entries
+    const builtinTools = opts.tools
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t && !t.startsWith(MCP_TOOL_PREFIX))
+      .join(",");
+    args.push("--tools", builtinTools);
   }
 
   if (opts.model != null) {

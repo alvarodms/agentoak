@@ -62,14 +62,49 @@ export function formatBacklogSection(
   return section;
 }
 
-/** The Pokédex MCP tools reference block, used by planners and the Pokémon Specialist advisor. */
-export function formatPokedexToolsSection(): string {
+/**
+ * Map from MCP tool name (as registered in the pokedex server) to its
+ * human-readable prompt documentation line.
+ */
+const POKEDEX_TOOL_DOCS: Record<string, string> = {
+  "mcp__pokedex__pokemon_stats":
+    "`pokemon_stats(name)` — base stats, types, BST, competitive tier for a species",
+  "mcp__pokedex__search_pokemon":
+    "`search_pokemon(type?, minBst?, maxBst?, limit?)` — find species by type and/or stat range",
+  "mcp__pokedex__move_data":
+    "`move_data(name)` — power, accuracy, type, category (Physical/Special/Status), PP",
+  "mcp__pokedex__type_matchup":
+    "`type_matchup(attacking, defending[])` — exact effectiveness multiplier for a type interaction",
+  "mcp__pokedex__pokemon_learnset":
+    "`pokemon_learnset(name, gen?)` — all moves a species can learn (level-up, TM, egg, tutor)",
+  "mcp__pokedex__smogon_sets":
+    "`smogon_sets(name, format?)` — competitive movesets and strategy from Smogon (moves, item, nature, EVs). Defaults to Gen 3.",
+  "mcp__pokedex__smogon_format_pokemon":
+    "`smogon_format_pokemon(format, limit?)` — list all Pokémon with competitive sets in a Smogon tier (ou, uu, ubers, etc.)",
+  "mcp__pokedex__team_type_coverage":
+    "`team_type_coverage(team[], gen?)` — analyse a team's defensive weaknesses, resistances, immunities, and offensive coverage",
+};
+
+/** All Pokédex MCP tool names — use to grant an agent access to the full set. */
+export const ALL_POKEDEX_TOOLS = Object.keys(POKEDEX_TOOL_DOCS);
+
+/**
+ * Build the Pokédex MCP tools reference block for agent prompts.
+ *
+ * @param mcpTools  When provided, only tools in this list are shown.
+ *                  Pass `undefined` or omit to include all Pokédex tools.
+ */
+export function formatPokedexToolsSection(mcpTools?: string[]): string {
+  const entries = mcpTools
+    ? mcpTools
+        .filter((t) => t in POKEDEX_TOOL_DOCS)
+        .map((t) => POKEDEX_TOOL_DOCS[t])
+    : Object.values(POKEDEX_TOOL_DOCS);
+
+  if (entries.length === 0) return "";
+
   return `## Pokédex MCP tools (structured, authoritative Gen 3 data)
-- \`pokemon_stats(name)\` — base stats, types, BST, competitive tier for a species
-- \`search_pokemon(type?, minBst?, maxBst?, limit?)\` — find species by type and/or stat range
-- \`move_data(name)\` — power, accuracy, type, category (Physical/Special/Status), PP
-- \`type_matchup(attacking, defending[])\` — exact effectiveness multiplier for a type interaction
-- \`pokemon_learnset(name, gen?)\` — all moves a species can learn (level-up, TM, egg, tutor)
+${entries.map((e) => `- ${e}`).join("\n")}
 
 Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.`;
 }
