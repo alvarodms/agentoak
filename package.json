@@ -8,6 +8,8 @@
     "build:check": "tsc --noEmit",
     "build:docs": "cd docs && npm run build",
     "debug:mcp": "tsx src/mcp/debug-ui.ts",
+    "debug:mcp:porymap": "tsx src/mcp/debug-ui.ts porymap",
+    "debug:mcp:all": "tsx src/mcp/debug-ui.ts all",
     "test": "vitest run",
     "test:watch": "vitest"
   },

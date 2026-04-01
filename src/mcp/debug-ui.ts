@@ -2,9 +2,14 @@
 /**
  * MCP Debug Web UI
  *
- * Spawns the Pokédex MCP server as a child process, connects to it via
+ * Spawns one or more MCP servers as child processes, connects to them via
  * the MCP client SDK over stdio, and serves a browser-based tool explorer
  * at http://localhost:3333 (configurable via PORT env var).
+ *
+ * Usage:
+ *   npx tsx src/mcp/debug-ui.ts            # pokedex server (default)
+ *   npx tsx src/mcp/debug-ui.ts porymap    # porymap server
+ *   npx tsx src/mcp/debug-ui.ts all        # both servers
  */
 
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -17,18 +22,63 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT ?? "3333", 10);
 
-async function createMcpClient(): Promise<Client> {
+// ─── Server Registry ────────────────────────────────────────────────────────
+
+interface ServerConfig {
+  key: string;
+  label: string;
+  scriptPath: string;
+  description: string;
+}
+
+const SERVER_REGISTRY: ServerConfig[] = [
+  {
+    key: "pokedex",
+    label: "Pokédex",
+    scriptPath: "pokedex-server.ts",
+    description: "Pokémon game data (stats, moves, types, sets)",
+  },
+  {
+    key: "porymap",
+    label: "Porymap",
+    scriptPath: "porymap-server.ts",
+    description: "Map data inspection (layouts, events, tilesets)",
+  },
+];
+
+// ─── CLI Argument Parsing ───────────────────────────────────────────────────
+
+const arg = process.argv[2] ?? "pokedex";
+const requestedServers =
+  arg === "all"
+    ? SERVER_REGISTRY
+    : SERVER_REGISTRY.filter((s) => s.key === arg);
+
+if (requestedServers.length === 0) {
+  const keys = SERVER_REGISTRY.map((s) => s.key).join(", ");
+  console.error(`Unknown server: "${arg}". Available: ${keys}, all`);
+  process.exit(1);
+}
+
+// ─── MCP Client ─────────────────────────────────────────────────────────────
+
+async function createMcpClient(config: ServerConfig): Promise<Client> {
   const transport = new StdioClientTransport({
     command: "npx",
-    args: ["tsx", path.resolve(__dirname, "pokedex-server.ts")],
+    args: ["tsx", path.resolve(__dirname, config.scriptPath)],
     cwd: path.resolve(__dirname, "../.."),
     stderr: "inherit",
   });
 
-  const client = new Client({ name: "debug-ui", version: "1.0.0" });
+  const client = new Client({
+    name: `debug-ui-${config.key}`,
+    version: "1.0.0",
+  });
   await client.connect(transport);
   return client;
 }
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
 
 function readBody(req: http.IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -47,10 +97,28 @@ function json(res: http.ServerResponse, data: unknown, status = 200) {
   res.end(JSON.stringify(data));
 }
 
+// ─── Main ───────────────────────────────────────────────────────────────────
+
 async function main() {
-  console.log("Connecting to Pokédex MCP server...");
-  const client = await createMcpClient();
-  console.log("MCP client connected.");
+  const clients = new Map<
+    string,
+    { client: Client; config: ServerConfig }
+  >();
+
+  for (const config of requestedServers) {
+    console.log(`Connecting to ${config.label} MCP server...`);
+    const client = await createMcpClient(config);
+    clients.set(config.key, { client, config });
+    console.log(`${config.label} connected.`);
+  }
+
+  function resolveClient(serverKey: string | undefined) {
+    if (clients.size === 1 && !serverKey) {
+      return clients.values().next().value!;
+    }
+    if (!serverKey) return undefined;
+    return clients.get(serverKey);
+  }
 
   const htmlPath = path.resolve(__dirname, "debug-ui.html");
 
@@ -75,15 +143,43 @@ async function main() {
         return;
       }
 
+      // List connected servers
+      if (url.pathname === "/api/servers" && req.method === "GET") {
+        const serverList = Array.from(clients.values()).map(({ config }) => ({
+          key: config.key,
+          label: config.label,
+          description: config.description,
+        }));
+        json(res, serverList);
+        return;
+      }
+
+      // List tools for a server
       if (url.pathname === "/api/tools" && req.method === "GET") {
-        const result = await client.listTools();
+        const serverKey = url.searchParams.get("server") ?? undefined;
+        const entry = resolveClient(serverKey);
+        if (!entry) {
+          json(
+            res,
+            { error: "Missing or invalid 'server' query parameter" },
+            400,
+          );
+          return;
+        }
+        const result = await entry.client.listTools();
         json(res, result.tools);
         return;
       }
 
+      // Call a tool
       if (url.pathname === "/api/call" && req.method === "POST") {
         const body = JSON.parse(await readBody(req));
-        const { tool, arguments: args } = body as {
+        const {
+          server: serverKey,
+          tool,
+          arguments: args,
+        } = body as {
+          server?: string;
           tool: string;
           arguments: Record<string, unknown>;
         };
@@ -93,7 +189,17 @@ async function main() {
           return;
         }
 
-        const result = await client.callTool({
+        const entry = resolveClient(serverKey);
+        if (!entry) {
+          json(
+            res,
+            { error: "Missing or invalid 'server' field" },
+            400,
+          );
+          return;
+        }
+
+        const result = await entry.client.callTool({
           name: tool,
           arguments: args ?? {},
         });
@@ -112,13 +218,18 @@ async function main() {
   });
 
   server.listen(PORT, () => {
-    console.log(`\nMCP Debug UI: http://localhost:${PORT}\n`);
+    const serverNames = Array.from(clients.values())
+      .map(({ config }) => config.label)
+      .join(" + ");
+    console.log(`\nMCP Debug UI (${serverNames}): http://localhost:${PORT}\n`);
   });
 
   const shutdown = async () => {
     console.log("\nShutting down...");
     server.close();
-    await client.close();
+    for (const { client } of clients.values()) {
+      await client.close();
+    }
     process.exit(0);
   };
   process.on("SIGINT", shutdown);
