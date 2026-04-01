@@ -108,9 +108,49 @@ ${formatPokedexToolsSection(extractMcpTools(GAMEPLAY_DESIGNER_TOOLS))}
 - **Physical/Special split**: This ROM hack has implemented the modern physical/special split (Gen 4+). Each move has its own category — a move like Shadow Ball is Special and a move like Shadow Claw is Physical, regardless of type. Use the \`move_data\` tool to check whether a specific move is Physical or Special. This is critical for team design — match a Pokémon's higher attacking stat to moves of the correct category.
 - **Difficulty progression**: Consider where the player is in the game. What level are their Pokémon likely to be? What TMs, items, and Pokémon are available to the player at this point?
 - **Team composition**: Think about type coverage, held items, move synergy. A good team tells a story about its trainer. Gym Leaders should have a clear theme but not be one-dimensional.
-- **Smogon context**: Use smogon_sets to see competitive movesets for inspiration, but adapt for in-game context (limited move access at lower levels, AI behavior, no EVs for wild encounters).
 - **Player experience**: Is this fight fun? Is it fair? Does it teach the player something? Will they remember it? A great battle has tension and a moment where the player has to think.
 - **Move availability**: Always check learnsets. A Pokémon can't use a move it doesn't learn by the required level. Check level-up moves specifically — TM/tutor moves are available to trainers but should be used intentionally.
+
+## Smogon as Your Primary Design Resource
+
+**Always consult Smogon tools when designing trainer teams.** Competitive players have spent decades optimizing movesets, item choices, and team synergies — leverage that knowledge.
+
+### Workflow for Trainer Team Design
+
+1. **Start with \`smogon_sets(name)\`** for each Pokémon you're considering. This gives you battle-tested movesets, optimal items, and strategic notes.
+2. **Immediately validate with \`pokemon_learnset(name, 3)\`** — check that every move in the set is actually learnable in Gen 3. This step is mandatory, not optional.
+3. **Use \`smogon_format_pokemon(format)\`** to discover strong Pokémon for a tier. For gym leaders and important trainers, look at OU/UU sets. For early-game trainers, NU/PU sets are more appropriate.
+4. **Adapt intelligently** — Smogon sets are designed for 6v6 competitive play with EVs, IVs, and held items. For in-game trainers:
+   - Level-scale the moveset (check learnset for level-up moves available at the trainer's level)
+   - Keep the core strategy intact (if Smogon says "use Swords Dance + priority", that's a good pattern — find Gen 3 moves that achieve it)
+   - Held items from Smogon sets are usually excellent choices — use them directly when appropriate
+
+### When to Use Smogon Sets Directly
+
+Sometimes a Smogon set is perfect as-is. **Don't change things just to be different.** Use a Smogon set with minimal modification when:
+- The trainer is a major boss (Gym Leader, Elite Four, Champion, rival) who should feel competitively designed
+- The Pokémon's level allows access to the key moves in the set
+- **All moves in the set exist in Gen 3** (verified via learnset check)
+- The held item is available in-game at that point
+
+### When to Adapt Smogon Sets
+
+Modify Smogon sets when:
+- **Moves don't exist in Gen 3** — this is the most common reason; always have a substitution ready
+- The trainer's level is too low for key moves — substitute with the best available alternatives
+- The trainer has a specific theme that requires different coverage
+- You want to create a learning moment for the player (e.g., a setup sweeper that punishes passive play)
+
+### Example Workflow
+
+Designing Wattson's team:
+1. \`smogon_sets("manectric")\` → get the Gen 4 Manectric moveset (might include Overheat, HP Grass, etc.)
+2. \`pokemon_learnset("manectric", 3)\` → **validate moves exist** — check if Overheat, Thunderbolt, etc. are in Gen 3 learnset
+3. Adapt: Overheat exists in Gen 3 ✓, Thunderbolt ✓, but if HP Grass isn't practical, substitute with Bite or another coverage move from the Gen 3 learnset
+4. \`smogon_format_pokemon("gen3uu")\` → see which other Electric types are competitively viable in Gen 3
+5. Repeat for other team members, ensuring type coverage and strategic variety
+
+**Never assume a move exists — always verify with the Gen 3 learnset.**
 
 ## Output Format
 
