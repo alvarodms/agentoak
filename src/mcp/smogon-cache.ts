@@ -4,16 +4,16 @@
  * Provides competitive Pokémon sets from @smogon/sets, which bundles
  * Smogon analysis data directly in the npm package. No network access required.
  *
- * Data covers Gen 3 formats: ou, uu, nu, ubers, 1v1
+ * Data covers Gen 4 formats: ou, uu, nu, ubers, lc, 1v1
  */
 
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 
-// Available Gen 3 format files in @smogon/sets
-const GEN3_FORMATS = ["gen3ou", "gen3uu", "gen3nu", "gen3ubers", "gen31v1"] as const;
-type Gen3Format = (typeof GEN3_FORMATS)[number];
+// Available Gen 4 format files in @smogon/sets
+const GEN4_FORMATS = ["gen4ou", "gen4uu", "gen4nu", "gen4ubers", "gen4lc", "gen41v1"] as const;
+type Gen4Format = (typeof GEN4_FORMATS)[number];
 
 export interface SmogonSet {
   moves: string[];
@@ -34,7 +34,7 @@ interface FormatFileData {
 // Lazy-loaded format data
 const formatCache = new Map<string, FormatFileData>();
 
-function loadFormat(format: Gen3Format): FormatFileData {
+function loadFormat(format: Gen4Format): FormatFileData {
   const cached = formatCache.get(format);
   if (cached) return cached;
 
@@ -43,12 +43,12 @@ function loadFormat(format: Gen3Format): FormatFileData {
   return data;
 }
 
-function normalizeFormat(format: string): Gen3Format | null {
+function normalizeFormat(format: string): Gen4Format | null {
   const lower = format.toLowerCase().replace(/[^a-z0-9]/g, "");
-  // Allow shorthand: "ou" -> "gen3ou"
-  const full = lower.startsWith("gen3") ? lower : `gen3${lower}`;
-  return GEN3_FORMATS.includes(full as Gen3Format)
-    ? (full as Gen3Format)
+  // Allow shorthand: "ou" -> "gen4ou"
+  const full = lower.startsWith("gen4") ? lower : `gen4${lower}`;
+  return GEN4_FORMATS.includes(full as Gen4Format)
+    ? (full as Gen4Format)
     : null;
 }
 
@@ -61,25 +61,28 @@ export function getSmogonSets(
   format?: string,
 ): Array<{ format: string; sets: { [name: string]: SmogonSet } }> {
   const formats = format
-    ? [normalizeFormat(format)].filter(Boolean) as Gen3Format[]
-    : [...GEN3_FORMATS];
+    ? [normalizeFormat(format)].filter(Boolean) as Gen4Format[]
+    : [...GEN4_FORMATS];
 
   const results: Array<{ format: string; sets: { [name: string]: SmogonSet } }> = [];
 
   for (const fmt of formats) {
     const data = loadFormat(fmt);
+    const dex = data?.dex;
+    if (!dex) continue;
+
     // Try exact match, then case-insensitive search
-    let pokemonSets = data.dex[pokemonName];
+    let pokemonSets = dex[pokemonName];
     if (!pokemonSets) {
-      const key = Object.keys(data.dex).find(
+      const key = Object.keys(dex).find(
         (k) => k.toLowerCase() === pokemonName.toLowerCase(),
       );
-      if (key) pokemonSets = data.dex[key];
+      if (key) pokemonSets = dex[key];
     }
 
     if (pokemonSets && Object.keys(pokemonSets).length > 0) {
-      // Strip "gen3" prefix for cleaner display
-      const displayFormat = fmt.replace("gen3", "").toUpperCase() || fmt;
+      // Strip "gen4" prefix for cleaner display
+      const displayFormat = fmt.replace("gen4", "").toUpperCase() || fmt;
       results.push({ format: displayFormat, sets: pokemonSets });
     }
   }
@@ -97,21 +100,25 @@ export function listFormatPokemon(
   if (!normalized) return [];
 
   const data = loadFormat(normalized);
-  return Object.entries(data.dex).map(([name, sets]) => ({
+  const dex = data?.dex;
+  if (!dex) return [];
+
+  return Object.entries(dex).map(([name, sets]) => ({
     name,
-    sets: Object.keys(sets),
+    sets: sets ? Object.keys(sets) : [],
   }));
 }
 
 /**
- * List all available Gen 3 formats with Pokémon counts.
+ * List all available Gen 4 formats with Pokémon counts.
  */
 export function listAvailableFormats(): Array<{ format: string; count: number }> {
-  return GEN3_FORMATS.map((fmt) => {
+  return GEN4_FORMATS.map((fmt) => {
     const data = loadFormat(fmt);
+    const dex = data?.dex;
     return {
-      format: fmt.replace("gen3", "").toUpperCase(),
-      count: Object.keys(data.dex).length,
+      format: fmt.replace("gen4", "").toUpperCase(),
+      count: dex ? Object.keys(dex).length : 0,
     };
   });
 }

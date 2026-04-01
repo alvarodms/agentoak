@@ -423,7 +423,7 @@ server.registerTool(
     description:
       "Get recommended competitive sets for a Pokémon from Smogon analyses. " +
       "Returns named sets with moves, item, nature, EVs, ability, and strategy notes. " +
-      "Defaults to Gen 3. Optionally filter by format (ou, uu, ubers, etc.).",
+      "Defaults to Gen 4. Optionally filter by format (ou, uu, ubers, etc.).",
     inputSchema: z.object({
       name: z
         .string()
