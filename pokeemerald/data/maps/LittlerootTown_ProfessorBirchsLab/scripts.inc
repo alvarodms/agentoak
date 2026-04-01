@@ -1922,6 +1922,7 @@ BirchLab_EventScript_PrimalDebrief::
 BirchLab_EventScript_PrimalResolved::
 	lock
 	faceplayer
+	goto_if_unset FLAG_SKY_GUARDIAN_QUEST_ACTIVE, BirchLab_EventScript_SkyGuardianTrigger
 	msgbox BirchLab_Text_PrimalResolved, MSGBOX_DEFAULT
 	release
 	end
@@ -1972,3 +1973,39 @@ BirchLab_Text_PrimalResolved:
 	.string "continue to intrigue me.\p"
 	.string "Something is stirring in the sky\n"
 	.string "above HOENN. I can feel it.$"
+
+@ =============================================================
+@ v7.0 Sky Guardian Arc -- Act 1: Birch triggers the quest
+@ =============================================================
+
+BirchLab_EventScript_SkyGuardianTrigger::
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox BirchLab_Text_SkyGuardianAlert, MSGBOX_DEFAULT
+	setflag FLAG_SKY_GUARDIAN_QUEST_ACTIVE
+	release
+	end
+
+BirchLab_Text_SkyGuardianAlert:
+	.string "PROF. BIRCH: {PLAYER}! Come quickly!\p"
+	.string "My atmospheric instruments are\n"
+	.string "going haywire again.\p"
+	.string "But this time, it is not the earth\n"
+	.string "or the sea.\l"
+	.string "The readings are coming from above.\p"
+	.string "The upper atmosphere itself is\n"
+	.string "destabilizing.\p"
+	.string "I have cross-referenced my data\n"
+	.string "with ancient DRACONID texts.\p"
+	.string "There are legends of a guardian\n"
+	.string "that dwells above the clouds...\p"
+	.string "A creature that descends only when\n"
+	.string "earth and sea clash beyond control.\p"
+	.string "The elders in PACIFIDLOG TOWN may\n"
+	.string "know more.\p"
+	.string "Their families have guarded these\n"
+	.string "stories for generations.\p"
+	.string "Please, {PLAYER}.\p"
+	.string "If the sky itself is stirring...\n"
+	.string "we may face something even greater\l"
+	.string "than GROUDON and KYOGRE.$"

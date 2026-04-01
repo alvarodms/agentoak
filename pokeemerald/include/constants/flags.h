@@ -671,11 +671,12 @@
 #define FLAG_PRIMAL_CRISIS_RESOLVED      0x26F // Both primals dealt with
 #define FLAG_TERRA_CAVE_INVESTIGATED     0x270 // Player investigated Terra Cave (Devon researcher)
 #define FLAG_SEAFLOOR_CAVERN_INVESTIGATED 0x271 // Player investigated Seafloor Cavern (deep-sea researcher)
-#define FLAG_UNUSED_0x272  0x272 // Unused Flag
-#define FLAG_UNUSED_0x273  0x273 // Unused Flag
-#define FLAG_UNUSED_0x274  0x274 // Unused Flag
-#define FLAG_UNUSED_0x275  0x275 // Unused Flag
-#define FLAG_UNUSED_0x276  0x276 // Unused Flag
+// === v7.0: The Sky Guardian arc flags ===
+#define FLAG_SKY_GUARDIAN_QUEST_ACTIVE   0x272 // Birch detected atmospheric anomaly, sent player to Pacifidlog
+#define FLAG_SPOKE_PACIFIDLOG_ELDER      0x273 // Player heard the Draconid legend from the elder
+#define FLAG_SKY_GUARDIAN_ACT1_COMPLETE  0x274 // Wallace opened Sky Pillar for the guardian quest
+#define FLAG_CAUGHT_RAYQUAZA_GUARDIAN    0x275 // Rayquaza caught during Sky Guardian quest (Act 3)
+#define FLAG_DEFEATED_RAYQUAZA_GUARDIAN  0x276 // Rayquaza defeated during Sky Guardian quest (Act 3)
 #define FLAG_UNUSED_0x277  0x277 // Unused Flag
 #define FLAG_UNUSED_0x278  0x278 // Unused Flag
 #define FLAG_UNUSED_0x279  0x279 // Unused Flag

@@ -82,7 +82,7 @@ See `memory/pokemon-knowledge/sky-pillar-arc-and-rematch-design.md` for per-lead
 
 | Cycle | Deliverable | Dependencies |
 |-------|-------------|-------------|
-| **C135** | Act 1 scripts: Birch debrief update, Pacifidlog elder NPC, Wallace enhanced scene. New flags. | C134 design (this doc) |
+| **C135** | **DONE.** Act 1 scripts: Birch debrief, Pacifidlog elder Draconid legend, Wallace Sky Pillar scene, 2 atmospheric NPCs. 5 flags (0x272-0x276). | C134 design |
 | **C136** | Act 2: Sky Pillar encounter tables (wild_encounters.json), mural sign scripts (1F/3F/5F), optional Draconid trainer | C135 flags |
 | **C137** | Act 3: Rayquaza enhanced encounter script, post-catch world reaction (4-6 NPC dialogues) | C136 encounters |
 | **C138** | Rematch tier implementation: all 8 gym leaders tiers 1-4 in trainer_parties.h | v7.1 base teams (C130-131) |

@@ -199,6 +199,7 @@ Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer:
 Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	lock
 	faceplayer
+	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, Route119_WeatherInstitute_2F_EventScript_ScientistSkyAnomaly
 	goto_if_set FLAG_BIRCH_QUEST_WEATHER, Route119_WeatherInstitute_2F_EventScript_ScientistPostQuest
 	goto_if_set FLAG_BIRCH_QUEST_STARTED, Route119_WeatherInstitute_2F_EventScript_ScientistQuestActive
 	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_ScientistMentionWeather
@@ -368,4 +369,23 @@ Route119_WeatherInstitute_2F_Text_ScientistPostQuest:
 	.string "Whatever is generating them\n"
 	.string "has been at it for a very\l"
 	.string "long time.$"
+
+@ =============================================
+@ v7.0 Sky Guardian -- Atmospheric flavor
+@ =============================================
+
+Route119_WeatherInstitute_2F_EventScript_ScientistSkyAnomaly::
+	msgbox Route119_WeatherInstitute_2F_Text_SkyAnomaly, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_WeatherInstitute_2F_Text_SkyAnomaly:
+	.string "Our weather satellites are\n"
+	.string "picking up anomalous readings\l"
+	.string "in the upper atmosphere.\p"
+	.string "The patterns do not match\n"
+	.string "anything in our database.\p"
+	.string "It is as if something massive\n"
+	.string "is generating its own weather\l"
+	.string "system...$"
 

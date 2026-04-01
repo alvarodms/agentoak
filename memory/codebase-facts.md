@@ -119,7 +119,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x869) → System flags (TRAINER_FLAGS_END+1 = 0x860+) → Daily flags (0x972+)
 
-**v6.0 flags (C118)**: 12 flags at 0x264-0x26F — FLAG_PRIMAL_STIRRING_STARTED through FLAG_VISITED_PACIFIDLOG_CURRENTS.
+**v6.0 flags (C118)**: 14 flags at 0x264-0x271 — FLAG_PRIMAL_STIRRING_STARTED through FLAG_SEAFLOOR_CAVERN_INVESTIGATED.
+
+**v7.0 flags (C135)**: 5 flags at 0x272-0x276 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_DEFEATED_RAYQUAZA_GUARDIAN. Next available: 0x277.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
@@ -137,7 +139,7 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **SkyPillar_Top**: Rayquaza encounter uses `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50).
 
-**SkyPillar_Outside**: Checks `FLAG_SYS_WEATHER_CTRL` for weather gating.
+**SkyPillar_Outside**: Checks `FLAG_SYS_WEATHER_CTRL` for weather gating. v7.0: Wallace reappears for guardian quest via `FLAG_HIDE_SKY_PILLAR_WALLACE` clear/set. Door opened via `OnLoad` check on `FLAG_SKY_GUARDIAN_ACT1_COMPLETE`.
 
 **Legendary battle pattern** (TerraCave/SeafloorCavern reference): `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
 

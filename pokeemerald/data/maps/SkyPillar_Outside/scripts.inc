@@ -19,6 +19,7 @@ SkyPillar_Outside_EventScript_CheckSetAbnormalWeather::
 
 SkyPillar_Outside_OnLoad:
 	call_if_set FLAG_WALLACE_GOES_TO_SKY_PILLAR, SkyPillar_Outside_EventScript_OpenDoor
+	call_if_set FLAG_SKY_GUARDIAN_ACT1_COMPLETE, SkyPillar_Outside_EventScript_OpenDoor
 	end
 
 SkyPillar_Outside_EventScript_OpenDoor::
@@ -131,6 +132,10 @@ SkyPillar_Outside_Movement_PlayerClimbSkyPillar:
 	step_end
 
 SkyPillar_Outside_EventScript_Wallace::
+	lock
+	faceplayer
+	goto_if_set FLAG_SPOKE_PACIFIDLOG_ELDER, SkyPillar_Outside_EventScript_WallaceGuardian
+	release
 	end
 
 SkyPillar_Outside_EventScript_ClosedDoor::
@@ -168,3 +173,67 @@ SkyPillar_Outside_Text_GotToGoBackForSootopolis:
 	.string "I've got to go back.\p"
 	.string "Everything is in your hands now.\n"
 	.string "Don't fail us!$"
+
+@ =============================================================
+@ v7.0 Sky Guardian Arc -- Wallace at Sky Pillar (Act 1)
+@ =============================================================
+
+SkyPillar_Outside_EventScript_WallaceGuardian::
+	msgbox SkyPillar_Outside_Text_WallaceGuardian, MSGBOX_DEFAULT
+	closemessage
+	@ Open the Sky Pillar door
+	setmetatile 14, 4, METATILE_Pacifidlog_SkyPillar_DoorOpen_Top, FALSE
+	setmetatile 14, 5, METATILE_Pacifidlog_SkyPillar_DoorOpen_Bottom, FALSE
+	special DrawWholeMapView
+	delay 20
+	@ Wallace departs
+	applymovement LOCALID_SKY_PILLAR_WALLACE, SkyPillar_Outside_Movement_WallaceGuardianExit
+	waitmovement 0
+	removeobject LOCALID_SKY_PILLAR_WALLACE
+	setflag FLAG_SKY_GUARDIAN_ACT1_COMPLETE
+	setflag FLAG_HIDE_SKY_PILLAR_WALLACE
+	release
+	end
+
+SkyPillar_Outside_Movement_WallaceGuardianExit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+SkyPillar_Outside_Text_WallaceGuardian:
+	.string "WALLACE: {PLAYER}.\n"
+	.string "I have been expecting you.\p"
+	.string "The seas around SOOTOPOLIS have\n"
+	.string "grown still.\p"
+	.string "Unnaturally so. As if the ocean\n"
+	.string "itself is holding its breath.\p"
+	.string "And now BIRCH tells me the\n"
+	.string "atmosphere above HOENN is\l"
+	.string "destabilizing.\p"
+	.string "Just as it did in the ancient\n"
+	.string "legends.\p"
+	.string "Beyond this door lies SKY PILLAR.\p"
+	.string "A place sacred to the DRACONID\n"
+	.string "people since time immemorial.\p"
+	.string "I have been entrusted with the\n"
+	.string "knowledge to unseal it.\p"
+	.string "But {PLAYER}...\p"
+	.string "What waits at the summit is no\n"
+	.string "ordinary POKeMON.\p"
+	.string "The SKY GUARDIAN is said to\n"
+	.string "possess power that dwarfs even\l"
+	.string "the PRIMAL titans.\p"
+	.string "The pillar itself is crumbling.\n"
+	.string "The floors may give way beneath\l"
+	.string "your feet.\p"
+	.string "Tread carefully.\p"
+	.string "I must return to SOOTOPOLIS to\n"
+	.string "watch over the city.\p"
+	.string "The rest is up to you.\p"
+	.string "Good luck, {PLAYER}.\n"
+	.string "HOENN is counting on you...\l"
+	.string "one last time.$"

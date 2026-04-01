@@ -60,9 +60,22 @@ PacifidlogTown_Text_TownSign:
 PacifidlogTown_EventScript_TideElder::
 	lock
 	faceplayer
+	goto_if_set FLAG_SPOKE_PACIFIDLOG_ELDER, PacifidlogTown_EventScript_DraconidReminder
+	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, PacifidlogTown_EventScript_DraconidLegend
 	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, PacifidlogTown_EventScript_TideElderResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, PacifidlogTown_EventScript_ElderReport
 	msgbox PacifidlogTown_Text_ElderNormal, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_DraconidLegend::
+	msgbox PacifidlogTown_Text_DraconidLegend, MSGBOX_DEFAULT
+	setflag FLAG_SPOKE_PACIFIDLOG_ELDER
+	release
+	end
+
+PacifidlogTown_EventScript_DraconidReminder::
+	msgbox PacifidlogTown_Text_DraconidReminder, MSGBOX_DEFAULT
 	release
 	end
 
@@ -115,3 +128,44 @@ PacifidlogTown_Text_TideElderResolved:
 	.string "The elders always said a brave\n"
 	.string "soul would rise when needed.\l"
 	.string "I believe that soul is you.$"
+
+@ =============================================
+@ v7.0 Sky Guardian Arc - Draconid Legend
+@ =============================================
+
+PacifidlogTown_Text_DraconidLegend:
+	.string "Ah, you must be the young trainer\n"
+	.string "PROF. BIRCH spoke of.\p"
+	.string "Sit, child. What I tell you now\n"
+	.string "has been passed down through my\l"
+	.string "family for a thousand years.\p"
+	.string "Long ago, when the land burned\n"
+	.string "with GROUDON's fury and the seas\l"
+	.string "raged with KYOGRE's wrath...\p"
+	.string "The people looked to the sky\n"
+	.string "and cried out for deliverance.\p"
+	.string "And the SKY GUARDIAN answered.\p"
+	.string "A great dragon, emerald and gold,\n"
+	.string "descended from above the clouds.\p"
+	.string "Its very presence stilled the\n"
+	.string "storms.\p"
+	.string "The ancients built SKY PILLAR to\n"
+	.string "honor it.\p"
+	.string "A stairway reaching toward the\n"
+	.string "heavens themselves.\p"
+	.string "They say the guardian sleeps atop\n"
+	.string "that pillar still, waiting for\l"
+	.string "the day it is needed once more.\p"
+	.string "If BIRCH's instruments detect\n"
+	.string "something in the sky...\p"
+	.string "Then perhaps that day has come.\p"
+	.string "WALLACE of SOOTOPOLIS knows the\n"
+	.string "way to SKY PILLAR.\p"
+	.string "Seek him at its base, east of\n"
+	.string "here.$"
+
+PacifidlogTown_Text_DraconidReminder:
+	.string "The SKY GUARDIAN sleeps atop\n"
+	.string "SKY PILLAR.\p"
+	.string "WALLACE can show you the way.\n"
+	.string "Be careful, young one.$"

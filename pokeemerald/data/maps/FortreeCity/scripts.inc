@@ -12,7 +12,16 @@ FortreeCity_OnResume:
 	end
 
 FortreeCity_EventScript_Man::
-	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, FortreeCity_EventScript_ManSkyDisturbance
+	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_DEFAULT
+	release
+	end
+
+FortreeCity_EventScript_ManSkyDisturbance::
+	msgbox FortreeCity_Text_SkyDisturbance, MSGBOX_DEFAULT
+	release
 	end
 
 FortreeCity_EventScript_Woman::
@@ -211,3 +220,14 @@ FortreeCity_Text_WomanBeastSighting:
 	.string "Something powerful is moving\n"
 	.string "through Hoenn. I can feel it\l"
 	.string "in my bones.$"
+
+@ =============================================
+@ v7.0 Sky Guardian -- Atmospheric flavor
+@ =============================================
+
+FortreeCity_Text_SkyDisturbance:
+	.string "The winds have changed.\p"
+	.string "My POKeMON will not stop looking\n"
+	.string "at the sky.\p"
+	.string "Something is happening up there.\n"
+	.string "I can feel it.$"
