@@ -19,7 +19,8 @@ import { logger } from "../utils/logger.js";
  * Uses the agent-declared stage from version.releaseStage when set;
  * otherwise auto-computes: major === 0 → Alpha, minor < 5 → Beta, else Stable.
  */
-function getReleaseStage(version: GameVersion): string {
+/** @internal Exported for testing */
+export function getReleaseStage(version: GameVersion): string {
   if (version.releaseStage) return version.releaseStage;
   if (version.major === 0) return "Alpha";
   if (version.minor < 5) return "Beta";
@@ -30,7 +31,8 @@ function getReleaseStage(version: GameVersion): string {
  * Format the IPS patch filename.
  * e.g. "agentoak-v0.0.15-build42.ips"
  */
-function patchFilename(version: GameVersion): string {
+/** @internal Exported for testing */
+export function patchFilename(version: GameVersion): string {
   return `agentoak-v${version.major}.${version.minor}.${version.cycle}-build${version.build}.ips`;
 }
 
@@ -41,7 +43,8 @@ function patchFilename(version: GameVersion): string {
  * If `cycleChanges` is provided, renders them as a bullet list.
  * Falls back to the narrative `cycleSummary` or `objective` otherwise.
  */
-function formatChangelog(
+/** @internal Exported for testing */
+export function formatChangelog(
   version: GameVersion,
   cycleSummary: string,
   objective: string,
