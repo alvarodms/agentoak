@@ -23,7 +23,7 @@ Birch's atmospheric anomaly readings point to Rayquaza. Sky Pillar arc. Setup pl
 
 ---
 
-# v7.1 — "Battle Quality Overhaul" (Active)
+# v7.1 — "Battle Quality Overhaul" (Complete — C129-132)
 
 ## Overview
 Add 20 Gen 4/5 moves to fill P/S split gaps. Redesign all 8 gym leaders + 4 E4 + Champion teams for strategic identity, correct stat/move alignment, and level curve compliance. Fixes issue #82.
@@ -95,7 +95,7 @@ Full team compositions (species, levels, items, moves) in `memory/pokemon-knowle
 
 **C131 — Gym Leaders 5-8**: COMPLETE. Norman (Kangaskhan/Tauros/Slaking Lv27-31), Winona (Skarmory/Altaria/Swellow Lv29-33), T&L (Claydol/Xatu/Slowbro/Alakazam Lv38-42, 6→4), Juan (Starmie/Ludicolo/Kingdra Lv42-46). All structural fixes applied.
 
-**C132 — E4 + Champion**: Sidney, Phoebe, Glacia, Drake, Wallace. Most complex (5-6 mons each, many new moves). Remove all duplicates. Build test.
+**C132 — E4 + Champion**: COMPLETE. Sidney (Absol/Houndoom/Sharpedo/Umbreon/Tyranitar Lv44-48), Phoebe (Banette×2/Dusclops/Sableye/Gengar Lv46-50), Glacia (Jynx/Cloyster/Piloswine/Walrein/Lapras Lv48-52), Drake (Altaria/Flygon/Salamence/Garchomp/Dragonite Lv51-55), Wallace (Starmie/Tentacruel/Gyarados/Ludicolo/Kingdra/Milotic Lv53-58). All duplicates removed. v7.1 trainer overhaul complete.
 
 **C133 — Rematch Tier Update + Polish**: Update rematch teams (tiers 1-4) to match new base teams. Run `make check_trainers`. README update with v7.1 changelog.
 

@@ -37,13 +37,16 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 ### Battle System Upgrades
 
 - **Gen IV physical/special split** — each move has its own Physical, Special, or Status category (Crunch hits physically, Shadow Ball hits specially)
+- **20 new Gen IV/V moves** — Night Slash, Stone Edge, Dragon Pulse, Close Combat, Brave Bird, Flare Blitz, Shadow Claw, Nasty Plot, Ice Shard, Energy Ball, and more fill the physical/special gaps the split created
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
 
 ### Trainer Overhaul
 
-- **All 8 gym leaders** redesigned with competitive teams, strategic held items, and 4-tier rematch progression
-- **Elite Four and Champion** carry full competitive rosters
+- **All 8 gym leaders** redesigned with unique strategic identities, held items, and correct physical/special move alignment — Slaking anchors Norman, Brave Bird Swellow leads Winona, Dragon Pulse Kingdra commands Juan's rain
+- **Elite Four and Champion** rebuilt from scratch — Sidney's dark squad runs Nasty Plot and Sucker Punch, Drake fields Salamence, Garchomp, AND Dragonite with Dragon Dance, Champion Wallace commands a rain-synergy team with Ludicolo and Kingdra. Zero duplicate species across the entire gauntlet
+- **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
+- **4-tier rematch progression** for all gym leaders with escalating teams
 - **Rival arc** redesigned across all 5 battles with migration-themed team building
 - **Villain bosses** (Maxie, Archie, Magma/Aqua admins) carry held items and coverage moves
 
