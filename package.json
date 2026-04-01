@@ -7,7 +7,9 @@
     "cycle": "tsx src/index.ts",
     "build:check": "tsc --noEmit",
     "build:docs": "cd docs && npm run build",
-    "debug:mcp": "tsx src/mcp/debug-ui.ts"
+    "debug:mcp": "tsx src/mcp/debug-ui.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "engines": {
     "node": ">=20.0.0"
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^22.12.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.2"
   }
 }
