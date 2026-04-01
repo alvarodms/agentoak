@@ -257,6 +257,8 @@ Decide: What mode should this cycle use, and what should the objective be?
 
 If a previous cycle had build failures and the changes were REVERTED (look for "[REVERTED" in the journal), do NOT choose "repair" — the broken code no longer exists. Instead, choose a productive mode (feature, patch, planning, etc.) and either retry the same objective with a different approach or move on to something else. Only choose "repair" if the build is currently broken with un-reverted changes still in place.
 
+If a previous cycle was marked INCOMPLETE or UNSUBSTANTIATED (look for "[INCOMPLETE" or "[UNSUBSTANTIATED" in the journal), the claimed work was NOT actually committed to the source files. Do NOT treat that work as done or "verify" it — the files were never changed. Either re-attempt the same objective (the source files still need modifying) or explicitly acknowledge the gap in your reasoning. Treat any \`completed-work.md\` entries from that cycle with suspicion — they may record phantom work that needs to be corrected.
+
 
 ${formatImplementationPlanGuidance()}
 

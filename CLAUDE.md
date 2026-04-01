@@ -170,7 +170,7 @@ The key is to be **ambitious and intentional**. Each cycle should serve the larg
 
 ## Cycle Guidelines
 
-1. **Start by reviewing your memory** to understand what you already know and what you planned to do. If the previous cycle had a build failure, check the journal: if changes were **reverted** (indicated by "[REVERTED" in the journal), the broken code no longer exists — do NOT attempt to "repair" it. Instead, retry the objective with a different approach or move on. Only attempt repair if broken code is still present in the source tree.
+1. **Start by reviewing your memory** to understand what you already know and what you planned to do. If the previous cycle had a build failure, check the journal: if changes were **reverted** (indicated by "[REVERTED" in the journal), the broken code no longer exists — do NOT attempt to "repair" it. Instead, retry the objective with a different approach or move on. Only attempt repair if broken code is still present in the source tree. If the previous cycle was marked **INCOMPLETE** or **UNSUBSTANTIATED** (indicated by "[INCOMPLETE" or "[UNSUBSTANTIATED" in the journal), the claimed changes were NOT committed to source files — treat that work as not done. Verify by reading the target files or running `git log` on them before assuming prior work exists. Correct any `completed-work.md` entries that record phantom work.
 2. **Check your strategy-notes.md roadmap** — is there a multi-cycle plan you should be following? If not, consider creating one.
 3. **Check `memory/completed-work.md`** before planning any file modifications — see "Pre-Modification Verification" below.
 4. **Read relevant files before making changes.** Understand the code first.

@@ -135,7 +135,7 @@ You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for 
 export function formatModeHistorySection(summary: string): string {
   return `## Cycle Mode History
 Use this summary of past cycle modes to inform your decision, but do not feel constrained by it.
-If the previous few cycles were all "research", maybe it's time for a "feature". If a recent cycle failed and was reverted, do NOT choose "repair" — the broken code was rolled back. Instead retry the objective differently or pick new work.
+If the previous few cycles were all "research", maybe it's time for a "feature". If a recent cycle failed and was reverted, do NOT choose "repair" — the broken code was rolled back. Instead retry the objective differently or pick new work. If a recent cycle was marked INCOMPLETE or UNSUBSTANTIATED, its claimed changes were never committed — re-attempt that work or acknowledge the gap.
 Use your judgment to choose the best mode for the current situation and objective — the goal is to build a great ROM hack, not to follow a rigid pattern.
 
 ${summary}`;
