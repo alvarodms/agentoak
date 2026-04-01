@@ -27,5 +27,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | README & Community Documentation Patterns | 126 | [readme-community-docs.md](pokemon-knowledge/readme-community-docs.md) |
 | Early Game Balance & Ace Variety | 127 | [early-game-balance-and-ace-variety.md](pokemon-knowledge/early-game-balance-and-ace-variety.md) |
 | Trainer Quality, Later-Gen Moves & Hack Identity | 128 | [trainer-quality-and-hack-identity.md](pokemon-knowledge/trainer-quality-and-hack-identity.md) |
+| Early Gym Implementation Notes | 130 | [early-gym-implementation-notes.md](pokemon-knowledge/early-gym-implementation-notes.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

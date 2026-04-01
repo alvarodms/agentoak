@@ -91,7 +91,7 @@ Full team compositions (species, levels, items, moves) in `memory/pokemon-knowle
 
 **C129 — Move Infrastructure**: COMPLETE. All 20 moves added (IDs 358-377, MOVES_COUNT=378). All reuse existing effects. Flare Blitz=DOUBLE_EDGE, Close Combat=SUPERPOWER, Sucker Punch=priority+1 HIT, Cross Poison=POISON_HIT.
 
-**C130 — Gym Leaders 1-4**: Roxanne, Brawly, Wattson, Flannery in `trainer_parties.h`. 3 mons each = 12 total. Simplest changes. Build test.
+**C130 — Gym Leaders 1-4**: COMPLETE. Roxanne (Geodude/Aerodactyl/Nosepass Lv12-15), Brawly (Machoke/Hitmonlee/Heracross Lv15-18), Wattson (Magneton/Electabuzz/Jolteon Lv20-24), Flannery (Magmar/Arcanine/Houndoom Lv25-29). Level curve corrected. Also fixed pre-existing TerraCave linker error.
 
 **C131 — Gym Leaders 5-8**: Norman, Winona, Tate&Liza, Juan. Structural changes (Blissey→Slaking, Salamence→Swellow, 6→4 mons for T&L, remove dup Kingdra). Build test.
 

@@ -31,12 +31,17 @@ Build failures and errors encountered, their causes, and how they were (or could
 - Use `cat >> file << 'HEREDOC'` for files with existing smart quotes (avoids Edit tool corruption).
 - **VALIDATE all new .string content**: Run `grep -P '[\x80-\xFF]' <file>` on every modified .inc file BEFORE `make`. Replace em dashes with `--`, curly quotes with `'`, etc.
 - Smart quotes U+201C/U+201D in existing vanilla text are VALID charmap entries (B1/B2) — do NOT replace those.
-- **C125 failure**: `U+2014` em dash in BirchLab scripts.inc line 1940. Fix: replace with `--`.
 
 ## Pre-existing Build Blockers Cause Cascade Reverts (C122, C124)
 
 **Symptom**: Cycle makes valid changes but build fails due to pre-existing issue in unrelated file.
 **Resolution**: At cycle start, run a smoke `make` build BEFORE making any changes. If it fails, fix the blocker first.
+
+## Dangling map.json Script References (Cycle 130)
+
+**Symptom**: Linker error `undefined reference to 'EventScript_Xxx'` in `map_events.o`.
+**Cause**: `map.json` object event references a script label never defined in `scripts.inc` (e.g. TerraCave MagmaGrunt1 from v6.0 work).
+**Resolution**: Add the missing script to `scripts.inc` or fix the reference in `map.json`. Smoke build at cycle start catches these.
 
 ## "File has not been read yet" After Context Compression (Cycles 57, 67, 88)
 
