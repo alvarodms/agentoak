@@ -319,7 +319,7 @@ Route104_EventScript_Boy1::
 	end
 
 Route104_EventScript_Woman::
-	msgbox Route104_Text_OnlyThrowBallAtWildPokemon, MSGBOX_NPC
+	msgbox Route104_Text_MigrationFlowers, MSGBOX_NPC
 	end
 
 Route104_EventScript_Boy2::
@@ -1013,6 +1013,13 @@ Route104_Text_ThrowBallAtWeakenedPokemon:
 	.string "weaken the wild POKéMON first.\p"
 	.string "It will be easier to catch if it's been\n"
 	.string "poisoned, burned, or lulled to sleep.$"
+
+Route104_Text_MigrationFlowers:
+	.string "Have you seen the VULPIX near here?\n"
+	.string "They're not from HOENN, you know.\p"
+	.string "My flowers have been attracting all\n"
+	.string "sorts of new POKéMON lately.\l"
+	.string "It's like the whole region is waking up!$"
 
 Route104_Text_OnlyThrowBallAtWildPokemon:
 	.string "You're a thief if you try to steal\n"

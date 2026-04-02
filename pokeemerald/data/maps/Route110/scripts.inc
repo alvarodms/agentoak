@@ -64,7 +64,7 @@ Route110_EventScript_AquaGrunt4::
 	end
 
 Route110_EventScript_Boy1::
-	msgbox Route110_Text_RideBikeAtFullSpeed, MSGBOX_NPC
+	msgbox Route110_Text_MigrationCyclist, MSGBOX_NPC
 	end
 
 Route110_EventScript_CyclingGirl1::
@@ -804,6 +804,14 @@ Route110_Text_BrendanExplainItemfinder:
 	.string "Anyway, I'm off.\n"
 	.string "New migrants won't find\l"
 	.string "themselves.$"
+
+Route110_Text_MigrationCyclist:
+	.string "I was riding the CYCLING ROAD when\n"
+	.string "something yellow and crackling with\l"
+	.string "electricity jumped out at me!\p"
+	.string "An ELECTABUZZ, right here on\n"
+	.string "ROUTE 110! Since when do those\l"
+	.string "live in HOENN?$"
 
 Route110_Text_RideBikeAtFullSpeed:
 	.string "Wouldn't it be great to ride a BIKE\n"

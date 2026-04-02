@@ -35,5 +35,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Legendary Climax & World Reaction | 137 | [legendary-climax-world-reaction.md](pokemon-knowledge/legendary-climax-world-reaction.md) |
 | Post-Arc Polish Priorities | 138 | [post-arc-polish-priorities.md](pokemon-knowledge/post-arc-polish-priorities.md) |
 | Postgame Breadcrumb & Player Direction Design | 139 | [postgame-breadcrumb-design.md](pokemon-knowledge/postgame-breadcrumb-design.md) |
+| Early-Game NPC World-Building | 140 | [early-game-npc-world-building.md](pokemon-knowledge/early-game-npc-world-building.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

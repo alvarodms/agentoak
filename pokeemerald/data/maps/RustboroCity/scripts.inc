@@ -145,7 +145,7 @@ RustboroCity_EventScript_FatManSawGrunt::
 RustboroCity_EventScript_DevonEmployee2::
 	lock
 	faceplayer
-	msgbox RustboroCity_Text_YoureNewAroundHere, MSGBOX_DEFAULT
+	msgbox RustboroCity_Text_MigrationScientist, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1039,6 +1039,13 @@ RustboroCity_Text_HeyThatsRustborosGymBadge:
 	.string "Hey, that's RUSTBORO's GYM BADGE!\p"
 	.string "Out of all the POKéMON GYM BADGES,\n"
 	.string "RUSTBORO's is the coolest, I'd say.$"
+
+RustboroCity_Text_MigrationScientist:
+	.string "DEVON CORPORATION has been monitoring\n"
+	.string "unusual species readings near RUSTBORO.\p"
+	.string "A POKéMON called RIOLU was detected\n"
+	.string "on ROUTE 116. It's native to SINNOH,\l"
+	.string "not HOENN. Fascinating, really.$"
 
 RustboroCity_Text_YoureNewAroundHere:
 	.string "Oh? Who might you be?\n"

@@ -30,7 +30,7 @@ OldaleTown_EventScript_TownSign::
 	end
 
 OldaleTown_EventScript_Girl::
-	msgbox OldaleTown_Text_SavingMyProgress, MSGBOX_NPC
+	msgbox OldaleTown_Text_MigrationResearcher, MSGBOX_NPC
 	end
 
 OldaleTown_EventScript_MartEmployee::
@@ -338,6 +338,13 @@ OldaleTown_Movement_ReturnToOriginalPosition:
 	walk_down
 	walk_left
 	step_end
+
+OldaleTown_Text_MigrationResearcher:
+	.string "I came from JOHTO to study the unusual\n"
+	.string "migration patterns here in HOENN.\p"
+	.string "LARVITAR and DRATINI on ROUTE 101!\n"
+	.string "In all my years, I've never seen\l"
+	.string "anything like it.$"
 
 OldaleTown_Text_SavingMyProgress:
 	.string "A trainer came in with burns from\n"

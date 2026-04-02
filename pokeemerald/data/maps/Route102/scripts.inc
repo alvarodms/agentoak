@@ -14,7 +14,7 @@ Route102_EventScript_RouteSignPetalburg::
 	end
 
 Route102_EventScript_Boy::
-	msgbox Route102_Text_CatchWholeBunchOfPokemon, MSGBOX_NPC
+	msgbox Route102_Text_MigrationBugCatcher, MSGBOX_NPC
 	end
 
 Route102_EventScript_Calvin::
@@ -95,6 +95,14 @@ Route102_Text_ImNotVeryTall:
 	.string "The grass goes up my nose and…\n"
 	.string "Fwafwafwafwafwa…\p"
 	.string "Fwatchoo!$"
+
+Route102_Text_MigrationBugCatcher:
+	.string "Dude, have you SEEN what's on this\n"
+	.string "route now? I came here for WURMPLE\l"
+	.string "and found a BELDUM instead!\p"
+	.string "A BELDUM! Just sitting in the tall\n"
+	.string "grass! This is the coolest thing\l"
+	.string "that's ever happened to me!$"
 
 Route102_Text_CatchWholeBunchOfPokemon:
 	.string "I'm going to catch a whole bunch of\n"

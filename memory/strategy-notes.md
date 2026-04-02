@@ -71,30 +71,17 @@ Legendary Encounter Template deferred to C142 consistency pass (zero player impa
 
 ---
 
-## C140: "The Living Early Game" (Early-Game Enrichment)
+## C140: "The Living Early Game" — COMPLETE
 
-**Priority: HIGH — fixes weakest moment #1**
+Shipped 6 migration-foreshadowing NPC dialogues across early-game areas:
+1. OldaleTown Girl → Johto researcher studying LARVITAR/DRATINI on Route 101
+2. Route102 Boy → Bug catcher who found a BELDUM in the grass
+3. PetalburgCity Gentleman → Norman getting reports, Birch investigating migration
+4. Route104 Woman → VULPIX near flowers, region "waking up"
+5. RustboroCity DevonEmployee2 → Devon monitoring RIOLU on Route 116
+6. Route110 Boy1 → ELECTABUZZ encounter on Cycling Road
 
-### Migration Foreshadowing NPCs (6-8 new dialogue scripts)
-Add 1-2 short migration-flavored NPC dialogues to each vanilla early-game area:
-- **OldaleTown**: Researcher noting unusual Pokemon sightings nearby
-- **Route 102**: Bug catcher excited about unfamiliar species
-- **PetalburgCity**: Norman's aide mentions rare Pokemon reports
-- **Route 104**: Flower shop owner notices new pollinators
-- **RustboroCity**: Devon Corp scientist studying migration patterns
-- **Route 116**: Hiker commenting on Route 116 Riolu sightings (connects to actual encounter table)
-- **Route 110**: Cyclist who saw something strange on the bike path
-
-### Design Principles
-- Keep dialogue SHORT (2-3 text boxes max)
-- Reference actual migration species present in nearby encounter tables
-- Don't spoil postgame — these are flavor, not quest hooks
-- Use existing NPC object events where possible (no map.json edits)
-- Follow the established pattern from C15/28 early-game flavor NPCs
-
-### Deliverables
-- 6-8 script file modifications (one per route/town)
-- No new flags needed (these are unconditional flavor text)
+Route 116 skipped — no generic non-trainer NPCs (all are plot-critical or battle trainers).
 
 ---
 

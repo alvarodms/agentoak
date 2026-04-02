@@ -29,7 +29,7 @@ Before modifying ANY pokeemerald file:
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
 | Wild Encounters | 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, 92, 98, 99, 100, 121, **136** | 3 (JSON + C + flags) | [wild-encounters.md](completed-work/wild-encounters.md) |
 | Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, 101, 102, 122–124, 126, 127, 130–133, **136** | 6 (parties, trainers, opponents, battle_setup, flags, learnsets) | [trainer-parties.md](completed-work/trainer-parties.md) |
-| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, **139** | ~60 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
+| NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, 139, **140** | ~60 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves) | 43–46, 52, **129** | 17 (+5 modified) | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, **107** | 13 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |

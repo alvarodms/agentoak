@@ -227,7 +227,7 @@ PetalburgCity_EventScript_CitySign::
 	end
 
 PetalburgCity_EventScript_Gentleman::
-	msgbox PetalburgCity_Text_FullPartyExplanation, MSGBOX_NPC
+	msgbox PetalburgCity_Text_MigrationReport, MSGBOX_NPC
 	end
 
 PetalburgCity_EventScript_WallyHouseSign::
@@ -726,6 +726,13 @@ PetalburgCity_Text_WaterReflection:
 	.string "I nearly fell out of my boat.\n"
 	.string "The water doesn't feel the\l"
 	.string "same anymore.$"
+
+PetalburgCity_Text_MigrationReport:
+	.string "GYM LEADER NORMAN has been getting\n"
+	.string "reports from trainers about unfamiliar\l"
+	.string "POKéMON appearing across HOENN.\p"
+	.string "He says PROFESSOR BIRCH is looking\n"
+	.string "into it. Something about a migration.$"
 
 PetalburgCity_Text_FullPartyExplanation:
 	.string "My sister spotted a Houndour near\n"
