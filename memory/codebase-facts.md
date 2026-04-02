@@ -33,9 +33,9 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 **Large files**: `trainers.h` is ~354KB (needs offset/limit reading). `trainer_parties.h` is ~116K tokens.
 
-**Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files, reports mismatches. Run after any trainer changes.
+**Trainer class/pic defines**: Both `TRAINER_CLASS_*` and `TRAINER_PIC_*` are in `include/constants/trainers.h` (NOT a separate file). Dragon Tamer = class 48, pic 62.
 
-**trainers.h parsing**: Entries are multi-line — `[TRAINER_NAME]` on one line, party macro on a subsequent line. Requires multi-line awk (not single-line grep) to extract trainer→party mappings.
+**Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files, reports mismatches. Run after any trainer changes.
 
 ---
 
@@ -44,8 +44,6 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 **File**: `src/option_menu.c`. Each menu item needs: enum entry, YPOS macro, task data define (`tXxx`), text string, ProcessInput function, DrawChoices function, entries in sOptionMenuItemsNames, init load, save, and process input switch case.
 
 **SaveBlock2 bitfield** (`include/global.h` line 519): 16-bit field stores optionsTextSpeed:3, optionsWindowFrameType:5, optionsSound:1, optionsBattleStyle:1, optionsBattleSceneOff:1, regionMapZoom:1, optionsBattleSpeed:1. 3 padding bits remain.
-
-**Battle animation skip**: `src/battle_main.c` ~line 3101 checks optionsBattleSceneOff OR optionsBattleSpeed and sets `HITMARKER_NO_ANIMATIONS`.
 
 ---
 
@@ -79,29 +77,13 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## Trainer Battle System
-
-**Party data**: `src/data/trainer_parties.h`. Struct: `TrainerMonItemCustomMoves` with `.species`, `.heldItem`, `.moves[]`.
-
-**AI flags**: Elite trainers use `AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY`. Champion adds `AI_FLAG_SMART_SWITCHING`.
-
----
-
 ## Physical/Special Split & Move System (Cycle 43-44, 75, 128)
 
 Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE_CATEGORY_STATUS` in `battle_moves.h`. Fairy type added as TYPE_FAIRY with full type chart.
 
 **Current state (C129)**: MOVES_COUNT = 378 (IDs 0-377). Last vanilla move = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5 moves: MOVE_NIGHT_SLASH (358) through MOVE_ZEN_HEADBUTT (377).
 
-**Recoil effects**: EFFECT_RECOIL = 1/4 (Take Down). EFFECT_DOUBLE_EDGE = 1/3 (Double-Edge).
-
 **Species NOT in codebase**: Mismagius, Mamoswine, Weavile. Garchomp, Lucario, Riolu ARE present (added C60-70).
-
----
-
-## Battle Frontier Architecture (Cycle 76)
-
-**Frontier mon pool**: `gBattleFrontierMons[NUM_FRONTIER_MONS=882]` in `src/data/battle_frontier/battle_frontier_mons.h`. Our 6 new species added (indices 882-893, Cycle 77).
 
 ---
 
@@ -121,15 +103,13 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v6.0 flags (C118)**: 14 flags at 0x264-0x271 — FLAG_PRIMAL_STIRRING_STARTED through FLAG_SEAFLOOR_CAVERN_INVESTIGATED.
 
-**v7.0 flags (C135)**: 5 flags at 0x272-0x276 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_DEFEATED_RAYQUAZA_GUARDIAN. Next available: 0x277.
+**v7.0 flags (C135-136)**: 5 quest flags at 0x272-0x276 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_DEFEATED_RAYQUAZA_GUARDIAN. FLAG_HIDE_SKY_PILLAR_DRACONID at 0x277. Next available: 0x278.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
-**Cave of Origin maps**: CaveOfOrigin_UnusedRubySapphireMap1/2/3 — unused RS maps available for repurposing.
-
 ---
 
-## Sky Pillar System (Cycle 134)
+## Sky Pillar System (Cycle 134-136)
 
 **Maps**: 7 directories — SkyPillar_Outside, SkyPillar_Entrance, SkyPillar_1F through SkyPillar_5F, SkyPillar_Top.
 
@@ -141,9 +121,11 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **SkyPillar_Outside**: Checks `FLAG_SYS_WEATHER_CTRL` for weather gating. v7.0: Wallace reappears for guardian quest via `FLAG_HIDE_SKY_PILLAR_WALLACE` clear/set. Door opened via `OnLoad` check on `FLAG_SKY_GUARDIAN_ACT1_COMPLETE`.
 
-**Legendary battle pattern** (TerraCave/SeafloorCavern reference): `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
+**C136 additions**: Encounter tables redesigned for 1F/3F/5F (Duskull/Golbat/Claydol/Sableye/Banette on 1F, Altaria/Solrock/Lunatone on 3F, Flygon/Salamence-rare on 5F). Ancient mural bg_events on each floor. Draconid trainer Kaelen (TRAINER_DRACONID_KAELEN) on 3F with Shelgon/Altaria/Flygon.
 
-**Pacifidlog NPCs**: House2 (FanClubYoungster), House4 (LittleGirl) — simple vanilla scripts, good candidates for elder/lore NPCs.
+**No OBJ_EVENT_GFX_DRAGON_TAMER**: Used OBJ_EVENT_GFX_MAN_1 for the Draconid NPC.
+
+**Legendary battle pattern** (TerraCave/SeafloorCavern reference): `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
 
 ---
 

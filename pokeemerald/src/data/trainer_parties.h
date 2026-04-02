@@ -14760,3 +14760,24 @@ static const struct TrainerMonItemCustomMoves sParty_AquaAdminSeafloor[] = {
     .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_BRICK_BREAK, MOVE_SWORDS_DANCE}
     }
 };
+
+static const struct TrainerMonNoItemCustomMoves sParty_DraconidKaelen[] = {
+    {
+    .iv = 200,
+    .lvl = 50,
+    .species = SPECIES_ALTARIA,
+    .moves = {MOVE_DRAGON_PULSE, MOVE_FLAMETHROWER, MOVE_SING, MOVE_SAFEGUARD}
+    },
+    {
+    .iv = 200,
+    .lvl = 51,
+    .species = SPECIES_FLYGON,
+    .moves = {MOVE_DRAGON_PULSE, MOVE_EARTHQUAKE, MOVE_CRUNCH, MOVE_DRAGON_DANCE}
+    },
+    {
+    .iv = 200,
+    .lvl = 50,
+    .species = SPECIES_SHELGON,
+    .moves = {MOVE_DRAGON_CLAW, MOVE_PROTECT, MOVE_IRON_DEFENSE, MOVE_CRUNCH}
+    }
+};

@@ -4,11 +4,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111) — RESOLVED C112
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136) — RECURRING
 
-**Symptom**: Objective calls for script content (map scripts, NPC dialogues) but cycle ends with only C-side infrastructure. 25+ actions spent reading/searching before any edits begin.
-**Cause**: Agent defaults to deep research even when the system is already well-understood from prior cycles. Memory files contain all needed context.
-**Resolution**: When C infrastructure is DONE, start writing scripts immediately. Read ONLY the specific insertion point (50-line window), then edit. Budget: ≤10 actions for reads, ≥30 for writes+build.
+**Symptom**: 90+ actions spent on file reads/searches before first edit (C136). Objective still completed but action budget nearly exhausted.
+**Cause**: Wrong working directory path (`/home/agentoak/` instead of `/__w/agentoak/agentoak/`) caused cascading failures in C136. Also: deep research on well-understood systems.
+**Resolution**: 
+- **ALWAYS use `/__w/agentoak/agentoak/pokeemerald/`** as the base path. NEVER use `/home/agentoak/`.
+- When C infrastructure is DONE, start writing scripts immediately. Budget: ≤10 actions for reads, ≥30 for writes+build.
 
 ## Claiming Completion Without Git Changes (Cycle 107)
 
@@ -40,20 +42,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Dangling map.json Script References (Cycle 130)
 
 **Symptom**: Linker error `undefined reference to 'EventScript_Xxx'` in `map_events.o`.
-**Cause**: `map.json` object event references a script label never defined in `scripts.inc` (e.g. TerraCave MagmaGrunt1 from v6.0 work).
-**Resolution**: Add the missing script to `scripts.inc` or fix the reference in `map.json`. Smoke build at cycle start catches these.
+**Cause**: `map.json` object event references a script label never defined in `scripts.inc`.
+**Resolution**: Add the missing script to `scripts.inc` or fix the reference in `map.json`.
 
 ## Bash-Modified Files Not Tracked by Validator (Cycle 133)
 
-**Symptom**: Validator says "no pokeemerald/ files modified" even though git diff shows 81 insertions. Agent marked INCOMPLETE.
-**Cause**: Used a Node.js script via Bash to modify `level_up_learnsets.h` instead of the Edit tool. Validator tracks Edit/Write tool calls, not Bash file modifications.
-**Resolution**: After Bash-based file modification, always run `git status` to verify. Also ALWAYS run `make` — C133 skipped the build entirely.
-
-## Skipped Build Verification (Cycle 133)
-
-**Symptom**: Learnset changes added via script but never compiled. Unknown if changes build successfully.
-**Cause**: Agent spent too many actions on research and README updates, ran out of budget for `make`.
-**Resolution**: Build verification is NON-NEGOTIABLE for any pokeemerald/ file modification. Reserve at least 5 actions for build at end of cycle.
+**Symptom**: Validator says "no pokeemerald/ files modified" even though git diff shows changes.
+**Cause**: Used Bash script to modify files instead of Edit tool. Validator tracks Edit/Write tool calls.
+**Resolution**: After Bash-based file modification, always run `git status` to verify. ALWAYS run `make`.
 
 ## "File has not been read yet" After Context Compression (Cycles 57, 67, 88)
 

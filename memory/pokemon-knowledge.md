@@ -31,5 +31,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Narrative Divergence Patterns | 131 | [narrative-divergence-patterns.md](pokemon-knowledge/narrative-divergence-patterns.md) |
 | Learnset Distribution for New Moves | 132 | [learnset-distribution-patterns.md](pokemon-knowledge/learnset-distribution-patterns.md) |
 | Sky Pillar Arc & Rematch Design | 134 | [sky-pillar-arc-and-rematch-design.md](pokemon-knowledge/sky-pillar-arc-and-rematch-design.md) |
+| Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storytelling.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
