@@ -98,3 +98,86 @@ export interface ReleaseEntry {
   ipsName: string | null;
 }
 
+// ── Pokedex Types ──
+
+export interface PokemonStats {
+  hp: number;
+  atk: number;
+  def: number;
+  spa: number;
+  spd: number;
+  spe: number;
+}
+
+export interface LearnsetMove {
+  level: number;
+  move: string;
+}
+
+export interface TMHMMove {
+  label: string;
+  move: string;
+}
+
+export interface EvolutionTarget {
+  species: string;
+  method: string;
+}
+
+export interface EvolutionFrom {
+  from: string;
+  method: string;
+}
+
+export interface PokemonLocation {
+  map: string;
+  method: string;
+  minLevel: number;
+  maxLevel: number;
+  rate: number;
+}
+
+export interface MoveInfo {
+  type: string;
+  power: number;
+  accuracy: number;
+  pp: number;
+  category: string;
+}
+
+export interface PokedexEntry {
+  id: number;
+  name: string;
+  types: string[];
+  stats: PokemonStats;
+  bst: number;
+  abilities: string[];
+  category: string;
+  height: number;
+  weight: number;
+  description: string;
+  catchRate: number;
+  genderRatio: string;
+  eggGroups: string[];
+  growthRate: string;
+  evYield: PokemonStats;
+  heldItems: { common: string | null; rare: string | null };
+  learnset: {
+    levelUp: LearnsetMove[];
+    tmhm: TMHMMove[];
+    tutor: string[];
+    egg: string[];
+  };
+  evolution: {
+    evolvesFrom: EvolutionFrom | null;
+    evolvesTo: EvolutionTarget[];
+  };
+  locations: PokemonLocation[];
+}
+
+export interface PokedexData {
+  generatedAt: string;
+  pokemon: PokedexEntry[];
+  moves: Record<string, MoveInfo>;
+}
+

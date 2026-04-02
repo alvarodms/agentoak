@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 const NAV_ITEMS = [
   { href: '/', label: 'Research Logs' },
   { href: '/guide', label: 'Game Guide' },
+  { href: '/pokedex', label: 'Pokedex' },
   { href: '/about', label: 'About' },
   { href: '/downloads', label: 'Downloads' },
 ];
@@ -32,7 +33,11 @@ export default function Header() {
           <Link
             key={item.href}
             to={item.href}
-            className={location.pathname === item.href ? 'active' : ''}
+            className={
+              location.pathname === item.href ||
+              (item.href === '/pokedex' && location.pathname.startsWith('/pokedex/'))
+                ? 'active' : ''
+            }
           >
             {item.label}
           </Link>
