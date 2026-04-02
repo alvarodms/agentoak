@@ -246,7 +246,16 @@ LittlerootTown_EventScript_FatMan::
 	end
 
 LittlerootTown_EventScript_Boy::
-	msgbox LittlerootTown_Text_BirchSpendsDaysInLab, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_EventScript_BoyPostgame
+	msgbox LittlerootTown_Text_BirchSpendsDaysInLab, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_EventScript_BoyPostgame::
+	msgbox LittlerootTown_Text_BoyPostgame, MSGBOX_DEFAULT
+	release
 	end
 
 LittlerootTown_EventScript_Twin::
@@ -1018,4 +1027,12 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab:
 	.string "I gave you?\p"
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
+
+LittlerootTown_Text_BoyPostgame:
+	.string "PROF. BIRCH has been working\n"
+	.string "nonstop since you became Champion!\p"
+	.string "He keeps going on about strange\n"
+	.string "migration patterns in his data.\p"
+	.string "You should go see him in his lab.\n"
+	.string "He seems really excited!$"
 

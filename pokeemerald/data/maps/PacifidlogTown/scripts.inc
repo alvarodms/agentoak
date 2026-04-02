@@ -128,7 +128,15 @@ PacifidlogTown_Text_TideElderResolved:
 	.string "Someone restored the balance.\p"
 	.string "The elders always said a brave\n"
 	.string "soul would rise when needed.\l"
-	.string "I believe that soul is you.$"
+	.string "I believe that soul is you.\p"
+	.string "But the old ones say the sky\n"
+	.string "feels wrong. Heavy, like before\l"
+	.string "a great storm.\p"
+	.string "PROF. BIRCH seemed worried when\n"
+	.string "I spoke with him. Something about\l"
+	.string "atmospheric readings.\p"
+	.string "Perhaps you should visit him\n"
+	.string "in LITTLEROOT.$"
 
 @ =============================================
 @ v7.0 Sky Guardian Arc - Draconid Legend

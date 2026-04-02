@@ -59,25 +59,15 @@
 
 ---
 
-## C139: "Breadcrumbs & Template" (Engineering + Postgame Polish)
+## C139: "Postgame Breadcrumbs" — COMPLETE
 
-**Priority: HIGH — fixes discoverability (weakest moment #3) + ships 23-cycle tech debt**
+Shipped 4 breadcrumb hints across 3 script files:
+1. LittlerootTown Boy (FLAG_SYS_GAME_CLEAR) → "Birch excited about migration patterns"
+2. MauvilleCity engineer AllDone text → "Birch called, head to Littleroot"
+3. MauvilleCity engineer PostClimax text → "Birch would want these readings"
+4. Pacifidlog elder Resolved text → "Sky feels wrong, Birch worried about atmospheric readings"
 
-### Legendary Encounter Template (engineering)
-- Extract parameterized macros from 4 shipped encounters (beasts, Groudon, Kyogre, Rayquaza) into `data/scripts/legend_macros.inc`
-- Reduces future legendary encounters from ~80 lines to ~20
-- Reference implementations: TerraCave_End, SeafloorCavern_Room9, SkyPillar_Top, roamer.c
-
-### Postgame Breadcrumb Trail (content)
-- **Post-E4 hint**: Add NPC in Ever Grande City or rival call that says "Birch has been trying to reach you about something urgent"
-- **Post-beast hint**: After catching all 3 beasts, Birch should mention unusual readings (bridges to Ho-Oh)
-- **Post-Ho-Oh hint**: Birch's instruments should already hint at primal stirring (this exists — verify it's clear enough)
-- **Post-primal hint**: Verify the Sky Guardian trigger is discoverable from the primal resolution dialogue
-
-### Deliverables
-- `data/scripts/legend_macros.inc` — new file with parameterized macros
-- 2-3 breadcrumb NPC scripts (EverGrandeCity, Birch transitions)
-- No more than 4 script files modified
+Legendary Encounter Template deferred to C142 consistency pass (zero player impact before v1.0).
 
 ---
 

@@ -740,7 +740,13 @@ MauvilleCity_Text_BeastSighting_AllDone:
 	.string "weeks are incredible.\p"
 	.string "Those legendary creatures left\n"
 	.string "quite an impression on HOENN's\l"
-	.string "ecology.$"
+	.string "ecology.\p"
+	.string "PROF. BIRCH called me about it.\n"
+	.string "He said the data you've gathered\l"
+	.string "is extraordinary.\p"
+	.string "You should head back to\n"
+	.string "LITTLEROOT. He sounded like\l"
+	.string "he was onto something big.$"
 
 MauvilleCity_EventScript_BeastSightingPostClimax::
 	msgbox MauvilleCity_Text_BeastSightingPostClimax, MSGBOX_DEFAULT
@@ -758,7 +764,10 @@ MauvilleCity_Text_BeastSightingPostClimax:
 	.string "Though... my instruments\n"
 	.string "are picking up something\l"
 	.string "new. Very faint. Almost\l"
-	.string "like a deep hum.$"
+	.string "like a deep hum.\p"
+	.string "PROF. BIRCH would want to see\n"
+	.string "these readings. You should\l"
+	.string "check in with him.$"
 
 MauvilleCity_EventScript_SecondWaveScientist::
 	lock

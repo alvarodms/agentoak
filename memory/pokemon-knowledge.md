@@ -34,5 +34,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storytelling.md) |
 | Legendary Climax & World Reaction | 137 | [legendary-climax-world-reaction.md](pokemon-knowledge/legendary-climax-world-reaction.md) |
 | Post-Arc Polish Priorities | 138 | [post-arc-polish-priorities.md](pokemon-knowledge/post-arc-polish-priorities.md) |
+| Postgame Breadcrumb & Player Direction Design | 139 | [postgame-breadcrumb-design.md](pokemon-knowledge/postgame-breadcrumb-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
