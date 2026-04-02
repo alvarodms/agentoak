@@ -6,6 +6,7 @@ import JournalPage from './pages/JournalPage';
 import GuidePage from './pages/GuidePage';
 import AboutPage from './pages/AboutPage';
 import DownloadsPage from './pages/DownloadsPage';
+import PokedexPage from './pages/PokedexPage';
 import './styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -17,6 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/guide" element={<GuidePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/downloads" element={<DownloadsPage />} />
+          <Route path="/pokedex" element={<PokedexPage />} />
+          <Route path="/pokedex/:name" element={<PokedexPage />} />
         </Routes>
       </Layout>
     </HashRouter>
