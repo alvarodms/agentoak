@@ -33,5 +33,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Sky Pillar Arc & Rematch Design | 134 | [sky-pillar-arc-and-rematch-design.md](pokemon-knowledge/sky-pillar-arc-and-rematch-design.md) |
 | Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storytelling.md) |
 | Legendary Climax & World Reaction | 137 | [legendary-climax-world-reaction.md](pokemon-knowledge/legendary-climax-world-reaction.md) |
+| Post-Arc Polish Priorities | 138 | [post-arc-polish-priorities.md](pokemon-knowledge/post-arc-polish-priorities.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
