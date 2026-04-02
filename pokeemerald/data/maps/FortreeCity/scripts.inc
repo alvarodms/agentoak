@@ -14,6 +14,7 @@ FortreeCity_OnResume:
 FortreeCity_EventScript_Man::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, FortreeCity_EventScript_ManSkyGuardianDone
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, FortreeCity_EventScript_ManSkyDisturbance
 	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_DEFAULT
 	release
@@ -231,3 +232,23 @@ FortreeCity_Text_SkyDisturbance:
 	.string "at the sky.\p"
 	.string "Something is happening up there.\n"
 	.string "I can feel it.$"
+
+@ =============================================
+@ v7.0 Sky Guardian Act 3 -- Fortree reaction
+@ =============================================
+
+FortreeCity_EventScript_ManSkyGuardianDone::
+	lock
+	faceplayer
+	msgbox FortreeCity_Text_ManSkyGuardianDone, MSGBOX_DEFAULT
+	release
+	end
+
+FortreeCity_Text_ManSkyGuardianDone:
+	.string "Have you noticed? The winds have\n"
+	.string "changed since you climbed the\l"
+	.string "tower.\p"
+	.string "They blow gently now. Steady and\n"
+	.string "warm. The birds are singing again.\p"
+	.string "Whatever you did up there on\n"
+	.string "SKY PILLAR... HOENN thanks you.$"

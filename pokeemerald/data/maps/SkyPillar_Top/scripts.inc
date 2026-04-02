@@ -42,46 +42,67 @@ SkyPillar_Top_EventScript_RayquazaFaceDown::
 
 SkyPillar_Top_EventScript_Rayquaza::
 	lockall
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
+	@ Storm builds around the summit
+	setweather WEATHER_RAIN_THUNDERSTORM
+	doweather
+	delay 60
+	msgbox SkyPillar_Top_Text_StormBuilds, MSGBOX_DEFAULT
+	@ Camera shake - the tower trembles
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	delay 20
+	@ Rayquaza's cry pierces the storm
 	waitse
 	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
+	@ Air Lock activates - the sky clears
+	setweather WEATHER_NONE
+	doweather
+	delay 40
+	msgbox SkyPillar_Top_Text_SkyClearance, MSGBOX_DEFAULT
+	closemessage
+	delay 20
+	@ Battle
 	setwildbattle SPECIES_RAYQUAZA, 70
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	waitstate
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SkyPillar_Top_EventScript_DefeatedRayquaza
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SkyPillar_Top_EventScript_RanFromRayquaza
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SkyPillar_Top_EventScript_RanFromRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SkyPillar_Top_EventScript_EnhancedDefeatedRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SkyPillar_Top_EventScript_EnhancedRanFromRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SkyPillar_Top_EventScript_EnhancedRanFromRayquaza
+	@ Caught - the trilogy concludes
+	setflag FLAG_CAUGHT_RAYQUAZA_GUARDIAN
 	setflag FLAG_DEFEATED_RAYQUAZA
+	msgbox SkyPillar_Top_Text_RayquazaCaught, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SkyPillar_Top_EventScript_DefeatedRayquaza::
+SkyPillar_Top_EventScript_EnhancedDefeatedRayquaza::
+	setflag FLAG_DEFEATED_RAYQUAZA_GUARDIAN
 	setflag FLAG_DEFEATED_RAYQUAZA
-	goto SkyPillar_Top_EventScript_DefeatedRayquaza2
-	end
-
-SkyPillar_Top_EventScript_RanFromRayquaza::
-	setvar VAR_0x8004, SPECIES_RAYQUAZA
-	goto SkyPillar_Top_EventScript_RanFromRayquaza2
-	end
-
-SkyPillar_Top_EventScript_DefeatedRayquaza2::
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject VAR_LAST_TALKED
 	fadescreenswapbuffers FADE_FROM_BLACK
+	msgbox SkyPillar_Top_Text_RayquazaFled, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SkyPillar_Top_EventScript_RanFromRayquaza2::
+SkyPillar_Top_EventScript_EnhancedRanFromRayquaza::
+	setflag FLAG_DEFEATED_RAYQUAZA_GUARDIAN
+	setflag FLAG_DEFEATED_RAYQUAZA
 	fadescreenswapbuffers FADE_TO_BLACK
 	removeobject VAR_LAST_TALKED
 	fadescreenswapbuffers FADE_FROM_BLACK
-	bufferspeciesname STR_VAR_1, VAR_0x8004
-	msgbox gText_LegendaryFlewAway, MSGBOX_DEFAULT
+	msgbox SkyPillar_Top_Text_RayquazaFled, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -179,5 +200,39 @@ SkyPillar_Top_Movement_CameraPanDown:
 	step_end
 
 SkyPillar_Top_Text_RayquazaFlewOff:
-	.string "The awakened RAYQUAZA flew off…$"
+	.string "The awakened RAYQUAZA flew off...$"
+
+@ =============================================
+@ v7.0 Sky Guardian Act 3 -- Enhanced Encounter
+@ =============================================
+
+SkyPillar_Top_Text_StormBuilds:
+	.string "The summit trembles beneath your\n"
+	.string "feet! Storm clouds churn around\l"
+	.string "the tower as the ancient guardian\l"
+	.string "stirs...\p"
+	.string "Rain lashes the broken stones.\n"
+	.string "A terrible pressure fills the air!$"
+
+SkyPillar_Top_Text_SkyClearance:
+	.string "Suddenly, the storm breaks.\p"
+	.string "The sky opens to brilliant light\n"
+	.string "as RAYQUAZA's presence calms the\l"
+	.string "raging elements.\p"
+	.string "The Sky Guardian awaits.$"
+
+SkyPillar_Top_Text_RayquazaCaught:
+	.string "The sky above HOENN glows with\n"
+	.string "a radiant calm.\p"
+	.string "The guardian of the sky rests\n"
+	.string "within your POKe BALL.\p"
+	.string "Earth, sea, and sky...\n"
+	.string "The ancient balance is restored.$"
+
+SkyPillar_Top_Text_RayquazaFled:
+	.string "RAYQUAZA's cry echoes across\n"
+	.string "the sky as it soars beyond\l"
+	.string "the clouds.\p"
+	.string "The ancient guardian retreats\n"
+	.string "to the heavens... for now.$"
 

@@ -1922,6 +1922,7 @@ BirchLab_EventScript_PrimalDebrief::
 BirchLab_EventScript_PrimalResolved::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, BirchLab_EventScript_SkyGuardianComplete
 	goto_if_unset FLAG_SKY_GUARDIAN_QUEST_ACTIVE, BirchLab_EventScript_SkyGuardianTrigger
 	msgbox BirchLab_Text_PrimalResolved, MSGBOX_DEFAULT
 	release
@@ -2009,3 +2010,33 @@ BirchLab_Text_SkyGuardianAlert:
 	.string "If the sky itself is stirring...\n"
 	.string "we may face something even greater\l"
 	.string "than GROUDON and KYOGRE.$"
+
+@ =============================================================
+@ v7.0 Sky Guardian Arc -- Act 3: Post-catch world reaction
+@ =============================================================
+
+BirchLab_EventScript_SkyGuardianComplete::
+	lock
+	faceplayer
+	msgbox BirchLab_Text_SkyGuardianComplete, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_Text_SkyGuardianComplete:
+	.string "PROF. BIRCH: {PLAYER}! Look at\n"
+	.string "my instruments!\p"
+	.string "Every single reading has\n"
+	.string "normalized. The atmospheric\l"
+	.string "anomaly, the seismic activity,\l"
+	.string "the tidal fluctuations...\p"
+	.string "All stable. Every one of them.\p"
+	.string "You restored the balance between\n"
+	.string "earth, sea, and sky.\p"
+	.string "As a scientist, I should remain\n"
+	.string "objective. But as your mentor...\l"
+	.string "I could not be more proud.\p"
+	.string "The migration that started all\n"
+	.string "of this was not a crisis.\p"
+	.string "It was nature finding a new\n"
+	.string "equilibrium. And you helped\l"
+	.string "HOENN achieve it.$"

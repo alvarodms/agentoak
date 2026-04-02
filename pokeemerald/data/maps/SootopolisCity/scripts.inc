@@ -771,6 +771,7 @@ SootopolisCity_EventScript_Woman2Rayquaza::
 SootopolisCity_EventScript_Man::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, SootopolisCity_EventScript_SkyGuardianReaction
 	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ManPostLegendaries
 	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
 	release
@@ -1716,3 +1717,24 @@ SootopolisCity_Text_DazzledByMentor:
 	.string "WALLACE: I'm sure that you will be\n"
 	.string "dazzled by my mentor's breathtakingly\l"
 	.string "elegant battle style.$"
+
+@ =============================================
+@ v7.0 Sky Guardian Act 3 -- Sootopolis reaction
+@ =============================================
+
+SootopolisCity_EventScript_SkyGuardianReaction::
+	lock
+	faceplayer
+	msgbox SootopolisCity_Text_SkyGuardianReaction, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Text_SkyGuardianReaction:
+	.string "The rain over SOOTOPOLIS has\n"
+	.string "finally eased to a gentle mist.\p"
+	.string "They say someone climbed\n"
+	.string "SKY PILLAR and calmed the\l"
+	.string "ancient guardian itself.\p"
+	.string "Earth, sea, and sky...\n"
+	.string "All at peace. What a time\l"
+	.string "to be alive.$"

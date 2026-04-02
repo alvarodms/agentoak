@@ -60,6 +60,7 @@ PacifidlogTown_Text_TownSign:
 PacifidlogTown_EventScript_TideElder::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, PacifidlogTown_EventScript_ElderSkyGuardianDone
 	goto_if_set FLAG_SPOKE_PACIFIDLOG_ELDER, PacifidlogTown_EventScript_DraconidReminder
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, PacifidlogTown_EventScript_DraconidLegend
 	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, PacifidlogTown_EventScript_TideElderResolved
@@ -169,3 +170,29 @@ PacifidlogTown_Text_DraconidReminder:
 	.string "SKY PILLAR.\p"
 	.string "WALLACE can show you the way.\n"
 	.string "Be careful, young one.$"
+
+@ =============================================
+@ v7.0 Sky Guardian Act 3 -- Elder reaction
+@ =============================================
+
+PacifidlogTown_EventScript_ElderSkyGuardianDone::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_ElderSkyGuardianDone, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_Text_ElderSkyGuardianDone:
+	.string "The ancient texts spoke true.\n"
+	.string "The Sky Guardian has answered.\p"
+	.string "For generations, my family has\n"
+	.string "guarded the Draconid prophecy.\p"
+	.string "We believed the guardian would\n"
+	.string "return when the land and sea\l"
+	.string "clashed once more.\p"
+	.string "And you stood at the summit\n"
+	.string "and faced the dragon of the sky.\p"
+	.string "The prophecy is fulfilled.\n"
+	.string "Our watch is complete.\p"
+	.string "May the skies of HOENN remain\n"
+	.string "clear for a thousand years.$"

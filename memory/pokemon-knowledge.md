@@ -1,6 +1,6 @@
-# Pokémon Knowledge Base
+# Pokemon Knowledge Base
 
-Research findings about Pokémon games, ROM hacks, community expectations, and design patterns — gathered via web search by the Pokémon Specialist advisor.
+Research findings about Pokemon games, ROM hacks, community expectations, and design patterns -- gathered via web search by the Pokemon Specialist advisor.
 
 Each topic has its own research file under `memory/pokemon-knowledge/`.
 
@@ -32,5 +32,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Learnset Distribution for New Moves | 132 | [learnset-distribution-patterns.md](pokemon-knowledge/learnset-distribution-patterns.md) |
 | Sky Pillar Arc & Rematch Design | 134 | [sky-pillar-arc-and-rematch-design.md](pokemon-knowledge/sky-pillar-arc-and-rematch-design.md) |
 | Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storytelling.md) |
+| Legendary Climax & World Reaction | 137 | [legendary-climax-world-reaction.md](pokemon-knowledge/legendary-climax-world-reaction.md) |
 
-Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
+Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

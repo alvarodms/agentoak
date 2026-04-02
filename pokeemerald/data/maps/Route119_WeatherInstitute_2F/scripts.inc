@@ -199,6 +199,7 @@ Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer:
 Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, WeatherInstitute_EventScript_ScientistSkyGuardianDone
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, Route119_WeatherInstitute_2F_EventScript_ScientistSkyAnomaly
 	goto_if_set FLAG_BIRCH_QUEST_WEATHER, Route119_WeatherInstitute_2F_EventScript_ScientistPostQuest
 	goto_if_set FLAG_BIRCH_QUEST_STARTED, Route119_WeatherInstitute_2F_EventScript_ScientistQuestActive
@@ -388,4 +389,24 @@ Route119_WeatherInstitute_2F_Text_SkyAnomaly:
 	.string "It is as if something massive\n"
 	.string "is generating its own weather\l"
 	.string "system...$"
+
+@ =============================================
+@ v7.0 Sky Guardian Act 3 -- Weather Institute
+@ =============================================
+
+WeatherInstitute_EventScript_ScientistSkyGuardianDone::
+	lock
+	faceplayer
+	msgbox WeatherInstitute_Text_ScientistSkyGuardianDone, MSGBOX_DEFAULT
+	release
+	end
+
+WeatherInstitute_Text_ScientistSkyGuardianDone:
+	.string "Our instruments are reading the\n"
+	.string "clearest data in years!\p"
+	.string "The pressure, wind patterns,\n"
+	.string "humidity... everything has\l"
+	.string "stabilized beautifully.\p"
+	.string "We owe you a debt of gratitude.\n"
+	.string "The skies of HOENN are at peace.$"
 
