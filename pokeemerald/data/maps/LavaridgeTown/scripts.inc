@@ -479,3 +479,21 @@ LavaridgeTown_Text_TremorWatcherResolved:
 	.string "has gone quiet. I can finally\l"
 	.string "relax again.$"
 
+@ =============================================
+@ Mid-Game Migration Thread — Hot springs visitor (C141)
+@ =============================================
+
+LavaridgeTown_EventScript_MigrationVisitor::
+	msgbox LavaridgeTown_Text_MigrationVisitor, MSGBOX_NPC
+	end
+
+LavaridgeTown_Text_MigrationVisitor:
+	.string "I came to LAVARIDGE for the hot\n"
+	.string "springs, but I stayed for the\n"
+	.string "research.\p"
+	.string "Even the volcanic heat of FIERY\n"
+	.string "PATH hasn't stopped new species\n"
+	.string "from settling nearby.\p"
+	.string "Whatever is driving this migration,\n"
+	.string "it must be something powerful.$"
+

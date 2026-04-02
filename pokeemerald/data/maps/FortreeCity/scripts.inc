@@ -252,3 +252,21 @@ FortreeCity_Text_ManSkyGuardianDone:
 	.string "warm. The birds are singing again.\p"
 	.string "Whatever you did up there on\n"
 	.string "SKY PILLAR... HOENN thanks you.$"
+
+@ =============================================
+@ Mid-Game Migration Thread — Birdwatcher (C141)
+@ =============================================
+
+FortreeCity_EventScript_MigrationBirdwatcher::
+	msgbox FortreeCity_Text_MigrationBirdwatcher, MSGBOX_NPC
+	end
+
+FortreeCity_Text_MigrationBirdwatcher:
+	.string "I've been watching the skies over\n"
+	.string "FORTREE for twenty years.\p"
+	.string "Last month I spotted a MURKROW\n"
+	.string "on ROUTE 120. Those aren't native\n"
+	.string "to HOENN at all.\p"
+	.string "The local SWELLOW don't seem\n"
+	.string "to mind, but... it's strange\n"
+	.string "how quickly things are changing.$"

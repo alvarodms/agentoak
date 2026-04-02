@@ -763,3 +763,21 @@ Route111_Text_DesertResearcherResolved:
 	.string "Whatever geological event was\n"
 	.string "building has completely dissipated.\l"
 	.string "Remarkable.$"
+
+@ =============================================
+@ Mid-Game Migration Thread — Desert researcher (C141)
+@ =============================================
+
+Route111_EventScript_MigrationResearcher::
+	msgbox Route111_Text_MigrationResearcher, MSGBOX_NPC
+	end
+
+Route111_Text_MigrationResearcher:
+	.string "I'm studying the desert ecosystem\n"
+	.string "here, and something is off.\p"
+	.string "LARVITAR are moving into TRAPINCH\n"
+	.string "territory. Two ground-dwellers\n"
+	.string "competing for the same burrows.\p"
+	.string "This migration isn't just bringing\n"
+	.string "new species. It's changing the\n"
+	.string "balance of the whole region.$"

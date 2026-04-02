@@ -148,3 +148,25 @@ Route119_WeatherInstitute_1F_Text_MigrationScientist:
 	.string "pulling them here. I only wish\l"
 	.string "I knew what.$"
 
+@ =============================================
+@ Mid-Game Migration Thread — Dr. Hartley (C141)
+@ =============================================
+
+WeatherInstitute_EventScript_DrHartley::
+	msgbox WeatherInstitute_Text_DrHartley, MSGBOX_NPC
+	end
+
+WeatherInstitute_Text_DrHartley:
+	.string "I'm DR. HARTLEY. I study atmospheric\n"
+	.string "patterns here at the WEATHER\n"
+	.string "INSTITUTE.\p"
+	.string "Our instruments have detected\n"
+	.string "unusual fluctuations that correlate\n"
+	.string "with the migration waves.\p"
+	.string "The POKeMON aren't moving randomly.\n"
+	.string "Something in HOENN's environment\n"
+	.string "is pulling them here.\p"
+	.string "If this continues to escalate...\n"
+	.string "well, I'd rather not speculate\n"
+	.string "without more data.$"
+

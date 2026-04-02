@@ -36,5 +36,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Post-Arc Polish Priorities | 138 | [post-arc-polish-priorities.md](pokemon-knowledge/post-arc-polish-priorities.md) |
 | Postgame Breadcrumb & Player Direction Design | 139 | [postgame-breadcrumb-design.md](pokemon-knowledge/postgame-breadcrumb-design.md) |
 | Early-Game NPC World-Building | 140 | [early-game-npc-world-building.md](pokemon-knowledge/early-game-npc-world-building.md) |
+| Mid-Game Narrative Thread Maintenance | 141 | [mid-game-narrative-thread.md](pokemon-knowledge/mid-game-narrative-thread.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

@@ -85,29 +85,18 @@ Route 116 skipped — no generic non-trainer NPCs (all are plot-critical or batt
 
 ---
 
-## C141: "The Mid-Game Thread" (Narrative Continuity)
+## C141: "The Mid-Game Thread" (Narrative Continuity) — COMPLETE
 
-**Priority: MEDIUM — fixes weakest moment #2**
+Shipped 5 mid-game migration-thread NPC dialogues + check_scripts Makefile target:
+1. MauvilleCity RichBoy → MigrationGambler (Electabuzz at Game Corner battles)
+2. Route111 Man1 → MigrationResearcher (Larvitar/Trapinch ecosystem competition)
+3. LavaridgeTown Twin → MigrationVisitor (Fiery Path new species, powerful driving force)
+4. WeatherInstitute Worker2 → DrHartley (named scientist, atmospheric/migration correlation — narrative anchor)
+5. FortreeCity GameboyKid → MigrationBirdwatcher (Murkrow on Route 120, change accelerating)
 
-### Mid-Game Migration Presence (4-6 NPC dialogues)
-Bridge the narrative gap between Rustboro and Fortree:
-- **Mauville City**: Game Corner patron mentions betting on migrant species battles
-- **Route 111 desert**: Researcher studying how migration affects desert ecosystem
-- **Lavaridge Town**: Hot springs visitor who traveled here following migration reports
-- **Route 119**: Weather Institute connection — migration and weather patterns
-- **Fortree City**: Birdwatcher comparing local vs migrant flying types
+Also shipped `make check_scripts` lint target (checks for non-charmap em/en dashes in script files).
 
-### Rival Arc Enhancement
-- Audit rival encounters (Route 110, Route 119, Lilycove) — do they reference migration consistently?
-- If gaps exist, add 1-2 lines to existing rival dialogue reinforcing the theme
-
-### Community Issue Alignment
-- **Issue #82** (trainer quality, early-game excitement): Addressed by C140 early-game enrichment + existing trainer redesigns
-- **Issue #88** (narrative): Addressed by C140-C141 narrative continuity work
-
-### Deliverables
-- 4-6 script file modifications
-- Possible minor rival dialogue tweaks (3-4 files)
+Issue #88 (narrative) formally addressed by C140-C141 narrative continuity work.
 
 ---
 

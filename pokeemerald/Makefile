@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -175,6 +175,17 @@ check_ascii:
 		exit 1; \
 	else \
 		echo "check_ascii: all .inc files clean"; \
+	fi
+
+# Guard against en dashes, em dashes, and other non-charmap Unicode in scripts
+# Note: curly quotes and ellipsis ARE valid charmap characters and should not be flagged
+check_scripts:
+	@echo "Checking scripts for non-charmap characters..."
+	@if grep -rPn '\xe2\x80[\x93\x94]' data/maps/*/scripts.inc data/maps/*/*/scripts.inc 2>/dev/null; then \
+		echo "ERROR: En dashes or em dashes found in script files above (use -- instead)"; \
+		exit 1; \
+	else \
+		echo "All script files clean."; \
 	fi
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))

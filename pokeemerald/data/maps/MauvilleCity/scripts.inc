@@ -812,3 +812,19 @@ MauvilleCity_Text_SecondWaveScientist_PostWave:
 	.string "Whatever drove these POKeMON\n"
 	.string "from their homelands is\l"
 	.string "getting worse.$"
+
+@ =============================================
+@ Mid-Game Migration Thread — Game Corner patron (C141)
+@ =============================================
+
+MauvilleCity_EventScript_MigrationGambler::
+	msgbox MauvilleCity_Text_MigrationGambler, MSGBOX_NPC
+	end
+
+MauvilleCity_Text_MigrationGambler:
+	.string "Have you been to the GAME CORNER\n"
+	.string "lately? Trainers are bringing in\n"
+	.string "POKeMON I've never seen before.\p"
+	.string "An ELECTABUZZ showed up in the\n"
+	.string "battles yesterday. Where do they\n"
+	.string "all keep coming from?$"

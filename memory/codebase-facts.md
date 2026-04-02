@@ -138,3 +138,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 ## ShakeCamera Special (C112)
 
 `special ShakeCamera` requires 4 vars: `VAR_0x8004` (vertical), `VAR_0x8005` (horizontal), `VAR_0x8006` (num shakes), `VAR_0x8007` (delay). Must `waitstate` after.
+
+---
+
+## Script Lint Target (C141)
+
+`make check_scripts` — Makefile target that greps all `data/maps/*/scripts.inc` and `data/maps/*/*/scripts.inc` for non-charmap characters (em dash, en dash, smart quotes, bullet). Excludes `\xc3[\xa9\xa0-\xbf]` (valid accented chars like é/à). Returns exit 0 if clean, exit 1 with file:line listing if violations found.
