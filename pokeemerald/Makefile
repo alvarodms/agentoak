@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -187,6 +187,10 @@ check_scripts:
 	else \
 		echo "All script files clean."; \
 	fi
+
+# Flag-chain validator: detect flags that are checked but never set in scripts
+check_flags:
+	@bash scripts/check_flags.sh
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

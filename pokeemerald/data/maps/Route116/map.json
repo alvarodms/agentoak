@@ -438,6 +438,24 @@
       "var": "VAR_ROUTE116_STATE",
       "var_value": "1",
       "script": "Route116_EventScript_BrineyTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 38,
+      "y": 14,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route116_EventScript_MigrationGlimpse"
+    },
+    {
+      "type": "trigger",
+      "x": 39,
+      "y": 14,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route116_EventScript_MigrationGlimpse"
     }
   ],
   "bg_events": [

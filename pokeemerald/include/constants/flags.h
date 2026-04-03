@@ -680,8 +680,8 @@
 #define FLAG_HIDE_SKY_PILLAR_DRACONID 0x277 // Draconid guardian Kaelen disappears after defeat + Dragon Scale gift
 #define FLAG_MIGRATION_GLIMPSE_ROUTE101  0x278 // One-shot migration glimpse event on Route 101
 #define FLAG_MIGRATION_GLIMPSE_ROUTE104  0x279 // One-shot migration glimpse event on Route 104
-#define FLAG_UNUSED_0x27A  0x27A // Unused Flag
-#define FLAG_UNUSED_0x27B  0x27B // Unused Flag
+#define FLAG_MIGRATION_GLIMPSE_ROUTE102  0x27A // One-shot migration glimpse event on Route 102
+#define FLAG_MIGRATION_GLIMPSE_ROUTE116  0x27B // One-shot migration glimpse event on Route 116
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
 #define FLAG_UNUSED_0x27D  0x27D // Unused Flag
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag

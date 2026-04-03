@@ -144,7 +144,26 @@
     }
   ],
   "warp_events": [],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route102_EventScript_MigrationGlimpse"
+    },
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route102_EventScript_MigrationGlimpse"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

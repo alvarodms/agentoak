@@ -468,3 +468,29 @@ Route116_Text_TrainerTipsBagHasPockets:
 	.string "No TRAINER can afford to be without\n"
 	.string "a BAG of their own.$"
 
+Route116_EventScript_MigrationGlimpse::
+	lock
+	goto_if_unset FLAG_ADVENTURE_STARTED, Route116_EventScript_MigrationGlimpse_End
+	goto_if_set FLAG_MIGRATION_GLIMPSE_ROUTE116, Route116_EventScript_MigrationGlimpse_End
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox Route116_Text_MigrationGlimpse1, MSGBOX_DEFAULT
+	delay 20
+	msgbox Route116_Text_MigrationGlimpse2, MSGBOX_DEFAULT
+	setflag FLAG_MIGRATION_GLIMPSE_ROUTE116
+Route116_EventScript_MigrationGlimpse_End::
+	release
+	end
+
+Route116_Text_MigrationGlimpse1:
+	.string "A tremor rippled through the ground\n"
+	.string "beneath your feet!\p"
+	.string "Loose stones tumbled from the cliff\n"
+	.string "face as something burrowed past...$"
+
+Route116_Text_MigrationGlimpse2:
+	.string "A faint, defiant cry echoed from\n"
+	.string "deep underground.\p"
+	.string "Whatever lives down there, it sounds\n"
+	.string "much tougher than a WHISMUR.$"
+

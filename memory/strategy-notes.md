@@ -124,9 +124,9 @@ Balance sanity check passed (all gym/E4 levels, items, species verified). README
 
 **Priority items for post-v1.0 development:**
 
-1. **Automated flag-chain validator** (`make check_flags`) — Parse checkflag/setflag/goto_if_set calls, build dependency graph, detect unreachable/circular flags. C142 found two bugs that hid for 20+ cycles. Priority: HIGH.
+1. ~~**Automated flag-chain validator**~~ (`make check_flags`) — done (C145). Shell script + Makefile target. Detects flags checked but never set in scripts. Allowlist covers engine/C-set flags.
 2. **Legendary Encounter Template** (`data/scripts/legend_macros.inc`) — Extract parameterized macros from 4 shipped encounters. Reduces future legendaries from ~80 to ~20 lines. 23 cycles deferred.
-3. **Early-game scripted events** — Route 101 + Route 104 migration glimpses shipped (C144). Could extend to Routes 102/116 in a future cycle.
+3. ~~**Early-game scripted events**~~ — Route 101/104 (C144) + Route 102/116 (C145). Pre-Rustboro early-game atmospheric pass complete.
 4. **Trainer quality pass** — Route trainer diversity audit, double-battle expansion.
 5. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
 

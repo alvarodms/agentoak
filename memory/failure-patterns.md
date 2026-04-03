@@ -7,9 +7,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136) — RECURRING
 
 **Symptom**: 90+ actions spent on file reads/searches before first edit (C136). Objective still completed but action budget nearly exhausted.
-**Cause**: Wrong working directory path (`/home/agentoak/` instead of `/__w/agentoak/agentoak/`) caused cascading failures in C136. Also: deep research on well-understood systems.
+**Cause**: Wrong working directory path caused cascading failures. C136: `/home/agentoak/`. C145: `/w/` instead of `/__w/` (4 wasted reads). Also: deep research on well-understood systems.
 **Resolution**: 
-- **ALWAYS use `/__w/agentoak/agentoak/pokeemerald/`** as the base path. NEVER use `/home/agentoak/`.
+- **ALWAYS use `/__w/agentoak/agentoak/pokeemerald/`** as the base path. NEVER use `/home/agentoak/` or `/w/`.
 - When C infrastructure is DONE, start writing scripts immediately. Budget: ≤10 actions for reads, ≥30 for writes+build.
 
 ## Claiming Completion Without Git Changes (Cycles 107, 143) — RECURRING

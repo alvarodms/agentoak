@@ -115,3 +115,28 @@ Route102_Text_RouteSignOldale:
 Route102_Text_RouteSignPetalburg:
 	.string "ROUTE 102\n"
 	.string "{LEFT_ARROW} PETALBURG CITY$"
+
+Route102_EventScript_MigrationGlimpse::
+	lock
+	goto_if_unset FLAG_ADVENTURE_STARTED, Route102_EventScript_MigrationGlimpse_End
+	goto_if_set FLAG_MIGRATION_GLIMPSE_ROUTE102, Route102_EventScript_MigrationGlimpse_End
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox Route102_Text_MigrationGlimpse1, MSGBOX_DEFAULT
+	delay 20
+	msgbox Route102_Text_MigrationGlimpse2, MSGBOX_DEFAULT
+	setflag FLAG_MIGRATION_GLIMPSE_ROUTE102
+Route102_EventScript_MigrationGlimpse_End::
+	release
+	end
+
+Route102_Text_MigrationGlimpse1:
+	.string "A sharp, metallic clicking echoed\n"
+	.string "from the grass ahead!\p"
+	.string "Something small and steel-blue\n"
+	.string "hovered just above the ground...$"
+
+Route102_Text_MigrationGlimpse2:
+	.string "It locked onto you with a single red\n"
+	.string "eye, then shot away like a bullet.\p"
+	.string "That was no ordinary Hoenn POKéMON.$"
