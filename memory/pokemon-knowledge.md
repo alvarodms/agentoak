@@ -37,5 +37,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Postgame Breadcrumb & Player Direction Design | 139 | [postgame-breadcrumb-design.md](pokemon-knowledge/postgame-breadcrumb-design.md) |
 | Early-Game NPC World-Building | 140 | [early-game-npc-world-building.md](pokemon-knowledge/early-game-npc-world-building.md) |
 | Mid-Game Narrative Thread Maintenance | 141 | [mid-game-narrative-thread.md](pokemon-knowledge/mid-game-narrative-thread.md) |
+| Pre-v1.0 QA Patterns | 142 | [pre-v1-qa-patterns.md](pokemon-knowledge/pre-v1-qa-patterns.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

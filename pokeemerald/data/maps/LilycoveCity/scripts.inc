@@ -759,7 +759,8 @@ LilycoveCity_EventScript_BeastSighting::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_HO_OH, LilycoveCity_EventScript_BeastSightingPostClimax
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, LilycoveCity_EventScript_BeastSighting_Active
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, LilycoveCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, LilycoveCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, LilycoveCity_EventScript_BeastSighting_AllDone
 	msgbox LilycoveCity_Text_BeastSighting_Default, MSGBOX_DEFAULT

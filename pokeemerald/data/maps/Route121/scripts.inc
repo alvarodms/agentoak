@@ -208,7 +208,8 @@ Route121_Text_SecondWavePokefan:
 Route121_EventScript_BeastSighting::
 	lock
 	faceplayer
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, Route121_EventScript_BeastSighting_Active
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, Route121_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, Route121_EventScript_BeastSighting_AllDone
 	msgbox Route121_Text_BeastSighting_Default, MSGBOX_DEFAULT

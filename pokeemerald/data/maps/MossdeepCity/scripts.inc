@@ -446,7 +446,8 @@ MossdeepCity_EventScript_BeastSighting::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_HO_OH, MossdeepCity_EventScript_BeastSightingPostClimax
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MossdeepCity_EventScript_BeastSighting_Active
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, MossdeepCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, MossdeepCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, MossdeepCity_EventScript_BeastSighting_AllDone
 	msgbox MossdeepCity_Text_BeastSighting_Default, MSGBOX_DEFAULT

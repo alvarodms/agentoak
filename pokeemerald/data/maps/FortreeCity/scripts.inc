@@ -15,6 +15,7 @@ FortreeCity_EventScript_Man::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, FortreeCity_EventScript_ManSkyGuardianDone
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, FortreeCity_EventScript_ManSkyGuardianDone
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, FortreeCity_EventScript_ManSkyDisturbance
 	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_DEFAULT
 	release
@@ -28,7 +29,8 @@ FortreeCity_EventScript_ManSkyDisturbance::
 FortreeCity_EventScript_Woman::
 	lock
 	faceplayer
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, FortreeCity_EventScript_WomanBeastSighting
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, FortreeCity_EventScript_WomanBeastSighting
 	goto_if_set FLAG_KECLEON_FLED_FORTREE, FortreeCity_EventScript_WomanGymAccessible
 	msgbox FortreeCity_Text_SomethingBlockingGym, MSGBOX_DEFAULT
 	release

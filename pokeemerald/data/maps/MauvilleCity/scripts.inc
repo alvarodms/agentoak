@@ -675,7 +675,8 @@ MauvilleCity_EventScript_BeastSighting::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_HO_OH, MauvilleCity_EventScript_BeastSightingPostClimax
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, MauvilleCity_EventScript_BeastSighting_Active
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_EventScript_BeastSighting_Active
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, MauvilleCity_EventScript_BeastSighting_AllDone
 	goto_if_set FLAG_BEAST_RAIKOU_KO, MauvilleCity_EventScript_BeastSighting_AllDone
 	msgbox MauvilleCity_Text_BeastSighting_Default, MSGBOX_DEFAULT

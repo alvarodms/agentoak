@@ -55,7 +55,8 @@ Route118_EventScript_DeclineGoodRod::
 	end
 
 Route118_EventScript_ReceivedGoodRod::
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, Route118_EventScript_FishermanBeastSighting
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, Route118_EventScript_FishermanBeastSighting
 	msgbox Route118_Text_TryCatchingMonWithGoodRod, MSGBOX_DEFAULT
 	release
 	end

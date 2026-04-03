@@ -772,6 +772,7 @@ SootopolisCity_EventScript_Man::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, SootopolisCity_EventScript_SkyGuardianReaction
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, SootopolisCity_EventScript_SkyGuardianReaction
 	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_ManPostLegendaries
 	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
 	release

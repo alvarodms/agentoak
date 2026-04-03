@@ -1354,7 +1354,8 @@ BirchLab_EventScript_MigrationComplete::
 	goto_if_set FLAG_CAUGHT_HO_OH, BirchLab_EventScript_HoOhCaught
 	goto_if_set FLAG_LEGENDS_AWAKENED, BirchLab_EventScript_ClimaxReminder
 	goto_if_set FLAG_BEAST_SUICUNE_DONE, BirchLab_EventScript_AllBeastsDone
-	goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING, BirchLab_EventScript_BeastActive
+	special IsRoamerActive
+	goto_if_eq VAR_RESULT, TRUE, BirchLab_EventScript_BeastActive
 	goto_if_set FLAG_BEAST_RAIKOU_DONE, BirchLab_EventScript_NextBeastArrived
 	@ First trigger - cinematic scene
 	msgbox BirchLab_Text_BeastTrigger1, MSGBOX_DEFAULT
@@ -1923,6 +1924,7 @@ BirchLab_EventScript_PrimalResolved::
 	lock
 	faceplayer
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, BirchLab_EventScript_SkyGuardianComplete
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, BirchLab_EventScript_SkyGuardianComplete
 	goto_if_unset FLAG_SKY_GUARDIAN_QUEST_ACTIVE, BirchLab_EventScript_SkyGuardianTrigger
 	msgbox BirchLab_Text_PrimalResolved, MSGBOX_DEFAULT
 	release

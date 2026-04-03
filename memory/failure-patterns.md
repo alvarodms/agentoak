@@ -57,6 +57,13 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Context compression evicts the file read after many tool calls.
 **Resolution**: Re-read immediately before editing.
 
+## Custom Roamer Flag Mismatch (Cycle 142) — FIXED
+
+**Symptom**: Beast roamer resets every time player visits Birch Lab. Beast sighting NPCs never show active-beast dialogue.
+**Cause**: Scripts used vanilla `FLAG_LATIOS_OR_LATIAS_ROAMING` to detect active beasts, but this flag is only set for Latias/Latios by `tv.inc`/`players_house.inc`, never for custom beast roamers.
+**Resolution**: Replace `goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING` with `special IsRoamerActive` + `goto_if_eq VAR_RESULT, TRUE` in all beast-related scripts. The special directly checks `ROAMER->active` which works for any roamer regardless of which flag triggered it.
+**Lesson**: When reusing vanilla systems (roamer) for custom content (beasts), audit ALL scripts that reference the system's control flags. The C code may work correctly while scripts still reference the old flag.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.
