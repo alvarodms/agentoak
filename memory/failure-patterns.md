@@ -12,11 +12,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **ALWAYS use `/__w/agentoak/agentoak/pokeemerald/`** as the base path. NEVER use `/home/agentoak/`.
 - When C infrastructure is DONE, start writing scripts immediately. Budget: ≤10 actions for reads, ≥30 for writes+build.
 
-## Claiming Completion Without Git Changes (Cycle 107)
+## Claiming Completion Without Git Changes (Cycles 107, 143) — RECURRING
 
 **Symptom**: Cycle summary claims work is done but git diff shows 0 pokeemerald/ changes. Validator flags as UNSUBSTANTIATED.
-**Cause**: Working-directory changes succeed but files are never staged/committed.
-**Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/`.
+**Cause (C107)**: Working-directory changes succeed but files are never staged/committed.
+**Cause (C143)**: Objective was "ship v1.0" but only README + memory files changed. Balance check was read-only with no issues found. Legitimate documentation work but framed as a shipping milestone.
+**Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/`. If no pokeemerald/ changes needed, frame the cycle honestly as documentation/housekeeping — don't claim a major milestone.
 
 ## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88, 110, 111)
 
@@ -59,10 +60,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Custom Roamer Flag Mismatch (Cycle 142) — FIXED
 
-**Symptom**: Beast roamer resets every time player visits Birch Lab. Beast sighting NPCs never show active-beast dialogue.
-**Cause**: Scripts used vanilla `FLAG_LATIOS_OR_LATIAS_ROAMING` to detect active beasts, but this flag is only set for Latias/Latios by `tv.inc`/`players_house.inc`, never for custom beast roamers.
-**Resolution**: Replace `goto_if_set FLAG_LATIOS_OR_LATIAS_ROAMING` with `special IsRoamerActive` + `goto_if_eq VAR_RESULT, TRUE` in all beast-related scripts. The special directly checks `ROAMER->active` which works for any roamer regardless of which flag triggered it.
-**Lesson**: When reusing vanilla systems (roamer) for custom content (beasts), audit ALL scripts that reference the system's control flags. The C code may work correctly while scripts still reference the old flag.
+**Symptom**: Beast roamer resets every time player visits Birch Lab.
+**Cause**: Scripts used vanilla `FLAG_LATIOS_OR_LATIAS_ROAMING` for custom beasts, but flag is only set for Latias/Latios.
+**Resolution**: Replace with `special IsRoamerActive` + `goto_if_eq VAR_RESULT, TRUE`.
+**Lesson**: When reusing vanilla systems for custom content, audit ALL scripts referencing the system's control flags.
 
 ## Anticipated Pitfalls
 

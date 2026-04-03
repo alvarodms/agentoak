@@ -6,21 +6,13 @@
 
 **An autonomous AI agent that explores, learns, and builds a Pokemon Emerald ROM hack — one cycle at a time.**
 
-Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. It works in iterative **cycles**: planning what to do, reading and modifying source code, building the ROM, reflecting on results, and remembering what it learned for next time. It can run unattended on a schedule via GitHub Actions, and the community can interact with it through GitHub Issues.
+Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. It works in iterative **cycles**: planning what to do, reading and modifying source code, building the ROM, reflecting on results, and remembering what it learned for next time. It runs unattended on a schedule via GitHub Actions, and the community can interact with it through GitHub Issues.
 
 > *This README is maintained by Agent Oak itself. It reviews and updates this page at the end of each cycle when player-facing changes are made.*
 
 ---
 
-## Table of Contents
-
-- [The Game: Legends of Hoenn](#the-game-legends-of-hoenn)
-- [How It Works](#how-it-works)
-- [Community Interaction](#community-interaction)
-
----
-
-## The Game: Legends of Hoenn
+## The Game: Legends of Hoenn — v1.0
 
 Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from distant regions — Larvitar scaling Mt. Chimney, Sneasel hunting on the Jagged Pass, Electabuzz surging through New Mauville. Gym leaders have adapted their teams. The player arrives at the perfect moment.
 
@@ -32,33 +24,34 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
 - **19 migration species** carry thematic wild held items
-- **Migration narrative arc** — NPC dialogue from Birch's introduction through Wallace's climax, with mid-game researcher encounters and Weather Institute foreshadowing
+- **Migration narrative arc** — NPCs across Hoenn react to the migration, from Birch's earliest research notes through Weather Institute scientists tracking atmospheric anomalies to postgame revelations
 
 ### Battle System Upgrades
 
-- **Gen IV physical/special split** — each move has its own Physical, Special, or Status category (Crunch hits physically, Shadow Ball hits specially)
+- **Gen IV physical/special split** — each move has its own Physical, Special, or Status category
 - **20 new Gen IV/V moves** — Night Slash, Stone Edge, Dragon Pulse, Close Combat, Brave Bird, Flare Blitz, Shadow Claw, Nasty Plot, Ice Shard, Energy Ball, and more fill the physical/special gaps the split created
-- **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species, so trainers never use moves you can't access yourself
+- **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
 
 ### Trainer Overhaul
 
-- **All 8 gym leaders** redesigned with unique strategic identities, held items, and correct physical/special move alignment — Slaking anchors Norman, Brave Bird Swellow leads Winona, Dragon Pulse Kingdra commands Juan's rain
+- **All 8 gym leaders** redesigned with unique strategic identities, held items, and competitive movesets — Slaking anchors Norman, Brave Bird Swellow leads Winona, Dragon Pulse Kingdra commands Juan's rain
 - **Elite Four and Champion** rebuilt from scratch — Sidney's dark squad runs Nasty Plot and Sucker Punch, Drake fields Salamence, Garchomp, AND Dragonite with Dragon Dance, Champion Wallace commands a rain-synergy team with Ludicolo and Kingdra. Zero duplicate species across the entire gauntlet
 - **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
 - **4-tier rematch progression** for all gym leaders with escalating teams
 - **Rival arc** redesigned across all 5 battles with migration-themed team building
-- **Villain bosses** (Maxie, Archie, Magma/Aqua admins) carry held items and coverage moves
+- **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
 
-### Postgame
+### The Postgame Saga
 
-- **Roaming Legendary Beasts** — Raikou, Entei, and Suicune, displaced from Johto by the migration, now roam Hoenn's routes. Complete the Migration Tracker, talk to Birch, and they'll appear one at a time. Six NPCs across Hoenn — from Mauville's power grid engineer to Mossdeep's satellite researcher — report beast-specific sightings that change depending on which legendary is currently active.
-- **The Migration Climax** — Defeat all three beasts and return to Birch's lab for a revelation: the beasts were harbingers. Their ancient master, Ho-Oh, has followed the migration corridors into Hoenn and now roosts in the deepest chamber of the Cave of Origin. A level 70 legendary encounter awaits — Sacred Fire, Recover, Earthquake, and Calm Mind. After catching Ho-Oh, Hoenn's NPC witnesses react to the climax — the world acknowledges your journey.
-- **The Primal Stirring** — Capturing Ho-Oh disturbed ancient forces beneath Hoenn. Seismic tremors and tidal surges appear across the region. Investigate anomalies reported by NPCs in Lavaridge, Dewford, Pacifidlog, and Slateport, then report back to Birch. Explore the revitalized Terra Cave and Seafloor Cavern — now guarded by Team Magma and Aqua remnants — to confront the awakened primals: Groudon (Lv70) and Kyogre (Lv70) in cinematic boss encounters with dynamic weather effects.
-- **The Sky Guardian** — After the Primal crisis, a third anomaly emerges in the sky. The Pacifidlog elder reveals the Draconid legend of an ancient sky guardian, and Wallace unseals Sky Pillar. Ascend five floors of escalating Dragon/Ghost encounters, discover ancient murals telling Rayquaza's story, and face a Draconid warrior guarding the upper floors. At the summit, storms rage and the tower shakes as Rayquaza (Lv70) descends — then Air Lock stills the tempest for an epic battle. After the encounter, NPCs across Hoenn react: Birch's instruments normalize, the Pacifidlog elder declares the prophecy fulfilled, and calm returns to Fortree, the Weather Institute, and Sootopolis. The ancient balance of earth, sea, and sky is restored.
-- **Migration Tracker Quest** — a 3-stage field guide for Professor Birch (pioneer species, apex predators, habitat specialists)
-- **Gym leader rematches** with escalating difficulty across 4 tiers
+Beat the Elite Four and a whole new story begins — five interconnected arcs that transform Hoenn's legendary landscape:
+
+- **Roaming Legendary Beasts** — Raikou, Entei, and Suicune, displaced from Johto by the migration, roam Hoenn's routes. Complete the Migration Tracker, talk to Birch, and they appear one at a time. Six NPCs across the region report sightings that change depending on which beast is active.
+- **The Migration Climax** — Defeat all three beasts and return to Birch for a revelation: the beasts were harbingers. Their ancient master, Ho-Oh, has followed the migration corridors into Hoenn and now roosts in the Cave of Origin. A level 70 encounter with Sacred Fire, Recover, Earthquake, and Calm Mind awaits.
+- **The Primal Stirring** — Capturing Ho-Oh disturbs ancient forces. Seismic tremors and tidal surges appear across the region. Investigate anomalies, battle Team Magma and Aqua remnants guarding revitalized Terra Cave and Seafloor Cavern, and confront the awakened Groudon (Lv70) and Kyogre (Lv70) in cinematic encounters with dynamic weather.
+- **The Sky Guardian** — After the Primal crisis, a third anomaly emerges. The Pacifidlog elder reveals the Draconid legend, Wallace unseals Sky Pillar, and you ascend five floors of escalating encounters past ancient murals and a Draconid warrior to reach Rayquaza (Lv70) at the storm-wracked summit. Air Lock stills the tempest for the final battle.
+- **Migration Tracker Quest** — A 3-stage field guide for Professor Birch tracking pioneer species, apex predators, and habitat specialists across Hoenn
 
 ### Quality of Life
 
@@ -66,6 +59,14 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI
+
+### How to Play
+
+**Requirements:** A GBA emulator ([mGBA](https://mgba.io/) recommended) or a GBA flash cart.
+
+**Download:** Grab the latest `.gba` ROM from the [Releases page](../../releases). Every successful cycle produces a new build.
+
+**From source:** Clone this repo, install the [agbcc toolchain](https://github.com/pret/agbcc), and run `make` in the `pokeemerald/` directory.
 
 ---
 
@@ -106,7 +107,7 @@ Agent Oak is autonomous — it is not an instruction-following bot. Community su
 - Whether the suggestion enhances the player experience
 - How it fits with recently completed or planned work
 
-Good suggestions that do not fit the current cycle are **deferred** to the backlog for future consideration. Suggestions that conflict with the project direction are **rejected** with an explanation.
+Good suggestions that don't fit the current cycle are **deferred** to the backlog for future consideration. Suggestions that conflict with the project direction are **rejected** with an explanation.
 
 ### How to Make a Great Suggestion
 

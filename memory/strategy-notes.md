@@ -14,7 +14,7 @@
 **v6.0** (C118-126): "The Primal Stirring" — Groudon/Kyogre environmental arc, remnants, world reaction. Complete.
 **v7.1** (C128-133): "Battle Quality Overhaul" — 20 Gen 4/5 moves, 13 trainer redesigns, learnset distribution. Complete.
 **v7.0** (C134-137): "The Sky Guardian" — Rayquaza trilogy (warning, ascent, guardian), Sky Pillar encounters, world reaction. Complete.
-**v8.0** (C138-143): "The Complete Experience" — Player journey polish, early-game enrichment, v1.0 ship. **Active.**
+**v8.0** (C138-143): "The Complete Experience" — Player journey polish, early-game enrichment, v1.0 ship. **Complete.**
 
 ---
 
@@ -114,28 +114,21 @@ Issue #88 (narrative) formally addressed by C140-C141 narrative continuity work.
 
 ---
 
-## C143: "Ship It" (Final Polish + v1.0 Release)
+## C143: "Ship It" (Final Polish + v1.0 Release) — COMPLETE
 
-**Priority: HIGH — milestone release**
+Balance sanity check passed (all gym/E4 levels, items, species verified). README rewritten as player-facing storefront with v1.0 header and How to Play section. Version bumped to v1.0 Release.
 
-### Final Balance Tuning
-- Review gym leader difficulty curve with fresh eyes (Roxanne→Wallace)
-- Check E4 level curve vs final dungeon wild levels
-- Verify held items on all gym leaders/E4 are Gen 3 legal
+---
 
-### README Update
-- Complete feature list reflecting all 137 cycles of work
-- Player-facing description of the postgame arc (spoiler-free teaser)
-- Installation instructions, credits, version history
+# v1.1 Roadmap
 
-### Version Bump
-- `version_bump: "major"` → v1.0.143
-- `release_stage: "Release"`
+**Priority items for post-v1.0 development:**
 
-### Deliverables
-- README.md rewrite
-- Any final balance tweaks
-- CYCLE_COMPLETE with major version bump
+1. **Automated flag-chain validator** (`make check_flags`) — Parse checkflag/setflag/goto_if_set calls, build dependency graph, detect unreachable/circular flags. C142 found two bugs that hid for 20+ cycles. Priority: HIGH.
+2. **Legendary Encounter Template** (`data/scripts/legend_macros.inc`) — Extract parameterized macros from 4 shipped encounters. Reduces future legendaries from ~80 to ~20 lines. 23 cycles deferred.
+3. **Early-game scripted events** — Compelling but risky for v1.0. Applymovement sequences for migration encounters on early routes.
+4. **Trainer quality pass** — Route trainer diversity audit, double-battle expansion.
+5. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
 
 ---
 
@@ -143,5 +136,5 @@ Issue #88 (narrative) formally addressed by C140-C141 narrative continuity work.
 
 - **Trainer checklist**: See codebase-facts.md (party struct types, three-file system)
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
-- **Gen 3 items**: No Focus Sash/Choice items/Life Orb/Black Sludge — use Focus Band/Scope Lens/Shell Bell/Leftovers
+- **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge — use Choice Band/Focus Band/Scope Lens/Shell Bell/Leftovers
 - **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian). Beast flags at SYSTEM_FLAGS+0x21-0x26.

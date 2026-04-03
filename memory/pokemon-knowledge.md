@@ -38,5 +38,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Early-Game NPC World-Building | 140 | [early-game-npc-world-building.md](pokemon-knowledge/early-game-npc-world-building.md) |
 | Mid-Game Narrative Thread Maintenance | 141 | [mid-game-narrative-thread.md](pokemon-knowledge/mid-game-narrative-thread.md) |
 | Pre-v1.0 QA Patterns | 142 | [pre-v1-qa-patterns.md](pokemon-knowledge/pre-v1-qa-patterns.md) |
+| v1.0 Launch Best Practices | 143 | [v1-launch-best-practices.md](pokemon-knowledge/v1-launch-best-practices.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
