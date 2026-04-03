@@ -4,14 +4,19 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147) — RECURRING
 
-**Symptom**: 90-117 actions spent on file reads/searches before first edit. C146: 117 reads for 21 trainers (reading each party AND trainer entry separately = ~5 reads per trainer).
-**Cause**: Reading every trainer individually rather than batching. Also: redundant re-reads of the same data (read parties at actions 10-21, then re-read them again at actions 88-108).
+**Symptom**: 90-120 actions spent on reads before first edit. C147: 120 reads for 59 trainers.
 **Resolution**: 
-- **ALWAYS use `/__w/agentoak/agentoak/pokeemerald/`** as the base path.
-- For bulk trainer edits: use `grep -n` to find all target offsets in ONE pass, then read in batches. Budget: ≤30 actions for reads, ≥30 for writes+build.
+- For bulk trainer edits: use `grep -n` to find all target offsets in ONE pass, then read in batches.
 - **Never re-read data you already have** — take notes on first pass.
+- Consider node.js scripts for batch edits to large files.
+
+## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
+
+**Symptom**: ~15 "File has been modified since read" errors when making many sequential edits to trainer_parties.h (311KB).
+**Cause**: Edit tool detects file modification between read and write on rapid sequential edits.
+**Resolution**: For bulk edits to a single large file, use a **node.js script** to apply all changes in one pass.
 
 ## Claiming Completion Without Git Changes (Cycles 107, 143) — RECURRING
 

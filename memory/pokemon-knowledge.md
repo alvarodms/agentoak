@@ -40,5 +40,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Pre-v1.0 QA Patterns | 142 | [pre-v1-qa-patterns.md](pokemon-knowledge/pre-v1-qa-patterns.md) |
 | v1.0 Launch Best Practices | 143 | [v1-launch-best-practices.md](pokemon-knowledge/v1-launch-best-practices.md) |
 | Post-v1.0 Launch Priorities | 144 | [post-v1-launch-priorities.md](pokemon-knowledge/post-v1-launch-priorities.md) |
+| Mid-Game Trainer Progression Design | 147 | [mid-game-trainer-progression.md](pokemon-knowledge/mid-game-trainer-progression.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

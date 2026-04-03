@@ -40,3 +40,8 @@ Modified files related to trainer team compositions, held items, and level curve
 | `include/constants/opponents.h` | Added TRAINER_NATE_AND_EMMA_1 (883); TRAINERS_COUNT→884 | **146** | |
 | `data/maps/Route104/scripts.inc` | Added Nate & Emma double battle scripts + dialogue (intro/defeat/not-enough-mons/post-battle). Migration-themed text. | **146** | |
 | `data/maps/Route104/map.json` | Added 2 object_events for Nate (YOUNGSTER, x25 y33) and Emma (LASS, x26 y33) in north section. | **146** | |
+| `src/data/trainer_parties.h` | Mid-game trainer quality pass: 59 trainers across Routes 110, 111, 113, 117, 118 redesigned. 8 ITEM_CUSTOM_MOVES anchors (Benjamin, Edwin, Bryan, Brooke, Wyatt, Isaac, Perry, Miles&Sierra). 51 ITEM_DEFAULT_MOVES with held items. Migration species: Electabuzz, Growlithe, Poliwag, Misdreavus, Larvitar, Gible, Murkrow, Riolu, Dratini, Houndour, Vulpix, Snubbull, Metang, Poliwhirl. New party: sParty_MilesAndSierra (3-mon doubles team). | **147** | Level curve: Lv16-24 post-Wattson to pre-Fortree |
+| `src/data/trainers.h` | Updated party macros for all 59 mid-game trainers. Added TRAINER_MILES_AND_SIERRA (ID 884, YOUNG_COUPLE, doubleBattle=TRUE, AI CHECK_BAD+TRY_FAINT+CHECK_VIABILITY). Class/pic changes: Bryan→HIKER, Wyatt→COLLECTOR, Isaac→POKEFAN. | **147** | |
+| `include/constants/opponents.h` | Added TRAINER_MILES_AND_SIERRA (884); TRAINERS_COUNT→885 | **147** | |
+| `data/maps/Route118/scripts.inc` | Added Miles & Sierra double battle scripts + dialogue (intro/defeat/not-enough-mons/post-battle). Migration-themed text. | **147** | |
+| `data/maps/Route118/map.json` | Added 2 object_events for Miles (YOUNGSTER, x62 y13) and Sierra (LASS, x63 y13) on east bank. | **147** | |

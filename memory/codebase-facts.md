@@ -12,7 +12,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT`/`MAX_TRAINERS_COUNT` = 884 in `opponents.h` (C146). Flag space 0x500-0x873. System flags shift automatically via `TRAINER_FLAGS_END` macro.
+**Trainer ID ceiling**: `TRAINERS_COUNT`/`MAX_TRAINERS_COUNT` = 886 in `opponents.h` (C147). Added TRAINER_MILES_AND_SIERRA (884), TRAINER_NATE_AND_EMMA_1 (previously existed). Flag space 0x500-0x873. System flags shift automatically via `TRAINER_FLAGS_END` macro.
 
 **Three-file trainer system**: Each trainer requires coordinated removal/addition across `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
 

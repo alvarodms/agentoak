@@ -271,6 +271,16 @@ Route118_EventScript_Deandre::
 	msgbox Route118_Text_DeandrePostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route118_EventScript_Miles::
+	trainerbattle_double TRAINER_MILES_AND_SIERRA, Route118_Text_MilesAndSierraIntro, Route118_Text_MilesAndSierraDefeat, Route118_Text_MilesAndSierraNotEnoughMons
+	msgbox Route118_Text_MilesAndSierraPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route118_EventScript_Sierra::
+	trainerbattle_double TRAINER_MILES_AND_SIERRA, Route118_Text_MilesAndSierraIntro, Route118_Text_MilesAndSierraDefeat, Route118_Text_MilesAndSierraNotEnoughMons
+	msgbox Route118_Text_MilesAndSierraPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 Route118_Text_StevenQuestions:
 	.string "STEVEN: Hi, {PLAYER}{KUN}!\p"
 	.string "It's me, STEVEN!\n"
@@ -401,4 +411,32 @@ Route118_Text_FishermanBeastSighting:
 	.string "My POKeMON would not come out of\n"
 	.string "their POKe BALLS for an hour after.\l"
 	.string "Never seen anything like it.$"
+
+Route118_Text_MilesAndSierraIntro:
+	.string "MILES: SIERRA and I have been\n"
+	.string "studying the migrating POKeMON\l"
+	.string "crossing this river!\p"
+	.string "SIERRA: A METANG from across\n"
+	.string "the sea, a DRATINI from who\l"
+	.string "knows where!\p"
+	.string "MILES: Battle us and see how\n"
+	.string "strong the newcomers are!$"
+
+Route118_Text_MilesAndSierraDefeat:
+	.string "MILES: Whoa! Your team is\n"
+	.string "incredible!\p"
+	.string "SIERRA: Even METANG could not\n"
+	.string "hold the line.$"
+
+Route118_Text_MilesAndSierraPostBattle:
+	.string "SIERRA: The migration brought\n"
+	.string "so many strong POKeMON here.\p"
+	.string "MILES: We catch them, train\n"
+	.string "them, learn from them. That is\l"
+	.string "what TRAINERS do.$"
+
+Route118_Text_MilesAndSierraNotEnoughMons:
+	.string "MILES: Hey, we battle as a\n"
+	.string "pair! You will need at least\l"
+	.string "two POKeMON to face us.$"
 
