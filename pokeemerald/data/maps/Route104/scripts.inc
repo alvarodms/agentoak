@@ -994,6 +994,34 @@ Route104_EventScript_Darian::
 	msgbox Route104_Text_DarianPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route104_EventScript_Nate::
+	trainerbattle_double TRAINER_NATE_AND_EMMA_1, Route104_Text_NateAndEmmaIntro, Route104_Text_NateAndEmmaDefeat, Route104_Text_NateAndEmmaNotEnoughMons
+	msgbox Route104_Text_NateAndEmmaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route104_EventScript_Emma::
+	trainerbattle_double TRAINER_NATE_AND_EMMA_1, Route104_Text_NateAndEmmaIntro, Route104_Text_NateAndEmmaDefeat, Route104_Text_NateAndEmmaNotEnoughMons
+	msgbox Route104_Text_NateAndEmmaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route104_Text_NateAndEmmaIntro:
+	.string "My brother caught a BELDUM near\n"
+	.string "ROUTE 101! I found a TAILLOW!\p"
+	.string "Let's show you what we can do!$"
+
+Route104_Text_NateAndEmmaDefeat:
+	.string "Aww, we lost! But wasn't it\n"
+	.string "cool seeing a BELDUM up close?$"
+
+Route104_Text_NateAndEmmaNotEnoughMons:
+	.string "Hey, you need at least two\n"
+	.string "POKéMON to battle us both!$"
+
+Route104_Text_NateAndEmmaPostBattle:
+	.string "People say rare POKéMON are\n"
+	.string "appearing all over HOENN!\p"
+	.string "PROF. BIRCH calls it a migration.$"
+
 Route104_Text_BrineyLivesInSeasideCottage:
 	.string "That seaside cottage is where\n"
 	.string "MR. BRINEY lives.\p"

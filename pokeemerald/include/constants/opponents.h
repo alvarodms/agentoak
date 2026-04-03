@@ -884,8 +884,9 @@
 #define TRAINER_AQUA_GRUNT_SEAFLOOR_2      880
 #define TRAINER_AQUA_ADMIN_SEAFLOOR        881
 #define TRAINER_DRACONID_KAELEN            882
+#define TRAINER_NATE_AND_EMMA_1            883
 
-#define TRAINERS_COUNT                      883  // Count of trainer IDs (0-882)
-#define MAX_TRAINERS_COUNT                  883  // Trainer flag space (0x500-0x872 = 883 slots)
+#define TRAINERS_COUNT                      884  // Count of trainer IDs (0-883)
+#define MAX_TRAINERS_COUNT                  884  // Trainer flag space (0x500-0x873 = 884 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

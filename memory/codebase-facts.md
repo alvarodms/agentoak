@@ -12,7 +12,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rematch enum**: `include/constants/rematches.h` — `REMATCH_SIDNEY`, `REMATCH_PHOEBE`, etc.
 
-**Trainer ID ceiling**: `TRAINERS_COUNT`/`MAX_TRAINERS_COUNT` = 874 in `opponents.h`. Flag space 0x500-0x869. System flags shift automatically via `TRAINER_FLAGS_END` macro.
+**Trainer ID ceiling**: `TRAINERS_COUNT`/`MAX_TRAINERS_COUNT` = 884 in `opponents.h` (C146). Flag space 0x500-0x873. System flags shift automatically via `TRAINER_FLAGS_END` macro.
 
 **Three-file trainer system**: Each trainer requires coordinated removal/addition across `opponents.h` (ID constants), `trainers.h` (metadata), and `trainer_parties.h` (party composition). All three must be updated together.
 
@@ -99,7 +99,7 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **File**: `include/constants/flags.h`
 
-**Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x869) → System flags (TRAINER_FLAGS_END+1 = 0x860+) → Daily flags (0x972+)
+**Layout**: Story flags (0x00-0x2FF) → Trainer flags (0x500-0x873) → System flags (TRAINER_FLAGS_END+1 = 0x874+) → Daily flags (0x972+)
 
 **v6.0 flags (C118)**: 14 flags at 0x264-0x271 — FLAG_PRIMAL_STIRRING_STARTED through FLAG_SEAFLOOR_CAVERN_INVESTIGATED.
 

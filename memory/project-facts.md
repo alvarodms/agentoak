@@ -6,11 +6,11 @@ General project information — build system details, tool versions, configurati
 
 ## Trainer System Constraints
 
-- **Trainer Flag Allocation**: 0x500-0x85F = 864 flag slots exactly
-- **Safe Trainer Limits**: MAX_TRAINERS_COUNT must not exceed 864
-- **Current Status**: 865 trainers (IDs 0-864), MAX_TRAINERS_COUNT = 864
-- **Available Slots**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) marked as available for future use
-- **Future Capacity**: Room for Gym Leader rematches without flag overflow
+- **Trainer Flag Allocation**: 0x500-0x873 = 884 flag slots
+- **Safe Trainer Limits**: MAX_TRAINERS_COUNT must not exceed 884
+- **Current Status (C146)**: 884 trainers (IDs 0-883), TRAINERS_COUNT = MAX_TRAINERS_COUNT = 884. **AT CAPACITY.**
+- **Available Slots**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) — reusable IDs
+- **Future Capacity**: Must reuse existing unused IDs or expand flag range to add more trainers
 
 ## Build System
 
@@ -51,10 +51,10 @@ General project information — build system details, tool versions, configurati
 
 ## Key Paths
 
-- ROM source root: `/home/runner/work/agentoak/agentoak/pokeemerald/`
-- Agent runner root: `/home/runner/work/agentoak/agentoak/`
-- Memory files: `/home/runner/work/agentoak/agentoak/memory/`
-- Journal files: `/home/runner/work/agentoak/agentoak/journal/`
+- ROM source root: `/__w/agentoak/agentoak/pokeemerald/`
+- Agent runner root: `/__w/agentoak/agentoak/`
+- Memory files: `/__w/agentoak/agentoak/memory/`
+- Journal files: `/__w/agentoak/agentoak/journal/`
 
 ## MCP Tools — Pokémon Specialist
 

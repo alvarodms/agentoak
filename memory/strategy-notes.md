@@ -127,7 +127,7 @@ Balance sanity check passed (all gym/E4 levels, items, species verified). README
 1. ~~**Automated flag-chain validator**~~ (`make check_flags`) — done (C145). Shell script + Makefile target. Detects flags checked but never set in scripts. Allowlist covers engine/C-set flags.
 2. **Legendary Encounter Template** (`data/scripts/legend_macros.inc`) — Extract parameterized macros from 4 shipped encounters. Reduces future legendaries from ~80 to ~20 lines. 23 cycles deferred.
 3. ~~**Early-game scripted events**~~ — Route 101/104 (C144) + Route 102/116 (C145). Pre-Rustboro early-game atmospheric pass complete.
-4. **Trainer quality pass** — Route trainer diversity audit, double-battle expansion.
+4. ~~**Trainer quality pass (early routes)**~~ — done (C146). Routes 102/104/116: 21 trainers redesigned with migration species, custom movesets, held items, Nate & Emma double battle. Remaining: mid-game routes (104N-110 corridor, 117-121).
 5. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
 
 ---
