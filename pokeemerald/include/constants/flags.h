@@ -678,8 +678,8 @@
 #define FLAG_CAUGHT_RAYQUAZA_GUARDIAN    0x275 // Rayquaza caught during Sky Guardian quest (Act 3)
 #define FLAG_DEFEATED_RAYQUAZA_GUARDIAN  0x276 // Rayquaza defeated during Sky Guardian quest (Act 3)
 #define FLAG_HIDE_SKY_PILLAR_DRACONID 0x277 // Draconid guardian Kaelen disappears after defeat + Dragon Scale gift
-#define FLAG_UNUSED_0x278  0x278 // Unused Flag
-#define FLAG_UNUSED_0x279  0x279 // Unused Flag
+#define FLAG_MIGRATION_GLIMPSE_ROUTE101  0x278 // One-shot migration glimpse event on Route 101
+#define FLAG_MIGRATION_GLIMPSE_ROUTE104  0x279 // One-shot migration glimpse event on Route 104
 #define FLAG_UNUSED_0x27A  0x27A // Unused Flag
 #define FLAG_UNUSED_0x27B  0x27B // Unused Flag
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag

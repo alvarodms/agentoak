@@ -296,6 +296,31 @@ Route101_Text_WildPokemonInTallGrass:
 	.string "If you want to catch POKéMON, you have\n"
 	.string "to go into the tall grass and search.$"
 
+Route101_EventScript_MigrationGlimpse::
+	lock
+	goto_if_unset FLAG_ADVENTURE_STARTED, Route101_EventScript_MigrationGlimpse_End
+	goto_if_set FLAG_MIGRATION_GLIMPSE_ROUTE101, Route101_EventScript_MigrationGlimpse_End
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox Route101_Text_MigrationGlimpse1, MSGBOX_DEFAULT
+	delay 20
+	msgbox Route101_Text_MigrationGlimpse2, MSGBOX_DEFAULT
+	setflag FLAG_MIGRATION_GLIMPSE_ROUTE101
+Route101_EventScript_MigrationGlimpse_End::
+	release
+	end
+
+Route101_Text_MigrationGlimpse1:
+	.string "The tall grass rustled violently\n"
+	.string "nearby!\p"
+	.string "A low, unfamiliar growl echoed from\n"
+	.string "the underbrush...$"
+
+Route101_Text_MigrationGlimpse2:
+	.string "Whatever made that sound, it didn't\n"
+	.string "seem like any POKéMON you've heard\n"
+	.string "on this route before.$"
+
 Route101_Text_RouteSign:
 	.string "ROUTE 101\n"
 	.string "{UP_ARROW} OLDALE TOWN$"

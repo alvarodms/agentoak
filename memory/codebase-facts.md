@@ -103,7 +103,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v6.0 flags (C118)**: 14 flags at 0x264-0x271 — FLAG_PRIMAL_STIRRING_STARTED through FLAG_SEAFLOOR_CAVERN_INVESTIGATED.
 
-**v7.0 flags (C135-136)**: 5 quest flags at 0x272-0x276 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_DEFEATED_RAYQUAZA_GUARDIAN. FLAG_HIDE_SKY_PILLAR_DRACONID at 0x277. Next available: 0x278.
+**v7.0 flags (C135-136)**: 5 quest flags at 0x272-0x277 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_HIDE_SKY_PILLAR_DRACONID.
+
+**v8.0 flags (C144)**: FLAG_MIGRATION_GLIMPSE_ROUTE101 (0x278), FLAG_MIGRATION_GLIMPSE_ROUTE104 (0x279) — one-shot coord_event triggers. Next available: 0x27A.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
@@ -138,6 +140,16 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 ## ShakeCamera Special (C112)
 
 `special ShakeCamera` requires 4 vars: `VAR_0x8004` (vertical), `VAR_0x8005` (horizontal), `VAR_0x8006` (num shakes), `VAR_0x8007` (delay). Must `waitstate` after.
+
+---
+
+## Coord Events / Walk-Over Triggers (C144)
+
+**map.json**: Add `coord_events` entries with `x`, `y`, `elevation`, `type: "1"`, `script` label. These fire when the player walks onto the tile.
+
+**Pattern**: Use a one-shot flag (`setflag` at end of script) + `goto_if_set` at start to make them fire once. Gate with `checkflag FLAG_ADVENTURE_STARTED` (or similar) to avoid firing before the player is ready.
+
+**Movement scripts**: `data/scripts/movement.inc` has `Common_Movement_ExclamationMark` (emote_exclamation_mark + step_end) and `Common_Movement_QuestionMark`.
 
 ---
 

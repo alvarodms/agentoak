@@ -1176,3 +1176,28 @@ Route104_Text_BrendanPostBattle:
 	.string "making POKéMON battle.\p"
 	.string "Like MR. BRINEY, it's important to\n"
 	.string "become friends with your POKéMON.$"
+
+Route104_EventScript_MigrationGlimpse::
+	lock
+	goto_if_unset FLAG_ADVENTURE_STARTED, Route104_EventScript_MigrationGlimpse_End
+	goto_if_set FLAG_MIGRATION_GLIMPSE_ROUTE104, Route104_EventScript_MigrationGlimpse_End
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox Route104_Text_MigrationGlimpse1, MSGBOX_DEFAULT
+	delay 20
+	msgbox Route104_Text_MigrationGlimpse2, MSGBOX_DEFAULT
+	setflag FLAG_MIGRATION_GLIMPSE_ROUTE104
+Route104_EventScript_MigrationGlimpse_End::
+	release
+	end
+
+Route104_Text_MigrationGlimpse1:
+	.string "Something darted through the flowers\n"
+	.string "ahead - a flash of reddish-brown fur!\p"
+	.string "It vanished into the tree line before\n"
+	.string "you could get a closer look.$"
+
+Route104_Text_MigrationGlimpse2:
+	.string "The air smells faintly of smoke...\p"
+	.string "Strange. Nothing around here should\n"
+	.string "give off that scent.$"

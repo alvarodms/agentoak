@@ -543,6 +543,24 @@
       "var": "VAR_ROUTE104_STATE",
       "var_value": "1",
       "script": "Route104_EventScript_RivalTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 62,
+      "elevation": 3,
+      "var": "VAR_ROUTE104_STATE",
+      "var_value": "0",
+      "script": "Route104_EventScript_MigrationGlimpse"
+    },
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 62,
+      "elevation": 3,
+      "var": "VAR_ROUTE104_STATE",
+      "var_value": "0",
+      "script": "Route104_EventScript_MigrationGlimpse"
     }
   ],
   "bg_events": [
