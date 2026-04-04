@@ -1,32 +1,28 @@
-# Post-Trainer Pass Priorities: What to Tackle After Victory Road
+# Post-Trainer Pass Priorities — What Comes Next
 
-**Cycle**: 59 | **Date**: March 2026
+**Cycle**: 151 | **Date**: April 2026
 
 ---
 
-## Context
+## Key Findings
 
-With Victory Road done (Cycle 58), the trainer quality pass is essentially complete across all major routes. The question is what delivers the most player value next.
+After completing the full Hoenn trainer quality pass (150+ trainers, 24 routes), successful Emerald hacks typically pivot to one of these areas:
 
-## New Species: Still High-Effort on Vanilla pokeemerald
+### 1. QoL Features (Most Impactful for Player Retention)
+- **Reusable TMs** — universally praised across Modern Emerald, Emerald Plus, Revelation
+- **Difficulty modes** — Emerald Imperium offers Easy/Normal; Modern Emerald has Normal/Hard with level scaling. Simple approach: scale boss trainer levels +/-2-3
+- **Auto-run / indoor running** — small but frequently cited as "makes it feel modern"
+- **DexNav-like encounter info** — helps players engage with custom encounter tables
 
-The pret wiki tutorial confirms adding a new species requires ~10+ file edits per mon: sprites (front/back/icon/footprint, indexed 14-color, 64x64), palettes, base stats, learnsets, Pokédex entries, cries, evolution data, encounter table entries. The Gible line alone (Gible→Gabite→Garchomp) = 3 species × 10+ files = 30+ file edits. Without pokeemerald-expansion, this is a multi-cycle grind with high error surface.
+### 2. Polish & Presentation
+- Upgraded tilesets and custom maps consistently cited as what separates "great" from "good" hacks
+- Bug-free experience matters more than new features at this stage
+- Every system the player touches should feel considered — no vanilla gaps
 
-## Dungeon Trainer Design Patterns
+### 3. Content Depth
+- Postgame rematches and expanded Battle Frontier content
+- Side quests and optional bosses (Emerald Imperium has 100+ optional mini-bosses)
+- Expanded Pokedex access = more team variety
 
-Best ROM hacks treat dungeons differently from routes:
-- **Scaling difficulty tied to depth** — deeper floors = stronger trainers
-- **Rest stops** — healing/shop NPCs every few floors (The Pit uses every 5th floor)
-- **Thematic teams** — dungeon trainers use species found in that dungeon
-- **Gauntlet feel** — resource attrition is the challenge, not individual battles
-
-## Community Consensus on Postgame
-
-Pure rematch escalation is the weakest postgame form. Players want variety: Battle Frontier verification, side content, narrative hooks. More E4/gym rematch tiers have diminishing returns compared to ensuring existing content (Battle Frontier, legendaries) works with P/S split + Fairy.
-
-## Recommendation
-
-1. **Dungeon trainers** are the natural next step — they complete the trainer quality pass and are moderate effort
-2. **Battle Frontier verification** is high-value, low-effort — just confirm it works with new mechanics
-3. **New species** should wait until other content is polished — it's the highest-effort remaining item
-4. **Early route verification** (102-104) is quick cleanup worth bundling
+## Design Principle
+ROM hacks that feel "complete" share a common trait: no system feels forgotten when the rest is polished. The trainer pass is done — now address the next most-visible vanilla gap.

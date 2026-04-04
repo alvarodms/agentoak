@@ -39,6 +39,14 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
+## TM Consumption & Indoor Running (Cycle 151 research)
+
+**TM consumption path**: `ItemUseCB_TMHM` (party_menu.c:4733) → `GiveMoveToMon` → `Task_LearnedMove` (4769) → `Task_LearnNextMoveOrClosePartyMenu` (4796) which calls `RemoveBagItem(gSpecialVar_ItemId, 1)` at ~4980. This single `RemoveBagItem` call is what makes TMs consumable. HMs skip this path.
+
+**Indoor running**: `IsRunningDisallowed` in `bike.c:1056` checks `gMapHeader.allowRunning`. Each map's JSON has `allow_running` boolean. Setting it to `true` on indoor maps enables running. Alternatively, modify `IsRunningDisallowed` to always return `FALSE` for a global fix.
+
+---
+
 ## Options Menu System (Cycle 105)
 
 **File**: `src/option_menu.c`. Each menu item needs: enum entry, YPOS macro, task data define (`tXxx`), text string, ProcessInput function, DrawChoices function, entries in sOptionMenuItemsNames, init load, save, and process input switch case.
