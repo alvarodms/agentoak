@@ -17,6 +17,7 @@ Route119_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_EventScript_MoveInstituteWorkersDownstairs
+	setflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
 	special SetRoute119Weather
 	end
 
@@ -682,3 +683,88 @@ Route119_Text_MigrationSrJrPostBattle:
 	.string "A breeder told me these species\n"
 	.string "are from distant regions. They're\l"
 	.string "breeding well in HOENN's climate.$"
+
+@ =============================================
+@ Mid-Game Migration Sighting Event (C149)
+@ Triggers once after Weather Institute cleared
+@ =============================================
+
+Route119_EventScript_MigrationSighting::
+	goto_if_set FLAG_ROUTE119_MIGRATION_EVENT, Route119_EventScript_MigrationSighting_End
+	lockall
+	@ Intensify the storm
+	setweather WEATHER_RAIN_THUNDERSTORM
+	doweather
+	delay 40
+	@ Dr. Hartley rushes in from the south
+	clearflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
+	addobject LOCALID_ROUTE119_HARTLEY
+	applymovement LOCALID_ROUTE119_HARTLEY, Route119_Movement_HartleyApproach
+	waitmovement 0
+	applymovement LOCALID_ROUTE119_HARTLEY, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox Route119_Text_HartleyStorm, MSGBOX_DEFAULT
+	msgbox Route119_Text_HartleyMigration, MSGBOX_DEFAULT
+	msgbox Route119_Text_HartleyConnected, MSGBOX_DEFAULT
+	msgbox Route119_Text_HartleyReturn, MSGBOX_DEFAULT
+	closemessage
+	@ Hartley departs back south
+	applymovement LOCALID_ROUTE119_HARTLEY, Route119_Movement_HartleyDepart
+	waitmovement 0
+	removeobject LOCALID_ROUTE119_HARTLEY
+	setflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
+	@ Restore normal cycling weather
+	setweather WEATHER_ROUTE119_CYCLE
+	doweather
+	delay 20
+	@ Mark event complete
+	setflag FLAG_ROUTE119_MIGRATION_EVENT
+	releaseall
+	end
+
+Route119_EventScript_MigrationSighting_End::
+	end
+
+Route119_Movement_HartleyApproach:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+Route119_Movement_HartleyDepart:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route119_Text_HartleyStorm:
+	.string "Trainer! Stay where you are!\n"
+	.string "This is no ordinary storm!$"
+
+Route119_Text_HartleyMigration:
+	.string "My instruments detected a massive\n"
+	.string "barometric shift just now.\p"
+	.string "The migration species use atmospheric\n"
+	.string "corridors to travel - and ROUTE 119\p"
+	.string "sits on one of the primary pathways.\p"
+	.string "DRAGONAIR in the upper canopy...\n"
+	.string "LAPRAS sighted in the river during\l"
+	.string "storms like these... even the CASTFORM\l"
+	.string "here are behaving erratically.$"
+
+Route119_Text_HartleyConnected:
+	.string "The rain isn't just weather - it's\n"
+	.string "a highway for migrating POKéMON.\p"
+	.string "The geothermal surges near LAVARIDGE,\n"
+	.string "the deep-sea currents by SOOTOPOLIS,\p"
+	.string "the atmospheric anomalies right here...\n"
+	.string "It's all connected.\p"
+	.string "Whatever force is reshaping HOENN's\n"
+	.string "ecosystem, it's accelerating.$"
+
+Route119_Text_HartleyReturn:
+	.string "I need to recalibrate my equipment\n"
+	.string "before this storm passes.\p"
+	.string "Keep your eyes open out here,\n"
+	.string "Trainer. The rain draws them in -\l"
+	.string "and not all of them are gentle.$"

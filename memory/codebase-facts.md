@@ -105,7 +105,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v7.0 flags (C135-136)**: 5 quest flags at 0x272-0x277 — FLAG_SKY_GUARDIAN_QUEST_ACTIVE through FLAG_HIDE_SKY_PILLAR_DRACONID.
 
-**v8.0 flags (C144-145)**: FLAG_MIGRATION_GLIMPSE_ROUTE101 (0x278), FLAG_MIGRATION_GLIMPSE_ROUTE104 (0x279), FLAG_MIGRATION_GLIMPSE_ROUTE102 (0x27A), FLAG_MIGRATION_GLIMPSE_ROUTE116 (0x27B) — one-shot coord_event triggers. Next available: 0x27C.
+**v8.0 flags (C144-145)**: FLAG_MIGRATION_GLIMPSE_ROUTE101 (0x278) through FLAG_MIGRATION_GLIMPSE_ROUTE116 (0x27B) — one-shot coord_event triggers.
+
+**v1.1 flags (C149)**: FLAG_HIDE_ROUTE119_HARTLEY (0x27C), FLAG_ROUTE119_MIGRATION_SIGHTING (0x27D) — Dr. Hartley thunderstorm event. Next available: 0x27E.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
@@ -123,11 +125,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **SkyPillar_Outside**: Checks `FLAG_SYS_WEATHER_CTRL` for weather gating. v7.0: Wallace reappears for guardian quest via `FLAG_HIDE_SKY_PILLAR_WALLACE` clear/set. Door opened via `OnLoad` check on `FLAG_SKY_GUARDIAN_ACT1_COMPLETE`.
 
-**C136 additions**: Encounter tables redesigned for 1F/3F/5F (Duskull/Golbat/Claydol/Sableye/Banette on 1F, Altaria/Solrock/Lunatone on 3F, Flygon/Salamence-rare on 5F). Ancient mural bg_events on each floor. Draconid trainer Kaelen (TRAINER_DRACONID_KAELEN) on 3F with Shelgon/Altaria/Flygon.
+**C136 additions**: Encounter tables redesigned for 1F/3F/5F. Ancient mural bg_events on each floor. Draconid trainer Kaelen on 3F.
 
-**No OBJ_EVENT_GFX_DRAGON_TAMER**: Used OBJ_EVENT_GFX_MAN_1 for the Draconid NPC.
-
-**Legendary battle pattern** (TerraCave/SeafloorCavern reference): `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
+**Legendary battle pattern**: `setwildbattle` → `setflag FLAG_HIDE_*` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → `specialvar VAR_RESULT, GetBattleOutcome` → branch on `B_OUTCOME_CAUGHT`.
 
 ---
 
@@ -137,22 +137,26 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
-## ShakeCamera Special (C112)
-
-`special ShakeCamera` requires 4 vars: `VAR_0x8004` (vertical), `VAR_0x8005` (horizontal), `VAR_0x8006` (num shakes), `VAR_0x8007` (delay). Must `waitstate` after.
-
----
-
 ## Coord Events / Walk-Over Triggers (C144)
 
 **map.json**: Add `coord_events` entries with `x`, `y`, `elevation`, `type: "1"`, `script` label. These fire when the player walks onto the tile.
 
 **Pattern**: Use a one-shot flag (`setflag` at end of script) + `goto_if_set` at start to make them fire once. Gate with `checkflag FLAG_ADVENTURE_STARTED` (or similar) to avoid firing before the player is ready.
 
-**Movement scripts**: `data/scripts/movement.inc` has `Common_Movement_ExclamationMark` (emote_exclamation_mark + step_end) and `Common_Movement_QuestionMark`.
+**Movement scripts**: `data/scripts/movement.inc` has `Common_Movement_ExclamationMark` and `Common_Movement_QuestionMark`.
+
+---
+
+## Route 119 Weather System (C149)
+
+**Weather cycling**: `WEATHER_ROUTE119_CYCLE` (constant 20) managed by `SetRoute119Weather()` in `src/field_specials.c`. Alternates between rain types based on map transition.
+
+**Script weather control**: `setweather WEATHER_RAIN_THUNDERSTORM` + `doweather` to trigger thunderstorm in scripts. `resetweather` + `doweather` to restore cycling weather.
+
+**LOCALIDs**: Route 119 NPC local_ids are string literals in map.json (e.g. `"LOCALID_ROUTE119_RIVAL"`), not header defines.
 
 ---
 
 ## Script Lint Target (C141)
 
-`make check_scripts` — Makefile target that greps all `data/maps/*/scripts.inc` and `data/maps/*/*/scripts.inc` for non-charmap characters (em dash, en dash, smart quotes, bullet). Excludes `\xc3[\xa9\xa0-\xbf]` (valid accented chars like é/à). Returns exit 0 if clean, exit 1 with file:line listing if violations found.
+`make check_scripts` — Makefile target that greps all script .inc files for non-charmap characters. Returns exit 0 if clean, exit 1 with file:line listing if violations found.

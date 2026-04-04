@@ -130,7 +130,8 @@ Balance sanity check passed (all gym/E4 levels, items, species verified). README
 4. ~~**Trainer quality pass (early routes)**~~ — done (C146). Routes 102/104/116: 21 trainers redesigned with migration species, custom movesets, held items, Nate & Emma double battle.
 5. ~~**Trainer quality pass (mid-game routes)**~~ — done (C147). Routes 110/111/113/117/118: 59 trainers redesigned. Miles & Sierra double battle on Route 118.
 6. **Trainer quality pass (late-mid routes)** — Routes 119-121 done (C148: 38 trainers, rain/mystery/power themes). Routes 123-125 remain.
-7. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
+7. ~~**Route 119 Migration Sighting Event**~~ — done (C149). First mid-game scripted event: thunderstorm scene with Dr. Hartley after Weather Institute.
+8. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
 
 ---
 
@@ -139,4 +140,4 @@ Balance sanity check passed (all gym/E4 levels, items, species verified). README
 - **Trainer checklist**: See codebase-facts.md (party struct types, three-file system)
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
 - **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge — use Choice Band/Focus Band/Scope Lens/Shell Bell/Leftovers
-- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian). Beast flags at SYSTEM_FLAGS+0x21-0x26.
+- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events). Beast flags at SYSTEM_FLAGS+0x21-0x26.

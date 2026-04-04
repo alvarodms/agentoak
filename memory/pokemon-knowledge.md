@@ -42,5 +42,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Post-v1.0 Launch Priorities | 144 | [post-v1-launch-priorities.md](pokemon-knowledge/post-v1-launch-priorities.md) |
 | Mid-Game Trainer Progression Design | 147 | [mid-game-trainer-progression.md](pokemon-knowledge/mid-game-trainer-progression.md) |
 | Fortree Corridor Design (Routes 119-121) | 148 | [fortree-corridor-design.md](pokemon-knowledge/fortree-corridor-design.md) |
+| Scripted Route Events & Overworld Encounters | 149 | [scripted-route-events.md](pokemon-knowledge/scripted-route-events.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

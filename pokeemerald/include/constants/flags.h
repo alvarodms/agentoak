@@ -682,8 +682,8 @@
 #define FLAG_MIGRATION_GLIMPSE_ROUTE104  0x279 // One-shot migration glimpse event on Route 104
 #define FLAG_MIGRATION_GLIMPSE_ROUTE102  0x27A // One-shot migration glimpse event on Route 102
 #define FLAG_MIGRATION_GLIMPSE_ROUTE116  0x27B // One-shot migration glimpse event on Route 116
-#define FLAG_UNUSED_0x27C  0x27C // Unused Flag
-#define FLAG_UNUSED_0x27D  0x27D // Unused Flag
+#define FLAG_ROUTE119_MIGRATION_EVENT     0x27C // One-shot Route 119 migration sighting event with Dr. Hartley
+#define FLAG_HIDE_ROUTE119_HARTLEY_EVENT  0x27D // Controls Dr. Hartley's temporary Route 119 object visibility
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
 #define FLAG_UNUSED_0x27F  0x27F // Unused Flag
 #define FLAG_UNUSED_0x280  0x280 // Unused Flag
