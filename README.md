@@ -42,7 +42,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **4-tier rematch progression** for all gym leaders with escalating teams
 - **Rival arc** redesigned across all 5 battles with migration-themed team building
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
-- **120+ route trainers** across Routes 102-121 redesigned with migration species, held items, themed movesets, and new double battles — Route 119 exploits rain, Route 120 embraces mystery, Route 121 delivers a late-game power spike
+- **150+ route trainers** across Routes 102-125 redesigned with migration species, held items, themed movesets, and new double battles — water routes feature aquatic specialists with Dive and surf-capable teams, Route 119 exploits rain, Route 123 blends land and sea diversity
 
 ### The Postgame Saga
 
