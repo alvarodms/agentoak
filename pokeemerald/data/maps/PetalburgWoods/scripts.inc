@@ -1,5 +1,10 @@
 PetalburgWoods_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgWoods_OnTransition
 	.byte 0
+
+PetalburgWoods_OnTransition::
+	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
+	end
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall
@@ -473,4 +478,63 @@ PetalburgWoods_Text_TrainerTipsPP:
 	.string "make moves during battle.\p"
 	.string "If a POKéMON runs out of PP, it must be\n"
 	.string "taken to a POKéMON CENTER.$"
+
+@ =============================================
+@ Migration Sighting Event - "The First Sighting"
+@ A Pikachu dashes across the path, startling the player
+@ =============================================
+
+PetalburgWoods_EventScript_MigrationSighting::
+	goto_if_set FLAG_MIGRATION_PETALBURG_WOODS, PetalburgWoods_EventScript_MigrationSighting_End
+	goto_if_unset FLAG_ADVENTURE_STARTED, PetalburgWoods_EventScript_MigrationSighting_End
+	lockall
+	@ Brief pause - something rustles
+	delay 15
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 10
+	@ Play an unfamiliar cry
+	playmoncry SPECIES_PIKACHU, CRY_MODE_ENCOUNTER
+	delay 30
+	waitmoncry
+	@ Reveal the Pikachu sprite and dash it across the screen
+	clearflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
+	addobject LOCALID_PETALBURG_WOODS_MIGRATION_MON
+	applymovement LOCALID_PETALBURG_WOODS_MIGRATION_MON, PetalburgWoods_Movement_MigrationDash
+	waitmovement 0
+	@ Hide the sprite
+	removeobject LOCALID_PETALBURG_WOODS_MIGRATION_MON
+	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
+	@ Player reacts
+	delay 10
+	msgbox PetalburgWoods_Text_MigrationSighting1, MSGBOX_DEFAULT
+	msgbox PetalburgWoods_Text_MigrationSighting2, MSGBOX_DEFAULT
+	@ Mark event complete
+	setflag FLAG_MIGRATION_PETALBURG_WOODS
+	releaseall
+	end
+
+PetalburgWoods_EventScript_MigrationSighting_End::
+	end
+
+PetalburgWoods_Movement_MigrationDash:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
+PetalburgWoods_Text_MigrationSighting1:
+	.string "A small yellow creature just bolted\n"
+	.string "across the path!\p"
+	.string "It was gone before you could get\n"
+	.string "a good look at it...$"
+
+PetalburgWoods_Text_MigrationSighting2:
+	.string "Whatever it was, it didn't look\n"
+	.string "like anything native to HOENN.\p"
+	.string "The forest feels different somehow.\n"
+	.string "Like the world is shifting.$"
 

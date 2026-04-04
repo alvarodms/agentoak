@@ -44,5 +44,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Fortree Corridor Design (Routes 119-121) | 148 | [fortree-corridor-design.md](pokemon-knowledge/fortree-corridor-design.md) |
 | Scripted Route Events & Overworld Encounters | 149 | [scripted-route-events.md](pokemon-knowledge/scripted-route-events.md) |
 | Routes 123-125 & Water Route Design | 150 | [routes-123-125-water-route-design.md](pokemon-knowledge/routes-123-125-water-route-design.md) |
+| Early-Game Hooks & Feature Scope | 152 | [early-game-hooks-and-scope.md](pokemon-knowledge/early-game-hooks-and-scope.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

@@ -24,6 +24,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
 - **19 migration species** carry thematic wild held items
+- **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a thunderstorm rages on Route 119 with weather-displaced Pokemon, and more moments throughout the journey
 - **Migration narrative arc** — NPCs across Hoenn react to the migration, from Birch's earliest research notes through Weather Institute scientists tracking atmospheric anomalies to postgame revelations
 
 ### Battle System Upgrades

@@ -15,6 +15,7 @@
 **v7.0-7.1** (C128-137): Battle Quality Overhaul + Sky Guardian Rayquaza trilogy.
 **v8.0** (C138-143): "The Complete Experience" — Player journey polish, v1.0 ship.
 **v1.1** (C144-150): Trainer quality pass (all routes), early-game glimpse events, Route 119 thunderstorm.
+**v1.2** (C151+): "The Player's Journey" — interactive events, QoL, engineering cleanup.
 
 ---
 
@@ -120,7 +121,7 @@ All items in one cycle — both are small, well-understood changes:
 | Cycle | Name | Pillar | Deliverable |
 |-------|------|--------|-------------|
 | C151 | Planning | — | This document (v1.2 roadmap) |
-| C152 | Petalburg Woods Event | Events | First-impression scripted sighting |
+| C152 | Petalburg Woods Event | Events | **DONE** — Pikachu sighting event |
 | C153 | Meteor Falls Event | Events | Mid-game Bagon colony encounter |
 | C154 | Mt. Pyre Event | Events | Late-mid spiritual disturbance |
 | C155 | QoL Bundle | QoL | Reusable TMs + indoor running |
@@ -138,6 +139,6 @@ All items in one cycle — both are small, well-understood changes:
 - **Trainer checklist**: See codebase-facts.md (party struct types, three-file system)
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
 - **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge — use Choice Band/Focus Band/Scope Lens/Shell Bell/Leftovers
-- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events). Beast flags at SYSTEM_FLAGS+0x21-0x26.
+- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events, 0x27E-0x27F for Petalburg Woods sighting). Beast flags at SYSTEM_FLAGS+0x21-0x26.
 - **QoL targets**: party_menu.c:5205,5243 (TM consumption), bike.c:1058 (indoor running)
 - **Trainer capacity**: 885/885, reclaimable IDs: #568 (GRUNT_UNUSED), #853 (MAY_PLACEHOLDER)

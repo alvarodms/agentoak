@@ -684,8 +684,8 @@
 #define FLAG_MIGRATION_GLIMPSE_ROUTE116  0x27B // One-shot migration glimpse event on Route 116
 #define FLAG_ROUTE119_MIGRATION_EVENT     0x27C // One-shot Route 119 migration sighting event with Dr. Hartley
 #define FLAG_HIDE_ROUTE119_HARTLEY_EVENT  0x27D // Controls Dr. Hartley's temporary Route 119 object visibility
-#define FLAG_UNUSED_0x27E  0x27E // Unused Flag
-#define FLAG_UNUSED_0x27F  0x27F // Unused Flag
+#define FLAG_MIGRATION_PETALBURG_WOODS       0x27E // One-shot migration sighting event complete
+#define FLAG_HIDE_MIGRATION_PIKACHU_WOODS   0x27F // Controls migration Pikachu visibility in Petalburg Woods
 #define FLAG_UNUSED_0x280  0x280 // Unused Flag
 #define FLAG_UNUSED_0x281  0x281 // Unused Flag
 #define FLAG_UNUSED_0x282  0x282 // Unused Flag

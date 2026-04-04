@@ -115,7 +115,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v8.0 flags (C144-145)**: FLAG_MIGRATION_GLIMPSE_ROUTE101 (0x278) through FLAG_MIGRATION_GLIMPSE_ROUTE116 (0x27B) — one-shot coord_event triggers.
 
-**v1.1 flags (C149)**: FLAG_HIDE_ROUTE119_HARTLEY (0x27C), FLAG_ROUTE119_MIGRATION_SIGHTING (0x27D) — Dr. Hartley thunderstorm event. Next available: 0x27E.
+**v1.1 flags (C149)**: FLAG_HIDE_ROUTE119_HARTLEY (0x27C), FLAG_ROUTE119_MIGRATION_SIGHTING (0x27D) — Dr. Hartley thunderstorm event.
+
+**v1.2 flags (C152)**: FLAG_PETALBURG_WOODS_SIGHTING (0x27E), FLAG_HIDE_PETALBURG_WOODS_PIKACHU (0x27F) — Pikachu sighting event. Next available: 0x280.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
@@ -162,6 +164,12 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 **Script weather control**: `setweather WEATHER_RAIN_THUNDERSTORM` + `doweather` to trigger thunderstorm in scripts. `resetweather` + `doweather` to restore cycling weather.
 
 **LOCALIDs**: Route 119 NPC local_ids are string literals in map.json (e.g. `"LOCALID_ROUTE119_RIVAL"`), not header defines.
+
+---
+
+## Overworld Pokemon Sprites (C152)
+
+**OBJ_EVENT_GFX_PIKACHU** = 209 (include/constants/event_objects.h). Available for use in map object events. PIKACHU_DOLL (470) is a separate decoration sprite — do not confuse.
 
 ---
 
