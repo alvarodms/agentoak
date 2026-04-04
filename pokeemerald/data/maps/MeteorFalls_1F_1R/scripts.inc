@@ -307,3 +307,116 @@ MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney:
 	.string "PROF. COZMO: But that TEAM MAGMA…\p"
 	.string "What are they going to do with that\n"
 	.string "METEORITE at MT. CHIMNEY?$"
+
+@ =============================================
+@ Migration Event: The Bagon Colony (C153)
+@ Triggers post-Badge 4 near the waterfall
+@ =============================================
+
+MeteorFalls_1F_1R_EventScript_ColonySighting::
+	goto_if_set FLAG_METEOR_FALLS_COLONY_EVENT, MeteorFalls_1F_1R_EventScript_ColonySighting_End
+	goto_if_unset FLAG_BADGE04_GET, MeteorFalls_1F_1R_EventScript_ColonySighting_End
+	lockall
+	delay 20
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 10
+	playmoncry SPECIES_BAGON, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	delay 15
+	playmoncry SPECIES_BAGON, CRY_MODE_NORMAL
+	delay 30
+	waitmoncry
+	applymovement LOCALID_METEOR_FALLS_RESEARCHER, MeteorFalls_1F_1R_Movement_ResearcherApproach
+	waitmovement 0
+	msgbox MeteorFalls_1F_1R_Text_ColonyResearcher1, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyResearcher2, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyResearcher3, MSGBOX_DEFAULT
+	playse SE_PIN
+	delay 30
+	setwildbattle SPECIES_BAGON, 27, ITEM_DRAGON_FANG
+	dowildbattle
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostBattle1, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostBattle2, MSGBOX_DEFAULT
+	giveitem ITEM_DRAGON_FANG
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostBattle3, MSGBOX_DEFAULT
+	setflag FLAG_METEOR_FALLS_COLONY_EVENT
+	releaseall
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonySighting_End::
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonyResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_METEOR_FALLS_COLONY_EVENT, MeteorFalls_1F_1R_EventScript_ColonyResearcherPost
+	msgbox MeteorFalls_1F_1R_Text_ResearcherPreEvent, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonyResearcherPost::
+	msgbox MeteorFalls_1F_1R_Text_ResearcherPostEvent, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_1F_1R_Movement_ResearcherApproach:
+	walk_down
+	walk_in_place_faster_down
+	step_end
+
+@ =============================================
+@ Colony Event Text
+@ =============================================
+
+MeteorFalls_1F_1R_Text_ColonyResearcher1:
+	.string "Shh! Stay still...\p"
+	.string "Did you hear that? Those cries have\n"
+	.string "been echoing through these caves\l"
+	.string "for days now.$"
+
+MeteorFalls_1F_1R_Text_ColonyResearcher2:
+	.string "I'm a researcher from MAUVILLE.\n"
+	.string "Something extraordinary is happening.\p"
+	.string "A colony of BAGON has appeared near\n"
+	.string "the falls. Dragon-types that have\l"
+	.string "never been recorded in HOENN.$"
+
+MeteorFalls_1F_1R_Text_ColonyResearcher3:
+	.string "BAGON are drawn to high places.\n"
+	.string "They dream of soaring through the sky\l"
+	.string "and hurl themselves off cliffs.\p"
+	.string "METEOR FALLS must feel like home\n"
+	.string "to them.\p"
+	.string "Wait... one of them has noticed us.\n"
+	.string "Brace yourself!$"
+
+MeteorFalls_1F_1R_Text_ColonyPostBattle1:
+	.string "Remarkable! That BAGON was far more\n"
+	.string "powerful than any wild specimen\l"
+	.string "I've documented.$"
+
+MeteorFalls_1F_1R_Text_ColonyPostBattle2:
+	.string "I found this near their nesting site.\n"
+	.string "The BAGON seem drawn to it.\p"
+	.string "Perhaps you can put it to better\n"
+	.string "use than I can.$"
+
+MeteorFalls_1F_1R_Text_ColonyPostBattle3:
+	.string "The migration is accelerating.\n"
+	.string "Whatever is drawing these creatures\l"
+	.string "to HOENN... it's far from over.\p"
+	.string "Keep your eyes open out there.$"
+
+MeteorFalls_1F_1R_Text_ResearcherPreEvent:
+	.string "Shh... I'm monitoring something.\n"
+	.string "Strange cries near the waterfall.\p"
+	.string "Go take a closer look, but\n"
+	.string "be careful.$"
+
+MeteorFalls_1F_1R_Text_ResearcherPostEvent:
+	.string "The rest of the BAGON colony has\n"
+	.string "scattered deeper into the caves.\p"
+	.string "I'll keep studying what traces\n"
+	.string "they left behind.$"

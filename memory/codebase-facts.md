@@ -117,7 +117,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v1.1 flags (C149)**: FLAG_HIDE_ROUTE119_HARTLEY (0x27C), FLAG_ROUTE119_MIGRATION_SIGHTING (0x27D) — Dr. Hartley thunderstorm event.
 
-**v1.2 flags (C152)**: FLAG_PETALBURG_WOODS_SIGHTING (0x27E), FLAG_HIDE_PETALBURG_WOODS_PIKACHU (0x27F) — Pikachu sighting event. Next available: 0x280.
+**v1.2 flags (C152)**: FLAG_PETALBURG_WOODS_SIGHTING (0x27E), FLAG_HIDE_PETALBURG_WOODS_PIKACHU (0x27F) — Pikachu sighting event.
+
+**v1.2 flags (C153)**: FLAG_METEOR_FALLS_COLONY_EVENT (0x280) — Bagon colony one-shot. Next available: 0x281.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
@@ -167,9 +169,11 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 ---
 
-## Overworld Pokemon Sprites (C152)
+## Overworld Pokemon Sprites (C152-C153)
 
 **OBJ_EVENT_GFX_PIKACHU** = 209 (include/constants/event_objects.h). Available for use in map object events. PIKACHU_DOLL (470) is a separate decoration sprite — do not confuse.
+
+**Limited sprite set**: Only ~40 Pokémon have OW sprites in vanilla pokeemerald. Most migration species (Bagon, Dratini, Larvitar, Vulpix, etc.) do NOT have OW sprites. For events featuring species without sprites, use sound design (playmoncry) + NPC narration instead of placing OW sprite objects.
 
 ---
 

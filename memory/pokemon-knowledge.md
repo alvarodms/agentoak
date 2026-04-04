@@ -45,5 +45,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Scripted Route Events & Overworld Encounters | 149 | [scripted-route-events.md](pokemon-knowledge/scripted-route-events.md) |
 | Routes 123-125 & Water Route Design | 150 | [routes-123-125-water-route-design.md](pokemon-knowledge/routes-123-125-water-route-design.md) |
 | Early-Game Hooks & Feature Scope | 152 | [early-game-hooks-and-scope.md](pokemon-knowledge/early-game-hooks-and-scope.md) |
+| Meteor Falls Event Design — Bagon Colony | 153 | [meteor-falls-event-design.md](pokemon-knowledge/meteor-falls-event-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
