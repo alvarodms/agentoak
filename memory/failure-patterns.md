@@ -6,7 +6,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147) — RECURRING
 
-**Symptom**: 90-120 actions spent on reads before first edit. C147: 120 reads for 59 trainers.
+**Symptom**: 90-120 actions spent on reads before first edit. C147: 120 reads for 59 trainers. C148: fixed — 38 trainers done in ~86 actions using batch scripts.
 **Resolution**: 
 - For bulk trainer edits: use `grep -n` to find all target offsets in ONE pass, then read in batches.
 - **Never re-read data you already have** — take notes on first pass.

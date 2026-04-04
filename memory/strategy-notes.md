@@ -129,7 +129,7 @@ Balance sanity check passed (all gym/E4 levels, items, species verified). README
 3. ~~**Early-game scripted events**~~ — Route 101/104 (C144) + Route 102/116 (C145). Pre-Rustboro early-game atmospheric pass complete.
 4. ~~**Trainer quality pass (early routes)**~~ — done (C146). Routes 102/104/116: 21 trainers redesigned with migration species, custom movesets, held items, Nate & Emma double battle.
 5. ~~**Trainer quality pass (mid-game routes)**~~ — done (C147). Routes 110/111/113/117/118: 59 trainers redesigned. Miles & Sierra double battle on Route 118.
-6. **Trainer quality pass (late-mid routes)** — Routes 119-121 (Fortree corridor), 123-125 (post-Fortree). Next priority after map editing.
+6. **Trainer quality pass (late-mid routes)** — Routes 119-121 done (C148: 38 trainers, rain/mystery/power themes). Routes 123-125 remain.
 7. **Map editing** (issue #77) — Tileset/layout changes for migration-themed areas.
 
 ---

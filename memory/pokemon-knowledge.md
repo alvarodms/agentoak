@@ -31,7 +31,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Narrative Divergence Patterns | 131 | [narrative-divergence-patterns.md](pokemon-knowledge/narrative-divergence-patterns.md) |
 | Learnset Distribution for New Moves | 132 | [learnset-distribution-patterns.md](pokemon-knowledge/learnset-distribution-patterns.md) |
 | Sky Pillar Arc & Rematch Design | 134 | [sky-pillar-arc-and-rematch-design.md](pokemon-knowledge/sky-pillar-arc-and-rematch-design.md) |
-| Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storytelling.md) |
+| Dungeon Environmental Storytelling | 136 | [dungeon-environmental-storytelling.md](pokemon-knowledge/dungeon-environmental-storyt.md) |
 | Legendary Climax & World Reaction | 137 | [legendary-climax-world-reaction.md](pokemon-knowledge/legendary-climax-world-reaction.md) |
 | Post-Arc Polish Priorities | 138 | [post-arc-polish-priorities.md](pokemon-knowledge/post-arc-polish-priorities.md) |
 | Postgame Breadcrumb & Player Direction Design | 139 | [postgame-breadcrumb-design.md](pokemon-knowledge/postgame-breadcrumb-design.md) |
@@ -41,5 +41,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v1.0 Launch Best Practices | 143 | [v1-launch-best-practices.md](pokemon-knowledge/v1-launch-best-practices.md) |
 | Post-v1.0 Launch Priorities | 144 | [post-v1-launch-priorities.md](pokemon-knowledge/post-v1-launch-priorities.md) |
 | Mid-Game Trainer Progression Design | 147 | [mid-game-trainer-progression.md](pokemon-knowledge/mid-game-trainer-progression.md) |
+| Fortree Corridor Design (Routes 119-121) | 148 | [fortree-corridor-design.md](pokemon-knowledge/fortree-corridor-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
