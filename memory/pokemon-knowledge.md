@@ -47,5 +47,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Early-Game Hooks & Feature Scope | 152 | [early-game-hooks-and-scope.md](pokemon-knowledge/early-game-hooks-and-scope.md) |
 | Meteor Falls Event Design — Bagon Colony | 153 | [meteor-falls-event-design.md](pokemon-knowledge/meteor-falls-event-design.md) |
 | Mt. Pyre Ghost Event Design — Misdreavus | 154 | [mt-pyre-ghost-event-design.md](pokemon-knowledge/mt-pyre-ghost-event-design.md) |
+| QoL Modernization Standards | 155 | [qol-modernization-standards.md](pokemon-knowledge/qol-modernization-standards.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
