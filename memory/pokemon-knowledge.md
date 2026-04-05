@@ -48,5 +48,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Meteor Falls Event Design — Bagon Colony | 153 | [meteor-falls-event-design.md](pokemon-knowledge/meteor-falls-event-design.md) |
 | Mt. Pyre Ghost Event Design — Misdreavus | 154 | [mt-pyre-ghost-event-design.md](pokemon-knowledge/mt-pyre-ghost-event-design.md) |
 | QoL Modernization Standards | 155 | [qol-modernization-standards.md](pokemon-knowledge/qol-modernization-standards.md) |
+| Post-v1.2 Direction — Mature Hack Differentiators | 157 | [post-v12-direction.md](pokemon-knowledge/post-v12-direction.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

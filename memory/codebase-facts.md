@@ -39,6 +39,16 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
+## Evolution Engine (C157)
+
+**File**: `src/data/pokemon/evolution.h`. Format: `{EVO_TYPE, param, SPECIES_TARGET}`.
+
+**Trade evolutions**: `EVO_TRADE` (type 5) and `EVO_TRADE_ITEM` (type 6) — 7 total: Kadabra, Machoke, Graveler, Haunter (EVO_TRADE), Seadra, Clamperl×2 (EVO_TRADE_ITEM).
+
+**Key fact**: `EVO_ITEM` (type 7) already exists for stone evolutions. Trade-item evos (Seadra/Clamperl) can use `EVO_ITEM` with the same held item — zero engine changes needed. No `EVO_LEVEL_ITEM` exists in Gen 3.
+
+---
+
 ## TM Consumption & Indoor Running (corrected C156)
 
 **TMs are already non-consumable** in pokeemerald decomp. `ItemUseCB_TMHM` (party_menu.c:4733) teaches moves via `GiveMoveToMon` → `Task_LearnedMove` → fanfare → `Task_ClosePartyMenu`. No `RemoveBagItem` call exists in this path. The C151 note claiming line ~4980 was TM consumption was wrong — that's `ItemUseCB_RareCandy`.
