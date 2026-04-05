@@ -615,3 +615,113 @@ MtPyre_Summit_Text_HoennTrioTale:
 	.string "Then, its duty done, the green POKéMON\n"
 	.string "flew off into the wild blue yonder…$"
 
+@ =============================================
+@ Migration Event: The Restless Dead (C154)
+@ Triggers post-Badge 6 on Mt. Pyre Summit
+@ =============================================
+
+MtPyre_Summit_EventScript_GhostMigration::
+	goto_if_set FLAG_MT_PYRE_GHOST_EVENT, MtPyre_Summit_EventScript_GhostMigration_End
+	goto_if_unset FLAG_BADGE06_GET, MtPyre_Summit_EventScript_GhostMigration_End
+	lockall
+	delay 30
+	special ShakeCamera
+	delay 20
+	playmoncry SPECIES_MISDREAVUS, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	delay 10
+	playse SE_PIN
+	applymovement LOCALID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_Delay48
+	waitmovement 0
+	delay 15
+	applymovement LOCALID_MT_PYRE_SUMMIT_KEEPER, MtPyre_Summit_Movement_KeeperApproach
+	waitmovement 0
+	msgbox MtPyre_Summit_Text_KeeperWarning1, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_KeeperWarning2, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_KeeperWarning3, MSGBOX_DEFAULT
+	playse SE_M_CONFUSE_RAY
+	delay 20
+	special ShakeCamera
+	delay 15
+	playmoncry SPECIES_MISDREAVUS, CRY_MODE_NORMAL
+	delay 30
+	waitmoncry
+	setwildbattle SPECIES_MISDREAVUS, 34, ITEM_SPELL_TAG
+	dowildbattle
+	msgbox MtPyre_Summit_Text_KeeperPostBattle1, MSGBOX_DEFAULT
+	msgbox MtPyre_Summit_Text_KeeperPostBattle2, MSGBOX_DEFAULT
+	setflag FLAG_MT_PYRE_GHOST_EVENT
+	releaseall
+	end
+
+MtPyre_Summit_EventScript_GhostMigration_End::
+	end
+
+MtPyre_Summit_EventScript_PyreKeeper::
+	lock
+	faceplayer
+	goto_if_set FLAG_MT_PYRE_GHOST_EVENT, MtPyre_Summit_EventScript_PyreKeeperPost
+	msgbox MtPyre_Summit_Text_KeeperPreEvent, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_Summit_EventScript_PyreKeeperPost::
+	msgbox MtPyre_Summit_Text_KeeperPostEvent, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_Summit_Movement_KeeperApproach:
+	walk_right
+	walk_right
+	walk_in_place_faster_left
+	step_end
+
+@ =============================================
+@ Ghost Migration Event Text (C154)
+@ =============================================
+
+MtPyre_Summit_Text_KeeperWarning1:
+	.string "Stop, child... Do you feel it?\p"
+	.string "The boundary between worlds grows\n"
+	.string "thin here on these sacred grounds.$"
+
+MtPyre_Summit_Text_KeeperWarning2:
+	.string "Since the great migration began,\n"
+	.string "restless spirits have been drawn\l"
+	.string "to MT. PYRE from distant lands.\p"
+	.string "Ghost-types that have never haunted\n"
+	.string "this mountain before...$"
+
+MtPyre_Summit_Text_KeeperWarning3:
+	.string "They are not hostile... but they\n"
+	.string "are not at peace.\p"
+	.string "Listen...$"
+
+MtPyre_Summit_Text_KeeperPostBattle1:
+	.string "That MISDREAVUS... it carried a\n"
+	.string "fragment of another world's sorrow.\p"
+	.string "Perhaps in your care, it will find\n"
+	.string "the peace this mountain once held.$"
+
+MtPyre_Summit_Text_KeeperPostBattle2:
+	.string "The spirits whisper of a greater\n"
+	.string "stirring yet to come...\p"
+	.string "Something deep beneath\n"
+	.string "SOOTOPOLIS.\p"
+	.string "Heed the mountain's warning, child.$"
+
+MtPyre_Summit_Text_KeeperPreEvent:
+	.string "These sacred grounds have been\n"
+	.string "restless of late...\p"
+	.string "Spirits from distant lands drift\n"
+	.string "through the fog.$"
+
+MtPyre_Summit_Text_KeeperPostEvent:
+	.string "The spirits have calmed... for now.\n"
+	.string "But the migration continues.\p"
+	.string "Whatever draws these creatures\n"
+	.string "to HOENN has not finished its work.$"
+

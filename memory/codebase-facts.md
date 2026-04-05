@@ -119,7 +119,9 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **v1.2 flags (C152)**: FLAG_PETALBURG_WOODS_SIGHTING (0x27E), FLAG_HIDE_PETALBURG_WOODS_PIKACHU (0x27F) — Pikachu sighting event.
 
-**v1.2 flags (C153)**: FLAG_METEOR_FALLS_COLONY_EVENT (0x280) — Bagon colony one-shot. Next available: 0x281.
+**v1.2 flags (C153)**: FLAG_METEOR_FALLS_COLONY_EVENT (0x280) — Bagon colony one-shot.
+
+**v1.2 flags (C154)**: FLAG_MT_PYRE_GHOST_EVENT (0x281) — Mt. Pyre ghost migration one-shot. Next available: 0x282.
 
 **Existing legendary flags**: `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50), `FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN`. Beast flags at system flags 0x881-0x886.
 
