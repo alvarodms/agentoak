@@ -55,7 +55,15 @@ Route120_EventScript_SetBridgeKecleonMovement::
 
 Route120_OnTransition:
 	call GabbyAndTy_EventScript_UpdateLocation
+	setflag FLAG_HIDE_ROUTE120_OMEN_BIRDKEEPER
+	goto_if_set FLAG_BADGE06_GET, Route120_EventScript_SetOmenWeather
 	call Route120_EventScript_SetWeather
+	end
+
+Route120_EventScript_SetOmenWeather::
+	setweather WEATHER_DOWNPOUR
+	doweather
+	clearflag FLAG_HIDE_ROUTE120_OMEN_BIRDKEEPER
 	end
 
 Route120_EventScript_SetWeather::
@@ -446,3 +454,20 @@ Route120_Text_SecondWaveRanger:
 	.string "when it senses disaster.\p"
 	.string "I am filing a report with\n"
 	.string "the RANGER UNION.$"
+
+@ =============================================
+@ Weather Omen NPC — Route 120 Bird Keeper (C160)
+@ Only visible after Badge 6 permanent downpour
+@ =============================================
+
+Route120_EventScript_WeatherOmenBirdKeeper::
+	lock
+	faceplayer
+	msgbox Route120_Text_OmenBirdKeeper, MSGBOX_DEFAULT
+	release
+	end
+
+Route120_Text_OmenBirdKeeper:
+	.string "Even the Flying-types won't come\n"
+	.string "out in this rain.\p"
+	.string "It's like the sky is angry.$"

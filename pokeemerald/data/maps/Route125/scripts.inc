@@ -9,7 +9,15 @@ Route125_OnTransition:
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_125_WEST, AbnormalWeather_StartKyogreWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_125_EAST, AbnormalWeather_StartKyogreWeather
+	setflag FLAG_HIDE_ROUTE125_OMEN_SWIMMER
+	call_if_set FLAG_BADGE07_GET, Route125_EventScript_SetOmenWeather
 	end
+
+Route125_EventScript_SetOmenWeather::
+	setweather WEATHER_SNOW
+	doweather
+	clearflag FLAG_HIDE_ROUTE125_OMEN_SWIMMER
+	return
 
 Route125_OnLoad:
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_125_WEST, AbnormalWeather_EventScript_PlaceTilesRoute125West
@@ -80,4 +88,21 @@ Route125_EventScript_Auron::
 	trainerbattle_single TRAINER_AURON, Route125_Text_AuronIntro, Route125_Text_AuronDefeat
 	msgbox Route125_Text_AuronPostBattle, MSGBOX_AUTOCLOSE
 	end
+
+@ =============================================
+@ Weather Omen NPC — Route 125 Swimmer (C160)
+@ Only visible after Badge 7 permanent hail
+@ =============================================
+
+Route125_EventScript_WeatherOmenSwimmer::
+	lock
+	faceplayer
+	msgbox Route125_Text_OmenSwimmer, MSGBOX_DEFAULT
+	release
+	end
+
+Route125_Text_OmenSwimmer:
+	.string "The water's ice cold today!\p"
+	.string "The currents have changed.\n"
+	.string "Shoal Cave must be freezing.$"
 

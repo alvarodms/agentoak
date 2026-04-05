@@ -177,7 +177,7 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Script weather control**: `setweather WEATHER_RAIN_THUNDERSTORM` + `doweather` to trigger thunderstorm in scripts. `resetweather` + `doweather` to restore cycling weather.
 
-**Weather Omen pattern (C159)**: Badge-gated permanent weather in OnTransition. Route 111: `goto_if_set FLAG_BADGE05_GET` skips coordinate checks → sandstorm covers entire route. Route 119: `goto_if_set FLAG_BADGE06_GET` skips `special SetRoute119Weather` entirely → permanent thunderstorm replaces cycling rain. NPC visibility: `setflag` (hide) then conditional `clearflag` (show) in same OnTransition block.
+**Weather Omen system (C159-C160)**: Badge-gated permanent weather in OnTransition across 4 routes. Pattern: `setflag HIDE_NPC` → `goto_if_set/call_if_set FLAG_BADGE_GET` → `setweather` + `doweather` + `clearflag HIDE_NPC`. Routes: 111 (Badge 5, sandstorm, flag 0x282), 119 (Badge 6, thunderstorm, flag 0x283), 120 (Badge 6, downpour, flag 0x284), 125 (Badge 7, hail/snow, flag 0x285). Each has one reaction NPC gated by the HIDE flag. **Important**: NPC object_events MUST be in map.json with the HIDE flag — C159 originally omitted these, fixed in C160.
 
 **LOCALIDs**: Route 119 NPC local_ids are string literals in map.json (e.g. `"LOCALID_ROUTE119_RIVAL"`), not header defines.
 

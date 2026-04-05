@@ -690,8 +690,8 @@
 #define FLAG_MT_PYRE_GHOST_EVENT  0x281 // One-shot Mt. Pyre ghost migration event (C154)
 #define FLAG_HIDE_ROUTE111_OMEN_HIKER    0x282 // Weather Omen Hiker, visible post-Badge 5 (C159)
 #define FLAG_HIDE_ROUTE119_OMEN_RANGER   0x283 // Weather Omen Ranger, visible post-Badge 6 (C159)
-#define FLAG_UNUSED_0x284  0x284 // Unused Flag
-#define FLAG_UNUSED_0x285  0x285 // Unused Flag
+#define FLAG_HIDE_ROUTE120_OMEN_BIRDKEEPER 0x284 // Weather Omen Bird Keeper, visible post-Badge 6 (C160)
+#define FLAG_HIDE_ROUTE125_OMEN_SWIMMER    0x285 // Weather Omen Swimmer, visible post-Badge 7 (C160)
 #define FLAG_UNUSED_0x286  0x286 // Unused Flag
 #define FLAG_UNUSED_0x287  0x287 // Unused Flag
 #define FLAG_UNUSED_0x288  0x288 // Unused Flag
