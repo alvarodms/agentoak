@@ -114,7 +114,7 @@ Schedule one engineering cycle after v1.3 content ships if friction recurs.
 | Cycle | Name | Pillar | Deliverable | Depends On |
 |-------|------|--------|-------------|------------|
 | C157 | Planning | — | This document | — |
-| C158 | Trade Evo QoL | 1 | Level/item-based trade evolutions (6 lines in evolution.h) | — |
+| C158 | Trade Evo QoL | 1 | **DONE** — All 11 trade evos converted (level/item-based) | — |
 | C159 | Weather Omens I | 2 | Route 111 + Route 119 weather shifts + 2 NPCs | — |
 | C160 | Weather Omens II | 2 | Route 120 + Route 125 weather shifts + 2 NPCs | C159 (pattern) |
 | C161 | Route Identity I | 3 | Route 110 + Route 113 thematic NPCs | — |

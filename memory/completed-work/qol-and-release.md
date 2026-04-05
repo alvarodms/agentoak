@@ -25,6 +25,7 @@ Quality-of-life improvements and release artifacts.
 | `src/strings.c` | Added gText_BattleSpeed, gText_BattleSpeedNormal, gText_BattleSpeedFast | 105 | |
 | `include/strings.h` | Added extern declarations for battle speed strings | 105 | |
 | `graphics_file_rules.mk` | Added move_categories to sprite sheet concatenation | 75 | physical/special/status appended after contest types |
+| `src/data/pokemon/evolution.h` | All 11 trade evolutions removed — 4 pure-trade→EVO_LEVEL 37, 7 trade-item→EVO_ITEM | 158 | Kadabra, Machoke, Graveler, Haunter→level 37; Politoed, Slowking, Steelix, Kingdra, Scizor, Porygon2, Huntail, Gorebyss→item-based |
 
 ## Release
 

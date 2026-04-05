@@ -58,6 +58,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 ### Quality of Life
 
 - **Reusable TMs** with halved prices
+- **Trade evolution QoL** — all trade-gated evolutions now use level-up (Lv37) or evolution items instead, so every species is obtainable in single-player
 - **Indoor running** — run anywhere, not just outdoors
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
