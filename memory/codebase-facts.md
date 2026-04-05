@@ -177,6 +177,8 @@ Moves use `.category = MOVE_CATEGORY_PHYSICAL` / `MOVE_CATEGORY_SPECIAL` / `MOVE
 
 **Script weather control**: `setweather WEATHER_RAIN_THUNDERSTORM` + `doweather` to trigger thunderstorm in scripts. `resetweather` + `doweather` to restore cycling weather.
 
+**Weather Omen pattern (C159)**: Badge-gated permanent weather in OnTransition. Route 111: `goto_if_set FLAG_BADGE05_GET` skips coordinate checks → sandstorm covers entire route. Route 119: `goto_if_set FLAG_BADGE06_GET` skips `special SetRoute119Weather` entirely → permanent thunderstorm replaces cycling rain. NPC visibility: `setflag` (hide) then conditional `clearflag` (show) in same OnTransition block.
+
 **LOCALIDs**: Route 119 NPC local_ids are string literals in map.json (e.g. `"LOCALID_ROUTE119_RIVAL"`), not header defines.
 
 ---

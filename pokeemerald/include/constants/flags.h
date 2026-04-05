@@ -688,8 +688,8 @@
 #define FLAG_HIDE_MIGRATION_PIKACHU_WOODS   0x27F // Controls migration Pikachu visibility in Petalburg Woods
 #define FLAG_METEOR_FALLS_COLONY_EVENT       0x280 // One-shot Bagon colony event complete (C153)
 #define FLAG_MT_PYRE_GHOST_EVENT  0x281 // One-shot Mt. Pyre ghost migration event (C154)
-#define FLAG_UNUSED_0x282  0x282 // Unused Flag
-#define FLAG_UNUSED_0x283  0x283 // Unused Flag
+#define FLAG_HIDE_ROUTE111_OMEN_HIKER    0x282 // Weather Omen Hiker, visible post-Badge 5 (C159)
+#define FLAG_HIDE_ROUTE119_OMEN_RANGER   0x283 // Weather Omen Ranger, visible post-Badge 6 (C159)
 #define FLAG_UNUSED_0x284  0x284 // Unused Flag
 #define FLAG_UNUSED_0x285  0x285 // Unused Flag
 #define FLAG_UNUSED_0x286  0x286 // Unused Flag

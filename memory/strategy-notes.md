@@ -115,7 +115,7 @@ Schedule one engineering cycle after v1.3 content ships if friction recurs.
 |-------|------|--------|-------------|------------|
 | C157 | Planning | — | This document | — |
 | C158 | Trade Evo QoL | 1 | **DONE** — All 11 trade evos converted (level/item-based) | — |
-| C159 | Weather Omens I | 2 | Route 111 + Route 119 weather shifts + 2 NPCs | — |
+| C159 | Weather Omens I | 2 | **DONE** — Route 111 permanent sandstorm post-Badge 5 + Route 119 permanent thunderstorm post-Badge 6 + 2 reaction NPCs | — |
 | C160 | Weather Omens II | 2 | Route 120 + Route 125 weather shifts + 2 NPCs | C159 (pattern) |
 | C161 | Route Identity I | 3 | Route 110 + Route 113 thematic NPCs | — |
 | C162 | Route Identity II | 3 | Route 119 intern + Route 123 researcher NPCs | C161 (pattern) |
@@ -131,7 +131,7 @@ Schedule one engineering cycle after v1.3 content ships if friction recurs.
 - **Trainer checklist**: See codebase-facts.md (party struct types, three-file system)
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
 - **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge — use Choice Band/Focus Band/Scope Lens/Shell Bell/Leftovers
-- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events, 0x27E-0x27F for Petalburg Woods, 0x280 for Meteor Falls colony, 0x281 for Mt. Pyre ghost event). Beast flags at SYSTEM_FLAGS+0x21-0x26.
+- **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events, 0x27E-0x27F for Petalburg Woods, 0x280 for Meteor Falls colony, 0x281 for Mt. Pyre ghost event, 0x282-0x283 for weather omen NPCs). Beast flags at SYSTEM_FLAGS+0x21-0x26.
 - **QoL note**: TMs already non-consumable in decomp. Indoor running enabled C156.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568 (GRUNT_UNUSED), #853 (MAY_PLACEHOLDER)
 - **Evolution file**: `src/data/pokemon/evolution.h` — format: `{EVO_TYPE, param, SPECIES_TARGET}`

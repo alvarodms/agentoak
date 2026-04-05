@@ -18,7 +18,15 @@ Route119_OnTransition:
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_EventScript_MoveInstituteWorkersDownstairs
 	setflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
+	setflag FLAG_HIDE_ROUTE119_OMEN_RANGER
+	goto_if_set FLAG_BADGE06_GET, Route119_EventScript_SetOmenWeather
 	special SetRoute119Weather
+	end
+
+Route119_EventScript_SetOmenWeather::
+	setweather WEATHER_RAIN_THUNDERSTORM
+	doweather
+	clearflag FLAG_HIDE_ROUTE119_OMEN_RANGER
 	end
 
 Route119_EventScript_MoveInstituteWorkersDownstairs::
@@ -768,3 +776,23 @@ Route119_Text_HartleyReturn:
 	.string "Keep your eyes open out here,\n"
 	.string "Trainer. The rain draws them in -\l"
 	.string "and not all of them are gentle.$"
+
+@ =============================================
+@ Weather Omen NPC — Route 119 Ranger (C159)
+@ Only visible after Badge 6 permanent thunderstorm
+@ =============================================
+
+Route119_EventScript_WeatherOmenRanger::
+	lock
+	faceplayer
+	msgbox Route119_Text_OmenRanger, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_Text_OmenRanger:
+	.string "The WEATHER INSTITUTE says these\n"
+	.string "storms are unprecedented.\p"
+	.string "The cycling rain was normal.\n"
+	.string "This constant thunder is not.\p"
+	.string "Nature itself feels restless.\n"
+	.string "Even the TROPIUS won't fly.$"

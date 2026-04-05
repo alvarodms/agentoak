@@ -25,6 +25,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
 - **19 migration species** carry thematic wild held items
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, and more moments throughout the journey
+- **Weather omens** — Hoenn's climate destabilizes as you earn badges: Route 111's sandstorm spreads beyond the desert after Badge 5, Route 119's cycling rain intensifies into permanent thunderstorms after Badge 6, foreshadowing the Primal Stirring
 - **Migration narrative arc** — NPCs across Hoenn react to the migration, from Birch's earliest research notes through Weather Institute scientists tracking atmospheric anomalies to postgame revelations
 
 ### Battle System Upgrades

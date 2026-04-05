@@ -44,6 +44,8 @@ Route111_OnTransition:
 	call_if_eq VAR_MIRAGE_TOWER_STATE, 1, Route111_EventScript_SetFallingPlayerGfx
 	call_if_eq VAR_MIRAGE_TOWER_STATE, 2, Route111_EventScript_SetMirageTowerGone
 	call Route111_EventScript_CheckSetSandstorm
+	setflag FLAG_HIDE_ROUTE111_OMEN_HIKER
+	call_if_set FLAG_BADGE05_GET, Route111_EventScript_ShowOmenHiker
 	call GabbyAndTy_EventScript_UpdateLocation
 	goto_if_not_defeated TRAINER_VICKY, Route111_EventScript_SetWinstratesNotDefeated
 	end
@@ -63,6 +65,7 @@ Route111_EventScript_SetFallingPlayerGfxFemale::
 	return
 
 Route111_EventScript_CheckSetSandstorm::
+	goto_if_set FLAG_BADGE05_GET, Route111_EventScript_SetSandstorm
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
 	goto_if_lt VAR_TEMP_1, 34, Route111_EventScript_EndCheckSetSandstorm
 	goto_if_gt VAR_TEMP_1, 107, Route111_EventScript_EndCheckSetSandstorm
@@ -781,3 +784,29 @@ Route111_Text_MigrationResearcher:
 	.string "This migration isn't just bringing\n"
 	.string "new species. It's changing the\n"
 	.string "balance of the whole region.$"
+
+@ =============================================
+@ Weather Omen NPC — Route 111 Hiker (C159)
+@ Only visible after Badge 5 permanent sandstorm
+@ =============================================
+
+Route111_EventScript_ShowOmenHiker::
+	clearflag FLAG_HIDE_ROUTE111_OMEN_HIKER
+	return
+
+Route111_EventScript_WeatherOmenHiker::
+	lock
+	faceplayer
+	msgbox Route111_Text_OmenHiker, MSGBOX_DEFAULT
+	release
+	end
+
+Route111_Text_OmenHiker:
+	.string "This sandstorm wasn't this bad\n"
+	.string "last week. I've hiked this route\l"
+	.string "for years and it was always calm\l"
+	.string "north of the desert.\p"
+	.string "Now the sand reaches all the way\n"
+	.string "to the FIERY PATH entrance.\p"
+	.string "Something is stirring beneath\n"
+	.string "the desert.$"
