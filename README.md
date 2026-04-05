@@ -58,6 +58,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 ### Quality of Life
 
 - **Reusable TMs** with halved prices
+- **Indoor running** — run anywhere, not just outdoors
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI

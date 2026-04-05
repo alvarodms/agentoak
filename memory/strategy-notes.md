@@ -29,7 +29,7 @@
 ## Remaining Weaknesses (post-v1.1)
 1. ~~**Early-game interactivity**~~ — **RESOLVED** (C152): Pikachu sighting event in Petalburg Woods.
 2. ~~**Mid-game event density**~~ — **RESOLVED** (C149+C153+C154): Route 119 thunderstorm, Meteor Falls Bagon colony, Mt. Pyre ghost event. Three interactive events now span mid-game.
-3. **QoL modernization** — Zero QoL features beyond Battle Speed (C105). Competitive ROM hacks are expected to have reusable TMs and indoor running at minimum.
+3. ~~**QoL modernization**~~ — **RESOLVED** (C156): Indoor running enabled. TMs already reusable in decomp. Battle Speed added C105.
 
 ---
 
@@ -83,25 +83,11 @@ Transform the hack from "great content, stock mechanics" to "a polished, modern 
 **Why this location**: Mt. Pyre is Hoenn's most atmospheric location — spiritual, somber, unique. A ghost migration disturbance adds emotional weight. Post-Badge 6 is late-mid-game, right before the Magma/Aqua climax, making this a "calm before the storm" moment.
 **Design note**: Tone shift from scientific (Meteor Falls researcher) to spiritual (Pyre Keeper). The migration isn't just a biological phenomenon — it touches the spirit world too.
 
-## Pillar 2: QoL Modernization (C155)
+## Pillar 2: QoL Modernization — **DONE** (C156)
 
-### C155 — QoL Bundle: "Modern Emerald"
-All items in one cycle — both are small, well-understood changes:
+**Reusable TMs**: Already non-consumable in pokeemerald decomp — `ItemUseCB_TMHM` teaches moves without calling `RemoveBagItem`. No code change needed.
 
-**Reusable TMs** (high impact, easy):
-- File: `pokeemerald/src/party_menu.c`
-- Change: Guard `RemoveBagItem` calls at lines ~5205 and ~5243 with `if (!ItemId_GetPocket(gSpecialVar_ItemId) == POCKET_TM_HM)` or similar TM check
-- HMs are already non-consumable; TMs become the same
-- Player impact: Removes the #1 QoL complaint in vanilla Gen 3
-
-**Indoor Running** (moderate impact, trivial):
-- File: `pokeemerald/src/bike.c`
-- Change: Remove or bypass `!gMapHeader.allowRunning` check in `IsRunningDisallowed` (~line 1058)
-- Player impact: Running in Pokémon Centers, Marts, homes — removes a persistent minor annoyance
-
-**Faster Text** (evaluate during cycle):
-- Check if text speed is already at max or if there's a "instant text" option to enable
-- Lower priority — implement only if time permits
+**Indoor Running**: **DONE** (C156) — Removed `!gMapHeader.allowRunning` from `IsRunningDisallowed` and `MAP_TYPE_INDOOR` from `RS_IsRunningDisallowed` in `src/bike.c`. Metatile checks preserved.
 
 ## Pillar 3: Engineering Cleanup (C156-C157)
 
@@ -124,7 +110,7 @@ All items in one cycle — both are small, well-understood changes:
 | C152 | Petalburg Woods Event | Events | **DONE** — Pikachu sighting event |
 | C153 | Meteor Falls Event | Events | **DONE** — Bagon colony encounter |
 | C154 | Mt. Pyre Event | Events | **DONE** — Ghost migration Misdreavus event |
-| C155 | QoL Bundle | QoL | Reusable TMs + indoor running |
+| C155 | QoL Bundle | QoL | **DONE** (C156) — Indoor running enabled; TMs already reusable |
 | C156 | Legend Template | Engineering | Parameterized encounter macros |
 | C157 | Trainer ID Audit | Engineering | Reclaimable ID report + script |
 
@@ -140,5 +126,5 @@ All items in one cycle — both are small, well-understood changes:
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
 - **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge — use Choice Band/Focus Band/Scope Lens/Shell Bell/Leftovers
 - **Flags**: 0x264+ block (~14 used for v6, 0x272-0x277 for Sky Guardian, 0x278-0x27D for migration events, 0x27E-0x27F for Petalburg Woods, 0x280 for Meteor Falls colony, 0x281 for Mt. Pyre ghost event). Beast flags at SYSTEM_FLAGS+0x21-0x26.
-- **QoL targets**: party_menu.c:5205,5243 (TM consumption), bike.c:1058 (indoor running)
+- **QoL note**: TMs already non-consumable in decomp (no RemoveBagItem in TMHM path). Indoor running enabled C156.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568 (GRUNT_UNUSED), #853 (MAY_PLACEHOLDER)

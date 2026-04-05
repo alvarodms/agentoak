@@ -11,6 +11,7 @@ Quality-of-life improvements and release artifacts.
 | TM shop data files | TM prices halved (3000→1500) | 22 | Dragon Claw, EQ, Shadow Ball, Psychic, etc. |
 | `data/maps/FallarborTown/scripts.inc` | Move tutor: Metronome→Earthquake | 23 | Pre-Gym 4 EQ access |
 | `src/field_player_avatar.c` | Auto-run enabled (B_BUTTON check removed) | 37 | Running is now default; always runs when FLAG_SYS_B_DASH set |
+| `src/bike.c` | Indoor running enabled (removed `allowRunning` and `MAP_TYPE_INDOOR` checks) | 156 | `IsRunningDisallowed` and `RS_IsRunningDisallowed` — only metatile checks remain |
 | `src/new_game.c` | FlagSet(FLAG_SYS_B_DASH) at game start | 38 | Player runs from very first step, not just after getting shoes |
 | `src/pokemon_summary_screen.c` | Move category icons (Physical/Special/Status) on summary screen | 75 | New sprite slot, animations, SetMoveCategoryIcon() function. Shows on battle moves page detail pane. |
 | `graphics/types/physical.png` | Physical category icon (red "PHYS") | 75 | 32x16 indexed-color PNG, palette 13 |

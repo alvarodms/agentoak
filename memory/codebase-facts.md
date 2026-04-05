@@ -39,11 +39,11 @@ Four party struct types in `include/data.h`, controlled by macros used in `train
 
 ---
 
-## TM Consumption & Indoor Running (Cycle 151 research)
+## TM Consumption & Indoor Running (corrected C156)
 
-**TM consumption path**: `ItemUseCB_TMHM` (party_menu.c:4733) → `GiveMoveToMon` → `Task_LearnedMove` (4769) → `Task_LearnNextMoveOrClosePartyMenu` (4796) which calls `RemoveBagItem(gSpecialVar_ItemId, 1)` at ~4980. This single `RemoveBagItem` call is what makes TMs consumable. HMs skip this path.
+**TMs are already non-consumable** in pokeemerald decomp. `ItemUseCB_TMHM` (party_menu.c:4733) teaches moves via `GiveMoveToMon` → `Task_LearnedMove` → fanfare → `Task_ClosePartyMenu`. No `RemoveBagItem` call exists in this path. The C151 note claiming line ~4980 was TM consumption was wrong — that's `ItemUseCB_RareCandy`.
 
-**Indoor running**: `IsRunningDisallowed` in `bike.c:1056` checks `gMapHeader.allowRunning`. Each map's JSON has `allow_running` boolean. Setting it to `true` on indoor maps enables running. Alternatively, modify `IsRunningDisallowed` to always return `FALSE` for a global fix.
+**Indoor running** (C156): Removed `!gMapHeader.allowRunning` check from `IsRunningDisallowed` (bike.c:1056) and `MAP_TYPE_INDOOR` check from `RS_IsRunningDisallowed` (bike.c:893). Only metatile-level restrictions remain.
 
 ---
 
