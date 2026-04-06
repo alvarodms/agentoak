@@ -117,7 +117,7 @@ Schedule one engineering cycle after v1.3 content ships if friction recurs.
 | C158 | Trade Evo QoL | 1 | **DONE** — All 11 trade evos converted (level/item-based) | — |
 | C159 | Weather Omens I | 2 | **DONE** — Route 111 permanent sandstorm post-Badge 5 + Route 119 permanent thunderstorm post-Badge 6 + 2 reaction NPCs | — |
 | C160 | Weather Omens II | 2 | **DONE** — Route 120 permanent downpour post-Badge 6 + Route 125 permanent hail post-Badge 7 + 2 reaction NPCs + fixed C159 missing map.json object_events | C159 (pattern) |
-| C161 | Route Identity I | 3 | Route 110 + Route 113 thematic NPCs | — |
+| C161 | Route Identity I | 3 | **DONE** — Route 110 Birdwatcher (migration sky observations) + Route 113 Volcanologist (Mt. Chimney seismic data) | — |
 | C162 | Route Identity II | 3 | Route 119 intern + Route 123 researcher NPCs | C161 (pattern) |
 
 **Total**: 5 implementation cycles. Tight, focused, no bloat.
