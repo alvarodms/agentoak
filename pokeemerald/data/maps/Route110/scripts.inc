@@ -1037,3 +1037,15 @@ Route110_Text_MigrationTwinsPostBattle:
 	.string "Have you seen other new POKeMON\n"
 	.string "around? There are so many now!$"
 
+Route110_EventScript_Birdwatcher::
+	msgbox Route110_Text_Birdwatcher, MSGBOX_NPC
+	end
+
+Route110_Text_Birdwatcher:
+	.string "I've been watching the skies all week.\n"
+	.string "TAILLOW flocks keep flying south over\l"
+	.string "CYCLING ROAD in huge numbers.\p"
+	.string "And mixed in with them, species I've\n"
+	.string "never seen in HOENN before.\l"
+	.string "Something is driving them here.$"
+

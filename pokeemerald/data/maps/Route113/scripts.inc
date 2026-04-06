@@ -167,3 +167,15 @@ Route113_Text_GlassWorkshopSign:
 	.string "GLASS WORKSHOP\n"
 	.string "“Turning Volcanic Ash into Glass Items”$"
 
+
+Route113_EventScript_Volcanologist::
+	msgbox Route113_Text_Volcanologist, MSGBOX_NPC
+	end
+
+Route113_Text_Volcanologist:
+	.string "My seismograph readings have tripled\n"
+	.string "since last month. MT. CHIMNEY is\l"
+	.string "venting far more ash than normal.\p"
+	.string "It started around the same time those\n"
+	.string "unfamiliar species began arriving.\l"
+	.string "Coincidence? I'm not so sure.$"

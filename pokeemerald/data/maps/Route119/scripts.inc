@@ -796,3 +796,14 @@ Route119_Text_OmenRanger:
 	.string "This constant thunder is not.\p"
 	.string "Nature itself feels restless.\n"
 	.string "Even the TROPIUS won't fly.$"
+
+Route119_EventScript_WeatherIntern::
+	msgbox Route119_Text_WeatherIntern, MSGBOX_NPC
+	end
+
+Route119_Text_WeatherIntern:
+	.string "Our instruments have been going haywire!\n"
+	.string "Barometric pressure, wind speed,\l"
+	.string "humidity - all off the charts.\p"
+	.string "The senior researchers say they've\n"
+	.string "never recorded storms like these.$"

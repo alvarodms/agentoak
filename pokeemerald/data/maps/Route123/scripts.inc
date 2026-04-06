@@ -196,3 +196,15 @@ Route123_Text_RouteSignMtPyre:
 Route123_Text_BerryMastersHouse:
 	.string "BERRY MASTER'S HOUSE$"
 
+Route123_EventScript_BerryResearcher::
+	msgbox Route123_Text_BerryResearcher, MSGBOX_NPC
+	end
+
+Route123_Text_BerryResearcher:
+	.string "Have you noticed the BERRY trees?\n"
+	.string "They're producing fruit faster than\l"
+	.string "I've ever documented!\p"
+	.string "New species are pollinating flowers\n"
+	.string "our native types never visited.\l"
+	.string "Change isn't always a bad thing!$"
+
