@@ -82,12 +82,12 @@ Issue #82 ("early-game excitement") is addressed by replacing rarity overload wi
 | Cycle | Name | Scope | Key Changes | Depends On |
 |-------|------|-------|-------------|------------|
 | C163 | Planning | — | This document + full encounter specs | — |
-| C164 | Early Game Reset | R101-104, Petalburg Woods (5 land + R102 water) | ✅ DONE. Pseudo-legendaries removed. Hoenn identity restored. 1% rewards: Eevee/Abra/Staryu/Pikachu/Heracross. Issue #82. | — |
-| C165 | Mid-Game Identity | R110-113, R114-117, Fiery Path (8-10 tables) | Solidify migration placement. Houndour=volcanic, Mareep=R110, Larvitar=R111. Fix R117 Illumise domination. | — |
-| C166 | Late-Game & Caves | R118-123, Granite Cave, Mt. Pyre 1F, Victory Road, Shoal Cave (12+ tables) | Granite Cave pseudo-legendary purge. Mt. Pyre 1F diversification. Victory Road upgrade. Shoal Cave = Sneasel home. | C165 (migration placement finalized) |
-| C167 | Ocean Differentiation | R105-109, R122, R124-134 water/fishing (20+ tables) | Every sea route gets 1-2 unique species. End Tentacool/Wingull monoculture. | — |
+| C164 | Early Game Reset | R101-104, Petalburg Woods (5 land + R102 water) | ❌ C164 failed (no pokeemerald changes). **C165 completed**: Pseudo-legendaries removed. Hoenn identity restored. 1% rewards: Eevee/Abra/Staryu/Pikachu/Heracross. R103 surf Staryu 5%. Issue #82. | — |
+| C166 | Mid-Game Identity | R110-113, R114-117, Fiery Path (8-10 tables) | Solidify migration placement. Houndour=volcanic, Mareep=R110, Larvitar=R111. Fix R117 Illumise domination. | — |
+| C167 | Late-Game & Caves | R118-123, Granite Cave, Mt. Pyre 1F, Victory Road, Shoal Cave (12+ tables) | Granite Cave pseudo-legendary purge. Mt. Pyre 1F diversification. Victory Road upgrade. Shoal Cave = Sneasel home. | C166 (migration placement finalized) |
+| C168 | Ocean Differentiation | R105-109, R122, R124-134 water/fishing (20+ tables) | Every sea route gets 1-2 unique species. End Tentacool/Wingull monoculture. | — |
 
-**Total**: 4 implementation cycles. C164 is highest priority (Issue #82, first impression).
+**Total**: 4 implementation cycles. C165 completed Early Game Reset (Issue #82, first impression).
 
 **After v1.4**: Evaluate — engineering cycle (check_scripts build prereq, event macro library from tech-debt-backlog.md), or v1.5 content depending on community feedback.
 
