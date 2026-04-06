@@ -183,34 +183,101 @@
 | 10 | 1 | Skarmory | 22-23 | **Rare reward.** Steel/Flying in volcanic cliffs |
 | 11 | 1 | Sneasel | 22-23 | Dark/Ice migration oddity |
 
-### Route 111 — "The Desert" (Lv 18-22)
-Signatures: Sandshrew (20%), Trapinch (20%), Cacnea (10%)
-Migration: Larvitar (5%), Gible (1%)
-Rare: Vibrava (1%) — Ground/Dragon apex
-Key change: Remove early-game power creep, add Gible as ultra-rare prize.
+### Route 111 — "The Desert" (Lv 18-22) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Sandshrew | 19-21 | Desert signature |
+| 1 | 20 | Trapinch | 18-20 | Arena Trap, →Flygon |
+| 2 | 10 | Cacnea | 19-21 | Desert cactus |
+| 3 | 10 | Baltoy | 19-21 | Ground/Psychic ruins |
+| 4 | 10 | Geodude | 19-21 | Rocky outcrops |
+| 5 | 10 | Sandshrew | 20-22 | Higher-level |
+| 6 | 5 | Larvitar | 20-22 | **Migration** |
+| 7 | 5 | Aron | 20-22 | Mineral deposits |
+| 8 | 4 | Cacnea | 20-22 | Higher-level |
+| 9 | 4 | Baltoy | 20-22 | Deeper ruins |
+| 10 | 1 | Vibrava | 21-22 | Rare evolved form |
+| 11 | 1 | Gible | 21-22 | **Ultra-rare migration** |
 
-### Route 112 — "Volcanic Pass" (Lv 19-22)
-Signatures: Numel (20%), Geodude (20%), Machop (10%)
-Migration: Houndour (4%), Nidoran-F (4%)
-Rare: Torkoal (1%)
+### Route 112 — "Volcanic Pass" (Lv 19-22) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Numel | 19-21 | Fire/Ground volcanic |
+| 1 | 20 | Geodude | 19-21 | Rocky terrain |
+| 2 | 10 | Machop | 20-22 | Mountain climber |
+| 3 | 10 | Slugma | 19-21 | Lava slug |
+| 4 | 10 | Koffing | 20-22 | Volcanic gas |
+| 5 | 10 | Aron | 20-22 | Iron deposits |
+| 6 | 5 | Numel | 21-22 | Higher-level |
+| 7 | 5 | Geodude | 21-22 | Higher-level |
+| 8 | 4 | Houndour | 21-22 | **Migration** |
+| 9 | 4 | Nidoran-F | 20-22 | **Migration** |
+| 10 | 1 | Torkoal | 22 | Rare furnace turtle |
+| 11 | 1 | Graveler | 22 | Evolved Geodude |
 
-### Route 114 — "The Riverbank" (Lv 15-18)
-Signatures: Lotad (20%), Swablu (20%), Seviper (10%)
-Migration: Teddiursa (1%)
-Additions: Lombre (5%), Nuzleaf (4%)
+### Route 114 — "The Riverbank" (Lv 15-18) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Lotad | 15-17 | River signature |
+| 1 | 20 | Swablu | 15-17 | Riverside flier |
+| 2 | 10 | Seviper | 16-18 | Riverside serpent |
+| 3 | 10 | Zangoose | 16-18 | Seviper's rival |
+| 4 | 10 | Oddish | 15-17 | Riverside vegetation |
+| 5 | 10 | Marill | 16-17 | River mouse |
+| 6 | 5 | Lombre | 16-18 | Evolved Lotad |
+| 7 | 5 | Seedot | 15-17 | Forest edge |
+| 8 | 4 | Nuzleaf | 17-18 | Evolved Seedot |
+| 9 | 4 | Roselia | 16-18 | Wildflowers |
+| 10 | 1 | Teddiursa | 17-18 | **Migration rare** |
+| 11 | 1 | Surskit | 16-17 | Bug/Water pond |
 
-### Route 115 — "The Cliff Coast" (Lv 23-26)
-Signatures: Swablu (20%), Taillow (20%), Jigglypuff (10%)
-Additions: Swellow (5%), Makuhita (4%), Gligar (1%)
+### Route 115 — "The Cliff Coast" (Lv 23-26) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Swablu | 23-25 | Cliff nesting |
+| 1 | 20 | Taillow | 23-25 | Coastal swallow |
+| 2 | 10 | Jigglypuff | 24-26 | Cliff singer |
+| 3 | 10 | Wingull | 23-25 | Coastal gulls |
+| 4 | 10 | Geodude | 24-26 | Cliff rock |
+| 5 | 10 | Nosepass | 24-26 | Rocky compass Pokémon |
+| 6 | 5 | Swellow | 25-26 | Evolved Taillow |
+| 7 | 5 | Machop | 24-26 | Cliff climber |
+| 8 | 4 | Makuhita | 24-26 | Cliff warrior |
+| 9 | 4 | Absol | 25-26 | Disaster omen |
+| 10 | 1 | Gligar | 25-26 | **Migration rare** |
+| 11 | 1 | Pinsir | 25-26 | Rare cliff beetle |
 
-### Route 116 — "Tunnel Approach" (Lv 6-10)
-Signatures: Taillow (20%), Whismur (20%), Nincada (10%)
-Keep: Riolu (4%) — established migration identity
-Additions: Skitty (4%), Abra (5%)
+### Route 116 — "Tunnel Approach" (Lv 6-10) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Taillow | 6-8 | Route standard |
+| 1 | 20 | Whismur | 6-8 | Tunnel-adjacent |
+| 2 | 10 | Nincada | 7-9 | Bug/Ground burrower |
+| 3 | 10 | Zigzagoon | 6-8 | Regional common |
+| 4 | 10 | Poochyena | 7-8 | Dark prowler |
+| 5 | 10 | Geodude | 8-10 | Near tunnel |
+| 6 | 5 | Abra | 7-9 | Teleport challenge |
+| 7 | 5 | Taillow | 8-10 | Higher-level |
+| 8 | 4 | Riolu | 8-10 | **Migration** |
+| 9 | 4 | Skitty | 7-9 | Cute Normal |
+| 10 | 1 | Aron | 9-10 | Tunnel spillover |
+| 11 | 1 | Sableye | 8-10 | Dark/Ghost cave |
 
-### Route 117 — "Daycare Route" (Lv 13-15)
-Signatures: Oddish (20%), Marill (20%), Volbeat/Illumise (10%)
-Fix: Currently 40% Illumise — reduce to 10%, add Roselia (5%), Shroomish (4%)
+### Route 117 — "Daycare Route" (Lv 13-15) ✅ C166
+| Slot | % | Species | Lv | Notes |
+|------|---|---------|----|-------|
+| 0 | 20 | Oddish | 13-14 | Garden weed |
+| 1 | 20 | Marill | 13-14 | Stream mouse |
+| 2 | 10 | Volbeat | 14-15 | Bug garden light |
+| 3 | 10 | Illumise | 14-15 | Bug garden glow (fixed from 40%) |
+| 4 | 10 | Seedot | 13-15 | Garden tree pods |
+| 5 | 10 | Zigzagoon | 13-14 | Garden path |
+| 6 | 5 | Roselia | 14-15 | Garden flower |
+| 7 | 5 | Oddish | 14-15 | Higher-level |
+| 8 | 4 | Shroomish | 14-15 | Garden mushroom |
+| 9 | 4 | Marill | 14-15 | Higher-level |
+| 10 | 1 | Ditto | 15 | Daycare route breeder prize |
+| 11 | 1 | Surskit | 14-15 | Garden pond skater |
 
 ---
 

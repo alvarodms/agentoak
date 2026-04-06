@@ -1,20 +1,35 @@
-# Mid-Game Encounter Execution — Lessons from C164
+# Mid-Game Encounter Execution
 
-**Cycle**: 165 | **Date**: April 2026
+**Cycle**: 166 | **Date**: April 2026
 
 ---
 
-## Key Insight: Execution Risk on Encounter Overhauls
+## C166 Completed: Mid-Game Identity Shipped
 
-C164 demonstrated the risk of "planning drift" — a full design doc existed but the actual `wild_encounters.json` edits didn't land. The encounter specifications in `v14-encounter-design.md` are complete and verified; the work is pure JSON editing.
+All 9 mid-game routes overhauled from pre-authored specs. Build verified. Pattern from C165 scales cleanly.
 
-## Mid-Game Encounter Patterns from Top Hacks
+### Routes Modified
+R110, R111, R112, R113, R114, R115, R116, R117, Fiery Path
 
-- **Emerald++**: Trainer levels dynamically adjusted ±2 from player average — keeps mid-game engaging. Legends of Hoenn uses fixed levels but curated species diversity achieves similar engagement.
-- **Modern Emerald**: Splits encounters into "Original" / "New (modern)" / "Post-game" tiers — similar to our SecondWave flag system.
-- **Emerald Essence**: Removes version exclusives so both Zangoose+Seviper appear on R114. Our migration species serve a similar "expanded pool" role but with narrative justification.
-- **R.O.W.E**: Open-world means every route must be self-contained. Our linear progression can use route-to-gym flow (e.g., Electrike on R110 → Wattson prep) which R.O.W.E can't.
+### Migration Species Placed
+| Species | Route | Rate | Thematic Fit |
+|---------|-------|------|-------------|
+| Larvitar | R111 | 5% | Desert mineral predator |
+| Gible | R111 | 1% | Ultra-rare desert dragon |
+| Houndour | R112 | 4% | Volcanic heat seeker |
+| Nidoran-F | R112 | 4% | Volcanic terrain poison |
+| Teddiursa | R114 | 1% | Riverside bear cub |
+| Gligar | R115 | 1% | Cliff glider |
+| Riolu | R116 | 4% | Tunnel approach (preserved from earlier) |
+| Magby | Fiery Path | 1% | Fire baby in volcanic cave |
 
-## Applicable to C165
+### Key Design Wins
+- **R117 Illumise fix**: Was 40% (4 slots), reduced to 10% (1 slot). Volbeat+Illumise now equal at 10% each.
+- **Ditto on Daycare Route (R117)**: 1% — perfect thematic placement for breeders.
+- **Zangoose/Seviper rivalry on R114**: Both at 10%, natural Hoenn lore.
+- **Adjacency overlap**: All pairs ≤1 shared top-3 species. Verified.
 
-The mid-game routes (R110-117, Fiery Path) are 8-10 JSON encounter tables. The design doc has full slot-by-slot specs for R110, R111, R113. Routes R112, R114-117 have summary specs. The work is well-scoped for a single feature cycle if execution stays focused on the JSON file.
+### Execution Lessons
+- 9-route batch is manageable in a single cycle when specs are pre-authored
+- Always verify species constants exist before editing (caught SPECIES_SPOINK/ZANGOOSE/etc.)
+- Existing water/fishing tables preserved untouched — scope discipline matters
