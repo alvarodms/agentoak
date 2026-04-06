@@ -52,5 +52,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Weather Omen Implementation | 159 | [weather-omen-implementation.md](pokemon-knowledge/weather-omen-implementation.md) |
 | Route Identity NPC Design | 161 | [route-identity-npc-design.md](pokemon-knowledge/route-identity-npc-design.md) |
 | v1.4 Direction — Post-v1.3 Inflection Point | 163 | [v14-direction-research.md](pokemon-knowledge/v14-direction-research.md) |
+| Early Game Reset — Encounter Design Lessons | 164 | [early-game-reset-design.md](pokemon-knowledge/early-game-reset-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

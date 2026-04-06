@@ -82,7 +82,7 @@ Issue #82 ("early-game excitement") is addressed by replacing rarity overload wi
 | Cycle | Name | Scope | Key Changes | Depends On |
 |-------|------|-------|-------------|------------|
 | C163 | Planning | — | This document + full encounter specs | — |
-| C164 | Early Game Reset | R101-104, Petalburg Woods (5 land + R103 water/fish) | Remove all pseudo-legendaries from pre-Badge 1. Restore Hoenn identity. Add Eevee/Staryu/Pikachu/Heracross as 1% rewards. | — |
+| C164 | Early Game Reset | R101-104, Petalburg Woods (5 land + R102 water) | ✅ DONE. Pseudo-legendaries removed. Hoenn identity restored. 1% rewards: Eevee/Abra/Staryu/Pikachu/Heracross. Issue #82. | — |
 | C165 | Mid-Game Identity | R110-113, R114-117, Fiery Path (8-10 tables) | Solidify migration placement. Houndour=volcanic, Mareep=R110, Larvitar=R111. Fix R117 Illumise domination. | — |
 | C166 | Late-Game & Caves | R118-123, Granite Cave, Mt. Pyre 1F, Victory Road, Shoal Cave (12+ tables) | Granite Cave pseudo-legendary purge. Mt. Pyre 1F diversification. Victory Road upgrade. Shoal Cave = Sneasel home. | C165 (migration placement finalized) |
 | C167 | Ocean Differentiation | R105-109, R122, R124-134 water/fishing (20+ tables) | Every sea route gets 1-2 unique species. End Tentacool/Wingull monoculture. | — |
