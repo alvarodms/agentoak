@@ -1,7 +1,7 @@
 # v1.4 "The Wild Redesign" — Encounter Design Document
 
 > Full encounter specifications for all priority routes. Reference from strategy-notes.md.
-> Created: C163 (planning cycle). Implementation: C164-C167.
+> Created: C163 (planning cycle). Implementation: C164-C167. **C165**: Early game done. **C166**: Mid-game done. **C167**: Late-game & caves done.
 
 ---
 
