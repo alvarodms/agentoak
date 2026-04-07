@@ -49,7 +49,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 
 | Priority | What | Why | Scope |
 |----------|------|-----|-------|
-| **P0** | Rival battles redesign | 30 parties still use default moves from C7/C12 | 30 parties → ITEM_CUSTOM_MOVES |
+| **P0** | ~~Rival battles redesign~~ **DONE C172** | 30 parties rewritten with custom movesets, items, migration companions | All 30 → CUSTOM_MOVES |
 | **P1** | Gym leader team expansion | Gyms 4-8 need 4 mons for boss-fight weight | +1 mon to Flannery, Norman, Winona, Juan |
 | **P2** | Victory Road trainer pass | Only C55-58 early work, pre-v1.1 quality | ~15 trainers |
 | **P3** | Ocean route trainer pass | Swimmers don't match v1.4 route themes | ~25 trainers |
@@ -62,7 +62,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 | Cycle | Name | Scope | Depends On |
 |-------|------|-------|------------|
 | **C171** | Planning | This document + full trainer specs | — |
-| **C172** | Rival Redesign | All 30 rival parties → ITEM_CUSTOM_MOVES. 5 battles × 3 starter variants × 2 characters. Custom movesets, held items, coherent team progression. | C171 design doc |
+| **C172** | ~~Rival Redesign~~ **DONE** | All 30 rival parties rewritten. Custom movesets, held items, migration companions, escalating team sizes (1→2→3→4→5). | C171 design doc |
 | **C173** | Gym Leader Tuning | Add 4th mon to Flannery/Norman/Winona/Juan. Minor moveset/item adjustments across all 8 leaders. | — |
 | **C174** | Victory Road Gauntlet | ~15 Victory Road trainers → ITEM_CUSTOM_MOVES quality. Lv40-48 endgame difficulty. | — |
 | **C175** | Ocean Route Trainers | ~25 swimmers across R105-134 updated to match v1.4 encounter themes. Route-coherent species. | v1.4 encounter tables |

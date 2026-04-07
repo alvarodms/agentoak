@@ -29,7 +29,7 @@ Four party struct types in `include/data.h`, controlled by macros in `trainers.h
 
 **CRITICAL**: Macro in `trainers.h` must match the party struct type. Mismatch = crash.
 
-**Rival audit (C171)**: All ~30 rival parties use `NoItemDefaultMoves` — must upgrade both `trainer_parties.h` (struct type) AND `trainers.h` (macro) simultaneously. A Node.js script is the safest approach for bulk conversion.
+**Rival status (C172)**: All 30 rival parties upgraded to `ItemCustomMoves` (Route103 uses `NoItemCustomMoves`). Both `trainer_parties.h` structs AND `trainers.h` macros updated simultaneously. Route103 = 1 mon, Rustboro = 2, Route110 = 3, Route119 = 4, Lilycove = 5.
 
 **Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files.
 

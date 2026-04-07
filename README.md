@@ -43,7 +43,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Elite Four and Champion** rebuilt from scratch — Sidney's dark squad runs Nasty Plot and Sucker Punch, Drake fields Salamence, Garchomp, AND Dragonite with Dragon Dance, Champion Wallace commands a rain-synergy team with Ludicolo and Kingdra. Zero duplicate species across the entire gauntlet
 - **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
 - **4-tier rematch progression** for all gym leaders with escalating teams
-- **Rival arc** redesigned across all 5 battles with migration-themed team building
+- **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1→2→3→4→5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
 - **150+ route trainers** across Routes 102-125 redesigned with migration species, held items, themed movesets, and new double battles — water routes feature aquatic specialists with Dive and surf-capable teams, Route 119 exploits rain, Route 123 blends land and sea diversity
 
