@@ -1,6 +1,6 @@
 import type { Memory } from "../memory/types.js";
 import { getMemorySummary } from "../memory/store.js";
-import type { ValidationResult } from "../reflection/validator.js";
+import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { formatJournalContext } from "./prompt-sections.js";
 import { PromptBuilder } from "./prompt-builder.js";
 
@@ -185,6 +185,46 @@ export function buildCommitFixPrompt(
       "Keep changes minimal and focused on making the commit succeed.",
     ], 3)
     .raw("Do NOT run full project tasks unrelated to commit recovery.\nFocus only on making the commit step succeed.")
+    .build();
+}
+
+/** Build a prompt for the validation-fix agent (Phase 3.5b retry loop) */
+export function buildValidationFixPrompt(
+  cycleNumber: number,
+  mode: string,
+  objective: string,
+  validationStatus: Exclude<ValidationStatus, "verified">,
+  warnings: string[],
+  diffSummary: string,
+  filesModified: string[],
+): string {
+  const statusExplanation = validationStatus === "unsubstantiated"
+    ? "The implementation agent claimed to make changes, but **no pokeemerald/ files were actually modified**. The agent's work was unsubstantiated — it either hallucinated its edits or only modified memory/non-game files."
+    : "The implementation agent made some changes, but key expected modifications are **missing or incomplete**. The validation check detected gaps between what was planned and what was actually delivered.";
+
+  const warningList = warnings.length > 0
+    ? warnings.map(w => `- ⚠ ${w}`).join("\n")
+    : "(no specific warnings)";
+
+  const fileList = filesModified.length > 0
+    ? filesModified.join("\n")
+    : "(no files were modified)";
+
+  return new PromptBuilder()
+    .heading(`Cycle ${cycleNumber} — Validation Fix Required`,
+      `The previous implementation attempt was **${validationStatus.toUpperCase()}**.\n\n${statusExplanation}\n\nYour job is to **actually implement** the objective by making real edits to pokeemerald/ source files.`)
+    .heading("Original Objective", objective, 3)
+    .heading("Validation Warnings", warningList, 3)
+    .heading("Actual Git Diff (ground truth)", `\`\`\`\n${diffSummary || "(no changes detected)"}\n\`\`\``, 3)
+    .heading("Files Agent Claimed to Modify", fileList, 3)
+    .numberedList("Instructions", [
+      "Read the relevant pokeemerald/ files to understand the current state of the code.",
+      "Make the actual edits needed to fulfil the objective. You MUST write/edit pokeemerald/ files.",
+      "Do NOT run `make` — the pipeline will handle build verification after you finish.",
+      "Do NOT produce a CYCLE_COMPLETE marker — just make the changes and stop.",
+      "Focus on delivering the objective. Do not add unrelated features or refactors.",
+    ], 3)
+    .raw("Begin your work now. Make real, substantive changes to pokeemerald/ files.")
     .build();
 }
 
