@@ -52,7 +52,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 | **P0** | ~~Rival battles redesign~~ **DONE C172** | 30 parties rewritten with custom movesets, items, migration companions | All 30 → CUSTOM_MOVES |
 | **P1** | ~~Gym leader team expansion~~ **DONE C173** | +1 mon to Flannery (Torkoal), Norman (Zangoose), Winona (Tropius), Juan (Whiscash) | 4 leaders → 4 mons each |
 | **P2** | ~~Victory Road trainer pass~~ **DONE C175** | 16 trainers redesigned: Lv40-48, VR-encounter-coherent species, IV 180, SETUP_FIRST_TURN AI | ~15 trainers |
-| **P3** | Ocean route trainer pass | Swimmers don't match v1.4 route themes | ~25 trainers |
+| **P3** | ~~Ocean route trainer pass~~ **DONE C176** | 40 trainers across R105-108, R127-128, R130-134 redesigned with route-coherent species, 3 minibosses | ~40 trainers |
 | **P4** | Cave trainer cleanup | Variable quality from early cycles | ~10 trainers |
 
 **Full specifications**: [`memory/v15-trainer-design.md`](v15-trainer-design.md)
@@ -66,7 +66,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 | **C173** | ~~Gym Leader Tuning~~ **DONE** | Added 4th mon to Flannery/Norman/Winona/Juan per v1.5 spec. | — |
 | **C174** | ~~Victory Road Gauntlet~~ failed (0 tool calls) | — | — |
 | **C175** | ~~Victory Road Gauntlet~~ **DONE** | 16 trainers redesigned Lv40-48, VR-coherent species, AI upgraded | — |
-| **C176** | Ocean Route Trainers | ~25 swimmers across R105-134 updated to match v1.4 encounter themes. Route-coherent species. | v1.4 encounter tables |
+| **C176** | ~~Ocean Route Trainers~~ **DONE** | 40 trainers across R105-108, R127-128, R130-134 redesigned. 3 minibosses (Matthew R108, Harrison R128, Kevin R131). Route-coherent species from v1.4 tables. | v1.4 encounter tables |
 | **C177** | Cave & Final Audit | Mt. Pyre, Meteor Falls, Granite Cave trainer cleanup. Full difficulty curve verification. | C172-176 complete |
 
 **After v1.5**: Consider v1.6 direction — underwater encounters, dynamic weather encounters, migration waves as game state, or narrative expansion.

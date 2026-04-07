@@ -45,7 +45,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **4-tier rematch progression** for all gym leaders with escalating teams
 - **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1→2→3→4→5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
-- **150+ route trainers** across Routes 102-125 redesigned with migration species, held items, themed movesets, and new double battles — water routes feature aquatic specialists with Dive and surf-capable teams, Route 119 exploits rain, Route 123 blends land and sea diversity
+- **200+ route trainers** across every land and ocean route redesigned with migration species, held items, themed movesets, and new double battles — ocean swimmers carry route-coherent species matching their waters, Route 119 exploits rain, Victory Road veterans field evolved teams with competitive AI
 
 ### The Postgame Saga
 

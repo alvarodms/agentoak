@@ -62,5 +62,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Gym Leader 4th Mon — Boss Fight Expansion | 173 | [gym-leader-4th-mon-design.md](pokemon-knowledge/gym-leader-4th-mon-design.md) |
 | Victory Road & Endgame Trainer Design | 174 | [victory-road-endgame-design.md](pokemon-knowledge/victory-road-endgame-design.md) |
 | Regional Forms — Complexity & Community Reception | 175 | [regional-forms-complexity.md](pokemon-knowledge/regional-forms-complexity.md) |
+| Ocean Route Trainer Pass — Design Research | 176 | [ocean-trainer-pass-design.md](pokemon-knowledge/ocean-trainer-pass-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
