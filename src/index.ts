@@ -1,12 +1,16 @@
 import "dotenv/config";
 import { runCycle } from "./cycle/runner.js";
 import { logger } from "./utils/logger.js";
+import { loadPersonality } from "./config/personality.js";
 
 async function main() {
   logger.info("Agent Oak starting up...");
   logger.info(`Model: ${process.env.ANTHROPIC_MODEL ?? "(default)"}`);
   logger.info(`Anthropic Base URL: ${process.env.ANTHROPIC_BASE_URL ?? "(default)"}`);
   logger.info(`Max tool calls/cycle: ${process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "100"}`);
+
+  const personality = loadPersonality();
+  logger.info(`Personality: riskTolerance=${personality.riskTolerance}, communityOpenness=${personality.communityOpenness}, ambitionLevel=${personality.ambitionLevel}`);
 
   try {
     await runCycle();

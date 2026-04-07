@@ -19,6 +19,7 @@ import {
   formatImplementationPlanGuidance,
   formatGameplayDesignBriefGuidance,
   formatPlannerClosingInstructions,
+  formatPersonalityGuidance,
 } from "../agent/prompt-sections.js";
 
 /** Run a single advisory agent and return its memo text */
@@ -144,6 +145,7 @@ Cycle ${cycleNumber} is about to start.
 
 ${sharedContext}
 ${memoSection}
+${formatPersonalityGuidance()}
 
 Decide: What mode should this cycle use, and what should the objective be?
 

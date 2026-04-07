@@ -12,6 +12,7 @@ import {
   formatImplementationPlanGuidance,
   formatGameplayDesignBriefGuidance,
   formatPlannerClosingInstructions,
+  formatPersonalityGuidance,
 } from "../agent/prompt-sections.js";
 
 export interface CyclePlan {
@@ -252,6 +253,7 @@ export async function planCycle(
 Cycle ${cycleNumber} is about to start.
 
 ${sharedContext}
+${formatPersonalityGuidance()}
 
 Decide: What mode should this cycle use, and what should the objective be?
 

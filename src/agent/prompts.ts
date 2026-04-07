@@ -3,6 +3,7 @@ import { getMemorySummary } from "../memory/store.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { formatJournalContext } from "./prompt-sections.js";
 import { PromptBuilder } from "./prompt-builder.js";
+import { getReflectionPersonalityNudge } from "../config/personality.js";
 
 /**
  * Build dynamic per-cycle context to append to the system prompt.
@@ -273,7 +274,7 @@ Please provide a structured reflection:
 3. **What evidence supports or contradicts my assumptions?** — Cite specific files, errors, or observations
 4. **What did I learn about the codebase?** — New concrete facts
 5. **What should I try next?** — Specific, actionable next steps
-6. **How does this cycle fit into the larger game design?** — Does the ROM hack have a coherent creative direction? Is the current strategy-notes.md roadmap still the right plan, or should it be updated? Think about the player experience holistically.
+6. **How does this cycle fit into the larger game design?** — Does the ROM hack have a coherent creative direction? Is the current strategy-notes.md roadmap still the right plan, or should it be updated? Think about the player experience holistically.${(() => { const nudge = getReflectionPersonalityNudge(); return nudge ? `\n7. **Personality check** — ${nudge}` : ""; })()}
 
 **CRITICAL**: Compare the "Files Modified" list above against the "Objective". If the objective called for modifying game data (encounters, trainers, maps, etc.) but the Files Modified list does NOT include the relevant pokeemerald/ files, then the cycle is **INCOMPLETE** regardless of what the Agent Summary claims. State this explicitly in your reflection. Do not echo the agent's summary as truth — the Files Modified list and Git Diff Summary are the ground truth.
 
