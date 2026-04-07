@@ -16,7 +16,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Trainer Party Struct Types (Cycle 55)
+## Trainer Party Struct Types (Cycle 55, updated C171)
 
 Four party struct types in `include/data.h`, controlled by macros in `trainers.h`:
 
@@ -28,6 +28,8 @@ Four party struct types in `include/data.h`, controlled by macros in `trainers.h
 | `TrainerMonItemCustomMoves` | `ITEM_CUSTOM_MOVES(party)` | iv, lvl, species, heldItem, moves[4] |
 
 **CRITICAL**: Macro in `trainers.h` must match the party struct type. Mismatch = crash.
+
+**Rival audit (C171)**: All ~30 rival parties use `NoItemDefaultMoves` — must upgrade both `trainer_parties.h` (struct type) AND `trainers.h` (macro) simultaneously. A Node.js script is the safest approach for bulk conversion.
 
 **Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files.
 

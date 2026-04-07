@@ -17,79 +17,58 @@
 **v1.1** (C144-150): Trainer quality pass (all routes), early-game glimpse events, Route 119 thunderstorm.
 **v1.2** (C151-156): "The Player's Journey" — 3 interactive migration events, indoor running QoL.
 **v1.3** (C157-162): "Living Hoenn" — Trade evo QoL (11 species), weather omens (4 routes), route identity NPCs (4 routes).
+**v1.4** (C165-170): "The Wild Redesign" — 60+ encounter tables rewritten. Every route has curated identity. Migration species rare and location-specific. Ocean routes differentiated. Engineering validation scripts shipped (C170). [Detail: `memory/v14-encounter-design.md`]
 
 ---
 
-# v1.4: "The Wild Redesign" — COMPLETE (C165-C169)
+# v1.5: "The Trainer Gauntlet" — IN PROGRESS (C171+)
 
 ## Vision
 
-Every route gets a curated encounter identity. Migration species move from "everywhere at once" to rare, location-specific finds. Early routes establish Hoenn's identity before migration species appear. Late routes reward thorough exploration. The wild encounter experience becomes the hack's strongest differentiator.
+Encounters are now v1.4 quality — every wild battle feels authored. But trainers lag behind. Gym leaders have good teams (C130-131) but too-small rosters. Rivals still use default movesets from C7/C12 — 160 cycles outdated. Ocean route swimmers don't reflect their route's new encounter identity. Victory Road trainers haven't been touched since C55-58.
 
-**What makes this arc unique**: Previous versions added features (P/S split, legendaries, events, QoL). v1.4 fixes the *core gameplay loop* — the 80% of player interaction that is wild encounters. The current tables have pseudo-legendaries on Route 101 and identical ocean routes. This redesign makes every route feel authored and every encounter meaningful.
+v1.5 closes the trainer quality gap so every battle — wild or trainer — feels intentional.
 
-**Full encounter specifications**: [`memory/v14-encounter-design.md`](v14-encounter-design.md)
+**Elevator pitch**: The rival becomes your personal measuring stick. Gym leaders become genuine boss fights. Every trainer you face uses species that belong on their route.
 
-## Critical Problems Being Fixed
+**Difficulty tier**: "Difficult But Fair" (Inclement Emerald model). Challenging for prepared players, never unfair.
 
-1. **Early route power creep**: Dratini (40%), Bagon, Larvitar on R101-102 at Lv 2-4
-2. **Petalburg Woods overleveled**: Heracross, Scyther, Breloom, Alakazam at Lv 10-16
-3. **Homogeneous migration**: Houndour/Sneasel on 8+ routes — no route feels special
-4. **Route 103 zero Hoenn natives**: All imports, no local species
-5. **Water route monotony**: All sea routes = identical Tentacool/Wingull/Pelipper
+## What Makes This Arc Unique
+
+v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together they make every interaction in Hoenn feel designed. The migration becomes systemic — trainers use migration species from their routes, making the world feel alive beyond just wild encounters.
 
 ## Design Principles
 
-### Migration Species Philosophy
-- **No migration species on R101-103.** First routes = pure Hoenn.
-- Migration species: mid-to-late game, 1-5% rates, 1-2 primary routes each.
-- Hoenn natives dominate every route (60%+ of encounter slots).
+1. **Route coherence**: Route trainers use species available on their route
+2. **Migration integration**: Trainers with migration species = migration feels real
+3. **Boss fight escalation**: Gym team size grows with progression (3 → 4 mons)
+4. **Rival as measuring stick**: Each rival battle escalates meaningfully with custom movesets
+5. **Gen 3 item rules**: Choice Band OK. No Focus Sash, Life Orb, Choice Specs/Scarf.
 
-### Migration Species Map
-| Species | Primary (4-5%) | Secondary (1%) |
-|---------|---------------|----------------|
-| Larvitar | R111 desert | Granite Cave deep, Meteor Falls |
-| Gible | R111 desert (1%) | — |
-| Riolu | R116 | New Mauville |
-| Dratini | Safari Zone | R119 Super Rod (4%) |
-| Houndour | R112-113 | R123, Mt. Pyre |
-| Sneasel | Shoal Cave | R120, R113 |
+## Priority Stack
 
-### Route Identity Rules
-- Every route: 2-3 signature species (50% of encounters) + 1 rare reward (1%)
-- No two adjacent routes share more than 1 top-3 species
-- Each route reinforces its NPC narrative (Birdwatcher, Volcanologist, etc.)
+| Priority | What | Why | Scope |
+|----------|------|-----|-------|
+| **P0** | Rival battles redesign | 30 parties still use default moves from C7/C12 | 30 parties → ITEM_CUSTOM_MOVES |
+| **P1** | Gym leader team expansion | Gyms 4-8 need 4 mons for boss-fight weight | +1 mon to Flannery, Norman, Winona, Juan |
+| **P2** | Victory Road trainer pass | Only C55-58 early work, pre-v1.1 quality | ~15 trainers |
+| **P3** | Ocean route trainer pass | Swimmers don't match v1.4 route themes | ~25 trainers |
+| **P4** | Cave trainer cleanup | Variable quality from early cycles | ~10 trainers |
 
-### Team-Building Flow
-Routes naturally provide counters for the next gym:
-- Pre-Roxanne: Water (Lotad), Grass (Shroomish/Seedot)
-- Pre-Brawly: Psychic (Ralts R102), Flying (Taillow)
-- Pre-Wattson: Ground (Nincada R116, Sandshrew R111)
-- Pre-Norman: Fighting (Machop R112, Makuhita Granite Cave)
-- Pre-Winona: Electric (Electrike/Mareep R110), Ice (Sneasel R113 rare)
+**Full specifications**: [`memory/v15-trainer-design.md`](v15-trainer-design.md)
 
-## Issue #82 Integration
+## Cycle Roadmap
 
-Issue #82 ("early-game excitement") is addressed by replacing rarity overload with genuine rarity:
-- 1% Eevee on R101 > 40% Dratini on R101
-- Diverse type coverage (7+ species per route) > homogeneous imports
-- Progression rewards (Heracross 1% in Petalburg Woods) > everything available immediately
+| Cycle | Name | Scope | Depends On |
+|-------|------|-------|------------|
+| **C171** | Planning | This document + full trainer specs | — |
+| **C172** | Rival Redesign | All 30 rival parties → ITEM_CUSTOM_MOVES. 5 battles × 3 starter variants × 2 characters. Custom movesets, held items, coherent team progression. | C171 design doc |
+| **C173** | Gym Leader Tuning | Add 4th mon to Flannery/Norman/Winona/Juan. Minor moveset/item adjustments across all 8 leaders. | — |
+| **C174** | Victory Road Gauntlet | ~15 Victory Road trainers → ITEM_CUSTOM_MOVES quality. Lv40-48 endgame difficulty. | — |
+| **C175** | Ocean Route Trainers | ~25 swimmers across R105-134 updated to match v1.4 encounter themes. Route-coherent species. | v1.4 encounter tables |
+| **C176** | Cave & Final Audit | Mt. Pyre, Meteor Falls, Granite Cave trainer cleanup. Full difficulty curve verification. | C172-175 complete |
 
----
-
-# v1.4 Cycle Roadmap
-
-| Cycle | Name | Scope | Key Changes | Depends On |
-|-------|------|-------|-------------|------------|
-| C163 | Planning | — | This document + full encounter specs | — |
-| C164 | Early Game Reset | R101-104, Petalburg Woods (5 land + R102 water) | ❌ C164 failed (no pokeemerald changes). **C165 completed**: Pseudo-legendaries removed. Hoenn identity restored. 1% rewards: Eevee/Abra/Staryu/Pikachu/Heracross. R103 surf Staryu 5%. Issue #82. | — |
-| C166 | Mid-Game Identity | R110-113, R114-117, Fiery Path (9 tables) | ✅ **DONE**. All 9 routes overhauled. 8 migration species placed. R117 Illumise fixed (40%→10%). Ditto 1% on Daycare route. Gible 1% desert prize. | — |
-| C167 | Late-Game & Caves | R118-123, Granite Cave, Mt. Pyre 1F, Victory Road, Shoal Cave (19 tables) | ✅ **DONE**. Granite Cave purged (Larvitar/Bagon/Alakazam → Mawile/Nosepass/Makuhita). Mt. Pyre 1F diversified (12× Shuppet → Ghost/Fire/Psychic mix). Victory Road endgame gauntlet (Pupitar 4%, Shelgon 1%). Shoal Cave = Sneasel/Snorunt home. Routes 118-121/123 redesigned with route identity. | C166 (migration placement finalized) |
-| C168 | Ocean Differentiation | R105-109, R122, R124-134 water/fishing (17 routes, 34 tables) | ✅ **DONE**. All 17 ocean routes overhauled. Tentacool+Wingull ≤30% enforced. Kingdra/Lanturn/Dewgong/Mantine/Relicanth/Gyarados/Slowbro/Wynaut as 1% chase prizes. Thematic routes: toxic R108, ghostly R122, seahorse R133, aggressive R132. v1.4 COMPLETE. | — |
-
-**Total**: 4 implementation cycles all completed (C165-C168). v1.4 "The Wild Redesign" is DONE.
-
-**After v1.4**: Engineering stabilization completed (C170). Ready for v1.5 planning.
+**After v1.5**: Consider v1.6 direction — underwater encounters, dynamic weather encounters, migration waves as game state, or narrative expansion.
 
 ---
 
@@ -97,9 +76,10 @@ Issue #82 ("early-game excitement") is addressed by replacing rarity overload wi
 
 - **Encounter slots**: Land 12 (20/20/10/10/10/10/5/5/4/4/1/1), Water 5, Fish 10
 - **Encounter file**: `src/data/wild_encounters.json` — modified 18 times across 15+ cycles
-- **Gen 3 items**: No Focus Sash/Choice Scarf/Specs/Life Orb/Black Sludge
+- **Gen 3 items**: Choice Band OK. No Focus Sash/Life Orb/Choice Specs/Scarf.
 - **Flags**: 0x264+ block (~14 v6, 0x272-0x277 Sky Guardian, 0x278-0x281 migration events, 0x282-0x285 weather omen NPCs). Beast flags at SYSTEM_FLAGS+0x21-0x26.
 - **QoL shipped**: TMs non-consumable, indoor running, trade evo QoL (11 species)
-- **Trainer capacity**: 885/885, reclaimable IDs: #568, #853
+- **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854
 - **Weather scripting**: `setweather CONSTANT` + `doweather` in OnTransition, gate with `goto_if_set FLAG_*`
 - **SecondWave system**: FLAG_SECOND_WAVE triggers alternate encounter tables on R118-121, R123, Mt. Pyre 1F (C63)
+- **Trainer struct types**: NoItemDefaultMoves, NoItemCustomMoves, ItemDefaultMoves, ItemCustomMoves — macro in trainers.h MUST match party struct type
