@@ -35,23 +35,60 @@ const PERSONALITY_PATH = path.join(PROJECT_ROOT, "personality.json");
 
 let cached: Personality | null = null;
 
-/** Load personality from `personality.json`. Falls back to defaults if missing. Cached after first call. */
+/**
+ * Parse a numeric env var override. Returns undefined if not set or invalid.
+ */
+function envOverride(envVar: string): number | undefined {
+  const val = process.env[envVar];
+  if (val === undefined || val === "") return undefined;
+  const num = Number(val);
+  if (Number.isNaN(num) || num < 0 || num > 100) {
+    logger.warn(`[Personality] Ignoring invalid env override ${envVar}=${val} (must be 0-100)`);
+    return undefined;
+  }
+  return num;
+}
+
+/**
+ * Load personality from `personality.json`, with env var overrides.
+ *
+ * Priority: env vars > personality.json > schema defaults.
+ * Env vars: OAK_RISK_TOLERANCE, OAK_COMMUNITY_OPENNESS, OAK_AMBITION_LEVEL
+ *
+ * Cached after first call.
+ */
 export function loadPersonality(): Personality {
   if (cached) return cached;
 
+  // Start from the JSON file (or schema defaults if missing)
+  let base: Record<string, unknown>;
   try {
     const raw = readFileSync(PERSONALITY_PATH, "utf-8");
-    cached = PersonalitySchema.parse(JSON.parse(raw));
-    logger.info(
-      `[Personality] Loaded: riskTolerance=${cached.riskTolerance}, communityOpenness=${cached.communityOpenness}, ambitionLevel=${cached.ambitionLevel}`,
-    );
+    base = JSON.parse(raw) as Record<string, unknown>;
   } catch (err) {
-    cached = PersonalitySchema.parse({});
+    base = {};
     const reason = (err as NodeJS.ErrnoException).code === "ENOENT"
       ? "file not found"
       : `parse error: ${err instanceof Error ? err.message : String(err)}`;
-    logger.info(`[Personality] Using defaults (${reason})`);
+    logger.info(`[Personality] No personality.json (${reason}), using defaults`);
   }
+
+  // Apply env var overrides (highest priority)
+  const overrides: Record<string, number> = {};
+  const riskEnv = envOverride("OAK_RISK_TOLERANCE");
+  const communityEnv = envOverride("OAK_COMMUNITY_OPENNESS");
+  const ambitionEnv = envOverride("OAK_AMBITION_LEVEL");
+  if (riskEnv !== undefined) overrides.riskTolerance = riskEnv;
+  if (communityEnv !== undefined) overrides.communityOpenness = communityEnv;
+  if (ambitionEnv !== undefined) overrides.ambitionLevel = ambitionEnv;
+
+  cached = PersonalitySchema.parse({ ...base, ...overrides });
+
+  const sources: string[] = [];
+  if (Object.keys(overrides).length > 0) sources.push(`env overrides: ${Object.keys(overrides).join(", ")}`);
+  logger.info(
+    `[Personality] Active: riskTolerance=${cached.riskTolerance}, communityOpenness=${cached.communityOpenness}, ambitionLevel=${cached.ambitionLevel}${sources.length ? ` (${sources.join("; ")})` : ""}`,
+  );
 
   return cached;
 }

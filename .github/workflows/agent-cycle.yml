@@ -12,6 +12,15 @@ on:
         description: "Max tool calls per cycle"
         required: false
         default: "100"
+      risk_tolerance:
+        description: "Personality: risk tolerance (0-100, default from personality.json)"
+        required: false
+      community_openness:
+        description: "Personality: community openness (0-100, default from personality.json)"
+        required: false
+      ambition_level:
+        description: "Personality: ambition level (0-100, default from personality.json)"
+        required: false
 
   # Run every 4 hours automatically
   schedule:
@@ -47,6 +56,9 @@ jobs:
       DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL || '' }}
       DEEPSEEK_BASE_URL: ${{ vars.DEEPSEEK_BASE_URL || '' }}
       DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY || '' }}
+      OAK_RISK_TOLERANCE: ${{ inputs.risk_tolerance || '' }}
+      OAK_COMMUNITY_OPENNESS: ${{ inputs.community_openness || '' }}
+      OAK_AMBITION_LEVEL: ${{ inputs.ambition_level || '' }}
       IS_SANDBOX: 1 # Bypass "--dangerously-skip-permissions cannot be used with root/sudo privileges for security reasons"
     timeout-minutes: 60
 
