@@ -59,5 +59,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Post-v1.4 Priorities — Community Expectations | 169 | [post-v14-priorities.md](pokemon-knowledge/post-v14-priorities.md) |
 | v1.5 Trainer Overhaul — Best Practices | 171 | [v15-trainer-overhaul-research.md](pokemon-knowledge/v15-trainer-overhaul-research.md) |
 | Configurable Difficulty in ROM Hacks | 172 | [configurable-difficulty-rom-hacks.md](pokemon-knowledge/configurable-difficulty-rom-hacks.md) |
+| Gym Leader 4th Mon — Boss Fight Expansion | 173 | [gym-leader-4th-mon-design.md](pokemon-knowledge/gym-leader-4th-mon-design.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

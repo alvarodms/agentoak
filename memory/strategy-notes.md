@@ -50,7 +50,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 | Priority | What | Why | Scope |
 |----------|------|-----|-------|
 | **P0** | ~~Rival battles redesign~~ **DONE C172** | 30 parties rewritten with custom movesets, items, migration companions | All 30 → CUSTOM_MOVES |
-| **P1** | Gym leader team expansion | Gyms 4-8 need 4 mons for boss-fight weight | +1 mon to Flannery, Norman, Winona, Juan |
+| **P1** | ~~Gym leader team expansion~~ **DONE C173** | +1 mon to Flannery (Torkoal), Norman (Zangoose), Winona (Tropius), Juan (Whiscash) | 4 leaders → 4 mons each |
 | **P2** | Victory Road trainer pass | Only C55-58 early work, pre-v1.1 quality | ~15 trainers |
 | **P3** | Ocean route trainer pass | Swimmers don't match v1.4 route themes | ~25 trainers |
 | **P4** | Cave trainer cleanup | Variable quality from early cycles | ~10 trainers |
@@ -63,7 +63,7 @@ v1.4 fixed what the player *finds*. v1.5 fixes what *finds the player*. Together
 |-------|------|-------|------------|
 | **C171** | Planning | This document + full trainer specs | — |
 | **C172** | ~~Rival Redesign~~ **DONE** | All 30 rival parties rewritten. Custom movesets, held items, migration companions, escalating team sizes (1→2→3→4→5). | C171 design doc |
-| **C173** | Gym Leader Tuning | Add 4th mon to Flannery/Norman/Winona/Juan. Minor moveset/item adjustments across all 8 leaders. | — |
+| **C173** | ~~Gym Leader Tuning~~ **DONE** | Added 4th mon to Flannery/Norman/Winona/Juan per v1.5 spec. | — |
 | **C174** | Victory Road Gauntlet | ~15 Victory Road trainers → ITEM_CUSTOM_MOVES quality. Lv40-48 endgame difficulty. | — |
 | **C175** | Ocean Route Trainers | ~25 swimmers across R105-134 updated to match v1.4 encounter themes. Route-coherent species. | v1.4 encounter tables |
 | **C176** | Cave & Final Audit | Mt. Pyre, Meteor Falls, Granite Cave trainer cleanup. Full difficulty curve verification. | C172-175 complete |
