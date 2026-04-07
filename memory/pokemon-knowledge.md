@@ -55,5 +55,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Early Game Reset — Encounter Design Lessons | 164 | [early-game-reset-design.md](pokemon-knowledge/early-game-reset-design.md) |
 | Mid-Game Encounter Execution | 165 | [mid-game-encounter-execution.md](pokemon-knowledge/mid-game-encounter-execution.md) |
 | Late-Game & Cave Encounter Design | 167 | [late-game-cave-encounter-design.md](pokemon-knowledge/late-game-cave-encounter-design.md) |
+| Ocean Route Differentiation | 168 | [ocean-route-differentiation.md](pokemon-knowledge/ocean-route-differentiation.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

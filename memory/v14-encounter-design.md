@@ -330,25 +330,9 @@ Super Rod: Dratini (4%), Feebas (1%) — fishing migration + legendary rarity.
 
 ---
 
-## Ocean Routes (Cycle D)
+## Ocean Routes (Cycle D) — ✅ IMPLEMENTED C168
 
-Every water route gets 1-2 unique species to end the Tentacool/Wingull monoculture:
-
-| Route | Theme | Unique Additions |
-|-------|-------|-----------------|
-| R105 | Standard ocean | Staryu (5% surf), Horsea (4%) |
-| R106 | Granite Cave area | Seel (5% surf), Shellder (4%) |
-| R107 | Deep ocean | Wailmer (30%), Corsola (4%), Mantine (1%) |
-| R108 | Abandoned Ship | Grimer (5% surf), Koffing (4%) |
-| R109 | Beach/resort | Psyduck (5% surf), Slowpoke (4%) |
-| R122 | Mt. Pyre approach | Shuppet (5% surf), Duskull (4%) |
-| R124 | Deep ocean | Chinchou (5% surf), Horsea (4%), Seadra (1%) |
-| R125 | Shoal Cave approach | Spheal (5% surf) |
-| R127 | Rocky shoals | Corsola (5%), Staryu (4%), Remoraid (1%) |
-| R128 | Seafloor Cavern | Wailmer (30%), Relicanth (1%) |
-| R129 | Pelagic zone | Sharpedo (5%), Wailmer dominant |
-| R130 | Mirage area | Wynaut (1%) |
-| R131 | Sky Pillar approach | Carvanha elevated, Qwilfish (4%) |
+All 17 ocean routes overhauled (R105-109, R122, R124-134). Tentacool+Wingull ≤30% on all surf. Every route has unique surf species. Full fishing tiers (Old/Good/Super Rod). See `completed-work/wild-encounters.md` for details.
 
 ---
 

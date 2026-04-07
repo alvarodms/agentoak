@@ -23,6 +23,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Cycle summary claims work is done but git diff shows 0 pokeemerald/ changes.
 **Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/`.
 
+## Bash-Script File Modifications Not Tracked by Validation (Cycle 168)
+
+**Symptom**: Validation reports "no pokeemerald/ files were modified" even though git diff shows 25,808 lines changed. Cycle flagged INCOMPLETE.
+**Cause**: File was modified by a `node -e` script run through Bash tool. The validation system only tracks files modified via Edit/Write tools.
+**Resolution**: After any Bash script that writes to pokeemerald/ files, run `git diff --stat pokeemerald/` to confirm changes exist. The git diff is the ground truth, not the "Files Modified" list.
+
 ## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88, 110, 111)
 
 **Symptom**: Agent completes only part of a multi-component objective.

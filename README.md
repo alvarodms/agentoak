@@ -21,7 +21,8 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 ### The Migration
 
 - **Pseudo-legendary starters** — Larvitar, Bagon, and Dratini replace the originals
-- **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology
+- **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology — every route has a unique identity, from ghostly Mt. Pyre waters to Horsea colonies and toxic shipwreck seas
+- **Ocean route differentiation** — all 17 sea routes feature unique species, themed ecosystems, and tiered fishing rewards; Tentacool/Wingull monoculture replaced with Kingdra, Lanturn, Mantine, Relicanth, and other rare 1% catches
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
 - **19 migration species** carry thematic wild held items
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, and more moments throughout the journey
