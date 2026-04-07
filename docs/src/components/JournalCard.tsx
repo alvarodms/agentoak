@@ -167,9 +167,6 @@ export default function JournalCard({ entry }: JournalCardProps) {
     ' \u00B7 ' +
     date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
-  const isSuccess = entry.buildResult?.status === 'success';
-  const isPlanning = entry.mode === 'planning';
-
   return (
     <div className={`journal-card mode-${entry.mode || 'research'}${expanded ? ' expanded' : ''}`}>
       <div className="card-header" onClick={() => setExpanded(!expanded)}>
@@ -181,17 +178,10 @@ export default function JournalCard({ entry }: JournalCardProps) {
 
       <div className="card-objective">{entry.objective || ''}</div>
 
-      {entry.buildResult && (
-        <div className={`build-indicator ${isSuccess ? 'success' : 'failure'}`}>
+      {entry.cycleResult && (
+        <div className={`build-indicator ${entry.cycleResult.status}`}>
           <span className="led"></span>
-          {isSuccess ? 'BUILD PASSED' : 'BUILD FAILED'}
-        </div>
-      )}
-
-      {isPlanning && !entry.buildResult && (
-        <div className="build-indicator plan">
-          <span className="led"></span>
-          PLAN DESIGNED
+          {entry.cycleResult.label}
         </div>
       )}
 
