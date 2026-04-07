@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -191,6 +191,10 @@ check_scripts:
 # Flag-chain validator: detect flags that are checked but never set in scripts
 check_flags:
 	@bash scripts/check_flags.sh
+
+# Encounter table validation
+check_encounters:
+	@bash scripts/check_encounters.sh
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 
@@ -256,7 +260,7 @@ modern: all
 compare: all
 
 # Other rules
-rom: $(ROM)
+rom: check_scripts $(ROM)
 ifeq ($(COMPARE),1)
 	@$(SHA1) rom.sha1
 endif

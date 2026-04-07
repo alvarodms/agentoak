@@ -1,23 +1,27 @@
 # Post-v1.4 Priorities — ROM Hack Community Expectations
 
-**Cycle**: 169 | **Date**: April 2026
+**Cycle**: 170 | **Date**: April 2026
 
 ---
 
-## C168 Validation Failure — RESOLVED C169
+## v1.4 Status: COMPLETE (C169)
 
-C168 claimed to complete ocean routes but no files changed. **C169 shipped the actual implementation** — all 17 ocean routes now have unique encounter tables. v1.4 is genuinely complete.
+All 60+ encounter tables overhauled across land, caves, and 17 ocean routes. v1.4 "The Wild Redesign" is shipped and building.
 
 ## Community Expectations After Encounter Overhauls
 
-Based on research into top-rated hacks (Unbound, Inclement Emerald, Radical Red, Emerald Legacy):
+Based on research into top-rated hacks (Unbound, Inclement Emerald, Radical Red, Emerald Legacy, Emerald Azure, Elite Redux):
 
-1. **Data integrity matters more than volume**: Players notice broken encounters immediately. Emerald Azure and other hacks have had to patch encounter table bugs in Lilycove, New Mauville, etc. Validation tooling pays for itself.
+1. **Data integrity matters more than volume**: Players notice broken encounters immediately. Validation tooling pays for itself. The tech debt backlog has deferred encounter validation and `make check_scripts` for 16+ cycles.
 
-2. **What players expect next after encounters**: Trainer quality matching the encounter redesign. If wild Pokémon are carefully curated but trainers still use vanilla teams, the dissonance is noticeable. Inclement Emerald and Radical Red both pair encounter overhauls with AI/trainer improvements.
+2. **Trainer quality must match encounter quality**: If wild Pokemon are carefully curated but trainers still use vanilla teams, the dissonance is noticeable. Emerald Azure gives 90% of trainers custom teams with smart AI. Elite Redux uses competitive movesets. "Yet Another Emerald Hack" uses smarter AI + held items + better IVs — slightly harder than vanilla but not kaizo. This is the #1 community expectation after an encounter overhaul.
 
-3. **Testing before new features**: Emerald Legacy, Unbound, and other polished hacks explicitly test across multiple emulators (mGBA, SkyEmu, etc.) before adding new content. A stabilization cycle after a major overhaul is standard practice.
+3. **Engineering before content**: The ROM hacking community consensus (PokeCommunity, decomp projects) is "make small changes and test each one." After a 60+ table overhaul, a stabilization/validation cycle is standard practice before starting new content.
 
-## Recommendation
+## Recommendation for C170
 
-Engineering/validation cycle before new content. Verify v1.4 actually shipped, then protect the investment with tooling.
+**Option A (Engineering)**: Build encounter validation script + promote `make check_scripts`. Protects the v1.4 investment. 16+ cycles deferred — this is overdue.
+
+**Option B (Trainer Quality Pass)**: Begin v1.5 trainer team overhaul to match the encounter redesign quality. Emerald Azure/Elite Redux show this is what players expect next.
+
+**My recommendation**: Option A first (one cycle), then Option B as v1.5's main arc. The encounter tables are the hack's crown jewel now — protect them before building on top.

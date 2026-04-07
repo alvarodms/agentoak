@@ -89,7 +89,7 @@ Issue #82 ("early-game excitement") is addressed by replacing rarity overload wi
 
 **Total**: 4 implementation cycles all completed (C165-C168). v1.4 "The Wild Redesign" is DONE.
 
-**After v1.4**: Evaluate — engineering cycle (check_scripts build prereq, event macro library from tech-debt-backlog.md), or v1.5 content depending on community feedback.
+**After v1.4**: Engineering stabilization completed (C170). Ready for v1.5 planning.
 
 ---
 
