@@ -20,7 +20,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = parseInt(process.env.PORT ?? "3333", 10);
+const PORT = parseInt(process.env.PORT ?? "3555", 10);
+
+const PORYMAP_WRITE_TOOLS = new Set([
+  "set_map_properties",
+  "add_object_event",
+  "add_warp_event",
+  "add_bg_event",
+  "add_coord_event",
+  "remove_event",
+  "edit_map_connection",
+]);
 
 // ─── Server Registry ────────────────────────────────────────────────────────
 
@@ -167,7 +177,11 @@ async function main() {
           return;
         }
         const result = await entry.client.listTools();
-        json(res, result.tools);
+        const annotated = result.tools.map((t) => ({
+          ...t,
+          _write: PORYMAP_WRITE_TOOLS.has(t.name),
+        }));
+        json(res, annotated);
         return;
       }
 
@@ -199,9 +213,14 @@ async function main() {
           return;
         }
 
+        const finalArgs = { ...(args ?? {}) };
+        if (PORYMAP_WRITE_TOOLS.has(tool)) {
+          finalArgs.dry_run = true;
+        }
+
         const result = await entry.client.callTool({
           name: tool,
-          arguments: args ?? {},
+          arguments: finalArgs,
         });
 
         json(res, result);

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * Porymap MCP Server — Phase 1 (Read-Only)
+ * Porymap MCP Server — Phase 1 (Read) + Phase 2 (Write)
  *
  * Provides structured access to pokeemerald map data, giving the agent
- * the ability to inspect maps, events, layouts, blockdata, and tilesets.
+ * the ability to inspect and safely modify maps, events, layouts,
+ * blockdata, and tilesets.
  *
- * Tools exposed:
+ * Read tools:
  *   list_maps              — list all maps, optionally filtered by group
  *   get_map_info           — metadata, connections, dimensions for a map
  *   get_map_events         — all events (NPCs, warps, triggers, signs, hidden items)
@@ -14,6 +15,15 @@
  *   get_layout_info        — layout dimensions, tileset references
  *   list_tilesets           — list available primary and secondary tilesets
  *   get_metatile_attributes — behavior/collision for metatiles in a tileset
+ *
+ * Write tools (strict validation — reject invalid edits):
+ *   set_map_properties     — modify map metadata (weather, music, flags, etc.)
+ *   add_object_event       — add an NPC/item/trainer to a map
+ *   add_warp_event         — add a door/exit warp
+ *   add_bg_event           — add a sign, hidden item, or secret base entrance
+ *   add_coord_event        — add a step trigger or weather trigger
+ *   remove_event           — remove an event by type + index or local_id
+ *   edit_map_connection    — add, remove, or modify a map connection
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -35,6 +45,21 @@ import {
   readMetatileAttributes,
   type Block,
 } from "./porymap/blockdata.js";
+import { type MapJson } from "./porymap/validation.js";
+import {
+  createWriteContext,
+  createDryRunContext,
+  type WriteContext,
+  type ToolResult,
+} from "./porymap/write-context.js";
+import { setMapProperties } from "./porymap/set-map-properties.js";
+import { addObjectEvent } from "./porymap/add-object-event.js";
+import { addWarpEvent } from "./porymap/add-warp-event.js";
+import { addBgEvent } from "./porymap/add-bg-event.js";
+import { addCoordEvent } from "./porymap/add-coord-event.js";
+import { removeEvent } from "./porymap/remove-event.js";
+import { editMapConnection } from "./porymap/edit-map-connection.js";
+import { unifiedDiff } from "./porymap/diff.js";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -82,31 +107,7 @@ async function findLayout(layoutId: string): Promise<LayoutEntry | undefined> {
   return layouts.layouts.find((l) => l.id === layoutId);
 }
 
-interface MapJson {
-  id: string;
-  name: string;
-  layout: string;
-  music: string;
-  region_map_section: string;
-  requires_flash: boolean | string;
-  weather: string;
-  map_type: string;
-  allow_cycling: boolean | string;
-  allow_escaping: boolean | string;
-  allow_running: boolean | string;
-  show_map_name: boolean | string;
-  battle_scene: string;
-  connections: Array<{
-    map: string;
-    offset: number;
-    direction: string;
-  }>;
-  object_events: unknown[];
-  warp_events: unknown[];
-  coord_events: unknown[];
-  bg_events: unknown[];
-}
-
+// Local readMapJson for Phase 1 read tools (uses local types, no validation import needed)
 async function readMapJson(mapName: string): Promise<MapJson> {
   const mapPath = path.join(MAPS_DIR, mapName, "map.json");
   return (await readJson(mapPath)) as MapJson;
@@ -124,7 +125,7 @@ function jsonText(data: unknown) {
 
 const server = new McpServer({
   name: "porymap",
-  version: "1.0.0",
+  version: "2.0.0",
 });
 
 // ─── Tool: list_maps ─────────────────────────────────────────────────────────
@@ -628,6 +629,222 @@ server.registerTool(
       JSON.stringify(result, null, 2),
     );
   },
+);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Phase 2: Write Tools (delegated to handler modules)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const writeCtx = createWriteContext();
+
+function errorText(message: string) {
+  return { content: [{ type: "text" as const, text: message }], isError: true };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyWriteHandler = (ctx: WriteContext, params: any) => Promise<ToolResult>;
+
+async function runWriteTool(
+  handler: AnyWriteHandler,
+  params: { name: string; dry_run?: boolean },
+) {
+  if (params.dry_run) {
+    const { ctx, captures } = createDryRunContext(writeCtx);
+    const result = await handler(ctx, params);
+    if (!result.ok) return errorText(result.error);
+    const capture = captures[0];
+    const diff = capture
+      ? unifiedDiff(
+          JSON.stringify(capture.before, null, 2),
+          JSON.stringify(capture.after, null, 2),
+          `${params.name}/map.json`,
+        )
+      : "";
+    return jsonText({ ...(result.data as object), status: "dry_run", diff });
+  }
+  const result = await handler(writeCtx, params);
+  return result.ok ? jsonText(result.data) : errorText(result.error);
+}
+
+// ─── Tool: set_map_properties ───────────────────────────────────────────────
+
+server.registerTool(
+  "set_map_properties",
+  {
+    title: "Set Map Properties",
+    description:
+      "Modify map metadata: weather, music, map_type, battle_scene, region_map_section, " +
+      "and boolean flags (requires_flash, allow_cycling, allow_escaping, allow_running, show_map_name). " +
+      "Only specified properties are changed; others are left untouched.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name, e.g. 'PetalburgCity'"),
+      properties: z
+        .record(z.string(), z.union([z.string(), z.boolean()]))
+        .describe(
+          "Key-value pairs to set. Valid keys: music, weather, map_type, region_map_section, " +
+          "battle_scene, requires_flash, allow_cycling, allow_escaping, allow_running, show_map_name",
+        ),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(setMapProperties, params),
+);
+
+// ─── Tool: add_object_event ─────────────────────────────────────────────────
+
+server.registerTool(
+  "add_object_event",
+  {
+    title: "Add Object Event",
+    description:
+      "Add an NPC, item, or trainer to a map. Validates coordinates against layout dimensions. " +
+      "The event is appended to the object_events array in map.json.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name"),
+      graphics_id: z.string().describe("Sprite constant, e.g. 'OBJ_EVENT_GFX_WOMAN_1'"),
+      x: z.number().int().describe("X grid position (0-based)"),
+      y: z.number().int().describe("Y grid position (0-based)"),
+      elevation: z.number().int().min(0).max(15).default(3).describe("Elevation layer (0-15, default 3)"),
+      movement_type: z.string().default("MOVEMENT_TYPE_FACE_DOWN").describe("Movement pattern constant"),
+      movement_range_x: z.number().int().min(0).max(15).default(0).describe("Horizontal movement range (0-15)"),
+      movement_range_y: z.number().int().min(0).max(15).default(0).describe("Vertical movement range (0-15)"),
+      trainer_type: z.string().default("TRAINER_TYPE_NONE").describe("Trainer type constant"),
+      trainer_sight_or_berry_tree_id: z.string().default("0").describe("Trainer sight range or berry tree ID"),
+      script: z.string().describe("Script label (e.g. 'MapName_EventScript_NpcName') or '0x0' for none"),
+      flag: z.string().default("0").describe("Visibility flag constant, or '0' for always visible"),
+      local_id: z.string().optional().describe("Optional local ID constant (generates #define in map_event_ids.h)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(addObjectEvent, params),
+);
+
+// ─── Tool: add_warp_event ───────────────────────────────────────────────────
+
+server.registerTool(
+  "add_warp_event",
+  {
+    title: "Add Warp Event",
+    description:
+      "Add a door/exit warp to a map. Validates coordinates and that the destination map exists.",
+    inputSchema: z.object({
+      name: z.string().describe("Source map directory name"),
+      x: z.number().int().describe("X grid position"),
+      y: z.number().int().describe("Y grid position"),
+      elevation: z.number().int().min(0).max(15).default(0).describe("Elevation (0-15, default 0)"),
+      dest_map: z.string().describe("Destination map constant, e.g. 'MAP_LITTLEROOT_TOWN'"),
+      dest_warp_id: z.string().describe("Warp index in destination map (e.g. '0', '1')"),
+      warp_id: z.string().optional().describe("Optional warp ID constant (generates #define)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(addWarpEvent, params),
+);
+
+// ─── Tool: add_bg_event ─────────────────────────────────────────────────────
+
+server.registerTool(
+  "add_bg_event",
+  {
+    title: "Add Background Event",
+    description:
+      "Add a sign, hidden item, or secret base entrance to a map. " +
+      "Validates coordinates against layout dimensions.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name"),
+      type: z.enum(["sign", "hidden_item", "secret_base"]).describe("Background event type"),
+      x: z.number().int().describe("X grid position"),
+      y: z.number().int().describe("Y grid position"),
+      elevation: z.number().int().min(0).max(15).default(0).describe("Elevation (0-15)"),
+      // Sign fields
+      player_facing_dir: z.string().default("BG_EVENT_PLAYER_FACING_ANY").describe("For signs: player facing direction"),
+      script: z.string().optional().describe("For signs: script label"),
+      // Hidden item fields
+      item: z.string().optional().describe("For hidden_item: item constant (e.g. 'ITEM_POTION')"),
+      hidden_item_flag: z.string().optional().describe("For hidden_item: flag constant"),
+      // Secret base fields
+      secret_base_id: z.string().optional().describe("For secret_base: secret base ID constant"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(addBgEvent, params),
+);
+
+// ─── Tool: add_coord_event ──────────────────────────────────────────────────
+
+server.registerTool(
+  "add_coord_event",
+  {
+    title: "Add Coordinate Event",
+    description:
+      "Add a step trigger or weather trigger to a map. Triggers fire when the player steps on the tile.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name"),
+      type: z.enum(["trigger", "weather"]).describe("Coordinate event type"),
+      x: z.number().int().describe("X grid position"),
+      y: z.number().int().describe("Y grid position"),
+      elevation: z.number().int().min(0).max(15).default(0).describe("Elevation (0-15)"),
+      // Trigger fields
+      var: z.string().optional().describe("For trigger: game variable constant (e.g. 'VAR_TEMP_1')"),
+      var_value: z.string().optional().describe("For trigger: variable value that activates the trigger"),
+      script: z.string().optional().describe("For trigger: script label"),
+      // Weather fields
+      weather: z.string().optional().describe("For weather: weather constant (e.g. 'WEATHER_RAIN')"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(addCoordEvent, params),
+);
+
+// ─── Tool: remove_event ─────────────────────────────────────────────────────
+
+server.registerTool(
+  "remove_event",
+  {
+    title: "Remove Event",
+    description:
+      "Remove an event from a map by type and index, or by local_id/warp_id. " +
+      "Returns the removed event for confirmation.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name"),
+      event_type: z
+        .enum(["object_events", "warp_events", "coord_events", "bg_events"])
+        .describe("Which event array to remove from"),
+      index: z
+        .number()
+        .int()
+        .min(0)
+        .optional()
+        .describe("0-based index in the event array"),
+      local_id: z
+        .string()
+        .optional()
+        .describe("Find and remove by local_id (object_events) or warp_id (warp_events) instead of index"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(removeEvent, params),
+);
+
+// ─── Tool: edit_map_connection ──────────────────────────────────────────────
+
+server.registerTool(
+  "edit_map_connection",
+  {
+    title: "Edit Map Connection",
+    description:
+      "Add, remove, or update a directional map connection (up/down/left/right). " +
+      "Validates that the target map exists.",
+    inputSchema: z.object({
+      name: z.string().describe("Map directory name"),
+      action: z.enum(["add", "remove", "update"]).describe("Operation to perform"),
+      direction: z.enum(["up", "down", "left", "right"]).describe("Connection direction"),
+      target_map: z.string().optional().describe("For add/update: target map constant (e.g. 'MAP_ROUTE101')"),
+      offset: z.number().int().optional().describe("For add/update: alignment offset (default 0)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
+    }),
+  },
+  async (params) => runWriteTool(editMapConnection, params),
 );
 
 // ─── Start server ────────────────────────────────────────────────────────────

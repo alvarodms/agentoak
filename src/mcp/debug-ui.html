@@ -351,6 +351,68 @@
   .output-box .json-bool { color: #c792ea; }
   .output-box .json-null { color: #546e7a; }
 
+  /* Write tool badge */
+  .write-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* Preview banner */
+  .preview-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    background: rgba(243, 156, 18, 0.1);
+    border: 1px solid rgba(243, 156, 18, 0.3);
+    font-size: 12px;
+    color: #f39c12;
+  }
+  .preview-banner svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Diff output */
+  .diff-container {
+    margin-bottom: 12px;
+  }
+  .diff-container h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .diff-box {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    overflow: auto;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.7;
+    white-space: pre;
+    max-height: 400px;
+  }
+  .diff-box .diff-add { color: #2ecc71; }
+  .diff-box .diff-remove { color: #e63946; }
+  .diff-box .diff-hunk { color: #3498db; font-style: italic; }
+  .diff-box .diff-header { color: var(--text-dim); font-weight: 600; }
+
   /* Empty state */
   .empty-state {
     display: flex;
@@ -483,7 +545,7 @@ function renderToolList() {
   el.innerHTML = tools.map(t => `
     <div class="tool-item ${selectedTool?.name === t.name ? 'active' : ''}"
          onclick="selectTool('${t.name}')">
-      <div class="tool-name">${t.name}</div>
+      <div class="tool-name">${t.name}${t._write ? '<span class="write-badge">write</span>' : ''}</div>
       <div class="tool-desc">${escapeHtml(t.description || '')}</div>
     </div>
   `).join('');
@@ -516,22 +578,30 @@ function renderMain() {
   const schema = selectedTool.inputSchema;
   const properties = schema?.properties || {};
   const required = schema?.required || [];
+  const isWrite = !!selectedTool._write;
+  const visibleProps = Object.entries(properties).filter(([key]) => key !== 'dry_run');
 
   panel.innerHTML = `
     <div class="main-header">
-      <h2>${selectedTool.name}</h2>
+      <h2>${selectedTool.name}${isWrite ? '<span class="write-badge" style="margin-left:10px;font-size:11px">write</span>' : ''}</h2>
       <div class="desc">${escapeHtml(selectedTool.description || '')}</div>
     </div>
     <div class="main-body">
       <div class="form-section">
+        ${isWrite ? `<div class="preview-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 9v4m0 4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+          Preview mode &mdash; changes will not be saved to disk
+        </div>` : ''}
         <h3>Parameters</h3>
         <div class="form-fields" id="formFields">
-          ${Object.keys(properties).length === 0
+          ${visibleProps.length === 0
             ? '<p style="color:var(--text-dim);font-size:13px">This tool takes no parameters.</p>'
-            : Object.entries(properties).map(([key, prop]) => renderField(key, prop, required.includes(key))).join('')}
+            : visibleProps.map(([key, prop]) => renderField(key, prop, required.includes(key))).join('')}
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" id="callBtn" onclick="callTool()">Call Tool</button>
+          <button class="btn btn-primary" id="callBtn" onclick="callTool()">${isWrite ? 'Preview' : 'Call Tool'}</button>
           <button class="btn btn-secondary" onclick="clearForm()">Clear</button>
           <div class="status-indicator" id="status"></div>
         </div>
@@ -578,6 +648,16 @@ function renderField(name, prop, isRequired) {
       <input type="checkbox" id="field-${name}" data-field="${name}" data-type="boolean">
       <label for="field-${name}">${name}${typeLabel}${optLabel}</label>
       ${desc ? `<span class="field-desc">${escapeHtml(desc)}</span>` : ''}
+    </div>`;
+  }
+
+  if (type === 'object') {
+    return `<div class="field">
+      <label for="field-${name}">${name}${typeLabel}${optLabel}</label>
+      ${desc ? `<span class="field-desc">${escapeHtml(desc)}</span>` : ''}
+      <textarea id="field-${name}" data-field="${name}" data-type="object"
+             rows="3" placeholder='{"key": "value"}'
+             style="background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:8px 10px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;resize:vertical"></textarea>
     </div>`;
   }
 
@@ -637,7 +717,9 @@ function collectArgs() {
     const val = el.value.trim();
     if (!val) continue;
 
-    if (type === 'array') {
+    if (type === 'object') {
+      try { args[name] = JSON.parse(val); } catch { args[name] = val; }
+    } else if (type === 'array') {
       args[name] = val.split(',').map(s => s.trim()).filter(Boolean);
     } else if (type === 'number' || type === 'integer') {
       const n = Number(val);
@@ -708,6 +790,16 @@ function copyOutput() {
   }
 }
 
+function formatDiff(diffText) {
+  return escapeHtml(diffText).split('\n').map(line => {
+    if (line.startsWith('@@')) return `<span class="diff-hunk">${line}</span>`;
+    if (line.startsWith('---') || line.startsWith('+++')) return `<span class="diff-header">${line}</span>`;
+    if (line.startsWith('+')) return `<span class="diff-add">${line}</span>`;
+    if (line.startsWith('-')) return `<span class="diff-remove">${line}</span>`;
+    return line;
+  }).join('\n');
+}
+
 function formatOutput(data) {
   if (data.error) return `<span class="json-string">Error: ${escapeHtml(String(data.error))}</span>`;
 
@@ -716,6 +808,21 @@ function formatOutput(data) {
       if (item.type === 'text') {
         try {
           const parsed = JSON.parse(item.text);
+
+          if (parsed.status === 'dry_run' && typeof parsed.diff === 'string') {
+            const { diff, ...rest } = parsed;
+            let html = '';
+            if (diff) {
+              html += `<div class="diff-container"><h4>Diff Preview</h4><div class="diff-box">${formatDiff(diff)}</div></div>`;
+            } else {
+              html += `<div class="diff-container"><h4>Diff Preview</h4><div class="diff-box" style="color:var(--text-dim)">No changes detected</div></div>`;
+            }
+            html += `<div><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:6px">Tool Response</h4>`;
+            html += syntaxHighlight(JSON.stringify(rest, null, 2));
+            html += '</div>';
+            return html;
+          }
+
           return syntaxHighlight(JSON.stringify(parsed, null, 2));
         } catch {
           return escapeHtml(item.text);
