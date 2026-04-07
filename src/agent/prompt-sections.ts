@@ -9,6 +9,7 @@
 import { CYCLE_MODES } from "../cycle/modes.js";
 import type { TeamContext } from "../cycle/team-roles.js";
 import { PromptBuilder } from "./prompt-builder.js";
+import { getPersonalityGuidance, getIssueEvaluationGuidance } from "../config/personality.js";
 
 // ---------------------------------------------------------------------------
 // Small reusable fragments
@@ -185,8 +186,19 @@ You have access to a **Gameplay Designer** agent that can produce detailed, data
 **When NOT to use it**: Research cycles, planning cycles, repairs, refactors, pure narrative/dialogue work, or any cycle that doesn't involve gameplay balancing decisions. Skip it to avoid unnecessary latency.`;
 }
 
+/**
+ * Build a personality guidance section for planner/Producer prompts.
+ * Returns empty string when all traits are at moderate defaults.
+ */
+export function formatPersonalityGuidance(): string {
+  const guidance = getPersonalityGuidance();
+  if (!guidance) return "";
+  return `\n\n## Decision-Making Personality\n\nThe following personality configuration shapes how you make decisions this cycle:\n\n${guidance}`;
+}
+
 /** The issue-response and help-request instructions appended to planner prompts. */
 export function formatPlannerClosingInstructions(): string {
+  const issuePersonality = getIssueEvaluationGuidance();
   return `**Issue handling rules:**
 - **New community issues**: Review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info.
 - **Multi-item issues**: If an issue contains multiple distinct asks (bugs + features, etc.), use the \`items\` array within your issueAction to give each item its own action and response. Set the top-level \`action\` to the dominant one (accept if any is accepted, defer if all deferred, reject if all rejected). For single-ask issues, omit \`items\`.
@@ -199,7 +211,7 @@ If an accepted issue should shape this cycle's objective, incorporate it.
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
-Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.`;
+Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.${issuePersonality}`;
 }
 
 // ---------------------------------------------------------------------------
