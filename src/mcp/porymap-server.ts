@@ -45,26 +45,21 @@ import {
   readMetatileAttributes,
   type Block,
 } from "./porymap/blockdata.js";
+import { type MapJson } from "./porymap/validation.js";
 import {
-  readMapJson as readMapJsonValidated,
-  writeMapJson,
-  getLayoutForMap,
-  mapExists,
-  resolveMapConstant,
-  coordsInBounds,
-  isUniqueLocalId,
-  isUniqueWarpId,
-  invalidateCaches,
-  VALID_WEATHER,
-  VALID_MAP_TYPES,
-  VALID_BATTLE_SCENES,
-  VALID_DIRECTIONS,
-  EDITABLE_PROPERTIES,
-  BOOLEAN_PROPERTIES,
-  type MapJson,
-  type ValidationError,
-  formatErrors,
-} from "./porymap/validation.js";
+  createWriteContext,
+  createDryRunContext,
+  type WriteContext,
+  type ToolResult,
+} from "./porymap/write-context.js";
+import { setMapProperties } from "./porymap/set-map-properties.js";
+import { addObjectEvent } from "./porymap/add-object-event.js";
+import { addWarpEvent } from "./porymap/add-warp-event.js";
+import { addBgEvent } from "./porymap/add-bg-event.js";
+import { addCoordEvent } from "./porymap/add-coord-event.js";
+import { removeEvent } from "./porymap/remove-event.js";
+import { editMapConnection } from "./porymap/edit-map-connection.js";
+import { unifiedDiff } from "./porymap/diff.js";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -637,11 +632,38 @@ server.registerTool(
 );
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// Phase 2: Write Tools (strict validation)
+// Phase 2: Write Tools (delegated to handler modules)
 // ═══════════════════════════════════════════════════════════════════════════════
+
+const writeCtx = createWriteContext();
 
 function errorText(message: string) {
   return { content: [{ type: "text" as const, text: message }], isError: true };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyWriteHandler = (ctx: WriteContext, params: any) => Promise<ToolResult>;
+
+async function runWriteTool(
+  handler: AnyWriteHandler,
+  params: { name: string; dry_run?: boolean },
+) {
+  if (params.dry_run) {
+    const { ctx, captures } = createDryRunContext(writeCtx);
+    const result = await handler(ctx, params);
+    if (!result.ok) return errorText(result.error);
+    const capture = captures[0];
+    const diff = capture
+      ? unifiedDiff(
+          JSON.stringify(capture.before, null, 2),
+          JSON.stringify(capture.after, null, 2),
+          `${params.name}/map.json`,
+        )
+      : "";
+    return jsonText({ ...(result.data as object), status: "dry_run", diff });
+  }
+  const result = await handler(writeCtx, params);
+  return result.ok ? jsonText(result.data) : errorText(result.error);
 }
 
 // ─── Tool: set_map_properties ───────────────────────────────────────────────
@@ -662,60 +684,10 @@ server.registerTool(
           "Key-value pairs to set. Valid keys: music, weather, map_type, region_map_section, " +
           "battle_scene, requires_flash, allow_cycling, allow_escaping, allow_running, show_map_name",
         ),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, properties }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}". Use list_maps to see available maps.`);
-    }
-
-    // Validate property keys
-    const errors: ValidationError[] = [];
-    for (const key of Object.keys(properties)) {
-      if (!EDITABLE_PROPERTIES.has(key)) {
-        errors.push({ field: key, message: `Not an editable property. Valid: ${[...EDITABLE_PROPERTIES].join(", ")}` });
-      }
-    }
-
-    // Validate known enum values
-    if (properties.weather && typeof properties.weather === "string" && !VALID_WEATHER.has(properties.weather)) {
-      errors.push({ field: "weather", message: `Unknown weather constant "${properties.weather}". Known: ${[...VALID_WEATHER].join(", ")}` });
-    }
-    if (properties.map_type && typeof properties.map_type === "string" && !VALID_MAP_TYPES.has(properties.map_type)) {
-      errors.push({ field: "map_type", message: `Unknown map type "${properties.map_type}". Known: ${[...VALID_MAP_TYPES].join(", ")}` });
-    }
-    if (properties.battle_scene && typeof properties.battle_scene === "string" && !VALID_BATTLE_SCENES.has(properties.battle_scene)) {
-      errors.push({ field: "battle_scene", message: `Unknown battle scene "${properties.battle_scene}". Known: ${[...VALID_BATTLE_SCENES].join(", ")}` });
-    }
-
-    // Validate boolean fields get boolean values
-    for (const key of Object.keys(properties)) {
-      if (BOOLEAN_PROPERTIES.has(key) && typeof properties[key] !== "boolean") {
-        errors.push({ field: key, message: `Expected boolean, got ${typeof properties[key]}` });
-      }
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    const mapData = await readMapJsonValidated(name);
-    const changed: Record<string, { from: unknown; to: unknown }> = {};
-
-    for (const [key, value] of Object.entries(properties)) {
-      const oldValue = (mapData as unknown as Record<string, unknown>)[key];
-      (mapData as unknown as Record<string, unknown>)[key] = value;
-      changed[key] = { from: oldValue, to: value };
-    }
-
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      changed,
-    });
-  },
+  async (params) => runWriteTool(setMapProperties, params),
 );
 
 // ─── Tool: add_object_event ─────────────────────────────────────────────────
@@ -741,77 +713,10 @@ server.registerTool(
       script: z.string().describe("Script label (e.g. 'MapName_EventScript_NpcName') or '0x0' for none"),
       flag: z.string().default("0").describe("Visibility flag constant, or '0' for always visible"),
       local_id: z.string().optional().describe("Optional local ID constant (generates #define in map_event_ids.h)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, graphics_id, x, y, elevation, movement_type, movement_range_x, movement_range_y, trainer_type, trainer_sight_or_berry_tree_id, script, flag, local_id }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const dims = await getLayoutForMap(name);
-    if (!dims) {
-      return errorText(`Could not resolve layout dimensions for map "${name}".`);
-    }
-
-    const errors: ValidationError[] = [];
-
-    if (!coordsInBounds(x, y, dims.width, dims.height)) {
-      errors.push({ field: "x/y", message: `Coordinates (${x}, ${y}) out of bounds for ${dims.width}x${dims.height} map` });
-    }
-
-    if (!script || script.trim() === "") {
-      errors.push({ field: "script", message: "Script must be non-empty (use '0x0' for no script)" });
-    }
-
-    const mapData = await readMapJsonValidated(name);
-
-    if (local_id && !isUniqueLocalId(mapData, local_id)) {
-      errors.push({ field: "local_id", message: `"${local_id}" already exists in this map's object events` });
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    const event: Record<string, unknown> = {
-      graphics_id,
-      x,
-      y,
-      elevation,
-      movement_type,
-      movement_range_x,
-      movement_range_y,
-      trainer_type,
-      trainer_sight_or_berry_tree_id,
-      script,
-      flag,
-    };
-
-    // local_id goes first if present (matches pokeemerald convention)
-    if (local_id) {
-      event.local_id = local_id;
-      const ordered: Record<string, unknown> = { local_id, ...event };
-      delete ordered.local_id;
-      // Rebuild with local_id first
-      const final: Record<string, unknown> = { local_id };
-      for (const [k, v] of Object.entries(event)) {
-        if (k !== "local_id") final[k] = v;
-      }
-      mapData.object_events.push(final);
-    } else {
-      mapData.object_events.push(event);
-    }
-
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      event_type: "object_events",
-      index: mapData.object_events.length - 1,
-      event: mapData.object_events[mapData.object_events.length - 1],
-    });
-  },
+  async (params) => runWriteTool(addObjectEvent, params),
 );
 
 // ─── Tool: add_warp_event ───────────────────────────────────────────────────
@@ -830,56 +735,10 @@ server.registerTool(
       dest_map: z.string().describe("Destination map constant, e.g. 'MAP_LITTLEROOT_TOWN'"),
       dest_warp_id: z.string().describe("Warp index in destination map (e.g. '0', '1')"),
       warp_id: z.string().optional().describe("Optional warp ID constant (generates #define)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, x, y, elevation, dest_map, dest_warp_id, warp_id }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const dims = await getLayoutForMap(name);
-    if (!dims) {
-      return errorText(`Could not resolve layout dimensions for map "${name}".`);
-    }
-
-    const errors: ValidationError[] = [];
-
-    if (!coordsInBounds(x, y, dims.width, dims.height)) {
-      errors.push({ field: "x/y", message: `Coordinates (${x}, ${y}) out of bounds for ${dims.width}x${dims.height} map` });
-    }
-
-    // Validate destination map exists
-    const destDir = await resolveMapConstant(dest_map);
-    if (!destDir) {
-      errors.push({ field: "dest_map", message: `Destination map "${dest_map}" not found. Use a MAP_* constant that corresponds to an existing map.` });
-    }
-
-    const mapData = await readMapJsonValidated(name);
-
-    if (warp_id && !isUniqueWarpId(mapData, warp_id)) {
-      errors.push({ field: "warp_id", message: `"${warp_id}" already exists in this map's warp events` });
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    const event: Record<string, unknown> = { x, y, elevation, dest_map, dest_warp_id };
-    if (warp_id) {
-      event.warp_id = warp_id;
-    }
-
-    mapData.warp_events.push(event);
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      event_type: "warp_events",
-      index: mapData.warp_events.length - 1,
-      event: mapData.warp_events[mapData.warp_events.length - 1],
-    });
-  },
+  async (params) => runWriteTool(addWarpEvent, params),
 );
 
 // ─── Tool: add_bg_event ─────────────────────────────────────────────────────
@@ -905,64 +764,10 @@ server.registerTool(
       hidden_item_flag: z.string().optional().describe("For hidden_item: flag constant"),
       // Secret base fields
       secret_base_id: z.string().optional().describe("For secret_base: secret base ID constant"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, type, x, y, elevation, player_facing_dir, script, item, hidden_item_flag, secret_base_id }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const dims = await getLayoutForMap(name);
-    if (!dims) {
-      return errorText(`Could not resolve layout dimensions for map "${name}".`);
-    }
-
-    const errors: ValidationError[] = [];
-
-    if (!coordsInBounds(x, y, dims.width, dims.height)) {
-      errors.push({ field: "x/y", message: `Coordinates (${x}, ${y}) out of bounds for ${dims.width}x${dims.height} map` });
-    }
-
-    if (type === "sign" && (!script || script.trim() === "")) {
-      errors.push({ field: "script", message: "Script is required for sign events" });
-    }
-    if (type === "hidden_item" && !item) {
-      errors.push({ field: "item", message: "Item constant is required for hidden_item events" });
-    }
-    if (type === "hidden_item" && !hidden_item_flag) {
-      errors.push({ field: "hidden_item_flag", message: "Flag is required for hidden_item events" });
-    }
-    if (type === "secret_base" && !secret_base_id) {
-      errors.push({ field: "secret_base_id", message: "Secret base ID is required for secret_base events" });
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    const mapData = await readMapJsonValidated(name);
-
-    let event: Record<string, unknown>;
-    if (type === "sign") {
-      event = { type, x, y, elevation, player_facing_dir, script };
-    } else if (type === "hidden_item") {
-      event = { type, x, y, elevation, item: item!, flag: hidden_item_flag! };
-    } else {
-      // secret_base
-      event = { type, x, y, elevation, secret_base_id: secret_base_id! };
-    }
-
-    mapData.bg_events.push(event);
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      event_type: "bg_events",
-      index: mapData.bg_events.length - 1,
-      event: mapData.bg_events[mapData.bg_events.length - 1],
-    });
-  },
+  async (params) => runWriteTool(addBgEvent, params),
 );
 
 // ─── Tool: add_coord_event ──────────────────────────────────────────────────
@@ -985,62 +790,10 @@ server.registerTool(
       script: z.string().optional().describe("For trigger: script label"),
       // Weather fields
       weather: z.string().optional().describe("For weather: weather constant (e.g. 'WEATHER_RAIN')"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, type, x, y, elevation, var: varName, var_value, script, weather }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const dims = await getLayoutForMap(name);
-    if (!dims) {
-      return errorText(`Could not resolve layout dimensions for map "${name}".`);
-    }
-
-    const errors: ValidationError[] = [];
-
-    if (!coordsInBounds(x, y, dims.width, dims.height)) {
-      errors.push({ field: "x/y", message: `Coordinates (${x}, ${y}) out of bounds for ${dims.width}x${dims.height} map` });
-    }
-
-    if (type === "trigger") {
-      if (!varName) errors.push({ field: "var", message: "Variable constant is required for trigger events" });
-      if (!var_value) errors.push({ field: "var_value", message: "Variable value is required for trigger events" });
-      if (!script || script.trim() === "") errors.push({ field: "script", message: "Script is required for trigger events" });
-    }
-
-    if (type === "weather") {
-      if (!weather) {
-        errors.push({ field: "weather", message: "Weather constant is required for weather events" });
-      } else if (!VALID_WEATHER.has(weather)) {
-        errors.push({ field: "weather", message: `Unknown weather "${weather}". Known: ${[...VALID_WEATHER].join(", ")}` });
-      }
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    const mapData = await readMapJsonValidated(name);
-
-    let event: Record<string, unknown>;
-    if (type === "trigger") {
-      event = { type, x, y, elevation, var: varName, var_value, script };
-    } else {
-      event = { type, x, y, elevation, weather };
-    }
-
-    mapData.coord_events.push(event);
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      event_type: "coord_events",
-      index: mapData.coord_events.length - 1,
-      event: mapData.coord_events[mapData.coord_events.length - 1],
-    });
-  },
+  async (params) => runWriteTool(addCoordEvent, params),
 );
 
 // ─── Tool: remove_event ─────────────────────────────────────────────────────
@@ -1067,50 +820,10 @@ server.registerTool(
         .string()
         .optional()
         .describe("Find and remove by local_id (object_events) or warp_id (warp_events) instead of index"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, event_type, index, local_id }) => {
-    if (index === undefined && !local_id) {
-      return errorText("Provide either 'index' or 'local_id' to identify the event to remove.");
-    }
-
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const mapData = await readMapJsonValidated(name);
-    const events = mapData[event_type] as Record<string, unknown>[];
-
-    let targetIndex: number;
-
-    if (local_id) {
-      // Search by local_id or warp_id
-      const idField = event_type === "warp_events" ? "warp_id" : "local_id";
-      targetIndex = events.findIndex((e) => e[idField] === local_id);
-      if (targetIndex === -1) {
-        return errorText(`No event with ${idField}="${local_id}" found in ${event_type} of map "${name}".`);
-      }
-    } else {
-      targetIndex = index!;
-      if (targetIndex < 0 || targetIndex >= events.length) {
-        return errorText(
-          `Index ${targetIndex} out of bounds. Map "${name}" has ${events.length} ${event_type} (indices 0-${events.length - 1}).`,
-        );
-      }
-    }
-
-    const [removed] = events.splice(targetIndex, 1);
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      event_type,
-      removed_index: targetIndex,
-      removed_event: removed,
-      remaining_count: events.length,
-    });
-  },
+  async (params) => runWriteTool(removeEvent, params),
 );
 
 // ─── Tool: edit_map_connection ──────────────────────────────────────────────
@@ -1128,82 +841,10 @@ server.registerTool(
       direction: z.enum(["up", "down", "left", "right"]).describe("Connection direction"),
       target_map: z.string().optional().describe("For add/update: target map constant (e.g. 'MAP_ROUTE101')"),
       offset: z.number().int().optional().describe("For add/update: alignment offset (default 0)"),
+      dry_run: z.boolean().optional().describe("If true, return a diff instead of writing to disk"),
     }),
   },
-  async ({ name, action, direction, target_map, offset }) => {
-    if (!(await mapExists(name))) {
-      return errorText(`Map not found: "${name}".`);
-    }
-
-    const mapData = await readMapJsonValidated(name);
-    const connections = mapData.connections ?? [];
-    const existingIdx = connections.findIndex((c) => c.direction === direction);
-
-    const errors: ValidationError[] = [];
-
-    if (action === "add") {
-      if (existingIdx !== -1) {
-        errors.push({ field: "direction", message: `Connection in direction "${direction}" already exists. Use action="update" to modify it.` });
-      }
-      if (!target_map) {
-        errors.push({ field: "target_map", message: "target_map is required for add action" });
-      }
-    }
-
-    if (action === "update") {
-      if (existingIdx === -1) {
-        errors.push({ field: "direction", message: `No existing connection in direction "${direction}". Use action="add" to create one.` });
-      }
-      if (!target_map) {
-        errors.push({ field: "target_map", message: "target_map is required for update action" });
-      }
-    }
-
-    if (action === "remove") {
-      if (existingIdx === -1) {
-        errors.push({ field: "direction", message: `No connection in direction "${direction}" to remove.` });
-      }
-    }
-
-    // Validate target map exists
-    if (target_map) {
-      const destDir = await resolveMapConstant(target_map);
-      if (!destDir) {
-        errors.push({ field: "target_map", message: `Target map "${target_map}" not found.` });
-      }
-    }
-
-    if (errors.length > 0) {
-      return errorText(`Validation failed:\n${formatErrors(errors)}`);
-    }
-
-    let result: Record<string, unknown>;
-
-    if (action === "add") {
-      const conn = { map: target_map!, offset: offset ?? 0, direction };
-      connections.push(conn);
-      mapData.connections = connections;
-      result = { action: "added", connection: conn };
-    } else if (action === "update") {
-      const old = { ...connections[existingIdx] };
-      connections[existingIdx] = { map: target_map!, offset: offset ?? connections[existingIdx].offset, direction };
-      mapData.connections = connections;
-      result = { action: "updated", old_connection: old, new_connection: connections[existingIdx] };
-    } else {
-      const [removed] = connections.splice(existingIdx, 1);
-      mapData.connections = connections;
-      result = { action: "removed", removed_connection: removed };
-    }
-
-    await writeMapJson(name, mapData);
-
-    return jsonText({
-      map: name,
-      status: "ok",
-      ...result,
-      total_connections: mapData.connections.length,
-    });
-  },
+  async (params) => runWriteTool(editMapConnection, params),
 );
 
 // ─── Start server ────────────────────────────────────────────────────────────
