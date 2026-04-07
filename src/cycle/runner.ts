@@ -10,6 +10,7 @@ import {
   buildTaskPrompt,
   buildBuildFixPrompt,
   buildCommitFixPrompt,
+  buildValidationFixPrompt,
 } from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { ClaudeCodeResult, IssueOutcome } from "../agent/output-parser.js";
@@ -29,7 +30,7 @@ import {
   getRecentGitLogText,
 } from "../git/committer.js";
 import { validateCycle } from "../reflection/validator.js";
-import type { ValidationResult } from "../reflection/validator.js";
+import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
@@ -62,6 +63,7 @@ function persistEngineeringInvestment(
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
 const MAX_COMMIT_FIX_ATTEMPTS = 3;
+const MAX_VALIDATION_FIX_ATTEMPTS = 1;
 const CODING_PHASE_DEFAULT_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
 /**
@@ -361,6 +363,136 @@ async function runBuildVerifyPhase(
 }
 
 /**
+ * Phase 3.5b: Validation fix loop.
+ *
+ * When validation detects that the implementation was "unsubstantiated" (no real
+ * pokeemerald changes) or "incomplete" (key changes missing), spawn a focused
+ * agent to complete the work before proceeding to reflection.
+ */
+async function runValidationFixPhase(
+  cycleNumber: number,
+  plan: { mode: string; objective: string; reasoning: string; implementationPlan?: string },
+  implResult: ClaudeCodeResult,
+  validationResult: ValidationResult,
+  sessionStartSha: string,
+  log: ReturnType<typeof cycleLogger>,
+): Promise<{
+  updatedImplResult: ClaudeCodeResult;
+  finalValidationResult: ValidationResult;
+  buildResult: { success: boolean; errors: string[] } | null;
+  fixActions: ActionRecord[];
+  fixTokenUsage: TokenUsage;
+  reverted: boolean;
+  gameVersion: string | null;
+}> {
+  const fixActions: ActionRecord[] = [];
+  let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+  let currentImplResult = implResult;
+  let currentValidation = validationResult;
+  let buildResult: { success: boolean; errors: string[] } | null = null;
+  let gameVersion: string | null = null;
+  let reverted = false;
+
+  for (let attempt = 1; attempt <= MAX_VALIDATION_FIX_ATTEMPTS; attempt++) {
+    log.info(
+      `  Validation: ${currentValidation.status.toUpperCase()} — running fix agent `
+      + `(attempt ${attempt}/${MAX_VALIDATION_FIX_ATTEMPTS})...`,
+    );
+
+    const fixPrompt = buildValidationFixPrompt(
+      cycleNumber,
+      plan.mode,
+      plan.objective,
+      currentValidation.status as Exclude<ValidationStatus, "verified">,
+      currentValidation.warnings,
+      currentValidation.diffSummary,
+      currentImplResult.filesModified,
+    );
+
+    // Route model same as Phase 2 — coding modes use DeepSeek if configured
+    const deepSeekOverrides = isCodingMode(plan.mode as Parameters<typeof isCodingMode>[0])
+      ? buildDeepSeekOverrides()
+      : undefined;
+    const usingDeepSeek = !!deepSeekOverrides;
+    const model = usingDeepSeek
+      ? process.env.DEEPSEEK_MODEL
+      : process.env.ANTHROPIC_MODEL;
+    const timeout = usingDeepSeek
+      ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
+      : 30 * 60 * 1000;
+
+    const fixResult = await runClaudeCode(fixPrompt, {
+      maxTurns: 30,
+      model,
+      timeout,
+      envOverrides: deepSeekOverrides,
+    });
+    fixActions.push(...fixResult.actions);
+    fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
+
+    // Merge files modified (deduplicated)
+    const mergedFiles = [...new Set([...currentImplResult.filesModified, ...fixResult.filesModified])];
+    currentImplResult = { ...currentImplResult, filesModified: mergedFiles };
+
+    // If fix agent modified pokeemerald files, re-run build verification
+    const hasPokeemeraldChanges = fixResult.filesModified.some((filePath) => {
+      const rel = path.isAbsolute(filePath)
+        ? path.relative(PROJECT_ROOT, filePath)
+        : filePath;
+      return rel.startsWith("pokeemerald/") || rel.startsWith("pokeemerald\\");
+    });
+
+    if (hasPokeemeraldChanges) {
+      log.info("  Validation fix modified pokeemerald/ files — running build verification...");
+      const buildVerify = await runBuildVerifyPhase(
+        cycleNumber,
+        currentImplResult,
+        sessionStartSha,
+        log,
+      );
+      fixActions.push(...buildVerify.fixActions);
+      fixTokenUsage = mergeTokenUsage(fixTokenUsage, buildVerify.fixTokenUsage);
+      buildResult = buildVerify.finalBuildResult;
+      gameVersion = buildVerify.gameVersion;
+
+      if (buildVerify.reverted) {
+        reverted = true;
+        // Build fix exhausted and reverted — no point re-validating
+        break;
+      }
+    }
+
+    // Re-validate
+    if (!reverted) {
+      const diffStats = await getDiffStats();
+      currentValidation = validateCycle({
+        mode: plan.mode as Parameters<typeof validateCycle>[0]["mode"],
+        objective: plan.objective,
+        implResult: currentImplResult,
+        diffStats,
+      });
+
+      if (currentValidation.status === "verified") {
+        log.info(`  Validation: VERIFIED (fixed on attempt ${attempt})`);
+        break;
+      }
+
+      log.warn(`  Validation: still ${currentValidation.status.toUpperCase()} after attempt ${attempt}`);
+    }
+  }
+
+  return {
+    updatedImplResult: currentImplResult,
+    finalValidationResult: currentValidation,
+    buildResult,
+    fixActions,
+    fixTokenUsage,
+    reverted,
+    gameVersion,
+  };
+}
+
+/**
  * Phase 4: Reflection — a fresh agent context analyzes what happened during
  * the cycle and updates memory.
  */
@@ -512,7 +644,7 @@ export async function runCycle(): Promise<void> {
     }
 
     // ── Phase 2: Implementation (separate agent context) ──
-    const implResult = await runImplementationPhase(
+    let implResult = await runImplementationPhase(
       cycleNumber,
       activePlan,
       memory,
@@ -521,7 +653,7 @@ export async function runCycle(): Promise<void> {
     );
 
     // ── Phase 3: Build verification + auto-fix loop ──
-    const {
+    let {
       finalBuildResult,
       fixActions,
       fixTokenUsage,
@@ -536,6 +668,9 @@ export async function runCycle(): Promise<void> {
 
     // ── Phase 3.5: Validation — programmatic claim cross-check ──
     let validationResult: ValidationResult | null = null;
+    let validationFixActions: ActionRecord[] = [];
+    let validationFixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+
     if (!reverted) {
       log.info("Phase 3.5: Validating implementation claims...");
       const diffStats = await getDiffStats();
@@ -551,6 +686,32 @@ export async function runCycle(): Promise<void> {
         for (const w of validationResult.warnings) {
           log.warn(`    - ${w}`);
         }
+
+        // ── Phase 3.5b: Validation fix loop ──
+        const valFix = await runValidationFixPhase(
+          cycleNumber,
+          activePlan,
+          implResult,
+          validationResult,
+          sessionStartSha,
+          log,
+        );
+
+        implResult = valFix.updatedImplResult;
+        validationResult = valFix.finalValidationResult;
+        validationFixActions = valFix.fixActions;
+        validationFixTokenUsage = valFix.fixTokenUsage;
+
+        // If fix triggered a build, update build/version tracking
+        if (valFix.buildResult) {
+          finalBuildResult = valFix.buildResult;
+        }
+        if (valFix.gameVersion) {
+          gameVersion = valFix.gameVersion;
+        }
+        if (valFix.reverted) {
+          reverted = true;
+        }
       }
     }
 
@@ -565,11 +726,12 @@ export async function runCycle(): Promise<void> {
     );
 
     // ── Phase 5: Journal + Commit ──
-    const allActions = [...implResult.actions, ...fixActions, ...reflection.actions];
+    const allActions = [...implResult.actions, ...fixActions, ...validationFixActions, ...reflection.actions];
     const totalTokenUsage = mergeTokenUsage(
       gameplayDesignTokenUsage,
       implResult.tokenUsage,
       fixTokenUsage,
+      validationFixTokenUsage,
       reflection.tokenUsage,
     );
 
@@ -607,7 +769,7 @@ export async function runCycle(): Promise<void> {
       nextSteps: reflection.nextSteps,
       reflectionText: reflection.reflectionText,
       tokenUsage: totalTokenUsage,
-      toolCallCount: implResult.toolCallCount + fixActions.length,
+      toolCallCount: implResult.toolCallCount + fixActions.length + validationFixActions.length,
       issueActions: plan.issueActions.length > 0 ? plan.issueActions : undefined,
       helpRequests: plan.helpRequests.length > 0 ? plan.helpRequests : undefined,
       planOutput,
