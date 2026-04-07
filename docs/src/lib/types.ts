@@ -10,6 +10,10 @@ export interface JournalEntry {
   buildResult?: {
     status: string;
   };
+  cycleResult?: {
+    status: 'reverted' | 'incomplete' | 'unsubstantiated' | 'build-failed' | 'build-passed' | 'plan-designed';
+    label: string;
+  };
   stats?: {
     tokensUsed?: number;
   };

@@ -62,6 +62,9 @@ function parseJournal(md, filename) {
   const summary = (sections['Summary'] || '').trim();
   const nextSteps = (sections['Next Steps'] || '').trim();
   const stats = parseStats(sections['Stats'] || '');
+  const validationStatus = parseValidationStatus(sections['Validation Warnings'] || '');
+  const isReverted = /\[REVERTED/.test(summary);
+  const cycleResult = computeCycleResult({ isReverted, validationStatus, buildResult, mode });
 
   // Plan output: first try the journal section, then fall back to git diff
   let planOutput = (sections['Plan Output'] || '').trim();
@@ -80,6 +83,7 @@ function parseJournal(md, filename) {
     summary,
     nextSteps,
     stats,
+    ...(cycleResult ? { cycleResult } : {}),
     ...(planOutput ? { planOutput } : {}),
   };
 }
@@ -135,6 +139,29 @@ function parseFilesList(text) {
     }
   }
   return files;
+}
+
+/**
+ * Parse validation warnings section for status.
+ */
+function parseValidationStatus(text) {
+  if (!text.trim()) return null;
+  const m = text.match(/\*\*Status\*\*:\s*(INCOMPLETE|UNSUBSTANTIATED)/i);
+  return m ? m[1].toUpperCase() : null;
+}
+
+/**
+ * Compute the overall cycle result from all available signals.
+ * Priority: reverted > validation warning > build result > planning mode.
+ */
+function computeCycleResult({ isReverted, validationStatus, buildResult, mode }) {
+  if (isReverted) return { status: 'reverted', label: 'REVERTED' };
+  if (validationStatus === 'INCOMPLETE') return { status: 'incomplete', label: 'INCOMPLETE' };
+  if (validationStatus === 'UNSUBSTANTIATED') return { status: 'unsubstantiated', label: 'UNSUBSTANTIATED' };
+  if (buildResult?.status === 'failure') return { status: 'build-failed', label: 'BUILD FAILED' };
+  if (buildResult?.status === 'success') return { status: 'build-passed', label: 'BUILD PASSED' };
+  if (mode === 'planning') return { status: 'plan-designed', label: 'PLAN DESIGNED' };
+  return null;
 }
 
 /**

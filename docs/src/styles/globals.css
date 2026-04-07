@@ -36,6 +36,8 @@
   --purple-bright: #b388ff;
   --cyan-bright: #00e5ff;
   --cyan-glow: rgba(0, 229, 255, 0.15);
+  --orange-bright: #ffab40;
+  --orange-glow: rgba(255, 171, 64, 0.15);
 
   --font-pixel: 'Press Start 2P', monospace;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -427,16 +429,30 @@ body::after {
   font-weight: 500;
 }
 
-.build-indicator.success {
+.build-indicator.build-passed {
   background: var(--green-glow);
   color: var(--green-bright);
   border: 1px solid rgba(0, 230, 118, 0.2);
 }
 
-.build-indicator.failure {
+.build-indicator.build-failed {
   background: var(--red-glow);
   color: var(--red-bright);
   border: 1px solid rgba(255, 82, 82, 0.2);
+}
+
+.build-indicator.reverted {
+  background: var(--red-glow);
+  color: var(--red-bright);
+  border: 1px solid rgba(255, 82, 82, 0.3);
+  text-decoration: line-through;
+}
+
+.build-indicator.incomplete,
+.build-indicator.unsubstantiated {
+  background: var(--orange-glow);
+  color: var(--orange-bright);
+  border: 1px solid rgba(255, 171, 64, 0.2);
 }
 
 .build-indicator .led {
@@ -445,15 +461,18 @@ body::after {
   border-radius: 50%;
 }
 
-.build-indicator.success .led { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); }
-.build-indicator.failure .led { background: var(--red-bright); box-shadow: 0 0 6px var(--red-bright); }
+.build-indicator.build-passed .led { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); }
+.build-indicator.build-failed .led { background: var(--red-bright); box-shadow: 0 0 6px var(--red-bright); }
+.build-indicator.reverted .led { background: var(--red-bright); box-shadow: 0 0 6px var(--red-bright); }
+.build-indicator.incomplete .led,
+.build-indicator.unsubstantiated .led { background: var(--orange-bright); box-shadow: 0 0 6px var(--orange-bright); }
 
-.build-indicator.plan {
+.build-indicator.plan-designed {
   background: var(--cyan-glow);
   color: var(--cyan-bright);
   border: 1px solid rgba(0, 229, 255, 0.2);
 }
-.build-indicator.plan .led { background: var(--cyan-bright); box-shadow: 0 0 6px var(--cyan-bright); }
+.build-indicator.plan-designed .led { background: var(--cyan-bright); box-shadow: 0 0 6px var(--cyan-bright); }
 
 /* Card Body (expandable) */
 .card-body {
