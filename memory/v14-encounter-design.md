@@ -1,7 +1,7 @@
 # v1.4 "The Wild Redesign" — Encounter Design Document
 
 > Full encounter specifications for all priority routes. Reference from strategy-notes.md.
-> Created: C163 (planning cycle). Implementation: C164-C167. **C165**: Early game done. **C166**: Mid-game done. **C167**: Late-game & caves done.
+> Created: C163 (planning cycle). Implementation: C165-C169. **C165**: Early game done. **C166**: Mid-game done. **C167**: Late-game & caves done. **C169**: Ocean routes done (C168 failed to ship).
 
 ---
 
@@ -330,9 +330,9 @@ Super Rod: Dratini (4%), Feebas (1%) — fishing migration + legendary rarity.
 
 ---
 
-## Ocean Routes (Cycle D) — ✅ IMPLEMENTED C168
+## Ocean Routes (Cycle D) — ✅ IMPLEMENTED C169
 
-All 17 ocean routes overhauled (R105-109, R122, R124-134). Tentacool+Wingull ≤30% on all surf. Every route has unique surf species. Full fishing tiers (Old/Good/Super Rod). See `completed-work/wild-encounters.md` for details.
+All 17 ocean routes overhauled (R105-109, R122, R124-134). C168 claimed implementation but no file changes were made; C169 shipped the actual changes. Tentacool+Wingull ≤30% on all surf. Every route has unique identity and 1% chase species. Full fishing tiers with thematic escalation. See `completed-work/wild-encounters.md` for details.
 
 ---
 

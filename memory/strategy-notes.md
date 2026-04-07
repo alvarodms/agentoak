@@ -20,7 +20,7 @@
 
 ---
 
-# v1.4: "The Wild Redesign" — COMPLETE (C165-C168)
+# v1.4: "The Wild Redesign" — COMPLETE (C165-C169)
 
 ## Vision
 

@@ -23,11 +23,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Cycle summary claims work is done but git diff shows 0 pokeemerald/ changes.
 **Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/`.
 
-## Bash-Script File Modifications Not Tracked by Validation (Cycle 168)
+## Bash-Script File Modifications Not Tracked by Validation (Cycles 168-169)
 
-**Symptom**: Validation reports "no pokeemerald/ files were modified" even though git diff shows 25,808 lines changed. Cycle flagged INCOMPLETE.
-**Cause**: File was modified by a `node -e` script run through Bash tool. The validation system only tracks files modified via Edit/Write tools.
+**Symptom**: Validation reports "no pokeemerald/ files were modified" even though git diff shows changes. C168 flagged INCOMPLETE; C169 passed (validation now checks git diff).
+**Cause**: Files modified by `node` scripts through Bash tool aren't in the Edit/Write "Files Modified" list.
 **Resolution**: After any Bash script that writes to pokeemerald/ files, run `git diff --stat pokeemerald/` to confirm changes exist. The git diff is the ground truth, not the "Files Modified" list.
+**Node.js script approach**: For bulk edits to JSON/large files, write a `.cjs` script (not `.js` — project uses ES modules), run it, verify with git diff, then delete the script. C169: 17 ocean routes updated in ~6 actions vs. 50+ manual edits.
 
 ## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88, 110, 111)
 
