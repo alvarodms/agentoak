@@ -43,36 +43,14 @@ Before modifying ANY pokeemerald file:
 
 ---
 
-## Files Modified 3+ Times (Watch for Overwrites)
+## Files Modified 3+ Times (v1.7-Relevant — Watch for Overwrites)
 
-These files have been touched in multiple cycles and are at highest risk of accidental regression:
+- **BirchLab/scripts.inc**: 13 cycles (last: C181) — difficulty selection, migration dialogue, legendary saga
+- **MossdeepCity/scripts.inc**: 5 cycles (last: C142) — beast sightings, post-climax reactions
+- **SootopolisCity/scripts.inc**: 3 cycles (last: C142) — Rayquaza reactions
+- **PacifidlogTown/scripts.inc**: 6 cycles (last: C142) — Draconid legend, breadcrumbs
+- **trainer_parties.h / trainers.h**: ~30 cycles each — all trainer data. Macro must match struct.
+- **wild_encounters.json**: 22 cycles (last: C167) — all encounter tables
+- **include/constants/flags.h**: Many cycles — custom flags through 0x286, next: 0x287
 
-- **LittlerootTown/scripts.inc**: Cycles 15, 28, 139, **180**
-- **LittlerootTown_ProfessorBirchsLab/scripts.inc**: Cycles 84, 96, 112, 115, 116, 118, 120, 126, 135, 137, 142, 180, **181**
-- **SlateportCity/scripts.inc**: Cycles 27, 28, 120, 123, 124, **126**
-- **LavaridgeTown/scripts.inc**: Cycles 29, 94, 120, 126, **141**
-- **DewfordTown/scripts.inc**: Cycles 120, **126**
-- **FieryPath/scripts.inc**: Cycles 120, **126**
-- **Route111/scripts.inc**: Cycles 120, 126, 141, **159**
-- **PacifidlogTown/scripts.inc**: Cycles 120, 126, 135, 137, 139, **142**
-- **FortreeCity/scripts.inc**: Cycles 29, 65, 94, 112, 135, 137, 141, **142**
-- **TerraCave_End/scripts.inc**: Cycles 121, 123, **124**
-- **TerraCave_End/map.json**: Cycles 121, 123, **124**
-- **SeafloorCavern_Room9/scripts.inc**: Cycles 121, 123, **124**
-- **SeafloorCavern_Room9/map.json**: Cycles 121, 123, **124**
-- **src/data/trainer_parties.h**: Cycles 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, 124, 126, 136, 146, 147, 148, 150, 172, 173, 175, 176, **177**
-- **src/data/trainers.h**: Cycles 6–12, 16, 17, 49–58, 71–74, 89, 90, 94, 123, 136, 146, 147, 148, 150, 172, 175, 176, 177, **183**
-- **include/constants/opponents.h**: Cycles 6–11, 49, 50, 51, 71, 94, 123, 136, 146, **147**
-- **src/battle_setup.c**: Cycles 6, 49, 50, 71
-- **PetalburgCity_Gym/scripts.inc**: Cycles 32, 36, 50
-- **MauvilleCity/scripts.inc**: Cycles 113, 116, 139, 141, **142**
-- **MossdeepCity/scripts.inc**: Cycles 33, 50, 113, 116, **142**
-- **SootopolisCity/scripts.inc**: Cycles 126, 137, **142**
-- **Route118/scripts.inc**: Cycles 112, 142, **147**
-- **Route119/scripts.inc**: Cycles 29, 65, 94, 104, 149, 159, 160, **162**
-- **Route119/map.json**: Cycles 149, 160, **162**
-- **LilycoveCity/scripts.inc**: Cycles 113, 116, **142**
-- **Route121/scripts.inc**: Cycles 113, **142**
-- **include/constants/species.h**: Cycles 60, 61, 68, 70
-- **include/constants/pokedex.h**: Cycles 60, 61, 68, 70
-- **src/data/wild_encounters.json**: Cycles 3, 4, 9, 14, 21, 47, 49, 52, 60, 61, 63, 68, 70, 91, 98, 99, 100, 121, 136, 165, 166, **167**
+Full history for other files: see detail files or `git log`.

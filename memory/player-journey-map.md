@@ -89,7 +89,7 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 ---
 
-## Known Gaps
+## Known Gaps (v1.7 targets)
 
-- **Badge 7-8 narrative**: No narrative events between Mossdeep and E4
-- **Ocean routes**: Trainers redesigned (C176) but no narrative content on water
+- **Badge 7-8 narrative**: No narrative events between Mossdeep and E4 → **v1.7 C186: badge-conditional city dialogue, C188-189: scripted events**
+- **Ocean routes**: Trainers redesigned (C176) but no narrative content on water → **v1.7 C187: atmospheric NPCs, C188: ocean migration event**

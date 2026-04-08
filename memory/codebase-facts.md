@@ -4,62 +4,13 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Elite Four Rematch System (Cycles 49-50)
+## Trainer System
 
-**Rematch table**: `src/battle_setup.c` lines 260+ — `gRematchTable[]` uses `REMATCH(t1, t2, t3, t4, t5, map)` macro. Each entry holds 5 trainer IDs (base + 4 rematch tiers).
+**Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Current state**: All 5 rematch slots filled — base, tier 1, tier 2, tier 3, tier 4. No more tiers available.
-
-**Trainer ID ceiling**: `TRAINERS_COUNT` = 885 in `opponents.h` (IDs 0-884). Flag space 0x500-0x873.
-
-**Three-file trainer system**: Each trainer requires coordinated changes across `opponents.h` (IDs), `trainers.h` (metadata), and `trainer_parties.h` (party). All three must be updated together.
+**Capacity**: TRAINERS_COUNT = 885 (at cap). Reclaimable IDs: #568, #853, #854. Rematch table: 5 tiers, all filled.
 
 ---
-
-## Trainer Party Struct Types (Cycle 55, updated C171)
-
-Four party struct types in `include/data.h`, controlled by macros in `trainers.h`:
-
-| Struct | Macro | Fields |
-|---|---|---|
-| `TrainerMonNoItemDefaultMoves` | `NO_ITEM_DEFAULT_MOVES(party)` | iv, lvl, species |
-| `TrainerMonNoItemCustomMoves` | `NO_ITEM_CUSTOM_MOVES(party)` | iv, lvl, species, moves[4] |
-| `TrainerMonItemDefaultMoves` | `ITEM_DEFAULT_MOVES(party)` | iv, lvl, species, heldItem |
-| `TrainerMonItemCustomMoves` | `ITEM_CUSTOM_MOVES(party)` | iv, lvl, species, heldItem, moves[4] |
-
-**CRITICAL**: Macro in `trainers.h` must match the party struct type. Mismatch = crash.
-
-**Rival status (C172)**: All 30 rival parties upgraded to `ItemCustomMoves` (Route103 uses `NoItemCustomMoves`). Both `trainer_parties.h` structs AND `trainers.h` macros updated simultaneously. Route103 = 1 mon, Rustboro = 2, Route110 = 3, Route119 = 4, Lilycove = 5.
-
-**Validation script**: `scripts/check_trainers.sh` (C118) — cross-references all three trainer files.
-
----
-
-## Evolution Engine (C157)
-
-**File**: `src/data/pokemon/evolution.h`. Format: `{EVO_TYPE, param, SPECIES_TARGET}`.
-
-**Trade evolutions**: `EVO_TRADE` (type 5) and `EVO_TRADE_ITEM` (type 6). Trade-item evos can use `EVO_ITEM` (type 7) with the same held item — zero engine changes needed.
-
----
-
-## TM Consumption & Indoor Running (C156)
-
-**TMs are already non-consumable** in pokeemerald decomp. No `RemoveBagItem` call in `ItemUseCB_TMHM` path.
-
-**Indoor running** (C156): Removed `!gMapHeader.allowRunning` and `MAP_TYPE_INDOOR` checks from `bike.c`.
-
----
-
-## Options Menu System (Cycle 105)
-
-**File**: `src/option_menu.c`. **SaveBlock2 bitfield** (`include/global.h` line 519): 16-bit field with 3 padding bits remaining.
-
----
-
-## Wild Pokémon Held Item System (Cycle 31)
-
-**Core**: `SetWildMonHeldItem()` in `src/pokemon.c`. Probabilities: 50% common / 5% rare. Compound Eyes: 60% common / 20% rare.
 
 ---
 
@@ -114,9 +65,9 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Sky Pillar System (Cycle 134-136)
+## Legendary Battle Pattern
 
-7 maps. `VAR_SKY_PILLAR_STATE` controls progression. Cracked floors on 2F/4F. Rayquaza uses `FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL` (0x50). **Legendary battle pattern**: `setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`.
+`setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`. Used by all 4 shipped legendaries (beasts, Ho-Oh, Groudon/Kyogre, Rayquaza).
 
 ---
 
@@ -135,17 +86,10 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Coord Events / Walk-Over Triggers (C144)
+## Weather System (C149, C159-160)
 
-**map.json**: `coord_events` with `x`, `y`, `elevation`, `type: "1"`, `script`. One-shot: `setflag` + `goto_if_set`.
-
----
-
-## Route 119 Weather & Weather Omens (C149, C159-160)
-
-**Weather cycling**: `WEATHER_ROUTE119_CYCLE` (constant 20). `setweather` + `doweather` for manual control.
-
-**Weather Omens (C159-160)**: Badge-gated permanent weather on 4 routes (R111/119/120/125). Flags 0x282-0x285. Each has reaction NPC gated by HIDE flag in map.json.
+**Weather commands**: `setweather` + `doweather`. `WEATHER_ROUTE119_CYCLE` (constant 20).
+**Weather Omens**: Badge-gated permanent weather on 4 routes (R111/119/120/125). Flags 0x282-0x285.
 
 ---
 
@@ -167,15 +111,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Regional Variant Sprite Pipeline (PoC validated)
 
-**Palette recoloring**: GBA sprites use 4-bit indexed color (16 palette entries per species). Each pixel stores a palette index, not a direct color. Changing `normal.pal` (JASC-PAL text format: 16 lines of `R G B` values, 0-255) recolors the entire sprite. The shiny system uses this same mechanism.
-
-**Pixel-level edits**: Pillow (Python) can draw markings, accents, and effects by manipulating palette indices programmatically. Proven techniques: glyph stamping (lightning bolts, etc.), low-usage index repurposing (e.g., gray→blue for electric blue eyes), edge emanations (sparks beyond silhouette).
-
-**Critical**: Must update BOTH the `.pal` file (used at GBA compile-time by `gbagfx`) AND the PNG's embedded palette via Pillow (for GitHub/file browser rendering). Palette-only `.pal` edits are invisible when viewing the PNG directly.
-
-**Species registration**: 13 files to touch — species.h constant, 6 graphics INCBINs + externs, 7 table entries (front/back/still pics, palettes, coordinates, icons), species_info. All entries go after UNOWN_QMARK, before closing `};`. Follow the Unown alternate-form pattern.
-
-**Full pipeline with code examples and palette design reference**: `memory/regional-variant-pipeline.md`
+GBA sprites use 4-bit indexed color (16 palette entries). Recolor via `normal.pal` (JASC-PAL format). Must update both `.pal` AND PNG embedded palette. Species registration: 13 files. Full pipeline: `memory/regional-variant-pipeline.md`.
 
 ---
 

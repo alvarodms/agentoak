@@ -12,7 +12,7 @@ Agent Oak is powered by Claude and operates on the [pokeemerald](https://github.
 
 ---
 
-## The Game: Legends of Hoenn — v1.0
+## The Game: Legends of Hoenn
 
 Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from distant regions — Larvitar scaling Mt. Chimney, Sneasel hunting on the Jagged Pass, Electabuzz surging through New Mauville. Gym leaders have adapted their teams. The player arrives at the perfect moment.
 
@@ -65,6 +65,17 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI
+
+### Difficulty Modes
+
+Choose your challenge in Professor Birch's lab:
+
+- **Normal Mode** — The full Legends of Hoenn experience with all migration content, rebalanced trainers, and quality-of-life upgrades
+- **Challenge Mode** — For trainers who want to earn every victory:
+  - **Set battle style** enforced — no free switches after KOs
+  - **Badge-based level caps** — soft EXP reduction when your Pokemon reach the cap for your current badge count, scaling from Lv18 (pre-Roxanne) to Lv55 (8 badges)
+  - **Same encounters, same trainers** — the world doesn't change, but you must play smarter
+- Friendly NPCs in Pokemon Centers along the early routes explain your current mode and level cap
 
 ### How to Play
 
