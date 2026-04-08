@@ -68,10 +68,12 @@ describe("parseBacklogEntries", () => {
       issueNumber: 42,
       title: "Add Riolu encounters",
       deferredAtCycle: 10,
+      deferralCount: 1,
       pendingItems: undefined,
     });
     expect(entries[1].issueNumber).toBe(7);
     expect(entries[1].deferredAtCycle).toBe(5);
+    expect(entries[1].deferralCount).toBe(1);
   });
 
   it("parses entries with pending items", async () => {

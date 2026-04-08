@@ -29,10 +29,10 @@ import {
   getGitStatusText,
   getRecentGitLogText,
 } from "../git/committer.js";
-import { validateCycle } from "../reflection/validator.js";
+import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
-import { closeIssue, addLabelsToIssue, AGENT_LABELS } from "../github/client.js";
+import { closeIssue, addLabelsToIssue, setDecisionLabel, commentOnIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
@@ -165,11 +165,17 @@ async function runPlanningPhase(
 
   // Any issue presented to the planner but NOT included in issueActions must
   // still be marked agent-reviewed so it doesn't resurface on the next cycle.
+  // Post a brief comment so the author knows their issue was seen.
   const actedNumbers = new Set(plan.issueActions.map((a) => a.issueNumber));
   const unhandled = communityIssues.filter((i) => !actedNumbers.has(i.number));
   if (unhandled.length > 0) {
     log.info(`  Marking ${unhandled.length} unhandled issue(s) as reviewed...`);
     for (const issue of unhandled) {
+      await commentOnIssue(
+        issue.number,
+        "🤖 **Agent Oak — Noted**\n\nThis issue was reviewed but not prioritized for the current development cycle. " +
+        "It may be revisited in a future cycle.",
+      );
       await addLabelsToIssue(issue.number, [AGENT_LABELS.reviewed]);
     }
   }
@@ -816,6 +822,20 @@ export async function runCycle(): Promise<void> {
     //    or reject (close as not_planned) based on the agent's decision field.
     // 3. Everything else — fully implemented; post closing comment and close as "completed".
     if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
+      // Guard: if validation found the cycle unsubstantiated, do NOT close any
+      // issues the agent claims are "complete" — the work likely wasn't done.
+      const unsubstantiatedIssues = new Set(
+        validationResult
+          ? getUnsubstantiatedIssueCompletions(validationResult, implResult.issueOutcomes)
+          : [],
+      );
+      if (unsubstantiatedIssues.size > 0) {
+        log.warn(
+          `  ⚠ Skipping closure of ${unsubstantiatedIssues.size} issue(s) with unsubstantiated completion claims: ` +
+          `${[...unsubstantiatedIssues].map((n) => `#${n}`).join(", ")}`,
+        );
+      }
+
       // Issues the planner explicitly flagged as multi-cycle at planning time
       const plannedPartialNumbers = new Set(
         plan.issueActions
@@ -835,6 +855,11 @@ export async function runCycle(): Promise<void> {
       for (const issueNumber of acceptedIssueNumbers) {
         if (plannedPartialNumbers.has(issueNumber)) {
           // Already handled as a planned multi-cycle issue — leave open, skip.
+          continue;
+        }
+        // Skip issues with unsubstantiated completion claims
+        if (unsubstantiatedIssues.has(issueNumber)) {
+          deferNumbers.push(issueNumber);
           continue;
         }
         const outcome = outcomeMap.get(issueNumber);
@@ -879,7 +904,7 @@ export async function runCycle(): Promise<void> {
           const resolution = resolveMultiItemOutcome(outcome);
           const partialComment = formatPartialCommentWithItems(reason, outcome);
           await postIssuePartialDeliveryComment(issueNumber, partialComment, "defer");
-          await addLabelsToIssue(issueNumber, [AGENT_LABELS.deferred]);
+          await setDecisionLabel(issueNumber, AGENT_LABELS.deferred);
           // Re-add to backlog with remaining items tracked
           addIssueToBacklog(issueNumber, `Issue #${issueNumber}`, cycleNumber);
           // If there are remaining items, update the backlog entry with pending items
@@ -904,7 +929,7 @@ export async function runCycle(): Promise<void> {
           const reason = outcome.reason ?? "This cycle's work only partially addressed this issue, and the remaining work will not be pursued.";
           const rejectComment = formatPartialCommentWithItems(reason, outcome);
           await postIssuePartialDeliveryComment(issueNumber, rejectComment, "reject");
-          await addLabelsToIssue(issueNumber, [AGENT_LABELS.rejected]);
+          await setDecisionLabel(issueNumber, AGENT_LABELS.rejected);
           await closeIssue(issueNumber, "not_planned");
         }
       }

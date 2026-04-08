@@ -1,5 +1,5 @@
 import path from "path";
-import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import type { ClaudeCodeResult, IssueOutcome } from "../agent/output-parser.js";
 import type { CycleMode } from "../cycle/modes.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { logger } from "../utils/logger.js";
@@ -84,6 +84,19 @@ export function validateCycle(params: {
     }
   }
 
+  // --- Check 4: Issue completion claims vs actual changes ---
+  // If agent claims issues are "complete" but no pokeemerald files were changed,
+  // flag as unsubstantiated — the issue shouldn't be closed.
+  if (expectsCodeChanges && diffStats.filesChanged === 0) {
+    const completedIssues = implResult.issueOutcomes.filter((o) => o.status === "complete");
+    if (completedIssues.length > 0) {
+      warnings.push(
+        `Agent claims ${completedIssues.length} issue(s) as "complete" (${completedIssues.map((o) => `#${o.number}`).join(", ")}), ` +
+        `but git diff shows 0 files changed in pokeemerald/. Issues should NOT be closed without actual code changes.`,
+      );
+    }
+  }
+
   // --- Determine status ---
   let status: ValidationStatus;
   if (warnings.length === 0) {
@@ -112,4 +125,23 @@ export function validateCycle(params: {
     warnings,
     diffSummary: diffStats.summary,
   };
+}
+
+/**
+ * Validate that issue completion claims are substantiated.
+ *
+ * Returns an array of issue numbers that should NOT be closed because
+ * the validation detected unsubstantiated completion claims.
+ */
+export function getUnsubstantiatedIssueCompletions(
+  validationResult: ValidationResult,
+  issueOutcomes: IssueOutcome[],
+): number[] {
+  if (validationResult.status === "unsubstantiated") {
+    // If the whole cycle is unsubstantiated, no issues should be closed
+    return issueOutcomes
+      .filter((o) => o.status === "complete")
+      .map((o) => o.number);
+  }
+  return [];
 }

@@ -225,7 +225,7 @@ export async function planCycle(
   cycleNumber: number,
   issueContext: string = "",
   issueBacklog: string = "",
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number }>,
 ): Promise<CyclePlan> {
   // Dispatch to team planner if conditions are met
   if (shouldUseTeamPlanning(cycleNumber, undefined, issueContext.length > 0)) {

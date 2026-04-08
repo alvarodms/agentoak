@@ -15,6 +15,8 @@ import {
   closeIssue,
   createIssue,
   getGitHubClient,
+  setDecisionLabel,
+  fetchIssueComments,
   AGENT_LABELS,
   COMMUNITY_LABELS,
 } from "./client.js";
@@ -24,21 +26,29 @@ import { MEMORY_DIR } from "../utils/paths.js";
 
 const BACKLOG_FILE = path.join(MEMORY_DIR, "issue-backlog.md");
 
+/** Maximum times an issue can be deferred before the planner must accept or reject it. */
+export const MAX_DEFERRALS = 5;
+
 /** Parsed backlog entry with cycle-tracking metadata. */
 export interface BacklogEntry {
   issueNumber: number;
   title: string;
   /** The cycle number when this issue was deferred. 0 if unknown (legacy entries). */
   deferredAtCycle: number;
+  /** How many times this issue has been deferred in total. */
+  deferralCount: number;
   /** For multi-item issues: labels of items still pending. Omitted for single-item issues. */
   pendingItems?: string[];
 }
 
-const BACKLOG_LINE_RE = /^- #(\d+):\s*(.+?)(?:\s*\(deferred: cycle (\d+)\))?(?:\s*\|\s*pending:\s*(.+))?$/;
+const BACKLOG_LINE_RE = /^- #(\d+):\s*(.+?)(?:\s*\(deferred: cycle (\d+)\))?(?:\s*\|\s*deferrals:\s*(\d+))?(?:\s*\|\s*pending:\s*(.+))?$/;
 
 /** Format a single backlog entry as a markdown line. */
 function formatBacklogLine(entry: BacklogEntry): string {
   let line = `- #${entry.issueNumber}: ${entry.title} (deferred: cycle ${entry.deferredAtCycle})`;
+  if (entry.deferralCount > 1) {
+    line += ` | deferrals: ${entry.deferralCount}`;
+  }
   if (entry.pendingItems && entry.pendingItems.length > 0) {
     line += ` | pending: ${entry.pendingItems.join("; ")}`;
   }
@@ -56,13 +66,14 @@ export function parseBacklogEntries(): BacklogEntry[] {
     for (const line of fs.readFileSync(BACKLOG_FILE, "utf-8").split("\n")) {
       const match = line.match(BACKLOG_LINE_RE);
       if (match) {
-        const pendingItems = match[4]
-          ? match[4].split(";").map((s) => s.trim()).filter(Boolean)
+        const pendingItems = match[5]
+          ? match[5].split(";").map((s) => s.trim()).filter(Boolean)
           : undefined;
         entries.push({
           issueNumber: parseInt(match[1], 10),
           title: match[2].trim(),
           deferredAtCycle: match[3] ? parseInt(match[3], 10) : 0,
+          deferralCount: match[4] ? parseInt(match[4], 10) : 1,
           pendingItems,
         });
       }
@@ -99,6 +110,16 @@ export function getStaleBacklogIssues(currentCycle: number, threshold = 10): Bac
 }
 
 /**
+ * Check whether an issue has exceeded the maximum deferral count.
+ * When true, the planner MUST accept or reject — no more deferring.
+ */
+export function isMaxDeferralsReached(issueNumber: number): boolean {
+  const entries = parseBacklogEntries();
+  const entry = entries.find((e) => e.issueNumber === issueNumber);
+  return entry ? entry.deferralCount >= MAX_DEFERRALS : false;
+}
+
+/**
  * Add a single issue to the backlog file unconditionally.
  *
  * Unlike updateIssueBacklog (which routes planning-phase actions), this is a
@@ -112,7 +133,13 @@ export function addIssueToBacklog(issueNumber: number, title: string, cycleNumbe
     existing.set(entry.issueNumber, entry);
   }
 
-  existing.set(issueNumber, { issueNumber, title, deferredAtCycle: cycleNumber });
+  const prev = existing.get(issueNumber);
+  existing.set(issueNumber, {
+    issueNumber,
+    title,
+    deferredAtCycle: cycleNumber,
+    deferralCount: prev ? prev.deferralCount + 1 : 1,
+  });
 
   writeBacklogEntries([...existing.values()]);
   logger.info(`Added issue #${issueNumber} to backlog (${existing.size} item(s) total).`);
@@ -150,15 +177,24 @@ export function updateIssueBacklog(
           issueNumber: action.issueNumber,
           title,
           deferredAtCycle: cycleNumber,
+          deferralCount: 1,
           pendingItems: deferredItemLabels?.length ? deferredItemLabels : undefined,
         });
         changed = true;
       } else if (staleIssueNumbers?.has(action.issueNumber)) {
-        // Re-deferring a stale issue — reset cycle counter
+        // Re-deferring a stale issue — reset cycle counter and increment deferral count
         const entry = existing.get(action.issueNumber)!;
+        const newCount = entry.deferralCount + 1;
+        if (newCount > MAX_DEFERRALS) {
+          logger.warn(
+            `Issue #${action.issueNumber} has been deferred ${newCount} times (max: ${MAX_DEFERRALS}). ` +
+            `It will be surfaced to the planner with a mandatory accept-or-reject constraint.`,
+          );
+        }
         existing.set(action.issueNumber, {
           ...entry,
           deferredAtCycle: cycleNumber,
+          deferralCount: newCount,
           pendingItems: deferredItemLabels?.length ? deferredItemLabels : entry.pendingItems,
         });
         changed = true;
@@ -167,10 +203,12 @@ export function updateIssueBacklog(
       if (action.items && action.items.length > 0 && deferredItemLabels && deferredItemLabels.length > 0) {
         // Multi-item: some items accepted, some deferred — track deferred items in backlog
         const title = issueMap.get(action.issueNumber)?.title ?? existing.get(action.issueNumber)?.title ?? "Unknown";
+        const prevEntry = existing.get(action.issueNumber);
         existing.set(action.issueNumber, {
           issueNumber: action.issueNumber,
           title,
           deferredAtCycle: cycleNumber,
+          deferralCount: prevEntry ? prevEntry.deferralCount + 1 : 1,
           pendingItems: deferredItemLabels,
         });
         changed = true;
@@ -350,11 +388,37 @@ ${rows.join("\n")}`;
 }
 
 /**
+ * Check whether the most recent bot comment on an issue already reflects the
+ * same decision. Returns true if posting a new comment would be redundant.
+ *
+ * Only applies to "defer" actions — accept/reject/need-info always post because
+ * they represent a meaningful state change.
+ */
+async function isDuplicateDeferral(issueNumber: number): Promise<boolean> {
+  try {
+    const comments = await fetchIssueComments(issueNumber, 5);
+    // Find the most recent bot comment (posted by github-actions)
+    const lastBotComment = comments.find(
+      (c) => c.author === "github-actions[bot]" || c.author === "github-actions",
+    );
+    if (!lastBotComment) return false;
+
+    // If the last bot comment was already a deferral, skip posting another one
+    return lastBotComment.body.includes("**Agent Oak — Deferred**");
+  } catch {
+    return false; // On error, allow the comment to be posted
+  }
+}
+
+/**
  * Execute the planner's decisions on community issues.
  *
- * For each action: post a comment with the agent's response, add the
- * appropriate action label, and always add `agent-reviewed` to prevent
- * re-processing in future cycles.
+ * For each action: post a comment with the agent's response, set the
+ * appropriate decision label (removing conflicting labels), and always
+ * add `agent-reviewed` to prevent re-processing in future cycles.
+ *
+ * Skips posting duplicate deferral comments when the last bot comment
+ * already said "Deferred" to avoid spamming long-running deferred issues.
  */
 export async function executeIssueActions(actions: IssueAction[]): Promise<void> {
   if (actions.length === 0) return;
@@ -363,6 +427,18 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
 
   for (const action of actions) {
     try {
+      // Skip duplicate deferral comments to avoid spamming issues like #77
+      if (action.action === "defer") {
+        const isDuplicate = await isDuplicateDeferral(action.issueNumber);
+        if (isDuplicate) {
+          logger.info(`Issue #${action.issueNumber}: skipping duplicate deferral comment`);
+          // Still update labels in case they need cleanup, but skip the comment
+          const actionLabel = ACTION_LABEL_MAP[action.action];
+          if (actionLabel) await setDecisionLabel(action.issueNumber, actionLabel);
+          continue;
+        }
+      }
+
       // Post the agent's response as a comment
       if (action.items && action.items.length > 0) {
         // Multi-item issue: checklist-style comment
@@ -376,12 +452,15 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
         await commentOnIssue(action.issueNumber, prefix + action.response);
       }
 
-      // Add the action label + reviewed label (based on dominant action)
+      // Set the decision label, removing conflicting labels (e.g., remove
+      // agent-deferred when accepting, remove agent-accepted when deferring)
       const actionLabel = ACTION_LABEL_MAP[action.action];
-      const labels: string[] = [AGENT_LABELS.reviewed];
-      if (actionLabel) labels.push(actionLabel);
-
-      await addLabelsToIssue(action.issueNumber, labels);
+      if (actionLabel) {
+        await setDecisionLabel(action.issueNumber, actionLabel);
+      } else {
+        // No decision label — just ensure agent-reviewed is present
+        await addLabelsToIssue(action.issueNumber, [AGENT_LABELS.reviewed]);
+      }
 
       // Close rejected issues immediately — only if ALL items are rejected
       // (for multi-item issues, action === "reject" means every item was rejected)
@@ -390,7 +469,7 @@ export async function executeIssueActions(actions: IssueAction[]): Promise<void>
       }
 
       logger.info(
-        `Issue #${action.issueNumber}: ${action.action}${action.items ? ` (${action.items.length} items)` : ""} — labels: [${labels.join(", ")}]`,
+        `Issue #${action.issueNumber}: ${action.action}${action.items ? ` (${action.items.length} items)` : ""}`,
       );
     } catch (err) {
       logger.error(
