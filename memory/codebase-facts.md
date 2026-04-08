@@ -176,3 +176,17 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 **Species registration**: 13 files to touch — species.h constant, 6 graphics INCBINs + externs, 7 table entries (front/back/still pics, palettes, coordinates, icons), species_info. All entries go after UNOWN_QMARK, before closing `};`. Follow the Unown alternate-form pattern.
 
 **Full pipeline with code examples and palette design reference**: `memory/regional-variant-pipeline.md`
+
+---
+
+## EXP Award System & Challenge Mode Level Caps (C182)
+
+**EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases:
+- Case 0: eligibility check (not link/frontier/safari)
+- Case 1: calculate base EXP
+- Case 2: apply to each party member (EXP amount stored in `gBattleMoveDamage`)
+- Case 3+: level-up handling
+
+**Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10.
+
+**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`. Wraps `FlagGet(FLAG_DIFFICULTY_CHALLENGE)`. Works because callers already include `event_data.h`. Used in `battle_main.c` (Set mode override) and `battle_script_commands.c` (level caps).

@@ -86,11 +86,12 @@ Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files:
 | Iron Head | 376 | Steel | 80 | Phys | FLINCH_HIT | 30% flinch |
 | Zen Headbutt | 377 | Psychic | 80 | Phys | FLINCH_HIT | 20% flinch |
 
-## Challenge Mode — Set Battle Override (C181)
+## Challenge Mode — Set Battle Override (C181) + Level Caps (C182)
 
 | File | What Changed | Cycle | Notes |
 |------|-------------|-------|-------|
-| `src/battle_main.c` | After `gBattleScripting.battleStyle` assignment, override to SET if `FLAG_DIFFICULTY_CHALLENGE` | **181** | 2 lines added after line ~3111 |
-| `include/constants/flags.h` | `FLAG_DIFFICULTY_CHALLENGE` = 0x286 | **181** | Repurposed `FLAG_UNUSED_0x286` |
+| `src/battle_main.c` | After `gBattleScripting.battleStyle` assignment, override to SET if Challenge Mode | **181**, **182** | C182: refactored to use IsChallengeModeActive() macro |
+| `include/constants/flags.h` | `FLAG_DIFFICULTY_CHALLENGE` = 0x286 + `IsChallengeModeActive()` macro | **181**, **182** | C182: added shared helper macro |
 | `include/constants/script_menu.h` | `MULTI_DIFFICULTY_SELECT` = 114 | **181** | New multichoice constant |
 | `src/data/script_menu.h` | `MultichoiceList_DifficultySelect` (Normal/Challenge) + array entry | **181** | 2 text strings + list + 1 array entry |
+| `src/battle_script_commands.c` | `GetChallengeLevelCap()` function + soft cap check in `Cmd_getexp()` | **182** | Badge-based caps (18/20/24/30/34/38/42/48/55), 10% EXP above cap |

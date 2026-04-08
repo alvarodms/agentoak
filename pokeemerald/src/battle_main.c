@@ -3109,7 +3109,7 @@ static void BattleStartClearSetData(void)
     }
 
     gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
-    if (FlagGet(FLAG_DIFFICULTY_CHALLENGE))
+    if (IsChallengeModeActive())
         gBattleScripting.battleStyle = OPTIONS_BATTLE_STYLE_SET;
 
     gMultiHitCounter = 0;

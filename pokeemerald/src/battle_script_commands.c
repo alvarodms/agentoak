@@ -3252,6 +3252,27 @@ static void Cmd_jumpiftype(void)
         gBattlescriptCurrInstr += 7;
 }
 
+static u8 GetChallengeLevelCap(void)
+{
+    if (FlagGet(FLAG_BADGE08_GET))
+        return 55;
+    if (FlagGet(FLAG_BADGE07_GET))
+        return 48;
+    if (FlagGet(FLAG_BADGE06_GET))
+        return 42;
+    if (FlagGet(FLAG_BADGE05_GET))
+        return 38;
+    if (FlagGet(FLAG_BADGE04_GET))
+        return 34;
+    if (FlagGet(FLAG_BADGE03_GET))
+        return 30;
+    if (FlagGet(FLAG_BADGE02_GET))
+        return 24;
+    if (FlagGet(FLAG_BADGE01_GET))
+        return 20;
+    return 18;
+}
+
 static void Cmd_getexp(void)
 {
     u16 item;
@@ -3394,6 +3415,15 @@ static void Cmd_getexp(void)
                     else
                     {
                         i = STRINGID_EMPTYSTRING4;
+                    }
+
+                    /* Challenge Mode soft level cap */
+                    if (IsChallengeModeActive())
+                    {
+                        u8 monLevel = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
+                        u8 levelCap = GetChallengeLevelCap();
+                        if (monLevel >= levelCap)
+                            gBattleMoveDamage = gBattleMoveDamage / 10;
                     }
 
                     // get exp getter battler

@@ -11,7 +11,9 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 **Key moments**:
 - Littleroot NPCs hint at strange cries and Birch's late nights (C140)
-- Birch gives starter + Pokédex; mentions migration research (C180 planned)
+- Birch gives starter + Pokédex; migration dialogue after Pokédex gift (C180)
+- Difficulty selection multichoice — Normal or Challenge Mode (C181)
+- Oldale PkmnCenter NPC acknowledges difficulty choice (C181)
 - Route 101 glimpse event: mystery creature stirs in grass (C144)
 - Route 102 glimpse event: second sighting (C145)
 - Route 104 glimpse event (C145)
@@ -34,6 +36,8 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 - Roxanne gym battle (redesigned C130)
 
 **Pacing**: Good escalation from passive hints to interactive event. Trainer quality matches atmospheric quality post-C146.
+
+**Challenge Mode note**: Level cap active (18 pre-badge, 20 post-Roxanne). Set battle style enforced. (C181-182)
 
 **Emotional arc**: Wonder (Pikachu sighting) → confidence (first gym)
 
@@ -85,7 +89,5 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 ## Known Gaps
 
-- **Birch lab opening**: No migration mention yet (C180 planned)
-- **Difficulty selection**: No player agency over challenge level (C181 planned)
 - **Badge 7-8 narrative**: No narrative events between Mossdeep and E4
 - **Ocean routes**: Trainers redesigned (C176) but no narrative content on water

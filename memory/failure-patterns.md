@@ -52,3 +52,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
 - **Trainer capacity**: TRAINERS_COUNT = 885, AT CAPACITY. Must reuse unused IDs for new trainers.
+
+## Trainer Macro/Struct Mismatches from Bulk Passes (C177→C182)
+
+**Symptom**: 17 trainers had wrong macro in `trainers.h` (e.g., `ITEM_CUSTOM_MOVES` when party struct is `NoItemDefaultMoves`). Not caught at compile time — causes runtime crash when game reads past struct boundaries.
+**Cause**: C177 cave trainer pass changed macros without verifying actual party struct types in `trainer_parties.h`.
+**Resolution**: C182 corrected all 17. For future bulk passes, always verify macro matches struct. Run `scripts/check_trainers.sh` after bulk trainer edits.

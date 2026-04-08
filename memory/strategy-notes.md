@@ -61,43 +61,9 @@ Multichoice in Birch Lab after migration dialogue. FLAG_DIFFICULTY_CHALLENGE (0x
 
 ---
 
-## Phase 4: Badge-Based Level Caps (C182) — Engine Sprint
+## Phase 4: Badge-Based Level Caps (C182) — DONE
 
-**Goal**: In Challenge Mode, Pokémon above the badge-appropriate level cap earn drastically reduced EXP.
-
-### Level Cap Table
-
-| Badges | Cap | Rationale |
-|--------|-----|-----------|
-| 0 | 16 | Pre-Roxanne: starters reach ~14-15 naturally |
-| 1 (Roxanne) | 20 | Brawly's ace is Lv18 |
-| 2 (Brawly) | 24 | Wattson's ace is Lv24 |
-| 3 (Wattson) | 30 | Flannery's ace is Lv29 |
-| 4 (Flannery) | 34 | Norman's ace is Lv31 |
-| 5 (Norman) | 38 | Winona's ace is Lv33 |
-| 6 (Winona) | 42 | Tate&Liza aces are Lv42 |
-| 7 (Tate&Liza) | 48 | Juan's ace is Lv46 |
-| 8 (Juan) | 55 | E4 Sidney starts at Lv46, Champion at Lv58 |
-| E4 clear | 100 | No cap — postgame is unrestricted |
-
-### Implementation
-**File**: `src/battle_script_commands.c`, in `Cmd_getexp()` around line 3369-3380
-**Injection point**: After all EXP multipliers are applied to `gBattleMoveDamage`, before the value is used:
-
-```c
-// Challenge Mode soft level cap
-if (FlagGet(FLAG_DIFFICULTY_CHALLENGE))
-{
-    u8 monLevel = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
-    u8 levelCap = GetChallengeLevelCap(); // helper function
-    if (monLevel >= levelCap)
-        gBattleMoveDamage = gBattleMoveDamage / 10; // 10% EXP above cap
-}
-```
-
-**Helper function** `GetChallengeLevelCap()`: checks badge flags (FLAG_BADGE01_GET through FLAG_BADGE08_GET) and returns the appropriate cap from the table above. ~20 lines, place in same file or in `src/battle_util.c`.
-
-**Soft cap, not hard**: Pokémon still gain *some* EXP (prevents softlocks). Rare Candy bypasses cap (intentional). Daycare/link/Frontier unaffected.
+Implemented badge-based soft level caps in Challenge Mode. `GetChallengeLevelCap()` in `battle_script_commands.c` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in `Cmd_getexp()` reduces EXP to 10% when at or above cap. `IsChallengeModeActive()` macro added to `flags.h` and used in both `battle_main.c` and the new cap check. 0-badge cap raised to 18 (from spec's 16) to avoid frustrating thorough players pre-Roxanne.
 
 ---
 
@@ -126,7 +92,7 @@ if (FlagGet(FLAG_DIFFICULTY_CHALLENGE))
 
 ## Technical Reference
 
-- **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Set mode override: `src/battle_main.c:3111`. Level cap: `src/battle_script_commands.c:~3377`.
+- **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()` macro in `constants/flags.h`. Set mode override: `src/battle_main.c:3112`. Level cap: `GetChallengeLevelCap()` + soft cap check in `src/battle_script_commands.c` (in `Cmd_getexp()`).
 - **Flag space**: 0x264+ (v6), 0x272-0x277 (Sky Guardian), 0x278-0x285 (migration/weather). Next available: 0x286.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854. Struct types: NoItemDefaultMoves, NoItemCustomMoves, ItemDefaultMoves, ItemCustomMoves.
