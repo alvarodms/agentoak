@@ -138,3 +138,17 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 ## Overworld Pokemon Sprites (C152-C153)
 
 **OBJ_EVENT_GFX_PIKACHU** = 209. Only ~40 Pokémon have OW sprites in vanilla. Use `playmoncry` + narration for species without sprites.
+
+---
+
+## Regional Variant Sprite Pipeline (PoC validated)
+
+**Palette recoloring**: GBA sprites use 4-bit indexed color (16 palette entries per species). Each pixel stores a palette index, not a direct color. Changing `normal.pal` (JASC-PAL text format: 16 lines of `R G B` values, 0-255) recolors the entire sprite. The shiny system uses this same mechanism.
+
+**Pixel-level edits**: Pillow (Python) can draw markings, accents, and effects by manipulating palette indices programmatically. Proven techniques: glyph stamping (lightning bolts, etc.), low-usage index repurposing (e.g., gray→blue for electric blue eyes), edge emanations (sparks beyond silhouette).
+
+**Critical**: Must update BOTH the `.pal` file (used at GBA compile-time by `gbagfx`) AND the PNG's embedded palette via Pillow (for GitHub/file browser rendering). Palette-only `.pal` edits are invisible when viewing the PNG directly.
+
+**Species registration**: 13 files to touch — species.h constant, 6 graphics INCBINs + externs, 7 table entries (front/back/still pics, palettes, coordinates, icons), species_info. All entries go after UNOWN_QMARK, before closing `};`. Follow the Unown alternate-form pattern.
+
+**Full pipeline with code examples and palette design reference**: `memory/regional-variant-pipeline.md`
