@@ -435,6 +435,197 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* Mode toggle */
+  .mode-toggle {
+    display: flex;
+    gap: 4px;
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mode-btn {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-align: center;
+  }
+  .mode-btn:hover { background: var(--bg-card); color: var(--text); }
+  .mode-btn.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Map preview */
+  .preview-controls {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .preview-controls select,
+  .preview-controls input[type="text"] {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    outline: none;
+  }
+  .preview-controls select:focus,
+  .preview-controls input:focus { border-color: var(--accent); }
+  .preview-controls input::placeholder { color: var(--text-dim); opacity: 0.5; }
+  .preview-controls label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+  }
+
+  .map-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 8px;
+  }
+  .map-list-item {
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--text);
+    transition: background 0.12s;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .map-list-item:hover { background: var(--bg-card); }
+  .map-list-item.active { background: var(--accent-soft); color: var(--accent); }
+
+  .map-canvas-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #0a0e1a;
+  }
+  .map-canvas-wrap canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    image-rendering: pixelated;
+  }
+
+  .map-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .map-toolbar label {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .map-toolbar input[type="range"] {
+    width: 100px;
+    accent-color: var(--accent);
+  }
+  .map-toolbar .zoom-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text);
+    min-width: 32px;
+  }
+  .map-toolbar .btn-small {
+    padding: 4px 10px;
+    font-size: 11px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: var(--font);
+    font-weight: 600;
+    transition: background 0.12s, color 0.12s;
+  }
+  .map-toolbar .btn-small:hover { color: var(--text); border-color: var(--text-dim); }
+  .map-toolbar .btn-small.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .map-toolbar .separator {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+  }
+
+  .map-info-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 16px;
+    background: var(--bg-panel);
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    flex-shrink: 0;
+    min-height: 28px;
+  }
+  .map-info-bar .info-item span { color: var(--text); }
+
+  .map-loading-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 14, 26, 0.85);
+    z-index: 10;
+  }
+  .map-loading-overlay .loading-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
@@ -445,11 +636,17 @@
     <p id="sidebarSubtitle">Tool Explorer</p>
   </div>
   <div class="server-tabs" id="serverTabs" style="display:none"></div>
+  <div class="mode-toggle" id="modeToggle" style="display:none">
+    <button class="mode-btn active" id="modeToolsBtn" onclick="setViewMode('tools')">Tools</button>
+    <button class="mode-btn" id="modePreviewBtn" onclick="setViewMode('preview')">Map Preview</button>
+  </div>
+  <div id="sidebarBody">
   <div class="tool-list" id="toolList">
     <div class="empty-state" style="padding: 40px 0">
       <div class="spinner"></div>
       <p style="font-size: 12px">Loading tools...</p>
     </div>
+  </div>
   </div>
 </aside>
 
@@ -476,6 +673,46 @@ let isLoading = false;
 let lastResult = null;
 let lastDuration = null;
 
+let viewMode = 'tools';
+let hasPorymap = false;
+
+// Map preview state
+const mapPreview = {
+  allMaps: [],
+  filteredMaps: [],
+  selectedMap: null,
+  mapInfo: null,
+  blocks: null,
+  events: null,
+  primaryMetatiles: null,
+  secondaryMetatiles: null,
+  // Indexed tileset data for palette-accurate rendering
+  tilesetData: null,       // { primary, secondary, palettes } from /map-tileset-data
+  paletteTilesheets: {},   // cache: "primary|secondary:palIdx" → Canvas
+  zoom: 1,
+  panX: 0,
+  panY: 0,
+  isPanning: false,
+  panStartX: 0,
+  panStartY: 0,
+  showCollision: false,
+  showEvents: true,
+  hoverX: -1,
+  hoverY: -1,
+  loading: false,
+  canvas: null,
+  ctx: null,
+  offscreen: null,
+  offCtx: null,
+};
+
+const EVENT_COLORS = {
+  object: '#3498db',
+  warp: '#f39c12',
+  coord: '#f1c40f',
+  bg: '#2ecc71',
+};
+
 async function init() {
   try {
     const res = await fetch(`${API}/api/servers`);
@@ -497,6 +734,11 @@ async function init() {
   } else {
     document.getElementById('sidebarSubtitle').textContent =
       servers[0].label + ' \u2014 Tool Explorer';
+  }
+
+  hasPorymap = servers.some(s => s.key === 'porymap');
+  if (hasPorymap) {
+    document.getElementById('modeToggle').style.display = 'flex';
   }
 
   document.title = servers.length > 1
@@ -528,20 +770,616 @@ function switchServer(key) {
   renderMain();
 }
 
+function setViewMode(mode) {
+  viewMode = mode;
+  document.getElementById('modeToolsBtn').classList.toggle('active', mode === 'tools');
+  document.getElementById('modePreviewBtn').classList.toggle('active', mode === 'preview');
+
+  if (mode === 'preview') {
+    renderPreviewSidebar();
+    renderPreviewMain();
+    if (mapPreview.allMaps.length === 0) loadMapList();
+  } else {
+    renderToolsSidebar();
+    renderMain();
+  }
+}
+
+function renderToolsSidebar() {
+  const body = document.getElementById('sidebarBody');
+  body.innerHTML = `<div class="tool-list" id="toolList"></div>`;
+  renderToolList();
+}
+
+function renderPreviewSidebar() {
+  const body = document.getElementById('sidebarBody');
+  body.innerHTML = `
+    <div class="preview-controls">
+      <label>Search maps</label>
+      <input type="text" id="mapSearch" placeholder="Filter maps..." oninput="filterMaps(this.value)">
+    </div>
+    <div class="map-list" id="mapList">
+      <div class="empty-state" style="padding:30px 0"><div class="spinner"></div><p style="font-size:11px">Loading maps...</p></div>
+    </div>`;
+}
+
+async function loadMapList() {
+  try {
+    const res = await fetch(`${API}/api/call`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ server: 'porymap', tool: 'list_maps', arguments: {} }),
+    });
+    const data = await res.json();
+    const text = data?.content?.[0]?.text ?? '';
+    const jsonStr = text.substring(text.indexOf('{'));
+    const groups = JSON.parse(jsonStr);
+    const maps = [];
+    for (const [, val] of Object.entries(groups)) {
+      if (val && typeof val === 'object' && Array.isArray(val.maps)) {
+        maps.push(...val.maps);
+      }
+    }
+    maps.sort();
+    mapPreview.allMaps = maps;
+    mapPreview.filteredMaps = maps;
+    renderMapList();
+  } catch (err) {
+    const el = document.getElementById('mapList');
+    if (el) el.innerHTML = `<div class="empty-state" style="padding:20px 0"><p style="font-size:11px;color:var(--accent)">Failed to load maps</p></div>`;
+  }
+}
+
+function filterMaps(query) {
+  const q = query.toLowerCase().trim();
+  mapPreview.filteredMaps = q
+    ? mapPreview.allMaps.filter(m => m.toLowerCase().includes(q))
+    : mapPreview.allMaps;
+  renderMapList();
+}
+
+function renderMapList() {
+  const el = document.getElementById('mapList');
+  if (!el) return;
+  if (mapPreview.filteredMaps.length === 0) {
+    el.innerHTML = `<div class="empty-state" style="padding:20px 0"><p style="font-size:11px">No maps found</p></div>`;
+    return;
+  }
+  el.innerHTML = mapPreview.filteredMaps.map(m => `
+    <div class="map-list-item ${mapPreview.selectedMap === m ? 'active' : ''}"
+         onclick="selectMap('${escapeHtml(m)}')">${escapeHtml(m)}</div>
+  `).join('');
+}
+
+async function selectMap(name) {
+  if (mapPreview.selectedMap === name && mapPreview.blocks) return;
+  mapPreview.selectedMap = name;
+  renderMapList();
+  await loadMapData(name);
+}
+
+async function callPorymapTool(tool, args) {
+  const res = await fetch(`${API}/api/call`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ server: 'porymap', tool, arguments: args }),
+  });
+  const data = await res.json();
+  const text = data?.content?.[0]?.text;
+  if (!text) throw new Error('Empty response');
+  return JSON.parse(text);
+}
+
+function tilesetConstToDir(name) {
+  return name
+    .replace('gTileset_', '')
+    .replace(/([A-Z])/g, (m, c, i) => i === 0 ? c.toLowerCase() : '_' + c.toLowerCase())
+    .replace(/^_/, '');
+}
+
+/**
+ * Build a recolored tileset canvas for a specific palette.
+ * Takes the raw indexed pixel data (Uint8Array of 0-15 values) and
+ * applies the given 16-color palette to produce a colored Canvas.
+ */
+function buildPaletteTilesheet(indexedData, width, height, palette) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  const imgData = ctx.createImageData(width, height);
+  const pixels = imgData.data;
+
+  for (let i = 0; i < indexedData.length; i++) {
+    const idx = indexedData[i];
+    const color = palette[idx];
+    const p = i * 4;
+    if (idx === 0) {
+      pixels[p] = 0;
+      pixels[p + 1] = 0;
+      pixels[p + 2] = 0;
+      pixels[p + 3] = 0;
+    } else {
+      pixels[p] = color[0];
+      pixels[p + 1] = color[1];
+      pixels[p + 2] = color[2];
+      pixels[p + 3] = 255;
+    }
+  }
+
+  ctx.putImageData(imgData, 0, 0);
+  return canvas;
+}
+
+/**
+ * Get (or lazily create) a recolored tilesheet for a tileset+palette combo.
+ */
+function getPaletteTilesheet(tilesetKey, indexedData, width, height, palette, palIdx) {
+  const cacheKey = `${tilesetKey}:${palIdx}`;
+  if (!mapPreview.paletteTilesheets[cacheKey]) {
+    mapPreview.paletteTilesheets[cacheKey] = buildPaletteTilesheet(
+      indexedData, width, height, palette,
+    );
+  }
+  return mapPreview.paletteTilesheets[cacheKey];
+}
+
+async function loadMapData(name) {
+  mapPreview.loading = true;
+  mapPreview.blocks = null;
+  mapPreview.events = null;
+  renderPreviewMain();
+
+  try {
+    const info = await callPorymapTool('get_map_info', { name });
+    mapPreview.mapInfo = info;
+
+    const primaryName = tilesetConstToDir(info.tilesets.primary);
+    const secondaryName = tilesetConstToDir(info.tilesets.secondary);
+
+    const [blockdata, events, primaryMt, secondaryMt, tilesetDataRes] = await Promise.all([
+      callPorymapTool('get_blockdata', { name }),
+      callPorymapTool('get_map_events', { name }),
+      callPorymapTool('get_metatile_composition', { tileset_type: 'primary', tileset_name: primaryName }),
+      callPorymapTool('get_metatile_composition', { tileset_type: 'secondary', tileset_name: secondaryName }).catch(() => null),
+      fetch(`${API}/map-tileset-data?primary=${encodeURIComponent(primaryName)}&secondary=${encodeURIComponent(secondaryName)}`)
+        .then(r => r.json()),
+    ]);
+
+    // Decode base64 indexed pixel arrays
+    const primaryIndexed = Uint8Array.from(atob(tilesetDataRes.primary.indexed), c => c.charCodeAt(0));
+    let secondaryIndexed = null;
+    if (tilesetDataRes.secondary) {
+      secondaryIndexed = Uint8Array.from(atob(tilesetDataRes.secondary.indexed), c => c.charCodeAt(0));
+    }
+
+    mapPreview.blocks = blockdata;
+    mapPreview.events = events;
+    mapPreview.primaryMetatiles = primaryMt;
+    mapPreview.secondaryMetatiles = secondaryMt;
+    mapPreview.tilesetData = {
+      primary: { ...tilesetDataRes.primary, decodedIndices: primaryIndexed },
+      secondary: tilesetDataRes.secondary
+        ? { ...tilesetDataRes.secondary, decodedIndices: secondaryIndexed }
+        : null,
+      palettes: tilesetDataRes.palettes,
+    };
+    mapPreview.paletteTilesheets = {};
+    mapPreview.loading = false;
+
+    renderPreviewMain();
+    renderMapToCanvas();
+  } catch (err) {
+    mapPreview.loading = false;
+    console.error('Map load error:', err);
+    renderPreviewMain();
+    const wrap = document.querySelector('.map-canvas-wrap');
+    if (wrap) wrap.innerHTML = `<div class="map-loading-overlay"><div class="loading-text" style="color:var(--accent)">Failed to load map: ${escapeHtml(err.message)}</div></div>`;
+  }
+}
+
+function renderPreviewMain() {
+  const panel = document.getElementById('mainPanel');
+
+  if (!mapPreview.selectedMap) {
+    panel.innerHTML = `<div class="empty-state">
+      <svg class="pokeball" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+        <circle cx="50" cy="50" r="46"/><line x1="4" y1="50" x2="34" y2="50"/>
+        <line x1="66" y1="50" x2="96" y2="50"/><circle cx="50" cy="50" r="16"/>
+        <circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.3"/>
+      </svg>
+      <p>Select a map from the sidebar to preview</p>
+    </div>`;
+    return;
+  }
+
+  const dim = mapPreview.mapInfo?.dimensions;
+  const dimStr = dim ? `${dim.width}x${dim.height}` : '';
+
+  panel.innerHTML = `
+    <div class="map-toolbar">
+      <label>Zoom</label>
+      <input type="range" id="zoomSlider" min="0.5" max="4" step="0.25" value="${mapPreview.zoom}" oninput="setZoom(parseFloat(this.value))">
+      <span class="zoom-label" id="zoomLabel">${mapPreview.zoom}x</span>
+      <button class="btn-small" onclick="fitToView()">Fit</button>
+      <div class="separator"></div>
+      <button class="btn-small ${mapPreview.showEvents ? 'active' : ''}" id="toggleEvents" onclick="toggleEvents()">Events</button>
+      <button class="btn-small ${mapPreview.showCollision ? 'active' : ''}" id="toggleCollision" onclick="toggleCollision()">Collision</button>
+      <div class="separator"></div>
+      <div class="legend-row">
+        <div class="legend-item"><div class="legend-dot" style="background:${EVENT_COLORS.object}"></div>NPC</div>
+        <div class="legend-item"><div class="legend-dot" style="background:${EVENT_COLORS.warp}"></div>Warp</div>
+        <div class="legend-item"><div class="legend-dot" style="background:${EVENT_COLORS.coord}"></div>Trigger</div>
+        <div class="legend-item"><div class="legend-dot" style="background:${EVENT_COLORS.bg}"></div>Sign</div>
+      </div>
+    </div>
+    <div class="map-canvas-wrap" id="canvasWrap">
+      <canvas id="mapCanvas"></canvas>
+      ${mapPreview.loading ? '<div class="map-loading-overlay"><div class="loading-text"><div class="spinner"></div>Loading map data...</div></div>' : ''}
+    </div>
+    <div class="map-info-bar" id="mapInfoBar">
+      <div class="info-item">Map: <span>${escapeHtml(mapPreview.selectedMap)}</span></div>
+      ${dimStr ? `<div class="info-item">Size: <span>${dimStr}</span></div>` : ''}
+      <div class="info-item" id="hoverInfo"></div>
+    </div>`;
+
+  setupCanvasEvents();
+}
+
+function setupCanvasEvents() {
+  const wrap = document.getElementById('canvasWrap');
+  const canvas = document.getElementById('mapCanvas');
+  if (!wrap || !canvas) return;
+
+  mapPreview.canvas = canvas;
+  mapPreview.ctx = canvas.getContext('2d');
+
+  wrap.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.25 : 0.25;
+    const newZoom = Math.max(0.5, Math.min(4, mapPreview.zoom + delta));
+    if (newZoom === mapPreview.zoom) return;
+
+    const rect = wrap.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    const worldX = (mx - mapPreview.panX) / mapPreview.zoom;
+    const worldY = (my - mapPreview.panY) / mapPreview.zoom;
+
+    mapPreview.zoom = newZoom;
+    mapPreview.panX = mx - worldX * newZoom;
+    mapPreview.panY = my - worldY * newZoom;
+
+    const slider = document.getElementById('zoomSlider');
+    const label = document.getElementById('zoomLabel');
+    if (slider) slider.value = newZoom;
+    if (label) label.textContent = newZoom + 'x';
+    applyCanvasTransform();
+  }, { passive: false });
+
+  wrap.addEventListener('mousedown', (e) => {
+    if (e.button === 0) {
+      mapPreview.isPanning = true;
+      mapPreview.panStartX = e.clientX - mapPreview.panX;
+      mapPreview.panStartY = e.clientY - mapPreview.panY;
+      wrap.style.cursor = 'grabbing';
+    }
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (mapPreview.isPanning) {
+      mapPreview.panX = e.clientX - mapPreview.panStartX;
+      mapPreview.panY = e.clientY - mapPreview.panStartY;
+      applyCanvasTransform();
+    }
+    updateHoverInfo(e);
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (mapPreview.isPanning) {
+      mapPreview.isPanning = false;
+      const wrap = document.getElementById('canvasWrap');
+      if (wrap) wrap.style.cursor = '';
+    }
+  });
+}
+
+function updateHoverInfo(e) {
+  if (!mapPreview.blocks || !mapPreview.canvas) return;
+  const wrap = document.getElementById('canvasWrap');
+  if (!wrap) return;
+
+  const rect = wrap.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  const worldX = (mx - mapPreview.panX) / mapPreview.zoom;
+  const worldY = (my - mapPreview.panY) / mapPreview.zoom;
+
+  const tileX = Math.floor(worldX / 16);
+  const tileY = Math.floor(worldY / 16);
+
+  const dim = mapPreview.blocks.map_dimensions;
+  if (tileX < 0 || tileY < 0 || tileX >= dim.width || tileY >= dim.height) {
+    const info = document.getElementById('hoverInfo');
+    if (info) info.innerHTML = '';
+    return;
+  }
+
+  const block = mapPreview.blocks.blocks[tileY]?.[tileX];
+  if (!block) return;
+
+  const info = document.getElementById('hoverInfo');
+  if (info) {
+    info.innerHTML = `Pos: <span>${tileX},${tileY}</span> | Metatile: <span>0x${block.metatile.toString(16).padStart(3,'0')}</span> | Col: <span>${block.collision}</span> | Elev: <span>${block.elevation}</span>`;
+  }
+}
+
+function setZoom(val) {
+  mapPreview.zoom = val;
+  document.getElementById('zoomLabel').textContent = val + 'x';
+  applyCanvasTransform();
+}
+
+function fitToView() {
+  if (!mapPreview.blocks) return;
+  const wrap = document.getElementById('canvasWrap');
+  if (!wrap) return;
+
+  const dim = mapPreview.blocks.map_dimensions;
+  const mapW = dim.width * 16;
+  const mapH = dim.height * 16;
+  const wrapW = wrap.clientWidth;
+  const wrapH = wrap.clientHeight;
+  const z = Math.min(wrapW / mapW, wrapH / mapH, 4);
+
+  mapPreview.zoom = Math.round(z * 4) / 4;
+  mapPreview.panX = (wrapW - mapW * mapPreview.zoom) / 2;
+  mapPreview.panY = (wrapH - mapH * mapPreview.zoom) / 2;
+
+  const slider = document.getElementById('zoomSlider');
+  const label = document.getElementById('zoomLabel');
+  if (slider) slider.value = mapPreview.zoom;
+  if (label) label.textContent = mapPreview.zoom + 'x';
+  applyCanvasTransform();
+}
+
+function toggleEvents() {
+  mapPreview.showEvents = !mapPreview.showEvents;
+  const btn = document.getElementById('toggleEvents');
+  if (btn) btn.classList.toggle('active', mapPreview.showEvents);
+  renderMapToCanvas();
+}
+
+function toggleCollision() {
+  mapPreview.showCollision = !mapPreview.showCollision;
+  const btn = document.getElementById('toggleCollision');
+  if (btn) btn.classList.toggle('active', mapPreview.showCollision);
+  renderMapToCanvas();
+}
+
+function applyCanvasTransform() {
+  const canvas = mapPreview.canvas;
+  if (!canvas) return;
+  canvas.style.transform = `translate(${mapPreview.panX}px, ${mapPreview.panY}px) scale(${mapPreview.zoom})`;
+  canvas.style.transformOrigin = '0 0';
+}
+
+function renderMapToCanvas() {
+  const { blocks, primaryMetatiles, secondaryMetatiles, tilesetData } = mapPreview;
+  if (!blocks || !primaryMetatiles || !tilesetData) return;
+
+  const dim = blocks.map_dimensions;
+  const w = dim.width * 16;
+  const h = dim.height * 16;
+
+  if (!mapPreview.offscreen) {
+    mapPreview.offscreen = document.createElement('canvas');
+  }
+  const off = mapPreview.offscreen;
+  off.width = w;
+  off.height = h;
+  const offCtx = off.getContext('2d');
+  offCtx.imageSmoothingEnabled = false;
+
+  const tilesPerRow = primaryMetatiles.tiles_per_row || 16;
+  const pMeta = primaryMetatiles.metatiles;
+  const sMeta = secondaryMetatiles?.metatiles || [];
+  const palettes = tilesetData.palettes;
+
+  const pData = tilesetData.primary;
+  const sData = tilesetData.secondary;
+
+  for (let by = 0; by < dim.height; by++) {
+    for (let bx = 0; bx < dim.width; bx++) {
+      const block = blocks.blocks[by]?.[bx];
+      if (!block) continue;
+
+      const mtId = block.metatile;
+      let metatile;
+      if (mtId < 512) {
+        metatile = pMeta[mtId];
+      } else {
+        metatile = sMeta[mtId - 512];
+      }
+      if (!metatile) continue;
+
+      const destX = bx * 16;
+      const destY = by * 16;
+
+      for (let ti = 0; ti < 8; ti++) {
+        const te = metatile.tiles[ti];
+        if (!te) continue;
+
+        const tIdx = te.tile;
+        const palIdx = te.pal;
+
+        let tilesheet, tilesetWidth;
+        if (tIdx < 512) {
+          const pal = palettes[palIdx] || palettes[0];
+          tilesheet = getPaletteTilesheet('primary', pData.decodedIndices, pData.width, pData.height, pal, palIdx);
+          tilesetWidth = pData.width;
+        } else if (sData) {
+          const pal = palettes[palIdx] || palettes[0];
+          tilesheet = getPaletteTilesheet('secondary', sData.decodedIndices, sData.width, sData.height, pal, palIdx);
+          tilesetWidth = sData.width;
+        } else {
+          continue;
+        }
+
+        const localIdx = tIdx < 512 ? tIdx : tIdx - 512;
+        const localTilesPerRow = tilesetWidth / 8;
+        const srcX = (localIdx % localTilesPerRow) * 8;
+        const srcY = Math.floor(localIdx / localTilesPerRow) * 8;
+
+        const lx = (ti % 2) * 8;
+        const ly = (ti < 4 ? Math.floor(ti / 2) : Math.floor((ti - 4) / 2)) * 8;
+        const dx = destX + lx;
+        const dy = destY + ly;
+
+        if (te.hflip || te.vflip) {
+          offCtx.save();
+          offCtx.translate(dx + (te.hflip ? 8 : 0), dy + (te.vflip ? 8 : 0));
+          offCtx.scale(te.hflip ? -1 : 1, te.vflip ? -1 : 1);
+          offCtx.drawImage(tilesheet, srcX, srcY, 8, 8, 0, 0, 8, 8);
+          offCtx.restore();
+        } else {
+          offCtx.drawImage(tilesheet, srcX, srcY, 8, 8, dx, dy, 8, 8);
+        }
+      }
+    }
+  }
+
+  if (mapPreview.showCollision) {
+    for (let by = 0; by < dim.height; by++) {
+      for (let bx = 0; bx < dim.width; bx++) {
+        const block = blocks.blocks[by]?.[bx];
+        if (block && block.collision > 0) {
+          offCtx.fillStyle = 'rgba(230, 57, 70, 0.35)';
+          offCtx.fillRect(bx * 16, by * 16, 16, 16);
+        }
+      }
+    }
+  }
+
+  if (mapPreview.showEvents && mapPreview.events) {
+    drawEvents(offCtx);
+  }
+
+  const canvas = mapPreview.canvas;
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(off, 0, 0);
+
+  applyCanvasTransform();
+  if (mapPreview.panX === 0 && mapPreview.panY === 0 && mapPreview.zoom === 1) {
+    fitToView();
+  }
+}
+
+function drawEvents(ctx) {
+  const ev = mapPreview.events;
+  if (!ev) return;
+
+  const drawMarker = (x, y, color, shape, label) => {
+    const cx = x * 16 + 8;
+    const cy = y * 16 + 8;
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = color;
+
+    if (shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    } else if (shape === 'diamond') {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 7);
+      ctx.lineTo(cx + 6, cy);
+      ctx.lineTo(cx, cy + 7);
+      ctx.lineTo(cx - 6, cy);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (shape === 'triangle') {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 7);
+      ctx.lineTo(cx + 6, cy + 5);
+      ctx.lineTo(cx - 6, cy + 5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (shape === 'arrow') {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 7);
+      ctx.lineTo(cx + 6, cy + 2);
+      ctx.lineTo(cx + 2, cy + 2);
+      ctx.lineTo(cx + 2, cy + 7);
+      ctx.lineTo(cx - 2, cy + 7);
+      ctx.lineTo(cx - 2, cy + 2);
+      ctx.lineTo(cx - 6, cy + 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    if (label) {
+      ctx.fillStyle = '#fff';
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 2.5;
+      ctx.font = 'bold 8px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.strokeText(label, cx, cy);
+      ctx.fillText(label, cx, cy);
+    }
+  };
+
+  if (ev.object_events?.events) {
+    for (const e of ev.object_events.events) {
+      const id = e.local_id ?? '';
+      drawMarker(Number(e.x)||0, Number(e.y)||0, EVENT_COLORS.object, 'circle', String(id));
+    }
+  }
+  if (ev.warp_events?.events) {
+    for (const e of ev.warp_events.events) {
+      drawMarker(Number(e.x)||0, Number(e.y)||0, EVENT_COLORS.warp, 'arrow', '');
+    }
+  }
+  if (ev.coord_events?.events) {
+    for (const e of ev.coord_events.events) {
+      drawMarker(Number(e.x)||0, Number(e.y)||0, EVENT_COLORS.coord, 'triangle', '');
+    }
+  }
+  if (ev.bg_events?.events) {
+    for (const e of ev.bg_events.events) {
+      drawMarker(Number(e.x)||0, Number(e.y)||0, EVENT_COLORS.bg, 'diamond', '');
+    }
+  }
+}
+
 async function fetchTools() {
   try {
     const res = await fetch(`${API}/api/tools?server=${currentServer}`);
     tools = await res.json();
-    renderToolList();
-    if (tools.length > 0 && !selectedTool) selectTool(tools[0].name);
+    if (viewMode === 'tools') {
+      renderToolList();
+      if (tools.length > 0 && !selectedTool) selectTool(tools[0].name);
+    }
   } catch (err) {
-    document.getElementById('toolList').innerHTML =
+    const el = document.getElementById('toolList');
+    if (el) el.innerHTML =
       `<div class="empty-state" style="padding:40px 16px"><p style="font-size:12px;color:var(--accent)">Failed to load tools.<br>${escapeHtml(String(err))}</p></div>`;
   }
 }
 
 function renderToolList() {
   const el = document.getElementById('toolList');
+  if (!el) return;
   el.innerHTML = tools.map(t => `
     <div class="tool-item ${selectedTool?.name === t.name ? 'active' : ''}"
          onclick="selectTool('${t.name}')">

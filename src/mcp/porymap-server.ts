@@ -43,6 +43,7 @@ import {
   readBlockdata,
   readBorder,
   readMetatileAttributes,
+  readMetatiles,
   type Block,
 } from "./porymap/blockdata.js";
 import { type MapJson } from "./porymap/validation.js";
@@ -628,6 +629,60 @@ server.registerTool(
       `(IDs ${start_id}-${endIdx - 1}, ${result.length} metatiles):\n` +
       JSON.stringify(result, null, 2),
     );
+  },
+);
+
+// ─── Tool: get_metatile_composition ──────────────────────────────────────────
+
+server.registerTool(
+  "get_metatile_composition",
+  {
+    title: "Get Metatile Composition",
+    description:
+      "Decode metatiles.bin for a tileset, returning the 8 tile entries (tile index, " +
+      "hflip, vflip, palette) that compose each metatile. Used for visual map rendering.",
+    inputSchema: z.object({
+      tileset_type: z
+        .enum(["primary", "secondary"])
+        .describe("Whether this is a primary or secondary tileset"),
+      tileset_name: z
+        .string()
+        .describe("Tileset directory name, e.g. 'general', 'petalburg', 'cave'"),
+    }),
+  },
+  async ({ tileset_type, tileset_name }) => {
+    const metatilePath = path.join(
+      TILESETS_DIR,
+      tileset_type,
+      tileset_name,
+      "metatiles.bin",
+    );
+
+    let metatiles;
+    try {
+      metatiles = await readMetatiles(metatilePath);
+    } catch {
+      return text(
+        `Tileset not found or no metatiles file: ${tileset_type}/${tileset_name}`,
+      );
+    }
+
+    const tilesPerRow = 16;
+
+    return jsonText({
+      tileset: `${tileset_type}/${tileset_name}`,
+      metatile_count: metatiles.length,
+      tiles_per_row: tilesPerRow,
+      metatiles: metatiles.map((mt, i) => ({
+        id: i,
+        tiles: mt.tiles.map((t) => ({
+          tile: t.tileIndex,
+          hflip: t.hflip,
+          vflip: t.vflip,
+          pal: t.palette,
+        })),
+      })),
+    });
   },
 );
 
