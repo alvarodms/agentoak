@@ -118,6 +118,7 @@ export function formatMemoryFilesSection(extraFiles?: string[]): string {
     "`memory/failure-patterns.md` — build failures encountered and their solutions",
     "`memory/project-facts.md` — build system details and configuration notes",
     "`memory/tech-debt-backlog.md` — accumulated engineering investment opportunities proposed by the Tech Lead across cycles (tooling, abstractions, config-driven patterns that would accelerate future content work)",
+    "`memory/creative-backlog.md` — deferred creative ideas proposed by the Creative Visionary across cycles (atmospheric details, narrative moments, bold features waiting for prerequisites)",
   ];
   if (extraFiles) {
     base.push(...extraFiles);

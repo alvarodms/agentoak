@@ -24,6 +24,8 @@ export interface CyclePlan {
   gameplayDesignBrief?: string;
   /** Optional engineering investment recommended by the Tech Lead. Captured even when the cycle's main objective is content work, so it can be persisted in the tech debt backlog for future cycles. */
   engineeringInvestment?: string;
+  /** Optional creative investment identified by the Creative Visionary. Captured when a bold creative idea is deferred so it can be tracked in the creative backlog for future cycles. */
+  creativeInvestment?: string;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -56,6 +58,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     engineeringInvestment: {
       type: "string",
       description: "Optional engineering investment opportunity identified by the Tech Lead or your own analysis. Capture it here even if this cycle focuses on content — it will be persisted in the tech debt backlog so future cycles can act on it. Examples: 'Extract wild encounter tables into a JSON config so adding species to a route is a 1-file edit instead of 3', 'Create a helper script that auto-generates species constant boilerplate'.",
+    },
+    creativeInvestment: {
+      type: "string",
+      description: "Optional creative investment opportunity identified by the Creative Visionary or your own analysis. Capture a deferred bold creative idea here — it will be persisted in the creative backlog so future cycles can act on it when prerequisites are met. Examples: 'Regional Forms for Hoenn migration species — needs sprite pipeline first', 'Route 119 thunderstorm should darken screen and play rain ambiance — needs scripted event macros'.",
     },
     issueActions: {
       type: "array",
