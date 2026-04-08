@@ -65,5 +65,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Ocean Route Trainer Pass — Design Research | 176 | [ocean-trainer-pass-design.md](pokemon-knowledge/ocean-trainer-pass-design.md) |
 | Post-v1.5 Direction — Community Priorities | 177 | [post-v15-direction-research.md](pokemon-knowledge/post-v15-direction-research.md) |
 | v1.6 Planning Direction — Community Research | 178 | [v16-planning-direction-research.md](pokemon-knowledge/v16-planning-direction-research.md) |
+| Opening Lab Dialogue Patterns | 180 | [opening-lab-dialogue-patterns.md](pokemon-knowledge/opening-lab-dialogue-patterns.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

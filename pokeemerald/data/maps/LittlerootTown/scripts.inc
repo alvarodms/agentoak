@@ -967,11 +967,10 @@ LittlerootTown_Text_CanUsePCToStoreItems:
 	.string "The power of science is staggering!$"
 
 LittlerootTown_Text_BirchSpendsDaysInLab:
-	.string "PROF. BIRCH spends days in his LAB\n"
-	.string "studying rare Pokémon migrations, then he'll suddenly go out in\l"
-	.string "the wild to do more research…\p"
-	.string "When does PROF. BIRCH spend time\n"
-	.string "at home?$"
+	.string "Last night I heard the coolest\n"
+	.string "POKéMON cry from ROUTE 101!\p"
+	.string "Like nothing in PROFESSOR BIRCH's\n"
+	.string "books!$"
 
 LittlerootTown_Text_IfYouGoInGrassPokemonWillJumpOut:
 	.string "Um, um, um!\p"
@@ -996,13 +995,10 @@ LittlerootTown_Text_YouSavedBirch:
 	.string "I'm so glad!$"
 
 LittlerootTown_Text_GoodLuckCatchingPokemon:
-	.string "I saw something in the tall grass\n"
-	.string "I've never seen before!\p"
-	.string "All shimmery and blue -- like a\n"
-	.string "tiny Dragonair.\p"
-	.string "Prof. Birch says rare Pokemon from\n"
-	.string "other regions have been appearing\l"
-	.string "all over Hoenn. I want to catch one!$"
+	.string "PROFESSOR BIRCH's lab light was on\n"
+	.string "past midnight again.\p"
+	.string "He keeps muttering about\n"
+	.string "migration patterns...$"
 
 LittlerootTown_Text_TownSign:
 	.string "LITTLEROOT TOWN\n"

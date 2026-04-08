@@ -31,7 +31,7 @@ The early game is in far better shape than initially assumed. Previous cycles sh
 - **C152**: Petalburg Woods Pikachu sighting event (OW sprite dash, cry, atmospheric text)
 - **C165-167**: Encounter tables already showcase migration species (Dratini R102 water, Vulpix/Meowth R103, Pikachu R104)
 
-**What's still missing**: Birch himself never mentions migration in the lab opening. Littleroot NPCs are vanilla. No difficulty selection exists anywhere.
+**What's still missing**: ~~Birch never mentions migration~~ (fixed C180). ~~Littleroot NPCs are vanilla~~ (fixed C180). No difficulty selection exists anywhere.
 
 ## Design Principles
 
@@ -49,36 +49,9 @@ Created `asm/macros/event_macros.inc` with 3 macros: GlimpseEvent, BadgeGateShow
 
 ---
 
-## Phase 2: Birch Lab & Littleroot Polish (C180) — Narrative Sprint
+## Phase 2: Birch Lab & Littleroot Polish (C180) — DONE
 
-**Goal**: Make the player's first 5 minutes establish the migration mystery through Birch's own words.
-
-### Birch Lab Script Changes
-**File**: `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc`
-**When**: After Birch gives the player their Pokédex (existing script flow), add a new dialogue beat.
-
-**Draft dialogue** (Birch, after Pokédex gift):
-> "Oh, one more thing, {PLAYER}. You may notice some unfamiliar POKéMON out there. Species that don't normally call HOENN home. I've been studying an unusual migration pattern — POKéMON from other regions are appearing across HOENN. I don't yet understand why. Keep your eyes open, would you? Any data your POKéDEX collects will help my research enormously."
-
-**Design intent**: Natural, professorial, curious — not alarmed. Plants the seed without explaining the whole mystery. 3 text boxes max.
-
-### Littleroot Town NPC Updates
-**File**: `data/maps/LittlerootTown/scripts.inc`
-**Currently**: Vanilla NPC dialogue (boy says "POKéMON hide in tall grass," girl says vanilla).
-
-**Updates**:
-- **Boy** (near grass edge): "My mom says not to go in the tall grass, but... I heard something weird out there last night. Like a cry I've never heard before." (Echoes the Route 101 glimpse event)
-- **Girl** (near Birch's lab): "PROFESSOR BIRCH has been staying up really late in his lab. He keeps muttering about migration patterns. I don't know what that means, but it sounds important!" (Bridges to Birch's research)
-
-**Preserve**: Any existing C139 modifications to Littleroot. Check git log before editing.
-
-### What NOT to Change
-- Routes 101-104 NPCs — already handled by C140
-- Glimpse events — already shipped in C144-145, C152
-- Encounter tables — already curated in v1.4
-- Petalburg/Rustboro scripts — already have migration NPCs
-
-**Scope**: ~2 script files, ~15 lines of new dialogue. Small, surgical cycle.
+Birch migration hint (2 msgbox after Pokédex gift: Riolu/Rustboro hook + "keep your eyes open"). Boy NPC: strange cry from Route 101. Girl/Twin NPC: Birch lab light + migration muttering. All C139 conditional branches preserved.
 
 ---
 

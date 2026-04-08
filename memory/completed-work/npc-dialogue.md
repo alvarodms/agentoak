@@ -9,7 +9,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 | File | Cycle | Notes |
 |------|-------|-------|
 | `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15 | Lab aide + Birch rescue dialogue |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, **180** | Lab aide + Birch rescue dialogue; C180: 2-part migration hint after Pokédex gift (Riolu/Rustboro hook + "keep your eyes open") |
 
 ## Rival (Brendan/May)
 
@@ -41,7 +41,7 @@ All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 
 ## Flavor NPCs
 
-- **Early game** (C15, 28, 36): LittlerootTown through Route110 — migration sightings
+- **Early game** (C15, 28, 36, **180**): LittlerootTown through Route110 — migration sightings; C180: Boy (strange cry from Route 101), Girl/Twin (Birch's lab light + migration muttering)
 - **Mid-game** (C29, 94, 95): MauvilleCity through FortreeCity + Weather Institute scientist
 - **Late game** (C33): MossdeepCity, SootopolisCity, EverGrandeCity
 - **Postgame** (C42, 50, 63, 65): Second Wave NPCs — see git history

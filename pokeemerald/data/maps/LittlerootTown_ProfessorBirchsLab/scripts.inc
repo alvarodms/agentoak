@@ -514,6 +514,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex, MSGBOX_DEFAULT
 	call LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint1, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint2, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_BIRCHS_LAB_RIVAL, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
 	waitmovement 0
@@ -773,6 +775,23 @@ LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex:
 	.string "and records its data in the POKéDEX,\l"
 	.string "why, {RIVAL} looks for me while I'm out\l"
 	.string "doing fieldwork, and shows me.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_MigrationHint1:
+	.string "PROF. BIRCH: Oh, one more thing,\n"
+	.string "{PLAYER}{KUN}.\l"
+	.string "I spotted a RIOLU near RUSTBORO\l"
+	.string "last week...$"
+
+LittlerootTown_ProfessorBirchsLab_Text_MigrationHint2:
+	.string "PROF. BIRCH: A species that shouldn't\n"
+	.string "be anywhere near HOENN.\p"
+	.string "POKéMON from distant regions are\n"
+	.string "turning up all across HOENN.\l"
+	.string "I've been a field researcher for\l"
+	.string "twenty years, and I've never seen\l"
+	.string "anything like it.\p"
+	.string "Keep your eyes open out there,\n"
+	.string "would you?$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
 	.string "PROF. BIRCH: Countless POKéMON\n"
