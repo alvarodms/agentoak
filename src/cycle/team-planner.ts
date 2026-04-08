@@ -69,6 +69,8 @@ Before making your decision, consider these perspectives from your advisory team
 
 **Engineering investments**: If the Technical Lead proposes an engineering improvement (tooling, abstractions, config-driven patterns), you must either (a) incorporate it into this cycle's objective, (b) capture it in the \`engineeringInvestment\` field so it is preserved for a future cycle, or (c) explain in your \`reasoning\` why it is not worth pursuing. Do not silently ignore engineering suggestions — they compound across cycles.
 
+**Design hypothesis**: If the Game Designer states a design hypothesis (a testable claim about how the player should feel), include it in your \`reasoning\` field. This becomes the design intent against which the next cycle evaluates success. If the Game Designer challenges the roadmap, engage with the argument directly — explain why you agree or disagree rather than defaulting to the planned next step.
+
 ${parts.join("\n\n")}`;
 }
 
