@@ -215,6 +215,79 @@ export async function addLabelsToIssue(issueNumber: number, labels: string[]): P
   }
 }
 
+/** Remove a label from an issue. Silently ignores if the label doesn't exist. */
+export async function removeLabelFromIssue(issueNumber: number, label: string): Promise<void> {
+  const octokit = getGitHubClient();
+  const repo = getRepoInfo();
+  if (!octokit || !repo) return;
+
+  try {
+    await octokit.issues.removeLabel({
+      owner: repo.owner,
+      repo: repo.repo,
+      issue_number: issueNumber,
+      name: label,
+    });
+    logger.info(`Removed label "${label}" from issue #${issueNumber}`);
+  } catch (err) {
+    // 404 means the label wasn't on the issue — not an error
+    if (err instanceof Error && "status" in err && (err as { status: number }).status === 404) return;
+    logger.error(`Failed to remove label from issue #${issueNumber}: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
+/**
+ * The set of mutually exclusive decision labels. When applying one,
+ * the others should be removed to avoid contradictory signals.
+ */
+export const DECISION_LABELS = [
+  AGENT_LABELS.accepted,
+  AGENT_LABELS.deferred,
+  AGENT_LABELS.rejected,
+  AGENT_LABELS.needsInfo,
+] as const;
+
+/**
+ * Set the decision label on an issue, removing any conflicting decision labels first.
+ * Always adds `agent-reviewed` alongside the decision label.
+ */
+export async function setDecisionLabel(issueNumber: number, newDecisionLabel: string): Promise<void> {
+  // Remove conflicting decision labels
+  const conflicting = DECISION_LABELS.filter((l) => l !== newDecisionLabel);
+  await Promise.all(conflicting.map((l) => removeLabelFromIssue(issueNumber, l)));
+
+  // Add the new decision label + reviewed
+  await addLabelsToIssue(issueNumber, [AGENT_LABELS.reviewed, newDecisionLabel]);
+}
+
+/** Fetch recent comments on an issue (most recent first, up to `count`). */
+export async function fetchIssueComments(issueNumber: number, count = 10): Promise<GitHubComment[]> {
+  const octokit = getGitHubClient();
+  const repo = getRepoInfo();
+  if (!octokit || !repo) return [];
+
+  try {
+    const response = await octokit.issues.listComments({
+      owner: repo.owner,
+      repo: repo.repo,
+      issue_number: issueNumber,
+      per_page: count,
+      sort: "created",
+      direction: "desc",
+    });
+
+    return response.data.map((c) => ({
+      id: c.id,
+      body: c.body ?? "",
+      author: c.user?.login ?? "unknown",
+      createdAt: c.created_at,
+    }));
+  } catch (err) {
+    logger.error(`Failed to fetch comments for issue #${issueNumber}: ${err instanceof Error ? err.message : String(err)}`);
+    return [];
+  }
+}
+
 /** Close an issue with a reason */
 export async function closeIssue(
   issueNumber: number,

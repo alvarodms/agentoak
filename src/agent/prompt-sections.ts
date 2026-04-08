@@ -37,7 +37,7 @@ export function formatIssueSection(issueContext: string): string {
 /** Build the "Deferred Issue Backlog" section (returns empty string if absent). */
 export function formatBacklogSection(
   issueBacklog: string,
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; pendingItems?: string[] }>,
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number; pendingItems?: string[] }>,
 ): string {
   const hasBacklog = !!issueBacklog;
   const hasStale = staleIssues && staleIssues.length > 0;
@@ -50,14 +50,20 @@ export function formatBacklogSection(
   }
 
   if (hasStale) {
+    const MAX_DEFERRALS = 5;
     const staleLines = staleIssues.map((i) => {
-      let line = `- #${i.issueNumber}: ${i.title} (deferred since cycle ${i.deferredAtCycle})`;
+      const count = i.deferralCount ?? 1;
+      const mustDecide = count >= MAX_DEFERRALS;
+      let line = `- #${i.issueNumber}: ${i.title} (deferred since cycle ${i.deferredAtCycle}, ${count} deferral(s))`;
       if (i.pendingItems && i.pendingItems.length > 0) {
         line += ` — Pending items: ${i.pendingItems.join(", ")}`;
       }
+      if (mustDecide) {
+        line += ` ⚠️ **MAX DEFERRALS REACHED — you MUST accept or reject this issue. Deferring again is NOT allowed.**`;
+      }
       return line;
     }).join("\n");
-    section += `\n### Stale Issues (deferred 10+ cycles)\n\nThese issues have been sitting in the backlog for a long time. Please re-evaluate each one and include it in \`issueActions\`:\n- **accept**: Pick it up this cycle\n- **reject**: It no longer aligns with the project direction — close it with a reason\n- **defer**: Still worth keeping — provide a brief justification for why\n\n${staleLines}\n`;
+    section += `\n### Stale Issues (deferred 10+ cycles)\n\nThese issues have been sitting in the backlog for a long time. Please re-evaluate each one and include it in \`issueActions\`:\n- **accept**: Pick it up this cycle\n- **reject**: It no longer aligns with the project direction — close it with a reason\n- **defer**: Still worth keeping — provide a brief justification for why (NOT allowed if max deferrals reached)\n\n${staleLines}\n`;
   }
 
   return section;
@@ -224,7 +230,7 @@ export interface PlannerContextParams {
   modeHistorySummary: string;
   issueContext: string;
   issueBacklog: string;
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; pendingItems?: string[] }>;
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number; pendingItems?: string[] }>;
   extraMemoryFiles?: string[];
 }
 

@@ -85,7 +85,7 @@ export async function planCycleWithTeam(
   cycleNumber: number,
   issueContext: string = "",
   issueBacklog: string = "",
-  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number }>,
+  staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number }>,
 ): Promise<CyclePlan> {
   const model = process.env.ANTHROPIC_MODEL;
 
