@@ -85,3 +85,12 @@ Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files:
 | Cross Poison | 375 | Poison | 70 | Phys | POISON_HIT | 10% poison |
 | Iron Head | 376 | Steel | 80 | Phys | FLINCH_HIT | 30% flinch |
 | Zen Headbutt | 377 | Psychic | 80 | Phys | FLINCH_HIT | 20% flinch |
+
+## Challenge Mode — Set Battle Override (C181)
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `src/battle_main.c` | After `gBattleScripting.battleStyle` assignment, override to SET if `FLAG_DIFFICULTY_CHALLENGE` | **181** | 2 lines added after line ~3111 |
+| `include/constants/flags.h` | `FLAG_DIFFICULTY_CHALLENGE` = 0x286 | **181** | Repurposed `FLAG_UNUSED_0x286` |
+| `include/constants/script_menu.h` | `MULTI_DIFFICULTY_SELECT` = 114 | **181** | New multichoice constant |
+| `src/data/script_menu.h` | `MultichoiceList_DifficultySelect` (Normal/Challenge) + array entry | **181** | 2 text strings + list + 1 array entry |

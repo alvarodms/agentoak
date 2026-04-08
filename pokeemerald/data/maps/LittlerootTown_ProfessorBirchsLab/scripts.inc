@@ -516,6 +516,20 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint1, MSGBOX_DEFAULT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint2, MSGBOX_DEFAULT
+	msgbox BirchLab_Text_DifficultyPrompt, MSGBOX_DEFAULT
+	multichoice 14, 6, MULTI_DIFFICULTY_SELECT, FALSE
+	compare VAR_RESULT, 1
+	goto_if_eq BirchLab_EventScript_ChallengeMode
+	compare VAR_RESULT, MULTI_B_PRESSED
+	goto_if_eq BirchLab_EventScript_NormalMode
+	goto BirchLab_EventScript_NormalMode
+BirchLab_EventScript_ChallengeMode:
+	setflag FLAG_DIFFICULTY_CHALLENGE
+	msgbox BirchLab_Text_ChallengeModeSelected, MSGBOX_DEFAULT
+	goto BirchLab_EventScript_DifficultyDone
+BirchLab_EventScript_NormalMode:
+	msgbox BirchLab_Text_NormalModeSelected, MSGBOX_DEFAULT
+BirchLab_EventScript_DifficultyDone:
 	closemessage
 	applymovement LOCALID_BIRCHS_LAB_RIVAL, LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer
 	waitmovement 0
@@ -2061,3 +2075,31 @@ BirchLab_Text_SkyGuardianComplete:
 	.string "It was nature finding a new\n"
 	.string "equilibrium. And you helped\l"
 	.string "HOENN achieve it.$"
+
+@ =============================================================
+@ Difficulty Selection — Phase 3 (C181)
+@ =============================================================
+
+BirchLab_Text_DifficultyPrompt:
+	.string "PROF. BIRCH: These new arrivals...\n"
+	.string "some are stronger than anything\l"
+	.string "native to HOENN.\p"
+	.string "If you want a real test of your\n"
+	.string "skill, I can log your journey\l"
+	.string "under field conditions - no\l"
+	.string "switching out when things get\l"
+	.string "tough.\p"
+	.string "It's how I'd do it, honestly.$"
+
+BirchLab_Text_ChallengeModeSelected:
+	.string "PROF. BIRCH: Ha! I had a feeling.\p"
+	.string "HOENN won't go easy on you -\n"
+	.string "but I suspect you wouldn't\l"
+	.string "want it to.$"
+
+BirchLab_Text_NormalModeSelected:
+	.string "PROF. BIRCH: Nothing wrong\n"
+	.string "with that!\p"
+	.string "Savor the journey. HOENN's\n"
+	.string "beautiful when you're not\l"
+	.string "white-knuckling through it.$"

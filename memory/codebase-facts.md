@@ -99,9 +99,18 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
 
-**Custom flags**: 0x264-0x285 used (v6.0 through v1.3). Next available: 0x286.
+**Custom flags**: 0x264-0x286 used (v6.0 through v1.6). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). Next available: 0x287.
 
 **Beast flags**: System flags 0x881-0x886.
+
+---
+
+## Multichoice System (Cycle 181)
+
+**Constants**: `include/constants/script_menu.h` — `MULTI_*` IDs (0-114). `MULTI_B_PRESSED` = 127.
+**Data**: `src/data/script_menu.h` — `sMultichoiceLists[]` array indexed by MULTI_* constants. Text strings + `MenuAction` arrays defined above it. `MULTICHOICE()` macro wraps list + count.
+**Script usage**: `multichoice x, y, MULTI_ID, ignoreBPress` → check `VAR_RESULT` (0 = first option, 1 = second, ..., 127 = B pressed).
+**Last used ID**: 114 (`MULTI_DIFFICULTY_SELECT`). Next available: 115.
 
 ---
 

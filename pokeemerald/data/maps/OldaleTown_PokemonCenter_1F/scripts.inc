@@ -21,7 +21,16 @@ OldaleTown_PokemonCenter_1F_EventScript_Gentleman::
 	end
 
 OldaleTown_PokemonCenter_1F_EventScript_Boy::
-	msgbox OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_DIFFICULTY_CHALLENGE, OldalePkmnCenter_EventScript_ChallengeReminder
+	msgbox OldaleTown_PokemonCenter_1F_Text_NormalReminder, MSGBOX_DEFAULT
+	release
+	end
+
+OldalePkmnCenter_EventScript_ChallengeReminder:
+	msgbox OldaleTown_PokemonCenter_1F_Text_ChallengeReminder, MSGBOX_DEFAULT
+	release
 	end
 
 OldaleTown_PokemonCenter_1F_EventScript_Girl::
@@ -48,6 +57,18 @@ OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
 	.string "You can use their services as much\n"
 	.string "as you like, and it's all for free.\l"
 	.string "You never have to worry!$"
+
+OldaleTown_PokemonCenter_1F_Text_ChallengeReminder:
+	.string "You've got that look about you.\n"
+	.string "Set battles, no safety net?\p"
+	.string "A real field researcher's\n"
+	.string "journey. Respect.$"
+
+OldaleTown_PokemonCenter_1F_Text_NormalReminder:
+	.string "Taking your time with HOENN?\n"
+	.string "Smart choice.\p"
+	.string "There's so much to see when\n"
+	.string "you're not in a rush.$"
 
 OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable:
 	.string "The POKéMON WIRELESS CLUB on\n"

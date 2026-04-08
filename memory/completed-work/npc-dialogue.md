@@ -9,7 +9,8 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 | File | Cycle | Notes |
 |------|-------|-------|
 | `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, **180** | Lab aide + Birch rescue dialogue; C180: 2-part migration hint after Pokédex gift (Riolu/Rustboro hook + "keep your eyes open") |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181** | Lab aide + Birch rescue dialogue; C180: migration hint after Pokédex; C181: difficulty selection multichoice (Normal/Challenge) after migration hint, sets FLAG_DIFFICULTY_CHALLENGE |
+| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **181** | Boy NPC repurposed: difficulty-aware reminder (challenge = "respect", normal = "smart choice"). Branch via FLAG_DIFFICULTY_CHALLENGE |
 
 ## Rival (Brendan/May)
 

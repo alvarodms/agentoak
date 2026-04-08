@@ -55,38 +55,9 @@ Birch migration hint (2 msgbox after Pokédex gift: Riolu/Rustboro hook + "keep 
 
 ---
 
-## Phase 3: Difficulty Selection + Set Mode (C181) — Engine Sprint
+## Phase 3: Difficulty Selection + Set Mode (C181) — DONE
 
-**Goal**: Player chooses Normal or Challenge mode. Challenge forces Set battle style.
-
-### Difficulty Selection Script
-**Location**: `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` — after Birch's migration dialogue (C180), before player leaves the lab for the first time.
-
-**Flag**: `FLAG_DIFFICULTY_CHALLENGE` at `0x286` in `include/constants/flags.h`
-
-**Draft dialogue** (Birch):
-> "Oh, and {PLAYER} — one last thing. HOENN can be a challenging place, especially with these new arrivals. How would you like to approach your journey?"
-
-Then a `multichoice` with two options:
-- **"Normal Mode"** → no flag set, Birch says: "A classic journey! Take your time and enjoy HOENN at your own pace."
-- **"Challenge Mode"** → set `FLAG_DIFFICULTY_CHALLENGE`, Birch says: "Ah, a bold spirit! In Challenge Mode, you won't get a chance to switch POKéMON when your opponent sends out a new one, and your team will need to stay sharp — overleveling won't carry you. Good luck!"
-
-**Locked after selection**: No NPC to change it mid-game. Choice is permanent.
-
-### Set Mode Implementation
-**File**: `src/battle_main.c` at line ~3111
-**Change**: After `gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;`, add:
-```c
-if (FlagGet(FLAG_DIFFICULTY_CHALLENGE))
-    gBattleScripting.battleStyle = OPTIONS_BATTLE_STYLE_SET;
-```
-**Include needed**: `#include "event_data.h"` for `FlagGet()` (verify it's not already included).
-**Effect**: Challenge players always battle in Set mode regardless of options menu setting.
-
-### Difficulty Reminder NPC
-**Location**: Oldale Town Pokémon Center (first center the player visits)
-**Dialogue**: "You're playing in {Challenge/Normal} Mode, right? I can always tell — Challenge Mode trainers have a certain look in their eye!"
-**Implementation**: Simple `goto_if_set FLAG_DIFFICULTY_CHALLENGE` branch.
+Multichoice in Birch Lab after migration dialogue. FLAG_DIFFICULTY_CHALLENGE (0x286). Set mode override in battle_main.c. Oldale PkmnCenter Boy NPC gives difficulty-aware reminder. 6 files touched.
 
 ---
 
