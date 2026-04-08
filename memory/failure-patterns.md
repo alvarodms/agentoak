@@ -45,4 +45,4 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **JSON errors**: `wild_encounters.json` — validate syntax after editing.
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
-- **Trainer capacity**: TRAINERS_COUNT = 884, AT CAPACITY. Must reuse unused IDs for new trainers.
+- **Trainer capacity**: TRAINERS_COUNT = 885, AT CAPACITY. Must reuse unused IDs for new trainers.

@@ -63,5 +63,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Victory Road & Endgame Trainer Design | 174 | [victory-road-endgame-design.md](pokemon-knowledge/victory-road-endgame-design.md) |
 | Regional Forms — Complexity & Community Reception | 175 | [regional-forms-complexity.md](pokemon-knowledge/regional-forms-complexity.md) |
 | Ocean Route Trainer Pass — Design Research | 176 | [ocean-trainer-pass-design.md](pokemon-knowledge/ocean-trainer-pass-design.md) |
+| Post-v1.5 Direction — Community Priorities | 177 | [post-v15-direction-research.md](pokemon-knowledge/post-v15-direction-research.md) |
 
 Older research files (Cycles 47-105) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
