@@ -61,7 +61,12 @@ OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
 OldaleTown_PokemonCenter_1F_Text_ChallengeReminder:
 	.string "You've got that look about you.\n"
 	.string "Set battles, no safety net?\p"
-	.string "A real field researcher's\n"
+	.string "And if your POKéMON start\n"
+	.string "earning less EXP than usual…\p"
+	.string "That's the level cap. Can't\n"
+	.string "overlevel the local competition.\p"
+	.string "Each GYM BADGE raises the\n"
+	.string "ceiling. A real researcher's\n"
 	.string "journey. Respect.$"
 
 OldaleTown_PokemonCenter_1F_Text_NormalReminder:

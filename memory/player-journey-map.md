@@ -37,7 +37,7 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 **Pacing**: Good escalation from passive hints to interactive event. Trainer quality matches atmospheric quality post-C146.
 
-**Challenge Mode note**: Level cap active (18 pre-badge, 20 post-Roxanne). Set battle style enforced. (C181-182)
+**Challenge Mode note**: Level cap active (18 pre-badge, 20 post-Roxanne). Set battle style enforced. (C181-182). Rustboro PkmnCenter Hiker explains level cap system (C183).
 
 **Emotional arc**: Wonder (Pikachu sighting) → confidence (first gym)
 
@@ -51,7 +51,9 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 - Mid-game migration NPCs including Dr. Hartley at Weather Institute (C141)
 - Routes 110-117 trainers redesigned with themed identities (C147)
 
-**Pacing**: Meteor Falls colony is the strongest narrative beat in mid-game. Long trainer stretches between narrative events.
+**Pacing**: Meteor Falls colony is the strongest narrative beat in mid-game. Long trainer stretches between narrative events. Dewford Boy and Mauville Researcher reinforce level cap/set mode awareness (C183).
+
+**Difficulty NPC coverage**: Oldale (Boy, C181/183), Rustboro (Hiker, C183), Dewford (Boy, C183), Mauville (Researcher, C183). Any player visiting a PkmnCenter in the first 3 hours will see at least one cap explainer.
 
 **Emotional arc**: Escalation → discovery (Bagon colony) → growing concern
 

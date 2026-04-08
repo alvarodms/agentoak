@@ -45,3 +45,35 @@ RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor:
 	.string "I used it to teach my POKéMON how to\n"
 	.string "CUT down skinny trees.$"
 
+RustboroCity_PokemonCenter_1F_EventScript_DifficultyHiker::
+	lock
+	faceplayer
+	goto_if_set FLAG_DIFFICULTY_CHALLENGE, RustboroPkmnCenter_ChallengeHiker
+	msgbox RustboroCity_PokemonCenter_1F_Text_HikerNormal, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroPkmnCenter_ChallengeHiker:
+	msgbox RustboroCity_PokemonCenter_1F_Text_HikerChallenge, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_PokemonCenter_1F_Text_HikerChallenge:
+	.string "Ha! A fellow Challenge Mode\n"
+	.string "trainer! I can always tell.\p"
+	.string "Don't be alarmed if your\n"
+	.string "POKéMON earn less EXP.\p"
+	.string "That's the level cap - keeps\n"
+	.string "you from getting too far ahead.\p"
+	.string "Win more GYM BADGES and the\n"
+	.string "ceiling goes up. Trust the\n"
+	.string "system!$"
+
+RustboroCity_PokemonCenter_1F_Text_HikerNormal:
+	.string "I've been hiking all over HOENN.\n"
+	.string "The trails near RUSTBORO are\n"
+	.string "some of the best.\p"
+	.string "ROXANNE's GYM is just north\n"
+	.string "of here if you're looking for\n"
+	.string "a battle!$"
+

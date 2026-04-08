@@ -35,3 +35,32 @@ DewfordTown_PokemonCenter_1F_Text_FaintedMonCanUseHM:
 	.string "battle, it can still use a move learned\l"
 	.string "from a HIDDEN MACHINE (HM).$"
 
+DewfordTown_PokemonCenter_1F_EventScript_DifficultyBoy::
+	lock
+	faceplayer
+	goto_if_set FLAG_DIFFICULTY_CHALLENGE, DewfordPkmnCenter_ChallengeBoy
+	msgbox DewfordTown_PokemonCenter_1F_Text_BoyNormal, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordPkmnCenter_ChallengeBoy:
+	msgbox DewfordTown_PokemonCenter_1F_Text_BoyChallenge, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_PokemonCenter_1F_Text_BoyChallenge:
+	.string "Wait, you're doing Challenge\n"
+	.string "Mode? That's really brave!\p"
+	.string "I heard your POKéMON can't\n"
+	.string "grow past a certain level\n"
+	.string "until you earn more BADGES.\p"
+	.string "And you can't even switch\n"
+	.string "POKéMON freely in battle!\p"
+	.string "I could never do that…$"
+
+DewfordTown_PokemonCenter_1F_Text_BoyNormal:
+	.string "Did you ride MR. BRINEY's boat\n"
+	.string "to get here? So cool!\p"
+	.string "BRAWLY's GYM is right next\n"
+	.string "door if you want a battle!$"
+

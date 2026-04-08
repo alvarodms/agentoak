@@ -52,3 +52,36 @@ MauvilleCity_PokemonCenter_1F_Text_RecordCornerSoundsFun:
 	.string "I don't know what it's about, but it\n"
 	.string "sounds fun. I'll go check it out!$"
 
+MauvilleCity_PokemonCenter_1F_EventScript_DifficultyResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_DIFFICULTY_CHALLENGE, MauvillePkmnCenter_ChallengeResearcher
+	msgbox MauvilleCity_PokemonCenter_1F_Text_ResearcherNormal, MSGBOX_DEFAULT
+	release
+	end
+
+MauvillePkmnCenter_ChallengeResearcher:
+	msgbox MauvilleCity_PokemonCenter_1F_Text_ResearcherChallenge, MSGBOX_DEFAULT
+	release
+	end
+
+MauvilleCity_PokemonCenter_1F_Text_ResearcherChallenge:
+	.string "Oh, a Challenge Mode trainer!\n"
+	.string "I've been studying your kind.\p"
+	.string "The level cap is fascinating -\n"
+	.string "your POKéMON earn less EXP\n"
+	.string "once they've matched the\n"
+	.string "local standard.\p"
+	.string "Each GYM BADGE raises that\n"
+	.string "standard, though.\p"
+	.string "It rewards strategy over\n"
+	.string "brute strength. Quite elegant!$"
+
+MauvilleCity_PokemonCenter_1F_Text_ResearcherNormal:
+	.string "MAUVILLE is a real crossroads!\n"
+	.string "Routes branch out in every\n"
+	.string "direction from here.\p"
+	.string "Have you visited the GAME\n"
+	.string "CORNER yet? It's a great\n"
+	.string "place to unwind.$"
+

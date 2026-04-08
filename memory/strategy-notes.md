@@ -69,7 +69,7 @@ Implemented badge-based soft level caps in Challenge Mode. `GetChallengeLevelCap
 
 ## Phase 5: Polish & Wrap-up (C183-C185)
 
-**C183**: Integration testing — verify Set mode in all battle types, level cap with Lucky Egg/Exp Share/traded boost, new game flow. Add difficulty-reminder NPCs in Pokémon Centers.
+**C183** — DONE: Oldale NPC text expanded (level caps + badge progression). 3 new difficulty-reminder NPCs: Rustboro Hiker, Dewford Boy, Mauville Researcher. Each has distinct personality and dual-path dialogue (challenge/normal). Edge cases verified: Lucky Egg/Exp Share/traded boost all apply before soft cap; Set mode enforced for all battle types. No code changes needed.
 **C184**: README update, v1.7 direction brainstorm, memory maintenance pass (10-cycle boundary).
 **C185**: Buffer — overflow, edge cases, regressions.
 
@@ -93,7 +93,7 @@ Implemented badge-based soft level caps in Challenge Mode. `GetChallengeLevelCap
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()` macro in `constants/flags.h`. Set mode override: `src/battle_main.c:3112`. Level cap: `GetChallengeLevelCap()` + soft cap check in `src/battle_script_commands.c` (in `Cmd_getexp()`).
-- **Flag space**: 0x264+ (v6), 0x272-0x277 (Sky Guardian), 0x278-0x285 (migration/weather). Next available: 0x286.
+- **Flag space**: 0x264+ (v6), 0x272-0x277 (Sky Guardian), 0x278-0x285 (migration/weather), 0x286 (difficulty). Next available: 0x287.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854. Struct types: NoItemDefaultMoves, NoItemCustomMoves, ItemDefaultMoves, ItemCustomMoves.
 - **QoL shipped**: TMs non-consumable, indoor running, trade evo QoL (11 species).

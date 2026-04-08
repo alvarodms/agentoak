@@ -10,7 +10,13 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------|-------|
 | `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181** | Lab aide + Birch rescue dialogue; C180: migration hint after Pokédex; C181: difficulty selection multichoice (Normal/Challenge) after migration hint, sets FLAG_DIFFICULTY_CHALLENGE |
-| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **181** | Boy NPC repurposed: difficulty-aware reminder (challenge = "respect", normal = "smart choice"). Branch via FLAG_DIFFICULTY_CHALLENGE |
+| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | 181, **183** | Boy NPC difficulty-aware reminder. C183: expanded challenge text to mention level caps and GYM BADGE progression |
+| `data/maps/RustboroCity_PokemonCenter_1F/scripts.inc` | **183** | New Hiker NPC: difficulty-aware. Challenge = level cap explainer + trust system. Normal = hiking/Roxanne hint |
+| `data/maps/RustboroCity_PokemonCenter_1F/map.json` | **183** | Added OBJ_EVENT_GFX_HIKER at (3,7), FACE_UP |
+| `data/maps/DewfordTown_PokemonCenter_1F/scripts.inc` | **183** | New Boy NPC: difficulty-aware. Challenge = awed reaction (level caps + set battles). Normal = Briney/Brawly hint |
+| `data/maps/DewfordTown_PokemonCenter_1F/map.json` | **183** | Added OBJ_EVENT_GFX_BOY_1 at (3,7), FACE_UP |
+| `data/maps/MauvilleCity_PokemonCenter_1F/scripts.inc` | **183** | New Researcher NPC: difficulty-aware. Challenge = analytical EXP/cap discussion. Normal = Mauville crossroads/Game Corner |
+| `data/maps/MauvilleCity_PokemonCenter_1F/map.json` | **183** | Added OBJ_EVENT_GFX_WOMAN_2 at (10,4), FACE_LEFT |
 
 ## Rival (Brendan/May)
 
