@@ -2896,15 +2896,6 @@ extern const u32 gMonStillFrontPic_UnownQuestionMark[];
 extern const u32 gMonBackPic_UnownQuestionMark[];
 extern const u8 gMonIcon_UnownQuestionMark[];
 
-// Hoenn regional forms
-extern const u32 gMonFrontPic_ArcanineHoenn[];
-extern const u32 gMonStillFrontPic_ArcanineHoenn[];
-extern const u32 gMonPalette_ArcanineHoenn[];
-extern const u32 gMonBackPic_ArcanineHoenn[];
-extern const u32 gMonShinyPalette_ArcanineHoenn[];
-extern const u8 gMonIcon_ArcanineHoenn[];
-extern const u8 gMonFootprint_ArcanineHoenn[];
-
 extern const u32 gMonFrontPic_CircledQuestionMark[];
 extern const u32 gMonBackPic_CircledQuestionMark[];
 extern const u32 gMonPalette_CircledQuestionMark[];
