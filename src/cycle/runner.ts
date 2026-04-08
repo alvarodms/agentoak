@@ -39,6 +39,7 @@ import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
 
 const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
+const CREATIVE_BACKLOG_PATH = path.join(MEMORY_DIR, "creative-backlog.md");
 
 /** Append an engineering investment to the persistent tech debt backlog. */
 function persistEngineeringInvestment(
@@ -59,6 +60,27 @@ function persistEngineeringInvestment(
   const sanitized = investment.replace(/\|/g, "—").replace(/\n/g, " ").trim();
   content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
   fs.writeFileSync(TECH_DEBT_BACKLOG_PATH, content, "utf-8");
+}
+
+/** Append a creative investment to the persistent creative backlog. */
+function persistCreativeInvestment(
+  cycleNumber: number,
+  idea: string,
+): void {
+  const header = "# Creative Backlog\n\nCreative investment opportunities identified by the Creative Visionary across cycles.\nThe Producer should review this list when planning — bold ideas that have been deferred multiple times may be ready when prerequisites are met.\n\n| Cycle | Idea | Status |\n|-------|------|--------|\n";
+
+  let content: string;
+  if (fs.existsSync(CREATIVE_BACKLOG_PATH)) {
+    content = fs.readFileSync(CREATIVE_BACKLOG_PATH, "utf-8");
+  } else {
+    fs.mkdirSync(MEMORY_DIR, { recursive: true });
+    content = header;
+  }
+
+  // Append the new idea as a table row
+  const sanitized = idea.replace(/\|/g, "—").replace(/\n/g, " ").trim();
+  content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
+  fs.writeFileSync(CREATIVE_BACKLOG_PATH, content, "utf-8");
 }
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
@@ -622,6 +644,12 @@ export async function runCycle(): Promise<void> {
     if (plan.engineeringInvestment) {
       persistEngineeringInvestment(cycleNumber, plan.engineeringInvestment);
       log.info(`  Engineering investment captured: ${plan.engineeringInvestment.slice(0, 100)}...`);
+    }
+
+    // Persist any creative investment to the creative backlog
+    if (plan.creativeInvestment) {
+      persistCreativeInvestment(cycleNumber, plan.creativeInvestment);
+      log.info(`  Creative investment captured: ${plan.creativeInvestment.slice(0, 100)}...`);
     }
 
     // ── Phase 1.5: Gameplay Design (conditional — only when Producer sets a brief) ──

@@ -69,6 +69,8 @@ Before making your decision, consider these perspectives from your advisory team
 
 **Engineering investments**: If the Technical Lead proposes an engineering improvement (tooling, abstractions, config-driven patterns), you must either (a) incorporate it into this cycle's objective, (b) capture it in the \`engineeringInvestment\` field so it is preserved for a future cycle, or (c) explain in your \`reasoning\` why it is not worth pursuing. Do not silently ignore engineering suggestions — they compound across cycles.
 
+**Creative investments**: If the Creative Visionary proposes a bold idea that you're deferring (not incorporating this cycle), capture it in the \`creativeInvestment\` field so it is tracked in the creative backlog. This prevents good ideas from being "noted and valued" but never tracked. Do not capture ideas you're rejecting outright — only ones worth revisiting when prerequisites are met.
+
 ${parts.join("\n\n")}`;
 }
 
@@ -154,6 +156,10 @@ If previous cycles had build failures, consider "repair".
 ## Engineering Investment (optional field)
 
 Even when the main objective is content work, capture any valuable engineering improvement opportunity in the \`engineeringInvestment\` field. This is persisted in a tech debt backlog across cycles, building a visible record of deferred infrastructure work. Engineering investments that reduce file-touch counts or automate repetitive operations accelerate all future content cycles — they are not in opposition to the creative vision, they are force multipliers for it.
+
+## Creative Investment (optional field)
+
+When deferring a bold creative idea from the Creative Visionary, capture it in the \`creativeInvestment\` field. This is persisted in a creative backlog across cycles, preventing good ideas from being acknowledged but never tracked. Only capture ideas worth revisiting — not ones you're rejecting outright.
 
 ${formatImplementationPlanGuidance()}
 
