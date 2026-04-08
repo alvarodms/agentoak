@@ -111,6 +111,21 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
+## Scripted Event Macro Library (C179)
+
+**File**: `asm/macros/event_macros.inc`. Included via `asm/macros.inc` (after `battle_tent.inc`).
+
+**3 macros** — all emit complete script bytecodes:
+- `EventMacro_GlimpseEvent prereq_flag, glimpse_flag, text1, text2` — One-shot walk-over event (exclamation + 2 messages). Ends with `release`+`end`.
+- `EventMacro_BadgeGateShow hide_flag, weather_id` — Reveal NPC + set weather. Ends with `return` (called via `call_if_set`).
+- `EventMacro_ConditionalDialogue flag, text_before, text_after` — Two-state NPC dialogue. Ends with `release`+`end`.
+
+**Label uniqueness**: Uses `.L` local labels + `\@` expansion count for unique labels per invocation.
+
+**Include order**: `macros.inc` (defines EventMacro_*) → `event.inc` (defines lock, msgbox, etc.) → script files (invoke macros). Works because GNU as macros are expanded at invocation, not definition.
+
+---
+
 ## Coord Events / Walk-Over Triggers (C144)
 
 **map.json**: `coord_events` with `x`, `y`, `elevation`, `type: "1"`, `script`. One-shot: `setflag` + `goto_if_set`.

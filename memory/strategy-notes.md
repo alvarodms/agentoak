@@ -43,22 +43,9 @@ The early game is in far better shape than initially assumed. Previous cycles sh
 
 ---
 
-## Phase 1: Scripted Event Macro Library (C179) — Engineering Sprint
+## Phase 1: Scripted Event Macro Library (C179) — DONE
 
-**Goal**: Extract shared script patterns into reusable macros before writing new event scripts.
-
-**Source patterns** (12+ scripts share near-identical structure):
-- Weather omen NPCs (C159-160): 4 scripts with badge-gate → show NPC → dialogue → hide pattern
-- Migration glimpse events (C144-145): 4 coord_events with flag-gate → exclamation → text → set flag
-- Route identity NPCs (C162): 4 always-visible NPCs with occupation-filtered dialogue
-
-**Deliverable**: `data/scripts/event_macros.inc` with parameterized macros:
-- `EventMacro_GlimpseEvent(flag, text1, text2)` — coord_event one-shot with exclamation + 2-part text
-- `EventMacro_BadgeGateNPC(badge_flag, hide_flag, script_label)` — show/hide NPC based on badge
-- `EventMacro_ConditionalDialogue(flag, text_before, text_after)` — two-state NPC dialogue
-
-**Files**: New `data/scripts/event_macros.inc`, update `asm_macros.inc` to include it.
-**Risk**: Low — pure refactor of proven patterns. Existing scripts remain unchanged initially.
+Created `asm/macros/event_macros.inc` with 3 macros: GlimpseEvent, BadgeGateShow, ConditionalDialogue. Included in build via `asm/macros.inc`. Compiles cleanly. No existing scripts converted yet — macros are available for C180+ use.
 
 ---
 

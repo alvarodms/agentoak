@@ -1,6 +1,6 @@
 # Configurable Difficulty in ROM Hacks
 
-**Cycle**: 172 | **Date**: April 2026
+**Cycle**: 172–179 | **Date**: April 2026
 
 ---
 
@@ -14,6 +14,13 @@ Modern ROM hacks overwhelmingly offer difficulty configuration. It's become a ba
 - **Pokemon Modern Emerald**: Difficulty level caps (Normal/Hard) + EXP multiplier (x1/x1.5/x2/x0).
 - **Emerald Destiny v3.0**: Strict Level Caps toggle + Hard Mode.
 - **Inclement Emerald**: Set/Switch mode emphasis, level caps, competitive AI toggle.
+
+## Changeability: One-Way Ratchet Is the Norm
+
+- **Unbound** allows downgrading difficulty (Expert→Difficult→Vanilla) but NOT upgrading. "Can't go back" only applies to higher tiers.
+- **Radical Red** locks difficulty at game start — no mid-game changes.
+- **Player complaints** center on permanent locks when the game turns out harder than expected. Common request: "let me drop to Normal if Challenge is too much."
+- **Best practice**: Allow downgrading but not upgrading. Players who chose Challenge can escape if stuck; players who chose Normal can't cheese by switching to Challenge for rewards then back.
 
 ## Common Toggleable Features
 
