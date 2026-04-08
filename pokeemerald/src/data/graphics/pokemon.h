@@ -2864,3 +2864,11 @@ const u8 gMonIcon_UnownExclamationMark[] = INCBIN_U8("graphics/pokemon/unown/exc
 const u32 gMonStillFrontPic_UnownQuestionMark[] = INCBIN_U32("graphics/pokemon/unown/question_mark/front.4bpp.lz");
 const u32 gMonBackPic_UnownQuestionMark[] = INCBIN_U32("graphics/pokemon/unown/question_mark/back.4bpp.lz");
 const u8 gMonIcon_UnownQuestionMark[] = INCBIN_U8("graphics/pokemon/unown/question_mark/icon.4bpp");
+
+// Hoenn regional forms
+const u32 gMonStillFrontPic_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/front.4bpp.lz");
+const u32 gMonPalette_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_ArcanineHoenn[] = INCBIN_U8("graphics/pokemon/arcanine_hoenn/icon.4bpp");
+const u8 gMonFootprint_ArcanineHoenn[] = INCBIN_U8("graphics/pokemon/arcanine_hoenn/footprint.1bpp");
