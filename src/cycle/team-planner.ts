@@ -71,6 +71,8 @@ Before making your decision, consider these perspectives from your advisory team
 
 **Creative investments**: If the Creative Visionary proposes a bold idea that you're deferring (not incorporating this cycle), capture it in the \`creativeInvestment\` field so it is tracked in the creative backlog. This prevents good ideas from being "noted and valued" but never tracked. Do not capture ideas you're rejecting outright — only ones worth revisiting when prerequisites are met.
 
+**Design hypothesis**: If the Game Designer states a design hypothesis (a testable claim about how the player should feel), include it in your \`reasoning\` field. This becomes the design intent against which the next cycle evaluates success. If the Game Designer challenges the roadmap, engage with the argument directly — explain why you agree or disagree rather than defaulting to the planned next step.
+
 ${parts.join("\n\n")}`;
 }
 

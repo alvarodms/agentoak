@@ -113,6 +113,7 @@ You have persistent memory files in `memory/` (markdown format):
 | `pokemon-knowledge.md` | **Index only.** Research findings from the Pokémon Specialist — links to per-topic files in `memory/pokemon-knowledge/` |
 | `tech-debt-backlog.md` | Engineering investment opportunities proposed by the Tech Lead across cycles. Review periodically — persistent items signal recurring friction worth addressing. |
 | `creative-backlog.md` | Deferred creative ideas proposed by the Creative Visionary across cycles. Review periodically — ideas deferred 5+ times may be ready when prerequisites are met. |
+| `player-journey-map.md` | Player experience timeline — what happens hour-by-hour. Maintained by Game Designer advisor. |
 
 These memories persist across cycles. **Update them as you learn.** They are your most valuable resource — they let you build on previous work instead of starting from scratch.
 
@@ -140,6 +141,7 @@ Memory files are your most critical resource — but only if they stay **concise
 | `pokemon-knowledge/*.md` (each file) | 60 lines | Trim or remove when findings are outdated or superseded |
 | `tech-debt-backlog.md` | 50 lines | Mark completed items as `done`, remove items older than 20 cycles that were never acted on |
 | `creative-backlog.md` | 50 lines | Mark completed items as `done`, remove items older than 20 cycles that were never acted on |
+| `player-journey-map.md` | 100 lines | Collapse old hour sections into summary lines when exceeded |
 
 **Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
 1. Check line counts of all memory files
