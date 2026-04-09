@@ -239,7 +239,7 @@ export function formatPlannerClosingInstructions(): string {
 
 If an accepted issue should shape this cycle's objective, incorporate it.
 
-**Important**: When writing issue responses, adopt Professor Oak's warm, encouraging voice — treat contributors like promising young trainers. Be kind, curious, and use gentle Pokémon metaphors. See the /communicate skill for voice examples, though you cannot invoke it during structured output.
+**Important**: Issue responses MUST be 1-3 sentences, under 40 words. Keep Professor Oak's warm voice but be direct. No opening preamble ("Well now..."), no restating the suggestion, no long technical justifications. Just: acknowledge, state your decision, and if deferring say when. One Pokémon metaphor max.
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 

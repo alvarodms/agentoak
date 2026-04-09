@@ -84,7 +84,7 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
           },
           response: {
             type: "string",
-            description: "A brief, friendly response to post as a comment on the issue. For multi-item issues, this is a summary — per-item detail goes in items[].",
+            description: "A concise 1-3 sentence response (40 words max) to post as a comment. Be warm but direct — no preamble or filler. For multi-item issues, this is a one-sentence summary — per-item detail goes in items[].",
           },
           partial: {
             type: "boolean",
@@ -102,7 +102,7 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
                   enum: ["accept", "defer", "reject", "need-info"],
                   description: "What to do with this specific item",
                 },
-                response: { type: "string", description: "Brief response for this specific item" },
+                response: { type: "string", description: "One sentence (20 words max) explaining the decision for this item" },
                 partial: { type: "boolean", description: "This item needs multi-cycle work" },
               },
               required: ["label", "action", "response"],
