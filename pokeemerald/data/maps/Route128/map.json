@@ -183,7 +183,35 @@
     }
   ],
   "warp_events": [],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 38,
+      "y": 36,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "Route128_EventScript_DeepMigration"
+    },
+    {
+      "type": "trigger",
+      "x": 39,
+      "y": 36,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "Route128_EventScript_DeepMigration"
+    },
+    {
+      "type": "trigger",
+      "x": 40,
+      "y": 36,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "Route128_EventScript_DeepMigration"
+    }
+  ],
   "bg_events": [
     {
       "type": "hidden_item",

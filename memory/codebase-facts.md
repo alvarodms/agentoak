@@ -50,7 +50,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
 
-**Custom flags**: 0x264-0x286 used (v6.0 through v1.6). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). Next available: 0x287.
+**Custom flags**: 0x264-0x287 used (v6.0 through v1.7). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287 = `FLAG_DEEP_MIGRATION_EVENT` (C188). Next available: 0x288.
 
 **Beast flags**: System flags 0x881-0x886.
 

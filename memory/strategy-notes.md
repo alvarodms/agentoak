@@ -75,7 +75,7 @@ Design specifics for both events will be refined in their respective cycle plann
 | **C185** | Engineering | Legendary Encounter Template (`legend_macros.inc`) — extract from 4 shipped encounters | LOW |
 | **C186** | Atmosphere | Badge-conditional dialogue in Mossdeep, Sootopolis, Pacifidlog (2 NPCs × 3 cities) | DONE |
 | **C187** | Atmosphere | Ocean route atmospheric NPCs — 5 across Routes 124/126/127/128/131 | DONE |
-| **C188** | Feature | Late-game scripted event #1 — ocean migration sighting | MEDIUM |
+| **C188** | Feature | Late-game scripted event #1 — ocean migration sighting | DONE |
 | **C189** | Feature | Late-game scripted event #2 — pre-Sootopolis narrative beat | MEDIUM |
 | **C190** | Polish | Integration, difficulty_utils.inc extraction, player journey map update | LOW |
 | **C191** | Buffer | Overflow / community issues / v1.8 planning | — |
@@ -102,7 +102,7 @@ Extract common patterns into `data/scripts/legend_macros.inc`. Follow `event_mac
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()` macro in `constants/flags.h`.
-- **Flag space**: 0x264+ custom. Next available: 0x287.
+- **Flag space**: 0x264+ custom. Next available: 0x288.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854.
 - **Scripted Event Macros**: `asm/macros/event_macros.inc` — GlimpseEvent, BadgeGateShow, ConditionalDialogue.

@@ -694,7 +694,7 @@
 #define FLAG_HIDE_ROUTE125_OMEN_SWIMMER    0x285 // Weather Omen Swimmer, visible post-Badge 7 (C160)
 #define FLAG_DIFFICULTY_CHALLENGE  0x286 /* Challenge Mode active (Set battles + level caps) (C181) */
 #define IsChallengeModeActive() FlagGet(FLAG_DIFFICULTY_CHALLENGE)
-#define FLAG_UNUSED_0x287  0x287 // Unused Flag
+#define FLAG_DEEP_MIGRATION_EVENT  0x287 /* Deep Migration event on Route 128 (C188) */
 #define FLAG_UNUSED_0x288  0x288 // Unused Flag
 #define FLAG_UNUSED_0x289  0x289 // Unused Flag
 #define FLAG_UNUSED_0x28A  0x28A // Unused Flag

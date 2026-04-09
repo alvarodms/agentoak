@@ -16,5 +16,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Level Cap Display Patterns in ROM Hacks | 185 | [level-cap-display-patterns.md](pokemon-knowledge/level-cap-display-patterns.md) |
 | Badge-Reactive NPC Dialogue Patterns | 186 | [badge-reactive-npc-patterns.md](pokemon-knowledge/badge-reactive-npc-patterns.md) |
 | Ocean Atmospheric NPC Design | 187 | [ocean-atmospheric-npc-design.md](pokemon-knowledge/ocean-atmospheric-npc-design.md) |
+| Deep Migration Event Design — Scripted Ocean Encounters | 188 | [deep-migration-event-design.md](pokemon-knowledge/deep-migration-event-design.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

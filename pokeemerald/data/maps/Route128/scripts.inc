@@ -311,3 +311,81 @@ Route128_Text_ScaredDiver:
 	.string "They had somewhere to be.\n"
 	.string "I'm not going back down there.$"
 
+@ =============================================
+@ Deep Migration Event -- "The Deep Migration" (C188)
+@ A Wailord pod passes beneath Route 128.
+@ Triggers once post-Badge 7 via coord_events.
+@ =============================================
+
+Route128_EventScript_DeepMigration::
+	goto_if_set FLAG_DEEP_MIGRATION_EVENT, Route128_EventScript_DeepMigration_End
+	goto_if_unset FLAG_BADGE07_GET, Route128_EventScript_DeepMigration_End
+	lockall
+	@ Beat 1: Something is wrong
+	delay 15
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	@ Beat 2: The ocean trembles
+	LegendMacro_ScreenShake 1, 1, 4, 3
+	delay 20
+	@ Beat 3: First cry -- close, massive
+	LegendMacro_PlayCry SPECIES_WAILORD
+	@ Beat 4: Weather darkens
+	LegendMacro_SetWeather WEATHER_RAIN
+	delay 30
+	@ Beat 5: Second cry -- distant echo
+	waitse
+	playmoncry SPECIES_WAILORD, CRY_MODE_NORMAL
+	delay 30
+	waitmoncry
+	@ Beat 6: The player sees it
+	msgbox Route128_Text_DeepMigration1, MSGBOX_DEFAULT
+	@ Beat 7: One breaks away
+	delay 15
+	waitse
+	playmoncry SPECIES_WAILORD, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	msgbox Route128_Text_DeepMigration2, MSGBOX_DEFAULT
+	@ Beat 8: The encounter
+	playse SE_PIN
+	delay 20
+	setwildbattle SPECIES_WAILMER, 40, ITEM_MYSTIC_WATER
+	dowildbattle
+	@ Beat 9: Aftermath
+	msgbox Route128_Text_DeepMigration3, MSGBOX_DEFAULT
+	@ Restore weather
+	setweather WEATHER_SUNNY
+	doweather
+	@ Mark complete
+	setflag FLAG_DEEP_MIGRATION_EVENT
+	releaseall
+	end
+
+Route128_EventScript_DeepMigration_End::
+	end
+
+@ =============================================
+@ Deep Migration Event Text
+@ =============================================
+
+Route128_Text_DeepMigration1:
+	.string "The ocean trembles beneath you.\n"
+	.string "Vast shadows glide below the surface.\p"
+	.string "A convoy of enormous shapes,\n"
+	.string "blotting out the seafloor.\l"
+	.string "Moving south. Moving with purpose.$"
+
+Route128_Text_DeepMigration2:
+	.string "One shape breaks from the pod.\n"
+	.string "Smaller. Younger.\p"
+	.string "It surfaces nearby, drawn by\n"
+	.string "your presence on the water.$"
+
+Route128_Text_DeepMigration3:
+	.string "The pod has passed.\n"
+	.string "The sea goes still.\p"
+	.string "But the current still hums with\n"
+	.string "their passing.\l"
+	.string "The world is moving.$"
+
