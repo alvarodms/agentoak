@@ -99,6 +99,29 @@ You also have access to these research tools — use them when designing moveset
 
 All tools default to Gen 3 data, which matches the pokeemerald base.
 
+### Sprite Designer Agent — Regional Form Sprites
+
+The **Sprite Designer** is a specialist agent (Phase 1.75) that creates and iterates on regional form sprites. It runs automatically when the Producer sets `spriteDesignBrief` in the cycle plan.
+
+**What it does:**
+- Creates regional form sprites by recoloring palettes and adding pixel-level accents via Pillow
+- Self-reviews its work by viewing the generated PNGs (multimodal)
+- Accumulates sprite technique knowledge in `memory/sprite-knowledge.md`
+
+**Community feedback loop:**
+1. Sprite Designer creates v1 of a regional form sprite
+2. After the build succeeds, a `sprite-feedback` GitHub issue is created with embedded images
+3. Community provides feedback on the sprite
+4. On the next relevant cycle, the Producer sets an iteration brief with the feedback
+5. Sprite Designer refines the sprite based on community input
+6. Process repeats for up to 5 iterations, then the sprite is finalized
+
+**The Sprite Designer only creates sprite files** (PNGs + PALs). Species registration (constants, tables, stats — the 13-file pipeline) remains the implementation agent's job.
+
+**When the Producer should trigger it:**
+- Creating a new regional form species → set `spriteDesignBrief` with base species, target typing, aesthetic direction
+- Community feedback pending on an existing sprite → set `spriteDesignBrief` with feedback quotes from the issue
+
 ## Memory System
 
 You have persistent memory files in `memory/` (markdown format):
@@ -114,6 +137,8 @@ You have persistent memory files in `memory/` (markdown format):
 | `tech-debt-backlog.md` | Engineering investment opportunities proposed by the Tech Lead across cycles. Review periodically — persistent items signal recurring friction worth addressing. |
 | `creative-backlog.md` | Deferred creative ideas proposed by the Creative Visionary across cycles. Review periodically — ideas deferred 5+ times may be ready when prerequisites are met. |
 | `player-journey-map.md` | Player experience timeline — what happens hour-by-hour. Maintained by Game Designer advisor. |
+| `sprite-knowledge.md` | Accumulated sprite techniques, palette recipes, and community feedback patterns. Maintained by the Sprite Designer agent. |
+| `sprite-iterations.md` | Version history tracking for regional form sprites across feedback cycles. |
 
 These memories persist across cycles. **Update them as you learn.** They are your most valuable resource — they let you build on previous work instead of starting from scratch.
 
@@ -142,6 +167,8 @@ Memory files are your most critical resource — but only if they stay **concise
 | `tech-debt-backlog.md` | 50 lines | Mark completed items as `done`, remove items older than 20 cycles that were never acted on |
 | `creative-backlog.md` | 50 lines | Mark completed items as `done`, remove items older than 20 cycles that were never acted on |
 | `player-journey-map.md` | 100 lines | Collapse old hour sections into summary lines when exceeded |
+| `sprite-knowledge.md` | 60 lines | Trim obsolete techniques; keep active palette recipes and community preferences |
+| `sprite-iterations.md` | 50 lines | Remove completed entries older than 20 cycles |
 
 **Every 10 cycles**, do a memory maintenance pass at the start of your cycle:
 1. Check line counts of all memory files

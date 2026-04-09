@@ -524,3 +524,111 @@ export async function createHelpRequest(
     [AGENT_LABELS.helpRequest],
   );
 }
+
+// ── Sprite Feedback ─────────────────────────────────────────────
+
+/** Maximum sprite feedback iterations before auto-closing */
+export const MAX_SPRITE_ITERATIONS = 5;
+
+/**
+ * Create a sprite-feedback issue to solicit community feedback on a new
+ * or updated regional form sprite.
+ * Returns the new issue number, or null on failure.
+ */
+export async function createSpriteFeedbackIssue(
+  speciesName: string,
+  typing: string,
+  spriteReport: string,
+  repoImagePaths: string[],
+  version: number,
+): Promise<number | null> {
+  const imageSection = repoImagePaths
+    .map((p) => `![${path.basename(p)}](/${p})`)
+    .join("\n");
+  const title = `[Sprite Feedback] Hoenn ${speciesName} (${typing})`;
+  const body =
+    `🎨 **Agent Oak — Sprite Feedback Request**\n\n` +
+    `## Regional Form Sprite — v${version}\n\n` +
+    `${imageSection}\n\n` +
+    `### Design Notes\n\n${spriteReport}\n\n` +
+    `---\n\n` +
+    `**What do you think?** Please share feedback on:\n` +
+    `- Color palette — do the colors read well as ${typing}?\n` +
+    `- Accent details — are the type-specific markings visible and fitting?\n` +
+    `- Overall impression — does this feel like a legitimate regional form?\n\n` +
+    `Your feedback directly shapes the next iteration! (up to ${MAX_SPRITE_ITERATIONS} rounds)`;
+  return createIssue(title, body, [AGENT_LABELS.spriteFeedback]);
+}
+
+/**
+ * Post an iteration update comment on an existing sprite-feedback issue.
+ */
+export async function postSpriteIterationUpdate(
+  issueNumber: number,
+  spriteReport: string,
+  repoImagePaths: string[],
+  version: number,
+): Promise<void> {
+  const imageSection = repoImagePaths
+    .map((p) => `![${path.basename(p)}](/${p})`)
+    .join("\n");
+  const body =
+    `🎨 **Sprite Update — v${version}**\n\n` +
+    `${imageSection}\n\n` +
+    `### Changes\n\n${spriteReport}\n\n` +
+    `---\n\n` +
+    `Feedback welcome! ${version >= MAX_SPRITE_ITERATIONS ? "This is the final iteration." : `(${MAX_SPRITE_ITERATIONS - version} iterations remaining)`}`;
+  await commentOnIssue(issueNumber, body);
+
+  // Auto-close if we've hit the iteration limit
+  if (version >= MAX_SPRITE_ITERATIONS) {
+    await commentOnIssue(issueNumber, `Reached the maximum of ${MAX_SPRITE_ITERATIONS} iterations. Closing this feedback round — the current sprite is now final. Thank you for all the feedback!`);
+    await closeIssue(issueNumber);
+  }
+}
+
+/**
+ * Fetch open sprite-feedback issues that have new community comments.
+ * Returns issues with their latest non-agent comments for the Producer
+ * to decide whether to trigger a sprite iteration.
+ */
+export async function fetchSpriteFeedbackWithComments(): Promise<
+  Array<{ issue: GitHubIssue; feedbackComments: string[] }>
+> {
+  const issues = await fetchOpenIssues([AGENT_LABELS.spriteFeedback]);
+  const results: Array<{ issue: GitHubIssue; feedbackComments: string[] }> = [];
+
+  for (const issue of issues) {
+    const comments = await fetchIssueComments(issue.number, 20);
+    // Filter out agent comments (they start with the agent emoji prefix)
+    const communityComments = comments.filter(
+      (c) => !c.body.startsWith("🎨 ") && !c.body.startsWith("🤖 ") && c.author !== "github-actions[bot]",
+    );
+    if (communityComments.length > 0) {
+      results.push({
+        issue,
+        feedbackComments: communityComments.map(
+          (c) => `@${c.author}: ${c.body}`,
+        ),
+      });
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Format sprite feedback issues for the planner prompt.
+ * Returns empty string if there are no sprite feedback issues with new comments.
+ */
+export async function formatSpriteFeedbackForPlanner(): Promise<string> {
+  const feedbackIssues = await fetchSpriteFeedbackWithComments();
+  if (feedbackIssues.length === 0) return "";
+
+  const sections = feedbackIssues.map(({ issue, feedbackComments }) => {
+    const commentBlock = feedbackComments.map((c) => `  - ${c}`).join("\n");
+    return `### ${issue.title} (Issue #${issue.number})\n\nCommunity feedback:\n${commentBlock}`;
+  });
+
+  return `\n## Sprite Feedback Pending\n\nThe following sprite-feedback issues have new community comments. Consider setting \`spriteDesignBrief\` to trigger a sprite iteration cycle.\n\n${sections.join("\n\n")}`;
+}

@@ -11,6 +11,7 @@ import {
   buildPlannerContextSections,
   formatImplementationPlanGuidance,
   formatGameplayDesignBriefGuidance,
+  formatSpriteDesignBriefGuidance,
   formatPlannerClosingInstructions,
   formatPersonalityGuidance,
 } from "../agent/prompt-sections.js";
@@ -26,6 +27,8 @@ export interface CyclePlan {
   engineeringInvestment?: string;
   /** Optional creative investment identified by the Creative Visionary. Captured when a bold creative idea is deferred so it can be tracked in the creative backlog for future cycles. */
   creativeInvestment?: string;
+  /** Optional brief for the Sprite Designer agent. When set, Phase 1.75 spawns a specialist to create or iterate on regional form sprites. For fresh sprites: describe the species, target typing, and aesthetic direction. For iterations: include community feedback quotes from the sprite-feedback issue. */
+  spriteDesignBrief?: string;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -62,6 +65,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     creativeInvestment: {
       type: "string",
       description: "Optional creative investment opportunity identified by the Creative Visionary or your own analysis. Capture a deferred bold creative idea here — it will be persisted in the creative backlog so future cycles can act on it when prerequisites are met. Examples: 'Regional Forms for Hoenn migration species — needs sprite pipeline first', 'Route 119 thunderstorm should darken screen and play rain ambiance — needs scripted event macros'.",
+    },
+    spriteDesignBrief: {
+      type: "string",
+      description: "Optional brief for the Sprite Designer agent. Set this when the cycle involves creating or iterating on regional form sprites. The Sprite Designer has access to Pillow, the sprite fetcher MCP tool, and memory of accumulated sprite techniques. For fresh sprites: describe the base species, target typing, and aesthetic direction (e.g., 'Create Hoenn Growlithe sprites: Electric/Fire. Base: growlithe. Electric-gold palette with lightning glyph accents.'). For iterations: include community feedback quotes from the sprite-feedback GitHub issue (e.g., 'Iterate on Arcanine Hoenn sprites based on feedback: gold is too close to original orange, needs more blue-electric accents on the mane.').",
     },
     issueActions: {
       type: "array",
@@ -137,6 +144,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     implementationPlan?: string;
     gameplayDesignBrief?: string;
     engineeringInvestment?: string;
+    spriteDesignBrief?: string;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -213,6 +221,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       implementationPlan: parsed.implementationPlan ?? "",
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
       engineeringInvestment: parsed.engineeringInvestment || undefined,
+      spriteDesignBrief: parsed.spriteDesignBrief || undefined,
       issueActions,
       helpRequests,
     };
@@ -269,6 +278,8 @@ If a previous cycle had build failures and the changes were REVERTED (look for "
 ${formatImplementationPlanGuidance()}
 
 ${formatGameplayDesignBriefGuidance()}
+
+${formatSpriteDesignBriefGuidance()}
 
 ${formatPlannerClosingInstructions()}`;
 

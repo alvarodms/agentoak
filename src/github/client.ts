@@ -74,6 +74,7 @@ export const AGENT_LABELS = {
   rejected: "agent-rejected",
   needsInfo: "agent-needs-info",
   helpRequest: "agent-help-request",
+  spriteFeedback: "sprite-feedback",
 } as const;
 
 /** Labels that indicate a community issue */

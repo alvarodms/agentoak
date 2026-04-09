@@ -18,6 +18,7 @@ import {
   buildPlannerContextSections,
   formatImplementationPlanGuidance,
   formatGameplayDesignBriefGuidance,
+  formatSpriteDesignBriefGuidance,
   formatPlannerClosingInstructions,
   formatPersonalityGuidance,
 } from "../agent/prompt-sections.js";
@@ -166,6 +167,8 @@ When deferring a bold creative idea from the Creative Visionary, capture it in t
 ${formatImplementationPlanGuidance()}
 
 ${formatGameplayDesignBriefGuidance()}
+
+${formatSpriteDesignBriefGuidance()}
 
 ${formatPlannerClosingInstructions()}`;
 
