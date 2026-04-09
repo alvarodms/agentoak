@@ -69,6 +69,21 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 `setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`. Used by all 4 shipped legendaries (beasts, Ho-Oh, Groudon/Kyogre, Rayquaza).
 
+## Legendary Encounter Macros (C185)
+
+**File**: `asm/macros/legend_macros.inc`. Included via `asm/macros.inc` (after `event_macros.inc`).
+
+**7 macros** -- composable building blocks:
+- `LegendMacro_ScreenShake v_pan, h_pan, shakes, shake_delay` -- camera shake (wraps 4 setvar + ShakeCamera)
+- `LegendMacro_PlayCry species` -- cry with encounter timing (waitse + playmoncry + delay + waitmoncry)
+- `LegendMacro_SetWeather weather` -- setweather + doweather
+- `LegendMacro_ClearWeather` -- WEATHER_NONE + doweather
+- `LegendMacro_FadeOut` -- fadescreenswapbuffers FADE_TO_BLACK
+- `LegendMacro_FadeIn` -- fadescreenswapbuffers FADE_FROM_BLACK
+- `LegendMacro_StartBattle species, level, item, won_label, caught_label` -- full battle setup + outcome branching
+
+**Design**: Building blocks, not complete scripts. Compose in map script files. No .L local labels needed (all branching uses caller-provided labels).
+
 ---
 
 ## Scripted Event Macro Library (C179)

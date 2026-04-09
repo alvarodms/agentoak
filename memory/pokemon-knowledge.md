@@ -13,5 +13,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Regional Forms — Complexity & Community Reception | 175 | [regional-forms-complexity.md](pokemon-knowledge/regional-forms-complexity.md) |
 | Ocean Route Trainer Pass — Design Research | 176 | [ocean-trainer-pass-design.md](pokemon-knowledge/ocean-trainer-pass-design.md) |
 | v1.7 Direction — Post-Difficulty-Mode Priorities | 184 | [v17-direction-research.md](pokemon-knowledge/v17-direction-research.md) |
+| Level Cap Display Patterns in ROM Hacks | 185 | [level-cap-display-patterns.md](pokemon-knowledge/level-cap-display-patterns.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

@@ -6,6 +6,7 @@
 	.include "asm/macros/trainer_hill.inc"
 	.include "asm/macros/battle_tent.inc"
 	.include "asm/macros/event_macros.inc"
+	.include "asm/macros/legend_macros.inc"
 	.include "asm/macros/battle_frontier/apprentice.inc"
 	.include "asm/macros/battle_frontier/battle_arena.inc"
 	.include "asm/macros/battle_frontier/battle_dome.inc"
