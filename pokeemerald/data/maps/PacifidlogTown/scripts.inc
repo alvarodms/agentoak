@@ -226,6 +226,7 @@ PacifidlogTown_EventScript_CurrentSailor_PostBadge7:
 PacifidlogTown_EventScript_CorsolaElder::
 	lock
 	faceplayer
+	goto_if_set FLAG_GATHERING_EVENT, PacifidlogTown_EventScript_CorsolaElder_PostGathering
 	goto_if_set FLAG_BADGE07_GET, PacifidlogTown_EventScript_CorsolaElder_PostBadge7
 	msgbox PacifidlogTown_Text_CorsolaElder_Normal, MSGBOX_DEFAULT
 	release
@@ -233,6 +234,13 @@ PacifidlogTown_EventScript_CorsolaElder::
 
 PacifidlogTown_EventScript_CorsolaElder_PostBadge7:
 	msgbox PacifidlogTown_Text_CorsolaElder_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_CorsolaElder_PostGathering::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_CorsolaElder_PostGathering, MSGBOX_DEFAULT
 	release
 	end
 
@@ -265,3 +273,12 @@ PacifidlogTown_Text_CorsolaElder_Uneasy:
 	.string "them from rising.\p"
 	.string "This town stands on their backs,\n"
 	.string "child. Remember that.$"
+
+PacifidlogTown_Text_CorsolaElder_PostGathering:
+	.string "A fog has settled over the waters\n"
+	.string "near SOOTOPOLIS.\p"
+	.string "My grandmother spoke of a time\n"
+	.string "when the sea would hold its breath\l"
+	.string "before something changed.\p"
+	.string "I believe that time has come,\n"
+	.string "child.$"

@@ -74,22 +74,28 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 ---
 
-## Hour 10-15: Ever Grande → E4 → Postgame (Badges: 7-8+)
+## Hour 10-15: Badge 7 → Sootopolis → E4 (Badges: 7-8+)
 
-**Key moments**:
+**Key moments — "The Gathering Storm" arc (v1.7)**:
+- Badge-conditional city atmosphere: 6 NPCs across Mossdeep, Sootopolis, Pacifidlog shift tone after Badge 7 (C186)
+- Ocean route witnesses: 5 NPCs across Routes 124/126/127/128/131 report migration signs (C187)
+- "The Deep Migration" scripted event: Wailord pod + special Wailmer encounter, Route 128 (C188)
+- "The Gathering" scripted event: Fog, layered cries, migration convergence approaching Sootopolis, Route 126 (C189)
+- Permanent fog on Route 126 after The Gathering — the world physically changed
+- Post-Gathering NPC reactions: 3 city NPCs acknowledge the convergence (C190)
 - Juan expanded (C173), Victory Road trainers redesigned (C175)
 - E4 + Champion redesigned (C132)
-- Postgame breadcrumb NPCs (C139)
-- Legendary saga: Beasts → Ho-Oh → Primals → Rayquaza (C120-137)
-- Rayquaza cinematic encounter (C137)
 
-**Pacing**: E4 quality is high. Legendary saga is the hack's signature. Long narrative gap between Badge 7 and postgame.
+**Pacing**: Four-beat narrative arc fills the Badge 7-E4 gap. City whispers → ocean witnesses → spectacle → dread. Each beat escalates. Permanent fog gives the world tangible weight. Post-Gathering city NPC callbacks reward backtracking.
 
-**Emotional arc**: Challenge (Victory Road) → triumph (E4) → epic scale (legendaries)
+**Emotional arc**: Unease (city atmosphere) → observation (ocean NPCs) → shock (Deep Migration) → dread (The Gathering) → challenge (Victory Road) → triumph (E4)
+
+**Challenge Mode note**: Level cap active (45 at Badge 7, 50 at Badge 8, 55 at E4).
 
 ---
 
-## Known Gaps (v1.7 targets)
+## Known Gaps
 
-- **Badge 7-8 narrative**: No narrative events between Mossdeep and E4 → **v1.7 C186: badge-conditional city dialogue, C188-189: scripted events**
-- **Ocean routes**: Trainers redesigned (C176) but no narrative content on water → **v1.7 C187: atmospheric NPCs, C188: ocean migration event**
+All v1.7 targets filled. Remaining opportunities:
+- Post-E4 fog thinning on Route 126 (reduce traversal friction for postgame players)
+- In-battle level cap feedback message (pending since C183)

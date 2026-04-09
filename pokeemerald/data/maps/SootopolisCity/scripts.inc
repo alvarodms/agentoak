@@ -1747,6 +1747,7 @@ SootopolisCity_Text_SkyGuardianReaction:
 SootopolisCity_EventScript_LakeFisherman::
 	lock
 	faceplayer
+	goto_if_set FLAG_GATHERING_EVENT, SootopolisCity_EventScript_LakeFisherman_PostGathering
 	goto_if_set FLAG_BADGE07_GET, SootopolisCity_EventScript_LakeFisherman_PostBadge7
 	msgbox SootopolisCity_Text_LakeFisherman_Normal, MSGBOX_DEFAULT
 	release
@@ -1754,6 +1755,13 @@ SootopolisCity_EventScript_LakeFisherman::
 
 SootopolisCity_EventScript_LakeFisherman_PostBadge7:
 	msgbox SootopolisCity_Text_LakeFisherman_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_EventScript_LakeFisherman_PostGathering::
+	lock
+	faceplayer
+	msgbox SootopolisCity_Text_LakeFisherman_PostGathering, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1781,6 +1789,16 @@ SootopolisCity_Text_LakeFisherman_Uneasy:
 	.string "forty years.\p"
 	.string "The lake is warmer, too. Not by\n"
 	.string "much, but I can feel it in the line.$"
+
+SootopolisCity_Text_LakeFisherman_PostGathering:
+	.string "Have you come from the south?\n"
+	.string "That fog out there… it wasn't\l"
+	.string "there before.\p"
+	.string "I hear cries at night now.\n"
+	.string "From the deep, echoing off\l"
+	.string "the crater walls.\p"
+	.string "Whatever's out there,\n"
+	.string "it's close.$"
 
 SootopolisCity_Text_CraterElder_Normal:
 	.string "This crater has sheltered\n"

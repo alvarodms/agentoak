@@ -39,7 +39,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `python3: command not found` when running validation scripts.
 **Resolution**: Use Node.js (always available) for validation scripts. Do NOT assume Python is installed.
 
-## Trainer Party Macro/Struct Type Mismatch (Cycle 179)
+## Trainer Party Macro/Struct Type Mismatch (Cycles 179, 190) — RECURRING
 
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
 **Cause**: Party macro (e.g., `ITEM_CUSTOM_MOVES`) doesn't match the struct type of the party array in trainer_parties.h (e.g., `TrainerMonNoItemDefaultMoves`). The four macros map 1:1 to four struct types: `NO_ITEM_DEFAULT_MOVES`↔`TrainerMonNoItemDefaultMoves`, `NO_ITEM_CUSTOM_MOVES`↔`TrainerMonNoItemCustomMoves`, `ITEM_DEFAULT_MOVES`↔`TrainerMonItemDefaultMoves`, `ITEM_CUSTOM_MOVES`↔`TrainerMonItemCustomMoves`.

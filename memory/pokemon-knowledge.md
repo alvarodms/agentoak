@@ -18,5 +18,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Ocean Atmospheric NPC Design | 187 | [ocean-atmospheric-npc-design.md](pokemon-knowledge/ocean-atmospheric-npc-design.md) |
 | Deep Migration Event Design — Scripted Ocean Encounters | 188 | [deep-migration-event-design.md](pokemon-knowledge/deep-migration-event-design.md) |
 | Pre-Climax Narrative Patterns in ROM Hacks | 189 | [pre-climax-narrative-patterns.md](pokemon-knowledge/pre-climax-narrative-patterns.md) |
+| Polish Cycle Best Practices — What Top Hacks Do | 190 | [polish-cycle-best-practices.md](pokemon-knowledge/polish-cycle-best-practices.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

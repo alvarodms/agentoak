@@ -77,7 +77,7 @@ Design specifics for both events will be refined in their respective cycle plann
 | **C187** | Atmosphere | Ocean route atmospheric NPCs — 5 across Routes 124/126/127/128/131 | DONE |
 | **C188** | Feature | Late-game scripted event #1 — ocean migration sighting | DONE |
 | **C189** | Feature | Late-game scripted event #2 — pre-Sootopolis narrative beat | DONE |
-| **C190** | Polish | Integration, difficulty_utils.inc extraction, player journey map update | LOW |
+| **C190** | Polish | Post-Gathering NPC dialogue (3 cities), difficulty_utils.inc, journey map update | DONE |
 | **C191** | Buffer | Overflow / community issues / v1.8 planning | — |
 
 ### Dependencies
@@ -105,6 +105,6 @@ Extract common patterns into `data/scripts/legend_macros.inc`. Follow `event_mac
 - **Flag space**: 0x264+ custom. Next available: 0x28A.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854.
-- **Scripted Event Macros**: `asm/macros/event_macros.inc` — GlimpseEvent, BadgeGateShow, ConditionalDialogue.
+- **Scripted Event Macros**: `asm/macros/event_macros.inc` — GlimpseEvent, BadgeGateShow, ConditionalDialogue. `asm/macros/difficulty_utils.inc` — DifficultyDialogue.
 - **Multichoice IDs**: Last used 114 (`MULTI_DIFFICULTY_SELECT`). Next: 115.
 - **QoL shipped**: TMs non-consumable, indoor running, trade evo QoL (11 species).

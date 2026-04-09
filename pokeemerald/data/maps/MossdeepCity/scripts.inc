@@ -540,6 +540,7 @@ MossdeepCity_Text_BeastSightingPostClimax:
 MossdeepCity_EventScript_StormResearcher::
 	lock
 	faceplayer
+	goto_if_set FLAG_GATHERING_EVENT, MossdeepCity_EventScript_StormResearcher_PostGathering
 	goto_if_set FLAG_BADGE07_GET, MossdeepCity_EventScript_StormResearcher_PostBadge7
 	msgbox MossdeepCity_Text_StormResearcher_Normal, MSGBOX_DEFAULT
 	release
@@ -547,6 +548,13 @@ MossdeepCity_EventScript_StormResearcher::
 
 MossdeepCity_EventScript_StormResearcher_PostBadge7:
 	msgbox MossdeepCity_Text_StormResearcher_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_StormResearcher_PostGathering::
+	lock
+	faceplayer
+	msgbox MossdeepCity_Text_StormResearcher_PostGathering, MSGBOX_DEFAULT
 	release
 	end
 
@@ -574,6 +582,16 @@ MossdeepCity_Text_StormResearcher_Uneasy:
 	.string "readings 14 percent above baseline.\p"
 	.string "I've recalibrated the instruments\n"
 	.string "twice. The numbers won't come down.$"
+
+MossdeepCity_Text_StormResearcher_PostGathering:
+	.string "The sensors aren't just elevated\n"
+	.string "anymore. They're overlapping.\p"
+	.string "Multiple acoustic signatures,\n"
+	.string "all converging south of here.\l"
+	.string "Near SOOTOPOLIS.\p"
+	.string "I've never recorded anything\n"
+	.string "like this. The migration is\l"
+	.string "concentrating.$"
 
 MossdeepCity_Text_WarmSwimmer_Normal:
 	.string "The water around MOSSDEEP is always\n"
