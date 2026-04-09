@@ -193,6 +193,31 @@ You have access to a **Gameplay Designer** agent that can produce detailed, data
 **When NOT to use it**: Research cycles, planning cycles, repairs, refactors, pure narrative/dialogue work, or any cycle that doesn't involve gameplay balancing decisions. Skip it to avoid unnecessary latency.`;
 }
 
+/** Guidance for the Producer on when and how to use the spriteDesignBrief field. */
+export function formatSpriteDesignBriefGuidance(): string {
+  return `## Sprite Designer (optional Phase 1.75)
+
+You have access to a **Sprite Designer** agent that creates and iterates on regional form sprites. It works programmatically — recoloring palettes, stamping pixel accents, and self-reviewing its output (it can view PNGs). After sprites are committed, the runner creates a GitHub issue soliciting community feedback.
+
+**When to use it**: Set the \`spriteDesignBrief\` field when this cycle involves:
+- Creating new regional form sprites (a new variant species)
+- Iterating on existing sprites based on community feedback (check the "Sprite Feedback Pending" section above)
+
+**For fresh sprites**, describe:
+- The base species (e.g., "growlithe")
+- The target typing (e.g., "Electric/Fire")
+- Aesthetic direction (e.g., "Electric-gold palette with lightning glyph accents on the body")
+
+**For iteration sprites**, include:
+- The species being iterated
+- Specific community feedback quotes from the sprite-feedback issue
+- What changes to prioritize
+
+**When you set a brief**: Your \`implementationPlan\` should focus on species registration (constants, tables, stats) — the Sprite Designer handles the sprite files.
+
+**When NOT to use it**: Research cycles, planning cycles, repairs, non-sprite work, or cycles adding species that use existing canonical sprites (use \`fetch_pokemon_sprites\` directly instead).`;
+}
+
 /**
  * Build a personality guidance section for planner/Producer prompts.
  * Returns empty string when all traits are at moderate defaults.

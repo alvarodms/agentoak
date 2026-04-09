@@ -4,6 +4,7 @@ import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import type { CyclePlan } from "./planner.js";
 import { runGameplayDesigner } from "./gameplay-designer.js";
+import { runSpriteDesigner } from "./sprite-designer.js";
 import { getModeDescription, isCodingMode } from "./modes.js";
 import {
   buildDynamicContext,
@@ -31,7 +32,7 @@ import {
 } from "../git/committer.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, setDecisionLabel, commentOnIssue, AGENT_LABELS } from "../github/client.js";
 import { cycleLogger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
@@ -135,7 +136,8 @@ async function runPlanningPhase(
   // Fetch new community issues (silently skipped if GitHub is not configured)
   log.info("  Checking for community issues...");
   const communityIssues = await fetchNewCommunityIssues();
-  const issueContext = formatIssuesForPrompt(communityIssues);
+  const spriteFeedbackSection = await formatSpriteFeedbackForPlanner();
+  const issueContext = formatIssuesForPrompt(communityIssues) + spriteFeedbackSection;
   const issueBacklog = readIssueBacklog();
   const staleIssues = getStaleBacklogIssues(cycleNumber);
 
@@ -677,6 +679,30 @@ export async function runCycle(): Promise<void> {
       }
     }
 
+    // ── Phase 1.75: Sprite Design (conditional — only when Producer sets a sprite brief) ──
+    let spriteDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+
+    if (activePlan.spriteDesignBrief) {
+      log.info("Phase 1.75: Sprite Design...");
+      try {
+        const spriteResult = await runSpriteDesigner(
+          activePlan.objective,
+          activePlan.spriteDesignBrief,
+          activePlan.implementationPlan,
+        );
+        activePlan = {
+          ...activePlan,
+          implementationPlan: `${activePlan.implementationPlan}\n\n## Sprite Design Report (from Sprite Designer)\n\n${spriteResult.spriteReport}\n\nFiles created/modified:\n${spriteResult.filesCreated.map(f => `- ${f}`).join("\n")}`,
+        };
+        spriteDesignTokenUsage = spriteResult.tokenUsage;
+        log.info(`  Sprite design complete: ${spriteResult.toolCallCount} tool calls, ${spriteResult.filesCreated.length} files`);
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        log.warn(`  Sprite Designer failed, proceeding with placeholder approach: ${errMsg}`);
+        // Fall through — implementation agent can copy sprites from base species as fallback
+      }
+    }
+
     // ── Phase 2: Implementation (separate agent context) ──
     let implResult = await runImplementationPhase(
       cycleNumber,
@@ -763,6 +789,7 @@ export async function runCycle(): Promise<void> {
     const allActions = [...implResult.actions, ...fixActions, ...validationFixActions, ...reflection.actions];
     const totalTokenUsage = mergeTokenUsage(
       gameplayDesignTokenUsage,
+      spriteDesignTokenUsage,
       implResult.tokenUsage,
       fixTokenUsage,
       validationFixTokenUsage,
