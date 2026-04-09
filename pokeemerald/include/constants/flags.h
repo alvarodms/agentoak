@@ -697,20 +697,20 @@
 #define FLAG_DEEP_MIGRATION_EVENT  0x287 /* Deep Migration event on Route 128 (C188) */
 #define FLAG_GATHERING_EVENT        0x288 /* The Gathering event on Route 126 (C189) */
 #define FLAG_GATHERING_FOG_SET      0x289 /* Permanent fog on Route 126 post-Gathering (C189) */
-#define FLAG_UNUSED_0x28A  0x28A // Unused Flag
-#define FLAG_UNUSED_0x28B  0x28B // Unused Flag
-#define FLAG_UNUSED_0x28C  0x28C // Unused Flag
-#define FLAG_UNUSED_0x28D  0x28D // Unused Flag
-#define FLAG_UNUSED_0x28E  0x28E // Unused Flag
-#define FLAG_UNUSED_0x28F  0x28F // Unused Flag
-#define FLAG_UNUSED_0x290  0x290 // Unused Flag
-#define FLAG_UNUSED_0x291  0x291 // Unused Flag
-#define FLAG_UNUSED_0x292  0x292 // Unused Flag
-#define FLAG_UNUSED_0x293  0x293 // Unused Flag
-#define FLAG_UNUSED_0x294  0x294 // Unused Flag
-#define FLAG_UNUSED_0x295  0x295 // Unused Flag
-#define FLAG_UNUSED_0x296  0x296 // Unused Flag
-#define FLAG_UNUSED_0x297  0x297 // Unused Flag
+#define FLAG_QUEST_ELDER_STARTED       0x28A /* Quest 1: Elder's Current - started (C192) */
+#define FLAG_QUEST_ELDER_INVESTIGATED  0x28B /* Quest 1: R132 dive spot checked (C192) */
+#define FLAG_QUEST_ELDER_COMPLETE      0x28C /* Quest 1: Elder's Current - complete (C192) */
+#define FLAG_QUEST_HARTLEY_STARTED     0x28D /* Quest 2: Hartley's Field Report - started (C192) */
+#define FLAG_QUEST_HARTLEY_SITE1       0x28E /* Quest 2: R111 sandstorm site checked (C192) */
+#define FLAG_QUEST_HARTLEY_SITE2       0x28F /* Quest 2: R119 rain site checked (C192) */
+#define FLAG_QUEST_HARTLEY_SITE3       0x290 /* Quest 2: R125 hail site checked (C192) */
+#define FLAG_QUEST_HARTLEY_COMPLETE    0x291 /* Quest 2: Hartley's Field Report - complete (C192) */
+#define FLAG_QUEST_MOSSDEEP_STARTED    0x292 /* Quest 3: Mossdeep Signal - started (C192) */
+#define FLAG_QUEST_MOSSDEEP_INVESTIGATED 0x293 /* Quest 3: R131 shimmer checked (C192) */
+#define FLAG_QUEST_MOSSDEEP_COMPLETE   0x294 /* Quest 3: Mossdeep Signal - complete (C192) */
+#define FLAG_QUEST_FOG_STARTED         0x295 /* Quest 4: Fog Beneath - started (C192) */
+#define FLAG_QUEST_FOG_INVESTIGATED    0x296 /* Quest 4: R126 dive spot checked (C192) */
+#define FLAG_QUEST_FOG_COMPLETE        0x297 /* Quest 4: Fog Beneath - complete (C192) */
 #define FLAG_UNUSED_0x298  0x298 // Unused Flag
 #define FLAG_UNUSED_0x299  0x299 // Unused Flag
 #define FLAG_UNUSED_0x29A  0x29A // Unused Flag

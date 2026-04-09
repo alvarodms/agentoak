@@ -68,13 +68,12 @@ Route126_EventScript_RematchPablo::
 	end
 
 @ C187 Ocean Atmosphere NPC — Warm Swimmer
+@ C192: Upgraded to v1.8 Quest 4 giver
 Route126_EventScript_WarmSwimmer::
-	goto_if_set FLAG_GATHERING_EVENT, Route126_EventScript_WarmSwimmerPost
+	goto_if_set FLAG_QUEST_FOG_COMPLETE, Route126_EventScript_SwimmerQuestDone
+	goto_if_set FLAG_QUEST_FOG_STARTED, Route126_EventScript_SwimmerQuestReminder
+	goto_if_set FLAG_GATHERING_EVENT, Route126_EventScript_SwimmerQuestOffer
 	msgbox Route126_Text_WarmSwimmer, MSGBOX_NPC
-	end
-
-Route126_EventScript_WarmSwimmerPost::
-	msgbox Route126_Text_WarmSwimmerPost, MSGBOX_NPC
 	end
 
 Route126_Text_WarmSwimmer:
@@ -83,13 +82,72 @@ Route126_Text_WarmSwimmer:
 	.string "And the water's warm. Not sun-warm.\n"
 	.string "Warm from below.$"
 
-Route126_Text_WarmSwimmerPost:
-	.string "They're all heading the same\n"
-	.string "direction. Everything.\p"
-	.string "The TENTACOOL, the WAILMER, even\n"
-	.string "the SHARPEDO.\p"
-	.string "Something's pulling them toward\n"
-	.string "SOOTOPOLIS.$"
+@ =============================================
+@ v1.8 Quest 4: The Fog Beneath (C192)
+@ =============================================
+
+Route126_EventScript_SwimmerQuestOffer::
+	lock
+	faceplayer
+	msgbox Route126_Text_SwimmerQuestOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_FOG_STARTED
+	release
+	end
+
+Route126_EventScript_SwimmerQuestReminder::
+	lock
+	faceplayer
+	msgbox Route126_Text_SwimmerQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+Route126_EventScript_SwimmerQuestDone::
+	lock
+	faceplayer
+	msgbox Route126_Text_SwimmerQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+Route126_Text_SwimmerQuestOffer:
+	.string "Champion… you're here.\n"
+	.string "Good. I didn't want to go\l"
+	.string "back alone.\p"
+	.string "I've been diving these waters\n"
+	.string "for years. I know every rock,\l"
+	.string "every current. But after\l"
+	.string "the Gathering…\p"
+	.string "There's an opening now.\n"
+	.string "In the seabed. It wasn't\l"
+	.string "there before. I KNOW it\l"
+	.string "wasn't.\p"
+	.string "I went down to look and…\n"
+	.string "something moved. Something\l"
+	.string "big. I surfaced fast.\p"
+	.string "That researcher in MOSSDEEP\n"
+	.string "says the sky changed too.\l"
+	.string "Above and below -- like HOENN\l"
+	.string "itself cracked open.\p"
+	.string "Will you dive down there?\n"
+	.string "The opening is just south.\l"
+	.string "Under the fog.$"
+
+Route126_Text_SwimmerQuestReminder:
+	.string "The dive spot is south of\n"
+	.string "here. Under the fog.\p"
+	.string "Just… be careful down there.\n"
+	.string "Something is living in that\l"
+	.string "opening now.$"
+
+Route126_Text_SwimmerQuestDone:
+	.string "A LAPRAS…? Down there?\p"
+	.string "They say LAPRAS follow warm\n"
+	.string "currents across the ocean.\l"
+	.string "The Gathering must have\l"
+	.string "drawn one to HOENN.\p"
+	.string "The fog makes sense now.\n"
+	.string "It's not hiding something\l"
+	.string "dangerous. It's protecting\l"
+	.string "something gentle.$"
 
 @ =============================================
 @ The Gathering Event -- "The Gathering" (C189)

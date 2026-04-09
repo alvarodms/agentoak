@@ -60,12 +60,18 @@ PacifidlogTown_Text_TownSign:
 PacifidlogTown_EventScript_TideElder::
 	lock
 	faceplayer
+	@ v1.8 Quest states (highest priority)
+	goto_if_set FLAG_QUEST_ELDER_COMPLETE, PacifidlogTown_EventScript_ElderQuestDone
+	goto_if_set FLAG_QUEST_ELDER_STARTED, PacifidlogTown_EventScript_ElderQuestReminder
+	@ Existing saga checks
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, PacifidlogTown_EventScript_ElderSkyGuardianDone
 	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, PacifidlogTown_EventScript_ElderSkyGuardianDone
 	goto_if_set FLAG_SPOKE_PACIFIDLOG_ELDER, PacifidlogTown_EventScript_DraconidReminder
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, PacifidlogTown_EventScript_DraconidLegend
 	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, PacifidlogTown_EventScript_TideElderResolved
 	goto_if_set FLAG_PRIMAL_STIRRING_STARTED, PacifidlogTown_EventScript_ElderReport
+	@ v1.8 Quest offer (post-E4)
+	goto_if_set FLAG_SYS_GAME_CLEAR, PacifidlogTown_EventScript_ElderQuestOffer
 	msgbox PacifidlogTown_Text_ElderNormal, MSGBOX_DEFAULT
 	release
 	end
@@ -282,3 +288,67 @@ PacifidlogTown_Text_CorsolaElder_PostGathering:
 	.string "before something changed.\p"
 	.string "I believe that time has come,\n"
 	.string "child.$"
+
+@ =============================================
+@ v1.8 Quest 1: The Elder's Current (C192)
+@ =============================================
+
+PacifidlogTown_EventScript_ElderQuestOffer::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_ElderQuestOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_ELDER_STARTED
+	release
+	end
+
+PacifidlogTown_EventScript_ElderQuestReminder::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_ElderQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_ElderQuestDone::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_ElderQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_Text_ElderQuestOffer:
+	.string "Champion… I was hoping you'd\n"
+	.string "return.\p"
+	.string "The sea isn't what it was.\n"
+	.string "The currents near ROUTE 132…\l"
+	.string "they reversed. Clean reversed.\p"
+	.string "My grandfather built this town\n"
+	.string "reading the tides. If he saw\l"
+	.string "what the water does now…\l"
+	.string "he wouldn't recognize it.\p"
+	.string "Sailors won't dive there\n"
+	.string "anymore. They say something\l"
+	.string "changed beneath the surface.\p"
+	.string "That scientist at the WEATHER\n"
+	.string "INSTITUTE is seeing the same\l"
+	.string "kind of thing. The land and\l"
+	.string "sea both remember what happened.\p"
+	.string "Would you look into it?\n"
+	.string "ROUTE 132… the dive spot the\l"
+	.string "fishermen marked. You're the\l"
+	.string "only one I'd trust with this.$"
+
+PacifidlogTown_Text_ElderQuestReminder:
+	.string "ROUTE 132… the dive spot.\n"
+	.string "The fishermen marked it, but\l"
+	.string "none will go near it now.\p"
+	.string "Be careful down there,\n"
+	.string "Champion.$"
+
+PacifidlogTown_Text_ElderQuestDone:
+	.string "The sea gives back what it\n"
+	.string "takes… just in a different\l"
+	.string "form.\p"
+	.string "My grandfather would say\n"
+	.string "PACIFIDLOG was built by\l"
+	.string "people who listened to the\l"
+	.string "ocean. You listened too.$"

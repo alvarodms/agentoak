@@ -94,6 +94,12 @@ MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated:
 MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	lock
 	faceplayer
+	@ v1.8 Quest states (highest priority)
+	goto_if_set FLAG_QUEST_MOSSDEEP_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestDone
+	goto_if_set FLAG_QUEST_MOSSDEEP_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReminder
+	@ v1.8 Quest offer (post-Primal)
+	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestOffer
+	@ Existing state checks
 	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_SpaceCenter_2F_EventScript_ScientistNormal
 	goto_if_eq VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistMagma
 	goto_if_lt VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_SpaceCenter_2F_EventScript_ScientistNormal
@@ -505,3 +511,69 @@ MossdeepCity_SpaceCenter_2F_Text_StevenThankYouComeSeeMeAtHome:
 	.string "after this.\p"
 	.string "Oh, yes, I don't live in RUSTBORO CITY.\n"
 	.string "I live right here on this island.$"
+
+@ =============================================
+@ v1.8 Quest 3: The Mossdeep Signal (C192)
+@ =============================================
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestOffer::
+	lock
+	faceplayer
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_MOSSDEEP_STARTED
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReminder::
+	lock
+	faceplayer
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestDone::
+	lock
+	faceplayer
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestOffer:
+	.string "Champion! Perfect timing.\n"
+	.string "I've been trying to get\l"
+	.string "someone to look at this.\p"
+	.string "During the PRIMAL STIRRING,\n"
+	.string "our satellite detected an\l"
+	.string "energy pulse. Normal so far.\p"
+	.string "But the pulse bounced back.\n"
+	.string "From the upper atmosphere.\l"
+	.string "Something reflected it.\p"
+	.string "We tracked the return signal\n"
+	.string "to ROUTE 131. There's a\l"
+	.string "specific coordinate where\l"
+	.string "the atmosphere is… thinner.\p"
+	.string "The swimmer near ROUTE 126\n"
+	.string "says the ocean changed too.\l"
+	.string "Up here, down there… the\l"
+	.string "whole region felt it.\p"
+	.string "Could you visit that spot\n"
+	.string "on ROUTE 131? I'd go myself\l"
+	.string "but… I get seasick.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReminder:
+	.string "ROUTE 131. Look for a spot\n"
+	.string "where the air shimmers.\p"
+	.string "Our instruments say it's\n"
+	.string "near the center of the\l"
+	.string "route.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestDone:
+	.string "You felt it too? A shimmer,\n"
+	.string "like the sky was breathing?\p"
+	.string "The data confirms it. The\n"
+	.string "PRIMAL STIRRING's energy\l"
+	.string "didn't just affect HOENN.\l"
+	.string "Something out there noticed.\p"
+	.string "I don't know what that means\n"
+	.string "yet. But I intend to find\l"
+	.string "out.$"

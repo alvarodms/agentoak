@@ -112,7 +112,7 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 
 | Cycle | Phase | Scope | Depends On |
 |-------|-------|-------|------------|
-| **C192** | Engineering | Trainer ID audit + quest flag declarations + NPC dialogue stubs | — |
+| **C192** | Engineering | ~~Trainer ID audit + quest flag declarations + NPC dialogue~~ DONE | — |
 | **C193** | Quest | "The Elder's Current" — Pacifidlog quest + R132 dive event | C192 flags |
 | **C194** | Quest | "Hartley's Field Report" — Weather Institute quest + 3 site updates | C192 flags |
 | **C195** | Species | Hoennian Corsola (Ghost/Rock) — full pipeline + Quest 1 integration | C193 |
@@ -132,7 +132,7 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
 - **Flag space**: Custom 0x264+. v1.8 allocates 0x28A-0x297. Next available after v1.8: 0x298.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
-- **Trainer capacity**: 885/885, reclaimable IDs: #568, #853, #854 (+ audit).
+- **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 114. Next: 115.
 - **QoL shipped**: TMs non-consumable, indoor running, trade evo QoL (11 species).

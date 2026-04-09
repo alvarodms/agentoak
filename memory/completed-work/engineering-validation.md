@@ -11,3 +11,4 @@
 | `pokeemerald/asm/macros/legend_macros.inc` | **C185** | New file: 7 parameterized macros (ScreenShake, PlayCry, SetWeather, ClearWeather, FadeOut, FadeIn, StartBattle) for legendary encounters |
 | `pokeemerald/asm/macros/difficulty_utils.inc` | **C190** | New file: `EventMacro_DifficultyDialogue` — convenience wrapper for Challenge Mode NPC branching. Hardcodes FLAG_DIFFICULTY_CHALLENGE, handles lock/faceplayer/branch/release/end. |
 | `pokeemerald/asm/macros.inc` | C179, C185, **C190** | Added `.include "asm/macros/difficulty_utils.inc"` after legend_macros.inc |
+| (Trainer ID Audit) | **C192** | 12 reclaimable IDs confirmed: #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. See tech-debt-backlog.md. |

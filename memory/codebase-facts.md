@@ -8,7 +8,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Capacity**: TRAINERS_COUNT = 885 (at cap). Reclaimable IDs: #568, #853, #854. Rematch table: 5 tiers, all filled.
+**Capacity**: TRAINERS_COUNT = 885 (at cap). 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
 
 ---
 
@@ -50,7 +50,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
 
-**Custom flags**: 0x264-0x289 used (v6.0 through v1.7). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287 = `FLAG_DEEP_MIGRATION_EVENT` (C188). 0x288 = `FLAG_GATHERING_EVENT` (C189). 0x289 = `FLAG_GATHERING_FOG_SET` (C189). Next available: 0x28A.
+**Custom flags**: 0x264-0x297 used (v6.0 through v1.8). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. Next available: 0x298.
 
 **Beast flags**: System flags 0x881-0x886.
 

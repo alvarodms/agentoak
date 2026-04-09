@@ -199,11 +199,17 @@ Route119_WeatherInstitute_2F_Movement_ScientistApproachPlayer:
 Route119_WeatherInstitute_2F_EventScript_WeatherScientist::
 	lock
 	faceplayer
+	@ v1.8 Quest states (highest priority)
+	goto_if_set FLAG_QUEST_HARTLEY_COMPLETE, Route119_WeatherInstitute_2F_EventScript_HartleyQuestDone
+	goto_if_set FLAG_QUEST_HARTLEY_STARTED, Route119_WeatherInstitute_2F_EventScript_HartleyQuestReminder
+	@ Existing saga checks
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, WeatherInstitute_EventScript_ScientistSkyGuardianDone
 	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, WeatherInstitute_EventScript_ScientistSkyGuardianDone
 	goto_if_set FLAG_SKY_GUARDIAN_QUEST_ACTIVE, Route119_WeatherInstitute_2F_EventScript_ScientistSkyAnomaly
 	goto_if_set FLAG_BIRCH_QUEST_WEATHER, Route119_WeatherInstitute_2F_EventScript_ScientistPostQuest
 	goto_if_set FLAG_BIRCH_QUEST_STARTED, Route119_WeatherInstitute_2F_EventScript_ScientistQuestActive
+	@ v1.8 Quest offer (post-E4)
+	goto_if_set FLAG_SYS_GAME_CLEAR, Route119_WeatherInstitute_2F_EventScript_HartleyQuestOffer
 	goto_if_set FLAG_RECEIVED_CASTFORM, Route119_WeatherInstitute_2F_EventScript_ScientistMentionWeather
 	goto Route119_WeatherInstitute_2F_EventScript_ReceiveCastform
 	end
@@ -410,4 +416,75 @@ WeatherInstitute_Text_ScientistSkyGuardianDone:
 	.string "stabilized beautifully.\p"
 	.string "We owe you a debt of gratitude.\n"
 	.string "The skies of HOENN are at peace.$"
+
+@ =============================================
+@ v1.8 Quest 2: Hartley's Field Report (C192)
+@ =============================================
+
+Route119_WeatherInstitute_2F_EventScript_HartleyQuestOffer::
+	lock
+	faceplayer
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyQuestOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_HARTLEY_STARTED
+	release
+	end
+
+Route119_WeatherInstitute_2F_EventScript_HartleyQuestReminder::
+	lock
+	faceplayer
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_WeatherInstitute_2F_EventScript_HartleyQuestDone::
+	lock
+	faceplayer
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_WeatherInstitute_2F_Text_HartleyQuestOffer:
+	.string "Oh! The Champion. Good.\n"
+	.string "Good. I need someone who'll\l"
+	.string "actually listen.\p"
+	.string "My colleagues think the\n"
+	.string "weather anomalies resolved\l"
+	.string "when the PRIMAL STIRRING\l"
+	.string "ended. They're wrong.\p"
+	.string "ROUTES 111, 119, 125…\n"
+	.string "the weather patterns that\l"
+	.string "formed during the migration\l"
+	.string "are still there. Permanent.\p"
+	.string "I filed a report. They called\n"
+	.string "it 'instrument drift.'\l"
+	.string "DRIFT!\l"
+	.string "I calibrated those instruments\l"
+	.string "myself!\p"
+	.string "I heard the PACIFIDLOG ELDER\n"
+	.string "is seeing strange changes in\l"
+	.string "the ocean too. It's not just\l"
+	.string "weather -- it's everything.\p"
+	.string "I need ground-truth readings\n"
+	.string "from three sites. Would you\l"
+	.string "visit them and confirm what\l"
+	.string "I already know?$"
+
+Route119_WeatherInstitute_2F_Text_HartleyQuestReminder:
+	.string "Three sites: ROUTE 111's\n"
+	.string "sandstorm, ROUTE 119's rain,\l"
+	.string "and ROUTE 125's hail.\p"
+	.string "Talk to the researchers I\n"
+	.string "posted at each one. They'll\l"
+	.string "have readings for you.$"
+
+Route119_WeatherInstitute_2F_Text_HartleyQuestDone:
+	.string "All three confirmed.\n"
+	.string "Permanent. Just like I said.\p"
+	.string "This data changes everything.\n"
+	.string "The migration didn't just\l"
+	.string "bring POKéMON to HOENN.\l"
+	.string "It changed the land itself.\p"
+	.string "Thank you. This report will\n"
+	.string "be published under both our\l"
+	.string "names.$"
 
