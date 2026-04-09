@@ -133,7 +133,7 @@ You have persistent memory files in `memory/` (markdown format):
 | `failure-patterns.md` | Build errors and problems encountered, their solutions |
 | `strategy-notes.md` | Ideas, plans, high-level strategies for the ROM hack |
 | `project-facts.md` | Build system details, tool versions, configuration notes |
-| `pokemon-knowledge.md` | **Index only.** Research findings from the Pokémon Specialist — links to per-topic files in `memory/pokemon-knowledge/` |
+| `pokemon-knowledge.md` | **Index only.** ROM hack community research findings — links to per-topic files in `memory/pokemon-knowledge/` |
 | `tech-debt-backlog.md` | Engineering investment opportunities proposed by the Tech Lead across cycles. Review periodically — persistent items signal recurring friction worth addressing. |
 | `creative-backlog.md` | Deferred creative ideas proposed by the Creative Visionary across cycles. Review periodically — ideas deferred 5+ times may be ready when prerequisites are met. |
 | `player-journey-map.md` | Player experience timeline — what happens hour-by-hour. Maintained by Game Designer advisor. |

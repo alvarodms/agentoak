@@ -1,6 +1,6 @@
 # Pokemon Knowledge Base
 
-Research findings about Pokemon games, ROM hacks, community expectations, and design patterns -- gathered via web search by the Pokemon Specialist advisor.
+Research findings about ROM hacks, community expectations, and design patterns -- gathered via web search by the ROM Hack Researcher advisor.
 
 Each topic has its own research file under `memory/pokemon-knowledge/`.
 

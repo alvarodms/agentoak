@@ -283,7 +283,7 @@ Update the memory files in the memory/ directory as needed:
 - memory/failure-patterns.md — new failure patterns
 - memory/strategy-notes.md — strategy updates, game design evolution, multi-cycle roadmap
 - memory/project-facts.md — project facts
-- memory/pokemon-knowledge.md — Pokémon game/ROM hack research findings (primarily updated by the Pokémon Specialist advisor)
+- memory/pokemon-knowledge.md — ROM hack community research findings (primarily updated by the ROM Hack Researcher advisor)
 
 **README maintenance**: After updating memory, review whether README.md needs changes based on this cycle's work. The README audience is **players and the ROM hacking community** — not developers of the agent runner. Update it when:
 - A new player-facing feature was added (update "The Game" section)
