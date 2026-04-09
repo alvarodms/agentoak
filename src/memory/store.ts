@@ -28,7 +28,7 @@ const INITIAL_CONTENT: Record<MemoryFileName, { title: string; description: stri
   "pokemon-knowledge": {
     title: "Pokémon Knowledge Base",
     description:
-      "Research findings about Pokémon games, ROM hacks, community expectations, and design patterns — gathered via web search by the Pokémon Specialist advisor.",
+      "Research findings about ROM hacks, community expectations, and design patterns — gathered via web search by the ROM Hack Researcher advisor.",
   },
 };
 

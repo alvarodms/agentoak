@@ -138,7 +138,7 @@ export async function planCycleWithTeam(
     issueBacklog,
     staleIssues,
     extraMemoryFiles: [
-      "`memory/pokemon-knowledge.md` — Pokémon game/ROM hack research findings (maintained by the Pokémon Specialist advisor)",
+      "`memory/pokemon-knowledge.md` — ROM hack community research findings (maintained by the ROM Hack Researcher advisor)",
     ],
   });
 
