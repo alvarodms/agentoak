@@ -7,53 +7,17 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 ---
 
-## Hour 0-1: Littleroot → Route 102 (Badges: 0)
+## Hour 0-3: Littleroot → Rustboro (Badges: 0-1)
 
-**Key moments**:
-- Littleroot NPCs hint at strange cries and Birch's late nights (C140)
-- Birch gives starter + Pokédex; migration dialogue after Pokédex gift (C180)
-- Difficulty selection multichoice — Normal or Challenge Mode (C181)
-- Oldale PkmnCenter NPC acknowledges difficulty choice (C181)
-- Route 101 glimpse event: mystery creature stirs in grass (C144)
-- Route 102 glimpse event: second sighting (C145)
-- Route 104 glimpse event (C145)
-- Migration NPCs: Johto researcher in Oldale, Bug Catcher mentions Beldum (C140)
+Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu sighting in Petalburg Woods (C152), migration NPCs in Oldale/Petalburg. Challenge Mode level caps active from start (C181-183). Redesigned trainers (C146), Roxanne (C130).
 
-**Pacing**: Dense with migration foreshadowing — 4 glimpse events + 2 NPCs in first hour. Risk of overload vs. effective mystery-building. Need to verify this feels like discovery, not bombardment.
-
-**Emotional arc**: Curiosity → mild unease → excitement (first rare encounter possible)
-
----
-
-## Hour 1-3: Petalburg → Rustboro (Badges: 0-1)
-
-**Key moments**:
-- Petalburg Woods Pikachu sighting — first interactive migration event (C152)
-- Route 116 glimpse event (C145)
-- Norman references migration reports (C140)
-- Devon researcher mentions Riolu (C140)
-- Redesigned early trainers with migration species (C146)
-- Roxanne gym battle (redesigned C130)
-
-**Pacing**: Good escalation from passive hints to interactive event. Trainer quality matches atmospheric quality post-C146.
-
-**Challenge Mode note**: Level cap active (18 pre-badge, 20 post-Roxanne). Set battle style enforced. (C181-182). Rustboro PkmnCenter Hiker explains level cap system (C183).
-
-**Emotional arc**: Wonder (Pikachu sighting) → confidence (first gym)
+**Emotional arc**: Curiosity → wonder (Pikachu) → confidence (first gym)
 
 ---
 
 ## Hour 3-6: Dewford → Mauville (Badges: 1-3)
 
-**Key moments**:
-- Brawly gym (redesigned C130), Wattson gym (redesigned C130)
-- Meteor Falls Bagon Colony event — special encounter (C153)
-- Mid-game migration NPCs including Dr. Hartley at Weather Institute (C141)
-- Routes 110-117 trainers redesigned with themed identities (C147)
-
-**Pacing**: Meteor Falls colony is the strongest narrative beat in mid-game. Long trainer stretches between narrative events. Dewford Boy and Mauville Researcher reinforce level cap/set mode awareness (C183).
-
-**Difficulty NPC coverage**: Oldale (Boy, C181/183), Rustboro (Hiker, C183), Dewford (Boy, C183), Mauville (Researcher, C183). Any player visiting a PkmnCenter in the first 3 hours will see at least one cap explainer.
+Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest mid-game narrative beat. Dr. Hartley at Weather Institute (C141). Routes 110-117 trainers themed (C147). Difficulty NPCs in every PkmnCenter through Mauville (C183).
 
 **Emotional arc**: Escalation → discovery (Bagon colony) → growing concern
 
@@ -94,8 +58,32 @@ This maps what the player **experiences** hour-by-hour. Use it to identify pacin
 
 ---
 
+## Hour 15-20+: Post-E4 / Postgame (Badges: 8+Champion)
+
+**Existing legendary saga** (shipped v1.0-v8.0):
+- Birch Research Quest (5 stages) → Master Ball
+- Migration Tracker Quest (3 stages, catch migrants) → Shell Bell
+- Beast release: Raikou → Entei → Suicune (roaming)
+- Ho-Oh encounter (Cave of Origin)
+- Primal Stirring: investigate anomalies → Groudon/Kyogre encounters
+- Sky Guardian: Pacifidlog Elder → Sky Pillar → Rayquaza
+- World reaction NPCs acknowledge resolution
+
+**v1.8 side quests** (planned C192-199, run in parallel with legendary saga):
+- "The Elder's Current" (Pacifidlog) — reversed ocean currents → Hoennian Corsola (Ghost/Rock)
+- "Hartley's Field Report" (Weather Institute) — permanent weather data → Hoennian Growlithe (Water)
+- "The Mossdeep Signal" (Space Center) — cosmic echo of Primal Stirring
+- "The Fog Beneath" (Route 126) — Gathering opened new underwater passage → Lapras encounter
+
+**Emotional arc (parallel tracks)**:
+- Legendary: wonder (beasts) → awe (Ho-Oh) → urgency (Primal) → peace (Rayquaza)
+- Side quests: curiosity → investigation → discovery (regional forms) → acknowledgment
+
+**Post-Rayquaza world state** (planned C198): Route 126 fog thins, NPCs across Hoenn reflect on the new normal, Birch epilogue acknowledges player as Champion AND researcher.
+
+---
+
 ## Known Gaps
 
-All v1.7 targets filled. Remaining opportunities:
-- Post-E4 fog thinning on Route 126 (reduce traversal friction for postgame players)
-- In-battle level cap feedback message (pending since C183)
+- In-battle level cap feedback message (pending since C183, scheduled C198)
+- Post-resolution NPC updates for v1.7 ocean/city atmosphere NPCs (planned C197-198)

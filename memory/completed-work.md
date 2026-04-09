@@ -7,20 +7,7 @@ Each system has its own detail file under `memory/completed-work/`.
 
 ---
 
-## How to Use
-
-Before modifying ANY pokeemerald file:
-1. Find the relevant system in the index below
-2. Open its detail file and search for your target filename
-3. If found, the file was ALREADY modified — read it first to see current state
-4. If you still want to change it, explain WHY in your cycle journal
-
-## Maintenance
-
-- **After every cycle**: add rows to the appropriate detail file for each file you modified
-- **When a file is re-modified**: update the existing row's cycle number and notes — don't add a duplicate row
-- **Every 10 cycles**: prune detail files if they grow beyond ~60 lines each
-- **Keep the "Files Modified 3+ Times" section** at the bottom of this index current
+Before modifying ANY file: check the system index below → open detail file → verify current state.
 
 ---
 
