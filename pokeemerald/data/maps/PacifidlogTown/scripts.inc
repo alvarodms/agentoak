@@ -205,3 +205,63 @@ PacifidlogTown_Text_ElderSkyGuardianDone:
 	.string "Our watch is complete.\p"
 	.string "May the skies of HOENN remain\n"
 	.string "clear for a thousand years.$"
+
+@ =============================================
+@ C186 Badge-Conditional Atmosphere NPCs
+@ =============================================
+
+PacifidlogTown_EventScript_CurrentSailor::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, PacifidlogTown_EventScript_CurrentSailor_PostBadge7
+	msgbox PacifidlogTown_Text_CurrentSailor_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_CurrentSailor_PostBadge7:
+	msgbox PacifidlogTown_Text_CurrentSailor_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_CorsolaElder::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, PacifidlogTown_EventScript_CorsolaElder_PostBadge7
+	msgbox PacifidlogTown_Text_CorsolaElder_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_EventScript_CorsolaElder_PostBadge7:
+	msgbox PacifidlogTown_Text_CorsolaElder_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+PacifidlogTown_Text_CurrentSailor_Normal:
+	.string "PACIFIDLOG rides the currents\n"
+	.string "smooth as a WAILORD's back!\p"
+	.string "Been living on this town my whole\n"
+	.string "life. Wouldn't trade it for\l"
+	.string "solid ground.$"
+
+PacifidlogTown_Text_CurrentSailor_Uneasy:
+	.string "My house shifted six inches\n"
+	.string "overnight.\p"
+	.string "The currents underneath us have\n"
+	.string "reversed. Never seen that.\p"
+	.string "Not once in thirty years\n"
+	.string "on this town.$"
+
+PacifidlogTown_Text_CorsolaElder_Normal:
+	.string "The CORSOLA colonies beneath us\n"
+	.string "surface every evening to feed.\p"
+	.string "You can set your watch by them.\n"
+	.string "That's how you know the sea\l"
+	.string "is healthy.$"
+
+PacifidlogTown_Text_CorsolaElder_Uneasy:
+	.string "The CORSOLA haven't surfaced in\n"
+	.string "three days.\p"
+	.string "Something down below is keeping\n"
+	.string "them from rising.\p"
+	.string "This town stands on their backs,\n"
+	.string "child. Remember that.$"

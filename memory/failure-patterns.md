@@ -57,3 +57,8 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: Wrong macro in `trainers.h` vs party struct type — runtime crash (not caught at compile time).
 **Resolution**: Always verify macro matches struct. Run `scripts/check_trainers.sh` after bulk trainer edits.
+
+## Uncommitted Changes from Prior Cycles in Working Tree (C186)
+
+**Symptom**: trainers.h had 17 uncommitted macro fixes from a prior cycle. These were in the working tree at C186 start and got included in the diff alongside unrelated NPC work.
+**Resolution**: At cycle start, check `git status pokeemerald/` for unexpected modified files. If pre-existing changes exist, acknowledge them explicitly. Don't let unrelated changes ride along silently.

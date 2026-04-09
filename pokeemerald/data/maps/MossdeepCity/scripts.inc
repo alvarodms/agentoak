@@ -533,3 +533,56 @@ MossdeepCity_Text_BeastSightingPostClimax:
 	.string "given us a lifetime of\l"
 	.string "research, {PLAYER}.$"
 
+@ =============================================
+@ C186 Badge-Conditional Atmosphere NPCs
+@ =============================================
+
+MossdeepCity_EventScript_StormResearcher::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, MossdeepCity_EventScript_StormResearcher_PostBadge7
+	msgbox MossdeepCity_Text_StormResearcher_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_StormResearcher_PostBadge7:
+	msgbox MossdeepCity_Text_StormResearcher_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_WarmSwimmer::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, MossdeepCity_EventScript_WarmSwimmer_PostBadge7
+	msgbox MossdeepCity_Text_WarmSwimmer_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_WarmSwimmer_PostBadge7:
+	msgbox MossdeepCity_Text_WarmSwimmer_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_Text_StormResearcher_Normal:
+	.string "The deep-ocean sensor array is\n"
+	.string "performing beautifully!\p"
+	.string "Every reading right on target.\n"
+	.string "Quietest data cycle in three years.$"
+
+MossdeepCity_Text_StormResearcher_Uneasy:
+	.string "Our deep-ocean sensors are showing\n"
+	.string "readings 14 percent above baseline.\p"
+	.string "I've recalibrated the instruments\n"
+	.string "twice. The numbers won't come down.$"
+
+MossdeepCity_Text_WarmSwimmer_Normal:
+	.string "The water around MOSSDEEP is always\n"
+	.string "perfect for a swim!\p"
+	.string "Crystal clear and just the right\n"
+	.string "temperature year-round.$"
+
+MossdeepCity_Text_WarmSwimmer_Uneasy:
+	.string "The water's warm. Like, bath warm.\p"
+	.string "I've been swimming here for ten\n"
+	.string "years and it's never felt like this.$"
+

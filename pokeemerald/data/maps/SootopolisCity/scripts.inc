@@ -1739,3 +1739,58 @@ SootopolisCity_Text_SkyGuardianReaction:
 	.string "Earth, sea, and sky...\n"
 	.string "All at peace. What a time\l"
 	.string "to be alive.$"
+
+@ =============================================
+@ C186 Badge-Conditional Atmosphere NPCs
+@ =============================================
+
+SootopolisCity_EventScript_LakeFisherman::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, SootopolisCity_EventScript_LakeFisherman_PostBadge7
+	msgbox SootopolisCity_Text_LakeFisherman_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_EventScript_LakeFisherman_PostBadge7:
+	msgbox SootopolisCity_Text_LakeFisherman_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_EventScript_CraterElder::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE07_GET, SootopolisCity_EventScript_CraterElder_PostBadge7
+	msgbox SootopolisCity_Text_CraterElder_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_EventScript_CraterElder_PostBadge7:
+	msgbox SootopolisCity_Text_CraterElder_Uneasy, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Text_LakeFisherman_Normal:
+	.string "I pull in three MAGIKARP before\n"
+	.string "breakfast every morning.\p"
+	.string "Regular as clockwork.\n"
+	.string "Best fishing in all of HOENN.$"
+
+SootopolisCity_Text_LakeFisherman_Uneasy:
+	.string "Nothing's biting. First time in\n"
+	.string "forty years.\p"
+	.string "The lake is warmer, too. Not by\n"
+	.string "much, but I can feel it in the line.$"
+
+SootopolisCity_Text_CraterElder_Normal:
+	.string "This crater has sheltered\n"
+	.string "SOOTOPOLIS since ancient times.\p"
+	.string "The lake keeps its own rhythm.\n"
+	.string "Always has, always will.$"
+
+SootopolisCity_Text_CraterElder_Uneasy:
+	.string "My grandmother told me the lake\n"
+	.string "would warm before the end.\p"
+	.string "She was old even then. I thought\n"
+	.string "it was just a story.\p"
+	.string "...The lake is warm.$"
