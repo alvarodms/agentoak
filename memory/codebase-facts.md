@@ -50,7 +50,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
 
-**Custom flags**: 0x264-0x287 used (v6.0 through v1.7). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287 = `FLAG_DEEP_MIGRATION_EVENT` (C188). Next available: 0x288.
+**Custom flags**: 0x264-0x289 used (v6.0 through v1.7). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287 = `FLAG_DEEP_MIGRATION_EVENT` (C188). 0x288 = `FLAG_GATHERING_EVENT` (C189). 0x289 = `FLAG_GATHERING_FOG_SET` (C189). Next available: 0x28A.
 
 **Beast flags**: System flags 0x881-0x886.
 
@@ -105,6 +105,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Weather commands**: `setweather` + `doweather`. `WEATHER_ROUTE119_CYCLE` (constant 20).
 **Weather Omens**: Badge-gated permanent weather on 4 routes (R111/119/120/125). Flags 0x282-0x285.
+**Permanent weather pattern**: Flag-gated `setweather` in `OnTransition` (without `doweather`) sets initial weather before map renders. Used by Route 126 fog (C189): `FLAG_GATHERING_FOG_SET` → `WEATHER_FOG_HORIZONTAL`. Reusable for any route that should permanently change weather after an event.
 
 ---
 

@@ -695,8 +695,8 @@
 #define FLAG_DIFFICULTY_CHALLENGE  0x286 /* Challenge Mode active (Set battles + level caps) (C181) */
 #define IsChallengeModeActive() FlagGet(FLAG_DIFFICULTY_CHALLENGE)
 #define FLAG_DEEP_MIGRATION_EVENT  0x287 /* Deep Migration event on Route 128 (C188) */
-#define FLAG_UNUSED_0x288  0x288 // Unused Flag
-#define FLAG_UNUSED_0x289  0x289 // Unused Flag
+#define FLAG_GATHERING_EVENT        0x288 /* The Gathering event on Route 126 (C189) */
+#define FLAG_GATHERING_FOG_SET      0x289 /* Permanent fog on Route 126 post-Gathering (C189) */
 #define FLAG_UNUSED_0x28A  0x28A // Unused Flag
 #define FLAG_UNUSED_0x28B  0x28B // Unused Flag
 #define FLAG_UNUSED_0x28C  0x28C // Unused Flag
