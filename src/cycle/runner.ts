@@ -189,17 +189,12 @@ async function runPlanningPhase(
 
   // Any issue presented to the planner but NOT included in issueActions must
   // still be marked agent-reviewed so it doesn't resurface on the next cycle.
-  // Post a brief comment so the author knows their issue was seen.
+  // The label alone is sufficient — no comment needed.
   const actedNumbers = new Set(plan.issueActions.map((a) => a.issueNumber));
   const unhandled = communityIssues.filter((i) => !actedNumbers.has(i.number));
   if (unhandled.length > 0) {
     log.info(`  Marking ${unhandled.length} unhandled issue(s) as reviewed...`);
     for (const issue of unhandled) {
-      await commentOnIssue(
-        issue.number,
-        "🤖 **Agent Oak — Noted**\n\nThis issue was reviewed but not prioritized for the current development cycle. " +
-        "It may be revisited in a future cycle.",
-      );
       await addLabelsToIssue(issue.number, [AGENT_LABELS.reviewed]);
     }
   }

@@ -356,7 +356,7 @@ const ACTION_PREFIX_MAP: Record<IssueAction["action"], string> = {
   "need-info": "🤖 **Agent Oak — More Info Needed**\n\n",
 };
 
-const PARTIAL_ACCEPT_PREFIX = "🤖 **Agent Oak — In Progress**\n\n";
+const PARTIAL_ACCEPT_PREFIX = "🤖 **Agent Oak — Accepted (multi-cycle)**\n\n";
 
 /** Action emoji for multi-item comment formatting */
 const ITEM_ACTION_EMOJI: Record<IssueActionItem["action"], string> = {
