@@ -55,3 +55,14 @@ Route131_EventScript_Kevin::
 	msgbox Route131_Text_KevinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+@ C187 Ocean Atmosphere NPC — Silent Swimmer
+Route131_EventScript_LoneSwimmer::
+	msgbox Route131_Text_LoneSwimmer, MSGBOX_NPC
+	end
+
+Route131_Text_LoneSwimmer:
+	.string "Have you noticed? No TENTACOOL.\n"
+	.string "No WINGULL overhead. Nothing.\p"
+	.string "I've been treading water for\n"
+	.string "an hour. It's completely silent.$"
+

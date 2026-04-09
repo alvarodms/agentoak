@@ -76,3 +76,14 @@ Route127_EventScript_RematchKoji::
 	msgbox Route127_Text_KojiPostRematch, MSGBOX_AUTOCLOSE
 	end
 
+@ C187 Ocean Atmosphere NPC — Trench Fisherman
+Route127_EventScript_TrenchFisherman::
+	msgbox Route127_Text_TrenchFisherman, MSGBOX_NPC
+	end
+
+Route127_Text_TrenchFisherman:
+	.string "Thirty years I've fished this\n"
+	.string "stretch. Know every feeding pattern.\p"
+	.string "Yesterday, nothing bit. Not one.\n"
+	.string "Like everything just… left.$"
+

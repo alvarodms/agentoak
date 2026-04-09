@@ -102,3 +102,14 @@ Route124_EventScript_Isabella::
 Route124_Text_HuntersHouse:
 	.string "HUNTER'S HOUSE$"
 
+@ C187 Ocean Atmosphere NPC — Curious Diver
+Route124_EventScript_CuriousDiver::
+	msgbox Route124_Text_CuriousDiver, MSGBOX_NPC
+	end
+
+Route124_Text_CuriousDiver:
+	.string "I dive this reef every week.\n"
+	.string "I know every species by sight.\p"
+	.string "Today I saw three I couldn't\n"
+	.string "identify. Moving east, in formation.$"
+

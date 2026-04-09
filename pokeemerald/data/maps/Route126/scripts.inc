@@ -62,3 +62,14 @@ Route126_EventScript_RematchPablo::
 	msgbox Route126_Text_PabloPostRematch, MSGBOX_AUTOCLOSE
 	end
 
+@ C187 Ocean Atmosphere NPC — Warm Swimmer
+Route126_EventScript_WarmSwimmer::
+	msgbox Route126_Text_WarmSwimmer, MSGBOX_NPC
+	end
+
+Route126_Text_WarmSwimmer:
+	.string "Feel that? The current's pulling\n"
+	.string "south. It never does that.\p"
+	.string "And the water's warm. Not sun-warm.\n"
+	.string "Warm from below.$"
+

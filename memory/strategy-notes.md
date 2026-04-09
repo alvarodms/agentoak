@@ -74,7 +74,7 @@ Design specifics for both events will be refined in their respective cycle plann
 | **C184** | Planning | This document + README + memory maintenance | None |
 | **C185** | Engineering | Legendary Encounter Template (`legend_macros.inc`) — extract from 4 shipped encounters | LOW |
 | **C186** | Atmosphere | Badge-conditional dialogue in Mossdeep, Sootopolis, Pacifidlog (2 NPCs × 3 cities) | DONE |
-| **C187** | Atmosphere | Ocean route atmospheric NPCs — 4-6 across Routes 124-134 | LOW |
+| **C187** | Atmosphere | Ocean route atmospheric NPCs — 5 across Routes 124/126/127/128/131 | DONE |
 | **C188** | Feature | Late-game scripted event #1 — ocean migration sighting | MEDIUM |
 | **C189** | Feature | Late-game scripted event #2 — pre-Sootopolis narrative beat | MEDIUM |
 | **C190** | Polish | Integration, difficulty_utils.inc extraction, player journey map update | LOW |

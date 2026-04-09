@@ -300,3 +300,14 @@ Route128_Text_StevenImGoingToSootopolis:
 	.string "Okay.\n"
 	.string "I'm going to SOOTOPOLIS.$"
 
+@ C187 Ocean Atmosphere NPC — Scared Diver
+Route128_EventScript_ScaredDiver::
+	msgbox Route128_Text_ScaredDiver, MSGBOX_NPC
+	end
+
+Route128_Text_ScaredDiver:
+	.string "I saw shapes below me. Big ones.\n"
+	.string "Moving together, like a convoy.\p"
+	.string "They had somewhere to be.\n"
+	.string "I'm not going back down there.$"
+
