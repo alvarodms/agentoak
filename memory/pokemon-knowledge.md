@@ -27,5 +27,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Water/Fire Arcanine & Regional Growlithe Design | 196 | [water-fire-arcanine-design.md](pokemon-knowledge/water-fire-arcanine-design.md) |
 | Post-Climax World State & Custom Elite Four | 197 | [post-climax-world-elite-four.md](pokemon-knowledge/post-climax-world-elite-four.md) |
 | Trainer AI & Ecological World-Change Patterns | 198 | [ai-and-ecological-world-patterns.md](pokemon-knowledge/ai-and-ecological-world-patterns.md) |
+| ROM Hack Documentation & Wiki Patterns | 199 | [rom-hack-documentation-patterns.md](pokemon-knowledge/rom-hack-documentation-patterns.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
