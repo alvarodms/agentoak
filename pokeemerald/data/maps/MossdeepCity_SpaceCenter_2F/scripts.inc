@@ -96,6 +96,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	faceplayer
 	@ v1.8 Quest states (highest priority)
 	goto_if_set FLAG_QUEST_MOSSDEEP_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestDone
+	goto_if_set FLAG_QUEST_MOSSDEEP_INVESTIGATED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReturn
 	goto_if_set FLAG_QUEST_MOSSDEEP_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReminder
 	@ v1.8 Quest offer (post-Primal)
 	goto_if_set FLAG_PRIMAL_CRISIS_RESOLVED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestOffer
@@ -531,6 +532,19 @@ MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReminder::
 	release
 	end
 
+MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReturn::
+	lock
+	faceplayer
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReturn, MSGBOX_DEFAULT
+	giveitem ITEM_STAR_PIECE, 3
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_RARE_CANDY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReturnPost, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_MOSSDEEP_COMPLETE
+	release
+	end
+
 MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestDone::
 	lock
 	faceplayer
@@ -568,12 +582,34 @@ MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReminder:
 	.string "route.$"
 
 MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestDone:
-	.string "You felt it too? A shimmer,\n"
-	.string "like the sky was breathing?\p"
-	.string "The data confirms it. The\n"
-	.string "PRIMAL STIRRING's energy\l"
-	.string "didn't just affect HOENN.\l"
-	.string "Something out there noticed.\p"
-	.string "I don't know what that means\n"
-	.string "yet. But I intend to find\l"
-	.string "out.$"
+	.string "Still monitoring ROUTE 131.\n"
+	.string "The thin spot hasn't closed.\p"
+	.string "Whatever the PRIMAL STIRRING\n"
+	.string "opened... it's permanent.\p"
+	.string "That's the most exciting data\n"
+	.string "I've collected in twenty years.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReturn:
+	.string "You saw it? The shimmer?\p"
+	.string "Our satellites recorded the\n"
+	.string "same anomaly. An atmospheric\l"
+	.string "thin spot -- exactly where\l"
+	.string "the signal bounced back.\p"
+	.string "Here's what I think happened:\n"
+	.string "the PRIMAL STIRRING released\l"
+	.string "enough energy to briefly thin\l"
+	.string "the barrier between our sky\l"
+	.string "and... whatever is above it.\p"
+	.string "I don't know what reflected\n"
+	.string "that signal. Not yet.\p"
+	.string "But these fell through.\n"
+	.string "Cosmic fragments that\l"
+	.string "shouldn't exist in our\l"
+	.string "atmosphere.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReturnPost:
+	.string "Keep them. Evidence belongs\n"
+	.string "with explorers, not labs.\p"
+	.string "I'll be monitoring that spot\n"
+	.string "on ROUTE 131 for a long,\l"
+	.string "long time.$"

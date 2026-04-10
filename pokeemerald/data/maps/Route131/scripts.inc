@@ -66,3 +66,66 @@ Route131_Text_LoneSwimmer:
 	.string "I've been treading water for\n"
 	.string "an hour. It's completely silent.$"
 
+@ =============================================
+@ v1.8 Quest 3: The Mossdeep Signal - Shimmer Spot (C200)
+@ =============================================
+
+Route131_EventScript_ShimmerSpotTrigger::
+	lock
+	goto_if_set FLAG_QUEST_MOSSDEEP_INVESTIGATED, Route131_EventScript_ShimmerSpotDone
+	goto_if_set FLAG_QUEST_MOSSDEEP_STARTED, Route131_EventScript_ShimmerSequence
+	release
+	end
+
+Route131_EventScript_ShimmerSpotDone::
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route131_EventScript_ShimmerSequence::
+	playbgm MUS_ABNORMAL_WEATHER, TRUE
+	msgbox Route131_Text_Shimmer_Beat1, MSGBOX_DEFAULT
+	playse SE_SHINY
+	waitse
+	delay 20
+	msgbox Route131_Text_Shimmer_Beat2, MSGBOX_DEFAULT
+	msgbox Route131_Text_Shimmer_Beat3, MSGBOX_DEFAULT
+	fadedefaultbgm
+	setflag FLAG_QUEST_MOSSDEEP_INVESTIGATED
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route131_Text_Shimmer_Beat1:
+	.string "The air above the water shifts...\p"
+	.string "A faint shimmer, like heat haze,\n"
+	.string "ripples across the sky.\p"
+	.string "No clouds. No wind. Just a\n"
+	.string "trembling in the atmosphere\l"
+	.string "itself.$"
+
+Route131_Text_Shimmer_Beat2:
+	.string "For a moment, the light bends\n"
+	.string "wrong. Points of light appear\l"
+	.string "in broad daylight -- starlight\l"
+	.string "filtering through a gap that\l"
+	.string "shouldn't exist.\p"
+	.string "The shimmer pulses once,\n"
+	.string "twice... then fades.\p"
+	.string "Whatever thinned the sky here,\n"
+	.string "it happened during the PRIMAL\l"
+	.string "STIRRING. The energy didn't\l"
+	.string "just shake the ground.\l"
+	.string "It reached upward.$"
+
+Route131_Text_Shimmer_Beat3:
+	.string "The shimmer is gone now.\p"
+	.string "But something glints on the\n"
+	.string "water's surface. Fragments\l"
+	.string "of... something. Cosmic dust,\l"
+	.string "maybe.\p"
+	.string "Evidence that the sky opened,\n"
+	.string "even briefly.\p"
+	.string "The researcher in MOSSDEEP\n"
+	.string "will want to hear about this.$"
+

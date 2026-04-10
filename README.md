@@ -57,7 +57,11 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 - **The Primal Stirring** — Capturing Ho-Oh disturbs ancient forces. Seismic tremors and tidal surges appear across the region. Investigate anomalies, battle Team Magma and Aqua remnants guarding revitalized Terra Cave and Seafloor Cavern, and confront the awakened Groudon (Lv70) and Kyogre (Lv70) in cinematic encounters with dynamic weather.
 - **The Sky Guardian** — After the Primal crisis, a third anomaly emerges. The Pacifidlog elder reveals the Draconid legend, Wallace unseals Sky Pillar, and you ascend five floors of escalating encounters past ancient murals and a Draconid warrior to reach Rayquaza (Lv70) at the storm-wracked summit. Air Lock stills the tempest for the final battle.
 - **Migration Tracker Quest** — A 3-stage field guide for Professor Birch tracking pioneer species, apex predators, and habitat specialists across Hoenn
-- **Postgame Side Quests** — Revisit familiar NPCs to unlock new investigations. The Pacifidlog Elder sends you beneath the currents to discover Hoennian Corsola. Dr. Hartley at the Weather Institute needs field help — and a strange bark echoes outside when his hypothesis proves true. More quests coming soon.
+- **Postgame Side Quests** — Four investigations across Hoenn, each revisiting familiar NPCs with new context:
+  - *The Elder's Current* — The Pacifidlog Elder sends you beneath the currents to discover Hoennian Corsola, a Ghost/Rock species transformed by the migration
+  - *Hartley's Field Report* — Dr. Hartley at the Weather Institute needs field data from three weather anomaly sites — and a strange bark echoes outside when his hypothesis proves true, revealing Hoennian Growlithe
+  - *The Mossdeep Signal* — A Space Center researcher tracked an energy pulse that bounced off the upper atmosphere during the Primal Stirring. Something shimmers on Route 131 where the sky grew thin
+  - *The Fog Beneath* — A swimmer on Route 126 found an opening in the seabed that wasn't there before the Gathering. Something massive and gentle waits below the fog
 
 ### Quality of Life
 

@@ -71,6 +71,7 @@ Route126_EventScript_RematchPablo::
 @ C192: Upgraded to v1.8 Quest 4 giver
 Route126_EventScript_WarmSwimmer::
 	goto_if_set FLAG_QUEST_FOG_COMPLETE, Route126_EventScript_SwimmerQuestDone
+	goto_if_set FLAG_QUEST_FOG_INVESTIGATED, Route126_EventScript_SwimmerQuestReturn
 	goto_if_set FLAG_QUEST_FOG_STARTED, Route126_EventScript_SwimmerQuestReminder
 	goto_if_set FLAG_GATHERING_EVENT, Route126_EventScript_SwimmerQuestOffer
 	msgbox Route126_Text_WarmSwimmer, MSGBOX_NPC
@@ -98,6 +99,14 @@ Route126_EventScript_SwimmerQuestReminder::
 	lock
 	faceplayer
 	msgbox Route126_Text_SwimmerQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+Route126_EventScript_SwimmerQuestReturn::
+	lock
+	faceplayer
+	msgbox Route126_Text_SwimmerQuestReturn, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_FOG_COMPLETE
 	release
 	end
 
@@ -138,8 +147,8 @@ Route126_Text_SwimmerQuestReminder:
 	.string "Something is living in that\l"
 	.string "opening now.$"
 
-Route126_Text_SwimmerQuestDone:
-	.string "A LAPRAS…? Down there?\p"
+Route126_Text_SwimmerQuestReturn:
+	.string "A LAPRAS...? Down there?\p"
 	.string "They say LAPRAS follow warm\n"
 	.string "currents across the ocean.\l"
 	.string "The Gathering must have\l"
@@ -148,6 +157,13 @@ Route126_Text_SwimmerQuestDone:
 	.string "It's not hiding something\l"
 	.string "dangerous. It's protecting\l"
 	.string "something gentle.$"
+
+Route126_Text_SwimmerQuestDone:
+	.string "The fog's thinned a little\n"
+	.string "since you found the LAPRAS.\p"
+	.string "Like the ocean is breathing\n"
+	.string "easier now that someone knows\l"
+	.string "what it was sheltering.$"
 
 @ =============================================
 @ The Gathering Event -- "The Gathering" (C189)
@@ -210,4 +226,64 @@ Route126_Text_TheGathering:
 	.string "same direction.\p"
 	.string "Toward SOOTOPOLIS.\n"
 	.string "Toward something unseen.$"
+
+@ =============================================
+@ v1.8 Quest 4: The Fog Beneath - Dive Spot (C200)
+@ =============================================
+
+Route126_EventScript_DiveSpotTrigger::
+	lock
+	goto_if_set FLAG_QUEST_FOG_INVESTIGATED, Route126_EventScript_DiveSpotDone
+	goto_if_set FLAG_QUEST_FOG_STARTED, Route126_EventScript_DiveSequence
+	release
+	end
+
+Route126_EventScript_DiveSpotDone::
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route126_EventScript_DiveSequence::
+	playbgm MUS_ABNORMAL_WEATHER, TRUE
+	msgbox Route126_Text_Dive_Beat1, MSGBOX_DEFAULT
+	msgbox Route126_Text_Dive_Beat2, MSGBOX_DEFAULT
+	waitse
+	playmoncry SPECIES_LAPRAS, CRY_MODE_NORMAL
+	waitmoncry
+	delay 20
+	msgbox Route126_Text_Dive_Beat3, MSGBOX_DEFAULT
+	fadedefaultbgm
+	setflag FLAG_QUEST_FOG_INVESTIGATED
+	setwildbattle SPECIES_LAPRAS, 50, ITEM_SHELL_BELL
+	dowildbattle
+	waitstate
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route126_Text_Dive_Beat1:
+	.string "The fog closes in. The water\n"
+	.string "here is warm -- not sun-warm.\l"
+	.string "Heat rising from somewhere\l"
+	.string "deep beneath the surface.$"
+
+Route126_Text_Dive_Beat2:
+	.string "Through the mist, a shadow\n"
+	.string "moves below. Massive, but\l"
+	.string "slow. Unhurried.\p"
+	.string "A low cry rises from the\n"
+	.string "depths -- resonant, ancient,\l"
+	.string "and strangely gentle.\p"
+	.string "Whatever found its way here\n"
+	.string "through the warm current...\l"
+	.string "it isn't afraid of you.$"
+
+Route126_Text_Dive_Beat3:
+	.string "The water parts. A long neck\n"
+	.string "breaks the surface, and two\l"
+	.string "dark eyes meet yours through\l"
+	.string "the mist.\p"
+	.string "The migration brought many\n"
+	.string "things to HOENN. This one\l"
+	.string "chose to stay.$"
 

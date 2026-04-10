@@ -189,6 +189,15 @@
       "var": "0",
       "var_value": "0",
       "script": "Route126_EventScript_TheGathering"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 38,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "Route126_EventScript_DiveSpotTrigger"
     }
   ],
   "bg_events": []
