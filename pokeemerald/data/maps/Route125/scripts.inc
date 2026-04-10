@@ -97,7 +97,20 @@ Route125_EventScript_Auron::
 Route125_EventScript_WeatherOmenSwimmer::
 	lock
 	faceplayer
+	goto_if_set FLAG_QUEST_HARTLEY_SITE3, Route125_EventScript_OmenSwimmerChecked
+	goto_if_set FLAG_QUEST_HARTLEY_STARTED, Route125_EventScript_OmenSwimmerQuest
 	msgbox Route125_Text_OmenSwimmer, MSGBOX_DEFAULT
+	release
+	end
+
+Route125_EventScript_OmenSwimmerQuest::
+	msgbox Route125_Text_OmenSwimmerQuest, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_HARTLEY_SITE3
+	release
+	end
+
+Route125_EventScript_OmenSwimmerChecked::
+	msgbox Route125_Text_OmenSwimmerChecked, MSGBOX_DEFAULT
 	release
 	end
 
@@ -105,4 +118,24 @@ Route125_Text_OmenSwimmer:
 	.string "The water's ice cold today!\p"
 	.string "The currents have changed.\n"
 	.string "Shoal Cave must be freezing.$"
+
+Route125_Text_OmenSwimmerQuest:
+	.string "You're checking the hail?\n"
+	.string "Good. Someone should.\p"
+	.string "It hasn't stopped once since\n"
+	.string "the migration. Not once.\p"
+	.string "But lately the pattern changed.\n"
+	.string "It used to fall steady, like rain.\p"
+	.string "Now it pulses. Heavy, then light,\n"
+	.string "then heavy. Like breathing.\p"
+	.string "And the ice -- hold a piece\n"
+	.string "sometime. It's not cold the way\l"
+	.string "ice should be.\p"
+	.string "It's a different kind of cold.\n"
+	.string "I don't know what it means.\l"
+	.string "But I wish I didn't notice it.$"
+
+Route125_Text_OmenSwimmerChecked:
+	.string "The pulsing hasn't stopped.\n"
+	.string "I'd rather not keep watching.$"
 

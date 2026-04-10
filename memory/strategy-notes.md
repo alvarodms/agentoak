@@ -114,7 +114,7 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 |-------|-------|-------|------------|
 | **C192** | Engineering | ~~Trainer ID audit + quest flag declarations + NPC dialogue~~ DONE | — |
 | **C193** | Quest | ~~"The Elder's Current" — Pacifidlog quest + R132 dive event~~ DONE | C192 flags |
-| **C194** | Quest | "Hartley's Field Report" — Weather Institute quest + 3 site updates | C192 flags |
+| **C194** | Quest | ~~"Hartley's Field Report" — Weather Institute quest + 3 site updates~~ DONE | C192 flags |
 | **C195** | Species | Hoennian Corsola (Ghost/Rock) — full pipeline + Quest 1 integration | C193 |
 | **C196** | Species | Hoennian Growlithe/Arcanine (Water, Water/Fire) — pipeline + Quest 2 | C194 |
 | **C197** | Quest+Narrative | Quests 3-4 (Mossdeep Signal + Fog Beneath) + post-Rayquaza NPC updates | C192 |

@@ -432,7 +432,22 @@ Route119_WeatherInstitute_2F_EventScript_HartleyQuestOffer::
 Route119_WeatherInstitute_2F_EventScript_HartleyQuestReminder::
 	lock
 	faceplayer
+	goto_if_unset FLAG_QUEST_HARTLEY_SITE1, Route119_WeatherInstitute_2F_EventScript_HartleyStillWorking
+	goto_if_unset FLAG_QUEST_HARTLEY_SITE2, Route119_WeatherInstitute_2F_EventScript_HartleyStillWorking
+	goto_if_unset FLAG_QUEST_HARTLEY_SITE3, Route119_WeatherInstitute_2F_EventScript_HartleyStillWorking
+	goto Route119_WeatherInstitute_2F_EventScript_HartleyReturn
+	end
+
+Route119_WeatherInstitute_2F_EventScript_HartleyStillWorking::
 	msgbox Route119_WeatherInstitute_2F_Text_HartleyQuestReminder, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_WeatherInstitute_2F_EventScript_HartleyReturn::
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyReturn, MSGBOX_DEFAULT
+	giveitem ITEM_NEVER_MELT_ICE
+	setflag FLAG_QUEST_HARTLEY_COMPLETE
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyReturnClose, MSGBOX_DEFAULT
 	release
 	end
 
@@ -478,13 +493,34 @@ Route119_WeatherInstitute_2F_Text_HartleyQuestReminder:
 	.string "have readings for you.$"
 
 Route119_WeatherInstitute_2F_Text_HartleyQuestDone:
-	.string "All three confirmed.\n"
-	.string "Permanent. Just like I said.\p"
-	.string "This data changes everything.\n"
-	.string "The migration didn't just\l"
-	.string "bring POKéMON to HOENN.\l"
-	.string "It changed the land itself.\p"
-	.string "Thank you. This report will\n"
-	.string "be published under both our\l"
-	.string "names.$"
+	.string "The field report is published.\n"
+	.string "Three divergent ecosystems.\p"
+	.string "No one believed it at first.\n"
+	.string "But the data doesn't lie.\p"
+	.string "HOENN is becoming something new.$"
+
+Route119_WeatherInstitute_2F_Text_HartleyReturn:
+	.string "You're back! All three sites?\n"
+	.string "Let me see those readings...\p"
+	.string "...\p"
+	.string "This can't be right.\p"
+	.string "The sandstorm stabilized.\n"
+	.string "The rain intensified.\l"
+	.string "The hail is pulsing.\p"
+	.string "Three sites, three completely\n"
+	.string "different trajectories.\p"
+	.string "This isn't residual energy from\n"
+	.string "the migration. These weather\l"
+	.string "systems are diverging.\p"
+	.string "I thought the weather would\n"
+	.string "revert. I was wrong.\p"
+	.string "HOENN isn't recovering.\n"
+	.string "It's adapting.\p"
+	.string "And if the weather adapted...\n"
+	.string "what about the POKéMON in it?$"
+
+Route119_WeatherInstitute_2F_Text_HartleyReturnClose:
+	.string "Champion, I need to think about\n"
+	.string "what this means. But thank you.\l"
+	.string "This changes everything.$"
 

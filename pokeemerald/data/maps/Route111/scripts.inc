@@ -797,7 +797,20 @@ Route111_EventScript_ShowOmenHiker::
 Route111_EventScript_WeatherOmenHiker::
 	lock
 	faceplayer
+	goto_if_set FLAG_QUEST_HARTLEY_SITE1, Route111_EventScript_OmenHikerChecked
+	goto_if_set FLAG_QUEST_HARTLEY_STARTED, Route111_EventScript_OmenHikerQuest
 	msgbox Route111_Text_OmenHiker, MSGBOX_DEFAULT
+	release
+	end
+
+Route111_EventScript_OmenHikerQuest::
+	msgbox Route111_Text_OmenHikerQuest, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_HARTLEY_SITE1
+	release
+	end
+
+Route111_EventScript_OmenHikerChecked::
+	msgbox Route111_Text_OmenHikerChecked, MSGBOX_DEFAULT
 	release
 	end
 
@@ -810,3 +823,21 @@ Route111_Text_OmenHiker:
 	.string "to the FIERY PATH entrance.\p"
 	.string "Something is stirring beneath\n"
 	.string "the desert.$"
+
+Route111_Text_OmenHikerQuest:
+	.string "You came for readings?\n"
+	.string "HARTLEY's people, right?\p"
+	.string "We don't call them sandstorms\n"
+	.string "anymore. It's just the air now.\p"
+	.string "The sand wore everything smooth.\n"
+	.string "Even the rocks look different\l"
+	.string "than they did a year ago.\p"
+	.string "Your instruments will show\n"
+	.string "the pressure's stable.\l"
+	.string "That's the thing.\p"
+	.string "The storm isn't raging.\n"
+	.string "It settled. The desert won.$"
+
+Route111_Text_OmenHikerChecked:
+	.string "The readings haven't changed.\n"
+	.string "They won't. The desert is steady.$"

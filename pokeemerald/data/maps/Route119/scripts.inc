@@ -785,7 +785,20 @@ Route119_Text_HartleyReturn:
 Route119_EventScript_WeatherOmenRanger::
 	lock
 	faceplayer
+	goto_if_set FLAG_QUEST_HARTLEY_SITE2, Route119_EventScript_OmenRangerChecked
+	goto_if_set FLAG_QUEST_HARTLEY_STARTED, Route119_EventScript_OmenRangerQuest
 	msgbox Route119_Text_OmenRanger, MSGBOX_DEFAULT
+	release
+	end
+
+Route119_EventScript_OmenRangerQuest::
+	msgbox Route119_Text_OmenRangerQuest, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_HARTLEY_SITE2
+	release
+	end
+
+Route119_EventScript_OmenRangerChecked::
+	msgbox Route119_Text_OmenRangerChecked, MSGBOX_DEFAULT
 	release
 	end
 
@@ -796,6 +809,25 @@ Route119_Text_OmenRanger:
 	.string "This constant thunder is not.\p"
 	.string "Nature itself feels restless.\n"
 	.string "Even the TROPIUS won't fly.$"
+
+Route119_Text_OmenRangerQuest:
+	.string "Oh! You're from HARTLEY's team?\n"
+	.string "Perfect timing!\p"
+	.string "Listen -- hear that? That low\n"
+	.string "hum under the rain? That's new.\p"
+	.string "The permanent storms brought\n"
+	.string "moisture we've never measured.\p"
+	.string "New moss on every tree. Calls I\n"
+	.string "can't identify in the canopy.\p"
+	.string "Something moved into these woods.\n"
+	.string "Not just bugs. Something warm-\l"
+	.string "blooded, adapting to the wet.\p"
+	.string "HARTLEY's going to love this\n"
+	.string "data.$"
+
+Route119_Text_OmenRangerChecked:
+	.string "Still raining! The data keeps\n"
+	.string "coming. HARTLEY will be thrilled.$"
 
 Route119_EventScript_WeatherIntern::
 	msgbox Route119_Text_WeatherIntern, MSGBOX_NPC
