@@ -24,5 +24,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Dive Quest & First Side Quest Design Patterns | 193 | [dive-quest-design-patterns.md](pokemon-knowledge/dive-quest-design-patterns.md) |
 | Multi-Site Collection Quest Engagement Patterns | 194 | [multi-site-quest-engagement.md](pokemon-knowledge/multi-site-quest-engagement.md) |
 | Regional Form Delivery & Ability Design Patterns | 195 | [regional-form-delivery-patterns.md](pokemon-knowledge/regional-form-delivery-patterns.md) |
+| Water/Fire Arcanine & Regional Growlithe Design | 196 | [water-fire-arcanine-design.md](pokemon-knowledge/water-fire-arcanine-design.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
