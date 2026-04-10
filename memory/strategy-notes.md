@@ -49,81 +49,48 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 
 ## Side Quest Framework
 
-### Quest 1: "The Elder's Current" (Pacifidlog)
+### Quest 1: "The Elder's Current" (Pacifidlog) — DONE (C193, C195)
 
-**Giver**: Pacifidlog Elder (C186/C190). **Trigger**: FLAG_SYS_GAME_CLEAR.
-**Premise**: Ocean currents near Pacifidlog reversed since The Gathering. The Elder asks the Champion to investigate a dive spot on Route 132 where sailors won't go.
-**Steps**: (1) Talk to Elder → FLAG set. (2) Route 132 coord_event → underwater sequence with environmental text. (3) Return to Elder → reward + lore.
-**Reward**: Hoennian Corsola encounter (Ghost/Rock, Lv45) + Mystic Water.
-**Narrative**: The reversed currents exposed volcanic thermal vents that fossilized the coral — Corsola adapted by becoming ghostly remnants.
-**Flags**: 0x28A (started), 0x28B (investigated), 0x28C (complete). 3 total.
+**Giver**: Pacifidlog Elder. **Reward**: Hoennian Corsola encounter (Ghost/Rock, Lv45) + Mystic Water.
 
-### Quest 2: "Hartley's Field Report" (Weather Institute)
+### Quest 2: "Hartley's Field Report" (Weather Institute) — Quest scripts DONE (C194), species FAILED (C196, C197)
 
-**Giver**: Dr. Hartley (C141). **Trigger**: FLAG_SYS_GAME_CLEAR.
-**Premise**: Hartley compiling a report on permanent weather changes. Needs ground-truth readings from 3 sites where weather omens settled (v1.3 C159-160).
-**Steps**: (1) Talk to Hartley → FLAG set. (2) Visit R111 sandstorm, R119 rain, R125 hail sites — existing weather omen NPCs gain postgame dialogue + set field-check flags. (3) Return to Hartley → reward + publication.
-**Reward**: Hoennian Growlithe encounter (Water, Lv40) + Nevermeltice.
-**Narrative**: The weather didn't revert. Growlithe migrants caught in the permanent coastal storms lost their fire — adapted to Water type.
-**Flags**: 0x28D (started), 0x28E-0x290 (3 field sites), 0x291 (complete). 5 total.
+**Giver**: Dr. Hartley. **Reward**: Hoennian Growlithe encounter (Water, Lv40) + Nevermeltice.
+**Status**: Quest dialogue and flag logic complete. Species pipeline (Growlithe_Hoenn + Arcanine_Hoenn) attempted twice, failed both times. C196: manual approach too slow. C197: script built but `\e` escape error in quest text, all reverted. Script and sprites survive on disk.
 
-### Quest 3: "The Mossdeep Signal" (Space Center)
+### Quest 3: "The Mossdeep Signal" (Space Center) — NOT STARTED
 
-**Giver**: Mossdeep Space Center researcher (C186). **Trigger**: FLAG_PRIMAL_CRISIS_RESOLVED.
-**Premise**: The Primal Stirring's energy pulse was detected bouncing off something in the upper atmosphere.
-**Steps**: (1) Talk to researcher → FLAG set. (2) Travel to Route 131 specific tile → coord_event with atmospheric shimmer + cosmic SFX. (3) Return → revelation.
-**Reward**: Star Piece x3 + Comet Shard. Narrative payoff, not species.
-**Narrative**: The migration's energy rippled beyond earth/sea/sky. Something cosmic noticed. Seeds wonder without starting a crisis.
-**Flags**: 0x292 (started), 0x293 (investigated), 0x294 (complete). 3 total.
+**Giver**: Mossdeep researcher. **Reward**: Star Piece x3 + Comet Shard. Narrative payoff, not species.
 
-### Quest 4: "The Fog Beneath" (Route 126)
+### Quest 4: "The Fog Beneath" (Route 126) — NOT STARTED
 
-**Giver**: WarmSwimmer (C187/C189, Route 126). **Trigger**: FLAG_GATHERING_EVENT.
-**Premise**: The permanent fog hides a new underwater opening that appeared during The Gathering.
-**Steps**: (1) Talk to WarmSwimmer → FLAG set. (2) Dive at specific R126 spot → environmental text + discovery. (3) Surface → special encounter.
-**Reward**: Lapras encounter (Lv50, holding Shell Bell) — a non-Hoenn migrant drawn by The Gathering.
-**Narrative**: The Gathering physically changed the seabed. The fog is permanent because what it covers is permanent.
-**Flags**: 0x295 (started), 0x296 (investigated), 0x297 (complete). 3 total.
+**Giver**: WarmSwimmer. **Reward**: Lapras encounter (Lv50, holding Shell Bell).
 
 ## Regional Forms Strategy (Issue #97)
 
-**2 forms in v1.8. More deferred to v1.9.** Each requires the full 13-file species pipeline.
+### Hoennian Corsola (Ghost/Rock) — DONE (C195)
+### Hoennian Growlithe (Water) → Hoennian Arcanine (Water/Fire) — BLOCKED (C196-197)
 
-### Hoennian Corsola (Ghost/Rock) — Quest 1 reward
-- **Lore**: Volcanic thermal vents fossilized coral. Corsola became ghostly remnants of living reef.
-- **Types**: Ghost/Rock. **Ability**: Weak Armor. **BST**: ~410.
-- **Distinct from Galarian Corsola**: Volcanic (not pollution), Rock subtype (not pure Ghost), different ability.
-- **Pipeline**: 1 species = 1 implementation cycle.
+**Assets on disk**: `scripts/add_growlithe_arcanine_hoenn.cjs` (29KB), `graphics/pokemon/growlithe_hoenn/` (compiled), `graphics/pokemon/arcanine_hoenn/` (compiled).
+**What failed**: C196 never built. C197 script worked but quest script had `\e` escape.
+**Next attempt plan**: (1) Run existing script. (2) Fix pokedex text, learnsets, cries manually (~15 actions). (3) Add quest scripts with escape validation. (4) `grep -nP '\\\\[^nlp$"\\]'` before `make`. (5) Build.
 
-### Hoennian Growlithe (Water) → Hoennian Arcanine (Water/Fire) — Quest 2 reward
-- **Lore**: Fire-type migrants caught in permanent coastal storms. Fire quenched; adapted to swim.
-- **Growlithe**: Water. **Ability**: Swift Swim. **BST**: ~350.
-- **Arcanine**: Water/Fire (unique type combo — only Volcanion shares it). **Ability**: Swift Swim. **BST**: ~555. Evolves via Water Stone.
-- **Pipeline**: 2 species = 1-2 implementation cycles.
+## Phase Plan (Revised after C197)
 
-## Engineering Prerequisites
-
-1. **Trainer ID Audit** (pending 44 cycles): Ship C192. Expected 10-20 reclaimable IDs.
-2. **Quest flags**: Allocate 0x28A-0x297 in flags.h. 14 flags for 4 quests.
-3. **Species pipeline**: Established pattern from 6 prior species. Sprite Designer for palette work.
-4. **No new macros needed**: Quest scripts use existing event_macros.inc patterns.
-
-## Phase Plan
-
-| Cycle | Phase | Scope | Depends On |
-|-------|-------|-------|------------|
-| **C192** | Engineering | ~~Trainer ID audit + quest flag declarations + NPC dialogue~~ DONE | — |
-| **C193** | Quest | ~~"The Elder's Current" — Pacifidlog quest + R132 dive event~~ DONE | C192 flags |
-| **C194** | Quest | ~~"Hartley's Field Report" — Weather Institute quest + 3 site updates~~ DONE | C192 flags |
-| **C195** | Species | Hoennian Corsola (Ghost/Rock) — full pipeline + Quest 1 integration | C193 |
-| **C196** | Species | Hoennian Growlithe/Arcanine (Water, Water/Fire) — pipeline + Quest 2 | C194 |
-| **C197** | Quest+Narrative | Quests 3-4 (Mossdeep Signal + Fog Beneath) + post-Rayquaza NPC updates | C192 |
-| **C198** | Polish | Birch epilogue, narrative audit, R126 fog thinning post-Rayquaza, Issue #104 | All |
-| **C199** | Buffer | Overflow, community issues, v1.9 planning | — |
+| Cycle | Phase | Scope | Status |
+|-------|-------|-------|--------|
+| **C192** | Engineering | Trainer ID audit + quest flag declarations | DONE |
+| **C193** | Quest | "The Elder's Current" + Corsola Hoenn encounter | DONE |
+| **C194** | Quest | "Hartley's Field Report" + 3 site updates | DONE |
+| **C195** | Species | Hoennian Corsola (Ghost/Rock) — full pipeline | DONE |
+| **C196** | Species | Growlithe/Arcanine attempt 1 — manual, never built | FAILED |
+| **C197** | Species | Growlithe/Arcanine attempt 2 — script, build error | FAILED |
+| **C198** | Species | Growlithe/Arcanine attempt 3 — re-run script + fix escapes | **NEXT** |
+| **C199** | Buffer | Quests 3-4 OR polish OR v1.9 planning | — |
 
 ### Issue Tracking
-- **#97 (Regional forms)**: Partially addressed C195-196 (2 forms). More in v1.9.
-- **#104 (Level cap display)**: Scheduled C198 polish.
+- **#97 (Regional forms)**: Corsola_Hoenn done (C195). Growlithe/Arcanine blocked. More in v1.9.
+- **#104 (Level cap display)**: Deferred — no room in v1.8 unless C198 succeeds quickly.
 
 ---
 

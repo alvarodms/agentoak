@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197) — RECURRING
 
-**Symptom**: 90-120 actions spent on reads before first edit. C196: 89 actions of research on a two-species pipeline, never built — all changes reverted.
-**Resolution**: Use `grep -n` to find all target offsets in ONE pass. Never re-read data you already have. Use node.js scripts for bulk edits. For species pipeline: **adapt existing scripts** (`add_corsola_hoenn.js` + `add_corsola_hoenn_part2.cjs`) — parameterize for new species instead of 60+ manual edits.
+**Symptom**: 90-120 actions spent on reads before first edit. C197: 60 actions of research before writing bulk script, despite the pattern being documented in memory from C195-196.
+**Resolution**: For species pipeline: **run existing scripts first** — `scripts/add_growlithe_arcanine_hoenn.cjs` already exists (29KB, untracked). Start edits by action 15 max. Use `grep -n` to find offsets in ONE pass.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -19,15 +19,16 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Cycle summary claims work is done but git diff shows 0 pokeemerald/ changes.
 **Resolution**: Before marking any objective "DONE", verify with `git status pokeemerald/`.
 
-## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88, 110, 111, 196)
+## Incomplete Multi-Part Objectives (Cycles 14, 16, 22, 67, 77, 88, 110, 111, 196, 197)
 
-**Symptom**: Agent completes only part of a multi-component objective. C196: built species data but never ran `make`, never added encounter data or coord_event.
-**Resolution**: Budget actions — reserve 30 for build + debug. Start edits by action 15. For two-species cycles, use Node.js bulk scripts.
+**Symptom**: Agent completes only part of a multi-component objective. C197: script ran + manual patches applied but build failed on quest script text, all reverted.
+**Resolution**: Budget actions — reserve 30 for build + debug. Start edits by action 15. Grep for invalid escapes before building.
 
-## Non-ASCII Characters in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125) — CRITICAL
+## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
-**Symptom**: `error: unknown character U+XXXX`
-**Resolution**: Use `cat >> file << 'HEREDOC'` for files with smart quotes. Run `grep -P '[\x80-\xFF]' <file>` before `make`.
+**Symptom**: `error: unknown escape '\e'` (or `\t`, `\r`, etc.) OR `error: unknown character U+XXXX`.
+**Cause**: pokeemerald `.string` only supports `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Any other `\X` is fatal. Non-charmap Unicode is also fatal.
+**Resolution**: Before `make`, run: `grep -nP '\\\\[^nlp$"\\]' <modified .inc files>` to catch invalid escapes. Use `cat >> file << 'HEREDOC'` for files with smart quotes. Em-dashes (—, –) NOT in charmap — use `--`.
 
 ## Python3 Unavailable in Build Environment (Cycle 170)
 
@@ -37,20 +38,20 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Trainer Party Macro/Struct Type Mismatch (Cycles 179, 190, 195) — RECURRING
 
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
-**Cause**: Party macro (e.g., `ITEM_DEFAULT_MOVES`) doesn't match the struct type of the party array in trainer_parties.h (e.g., `TrainerMonNoItemDefaultMoves`). The four macros map 1:1 to four struct types: `NO_ITEM_DEFAULT_MOVES`↔`TrainerMonNoItemDefaultMoves`, `NO_ITEM_CUSTOM_MOVES`↔`TrainerMonNoItemCustomMoves`, `ITEM_DEFAULT_MOVES`↔`TrainerMonItemDefaultMoves`, `ITEM_CUSTOM_MOVES`↔`TrainerMonItemCustomMoves`.
-**Resolution**: Change the macro in trainers.h to match the struct type declared in trainer_parties.h. C195 created `scripts/fix_trainer_macros.cjs` that auto-detects and fixes all mismatches.
+**Cause**: Party macro doesn't match the struct type in trainer_parties.h. Four macros map 1:1 to four struct types.
+**Resolution**: Change macro in trainers.h to match struct type. C195 created `scripts/fix_trainer_macros.cjs`.
 
 ## Missing HOENN_DEX Entry When Adding Species (Cycle 195)
 
 **Symptom**: `initializer element for 'sSpeciesToHoennPokedexNum[N]' is not constant` in pokemon.c.
-**Cause**: Added NATIONAL_DEX entry and SPECIES_TO_HOENN/NATIONAL macros but forgot HOENN_DEX_* enum entry and HOENN_DEX_COUNT update in pokedex.h.
-**Resolution**: When adding any species, ALWAYS update both national AND Hoenn dex sections of pokedex.h. The HOENN_DEX enum entry must exist for the SPECIES_TO_HOENN macro to resolve.
+**Cause**: Added NATIONAL_DEX entry but forgot HOENN_DEX_* enum entry and HOENN_DEX_COUNT update.
+**Resolution**: When adding any species, ALWAYS update both national AND Hoenn dex sections of pokedex.h.
 
-## Two-Species Pipeline Too Large for Manual Edits (Cycle 196) — NEW
+## Two-Species Pipeline Too Large for Manual Edits (Cycles 196, 197)
 
-**Symptom**: Agent spent 171 actions manually editing 29 files for two species, never had time to build.
-**Cause**: Each species touches ~15 files. Two species = 30 file edits + quest integration. Manual edits + research exhaust the action budget.
-**Resolution**: For multi-species cycles, write a Node.js script FIRST that applies all changes in one pass. Parameterize the C195 Corsola scripts. Budget: 15 actions research, 30 actions writing script, 10 actions running it, 30 actions for build + debug + quest integration.
+**Symptom**: C196: 171 actions manual editing, never built. C197: wrote a script but still needed ~40 manual actions for patches the script missed.
+**Cause**: Each species touches ~15 files. Two species = 30 file edits + quest integration.
+**Resolution**: The script at `scripts/add_growlithe_arcanine_hoenn.cjs` handles most files. For next attempt: run script, then only fix pokedex entries text, learnset appends, and cry table appends manually. Total manual work should be ~15 actions.
 
 ## Anticipated Pitfalls
 

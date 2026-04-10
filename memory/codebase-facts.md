@@ -14,7 +14,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ## Dialogue Editing System (Cycles 24-26)
 
-**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes (—, –) NOT in charmap — use `--` for dashes. Ellipsis `…` = B0 in charmap.
+**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes NOT in charmap — use `--`. Ellipsis = B0 in charmap. **Only valid escapes**: `\n`, `\l`, `\p`, `$`. Any other `\X` (e.g. `\e`, `\t`) causes build error.
 
 **Safety**: `MSGBOX_NPC` labels safe to rewrite. `MSGBOX_DEFAULT` may have story logic.
 
@@ -57,81 +57,55 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 ## Multichoice System (Cycle 181)
 
 **Constants**: `include/constants/script_menu.h` — `MULTI_*` IDs (0-114). `MULTI_B_PRESSED` = 127.
-**Data**: `src/data/script_menu.h` — `sMultichoiceLists[]` array indexed by MULTI_* constants. Text strings + `MenuAction` arrays defined above it. `MULTICHOICE()` macro wraps list + count.
-**Script usage**: `multichoice x, y, MULTI_ID, ignoreBPress` → check `VAR_RESULT` (0 = first option, 1 = second, ..., 127 = B pressed).
+**Data**: `src/data/script_menu.h` — `sMultichoiceLists[]` array indexed by MULTI_* constants.
 **Last used ID**: 114 (`MULTI_DIFFICULTY_SELECT`). Next available: 115.
 
 ---
 
 ## Legendary Battle Pattern
 
-`setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`. Used by all 4 shipped legendaries (beasts, Ho-Oh, Groudon/Kyogre, Rayquaza).
+`setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`. Used by all 4 shipped legendaries.
 
 ## Legendary Encounter Macros (C185)
 
-**File**: `asm/macros/legend_macros.inc`. Included via `asm/macros.inc` (after `event_macros.inc`).
-
-**7 macros** -- composable building blocks:
-- `LegendMacro_ScreenShake v_pan, h_pan, shakes, shake_delay` -- camera shake (wraps 4 setvar + ShakeCamera)
-- `LegendMacro_PlayCry species` -- cry with encounter timing (waitse + playmoncry + delay + waitmoncry)
-- `LegendMacro_SetWeather weather` -- setweather + doweather
-- `LegendMacro_ClearWeather` -- WEATHER_NONE + doweather
-- `LegendMacro_FadeOut` -- fadescreenswapbuffers FADE_TO_BLACK
-- `LegendMacro_FadeIn` -- fadescreenswapbuffers FADE_FROM_BLACK
-- `LegendMacro_StartBattle species, level, item, won_label, caught_label` -- full battle setup + outcome branching
-
-**Design**: Building blocks, not complete scripts. Compose in map script files. No .L local labels needed (all branching uses caller-provided labels).
+**File**: `asm/macros/legend_macros.inc`. 7 composable macros for camera shake, cries, weather, fades, and battle setup.
 
 ---
 
 ## Scripted Event Macro Library (C179)
 
-**File**: `asm/macros/event_macros.inc`. Included via `asm/macros.inc` (after `battle_tent.inc`).
-
-**3 macros** — all emit complete script bytecodes:
-- `EventMacro_GlimpseEvent prereq_flag, glimpse_flag, text1, text2` — One-shot walk-over event (exclamation + 2 messages). Ends with `release`+`end`.
-- `EventMacro_BadgeGateShow hide_flag, weather_id` — Reveal NPC + set weather. Ends with `return` (called via `call_if_set`).
-- `EventMacro_ConditionalDialogue flag, text_before, text_after` — Two-state NPC dialogue. Ends with `release`+`end`.
-
-**Label uniqueness**: Uses `.L` local labels + `\@` expansion count for unique labels per invocation.
-
-**Include order**: `macros.inc` (defines EventMacro_*) → `event.inc` (defines lock, msgbox, etc.) → script files (invoke macros). Works because GNU as macros are expanded at invocation, not definition.
+**File**: `asm/macros/event_macros.inc`. 3 macros: `GlimpseEvent`, `BadgeGateShow`, `ConditionalDialogue`.
 
 ---
 
 ## Weather System (C149, C159-160)
 
-**Weather commands**: `setweather` + `doweather`. `WEATHER_ROUTE119_CYCLE` (constant 20).
 **Weather Omens**: Badge-gated permanent weather on 4 routes (R111/119/120/125). Flags 0x282-0x285.
-**Permanent weather pattern**: Flag-gated `setweather` in `OnTransition` (without `doweather`) sets initial weather before map renders. Used by Route 126 fog (C189): `FLAG_GATHERING_FOG_SET` → `WEATHER_FOG_HORIZONTAL`. Reusable for any route that should permanently change weather after an event.
+**Permanent weather pattern**: Flag-gated `setweather` in `OnTransition` (without `doweather`).
 
 ---
 
 ## Build Validation Targets (C141, C170)
 
-`make check_scripts` — Lints .inc files for non-charmap characters. **Build prerequisite** since C170.
-
-`make check_encounters` — Node.js validator for `wild_encounters.json`. Checks species existence (vs `constants/species.h`), slot counts (12/5/10), level ranges. Script: `scripts/check_encounters.sh`.
-
-**CI note**: `python3` unavailable in build env. Use Node.js for validation scripts.
+`make check_scripts` — Lints .inc files for non-charmap characters.
+`make check_encounters` — Node.js validator for `wild_encounters.json`.
+**CI note**: `python3` unavailable. Use Node.js for validation scripts.
 
 ---
 
-## Overworld Pokemon Sprites (C152-C153)
+## Regional Variant Species Pipeline (C195-197)
 
-**OBJ_EVENT_GFX_PIKACHU** = 209. Only ~40 Pokémon have OW sprites in vanilla. Use `playmoncry` + narration for species without sprites.
+**Existing scripts**:
+- `scripts/add_corsola_hoenn.js` + `scripts/add_corsola_hoenn_part2.cjs` — Corsola Hoenn pipeline (C195, worked)
+- `scripts/add_growlithe_arcanine_hoenn.cjs` — Growlithe/Arcanine pipeline (C197, 29KB, untracked). Handles most files but needs manual patches for: pokedex entry text/descriptions, learnset data content, cry table appends.
 
----
+**Pre-compiled sprites on disk**: `graphics/pokemon/growlithe_hoenn/` and `graphics/pokemon/arcanine_hoenn/` — both have .4bpp.lz and .gbapal.lz files ready. These survive reverts since they're untracked.
 
-## Regional Variant Species Pipeline (C195)
+**HOENN_DEX required**: Must add entry to BOTH national and Hoenn dex sections of `pokedex.h`.
 
-**Node.js scripts**: `scripts/add_corsola_hoenn.js` (Phase 1: constants, species_info, pokedex, cry tables, graphics declarations, pokemon.c tables, icon, animation, evolution, egg_moves) + `scripts/add_corsola_hoenn_part2.cjs` (Phase 2: pokedex_text, pokedex_entries, pokedex_orders, learnsets, TM learnsets, species_names, remaining graphics tables).
+**front_pic_anims.h structure**: AnimCmd arrays → `sAnims_*` table → `sMonFrontAnimsPtrTable[]`. New species needs all three.
 
-**HOENN_DEX required**: When adding new species, must add entry to BOTH national dex AND Hoenn dex sections of `pokedex.h`, plus update `HOENN_DEX_COUNT`. Missing HOENN_DEX causes `sSpeciesToHoennPokedexNum` initializer error.
-
-**front_pic_anims.h structure**: AnimCmd arrays → `sAnims_*` table → `sMonFrontAnimsPtrTable[]`. New species needs all three. Syntax error if AnimCmd placed after table but before ptr table.
-
-**Cry reuse**: Regional forms can reuse base species cry by referencing the same `Cry_*` label in `cry_tables.inc`. No new `.bin` file needed.
+**Cry reuse**: Regional forms can reuse base species cry by referencing the same `Cry_*` label in `cry_tables.inc`.
 
 ---
 
@@ -139,4 +113,4 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases.
 **Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10.
-**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`. Wraps `FlagGet(FLAG_DIFFICULTY_CHALLENGE)`.
+**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`.
