@@ -15,6 +15,31 @@ static const u16 sBulbasaurLevelUpLearnset[] = {
     LEVEL_UP_END
 };
 
+static const u16 sGrowlitheHoennLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_BITE),
+    LEVEL_UP_MOVE( 1, MOVE_ROAR),
+    LEVEL_UP_MOVE( 7, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE(13, MOVE_LEER),
+    LEVEL_UP_MOVE(19, MOVE_ODOR_SLEUTH),
+    LEVEL_UP_MOVE(25, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE(31, MOVE_TAKE_DOWN),
+    LEVEL_UP_MOVE(37, MOVE_RAIN_DANCE),
+    LEVEL_UP_MOVE(43, MOVE_AGILITY),
+    LEVEL_UP_MOVE(49, MOVE_HYDRO_PUMP),
+    LEVEL_UP_END
+};
+
+static const u16 sArcanineHoennLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_BITE),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_GUN),
+    LEVEL_UP_MOVE( 1, MOVE_ROAR),
+    LEVEL_UP_MOVE( 1, MOVE_WATER_PULSE),
+    LEVEL_UP_MOVE( 1, MOVE_FLAMETHROWER),
+    LEVEL_UP_MOVE( 1, MOVE_HELPING_HAND),
+    LEVEL_UP_MOVE(49, MOVE_EXTREME_SPEED),
+    LEVEL_UP_END
+};
+
 static const u16 sIvysaurLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 1, MOVE_GROWL),

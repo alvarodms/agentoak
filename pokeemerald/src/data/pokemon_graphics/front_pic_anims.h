@@ -4638,6 +4638,22 @@ static const union AnimCmd sAnim_CorsolaHoenn_1[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_GrowlitheHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_ArcanineHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_Egg_1[] =
 {
     ANIMCMD_FRAME(0, 6),
@@ -5286,6 +5302,8 @@ SINGLE_ANIMATION(Gible);
 SINGLE_ANIMATION(Gabite);
 SINGLE_ANIMATION(Garchomp);
 SINGLE_ANIMATION(CorsolaHoenn);
+SINGLE_ANIMATION(GrowlitheHoenn);
+SINGLE_ANIMATION(ArcanineHoenn);
 SINGLE_ANIMATION(Egg);
 SINGLE_ANIMATION(UnownB);
 SINGLE_ANIMATION(UnownC);
@@ -5736,6 +5754,8 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [SPECIES_GABITE]      = sAnims_Gabite,
     [SPECIES_GARCHOMP]    = sAnims_Garchomp,
     [SPECIES_CORSOLA_HOENN] = sAnims_CorsolaHoenn,
+    [SPECIES_GROWLITHE_HOENN] = sAnims_GrowlitheHoenn,
+    [SPECIES_ARCANINE_HOENN] = sAnims_ArcanineHoenn,
     [SPECIES_EGG]         = sAnims_Egg,
     [SPECIES_UNOWN_B]     = sAnims_UnownB,
     [SPECIES_UNOWN_C]     = sAnims_UnownC,

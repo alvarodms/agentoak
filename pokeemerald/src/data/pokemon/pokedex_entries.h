@@ -4727,4 +4727,28 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
+    [NATIONAL_DEX_GROWLITHE_HOENN] =
+    {
+        .categoryName = _("Puppy"),
+        .height = 7,
+        .weight = 190,
+        .description = gGrowlitheHoennPokedexText,
+        .pokemonScale = 346,
+        .pokemonOffset = 14,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_ARCANINE_HOENN] =
+    {
+        .categoryName = _("Legendary"),
+        .height = 19,
+        .weight = 1550,
+        .description = gArcanineHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
 };

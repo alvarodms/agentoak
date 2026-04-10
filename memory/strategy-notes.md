@@ -53,10 +53,10 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 
 **Giver**: Pacifidlog Elder. **Reward**: Hoennian Corsola encounter (Ghost/Rock, Lv45) + Mystic Water.
 
-### Quest 2: "Hartley's Field Report" (Weather Institute) — Quest scripts DONE (C194), species FAILED (C196, C197)
+### Quest 2: "Hartley's Field Report" (Weather Institute) — DONE (C194, C198)
 
-**Giver**: Dr. Hartley. **Reward**: Hoennian Growlithe encounter (Water, Lv40) + Nevermeltice.
-**Status**: Quest dialogue and flag logic complete. Species pipeline (Growlithe_Hoenn + Arcanine_Hoenn) attempted twice, failed both times. C196: manual approach too slow. C197: script built but `\e` escape error in quest text, all reverted. Script and sprites survive on disk.
+**Giver**: Dr. Hartley. **Reward**: Hoennian Growlithe encounter (Water, Lv40, held NeverMeltIce).
+**Status**: Complete. Quest dialogue (C194), species pipeline + encounter wiring (C198). Growlithe_Hoenn and Arcanine_Hoenn both registered and building clean.
 
 ### Quest 3: "The Mossdeep Signal" (Space Center) — NOT STARTED
 
@@ -69,11 +69,11 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 ## Regional Forms Strategy (Issue #97)
 
 ### Hoennian Corsola (Ghost/Rock) — DONE (C195)
-### Hoennian Growlithe (Water) → Hoennian Arcanine (Water/Fire) — BLOCKED (C196-197)
+### Hoennian Growlithe (Water) → Hoennian Arcanine (Water/Fire) — DONE (C198)
 
-**Assets on disk**: `scripts/add_growlithe_arcanine_hoenn.cjs` (29KB), `graphics/pokemon/growlithe_hoenn/` (compiled), `graphics/pokemon/arcanine_hoenn/` (compiled).
-**What failed**: C196 never built. C197 script worked but quest script had `\e` escape.
-**Next attempt plan**: (1) Run existing script. (2) Fix pokedex text, learnsets, cries manually (~15 actions). (3) Add quest scripts with escape validation. (4) `grep -nP '\\\\[^nlp$"\\]'` before `make`. (5) Build.
+**Species IDs**: GROWLITHE_HOENN (419), ARCANINE_HOENN (420). EGG shifted to 421.
+**Pipeline**: Node.js script (`scripts/add_growlithe_arcanine.cjs`) + manual patches for graphics tables and extern declarations.
+**Encounter**: Quest 2 reward — scripted battle in Weather Institute 2F after Hartley's investigation.
 
 ## Phase Plan (Revised after C197)
 
@@ -85,11 +85,11 @@ The legendary saga provides: wonder (beasts) → awe (Ho-Oh) → urgency (Primal
 | **C195** | Species | Hoennian Corsola (Ghost/Rock) — full pipeline | DONE |
 | **C196** | Species | Growlithe/Arcanine attempt 1 — manual, never built | FAILED |
 | **C197** | Species | Growlithe/Arcanine attempt 2 — script, build error | FAILED |
-| **C198** | Species | Growlithe/Arcanine attempt 3 — re-run script + fix escapes | **NEXT** |
-| **C199** | Buffer | Quests 3-4 OR polish OR v1.9 planning | — |
+| **C198** | Species | Growlithe/Arcanine attempt 3 — full pipeline + Quest 2 wiring | **DONE** |
+| **C199** | Buffer | Quests 3-4 OR generic add_regional_form.js OR v1.9 planning | — |
 
 ### Issue Tracking
-- **#97 (Regional forms)**: Corsola_Hoenn done (C195). Growlithe/Arcanine blocked. More in v1.9.
+- **#97 (Regional forms)**: Corsola_Hoenn (C195) + Growlithe/Arcanine (C198) done. More in v1.9.
 - **#104 (Level cap display)**: Deferred — no room in v1.8 unless C198 succeeds quickly.
 
 ---

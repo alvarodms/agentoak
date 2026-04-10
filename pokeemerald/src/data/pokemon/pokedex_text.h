@@ -2363,3 +2363,17 @@ const u8 gCorsolaHoennPokedexText[] = _(
     "stone branches crumble with\n"
     "each movement, yet it endures.");
 
+const u8 gGrowlitheHoennPokedexText[] = _(
+    "This GROWLITHE adapted to the\n"
+    "endless rain of Route 119.\n"
+    "Its fur repels water and its\n"
+    "paws are webbed for swimming\n"
+    "in fast currents.");
+
+const u8 gArcanineHoennPokedexText[] = _(
+    "Steam rises from its coat as\n"
+    "raindrops meet its inner fire.\n"
+    "It races across flooded fields\n"
+    "with grace, never slowing in\n"
+    "the deepest water.");
+

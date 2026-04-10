@@ -419,5 +419,7 @@ const u8 *const gMonFootprintTable[] =
     [SPECIES_GABITE] = gMonFootprint_Gabite,
     [SPECIES_GARCHOMP] = gMonFootprint_Garchomp,
     [SPECIES_CORSOLA_HOENN] = gMonFootprint_CorsolaHoenn,
+    [SPECIES_GROWLITHE_HOENN] = gMonFootprint_GrowlitheHoenn,
+    [SPECIES_ARCANINE_HOENN] = gMonFootprint_ArcanineHoenn,
     [SPECIES_EGG] = gMonFootprint_Bulbasaur,
 };

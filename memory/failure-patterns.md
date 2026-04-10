@@ -7,7 +7,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197) — RECURRING
 
 **Symptom**: 90-120 actions spent on reads before first edit. C197: 60 actions of research before writing bulk script, despite the pattern being documented in memory from C195-196.
-**Resolution**: For species pipeline: **run existing scripts first** — `scripts/add_growlithe_arcanine_hoenn.cjs` already exists (29KB, untracked). Start edits by action 15 max. Use `grep -n` to find offsets in ONE pass.
+**Resolution**: For species pipeline: write script early. C198 succeeded by starting script by action 10. Use `grep -n` to find offsets in ONE pass.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -47,11 +47,15 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Added NATIONAL_DEX entry but forgot HOENN_DEX_* enum entry and HOENN_DEX_COUNT update.
 **Resolution**: When adding any species, ALWAYS update both national AND Hoenn dex sections of pokedex.h.
 
-## Two-Species Pipeline Too Large for Manual Edits (Cycles 196, 197)
+## Two-Species Pipeline Too Large for Manual Edits (Cycles 196, 197, fixed C198)
 
-**Symptom**: C196: 171 actions manual editing, never built. C197: wrote a script but still needed ~40 manual actions for patches the script missed.
-**Cause**: Each species touches ~15 files. Two species = 30 file edits + quest integration.
-**Resolution**: The script at `scripts/add_growlithe_arcanine_hoenn.cjs` handles most files. For next attempt: run script, then only fix pokedex entries text, learnset appends, and cry table appends manually. Total manual work should be ~15 actions.
+**Symptom**: C196: 171 actions manual editing, never built. C197: script + manual but `\e` killed build.
+**Resolution (C198)**: Fresh script (`scripts/add_growlithe_arcanine.cjs`) + 8 manual Edit patches for graphics tables that have EGG/UNOWN entries after CORSOLA_HOENN. Also need extern declarations in `include/graphics.h`. Script anchors that assume `};` follows CORSOLA_HOENN are WRONG for graphics tables — always insert before `[SPECIES_EGG]`.
+
+## replace_all Footgun (Cycle 198)
+
+**Symptom**: Used `replace_all: true` to fix `MON_MALE` → `PERCENT_FEMALE(25)` in species_info.h; changed ALL species with MON_MALE, not just the two new ones.
+**Resolution**: NEVER use `replace_all` on common strings in large files. Use targeted edits or `git checkout --` to restore + re-apply.
 
 ## Anticipated Pitfalls
 

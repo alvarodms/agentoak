@@ -2761,6 +2761,20 @@ const u32 gMonShinyPalette_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola
 const u8 gMonIcon_CorsolaHoenn[] = INCBIN_U8("graphics/pokemon/corsola_hoenn/icon.4bpp");
 const u8 gMonFootprint_CorsolaHoenn[] = INCBIN_U8("graphics/pokemon/corsola_hoenn/footprint.1bpp");
 
+const u32 gMonStillFrontPic_GrowlitheHoenn[] = INCBIN_U32("graphics/pokemon/growlithe_hoenn/front.4bpp.lz");
+const u32 gMonPalette_GrowlitheHoenn[] = INCBIN_U32("graphics/pokemon/growlithe_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_GrowlitheHoenn[] = INCBIN_U32("graphics/pokemon/growlithe_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_GrowlitheHoenn[] = INCBIN_U32("graphics/pokemon/growlithe_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_GrowlitheHoenn[] = INCBIN_U8("graphics/pokemon/growlithe_hoenn/icon.4bpp");
+const u8 gMonFootprint_GrowlitheHoenn[] = INCBIN_U8("graphics/pokemon/growlithe_hoenn/footprint.1bpp");
+
+const u32 gMonStillFrontPic_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/front.4bpp.lz");
+const u32 gMonPalette_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_ArcanineHoenn[] = INCBIN_U8("graphics/pokemon/arcanine_hoenn/icon.4bpp");
+const u8 gMonFootprint_ArcanineHoenn[] = INCBIN_U8("graphics/pokemon/arcanine_hoenn/footprint.1bpp");
+
 
 const u32 gMonStillFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/front.4bpp.lz");
 const u32 gMonPalette_Egg[] = INCBIN_U32("graphics/pokemon/egg/normal.gbapal.lz");

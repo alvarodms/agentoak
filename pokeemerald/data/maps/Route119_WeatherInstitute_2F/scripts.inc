@@ -445,7 +445,13 @@ Route119_WeatherInstitute_2F_EventScript_HartleyStillWorking::
 
 Route119_WeatherInstitute_2F_EventScript_HartleyReturn::
 	msgbox Route119_WeatherInstitute_2F_Text_HartleyReturn, MSGBOX_DEFAULT
-	giveitem ITEM_NEVER_MELT_ICE
+	msgbox Route119_WeatherInstitute_2F_Text_HartleyEncounterSetup, MSGBOX_DEFAULT
+	closemessage
+	playse SE_PIN
+	waitse
+	setwildbattle SPECIES_GROWLITHE_HOENN, 40, ITEM_NEVER_MELT_ICE
+	special BattleSetup_StartLegendaryBattle
+	waitstate
 	setflag FLAG_QUEST_HARTLEY_COMPLETE
 	msgbox Route119_WeatherInstitute_2F_Text_HartleyReturnClose, MSGBOX_DEFAULT
 	release
@@ -519,7 +525,18 @@ Route119_WeatherInstitute_2F_Text_HartleyReturn:
 	.string "And if the weather adapted...\n"
 	.string "what about the POKéMON in it?$"
 
+Route119_WeatherInstitute_2F_Text_HartleyEncounterSetup:
+	.string "Wait. Do you hear that?\n"
+	.string "Outside, in the rain...\p"
+	.string "That bark. I have never heard\n"
+	.string "anything like it on this route.\p"
+	.string "Go. Go now. If a POKeMON\n"
+	.string "really did adapt to the rain,\l"
+	.string "this is your chance to prove it.$"
+
 Route119_WeatherInstitute_2F_Text_HartleyReturnClose:
+	.string "You caught it! A GROWLITHE\n"
+	.string "adapted to the rain!\p"
 	.string "Champion, I need to think about\n"
 	.string "what this means. But thank you.\l"
 	.string "This changes everything.$"

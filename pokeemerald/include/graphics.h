@@ -2790,6 +2790,22 @@ extern const u32 gMonStillFrontPic_CorsolaHoenn[];
 extern const u8 gMonIcon_CorsolaHoenn[];
 extern const u8 gMonFootprint_CorsolaHoenn[];
 
+extern const u32 gMonFrontPic_GrowlitheHoenn[];
+extern const u32 gMonPalette_GrowlitheHoenn[];
+extern const u32 gMonBackPic_GrowlitheHoenn[];
+extern const u32 gMonShinyPalette_GrowlitheHoenn[];
+extern const u32 gMonStillFrontPic_GrowlitheHoenn[];
+extern const u8 gMonIcon_GrowlitheHoenn[];
+extern const u8 gMonFootprint_GrowlitheHoenn[];
+
+extern const u32 gMonFrontPic_ArcanineHoenn[];
+extern const u32 gMonPalette_ArcanineHoenn[];
+extern const u32 gMonBackPic_ArcanineHoenn[];
+extern const u32 gMonShinyPalette_ArcanineHoenn[];
+extern const u32 gMonStillFrontPic_ArcanineHoenn[];
+extern const u8 gMonIcon_ArcanineHoenn[];
+extern const u8 gMonFootprint_ArcanineHoenn[];
+
 extern const u32 gMonPic_Egg[];
 extern const u32 gMonPalette_Egg[];
 extern const u32 gMonFrontPic_Egg[];

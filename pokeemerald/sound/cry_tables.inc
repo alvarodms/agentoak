@@ -395,6 +395,8 @@ gCryTable::
 	cry Cry_Gabite
 	cry Cry_Garchomp
 	cry Cry_Corsola
+	cry Cry_Growlithe
+	cry Cry_Arcanine
 
 	.align 2
 gCryTable_Reverse::
@@ -620,6 +622,8 @@ gCryTable_Reverse::
 	cry_reverse Cry_Swinub
 	cry_reverse Cry_Piloswine
 	cry_reverse Cry_Corsola
+	cry_reverse Cry_Growlithe
+	cry_reverse Cry_Arcanine
 	cry_reverse Cry_Remoraid
 	cry_reverse Cry_Octillery
 	cry_reverse Cry_Delibird

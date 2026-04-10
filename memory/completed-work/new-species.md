@@ -72,3 +72,23 @@ First regional variant. Ghost/Rock typing. Quest 1 reward encounter.
 | Script | PacifidlogTown_EventScript_ElderQuestBattle — static encounter after completing Quest 1 investigation |
 | Dex text | Volcanic thermal vent lore — fossilized coral becoming ghostly remnants |
 | Pipeline | Automated via Node.js scripts (add_corsola_hoenn.js + part2.cjs). Also fixed 17 pre-existing trainer macro warnings. |
+
+## Hoennian Growlithe & Arcanine (Cycle 198) — BUILD CLEAN
+
+Second and third regional variants. Water (Growlithe) and Water/Fire (Arcanine) typing. Quest 2 reward encounter.
+
+| Detail | Value |
+|--------|-------|
+| Species IDs | SPECIES_GROWLITHE_HOENN (419), SPECIES_ARCANINE_HOENN (420), EGG→421 |
+| Stats | Growlithe: 55/45/45/80/65/60 BST 350 (Water), Arcanine: 90/95/80/115/85/90 BST 555 (Water/Fire) |
+| Abilities | Growlithe: Swift Swim / Swift Swim, Arcanine: Intimidate / Flash Fire |
+| Evolution | Growlithe_Hoenn → Arcanine_Hoenn via Water Stone |
+| Encounter | Scripted: Weather Institute 2F Quest 2 reward (setwildbattle Lv40, held NeverMeltIce) |
+| Learnset (G) | Bite, Roar, Water Gun(7), Leer(13), Odor Sleuth(19), Water Pulse(25), Take Down(31), Rain Dance(37), Agility(43), Hydro Pump(49) |
+| Learnset (A) | Bite(1), Water Gun(1), Roar(1), Water Pulse(1), Flamethrower(1), Helping Hand(1), Extreme Speed(49) |
+| Egg moves | Crunch, Thrash, Howl, Mist, Whirlpool, Safeguard |
+| TMs | G: 25 TMs (Water HMs, Ice Beam, Rain Dance). A: 31 TMs (adds Fire STAB: Flamethrower/Fire Blast/Overheat, Sunny Day, Blizzard, Hyper Beam) |
+| Assets | Fetched via fetch_pokemon_sprites (expansion repo). All 7 files each. |
+| Cry | Reuses vanilla Cry_Growlithe and Cry_Arcanine |
+| Pipeline | Automated via Node.js script (scripts/add_growlithe_arcanine.cjs) + manual patches for graphics tables and include/graphics.h extern declarations |
+| Files modified | 27 source files + scripts/add_growlithe_arcanine.cjs + Quest 2 script modification |

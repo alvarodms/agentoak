@@ -8,3 +8,4 @@ Deferred community issues for future consideration.
 - #110: Deoxys quest (deferred: cycle 197)
 - #109: More accessible regional forms (deferred: cycle 197)
 - #108: Graphical tweaks (deferred: cycle 197)
+- #114: Reason for Migration (deferred: cycle 198)

@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418). NUM_SPECIES = 419.
+**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420). NUM_SPECIES = 421.
 
 ---
 
@@ -97,7 +97,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Existing scripts**:
 - `scripts/add_corsola_hoenn.js` + `scripts/add_corsola_hoenn_part2.cjs` — Corsola Hoenn pipeline (C195, worked)
-- `scripts/add_growlithe_arcanine_hoenn.cjs` — Growlithe/Arcanine pipeline (C197, 29KB, untracked). Handles most files but needs manual patches for: pokedex entry text/descriptions, learnset data content, cry table appends.
+- `scripts/add_growlithe_arcanine.cjs — Growlithe/Arcanine pipeline (C198, worked). Handles 26 files in one pass. Manual patches still needed for 8 graphics table files + graphics.h externs.
 
 **Pre-compiled sprites on disk**: `graphics/pokemon/growlithe_hoenn/` and `graphics/pokemon/arcanine_hoenn/` — both have .4bpp.lz and .gbapal.lz files ready. These survive reverts since they're untracked.
 
