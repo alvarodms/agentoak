@@ -41,3 +41,63 @@ Route132_EventScript_Makayla::
 	msgbox Route132_Text_MakaylaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+@ =============================================
+@ v1.8 Quest 1: The Elder's Current - Dive Spot
+@ =============================================
+
+Route132_EventScript_DiveSpotTrigger::
+	lock
+	goto_if_set FLAG_QUEST_ELDER_INVESTIGATED, Route132_EventScript_DiveSpotDone
+	goto_if_set FLAG_QUEST_ELDER_STARTED, Route132_EventScript_DiveSequence
+	release
+	end
+
+Route132_EventScript_DiveSpotDone::
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route132_EventScript_DiveSequence::
+	playbgm MUS_ABNORMAL_WEATHER, TRUE
+	msgbox Route132_Text_DiveSpot_Beat1, MSGBOX_DEFAULT
+	msgbox Route132_Text_DiveSpot_Beat2, MSGBOX_DEFAULT
+	msgbox Route132_Text_DiveSpot_Beat3, MSGBOX_DEFAULT
+	fadedefaultbgm
+	setflag FLAG_QUEST_ELDER_INVESTIGATED
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route132_Text_DiveSpot_Beat1:
+	.string "The water here feels strange...\n"
+	.string "unnervingly warm, like a bath\l"
+	.string "that no one drew.\p"
+	.string "Beneath the surface, the current\n"
+	.string "pulls downward. Steady.\l"
+	.string "Patient. As if the ocean\l"
+	.string "itself is breathing in.$"
+
+Route132_Text_DiveSpot_Beat2:
+	.string "The coral below has gone pale.\n"
+	.string "Not bleached -- petrified.\p"
+	.string "Great branches frozen mid-sway,\n"
+	.string "turned to stone by heat\l"
+	.string "rising from the seafloor.\p"
+	.string "Thermal vents shimmer between\n"
+	.string "the fossilized reef. The coral\l"
+	.string "didn't die. It turned to stone\l"
+	.string "in place, still standing.$"
+
+Route132_Text_DiveSpot_Beat3:
+	.string "Something shifts among the\n"
+	.string "stone coral.\p"
+	.string "A shape that shouldn't be able\n"
+	.string "to move... does. Slowly.\l"
+	.string "Deliberately.\p"
+	.string "As if it has been waiting for\n"
+	.string "someone to notice.\p"
+	.string "The reversed currents make\n"
+	.string "sense now. The sea isn't pulling\l"
+	.string "toward nothing -- it's circling\l"
+	.string "something that's still alive.$"
+

@@ -62,6 +62,7 @@ PacifidlogTown_EventScript_TideElder::
 	faceplayer
 	@ v1.8 Quest states (highest priority)
 	goto_if_set FLAG_QUEST_ELDER_COMPLETE, PacifidlogTown_EventScript_ElderQuestDone
+	goto_if_set FLAG_QUEST_ELDER_INVESTIGATED, PacifidlogTown_EventScript_ElderQuestReturn
 	goto_if_set FLAG_QUEST_ELDER_STARTED, PacifidlogTown_EventScript_ElderQuestReminder
 	@ Existing saga checks
 	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, PacifidlogTown_EventScript_ElderSkyGuardianDone
@@ -308,6 +309,17 @@ PacifidlogTown_EventScript_ElderQuestReminder::
 	release
 	end
 
+PacifidlogTown_EventScript_ElderQuestReturn::
+	lock
+	faceplayer
+	msgbox PacifidlogTown_Text_ElderQuestReturn, MSGBOX_DEFAULT
+	giveitem ITEM_MYSTIC_WATER
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_QUEST_ELDER_COMPLETE
+	msgbox PacifidlogTown_Text_ElderQuestReturnPost, MSGBOX_DEFAULT
+	release
+	end
+
 PacifidlogTown_EventScript_ElderQuestDone::
 	lock
 	faceplayer
@@ -343,6 +355,28 @@ PacifidlogTown_Text_ElderQuestReminder:
 	.string "none will go near it now.\p"
 	.string "Be careful down there,\n"
 	.string "Champion.$"
+
+PacifidlogTown_Text_ElderQuestReturn:
+	.string "You found it, then.\p"
+	.string "So the reef turned to stone...\n"
+	.string "and something still lives\l"
+	.string "in it.\p"
+	.string "The currents didn't reverse.\n"
+	.string "They're mourning. Circling\l"
+	.string "what remains of a living sea.\p"
+	.string "My grandmother told me the\n"
+	.string "ocean remembers every creature\l"
+	.string "that ever called it home.\p"
+	.string "I didn't understand until now.$"
+
+PacifidlogTown_Text_ElderQuestReturnPost:
+	.string "Take this. The sailors call\n"
+	.string "it MYSTIC WATER -- drawn from\l"
+	.string "the depths where the current\l"
+	.string "changes.\p"
+	.string "Perhaps it will help whatever\n"
+	.string "you find down there...\l"
+	.string "when you're ready to meet it.$"
 
 PacifidlogTown_Text_ElderQuestDone:
 	.string "The sea gives back what it\n"

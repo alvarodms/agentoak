@@ -21,5 +21,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Polish Cycle Best Practices — What Top Hacks Do | 190 | [polish-cycle-best-practices.md](pokemon-knowledge/polish-cycle-best-practices.md) |
 | v1.8 Direction — Community Trends & Completeness | 191 | [v18-direction-community-trends.md](pokemon-knowledge/v18-direction-community-trends.md) |
 | Quest Infrastructure Patterns in pokeemerald | 192 | [quest-infrastructure-patterns.md](pokemon-knowledge/quest-infrastructure-patterns.md) |
+| Dive Quest & First Side Quest Design Patterns | 193 | [dive-quest-design-patterns.md](pokemon-knowledge/dive-quest-design-patterns.md) |
 
 Older research files (Cycles 47-177) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

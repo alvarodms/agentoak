@@ -16,11 +16,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ## Dialogue Editing System (Cycles 24-26)
 
-**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap.
+**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes (—, –) NOT in charmap — use `--` for dashes.
 
 **Safety**: `MSGBOX_NPC` labels safe to rewrite. `MSGBOX_DEFAULT` may have story logic.
 
-**Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist.
+**Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_TEMP_* reset on map transition — coord_events using them as guards fire once per visit.
 
 ---
 
