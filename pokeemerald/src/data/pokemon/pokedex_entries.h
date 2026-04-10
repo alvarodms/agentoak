@@ -4715,4 +4715,16 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
+    [NATIONAL_DEX_CORSOLA_HOENN] =
+    {
+        .categoryName = _("Fossil"),
+        .height = 6,
+        .weight = 85,
+        .description = gCorsolaHoennPokedexText,
+        .pokemonScale = 410,
+        .pokemonOffset = 15,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
 };

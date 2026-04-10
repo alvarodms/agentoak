@@ -2782,6 +2782,14 @@ extern const u32 gMonShinyPalette_Garchomp[];
 extern const u32 gMonStillFrontPic_Garchomp[];
 extern const u8 gMonIcon_Garchomp[];
 extern const u8 gMonFootprint_Garchomp[];
+extern const u32 gMonFrontPic_CorsolaHoenn[];
+extern const u32 gMonPalette_CorsolaHoenn[];
+extern const u32 gMonBackPic_CorsolaHoenn[];
+extern const u32 gMonShinyPalette_CorsolaHoenn[];
+extern const u32 gMonStillFrontPic_CorsolaHoenn[];
+extern const u8 gMonIcon_CorsolaHoenn[];
+extern const u8 gMonFootprint_CorsolaHoenn[];
+
 extern const u32 gMonPic_Egg[];
 extern const u32 gMonPalette_Egg[];
 extern const u32 gMonFrontPic_Egg[];

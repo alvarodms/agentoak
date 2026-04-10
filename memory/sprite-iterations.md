@@ -5,3 +5,4 @@
 
 | Species | Type | Version | Cycle | Issue | Status |
 |---------|------|---------|-------|-------|--------|
+| Corsola Hoenn | Ghost/Rock | v1 | 195 | — | awaiting feedback |

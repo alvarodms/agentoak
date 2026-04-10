@@ -2355,3 +2355,11 @@ const u8 gGarchompPokedexText[] = _(
     "plane. When it folds its body\n"
     "and spreads its wings, it looks\n"
     "like a fighter jet in flight.");
+
+const u8 gCorsolaHoennPokedexText[] = _(
+    "This CORSOLA was fossilized by\n"
+    "centuries of volcanic heat from\n"
+    "underwater thermal vents. Its\n"
+    "stone branches crumble with\n"
+    "each movement, yet it endures.");
+

@@ -418,4 +418,5 @@ const u16 *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_GIBLE] = sGibleLevelUpLearnset,
     [SPECIES_GABITE] = sGabiteLevelUpLearnset,
     [SPECIES_GARCHOMP] = sGarchompLevelUpLearnset,
+    [SPECIES_CORSOLA_HOENN] = sCorsolaHoennLevelUpLearnset,
 };

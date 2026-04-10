@@ -313,10 +313,18 @@ PacifidlogTown_EventScript_ElderQuestReturn::
 	lock
 	faceplayer
 	msgbox PacifidlogTown_Text_ElderQuestReturn, MSGBOX_DEFAULT
+	msgbox PacifidlogTown_Text_ElderSomethingFollowed, MSGBOX_DEFAULT
+	playse SE_M_NIGHTMARE
+	waitse
+	delay 30
+	msgbox PacifidlogTown_Text_CoralStirs, MSGBOX_DEFAULT
+	setwildbattle SPECIES_CORSOLA_HOENN, 45
+	dowildbattle
+	waitstate
+	msgbox PacifidlogTown_Text_ElderCorsolaReaction, MSGBOX_DEFAULT
 	giveitem ITEM_MYSTIC_WATER
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_QUEST_ELDER_COMPLETE
-	msgbox PacifidlogTown_Text_ElderQuestReturnPost, MSGBOX_DEFAULT
 	release
 	end
 
@@ -369,20 +377,35 @@ PacifidlogTown_Text_ElderQuestReturn:
 	.string "that ever called it home.\p"
 	.string "I didn't understand until now.$"
 
-PacifidlogTown_Text_ElderQuestReturnPost:
-	.string "Take this. The sailors call\n"
-	.string "it MYSTIC WATER -- drawn from\l"
-	.string "the depths where the current\l"
-	.string "changes.\p"
-	.string "Perhaps it will help whatever\n"
-	.string "you find down there...\l"
-	.string "when you're ready to meet it.$"
+PacifidlogTown_Text_ElderSomethingFollowed:
+	.string "Wait... do you feel that?\p"
+	.string "Something followed you back\n"
+	.string "from the deep...$"
+
+PacifidlogTown_Text_CoralStirs:
+	.string "The fossilized coral shudders...\n"
+	.string "Something stirs within!$"
+
+PacifidlogTown_Text_ElderCorsolaReaction:
+	.string "... Incredible.\p"
+	.string "A CORSOLA whose coral turned\n"
+	.string "to stone, yet its spirit\l"
+	.string "endures.\p"
+	.string "The thermal vents must have\n"
+	.string "changed it over centuries.\l"
+	.string "Neither alive nor gone...\l"
+	.string "something in between.\p"
+	.string "You've made an extraordinary\n"
+	.string "discovery, Champion.\p"
+	.string "Take this. The old sailors\n"
+	.string "believed MYSTIC WATER could\l"
+	.string "calm even the roughest\l"
+	.string "currents.$"
 
 PacifidlogTown_Text_ElderQuestDone:
 	.string "The sea gives back what it\n"
-	.string "takes… just in a different\l"
+	.string "takes... just in a different\l"
 	.string "form.\p"
-	.string "My grandfather would say\n"
-	.string "PACIFIDLOG was built by\l"
-	.string "people who listened to the\l"
-	.string "ocean. You listened too.$"
+	.string "That fossilized CORSOLA...\n"
+	.string "proof the ocean never truly\l"
+	.string "forgets.$"

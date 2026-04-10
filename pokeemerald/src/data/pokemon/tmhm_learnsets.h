@@ -10350,4 +10350,27 @@ const union {
         .ROCK_SMASH = TRUE,
     } },
 
+    [SPECIES_CORSOLA_HOENN] = { .learnset = {
+        .TOXIC = TRUE,
+        .HIDDEN_POWER = TRUE,
+        .SUNNY_DAY = TRUE,
+        .PROTECT = TRUE,
+        .FRUSTRATION = TRUE,
+        .EARTHQUAKE = TRUE,
+        .RETURN = TRUE,
+        .DIG = TRUE,
+        .PSYCHIC = TRUE,
+        .SHADOW_BALL = TRUE,
+        .DOUBLE_TEAM = TRUE,
+        .SANDSTORM = TRUE,
+        .ROCK_TOMB = TRUE,
+        .FACADE = TRUE,
+        .SECRET_POWER = TRUE,
+        .REST = TRUE,
+        .ATTRACT = TRUE,
+        .STRENGTH = TRUE,
+        .ROCK_SMASH = TRUE,
+    } },
+
+
 };

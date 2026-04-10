@@ -30,6 +30,12 @@
 
 _(Updated as feedback accumulates across iterations)_
 
+## Techniques Validated
+
+- **Binary PLTE replacement (Node.js)**: Read PNG binary, find PLTE chunk, replace RGB bytes, recalculate CRC with `zlib.crc32()`. Preserves all pixel index data exactly — cleanest recolor approach. No Python/Pillow needed.
+- **Icon palette is SEPARATE from sprite palette**: Icons use a shared palette system (gMonIconPaletteTable). The icon PNG's embedded PLTE has different color→index mapping than `normal.pal`. Must analyze icon's own PLTE and remap body-part colors independently.
+- **Desaturation for fossil/stone aesthetic**: Push all body colors toward warm gray (nearly equal RGB channels with slight warm bias). Use amber (R:135-185, G:88-135, B:42-70) for accent "heated stone" details on branch tips/extremities.
+
 ## Reusable Scripts
 
-_(Paths to validated Pillow scripts recorded here as they are created)_
+- **PLTE binary recolor**: `/tmp/recolor_sprites.js` pattern — reads PNG binary, finds PLTE chunk offset, replaces 48 bytes (16×RGB), recalculates CRC. Works with `pngjs` npm package for analysis, raw `Buffer` for editing.

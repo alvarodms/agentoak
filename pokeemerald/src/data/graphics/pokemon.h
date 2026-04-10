@@ -2754,6 +2754,14 @@ const u32 gMonShinyPalette_Garchomp[] = INCBIN_U32("graphics/pokemon/garchomp/sh
 const u8 gMonIcon_Garchomp[] = INCBIN_U8("graphics/pokemon/garchomp/icon.4bpp");
 const u8 gMonFootprint_Garchomp[] = INCBIN_U8("graphics/pokemon/garchomp/footprint.1bpp");
 
+const u32 gMonStillFrontPic_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola_hoenn/front.4bpp.lz");
+const u32 gMonPalette_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_CorsolaHoenn[] = INCBIN_U8("graphics/pokemon/corsola_hoenn/icon.4bpp");
+const u8 gMonFootprint_CorsolaHoenn[] = INCBIN_U8("graphics/pokemon/corsola_hoenn/footprint.1bpp");
+
+
 const u32 gMonStillFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/front.4bpp.lz");
 const u32 gMonPalette_Egg[] = INCBIN_U32("graphics/pokemon/egg/normal.gbapal.lz");
 

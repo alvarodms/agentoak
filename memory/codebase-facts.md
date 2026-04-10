@@ -12,11 +12,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
----
-
 ## Dialogue Editing System (Cycles 24-26)
 
-**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes (—, –) NOT in charmap — use `--` for dashes.
+**Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes (—, –) NOT in charmap — use `--` for dashes. Ellipsis `…` = B0 in charmap.
 
 **Safety**: `MSGBOX_NPC` labels safe to rewrite. `MSGBOX_DEFAULT` may have story logic.
 
@@ -36,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Species NOT in codebase**: Mismagius, Mamoswine, Weavile. Garchomp, Lucario, Riolu ARE present.
+**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418). NUM_SPECIES = 419.
 
 ---
 
@@ -125,20 +123,20 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Regional Variant Sprite Pipeline (PoC validated)
+## Regional Variant Species Pipeline (C195)
 
-GBA sprites use 4-bit indexed color (16 palette entries). Recolor via `normal.pal` (JASC-PAL format). Must update both `.pal` AND PNG embedded palette. Species registration: 13 files. Full pipeline: `memory/regional-variant-pipeline.md`.
+**Node.js scripts**: `scripts/add_corsola_hoenn.js` (Phase 1: constants, species_info, pokedex, cry tables, graphics declarations, pokemon.c tables, icon, animation, evolution, egg_moves) + `scripts/add_corsola_hoenn_part2.cjs` (Phase 2: pokedex_text, pokedex_entries, pokedex_orders, learnsets, TM learnsets, species_names, remaining graphics tables).
+
+**HOENN_DEX required**: When adding new species, must add entry to BOTH national dex AND Hoenn dex sections of `pokedex.h`, plus update `HOENN_DEX_COUNT`. Missing HOENN_DEX causes `sSpeciesToHoennPokedexNum` initializer error.
+
+**front_pic_anims.h structure**: AnimCmd arrays → `sAnims_*` table → `sMonFrontAnimsPtrTable[]`. New species needs all three. Syntax error if AnimCmd placed after table but before ptr table.
+
+**Cry reuse**: Regional forms can reuse base species cry by referencing the same `Cry_*` label in `cry_tables.inc`. No new `.bin` file needed.
 
 ---
 
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
-**EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases:
-- Case 0: eligibility check (not link/frontier/safari)
-- Case 1: calculate base EXP
-- Case 2: apply to each party member (EXP amount stored in `gBattleMoveDamage`)
-- Case 3+: level-up handling
-
+**EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases.
 **Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10.
-
-**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`. Wraps `FlagGet(FLAG_DIFFICULTY_CHALLENGE)`. Works because callers already include `event_data.h`. Used in `battle_main.c` (Set mode override) and `battle_script_commands.c` (level caps).
+**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`. Wraps `FlagGet(FLAG_DIFFICULTY_CHALLENGE)`.
