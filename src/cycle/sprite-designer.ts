@@ -14,6 +14,26 @@ import { runClaudeCode, extractMcpTools } from "../agent/claude-cli.js";
 import { logger } from "../utils/logger.js";
 import type { TokenUsage } from "../memory/types.js";
 
+/**
+ * Structured metadata the Sprite Designer emits alongside its narrative report
+ * so the runner can post the sprite-feedback GitHub issue without parsing prose.
+ *
+ * The agent is instructed to end its report with a fenced `sprite-metadata`
+ * JSON block — see the `## Output` section of the prompt.
+ */
+export interface SpriteFeedbackMetadata {
+  /** Base species name, e.g. "Corsola" — NO "Hoenn" prefix (the issue helper adds it). */
+  speciesName: string;
+  /** Type line, e.g. "Ghost/Rock". */
+  typing: string;
+  /** 1 for a fresh sprite, 2+ for iteration rounds. */
+  version: number;
+  /** True when this cycle iterates on an existing sprite-feedback issue. */
+  isIteration: boolean;
+  /** Required when isIteration === true — the existing sprite-feedback issue number. */
+  existingIssueNumber?: number;
+}
+
 export interface SpriteDesignResult {
   /** Report of what was created/modified, techniques used, notes for community */
   spriteReport: string;
@@ -23,6 +43,10 @@ export interface SpriteDesignResult {
   toolCallCount: number;
   /** Token usage for this phase */
   tokenUsage: TokenUsage;
+  /** Structured metadata parsed from the agent's report. Null when the agent
+   *  omitted or malformed the sprite-metadata block — the runner logs a warning
+   *  in that case and skips the feedback issue. */
+  metadata: SpriteFeedbackMetadata | null;
 }
 
 const SPRITE_DESIGNER_MAX_TURNS = 80;
@@ -80,15 +104,83 @@ export async function runSpriteDesigner(
     (f) => f.includes("graphics/pokemon/") || f.endsWith(".py"),
   );
 
+  const metadata = parseSpriteFeedbackMetadata(spriteReport);
+
   logger.info(
     `[Sprite Designer] Design complete: ${result.toolCallCount} tool calls, ${filesCreated.length} files created/modified`,
   );
+  if (metadata) {
+    logger.info(
+      `[Sprite Designer] Metadata: ${metadata.speciesName} ${metadata.typing} v${metadata.version}${metadata.isIteration ? ` (iteration of #${metadata.existingIssueNumber ?? "?"})` : ""}`,
+    );
+  } else {
+    logger.warn(
+      "[Sprite Designer] No sprite-metadata block found in report — the runner will not be able to post a sprite-feedback issue for this sprite.",
+    );
+  }
 
   return {
     spriteReport,
     filesCreated,
     toolCallCount: result.toolCallCount,
     tokenUsage: result.tokenUsage,
+    metadata,
+  };
+}
+
+/**
+ * Extract a `sprite-metadata` fenced JSON block from the Sprite Designer's
+ * report. Returns null (and logs a warning) if the block is missing, malformed,
+ * or fails validation — the cycle still completes, but no feedback issue is
+ * posted.
+ */
+export function parseSpriteFeedbackMetadata(
+  report: string,
+): SpriteFeedbackMetadata | null {
+  const match = report.match(/```sprite-metadata\s*\n([\s\S]*?)\n```/);
+  if (!match) {
+    return null;
+  }
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(match[1]);
+  } catch (err) {
+    logger.warn(
+      `[Sprite Designer] sprite-metadata block is not valid JSON: ${err instanceof Error ? err.message : String(err)}`,
+    );
+    return null;
+  }
+  if (!parsed || typeof parsed !== "object") {
+    logger.warn("[Sprite Designer] sprite-metadata block is not an object");
+    return null;
+  }
+  const m = parsed as Record<string, unknown>;
+  if (
+    typeof m.speciesName !== "string" ||
+    typeof m.typing !== "string" ||
+    typeof m.version !== "number" ||
+    typeof m.isIteration !== "boolean"
+  ) {
+    logger.warn(
+      "[Sprite Designer] sprite-metadata block missing required fields (speciesName, typing, version, isIteration)",
+    );
+    return null;
+  }
+  if (m.isIteration && typeof m.existingIssueNumber !== "number") {
+    logger.warn(
+      "[Sprite Designer] sprite-metadata marks isIteration=true but existingIssueNumber is missing",
+    );
+    return null;
+  }
+  return {
+    speciesName: m.speciesName,
+    typing: m.typing,
+    version: m.version,
+    isIteration: m.isIteration,
+    existingIssueNumber:
+      typeof m.existingIssueNumber === "number"
+        ? m.existingIssueNumber
+        : undefined,
   };
 }
 
@@ -225,5 +317,28 @@ End your work with a clear **Sprite Report** section that includes:
 5. **Self-assessment**: What looks good, what might need community feedback
 6. **Feedback questions**: 2-3 specific questions for the community (e.g., "Does the gold read as Electric or just yellow?", "Are the lightning glyph accents visible enough?")
 
-This report will be posted to a GitHub issue for community feedback.`;
+This report will be posted to a GitHub issue for community feedback.
+
+### Required: sprite-metadata block
+
+After the Sprite Report, you MUST end your output with a fenced JSON block tagged \`sprite-metadata\`. The runner parses this block to create the sprite-feedback GitHub issue — without it, the community never sees your work.
+
+For a fresh sprite:
+\`\`\`sprite-metadata
+{"speciesName": "Corsola", "typing": "Ghost/Rock", "version": 1, "isIteration": false}
+\`\`\`
+
+For an iteration on an existing sprite-feedback issue (read the existing issue number from your brief — the Producer includes it when quoting community feedback):
+\`\`\`sprite-metadata
+{"speciesName": "Arcanine", "typing": "Water/Fire", "version": 2, "isIteration": true, "existingIssueNumber": 142}
+\`\`\`
+
+**Rules for the metadata block:**
+- \`speciesName\` is the BASE species name with no region prefix — e.g. \`"Corsola"\`, not \`"Hoenn Corsola"\` or \`"Corsola Hoenn"\`. The issue helper adds the "Hoenn" prefix automatically.
+- \`typing\` is the type line exactly as it should appear in the issue title, e.g. \`"Ghost/Rock"\` or \`"Water"\` (single type).
+- \`version\` is an integer. v1 for a fresh sprite, v2+ for iterations.
+- \`isIteration\` is \`true\` only when you're refining an existing sprite based on community feedback quoted in your brief. Otherwise \`false\`.
+- When \`isIteration\` is \`true\`, \`existingIssueNumber\` is required and must match the sprite-feedback issue number from your brief.
+
+The block must be the LAST fenced code block in your output.`;
 }

@@ -4,7 +4,7 @@ import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
 import { planCycle } from "./planner.js";
 import type { CyclePlan } from "./planner.js";
 import { runGameplayDesigner } from "./gameplay-designer.js";
-import { runSpriteDesigner } from "./sprite-designer.js";
+import { runSpriteDesigner, type SpriteDesignResult } from "./sprite-designer.js";
 import { getModeDescription, isCodingMode } from "./modes.js";
 import {
   buildDynamicContext,
@@ -32,15 +32,16 @@ import {
 } from "../git/committer.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, setDecisionLabel, commentOnIssue, AGENT_LABELS } from "../github/client.js";
-import { cycleLogger } from "../utils/logger.js";
+import { cycleLogger, logger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
 import type { TokenUsage } from "../memory/types.js";
 
 const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
 const CREATIVE_BACKLOG_PATH = path.join(MEMORY_DIR, "creative-backlog.md");
+const SPRITE_ITERATIONS_PATH = path.join(MEMORY_DIR, "sprite-iterations.md");
 
 /** Append an engineering investment to the persistent tech debt backlog. */
 function persistEngineeringInvestment(
@@ -82,6 +83,44 @@ function persistCreativeInvestment(
   const sanitized = idea.replace(/\|/g, "—").replace(/\n/g, " ").trim();
   content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
   fs.writeFileSync(CREATIVE_BACKLOG_PATH, content, "utf-8");
+}
+
+/**
+ * Fill in the Issue column of the matching row in `memory/sprite-iterations.md`
+ * after the runner creates a fresh sprite-feedback issue. The Sprite Designer
+ * writes the row with `—` expecting the runner to complete it. Matches by
+ * species name (case-insensitive, allowing any surrounding prefix/suffix) and
+ * version. Idempotent — if no matching row is found, logs a warning and leaves
+ * the file untouched.
+ */
+function updateSpriteIterationsIssueNumber(
+  speciesName: string,
+  version: number,
+  issueNumber: number,
+): void {
+  if (!fs.existsSync(SPRITE_ITERATIONS_PATH)) {
+    logger.warn(
+      `sprite-iterations.md does not exist — cannot record issue #${issueNumber}`,
+    );
+    return;
+  }
+  const content = fs.readFileSync(SPRITE_ITERATIONS_PATH, "utf-8");
+  const escapedSpecies = speciesName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Row shape:  | Species line | Type | vN | Cycle | Issue | Status |
+  // Species line may be "Corsola Hoenn", "Hoenn Corsola", etc. — we match on
+  // the base species name appearing anywhere in the first column.
+  const pattern = new RegExp(
+    `(\\|[^|\\n]*${escapedSpecies}[^|\\n]*\\|[^|\\n]*\\|\\s*v${version}\\s*\\|[^|\\n]*\\|\\s*)—(\\s*\\|)`,
+    "i",
+  );
+  const updated = content.replace(pattern, `$1#${issueNumber}$2`);
+  if (updated === content) {
+    logger.warn(
+      `Could not find sprite-iterations.md row for ${speciesName} v${version} to update with #${issueNumber}`,
+    );
+    return;
+  }
+  fs.writeFileSync(SPRITE_ITERATIONS_PATH, updated, "utf-8");
 }
 
 const MAX_BUILD_FIX_ATTEMPTS = 3;
@@ -675,12 +714,13 @@ export async function runCycle(): Promise<void> {
     }
 
     // ── Phase 1.75: Sprite Design (conditional — only when Producer sets a sprite brief) ──
+    let spriteResult: SpriteDesignResult | null = null;
     let spriteDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
 
     if (activePlan.spriteDesignBrief) {
       log.info("Phase 1.75: Sprite Design...");
       try {
-        const spriteResult = await runSpriteDesigner(
+        spriteResult = await runSpriteDesigner(
           activePlan.objective,
           activePlan.spriteDesignBrief,
           activePlan.implementationPlan,
@@ -766,6 +806,64 @@ export async function runCycle(): Promise<void> {
         }
         if (valFix.reverted) {
           reverted = true;
+        }
+      }
+    }
+
+    // ── Phase 3.6: Sprite Feedback Issue ──
+    // When the Sprite Designer ran and the build is green, post the sprite-feedback
+    // GitHub issue (or comment on an existing one for iterations). Failures are
+    // logged as warnings — we never let issue-creation errors fail the cycle.
+    if (spriteResult && !reverted && finalBuildResult?.success) {
+      if (!spriteResult.metadata) {
+        log.warn(
+          "  ⚠ Phase 3.6: Sprite Designer ran and build succeeded, but no sprite-metadata block was parsed — cannot post feedback issue. Fix the Sprite Designer output or backfill manually.",
+        );
+      } else {
+        const meta = spriteResult.metadata;
+        const imagePaths = spriteResult.filesCreated.filter(
+          (f) => f.includes("graphics/pokemon/") && f.endsWith(".png"),
+        );
+        log.info("Phase 3.6: Posting sprite feedback issue...");
+        try {
+          if (meta.isIteration && meta.existingIssueNumber) {
+            await postSpriteIterationUpdate(
+              meta.existingIssueNumber,
+              spriteResult.spriteReport,
+              imagePaths,
+              meta.version,
+            );
+            log.info(
+              `  Posted sprite iteration v${meta.version} to #${meta.existingIssueNumber}`,
+            );
+          } else {
+            const issueNumber = await createSpriteFeedbackIssue(
+              meta.speciesName,
+              meta.typing,
+              spriteResult.spriteReport,
+              imagePaths,
+              meta.version,
+            );
+            if (issueNumber) {
+              updateSpriteIterationsIssueNumber(
+                meta.speciesName,
+                meta.version,
+                issueNumber,
+              );
+              log.info(
+                `  Created sprite-feedback issue #${issueNumber} for ${meta.speciesName} v${meta.version}`,
+              );
+            } else {
+              log.warn(
+                "  createSpriteFeedbackIssue returned null — issue may not have been created",
+              );
+            }
+          }
+        } catch (err) {
+          const errMsg = err instanceof Error ? err.message : String(err);
+          log.warn(
+            `  Sprite feedback issue creation failed, continuing: ${errMsg}`,
+          );
         }
       }
     }
