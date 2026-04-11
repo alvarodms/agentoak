@@ -23,7 +23,6 @@
 
 - /__w/agentoak/agentoak/pokeemerald/scripts/add_regional_form.cjs
 - /__w/agentoak/agentoak/pokeemerald/scripts/configs/corsola_hoenn.json
-- /__w/agentoak/agentoak/pokeemerald/scripts/configs/test_species.json
 - /__w/agentoak/agentoak/memory/completed-work/engineering-validation.md
 - /__w/agentoak/agentoak/memory/completed-work.md
 - /__w/agentoak/agentoak/memory/tech-debt-backlog.md
