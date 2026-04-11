@@ -48,7 +48,7 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - Permanent fog on Route 126 after The Gathering — the world physically changed
 - Post-Gathering NPC reactions: 3 city NPCs acknowledge the convergence (C190)
 - Juan expanded (C173), Victory Road trainers redesigned (C175)
-- E4 + Champion redesigned (C132)
+- E4 + Champion redesigned (C132) — migration dialogue present but generic. **v1.9 overhaul planned C203-C205**: specific event callbacks, Corsola_Hoenn on Phoebe, Arcanine_Hoenn on Wallace.
 
 **Pacing**: Four-beat narrative arc fills the Badge 7-E4 gap. City whispers → ocean witnesses → spectacle → dread. Each beat escalates. Permanent fog gives the world tangible weight. Post-Gathering city NPC callbacks reward backtracking.
 
@@ -69,21 +69,25 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - Sky Guardian: Pacifidlog Elder → Sky Pillar → Rayquaza
 - World reaction NPCs acknowledge resolution
 
-**v1.8 side quests** (planned C192-199, run in parallel with legendary saga):
+**v1.8 side quests** (shipped C192-200):
 - "The Elder's Current" (Pacifidlog) — reversed ocean currents → Hoennian Corsola (Ghost/Rock)
 - "Hartley's Field Report" (Weather Institute) — permanent weather data → Hoennian Growlithe (Water)
-- "The Mossdeep Signal" (Space Center) — cosmic echo of Primal Stirring
-- "The Fog Beneath" (Route 126) — Gathering opened new underwater passage → Lapras encounter
+- "The Mossdeep Signal" (Space Center) — cosmic echo of Primal Stirring → Star Pieces + Rare Candy
+- "The Fog Beneath" (Route 126) — Gathering opened underwater passage → Lapras (Lv50)
 
 **Emotional arc (parallel tracks)**:
 - Legendary: wonder (beasts) → awe (Ho-Oh) → urgency (Primal) → peace (Rayquaza)
 - Side quests: curiosity → investigation → discovery (regional forms) → acknowledgment
 
-**Post-Rayquaza world state** (planned C198): Route 126 fog thins, NPCs across Hoenn reflect on the new normal, Birch epilogue acknowledges player as Champion AND researcher.
+**Post-Rayquaza world state**: 5 NPCs react (Birch, Pacifidlog Elder, Fortree Man, Weather Scientist, Sootopolis Man). v1.9 "The Exhale" (C206) will expand to 12+ NPCs including ocean witnesses.
 
 ---
 
 ## Known Gaps
 
-- In-battle level cap feedback message (pending since C183, scheduled C198)
-- Post-resolution NPC updates for v1.7 ocean/city atmosphere NPCs (planned C197-198)
+- **In-battle level cap feedback** (C183): One-time EXP reduction message. Scheduled C207.
+- **Post-Rayquaza NPC gap** (audit C201): 7 v1.7 atmosphere NPCs stuck in "dread" — R126 Swimmer, Mossdeep StormResearcher, R124/127/128/131 ocean witnesses. Scheduled C206 "The Exhale."
+- **Regional form discoverability** (audit C201): Both forms are postgame-only. No pre-E4 regional form exists. Scheduled C208-C209 (mid-game accessible form).
+- **Bagon Colony researcher** (C153): Appears once, never revisited. Dangling thread. Scheduled C209.
+- **E4 dialogue staleness** (audit C201): Migration dialogue from C33 is generic — no callbacks to v1.1-v1.8 events. Scheduled C203-C204 overhaul.
+- **Weather omens → Gathering gap**: No NPC connects the weather omens (C159-160) to The Gathering (C189). Consider adding during C206.
