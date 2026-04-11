@@ -3902,10 +3902,10 @@ static const struct TrainerMonItemCustomMoves sParty_Sidney[] = {
 static const struct TrainerMonItemCustomMoves sParty_Phoebe[] = {
     {
     .iv = 250,
-    .lvl = 46,
-    .species = SPECIES_BANETTE,
+    .lvl = 47,
+    .species = SPECIES_CORSOLA_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_CLAW, MOVE_SUCKER_PUNCH, MOVE_WILL_O_WISP, MOVE_BRICK_BREAK}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_SLIDE, MOVE_DOUBLE_EDGE, MOVE_CURSE}
     },
     {
     .iv = 250,

@@ -41,7 +41,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 ### Trainer Overhaul
 
 - **All 8 gym leaders** redesigned with unique strategic identities, held items, and competitive movesets — Slaking anchors Norman, Brave Bird Swellow leads Winona, Dragon Pulse Kingdra commands Juan's rain
-- **Elite Four and Champion** rebuilt from scratch — Sidney's dark squad runs Nasty Plot and Sucker Punch, Drake fields Salamence, Garchomp, AND Dragonite with Dragon Dance, Champion Wallace commands a rain-synergy team with Ludicolo and Kingdra. Zero duplicate species across the entire gauntlet
+- **Elite Four and Champion** rebuilt with competitive teams and narrative depth — each E4 member's dialogue reflects their personal connection to the migration: Sidney names the dark predators that crept in behind the noble arrivals, Phoebe's grandmother on Mt. Pyre confirms the spirits settled, Glacia followed the cold south from a distant land. Phoebe fields Hoennian Corsola — the first time a regional form appears on an opponent's team. Zero duplicate species across the entire gauntlet
 - **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
 - **4-tier rematch progression** for all gym leaders with escalating teams
 - **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1→2→3→4→5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum

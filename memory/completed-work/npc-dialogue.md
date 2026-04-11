@@ -42,9 +42,10 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------|-------|
 | Roxanne, Brawly, Wattson, Flannery, Norman, Winona, Tate&Liza, Juan | 32, 36, 103 | Pre-battle (C32/36) + migration-themed rematch dialogue (C103) |
 
-## Elite Four & Champion — Cycle 33
+## Elite Four & Champion — Cycles 33, 42, **203**
 
 All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
+C203: Rewrote Sidney, Phoebe, Glacia dialogue with deep migration-narrative callbacks. Sidney references Murkrow/Houndoom on Routes 120-121. Phoebe references Mt. Pyre grandmother + introduces Corsola_Hoenn ("a CORSOLA from the reefs that lost its ocean and became stone"). Glacia references Route 125 cold + being drawn by the migration. Each member's final pre-battle line is a question. Character voices: Sidney=casual/menacing, Phoebe=warm/spiritual, Glacia=formal/alien.
 
 ## Flavor NPCs
 
