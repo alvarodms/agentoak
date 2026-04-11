@@ -213,24 +213,71 @@ export interface DiffStats {
   summary: string;
 }
 
-/** Get structured diff statistics for pokeemerald/ changes (staged + unstaged) */
+/**
+ * Count untracked files under pokeemerald/ that aren't covered by gitignore.
+ * `git diff --stat HEAD` is blind to never-added files, so cycles whose work
+ * is primarily *new* files (new scripts, new data, new sprite directories)
+ * would otherwise be flagged as unsubstantiated even though the work shipped.
+ *
+ * Returns a zero-length list on any failure so the caller can fall back to
+ * the tracked-only stats without losing them.
+ */
+async function listUntrackedPokeemeraldFiles(): Promise<string[]> {
+  try {
+    const output = await git.raw([
+      "ls-files",
+      "--others",
+      "--exclude-standard",
+      "--",
+      "pokeemerald/",
+    ]);
+    return output
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Pure helper: combine the raw `git diff --stat` output and the list of
+ * untracked files into a `DiffStats`. Extracted so it can be unit-tested
+ * without touching the real git repo.
+ */
+export function buildDiffStats(rawDiffStat: string, untrackedFiles: string[]): DiffStats {
+  const stat = rawDiffStat.trim();
+  const lines = stat.split("\n");
+  const summaryLine = lines[lines.length - 1] ?? "";
+
+  const filesMatch = summaryLine.match(/(\d+)\s+files?\s+changed/);
+  const insertMatch = summaryLine.match(/(\d+)\s+insertions?\(\+\)/);
+  const deleteMatch = summaryLine.match(/(\d+)\s+deletions?\(-\)/);
+
+  const trackedFilesChanged = filesMatch ? parseInt(filesMatch[1], 10) : 0;
+  const insertions = insertMatch ? parseInt(insertMatch[1], 10) : 0;
+  const deletions = deleteMatch ? parseInt(deleteMatch[1], 10) : 0;
+
+  const filesChanged = trackedFilesChanged + untrackedFiles.length;
+
+  let summary = stat || "No changes in pokeemerald/";
+  if (untrackedFiles.length > 0) {
+    const preview = untrackedFiles.slice(0, 5).join(", ");
+    const more = untrackedFiles.length > 5 ? `, +${untrackedFiles.length - 5} more` : "";
+    summary += `\n ${untrackedFiles.length} untracked file(s) (newly created): ${preview}${more}`;
+  }
+
+  return { filesChanged, insertions, deletions, summary };
+}
+
+/** Get structured diff statistics for pokeemerald/ changes (staged + unstaged + untracked) */
 export async function getDiffStats(): Promise<DiffStats> {
   try {
-    // Include both staged and unstaged changes
+    // Tracked changes: staged + unstaged vs HEAD.
     const stat = await git.diff(["--stat", "HEAD", "--", "pokeemerald/"]);
-    const lines = stat.trim().split("\n");
-    const summaryLine = lines[lines.length - 1] ?? "";
-
-    const filesMatch = summaryLine.match(/(\d+)\s+files?\s+changed/);
-    const insertMatch = summaryLine.match(/(\d+)\s+insertions?\(\+\)/);
-    const deleteMatch = summaryLine.match(/(\d+)\s+deletions?\(-\)/);
-
-    return {
-      filesChanged: filesMatch ? parseInt(filesMatch[1], 10) : 0,
-      insertions: insertMatch ? parseInt(insertMatch[1], 10) : 0,
-      deletions: deleteMatch ? parseInt(deleteMatch[1], 10) : 0,
-      summary: stat.trim() || "No changes in pokeemerald/",
-    };
+    // Untracked files: not visible to `git diff`, but still real work.
+    const untrackedFiles = await listUntrackedPokeemeraldFiles();
+    return buildDiffStats(stat, untrackedFiles);
   } catch {
     return { filesChanged: 0, insertions: 0, deletions: 0, summary: "Could not compute diff stats" };
   }
