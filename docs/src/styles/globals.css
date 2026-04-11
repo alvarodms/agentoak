@@ -1105,6 +1105,9 @@ body::after {
 .type-dragon     { background: #7038f8; }
 .type-champion   { background: linear-gradient(135deg, #ffd740, #ff6d00); color: #333; }
 .type-rival      { background: linear-gradient(135deg, var(--pokeball-red), var(--pokeball-red-dark)); }
+.type-magma      { background: linear-gradient(135deg, #e25822, #7a1f0f); }
+.type-aqua       { background: linear-gradient(135deg, #2c7fb8, #0b2d4a); }
+.type-wally      { background: linear-gradient(135deg, #7a57c4, #3b1f68); }
 .type-steel      { background: #b8b8d0; color: #333; }
 .type-grass      { background: #78c850; }
 .type-poison     { background: #a040a0; }
@@ -1531,6 +1534,10 @@ body::after {
 
 .progression-step.step-rival {
   border-left-color: var(--red-bright);
+}
+
+.progression-step.step-boss {
+  border-left-color: #e25822;
 }
 
 .progression-step.step-route {

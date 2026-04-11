@@ -60,6 +60,19 @@ export interface RivalBattle {
   party: PartyMember[];
 }
 
+export interface BossBattle {
+  /** Stable identifier (e.g. 'maxie_mt_chimney') — matched by ProgressionStep.bossKey */
+  key: string;
+  /** Display name of the trainer (e.g. 'Maxie') */
+  name: string;
+  /** Faction label used for the type badge and card title */
+  faction: 'Magma' | 'Aqua' | 'Wally' | 'Champion';
+  /** Human-readable location shown as the card subtitle */
+  location: string;
+  doubleBattle?: boolean;
+  party: PartyMember[];
+}
+
 export interface EncounterEntry {
   species: string;
   minLevel: number;
@@ -89,6 +102,7 @@ export interface GuideData {
   eliteFour: EliteFourMember[];
   champion: Champion | null;
   rivals: RivalBattle[];
+  bossFights: BossBattle[];
   routes: Record<string, RouteData>;
 }
 

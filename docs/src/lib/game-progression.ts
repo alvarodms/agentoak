@@ -4,7 +4,7 @@
  */
 
 export interface ProgressionStep {
-  type: 'starter' | 'route' | 'gym' | 'rival' | 'elite-four' | 'champion' | 'landmark' | 'chapter';
+  type: 'starter' | 'route' | 'gym' | 'rival' | 'elite-four' | 'champion' | 'landmark' | 'chapter' | 'boss';
   label: string;
   /** Matches key in GuideData.routes (e.g. "Route 101", "Petalburg Woods") */
   routeKeys?: string[];
@@ -12,6 +12,8 @@ export interface ProgressionStep {
   gymNumber?: number;
   /** Substring match against rival battle location */
   rivalLocation?: string;
+  /** For type === 'boss': one or more BossBattle.key values to render as a group */
+  bossKeys?: string[];
   /** Flavor text for landmarks / chapters */
   description?: string;
 }
@@ -51,6 +53,7 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'rival', label: 'Rival Battle \u2014 Route 110', rivalLocation: 'Route 110' },
   { type: 'landmark', label: 'Mauville City', description: 'The crossroads of Hoenn, home to the Game Corner and Bike Shop.' },
   { type: 'gym', label: 'Gym 3: Wattson', gymNumber: 3 },
+  { type: 'boss', label: 'Boss Fight \u2014 Wally (Mauville City)', bossKeys: ['wally_mauville'] },
   { type: 'route', label: 'New Mauville', routeKeys: ['New Mauville Entrance', 'New Mauville Inside'] },
 
   // ── Chapter 5: The Road to Lavaridge ──
@@ -63,6 +66,7 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'landmark', label: 'Fallarbor Town', description: 'A quiet town near the foot of Mt. Chimney.' },
   { type: 'route', label: 'Route 114', routeKeys: ['Route 114'] },
   { type: 'route', label: 'Meteor Falls', routeKeys: ['Meteor Falls 1f 1r', 'Meteor Falls 1f 2r'] },
+  { type: 'boss', label: 'Boss Fights \u2014 Tabitha & Maxie (Mt. Chimney)', bossKeys: ['tabitha_mt_chimney', 'maxie_mt_chimney'] },
   { type: 'route', label: 'Jagged Pass', routeKeys: ['Jagged Pass'] },
   { type: 'landmark', label: 'Lavaridge Town', description: 'A town famous for its hot springs, nestled at the base of Mt. Chimney.' },
   { type: 'gym', label: 'Gym 4: Flannery', gymNumber: 4 },
@@ -78,6 +82,7 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'route', label: 'Route 118', routeKeys: ['Route 118'] },
   { type: 'route', label: 'Route 119', routeKeys: ['Route 119'] },
   { type: 'rival', label: 'Rival Battle \u2014 Route 119', rivalLocation: 'Route 119' },
+  { type: 'boss', label: 'Boss Fight \u2014 Shelly (Weather Institute)', bossKeys: ['shelly_weather_institute'] },
   { type: 'landmark', label: 'Fortree City', description: 'A city of treehouses deep in the forest.' },
   { type: 'gym', label: 'Gym 6: Winona', gymNumber: 6 },
   { type: 'route', label: 'Route 120', routeKeys: ['Route 120'] },
@@ -90,8 +95,10 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'rival', label: 'Rival Battle \u2014 Lilycove', rivalLocation: 'Lilycove' },
   { type: 'route', label: 'Route 122', routeKeys: ['Route 122'] },
   { type: 'route', label: 'Mt. Pyre', routeKeys: ['Mt Pyre 1f', 'Mt Pyre 2f', 'Mt Pyre 3f', 'Mt Pyre 4f', 'Mt Pyre 5f', 'Mt Pyre 6f', 'Mt Pyre Exterior', 'Mt Pyre Summit'] },
+  { type: 'boss', label: 'Boss Fight \u2014 Matt (Mt. Pyre Summit)', bossKeys: ['matt'] },
   { type: 'route', label: 'Route 123', routeKeys: ['Route 123'] },
   { type: 'route', label: 'Magma Hideout', routeKeys: ['Magma Hideout 1f', 'Magma Hideout 2f 1r', 'Magma Hideout 2f 2r', 'Magma Hideout 2f 3r', 'Magma Hideout 3f 1r', 'Magma Hideout 3f 2r', 'Magma Hideout 3f 3r', 'Magma Hideout 4f'] },
+  { type: 'boss', label: 'Boss Fights \u2014 Matthew, Tabitha & Maxie (Magma Hideout)', bossKeys: ['matthew', 'tabitha_magma_hideout', 'maxie_magma_hideout'] },
 
   // ── Chapter 9: The Deep Sea ──
   { type: 'chapter', label: 'Chapter 9: The Deep Sea', description: 'Dive beneath the ocean and earn the Mind Badge on Mossdeep Island.' },
@@ -99,8 +106,10 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'route', label: 'Shoal Cave', routeKeys: ['Shoal Cave Low Tide Entrance Room', 'Shoal Cave Low Tide Ice Room', 'Shoal Cave Low Tide Inner Room', 'Shoal Cave Low Tide Lower Room', 'Shoal Cave Low Tide Stairs Room'] },
   { type: 'landmark', label: 'Mossdeep City', description: 'Home to the Space Center and the 7th Gym.' },
   { type: 'gym', label: 'Gym 7: Tate & Liza', gymNumber: 7 },
+  { type: 'boss', label: 'Boss Fights \u2014 Tabitha, Maxie & Steven (Mossdeep City)', bossKeys: ['tabitha_mossdeep', 'maxie_mossdeep', 'steven_multi'] },
   { type: 'route', label: 'Route 127', routeKeys: ['Route 127'] },
   { type: 'route', label: 'Seafloor Cavern', routeKeys: ['Seafloor Cavern Entrance', 'Seafloor Cavern Room1', 'Seafloor Cavern Room2', 'Seafloor Cavern Room3', 'Seafloor Cavern Room4', 'Seafloor Cavern Room5', 'Seafloor Cavern Room6', 'Seafloor Cavern Room7', 'Seafloor Cavern Room8'] },
+  { type: 'boss', label: 'Boss Fights \u2014 Shelly & Archie (Seafloor Cavern)', bossKeys: ['shelly_seafloor_cavern', 'archie'] },
 
   // ── Chapter 10: The Final Gym ──
   { type: 'chapter', label: 'Chapter 10: The Final Gym', description: 'Calm Groudon and Kyogre, then earn your 8th badge.' },
@@ -114,6 +123,7 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'route', label: 'Sea Routes 129\u2013134', routeKeys: ['Route 129', 'Route 130', 'Route 131', 'Route 132', 'Route 133', 'Route 134'] },
   { type: 'landmark', label: 'Ever Grande City', description: 'The gateway to the Pok\u00e9mon League.' },
   { type: 'route', label: 'Victory Road', routeKeys: ['Victory Road 1f', 'Victory Road B1f', 'Victory Road B2f'] },
+  { type: 'boss', label: 'Boss Fight \u2014 Wally Rematch Tiers (Victory Road)', bossKeys: ['wally_vr_1', 'wally_vr_2', 'wally_vr_3', 'wally_vr_4', 'wally_vr_5'] },
   { type: 'elite-four', label: 'Elite Four' },
   { type: 'champion', label: 'Champion' },
 
