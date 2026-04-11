@@ -4,11 +4,17 @@ Route126_MapScripts::
 
 Route126_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
-	goto_if_set FLAG_GATHERING_FOG_SET, Route126_EventScript_SetGatheringFog
+	goto_if_set FLAG_GATHERING_FOG_SET, Route126_EventScript_CheckFogState
 	end
 
-Route126_EventScript_SetGatheringFog::
+Route126_EventScript_CheckFogState::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route126_EventScript_SetThinFog
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route126_EventScript_SetThinFog
 	setweather WEATHER_FOG_HORIZONTAL
+	end
+
+Route126_EventScript_SetThinFog::
+	setweather WEATHER_FOG_DIAGONAL
 	end
 
 Route126_EventScript_Barry::
@@ -69,12 +75,22 @@ Route126_EventScript_RematchPablo::
 
 @ C187 Ocean Atmosphere NPC — Warm Swimmer
 @ C192: Upgraded to v1.8 Quest 4 giver
+@ C205: Post-Rayquaza resolution ("The Exhale")
 Route126_EventScript_WarmSwimmer::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route126_EventScript_WarmSwimmerResolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route126_EventScript_WarmSwimmerResolved
 	goto_if_set FLAG_QUEST_FOG_COMPLETE, Route126_EventScript_SwimmerQuestDone
 	goto_if_set FLAG_QUEST_FOG_INVESTIGATED, Route126_EventScript_SwimmerQuestReturn
 	goto_if_set FLAG_QUEST_FOG_STARTED, Route126_EventScript_SwimmerQuestReminder
 	goto_if_set FLAG_GATHERING_EVENT, Route126_EventScript_SwimmerQuestOffer
 	msgbox Route126_Text_WarmSwimmer, MSGBOX_NPC
+	end
+
+Route126_EventScript_WarmSwimmerResolved::
+	lock
+	faceplayer
+	msgbox Route126_Text_WarmSwimmerResolved, MSGBOX_DEFAULT
+	release
 	end
 
 Route126_Text_WarmSwimmer:
@@ -286,4 +302,16 @@ Route126_Text_Dive_Beat3:
 	.string "The migration brought many\n"
 	.string "things to HOENN. This one\l"
 	.string "chose to stay.$"
+
+@ =============================================
+@ C205: "The Exhale" — Post-Rayquaza Resolution
+@ =============================================
+
+Route126_Text_WarmSwimmerResolved:
+	.string "The current settled overnight.\n"
+	.string "Just stopped pulling south.\p"
+	.string "Water's cooling back to normal,\n"
+	.string "too. Ocean-cold, not deep-warm.\p"
+	.string "Whatever was gathering here...\n"
+	.string "I think it's over.$"
 

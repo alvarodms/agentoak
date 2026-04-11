@@ -56,8 +56,18 @@ Route131_EventScript_Kevin::
 	end
 
 @ C187 Ocean Atmosphere NPC — Silent Swimmer
+@ C205: Post-Rayquaza resolution ("The Exhale")
 Route131_EventScript_LoneSwimmer::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route131_EventScript_LoneSwimmerResolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route131_EventScript_LoneSwimmerResolved
 	msgbox Route131_Text_LoneSwimmer, MSGBOX_NPC
+	end
+
+Route131_EventScript_LoneSwimmerResolved::
+	lock
+	faceplayer
+	msgbox Route131_Text_LoneSwimmerResolved, MSGBOX_DEFAULT
+	release
 	end
 
 Route131_Text_LoneSwimmer:
@@ -65,6 +75,14 @@ Route131_Text_LoneSwimmer:
 	.string "No WINGULL overhead. Nothing.\p"
 	.string "I've been treading water for\n"
 	.string "an hour. It's completely silent.$"
+
+Route131_Text_LoneSwimmerResolved:
+	.string "WINGULL are back! Listen…\n"
+	.string "hear that? That's normal.\p"
+	.string "For a while, the ocean was\n"
+	.string "holding its breath.\p"
+	.string "Whatever was happening…\n"
+	.string "I think HOENN just exhaled.$"
 
 @ =============================================
 @ v1.8 Quest 3: The Mossdeep Signal - Shimmer Spot (C200)

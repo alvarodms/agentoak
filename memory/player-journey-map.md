@@ -79,15 +79,15 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - Legendary: wonder (beasts) → awe (Ho-Oh) → urgency (Primal) → peace (Rayquaza)
 - Side quests: curiosity → investigation → discovery (regional forms) → acknowledgment
 
-**Post-Rayquaza world state**: 5 NPCs react (Birch, Pacifidlog Elder, Fortree Man, Weather Scientist, Sootopolis Man). v1.9 "The Exhale" (C206) will expand to 12+ NPCs including ocean witnesses.
+**Post-Rayquaza world state**: 5 NPCs react (Birch, Pacifidlog Elder, Fortree Man, Weather Scientist, Sootopolis Man). **"The Exhale" (C205)**: 6 additional NPCs resolve from dread — R124 CuriousDiver, R126 WarmSwimmer, R127 TrenchFisherman, R128 ScaredDiver, R131 LoneSwimmer, Mossdeep StormResearcher. R126 fog thins from heavy to diagonal. StormResearcher connects weather omens to resolution. LoneSwimmer names the theme: "I think HOENN just exhaled."
 
 ---
 
 ## Known Gaps
 
 - **In-battle level cap feedback** (C183): One-time EXP reduction message. Scheduled C207.
-- **Post-Rayquaza NPC gap** (audit C201): 7 v1.7 atmosphere NPCs stuck in "dread" — R126 Swimmer, Mossdeep StormResearcher, R124/127/128/131 ocean witnesses. Scheduled C206 "The Exhale."
+- ~~**Post-Rayquaza NPC gap**~~: **RESOLVED C205.** 6 ocean/atmosphere NPCs gain resolved dialogue. R126 fog thins. StormResearcher bridges weather omens → resolution.
 - **Regional form discoverability** (audit C201): Both forms are postgame-only. No pre-E4 regional form exists. Scheduled C208-C209 (mid-game accessible form).
 - **Bagon Colony researcher** (C153): Appears once, never revisited. Dangling thread. Scheduled C209.
 - **E4 dialogue staleness** (audit C201): Migration dialogue from C33 is generic — no callbacks to v1.1-v1.8 events. Scheduled C203-C204 overhaul.
-- **Weather omens → Gathering gap**: No NPC connects the weather omens (C159-160) to The Gathering (C189). Consider adding during C206.
+- ~~**Weather omens → Gathering gap**~~: **RESOLVED C205.** Mossdeep StormResearcher's resolved text: "My colleagues at the WEATHER INSTITUTE say the anomalous patterns are stabilizing too."

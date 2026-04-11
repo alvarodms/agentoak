@@ -77,8 +77,18 @@ Route127_EventScript_RematchKoji::
 	end
 
 @ C187 Ocean Atmosphere NPC — Trench Fisherman
+@ C205: Post-Rayquaza resolution ("The Exhale")
 Route127_EventScript_TrenchFisherman::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route127_EventScript_TrenchFishermanResolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route127_EventScript_TrenchFishermanResolved
 	msgbox Route127_Text_TrenchFisherman, MSGBOX_NPC
+	end
+
+Route127_EventScript_TrenchFishermanResolved::
+	lock
+	faceplayer
+	msgbox Route127_Text_TrenchFishermanResolved, MSGBOX_DEFAULT
+	release
 	end
 
 Route127_Text_TrenchFisherman:
@@ -86,4 +96,14 @@ Route127_Text_TrenchFisherman:
 	.string "stretch. Know every feeding pattern.\p"
 	.string "Yesterday, nothing bit. Not one.\n"
 	.string "Like everything just… left.$"
+
+Route127_Text_TrenchFishermanResolved:
+	.string "They're biting again.\n"
+	.string "Whatever spooked everything\l"
+	.string "out of these waters, it passed.\p"
+	.string "Thirty years on this stretch.\n"
+	.string "Never seen fish leave like\l"
+	.string "that, or come back so fast.\p"
+	.string "The sea needed a minute\n"
+	.string "to catch its breath.$"
 

@@ -32,9 +32,9 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 
 1. **Mid-game density (Hours 3-6)**: LOW. Not a priority.
 2. **Regional form discoverability**: MEDIUM. Fix: E4 showcases them (C203 ✓ Phoebe, C204 Wallace) + add one mid-game wild form (C208).
-3. **Post-Rayquaza emotional landing**: MEDIUM. 7 NPCs stuck in dread. Fix: "The Exhale" (C206).
+3. **Post-Rayquaza emotional landing**: ✅ C205 "The Exhale" — 6 NPCs resolved, R126 fog thinned, weather-omen gap bridged.
 4. **E4 dialogue gap**: C203 addressed Sidney/Phoebe/Glacia. C204 addresses Drake/Wallace.
-5. **Narrative thread continuity**: LOW-MEDIUM. Drake (C204) will callback Bagon Colony. Remaining threads deferred.
+5. **Narrative thread continuity**: LOW-MEDIUM. Drake (C204) callbacks Bagon Colony. C205 StormResearcher bridges weather omens → resolution. Remaining threads deferred.
 
 ## Flagship: Elite Four & Champion Overhaul (#112)
 
@@ -57,11 +57,9 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 - Update rematch tiers (C49-50, C71) with regional forms at T3-T4
 - Challenge Mode E4: held items on every mon, SETUP_FIRST_TURN AI, IV 200, tighter level spread
 
-## "The Exhale" — Post-Rayquaza World State (C206)
+## "The Exhale" — Post-Rayquaza World State ✅ C205
 
-Add FLAG_CAUGHT_RAYQUAZA_GUARDIAN check to 7 NPCs stuck in permanent dread:
-- R126 WarmSwimmer, Mossdeep StormResearcher, R124 Curious Diver, R127 Trench Fisherman, R128 Scared Diver, R131 Lone Swimmer
-- R126 fog: Thin to WEATHER_FOG_DIAGONAL after Rayquaza caught
+6 NPCs gain post-Rayquaza resolved dialogue. R126 fog thins to WEATHER_FOG_DIAGONAL. Mossdeep StormResearcher connects weather omens to resolution via WEATHER INSTITUTE callback.
 
 ## Regional Form Strategy
 
@@ -81,7 +79,7 @@ Add FLAG_CAUGHT_RAYQUAZA_GUARDIAN check to 7 NPCs stuck in permanent dread:
 | #112 E4/Champion | C203 ✓ + C204-C205 | Flagship: dialogue + teams + rematches |
 | #109 Accessible forms | C208-C209 | Mid-game wild regional form + E4 showcase |
 | #97 More regional forms | C202 ✓ + C208-C209 | Pipeline enables, then 2-3 species |
-| #114 Migration lore | C206 | Fold into "The Exhale" NPC pass |
+| #114 Migration lore | C205 ✓ | Folded into "The Exhale" — StormResearcher bridges weather omens to resolution |
 | #110 Deoxys quest | C210 | v1.8 quest pattern, needs form-change research |
 | #104 Level cap display | C211 | UI: pokemon_summary_screen.c |
 | #80 Playtesting bugs | Ongoing | Check remaining items |
@@ -96,9 +94,9 @@ Add FLAG_CAUGHT_RAYQUAZA_GUARDIAN check to 7 NPCs stuck in permanent dread:
 | C202 | refactor | Ship `add_regional_form.cjs` pipeline | **DONE** |
 | C203 | feature | E4 dialogue: Sidney + Phoebe + Glacia + Phoebe team swap | **DONE** |
 | C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | **DONE** |
-| C205 | feature | E4 rematches + Challenge Mode variants | C204 |
-| C206 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning, #114 lore | -- |
-| C207 | feature | In-battle level cap feedback + E4 difficulty tuning | C205 |
+| C205 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning | **DONE** |
+| C206 | feature | E4 rematches + Challenge Mode variants | C204 |
+| C207 | feature | In-battle level cap feedback + E4 difficulty tuning | C206 |
 | C208 | feature | New regional form #1 (mid-game accessible, #109) | C202 ✓ |
 | C209 | feature | New regional form #2 + Bagon Colony researcher callback | C202 ✓ |
 | C210 | feature | Deoxys quest (#110) | -- |

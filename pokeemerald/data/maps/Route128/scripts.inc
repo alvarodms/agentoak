@@ -301,8 +301,18 @@ Route128_Text_StevenImGoingToSootopolis:
 	.string "I'm going to SOOTOPOLIS.$"
 
 @ C187 Ocean Atmosphere NPC — Scared Diver
+@ C205: Post-Rayquaza resolution ("The Exhale")
 Route128_EventScript_ScaredDiver::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route128_EventScript_ScaredDiverResolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route128_EventScript_ScaredDiverResolved
 	msgbox Route128_Text_ScaredDiver, MSGBOX_NPC
+	end
+
+Route128_EventScript_ScaredDiverResolved::
+	lock
+	faceplayer
+	msgbox Route128_Text_ScaredDiverResolved, MSGBOX_DEFAULT
+	release
 	end
 
 Route128_Text_ScaredDiver:
@@ -310,6 +320,16 @@ Route128_Text_ScaredDiver:
 	.string "Moving together, like a convoy.\p"
 	.string "They had somewhere to be.\n"
 	.string "I'm not going back down there.$"
+
+Route128_Text_ScaredDiverResolved:
+	.string "I went back down. Took me\n"
+	.string "a week to work up the nerve.\p"
+	.string "The shapes are gone. Just\n"
+	.string "open water where they passed.\p"
+	.string "But the current down there\n"
+	.string "feels… different now.\p"
+	.string "Like something big came through\n"
+	.string "and left a trail.$"
 
 @ =============================================
 @ Deep Migration Event -- "The Deep Migration" (C188)

@@ -103,8 +103,18 @@ Route124_Text_HuntersHouse:
 	.string "HUNTER'S HOUSE$"
 
 @ C187 Ocean Atmosphere NPC — Curious Diver
+@ C205: Post-Rayquaza resolution ("The Exhale")
 Route124_EventScript_CuriousDiver::
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, Route124_EventScript_CuriousDiverResolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, Route124_EventScript_CuriousDiverResolved
 	msgbox Route124_Text_CuriousDiver, MSGBOX_NPC
+	end
+
+Route124_EventScript_CuriousDiverResolved::
+	lock
+	faceplayer
+	msgbox Route124_Text_CuriousDiverResolved, MSGBOX_DEFAULT
+	release
 	end
 
 Route124_Text_CuriousDiver:
@@ -112,4 +122,13 @@ Route124_Text_CuriousDiver:
 	.string "I know every species by sight.\p"
 	.string "Today I saw three I couldn't\n"
 	.string "identify. Moving east, in formation.$"
+
+Route124_Text_CuriousDiverResolved:
+	.string "The reef's back to normal!\n"
+	.string "CORSOLA, CHINCHOU... all the\l"
+	.string "regulars I missed.\p"
+	.string "Those strange species moving\n"
+	.string "east? Gone. Moved on.\p"
+	.string "I think they found where\n"
+	.string "they were going.$"
 

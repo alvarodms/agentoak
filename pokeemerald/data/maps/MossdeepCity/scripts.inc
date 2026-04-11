@@ -537,12 +537,20 @@ MossdeepCity_Text_BeastSightingPostClimax:
 @ C186 Badge-Conditional Atmosphere NPCs
 @ =============================================
 
+@ C205: Post-Rayquaza resolution ("The Exhale")
 MossdeepCity_EventScript_StormResearcher::
 	lock
 	faceplayer
+	goto_if_set FLAG_CAUGHT_RAYQUAZA_GUARDIAN, MossdeepCity_EventScript_StormResearcher_Resolved
+	goto_if_set FLAG_DEFEATED_RAYQUAZA_GUARDIAN, MossdeepCity_EventScript_StormResearcher_Resolved
 	goto_if_set FLAG_GATHERING_EVENT, MossdeepCity_EventScript_StormResearcher_PostGathering
 	goto_if_set FLAG_BADGE07_GET, MossdeepCity_EventScript_StormResearcher_PostBadge7
 	msgbox MossdeepCity_Text_StormResearcher_Normal, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_StormResearcher_Resolved::
+	msgbox MossdeepCity_Text_StormResearcherResolved, MSGBOX_DEFAULT
 	release
 	end
 
@@ -592,6 +600,19 @@ MossdeepCity_Text_StormResearcher_PostGathering:
 	.string "I've never recorded anything\n"
 	.string "like this. The migration is\l"
 	.string "concentrating.$"
+
+MossdeepCity_Text_StormResearcherResolved:
+	.string "The readings are dropping!\n"
+	.string "Down 6 percent since yesterday\l"
+	.string "and still falling.\p"
+	.string "Those convergent signatures\n"
+	.string "near SOOTOPOLIS? Dispersed.\p"
+	.string "My colleagues at the WEATHER\n"
+	.string "INSTITUTE say the anomalous\l"
+	.string "patterns are stabilizing too.\p"
+	.string "I don't know what happened up\n"
+	.string "at SKY PILLAR, but the ocean\l"
+	.string "knows.$"
 
 MossdeepCity_Text_WarmSwimmer_Normal:
 	.string "The water around MOSSDEEP is always\n"

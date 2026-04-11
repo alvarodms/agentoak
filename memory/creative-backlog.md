@@ -7,4 +7,4 @@ The Producer should review this list when planning — bold ideas that have been
 |-------|------|--------|
 | 183 | **In-battle level cap feedback**: One-time message when soft cap reduces EXP — "Your Pokemon seems to have reached its limit for now." Medium complexity battle script change. | pending (scheduled C198) |
 | 184 | **Petalburg downgrade NPC**: One-way Challenge→Normal valve in Petalburg PkmnCenter. Low priority. | pending |
-| 191 | **Post-Rayquaza fog thinning**: Route 126 fog reduces to normal weather after Rayquaza caught. Reduces traversal friction. | pending (scheduled C198) |
+| 191 | **Post-Rayquaza fog thinning**: Route 126 fog thins from WEATHER_FOG_HORIZONTAL to WEATHER_FOG_DIAGONAL after Rayquaza caught. | **done** (C205) |
