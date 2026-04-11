@@ -93,19 +93,25 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Regional Variant Species Pipeline (C195-197)
+## Regional Variant Species Pipeline (C195-202)
 
-**Existing scripts**:
-- `scripts/add_corsola_hoenn.js` + `scripts/add_corsola_hoenn_part2.cjs` — Corsola Hoenn pipeline (C195, worked)
-- `scripts/add_growlithe_arcanine.cjs — Growlithe/Arcanine pipeline (C198, worked). Handles 26 files in one pass. Manual patches still needed for 8 graphics table files + graphics.h externs.
+**Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. Usage:
+```
+node scripts/add_regional_form.cjs scripts/configs/<species>.json          # live
+node scripts/add_regional_form.cjs scripts/configs/<species>.json --dry-run # preview
+```
 
-**Pre-compiled sprites on disk**: `graphics/pokemon/growlithe_hoenn/` and `graphics/pokemon/arcanine_hoenn/` — both have .4bpp.lz and .gbapal.lz files ready. These survive reverts since they're untracked.
+**Config template**: `scripts/configs/corsola_hoenn.json` — copy and modify for new species.
 
-**HOENN_DEX required**: Must add entry to BOTH national and Hoenn dex sections of `pokedex.h`.
+**What the script handles**: species.h, pokedex.h (both enums + count), species_info.h, level_up_learnsets.h, learnset_pointers.h, egg_moves.h, tmhm_learnsets.h, evolution.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h (3 arrays), pokemon.c (4 tables), graphics/pokemon.h (6 INCBINs), anim_mon_front_pics.c, graphics.h (7 externs), 8 graphics table files, front_pic_anims.h (3 insertions), pokemon_icon.c (2 tables), cry_tables.inc (2 sections), enemy_mon_elevation.h (if needed).
 
-**front_pic_anims.h structure**: AnimCmd arrays → `sAnims_*` table → `sMonFrontAnimsPtrTable[]`. New species needs all three.
+**What it does NOT handle**: Sprite files (use `fetch_pokemon_sprites` MCP tool). Encounter tables. Trainer parties.
 
-**Cry reuse**: Regional forms can reuse base species cry by referencing the same `Cry_*` label in `cry_tables.inc`.
+**Key anchors**: Most tables use `[SPECIES_EGG]` or `};`. Graphics tables use macros like `SPECIES_SPRITE(EGG`, `SPECIES_PAL(EGG`. Cry table forward uses `.align 2`, reverse appends to EOF.
+
+**front_pic_anims.h structure**: AnimCmd arrays → SINGLE_ANIMATION macro → `gMonFrontAnimsPtrTable[]`. Script handles all three.
+
+**Cry reuse**: Regional forms reuse base species cry via `Cry_*` label in `cry_tables.inc`.
 
 ---
 

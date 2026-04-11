@@ -22,5 +22,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | ROM Hack Documentation & Wiki Patterns | 199 | [rom-hack-documentation-patterns.md](pokemon-knowledge/rom-hack-documentation-patterns.md) |
 | v1.8 Completion & Milestone Release Patterns | 200 | [v18-completion-and-milestone-patterns.md](pokemon-knowledge/v18-completion-and-milestone-patterns.md) |
 | v1.9 Direction — What Separates Great from Good | 201 | [v19-direction-what-separates-great.md](pokemon-knowledge/v19-direction-what-separates-great.md) |
+| Species Addition Pipeline — Community Patterns | 202 | [species-pipeline-community-patterns.md](pokemon-knowledge/species-pipeline-community-patterns.md) |
 
 Older research files (Cycles 47-190) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
