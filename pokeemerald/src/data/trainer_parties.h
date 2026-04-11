@@ -5120,10 +5120,10 @@ static const struct TrainerMonItemCustomMoves sParty_Wallace[] = {
     },
     {
     .iv = 255,
-    .lvl = 54,
-    .species = SPECIES_TENTACRUEL,
-    .heldItem = ITEM_SHELL_BELL,
-    .moves = {MOVE_SURF, MOVE_SLUDGE_BOMB, MOVE_ICE_BEAM, MOVE_TOXIC}
+    .lvl = 55,
+    .species = SPECIES_ARCANINE_HOENN,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SURF, MOVE_FLAMETHROWER, MOVE_EXTREME_SPEED, MOVE_CRUNCH}
     },
     {
     .iv = 255,

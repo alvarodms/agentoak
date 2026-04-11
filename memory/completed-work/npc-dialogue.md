@@ -42,10 +42,11 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------|-------|
 | Roxanne, Brawly, Wattson, Flannery, Norman, Winona, Tate&Liza, Juan | 32, 36, 103 | Pre-battle (C32/36) + migration-themed rematch dialogue (C103) |
 
-## Elite Four & Champion — Cycles 33, 42, **203**
+## Elite Four & Champion — Cycles 33, 42, **203**, **204**
 
 All 5 E4/Champion rooms: Sidney, Phoebe (also C42), Glacia, Drake, Wallace.
 C203: Rewrote Sidney, Phoebe, Glacia dialogue with deep migration-narrative callbacks. Sidney references Murkrow/Houndoom on Routes 120-121. Phoebe references Mt. Pyre grandmother + introduces Corsola_Hoenn ("a CORSOLA from the reefs that lost its ocean and became stone"). Glacia references Route 125 cold + being drawn by the migration. Each member's final pre-battle line is a question. Character voices: Sidney=casual/menacing, Phoebe=warm/spiritual, Glacia=formal/alien.
+C204: Rewrote Drake and Wallace dialogue completing the 5-act E4 arc. Drake references Bagon Colony in Meteor Falls + Draconid legend ("dragons remember what the world was before humans"), ends with "do you change, or hold the line?" Wallace references The Gathering on Route 126 + Arcanine_Hoenn found on Route 128 ("a fire that burns underwater"), ends with "whether you're ready for what HOENN is becoming." Drake's post-battle bridges to Wallace ("He was CHAMPION when THE GATHERING shook the ocean"). Wallace's post-battle sets up Hall of Fame ("You're the first who knows what it's becoming").
 
 ## Flavor NPCs
 

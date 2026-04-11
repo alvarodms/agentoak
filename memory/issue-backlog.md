@@ -10,3 +10,4 @@ Deferred community issues for future consideration.
 - #108: Graphical tweaks (deferred: cycle 197)
 - #114: Reason for Migration (deferred: cycle 198)
 - #115: Improved docs (deferred: cycle 200)
+- #118: More regional forms and more accessible (deferred: cycle 204)

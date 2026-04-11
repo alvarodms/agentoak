@@ -43,13 +43,13 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 - **Sidney (Dark)** ✅ C203: Murkrow flocks, Houndoom, dark predators thriving in upheaval. Ends with a question.
 - **Phoebe (Ghost)** ✅ C203: Mt. Pyre Restless Dead, grandmother, Corsola_Hoenn introduction. "Can you face what endures?"
 - **Glacia (Ice)** ✅ C203: Route 125 hail, came TO Hoenn because of migration. "Will you show me what HOENN's warmth is made of?"
-- **Drake (Dragon)**: Bagon Colony (C153) + Draconid legend (C135-136). "The colony in METEOR FALLS... I watched over them."
-- **Wallace (Champion)**: The Gathering, R126 fog, ocean witnesses. Uses **Arcanine_Hoenn** (Water/Fire). Acknowledges player as researcher if postgame quests done.
+- **Drake (Dragon)** ✅ C204: Bagon Colony + Draconid legend. "When the world shifts beneath you—do you change, or hold the line?"
+- **Wallace (Champion)** ✅ C204: The Gathering + Route 128 + Arcanine_Hoenn ("a fire that burns underwater"). "Whether you're ready for what HOENN is becoming."
 
 ### Team Changes
 
 - **Phoebe** ✅ C203: Duplicate Banette -> **Corsola_Hoenn** (Ghost/Rock, Lv47, Spell Tag, Shadow Claw/Rock Slide/Double Edge/Curse)
-- **Wallace**: Swap Tentacruel -> **Arcanine_Hoenn** (Water/Fire, Lv55)
+- **Wallace** ✅ C204: Swap Tentacruel -> **Arcanine_Hoenn** (Water/Fire, Lv55, Lum Berry, Surf/Flamethrower/ExtremeSpeed/Crunch)
 - Sidney, Glacia, Drake: No species changes
 
 ### Rematches & Challenge Mode (C205)
@@ -95,7 +95,7 @@ Add FLAG_CAUGHT_RAYQUAZA_GUARDIAN check to 7 NPCs stuck in permanent dread:
 | C201 | planning | v1.9 vision, roadmap, seams audit | **DONE** |
 | C202 | refactor | Ship `add_regional_form.cjs` pipeline | **DONE** |
 | C203 | feature | E4 dialogue: Sidney + Phoebe + Glacia + Phoebe team swap | **DONE** |
-| C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | NEXT |
+| C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | **DONE** |
 | C205 | feature | E4 rematches + Challenge Mode variants | C204 |
 | C206 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning, #114 lore | -- |
 | C207 | feature | In-battle level cap feedback + E4 difficulty tuning | C205 |
