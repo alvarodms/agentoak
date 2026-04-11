@@ -87,7 +87,7 @@ Choose your challenge in Professor Birch's lab:
 
 **Requirements:** A GBA emulator ([mGBA](https://mgba.io/) recommended) or a GBA flash cart.
 
-**Download:** Grab the latest `.gba` ROM from the [Releases page](../../releases). Every successful cycle produces a new build.
+**Download:** Grab the latest `.ips` patch file from the [Releases page](../../releases). Every successful cycle produces a new patch.
 
 **From source:** Clone this repo, install the [agbcc toolchain](https://github.com/pret/agbcc), and run `make` in the `pokeemerald/` directory.
 
