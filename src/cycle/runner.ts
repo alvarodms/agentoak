@@ -43,6 +43,44 @@ const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
 const CREATIVE_BACKLOG_PATH = path.join(MEMORY_DIR, "creative-backlog.md");
 const SPRITE_ITERATIONS_PATH = path.join(MEMORY_DIR, "sprite-iterations.md");
 
+/**
+ * Structured outcome of the Phase 1.75 → Phase 3.6 sprite pipeline. Captured
+ * by the runner so that Phase 4 (reflection) and Phase 5 (journal) can report
+ * what actually happened — this eliminates the cycle 204 failure mode where
+ * the reflection agent hallucinated an explanation for sprite file diffs it
+ * didn't know about.
+ */
+export type SpriteFeedbackOutcome = {
+  /** True if Phase 1.75 actually ran the Sprite Designer. */
+  ran: true;
+  /**
+   * What happened downstream:
+   * - `designer-failed`: Phase 1.75 threw; no sprite work landed.
+   * - `missing-metadata`: sprites modified, but the metadata block was unparseable.
+   * - `skipped-build-failed`: sprites modified, but build failed so nothing was posted.
+   * - `skipped-reverted`: sprites modified, but the cycle was reverted.
+   * - `issue-created`: fresh sprite-feedback issue posted successfully.
+   * - `iteration-posted`: iteration comment posted on existing issue.
+   * - `post-failed`: metadata valid but posting to GitHub raised.
+   */
+  status:
+    | "designer-failed"
+    | "missing-metadata"
+    | "skipped-build-failed"
+    | "skipped-reverted"
+    | "issue-created"
+    | "iteration-posted"
+    | "post-failed";
+  /** Sprite files created or modified by Phase 1.75. */
+  filesModified: string[];
+  speciesName?: string;
+  typing?: string;
+  version?: number;
+  issueNumber?: number;
+  /** Free-text detail for warning/error statuses. */
+  detail?: string;
+};
+
 /** Append an engineering investment to the persistent tech debt backlog. */
 function persistEngineeringInvestment(
   cycleNumber: number,
@@ -83,6 +121,71 @@ function persistCreativeInvestment(
   const sanitized = idea.replace(/\|/g, "—").replace(/\n/g, " ").trim();
   content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
   fs.writeFileSync(CREATIVE_BACKLOG_PATH, content, "utf-8");
+}
+
+/**
+ * Parse `memory/sprite-iterations.md` and return the highest version number
+ * recorded for a species (or 0 if the species has no row yet). Used so the
+ * runner can compute `nextVersion = currentHighest + 1` when injecting the
+ * iteration context into the Sprite Designer prompt.
+ */
+function readCurrentSpriteVersion(speciesName: string): number {
+  if (!fs.existsSync(SPRITE_ITERATIONS_PATH)) return 0;
+  const content = fs.readFileSync(SPRITE_ITERATIONS_PATH, "utf-8");
+  const escapedSpecies = speciesName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Row shape:  | Species line | Type | vN | Cycle | Issue | Status |
+  const rowPattern = new RegExp(
+    `\\|[^|\\n]*${escapedSpecies}[^|\\n]*\\|[^|\\n]*\\|\\s*v(\\d+)\\s*\\|`,
+    "gi",
+  );
+  let highest = 0;
+  let match: RegExpExecArray | null;
+  while ((match = rowPattern.exec(content)) !== null) {
+    const v = parseInt(match[1], 10);
+    if (!Number.isNaN(v) && v > highest) highest = v;
+  }
+  return highest;
+}
+
+/**
+ * Append a new iteration row to `memory/sprite-iterations.md` after a
+ * successful iteration comment is posted. Parallel to
+ * `updateSpriteIterationsIssueNumber` but adds a row instead of editing one.
+ * Idempotent — if a row with the same species+version already exists, skips.
+ */
+function appendSpriteIterationRow(params: {
+  speciesName: string;
+  typing: string;
+  version: number;
+  cycleNumber: number;
+  issueNumber: number;
+}): void {
+  if (!fs.existsSync(SPRITE_ITERATIONS_PATH)) {
+    logger.warn(
+      `sprite-iterations.md does not exist — cannot record iteration v${params.version} row`,
+    );
+    return;
+  }
+  const content = fs.readFileSync(SPRITE_ITERATIONS_PATH, "utf-8");
+  const escapedSpecies = params.speciesName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Skip if a row with this species + version already exists
+  const existingPattern = new RegExp(
+    `\\|[^|\\n]*${escapedSpecies}[^|\\n]*\\|[^|\\n]*\\|\\s*v${params.version}\\s*\\|`,
+    "i",
+  );
+  if (existingPattern.test(content)) {
+    logger.info(
+      `sprite-iterations.md already has ${params.speciesName} v${params.version} — skipping row append`,
+    );
+    return;
+  }
+  const row = `| ${params.speciesName} Hoenn | ${params.typing} | v${params.version} | ${params.cycleNumber} | #${params.issueNumber} | iterated |\n`;
+  // Append at end of file, ensuring trailing newline
+  const newContent = content.endsWith("\n") ? content + row : content + "\n" + row;
+  fs.writeFileSync(SPRITE_ITERATIONS_PATH, newContent, "utf-8");
+  logger.info(
+    `sprite-iterations.md: appended ${params.speciesName} v${params.version} row (#${params.issueNumber})`,
+  );
 }
 
 /**
@@ -567,6 +670,7 @@ async function runReflectionPhase(
   buildResult: { success: boolean; errors: string[] } | null,
   validationResult: ValidationResult | null,
   log: ReturnType<typeof cycleLogger>,
+  spriteFeedbackOutcome: SpriteFeedbackOutcome | null,
 ) {
   log.info("Phase 4: Reflection...");
   return runReflection({
@@ -578,6 +682,7 @@ async function runReflectionPhase(
     cycleSummary: implResult.cycleSummary,
     cycleChanges: implResult.cycleChanges,
     validationResult,
+    spriteFeedbackOutcome,
   });
 }
 
@@ -716,14 +821,52 @@ export async function runCycle(): Promise<void> {
     // ── Phase 1.75: Sprite Design (conditional — only when Producer sets a sprite brief) ──
     let spriteResult: SpriteDesignResult | null = null;
     let spriteDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+    // Tracks what happened in the Sprite Designer + feedback-issue pipeline so
+    // Phase 4 (reflection) and Phase 5 (journal) don't have to guess. Any
+    // non-trivial status here is also surfaced as a validation warning so it
+    // shows up in the journal and in the PR summary.
+    let spriteFeedbackOutcome: SpriteFeedbackOutcome | null = null;
 
     if (activePlan.spriteDesignBrief) {
       log.info("Phase 1.75: Sprite Design...");
+      // Resolve iteration context up-front so the runner — not the agent —
+      // owns the issue number and next version. This closes the cycle 204
+      // failure mode where the issue number lived only in free-text.
+      let iterationContext: {
+        speciesName: string;
+        existingIssueNumber: number;
+        nextVersion: number;
+      } | undefined;
+      if (typeof activePlan.spriteIterationOf === "number") {
+        // Best-effort species name guess from the brief: match a capitalized
+        // word immediately before "Hoenn" or after "iterate on". Fall back to
+        // "sprite" so the downstream regex in sprite-iterations.md is lenient.
+        const briefText = activePlan.spriteDesignBrief;
+        const speciesMatch =
+          briefText.match(/iterat[ei](?:ng|e)?\s+(?:on\s+)?([A-Z][a-zA-Z_]+)/) ||
+          briefText.match(/([A-Z][a-zA-Z_]+)\s*[_ ]Hoenn/i) ||
+          briefText.match(/Hoenn\s+([A-Z][a-zA-Z_]+)/);
+        const speciesGuess = speciesMatch ? speciesMatch[1] : "";
+        const currentVersion = speciesGuess
+          ? readCurrentSpriteVersion(speciesGuess)
+          : 0;
+        const nextVersion = (currentVersion || 1) + 1;
+        iterationContext = {
+          speciesName: speciesGuess,
+          existingIssueNumber: activePlan.spriteIterationOf,
+          nextVersion,
+        };
+        log.info(
+          `  Iteration context resolved: ${speciesGuess || "<unknown>"} v${nextVersion} → existing issue #${activePlan.spriteIterationOf}`,
+        );
+      }
+
       try {
         spriteResult = await runSpriteDesigner(
           activePlan.objective,
           activePlan.spriteDesignBrief,
           activePlan.implementationPlan,
+          iterationContext,
         );
         activePlan = {
           ...activePlan,
@@ -734,6 +877,12 @@ export async function runCycle(): Promise<void> {
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : String(err);
         log.warn(`  Sprite Designer failed, proceeding with placeholder approach: ${errMsg}`);
+        spriteFeedbackOutcome = {
+          ran: true,
+          status: "designer-failed",
+          filesModified: [],
+          detail: errMsg,
+        };
         // Fall through — implementation agent can copy sprites from base species as fallback
       }
     }
@@ -814,34 +963,73 @@ export async function runCycle(): Promise<void> {
     // When the Sprite Designer ran and the build is green, post the sprite-feedback
     // GitHub issue (or comment on an existing one for iterations). Failures are
     // logged as warnings — we never let issue-creation errors fail the cycle.
-    if (spriteResult && !reverted && finalBuildResult?.success) {
-      if (!spriteResult.metadata) {
-        log.warn(
-          "  ⚠ Phase 3.6: Sprite Designer ran and build succeeded, but no sprite-metadata block was parsed — cannot post feedback issue. Fix the Sprite Designer output or backfill manually.",
-        );
+    // The outcome is captured in `spriteFeedbackOutcome` so reflection and the
+    // journal have accurate context instead of hallucinating explanations.
+    if (spriteResult) {
+      const spriteImagePaths = spriteResult.filesCreated.filter(
+        (f) => f.includes("graphics/pokemon/") && f.endsWith(".png"),
+      );
+
+      if (reverted) {
+        spriteFeedbackOutcome = {
+          ran: true,
+          status: "skipped-reverted",
+          filesModified: spriteResult.filesCreated,
+          detail: "Cycle was reverted due to build failure — sprite work discarded.",
+        };
+      } else if (!finalBuildResult?.success) {
+        spriteFeedbackOutcome = {
+          ran: true,
+          status: "skipped-build-failed",
+          filesModified: spriteResult.filesCreated,
+          detail: "Build did not succeed — sprite feedback issue was not posted.",
+        };
+      } else if (!spriteResult.metadata) {
+        const warningMsg =
+          "Sprite Designer ran and build succeeded, but no sprite-metadata block was parsed — cannot post feedback issue. Fix the Sprite Designer output or backfill manually.";
+        log.warn(`  ⚠ Phase 3.6: ${warningMsg}`);
+        spriteFeedbackOutcome = {
+          ran: true,
+          status: "missing-metadata",
+          filesModified: spriteResult.filesCreated,
+          detail: warningMsg,
+        };
       } else {
         const meta = spriteResult.metadata;
-        const imagePaths = spriteResult.filesCreated.filter(
-          (f) => f.includes("graphics/pokemon/") && f.endsWith(".png"),
-        );
         log.info("Phase 3.6: Posting sprite feedback issue...");
         try {
           if (meta.isIteration && meta.existingIssueNumber) {
             await postSpriteIterationUpdate(
               meta.existingIssueNumber,
               spriteResult.spriteReport,
-              imagePaths,
+              spriteImagePaths,
               meta.version,
             );
+            appendSpriteIterationRow({
+              speciesName: meta.speciesName,
+              typing: meta.typing,
+              version: meta.version,
+              cycleNumber,
+              issueNumber: meta.existingIssueNumber,
+            });
             log.info(
               `  Posted sprite iteration v${meta.version} to #${meta.existingIssueNumber}`,
             );
+            spriteFeedbackOutcome = {
+              ran: true,
+              status: "iteration-posted",
+              filesModified: spriteResult.filesCreated,
+              speciesName: meta.speciesName,
+              typing: meta.typing,
+              version: meta.version,
+              issueNumber: meta.existingIssueNumber,
+            };
           } else {
             const issueNumber = await createSpriteFeedbackIssue(
               meta.speciesName,
               meta.typing,
               spriteResult.spriteReport,
-              imagePaths,
+              spriteImagePaths,
               meta.version,
             );
             if (issueNumber) {
@@ -853,10 +1041,28 @@ export async function runCycle(): Promise<void> {
               log.info(
                 `  Created sprite-feedback issue #${issueNumber} for ${meta.speciesName} v${meta.version}`,
               );
+              spriteFeedbackOutcome = {
+                ran: true,
+                status: "issue-created",
+                filesModified: spriteResult.filesCreated,
+                speciesName: meta.speciesName,
+                typing: meta.typing,
+                version: meta.version,
+                issueNumber,
+              };
             } else {
               log.warn(
                 "  createSpriteFeedbackIssue returned null — issue may not have been created",
               );
+              spriteFeedbackOutcome = {
+                ran: true,
+                status: "post-failed",
+                filesModified: spriteResult.filesCreated,
+                speciesName: meta.speciesName,
+                typing: meta.typing,
+                version: meta.version,
+                detail: "createSpriteFeedbackIssue returned null",
+              };
             }
           }
         } catch (err) {
@@ -864,22 +1070,52 @@ export async function runCycle(): Promise<void> {
           log.warn(
             `  Sprite feedback issue creation failed, continuing: ${errMsg}`,
           );
+          spriteFeedbackOutcome = {
+            ran: true,
+            status: "post-failed",
+            filesModified: spriteResult.filesCreated,
+            speciesName: meta.speciesName,
+            typing: meta.typing,
+            version: meta.version,
+            detail: errMsg,
+          };
         }
       }
     }
+
+    // Merge Phase 1.75 sprite files into the implementation file list so
+    // reflection, journal, and commit all see the sprite work. Without this,
+    // Phase 1.75 is effectively invisible downstream — the cycle 204 bug.
+    const spriteFilesForTracking =
+      spriteResult && !reverted ? spriteResult.filesCreated : [];
+    const mergedImplFiles = Array.from(
+      new Set([...implResult.filesModified, ...spriteFilesForTracking]),
+    );
+    const implResultWithSprites: ClaudeCodeResult = {
+      ...implResult,
+      filesModified: mergedImplFiles,
+    };
 
     // ── Phase 4: Reflection (separate agent context) ──
     const reflection = await runReflectionPhase(
       cycleNumber,
       plan,
-      implResult,
+      implResultWithSprites,
       finalBuildResult,
       validationResult,
       log,
+      spriteFeedbackOutcome,
     );
 
     // ── Phase 5: Journal + Commit ──
-    const allActions = [...implResult.actions, ...fixActions, ...validationFixActions, ...reflection.actions];
+    const spriteActions = spriteResult && !reverted ? spriteResult.actions : [];
+    const allActions = [
+      ...implResult.actions,
+      ...spriteActions,
+      ...fixActions,
+      ...validationFixActions,
+      ...reflection.actions,
+    ];
     const totalTokenUsage = mergeTokenUsage(
       gameplayDesignTokenUsage,
       spriteDesignTokenUsage,
@@ -889,7 +1125,7 @@ export async function runCycle(): Promise<void> {
       reflection.tokenUsage,
     );
 
-    const filesModified = reverted ? [] : implResult.filesModified;
+    const filesModified = reverted ? [] : mergedImplFiles;
 
     // Write cycle.json so the README dynamic badge can read the latest cycle number
     const cycleJsonPath = path.join(ARTIFACTS_DIR, "cycle.json");
@@ -903,6 +1139,7 @@ export async function runCycle(): Promise<void> {
     }
 
     log.info("Phase 5: Writing journal entry...");
+    const spriteToolCallCount = spriteResult && !reverted ? spriteResult.toolCallCount : 0;
     const journalFile = writeJournalEntry({
       cycleNumber,
       mode: plan.mode,
@@ -923,10 +1160,15 @@ export async function runCycle(): Promise<void> {
       nextSteps: reflection.nextSteps,
       reflectionText: reflection.reflectionText,
       tokenUsage: totalTokenUsage,
-      toolCallCount: implResult.toolCallCount + fixActions.length + validationFixActions.length,
+      toolCallCount:
+        implResult.toolCallCount
+        + spriteToolCallCount
+        + fixActions.length
+        + validationFixActions.length,
       issueActions: plan.issueActions.length > 0 ? plan.issueActions : undefined,
       helpRequests: plan.helpRequests.length > 0 ? plan.helpRequests : undefined,
       planOutput,
+      spriteFeedbackOutcome: spriteFeedbackOutcome ?? undefined,
     });
 
     // Apply agent-declared version bump / release stage before committing

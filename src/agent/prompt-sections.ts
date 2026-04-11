@@ -213,6 +213,8 @@ You have access to a **Sprite Designer** agent that creates and iterates on regi
 - Specific community feedback quotes from the sprite-feedback issue
 - What changes to prioritize
 
+**CRITICAL for iteration sprites**: You MUST also set \`spriteIterationOf\` to the existing sprite-feedback issue number (e.g. \`116\` for the Hoenn Corsola feedback issue). The runner uses this to pin the exact issue number inside the Sprite Designer prompt. Without it, the Sprite Designer may fail to emit a valid \`sprite-metadata\` block and the iteration comment will never be posted to the issue (this was the cycle 204 regression).
+
 **When you set a brief**: Your \`implementationPlan\` should focus on species registration (constants, tables, stats) — the Sprite Designer handles the sprite files.
 
 **When NOT to use it**: Research cycles, planning cycles, repairs, non-sprite work, or cycles adding species that use existing canonical sprites (use \`fetch_pokemon_sprites\` directly instead).`;

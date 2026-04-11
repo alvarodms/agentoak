@@ -29,6 +29,8 @@ export interface CyclePlan {
   creativeInvestment?: string;
   /** Optional brief for the Sprite Designer agent. When set, Phase 1.75 spawns a specialist to create or iterate on regional form sprites. For fresh sprites: describe the species, target typing, and aesthetic direction. For iterations: include community feedback quotes from the sprite-feedback issue. */
   spriteDesignBrief?: string;
+  /** Optional — when this cycle iterates on an existing sprite-feedback issue, the Producer sets this to the issue number. The runner resolves the next version number and injects both into the Sprite Designer prompt, so the agent can't drop or hallucinate the existing issue number when emitting its sprite-metadata block. */
+  spriteIterationOf?: number;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -69,6 +71,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     spriteDesignBrief: {
       type: "string",
       description: "Optional brief for the Sprite Designer agent. Set this when the cycle involves creating or iterating on regional form sprites. The Sprite Designer has access to Pillow, the sprite fetcher MCP tool, and memory of accumulated sprite techniques. For fresh sprites: describe the base species, target typing, and aesthetic direction (e.g., 'Create Hoenn Growlithe sprites: Electric/Fire. Base: growlithe. Electric-gold palette with lightning glyph accents.'). For iterations: include community feedback quotes from the sprite-feedback GitHub issue (e.g., 'Iterate on Arcanine Hoenn sprites based on feedback: gold is too close to original orange, needs more blue-electric accents on the mane.').",
+    },
+    spriteIterationOf: {
+      type: "number",
+      description: "REQUIRED when the cycle iterates on an existing sprite-feedback issue (i.e., spriteDesignBrief quotes community feedback from a sprite-feedback issue). Set this to the issue number of the existing sprite-feedback issue (e.g. 116 for Corsola Hoenn). The runner uses this to inject the exact issue number into the Sprite Designer prompt, so the agent cannot drop or mis-remember it when emitting its sprite-metadata block. OMIT for fresh sprites (a brand new regional form with no prior feedback issue).",
     },
     issueActions: {
       type: "array",
@@ -145,6 +151,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     gameplayDesignBrief?: string;
     engineeringInvestment?: string;
     spriteDesignBrief?: string;
+    spriteIterationOf?: number;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -222,6 +229,10 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
       engineeringInvestment: parsed.engineeringInvestment || undefined,
       spriteDesignBrief: parsed.spriteDesignBrief || undefined,
+      spriteIterationOf:
+        typeof parsed.spriteIterationOf === "number"
+          ? parsed.spriteIterationOf
+          : undefined,
       issueActions,
       helpRequests,
     };

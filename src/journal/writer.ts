@@ -6,6 +6,7 @@ import type { ActionRecord } from "../agent/output-parser.js";
 import type { CycleMode } from "../cycle/modes.js";
 import type { TokenUsage } from "../memory/types.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
+import type { SpriteFeedbackOutcome } from "../cycle/runner.js";
 
 export interface JournalData {
   cycleNumber: number;
@@ -26,6 +27,9 @@ export interface JournalData {
   validationStatus?: string;
   /** For planning cycles: the content added to strategy-notes.md (the plan output) */
   planOutput?: string;
+  /** Phase 1.75 + 3.6 sprite pipeline outcome. Rendered as a dedicated
+   *  "Sprite Design" section in the journal when present. */
+  spriteFeedbackOutcome?: SpriteFeedbackOutcome;
 }
 
 /** Write a journal entry for a completed cycle */
@@ -52,15 +56,16 @@ export function writeJournalEntry(data: JournalData): string {
 
   const issueSection = formatIssueSection(data.issueActions, data.helpRequests);
   const validationSection = formatValidationSection(data.validationWarnings, data.validationStatus);
+  const spriteSection = formatSpriteFeedbackSection(data.spriteFeedbackOutcome);
   const planOutputSection = data.planOutput
     ? `\n## Plan Output\n\n${data.planOutput}\n`
     : "";
 
   const content = `# Cycle ${paddedNumber}
 
-**Date**: ${timestamp}  
-**Mode**: ${data.mode}  
-**Objective**: ${data.objective}  
+**Date**: ${timestamp}
+**Mode**: ${data.mode}
+**Objective**: ${data.objective}
 
 ## Reasoning
 
@@ -73,7 +78,7 @@ ${fileList}
 ## Build Result
 
 ${buildSection}
-
+${spriteSection}
 ## Summary
 
 ${data.cycleSummary || "No summary provided."}
@@ -151,6 +156,55 @@ function formatIssueSection(
     parts.push("");
   }
 
+  return parts.join("\n");
+}
+
+/**
+ * Render the Phase 1.75 + 3.6 sprite pipeline outcome as a dedicated
+ * "Sprite Design" section in the journal. Previously Phase 1.75 was invisible
+ * in journal entries — only the files from the implementation agent were
+ * tracked, leading to confused reflections (see cycle 204).
+ */
+function formatSpriteFeedbackSection(
+  outcome?: SpriteFeedbackOutcome,
+): string {
+  if (!outcome) return "\n";
+
+  const parts: string[] = ["\n## Sprite Design (Phase 1.75)\n"];
+
+  const labels: Record<SpriteFeedbackOutcome["status"], string> = {
+    "issue-created": "✅ Fresh sprite-feedback issue created",
+    "iteration-posted": "✅ Iteration comment posted on existing issue",
+    "missing-metadata": "⚠ Sprite files modified, but no valid sprite-metadata block — feedback issue NOT posted",
+    "designer-failed": "⚠ Sprite Designer agent threw an error",
+    "skipped-build-failed": "⚠ Sprite files modified, but build failed — feedback issue not posted",
+    "skipped-reverted": "⚠ Sprite files modified, but cycle was reverted",
+    "post-failed": "⚠ Metadata valid but posting to GitHub failed",
+  };
+  parts.push(`**Status**: ${labels[outcome.status]}`);
+  parts.push("");
+
+  const descriptor: string[] = [];
+  if (outcome.speciesName) descriptor.push(`Species: ${outcome.speciesName}`);
+  if (outcome.typing) descriptor.push(`Typing: ${outcome.typing}`);
+  if (outcome.version !== undefined) descriptor.push(`Version: v${outcome.version}`);
+  if (outcome.issueNumber !== undefined) descriptor.push(`Issue: #${outcome.issueNumber}`);
+  if (descriptor.length > 0) {
+    parts.push(`- ${descriptor.join(" · ")}`);
+  }
+
+  if (outcome.detail) {
+    parts.push(`- Detail: ${outcome.detail}`);
+  }
+
+  if (outcome.filesModified.length > 0) {
+    parts.push("");
+    parts.push("**Sprite files touched**:");
+    for (const f of outcome.filesModified) {
+      parts.push(`- ${f}`);
+    }
+  }
+  parts.push("");
   return parts.join("\n");
 }
 

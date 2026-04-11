@@ -6,6 +6,7 @@ import { buildDynamicContext } from "../agent/prompts.js";
 import { loadMemory } from "../memory/store.js";
 import { logger } from "../utils/logger.js";
 import type { ValidationResult } from "./validator.js";
+import type { SpriteFeedbackOutcome } from "../cycle/runner.js";
 
 export interface ReflectionResult {
   reflectionText: string;
@@ -27,6 +28,7 @@ export async function runReflection(context: {
   cycleSummary: string;
   cycleChanges: string[];
   validationResult?: ValidationResult | null;
+  spriteFeedbackOutcome?: SpriteFeedbackOutcome | null;
 }): Promise<ReflectionResult> {
   logger.info("Starting reflection phase...");
 

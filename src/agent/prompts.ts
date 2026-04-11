@@ -4,6 +4,7 @@ import type { ValidationResult, ValidationStatus } from "../reflection/validator
 import { formatJournalContext } from "./prompt-sections.js";
 import { PromptBuilder } from "./prompt-builder.js";
 import { getReflectionPersonalityNudge } from "../config/personality.js";
+import type { SpriteFeedbackOutcome } from "../cycle/runner.js";
 
 /**
  * Build dynamic per-cycle context to append to the system prompt.
@@ -237,6 +238,68 @@ function formatValidationSection(v: ValidationResult): string {
   return `## Validation Result\n\n**Status**: ${v.status.toUpperCase()}\n\n${warnings}\n\n**Git Diff Summary** (ground truth of actual changes):\n\`\`\`\n${v.diffSummary}\n\`\`\``;
 }
 
+/**
+ * Render the Phase 1.75 + 3.6 sprite pipeline outcome for the reflection
+ * prompt. Without this block, the reflection agent can see sprite files in
+ * `git status` that aren't in `Files Modified` and invent explanations for
+ * them — this is how cycle 204 ended up with the hallucinated "from PR #119"
+ * attribution.
+ */
+function formatSpriteFeedbackSection(
+  outcome: SpriteFeedbackOutcome,
+): string {
+  const lines: string[] = ["## Sprite Design (Phase 1.75)"];
+  lines.push("");
+  lines.push(
+    `**The Sprite Designer agent ran this cycle.** The sprite files listed in Files Modified above were created or modified by that specialist agent — NOT by the implementation agent — and are part of this cycle's intentional work. Do not attribute them to outside PRs or other cycles.`,
+  );
+  lines.push("");
+
+  if (outcome.speciesName || outcome.typing || outcome.version) {
+    const descriptor = [
+      outcome.speciesName ? `**Species**: ${outcome.speciesName}` : null,
+      outcome.typing ? `**Typing**: ${outcome.typing}` : null,
+      outcome.version !== undefined ? `**Version**: v${outcome.version}` : null,
+      outcome.issueNumber !== undefined
+        ? `**Issue**: #${outcome.issueNumber}`
+        : null,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    if (descriptor) lines.push(descriptor);
+    lines.push("");
+  }
+
+  const statusLabel = {
+    "issue-created": "✅ Fresh sprite-feedback GitHub issue created successfully.",
+    "iteration-posted": "✅ Iteration comment posted successfully on existing sprite-feedback issue.",
+    "missing-metadata":
+      "⚠ Sprite files were modified, but the Sprite Designer did not emit a valid `sprite-metadata` block. No feedback issue was posted — the community will not see this iteration until someone backfills manually. Flag this in your reflection and consider filing a tech-debt item.",
+    "designer-failed":
+      "⚠ The Sprite Designer agent threw an error. No sprite work landed. Details in the Agent Summary above.",
+    "skipped-build-failed":
+      "⚠ Sprite files were modified, but the build did not succeed, so the feedback issue was not posted.",
+    "skipped-reverted":
+      "⚠ Sprite files were modified, but the cycle was reverted due to build failure — sprite work discarded.",
+    "post-failed":
+      "⚠ Metadata was valid but the GitHub posting step failed. Details in the runner logs.",
+  }[outcome.status];
+
+  lines.push(statusLabel);
+  if (outcome.detail) {
+    lines.push("");
+    lines.push(`_Detail_: ${outcome.detail}`);
+  }
+  if (outcome.filesModified.length > 0) {
+    lines.push("");
+    lines.push("**Sprite files touched by Phase 1.75**:");
+    for (const f of outcome.filesModified) {
+      lines.push(`- ${f}`);
+    }
+  }
+  return lines.join("\n");
+}
+
 /** Build the reflection prompt sent after the main agent loop */
 export function buildReflectionPrompt(cycleContext: {
   cycleNumber: number;
@@ -246,6 +309,7 @@ export function buildReflectionPrompt(cycleContext: {
   buildResult: { success: boolean; errors: string[] } | null;
   cycleSummary: string;
   validationResult?: ValidationResult | null;
+  spriteFeedbackOutcome?: SpriteFeedbackOutcome | null;
 }): string {
   const actionLog = cycleContext.actions
     .map((a, i) => `${i + 1}. ${a.tool}(${JSON.stringify(a.input).slice(0, 80)}) → ${a.result.slice(0, 100)}`)
@@ -263,6 +327,8 @@ export function buildReflectionPrompt(cycleContext: {
       cycleContext.filesModified.length > 0 ? cycleContext.filesModified.join("\n") : "None")
     .heading("Build Result", buildInfo)
     .heading("Agent Summary", cycleContext.cycleSummary)
+    .sectionIf(cycleContext.spriteFeedbackOutcome, () =>
+      formatSpriteFeedbackSection(cycleContext.spriteFeedbackOutcome!))
     .sectionIf(cycleContext.validationResult, () =>
       formatValidationSection(cycleContext.validationResult!))
     .raw(`---

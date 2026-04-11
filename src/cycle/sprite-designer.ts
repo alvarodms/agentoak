@@ -13,6 +13,7 @@
 import { runClaudeCode, extractMcpTools } from "../agent/claude-cli.js";
 import { logger } from "../utils/logger.js";
 import type { TokenUsage } from "../memory/types.js";
+import type { ActionRecord } from "../agent/output-parser.js";
 
 /**
  * Structured metadata the Sprite Designer emits alongside its narrative report
@@ -34,6 +35,23 @@ export interface SpriteFeedbackMetadata {
   existingIssueNumber?: number;
 }
 
+/**
+ * Pre-filled iteration context the runner injects into the Sprite Designer
+ * prompt when the Producer signalled this is an iteration on an existing
+ * sprite-feedback issue. Supplying this out-of-band lets the runner hard-pin
+ * `existingIssueNumber` in the expected metadata block, instead of relying on
+ * the agent to parse it from free-text in the brief (which has historically
+ * failed — see the cycle 204 post-mortem).
+ */
+export interface SpriteIterationContext {
+  /** Base species name (e.g. "Corsola"). */
+  speciesName: string;
+  /** Existing sprite-feedback GitHub issue number to comment on. */
+  existingIssueNumber: number;
+  /** The version number this iteration will produce (previous + 1). */
+  nextVersion: number;
+}
+
 export interface SpriteDesignResult {
   /** Report of what was created/modified, techniques used, notes for community */
   spriteReport: string;
@@ -43,6 +61,9 @@ export interface SpriteDesignResult {
   toolCallCount: number;
   /** Token usage for this phase */
   tokenUsage: TokenUsage;
+  /** Structured action log from the Sprite Designer agent — merged into the
+   *  journal's tool-call accounting so Phase 1.75 isn't invisible. */
+  actions: ActionRecord[];
   /** Structured metadata parsed from the agent's report. Null when the agent
    *  omitted or malformed the sprite-metadata block — the runner logs a warning
    *  in that case and skips the feedback issue. */
@@ -80,11 +101,22 @@ export async function runSpriteDesigner(
   objective: string,
   brief: string,
   implementationPlan: string,
+  iterationContext?: SpriteIterationContext,
 ): Promise<SpriteDesignResult> {
-  const prompt = buildSpriteDesignerPrompt(objective, brief, implementationPlan);
+  const prompt = buildSpriteDesignerPrompt(
+    objective,
+    brief,
+    implementationPlan,
+    iterationContext,
+  );
 
   logger.info("[Sprite Designer] Starting sprite design phase...");
   logger.info(`[Sprite Designer] Brief: ${brief.slice(0, 200)}${brief.length > 200 ? "..." : ""}`);
+  if (iterationContext) {
+    logger.info(
+      `[Sprite Designer] Iteration context: ${iterationContext.speciesName} v${iterationContext.nextVersion} (existing issue #${iterationContext.existingIssueNumber})`,
+    );
+  }
 
   const result = await runClaudeCode(prompt, {
     maxTurns: SPRITE_DESIGNER_MAX_TURNS,
@@ -104,10 +136,59 @@ export async function runSpriteDesigner(
     (f) => f.includes("graphics/pokemon/") || f.endsWith(".py"),
   );
 
-  const metadata = parseSpriteFeedbackMetadata(spriteReport);
+  let metadata = parseSpriteFeedbackMetadata(spriteReport);
+  let finalReport = spriteReport;
+  let totalToolCalls = result.toolCallCount;
+  let totalTokenUsage = result.tokenUsage;
+  const allActions: ActionRecord[] = [...result.actions];
+
+  // Retry once if metadata parsing failed — historically a silent failure mode
+  // that left Phase 3.6 unable to post the feedback issue (see cycle 204).
+  if (!metadata) {
+    logger.warn(
+      "[Sprite Designer] No valid sprite-metadata block in first report — retrying with a focused metadata prompt.",
+    );
+    try {
+      const retryPrompt = buildMetadataRetryPrompt(
+        finalReport,
+        iterationContext,
+      );
+      const retry = await runClaudeCode(retryPrompt, {
+        maxTurns: 5,
+        timeout: 2 * 60 * 1000,
+        tools: "Read",
+        model: process.env.ANTHROPIC_MODEL,
+      });
+      const retryText = retry.narrativeText || retry.resultText || "";
+      const retryMetadata = parseSpriteFeedbackMetadata(retryText);
+      totalToolCalls += retry.toolCallCount;
+      allActions.push(...retry.actions);
+      totalTokenUsage = {
+        inputTokens: totalTokenUsage.inputTokens + retry.tokenUsage.inputTokens,
+        outputTokens:
+          totalTokenUsage.outputTokens + retry.tokenUsage.outputTokens,
+        totalTokens: totalTokenUsage.totalTokens + retry.tokenUsage.totalTokens,
+      };
+      if (retryMetadata) {
+        metadata = retryMetadata;
+        finalReport = `${finalReport}\n\n${retryText.trim()}`;
+        logger.info(
+          "[Sprite Designer] Metadata retry succeeded — sprite-feedback issue posting will proceed.",
+        );
+      } else {
+        logger.warn(
+          "[Sprite Designer] Metadata retry still produced no valid sprite-metadata block.",
+        );
+      }
+    } catch (err) {
+      logger.warn(
+        `[Sprite Designer] Metadata retry failed: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
+  }
 
   logger.info(
-    `[Sprite Designer] Design complete: ${result.toolCallCount} tool calls, ${filesCreated.length} files created/modified`,
+    `[Sprite Designer] Design complete: ${totalToolCalls} tool calls, ${filesCreated.length} files created/modified`,
   );
   if (metadata) {
     logger.info(
@@ -120,12 +201,54 @@ export async function runSpriteDesigner(
   }
 
   return {
-    spriteReport,
+    spriteReport: finalReport,
     filesCreated,
-    toolCallCount: result.toolCallCount,
-    tokenUsage: result.tokenUsage,
+    toolCallCount: totalToolCalls,
+    tokenUsage: totalTokenUsage,
+    actions: allActions,
     metadata,
   };
+}
+
+/**
+ * Focused prompt used as a retry pass when the Sprite Designer forgot to emit
+ * (or malformed) the `sprite-metadata` block. Asks only for the block — no
+ * file edits, no re-design work.
+ */
+function buildMetadataRetryPrompt(
+  previousReport: string,
+  iterationContext?: SpriteIterationContext,
+): string {
+  const exampleBlock = iterationContext
+    ? `\`\`\`sprite-metadata
+{"speciesName": "${iterationContext.speciesName}", "typing": "<REPLACE WITH TYPING FROM YOUR REPORT>", "version": ${iterationContext.nextVersion}, "isIteration": true, "existingIssueNumber": ${iterationContext.existingIssueNumber}}
+\`\`\``
+    : `\`\`\`sprite-metadata
+{"speciesName": "<base species name, no 'Hoenn' prefix>", "typing": "<type line>", "version": 1, "isIteration": false}
+\`\`\``;
+
+  return `You previously ran as the Sprite Designer and produced this report:
+
+---
+${previousReport.slice(-4000)}
+---
+
+The report is missing (or has a malformed) \`sprite-metadata\` JSON block. The runner cannot post the sprite-feedback GitHub issue without it, so the community will never see your work.
+
+Your ONLY job right now is to output a single valid \`sprite-metadata\` block that describes the sprite you already created. Do NOT re-edit any files. Do NOT re-analyze the sprites.
+
+Output format — copy this exactly, filling in the values based on the report above:
+
+${exampleBlock}
+
+Rules:
+- \`speciesName\` is the BASE species name, no "Hoenn" prefix.
+- \`typing\` is the full type line (e.g. "Ghost/Rock" or "Water").
+- \`version\` is an integer (1 for fresh, 2+ for iterations).
+- \`isIteration\` is true for iteration rounds, false for fresh sprites.
+- When \`isIteration\` is true, \`existingIssueNumber\` is REQUIRED.
+
+Respond with just the fenced \`sprite-metadata\` block. No prose.`;
 }
 
 /**
@@ -188,7 +311,28 @@ function buildSpriteDesignerPrompt(
   objective: string,
   brief: string,
   implementationPlan: string,
+  iterationContext?: SpriteIterationContext,
 ): string {
+  const iterationContextSection = iterationContext
+    ? `
+## Iteration Context (from the runner)
+
+**This is an iteration on an existing sprite-feedback issue.** The Producer flagged this cycle as a feedback round, and the runner has resolved the exact issue number for you so you don't have to guess.
+
+- **Base species**: ${iterationContext.speciesName}
+- **Existing sprite-feedback issue**: #${iterationContext.existingIssueNumber}
+- **This iteration's version number**: v${iterationContext.nextVersion}
+
+When you emit the required \`sprite-metadata\` block below, use EXACTLY these values:
+- \`speciesName\`: \`"${iterationContext.speciesName}"\`
+- \`version\`: \`${iterationContext.nextVersion}\`
+- \`isIteration\`: \`true\`
+- \`existingIssueNumber\`: \`${iterationContext.existingIssueNumber}\`
+
+Fill in \`typing\` from the brief. Do not invent a different issue number or version.
+`
+    : "";
+
   return `You are the **Sprite Designer** for a Pokémon Emerald ROM hack called Legends of Hoenn.
 
 Your job: create or iterate on regional form sprites based on the Producer's brief. You produce the sprite FILES (PNGs and PAL files) — the implementation agent will handle species registration in the codebase.
@@ -202,6 +346,7 @@ ${objective}
 ## Implementation Context
 The Producer has outlined these implementation steps. Your sprite work feeds into this plan:
 ${implementationPlan}
+${iterationContextSection}
 
 ## Your Capabilities
 
@@ -328,7 +473,7 @@ For a fresh sprite:
 {"speciesName": "Corsola", "typing": "Ghost/Rock", "version": 1, "isIteration": false}
 \`\`\`
 
-For an iteration on an existing sprite-feedback issue (read the existing issue number from your brief — the Producer includes it when quoting community feedback):
+For an iteration on an existing sprite-feedback issue, use the \`existingIssueNumber\` and \`version\` from the **Iteration Context** section above (the runner injects them for you). Example:
 \`\`\`sprite-metadata
 {"speciesName": "Arcanine", "typing": "Water/Fire", "version": 2, "isIteration": true, "existingIssueNumber": 142}
 \`\`\`
