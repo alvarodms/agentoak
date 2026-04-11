@@ -72,11 +72,20 @@ function computeStats(data: GuideData) {
       if (mon.level > maxLevel) maxLevel = mon.level;
     }
   }
+  for (const boss of data.bossFights || []) {
+    for (const mon of boss.party) {
+      if (mon.level > maxLevel) maxLevel = mon.level;
+    }
+  }
 
   return {
     totalRoutes: Object.keys(data.routes).length,
     totalSpecies: allSpecies.size,
-    trainers: data.gymLeaders.length + data.eliteFour.length + (data.champion ? 1 : 0),
+    trainers:
+      data.gymLeaders.length +
+      data.eliteFour.length +
+      (data.champion ? 1 : 0) +
+      (data.bossFights?.length || 0),
     levelRange: `Lv ${minLevel}\u2013${maxLevel}`,
   };
 }
@@ -168,6 +177,29 @@ function StepRenderer({
       );
     }
 
+    case 'boss': {
+      if (!step.bossKeys || step.bossKeys.length === 0) return null;
+      const fights = (data.bossFights || []).filter(b => step.bossKeys!.includes(b.key));
+      if (fights.length === 0) return null;
+      // Preserve the author's ordering from bossKeys (not the JSON order).
+      const ordered = step.bossKeys
+        .map(k => fights.find(f => f.key === k))
+        .filter((b): b is NonNullable<typeof b> => !!b);
+      return (
+        <>
+          {ordered.map(boss => (
+            <TrainerCard
+              key={boss.key}
+              title={`${boss.faction === 'Wally' ? 'Wally' : boss.faction + ' ' + boss.name} \u2014 ${boss.location}`}
+              subtitle={boss.doubleBattle ? 'Double Battle' : ''}
+              typeBadge={boss.faction}
+              party={boss.party}
+            />
+          ))}
+        </>
+      );
+    }
+
     case 'rival': {
       const battles = data.rivals.filter(r => {
         if (!step.rivalLocation) return false;
@@ -247,6 +279,7 @@ function StepRenderer({
 function stepTypeClass(type: ProgressionStep['type']): string {
   switch (type) {
     case 'gym': return 'step-gym';
+    case 'boss': return 'step-boss';
     case 'rival': return 'step-rival';
     case 'route': return 'step-route';
     case 'elite-four': return 'step-elite';

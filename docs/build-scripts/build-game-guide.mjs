@@ -387,6 +387,61 @@ function assembleChampion(trainers, parties) {
   };
 }
 
+// ── Boss Fights ──
+//
+// "Boss fights" covers story battles that aren't gym leaders, the Elite Four,
+// the Champion, or your rival: Team Magma/Aqua admins and their leaders, the
+// Wally fights (Mauville + Victory Road escalation), and the Mossdeep tag
+// battle with Steven. These are some of the most memorable fights in the
+// game and deserve first-class coverage in the guide.
+const BOSS_DEFINITIONS = [
+  { key: 'wally_mauville',          trainerId: 'TRAINER_WALLY_MAUVILLE',          name: 'Wally',   faction: 'Wally',    location: 'Mauville City' },
+  { key: 'maxie_mt_chimney',        trainerId: 'TRAINER_MAXIE_MT_CHIMNEY',        name: 'Maxie',   faction: 'Magma',    location: 'Mt. Chimney' },
+  { key: 'tabitha_mt_chimney',      trainerId: 'TRAINER_TABITHA_MT_CHIMNEY',      name: 'Tabitha', faction: 'Magma',    location: 'Mt. Chimney' },
+  { key: 'shelly_weather_institute',trainerId: 'TRAINER_SHELLY_WEATHER_INSTITUTE',name: 'Shelly',  faction: 'Aqua',     location: 'Weather Institute' },
+  { key: 'matt',                    trainerId: 'TRAINER_MATT',                    name: 'Matt',    faction: 'Aqua',     location: 'Mt. Pyre' },
+  { key: 'matthew',                 trainerId: 'TRAINER_MATTHEW',                 name: 'Matthew', faction: 'Aqua',     location: 'Magma Hideout' },
+  { key: 'tabitha_magma_hideout',   trainerId: 'TRAINER_TABITHA_MAGMA_HIDEOUT',   name: 'Tabitha', faction: 'Magma',    location: 'Magma Hideout' },
+  { key: 'maxie_magma_hideout',     trainerId: 'TRAINER_MAXIE_MAGMA_HIDEOUT',     name: 'Maxie',   faction: 'Magma',    location: 'Magma Hideout' },
+  { key: 'shelly_seafloor_cavern',  trainerId: 'TRAINER_SHELLY_SEAFLOOR_CAVERN',  name: 'Shelly',  faction: 'Aqua',     location: 'Seafloor Cavern' },
+  { key: 'archie',                  trainerId: 'TRAINER_ARCHIE',                  name: 'Archie',  faction: 'Aqua',     location: 'Seafloor Cavern' },
+  { key: 'tabitha_mossdeep',        trainerId: 'TRAINER_TABITHA_MOSSDEEP',        name: 'Tabitha', faction: 'Magma',    location: 'Mossdeep City' },
+  { key: 'maxie_mossdeep',          trainerId: 'TRAINER_MAXIE_MOSSDEEP',          name: 'Maxie',   faction: 'Magma',    location: 'Mossdeep City' },
+  { key: 'steven_multi',            trainerId: 'TRAINER_STEVEN',                  name: 'Steven',  faction: 'Champion', location: 'Mossdeep City' },
+  { key: 'wally_vr_1',              trainerId: 'TRAINER_WALLY_VR_1',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 1)' },
+  { key: 'wally_vr_2',              trainerId: 'TRAINER_WALLY_VR_2',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 2)' },
+  { key: 'wally_vr_3',              trainerId: 'TRAINER_WALLY_VR_3',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 3)' },
+  { key: 'wally_vr_4',              trainerId: 'TRAINER_WALLY_VR_4',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 4)' },
+  { key: 'wally_vr_5',              trainerId: 'TRAINER_WALLY_VR_5',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 5)' },
+];
+
+function assembleBossFights(trainers, parties) {
+  const byId = new Map(trainers.map(t => [t.id, t]));
+  const fights = [];
+
+  for (const def of BOSS_DEFINITIONS) {
+    const trainer = byId.get(def.trainerId);
+    if (!trainer) {
+      console.warn(`  ! Boss trainer not found: ${def.trainerId}`);
+      continue;
+    }
+    const party = parties.get(trainer.partyRef) || [];
+    if (party.length === 0) {
+      console.warn(`  ! Boss party empty: ${def.trainerId} -> ${trainer.partyRef}`);
+    }
+    fights.push({
+      key: def.key,
+      name: def.name,
+      faction: def.faction,
+      location: def.location,
+      doubleBattle: trainer.doubleBattle,
+      party,
+    });
+  }
+
+  return fights;
+}
+
 function assembleRivals(trainers, parties, starters) {
   // Map vanilla starter ID suffixes → the actual new player starter for that matchup.
   // Trainer IDs like TRAINER_BRENDAN_ROUTE_103_MUDKIP were named for the vanilla rival's
@@ -462,6 +517,7 @@ async function main() {
   const eliteFour = assembleEliteFour(trainers, parties);
   const champion = assembleChampion(trainers, parties);
   const rivals = assembleRivals(trainers, parties, starters);
+  const bossFights = assembleBossFights(trainers, parties);
 
   const guide = {
     generatedAt: new Date().toISOString(),
@@ -471,6 +527,7 @@ async function main() {
     eliteFour,
     champion,
     rivals,
+    bossFights,
   };
 
   await mkdir(OUTPUT_DIR, { recursive: true });
@@ -480,6 +537,7 @@ async function main() {
   console.log(`  Elite Four: ${eliteFour.length}`);
   console.log(`  Champion: ${champion ? champion.name : 'not found'}`);
   console.log(`  Rival battles: ${rivals.length}`);
+  console.log(`  Boss fights: ${bossFights.length}`);
 }
 
 main().catch(err => {
