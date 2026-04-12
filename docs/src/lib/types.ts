@@ -166,6 +166,7 @@ export interface MoveInfo {
 export interface PokedexEntry {
   id: number;
   name: string;
+  spriteKey: string;
   types: string[];
   stats: PokemonStats;
   bst: number;

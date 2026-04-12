@@ -93,7 +93,7 @@ export default function PokedexPage() {
 
         {/* Header */}
         <div className="pokedex-detail-header">
-          <PokemonSprite name={pokemon.name} className="pokedex-detail-sprite" />
+          <PokemonSprite spriteKey={pokemon.spriteKey} alt={pokemon.name} className="pokedex-detail-sprite" />
           <div className="pokedex-detail-info">
             <span className="pokedex-detail-id">#{String(pokemon.id).padStart(3, '0')}</span>
             <h2 className="pokedex-detail-name">{pokemon.name}</h2>

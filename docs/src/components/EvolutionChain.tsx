@@ -9,6 +9,7 @@ interface EvolutionChainProps {
 
 interface ChainNode {
   name: string;
+  spriteKey: string;
   method?: string;
 }
 
@@ -37,7 +38,7 @@ function buildChain(pokemon: PokedexEntry, allPokemon: PokedexEntry[]): ChainNod
     seen.add(mon.name);
 
     if (!stages[stage]) stages[stage] = [];
-    stages[stage].push({ name: mon.name, method });
+    stages[stage].push({ name: mon.name, spriteKey: mon.spriteKey, method });
 
     for (const evo of mon.evolution.evolvesTo) {
       const next = allPokemon.find(p => p.name === evo.species);
@@ -70,7 +71,7 @@ export default function EvolutionChain({ pokemon, allPokemon, onNavigate }: Evol
                 onClick={() => onNavigate(node.name)}
                 type="button"
               >
-                <PokemonSprite name={node.name} className="evo-sprite" />
+                <PokemonSprite spriteKey={node.spriteKey} alt={node.name} className="evo-sprite" />
                 <span className="evo-name">{node.name}</span>
                 {node.method && <span className="evo-method">{node.method}</span>}
               </button>
