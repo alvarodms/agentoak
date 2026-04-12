@@ -18,6 +18,10 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  readIndexedPng,
+  loadCombinedPalettes,
+} from "./porymap/png-indexed.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT ?? "3555", 10);
@@ -224,6 +228,87 @@ async function main() {
         });
 
         json(res, result);
+        return;
+      }
+
+      // Serve tileset PNG images for the map preview renderer
+      const tilesetMatch = url.pathname.match(
+        /^\/tileset\/(primary|secondary)\/([a-zA-Z0-9_-]+)\/tiles\.png$/,
+      );
+      if (tilesetMatch && req.method === "GET") {
+        const [, tilesetType, tilesetName] = tilesetMatch;
+        const pokeemeraldRoot = path.resolve(__dirname, "../../pokeemerald");
+        const pngPath = path.join(
+          pokeemeraldRoot,
+          "data/tilesets",
+          tilesetType,
+          tilesetName,
+          "tiles.png",
+        );
+
+        try {
+          const data = fs.readFileSync(pngPath);
+          res.writeHead(200, {
+            "Content-Type": "image/png",
+            "Cache-Control": "public, max-age=3600",
+            "Access-Control-Allow-Origin": "*",
+          });
+          res.end(data);
+        } catch {
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end(`Tileset not found: ${tilesetType}/${tilesetName}`);
+        }
+        return;
+      }
+
+      // Serve indexed tile data + combined palettes for palette-accurate map rendering
+      if (url.pathname === "/map-tileset-data" && req.method === "GET") {
+        const primaryName = url.searchParams.get("primary");
+        const secondaryName = url.searchParams.get("secondary");
+        if (!primaryName || !secondaryName) {
+          json(res, { error: "Missing primary or secondary query parameter" }, 400);
+          return;
+        }
+
+        const pokeemeraldRoot = path.resolve(__dirname, "../../pokeemerald");
+        const tilesetsDir = path.join(pokeemeraldRoot, "data/tilesets");
+
+        try {
+          const [primaryPng, secondaryPng, palettes] = await Promise.all([
+            readIndexedPng(path.join(tilesetsDir, "primary", primaryName, "tiles.png")),
+            readIndexedPng(path.join(tilesetsDir, "secondary", secondaryName, "tiles.png")).catch(() => null),
+            loadCombinedPalettes(
+              path.join(tilesetsDir, "primary", primaryName, "palettes"),
+              path.join(tilesetsDir, "secondary", secondaryName, "palettes"),
+            ),
+          ]);
+
+          const result = {
+            primary: {
+              width: primaryPng.width,
+              height: primaryPng.height,
+              indexed: primaryPng.indices.toString("base64"),
+            },
+            secondary: secondaryPng
+              ? {
+                  width: secondaryPng.width,
+                  height: secondaryPng.height,
+                  indexed: secondaryPng.indices.toString("base64"),
+                }
+              : null,
+            palettes,
+          };
+
+          res.writeHead(200, {
+            "Content-Type": "application/json",
+            "Cache-Control": "public, max-age=3600",
+            "Access-Control-Allow-Origin": "*",
+          });
+          res.end(JSON.stringify(result));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          json(res, { error: `Failed to load tileset data: ${msg}` }, 500);
+        }
         return;
       }
 

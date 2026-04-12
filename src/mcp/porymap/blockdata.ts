@@ -113,3 +113,63 @@ export async function readMetatileAttributes(
 
   return attrs;
 }
+
+// ─── Metatile composition (metatiles.bin) ────────────────────────────────────
+
+const NUM_TILES_PER_METATILE = 8;
+
+/** A single tile entry within a metatile (decoded GBA BG tilemap u16). */
+export interface TileEntry {
+  tileIndex: number;
+  hflip: boolean;
+  vflip: boolean;
+  palette: number;
+}
+
+/** One metatile = 8 tile entries (bottom 2x2 + top 2x2). */
+export interface MetatileTiles {
+  tiles: TileEntry[];
+}
+
+/** Decode a single u16 GBA tilemap entry. */
+export function decodeTileEntry(raw: number): TileEntry {
+  return {
+    tileIndex: raw & 0x3ff,
+    hflip: !!(raw & 0x400),
+    vflip: !!(raw & 0x800),
+    palette: (raw >> 12) & 0xf,
+  };
+}
+
+/**
+ * Read metatiles.bin — 8 x u16 per metatile.
+ *
+ * Each metatile is composed of 8 tile references (GBA BG tilemap entries):
+ *   [0-3] = bottom layer 2x2 tiles (left-to-right, top-to-bottom)
+ *   [4-7] = top layer 2x2 tiles
+ *
+ * Each u16:
+ *   Bits  0-9:  tile index into the tileset's tile sheet
+ *   Bit  10:    horizontal flip
+ *   Bit  11:    vertical flip
+ *   Bits 12-15: palette number (0-15)
+ */
+export async function readMetatiles(
+  filePath: string,
+): Promise<MetatileTiles[]> {
+  const buf = await fs.readFile(filePath);
+  const bytesPerMetatile = NUM_TILES_PER_METATILE * 2;
+  const count = Math.floor(buf.length / bytesPerMetatile);
+  const metatiles: MetatileTiles[] = [];
+
+  for (let m = 0; m < count; m++) {
+    const tiles: TileEntry[] = [];
+    for (let t = 0; t < NUM_TILES_PER_METATILE; t++) {
+      const offset = m * bytesPerMetatile + t * 2;
+      tiles.push(decodeTileEntry(buf.readUInt16LE(offset)));
+    }
+    metatiles.push({ tiles });
+  }
+
+  return metatiles;
+}
