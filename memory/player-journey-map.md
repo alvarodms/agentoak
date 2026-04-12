@@ -98,9 +98,7 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 
 ## Known Gaps
 
-- ~~**In-battle level cap feedback**~~: **RESOLVED C207.** Two-page battle message: "{MON} gained {EXP} EXP. Points!" → "EXP reduced by the level cap." Displays every time the cap triggers in Challenge Mode.
-- ~~**Post-Rayquaza NPC gap**~~: **RESOLVED C205.** 6 ocean/atmosphere NPCs gain resolved dialogue. R126 fog thins. StormResearcher bridges weather omens → resolution.
-- **Regional form discoverability** (audit C201): **RESOLVED C207+C208.** Two mid-game forms: Corsola_Hoenn at Mt. Pyre (4%, Hours 6-10) + Vulpix_Hoenn at Route 113 (4%, Hours 3-6). Pattern established: one form per emotional register (spiritual unease vs wonder).
-- ~~**Bagon Colony researcher**~~ (C153): **RESOLVED C209.** Post-Champion callback — researcher reports juvenile Bagon changing (rocky scales, stopped leaping), Drake "choosing to stay" connection, seeds Bagon_Hoenn form.
-- ~~**E4 dialogue staleness**~~ (audit C201): **RESOLVED C203-C204.** All 5 E4/Champion rooms rewritten with specific event callbacks (Bagon Colony, Restless Dead, The Gathering, regional forms).
-- ~~**Weather omens → Gathering gap**~~: **RESOLVED C205.** Mossdeep StormResearcher's resolved text: "My colleagues at the WEATHER INSTITUTE say the anomalous patterns are stabilizing too."
+All v1.0-v1.9 gaps resolved (level cap feedback C207, post-Rayquaza NPCs C205, form discoverability C207+C208, Bagon researcher C209, E4 dialogue C203-C204, weather-Gathering bridge C205).
+
+**New (C211 audit)**:
+- **Bagon Colony gameplay resolution**: C209 researcher reports juveniles changing, but no encounter exists yet. Addressed in v2.0 roadmap — Bagon_Hoenn (Dragon/Rock) at Meteor Falls, C215.

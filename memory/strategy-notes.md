@@ -14,95 +14,87 @@
 **v1.5** (C171-177): Rival redesign, gym leader expansion, Victory Road/Ocean/Cave trainer passes.
 **v1.6** (C178-183): First impressions & Challenge Mode — Birch dialogue, difficulty selection, Set battles, badge-based level caps.
 **v1.7** (C184-191): "The Gathering Storm" — Late-game atmosphere arc. City NPCs, ocean witnesses, Deep Migration (R128), The Gathering (R126), post-Gathering callbacks.
-**v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline. **COMPLETE.**
+**v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline.
+**v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul (dialogue+teams+rematches), "The Exhale" post-Rayquaza resolution, 2 mid-game forms (Vulpix_Hoenn, Ninetales_Hoenn), Corsola encounter, Bagon Colony callback, Deoxys quest, challenge_mode_scaling.h.
 
 ---
 
-# v1.9: "The New Normal" (C201-C215)
+# v2.0: "Deeper Roots" (C212-C225)
 
 ## Creative Vision
 
-v1.8 made Hoenn a living region with quests and regional forms. v1.9 asks: **what does Hoenn look like after everything settles?** The migration happened, the legendaries were tamed, The Gathering shook the ocean — now the world should reflect that. "The New Normal" is where the hack's narrative lands.
+v1.9 completed the narrative arc — from Birch's lab to Deoxys, the story lands. v2.0 asks: **what grows in settled ground?**
 
-The **Elite Four & Champion overhaul** is the flagship. All 5 E4 members reference migration in dialogue (C33), but generically — written before weather omens, The Gathering, regional forms, and the legendary saga existed. v1.9 deepens this: Phoebe acknowledges the Restless Dead, Drake references the Bagon Colony, Wallace's team features a regional form. The E4 becomes the narrative culmination.
+"Deeper Roots" has a dual meaning. First, cross-generation evolutions — species that already live in Hoenn discovering new evolutionary paths (Dusknoir, Froslass, Mamoswine, Honchkrow, Farigiraf). The migration didn't just bring new species; it unlocked latent potential in existing ones. Second, the Bagon Colony's resolution: the dragon that dreamed of flight has put down roots in Meteor Falls, its children hardening into something new.
 
-The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in permanent "dread" — the Route 126 Swimmer and Mossdeep StormResearcher never learn Rayquaza resolved the crisis. Fixing these seams turns the world from a feature collection into a coherent story.
+Where v1.9 was wide (E4 overhaul, quests, forms, resolution), v2.0 is deep. No new quest chains. No new narrative arcs. Instead: making every existing system richer. The E4 gains cross-gen evolutions that make their teams feel modern and complete. The Bagon Colony thread resolves with a tangible encounter. The Petalburg difficulty NPC ships. Graphical rough edges get smoothed. Documentation catches up to the feature set.
 
-## Seams Audit Findings (C201)
+The player experience goal: a second playthrough reveals new details. Glacia fields a Froslass. Sidney's Honchkrow presides. Tate & Liza share a Farigiraf. And in Meteor Falls, where Drake once spoke of dragons who "choose to stay," the proof waits in the dark.
 
-1. **Mid-game density (Hours 3-6)**: LOW. Not a priority.
-2. **Regional form discoverability**: ✅ RESOLVED. E4 showcases (C203 ✓ Phoebe, C204 Wallace) + mid-game Corsola_Hoenn at Mt. Pyre (C207 ✓) + Vulpix_Hoenn at R113 (C208 ✓). Two forms visible pre-E4 in different emotional registers.
-3. **Post-Rayquaza emotional landing**: ✅ C205 "The Exhale" — 6 NPCs resolved, R126 fog thinned, weather-omen gap bridged.
-4. **E4 dialogue gap**: C203 addressed Sidney/Phoebe/Glacia. C204 addresses Drake/Wallace.
-5. **Narrative thread continuity**: LOW-MEDIUM. Drake (C204) callbacks Bagon Colony. C205 StormResearcher bridges weather omens → resolution. Remaining threads deferred.
+## Design Ruling: Bagon_Hoenn (Dragon/Rock)
 
-## Flagship: Elite Four & Champion Overhaul (#112)
+**Decision**: Ship Bagon_Hoenn as Dragon/Rock. Standalone form — no Shelgon_Hoenn or Salamence_Hoenn in v2.0.
 
-### Dialogue Direction
+**Species**: Bagon_Hoenn | **Typing**: Dragon/Rock | **BST**: ~310 (base Bagon is 300: shift +Def, +SpDef, -Spd, -Atk)
+**Ability**: Rock Head (retained) / Sturdy (hidden — thematic for a cave-hardened dragon)
 
-- **Sidney (Dark)** ✅ C203: Murkrow flocks, Houndoom, dark predators thriving in upheaval. Ends with a question.
-- **Phoebe (Ghost)** ✅ C203: Mt. Pyre Restless Dead, grandmother, Corsola_Hoenn introduction. "Can you face what endures?"
-- **Glacia (Ice)** ✅ C203: Route 125 hail, came TO Hoenn because of migration. "Will you show me what HOENN's warmth is made of?"
-- **Drake (Dragon)** ✅ C204: Bagon Colony + Draconid legend. "When the world shifts beneath you—do you change, or hold the line?"
-- **Wallace (Champion)** ✅ C204: The Gathering + Route 128 + Arcanine_Hoenn ("a fire that burns underwater"). "Whether you're ready for what HOENN is becoming."
+**Narrative justification**: Every other regional form in Legends of Hoenn represents outsiders adapting TO Hoenn — Corsola bleaching near graves, Vulpix crystallizing in ash, Growlithe absorbing ocean currents. Bagon_Hoenn represents the inverse: Hoenn itself changing in response to the migration. The colony juveniles stopped dreaming of flight. They burrowed into Meteor Falls' walls, their scales hardening into mineral composites. This isn't redundancy — it's narrative completion. The migration didn't just bring newcomers; it changed the residents.
 
-### Team Changes
+**Why not Ekans/Arbok (#126 alternative)**: The C209 researcher callback specifically describes juvenile Bagon physically changing (rocky scales, stopped leaping). Pivoting to a different species makes that dialogue a dead-end thread.
 
-- **Phoebe** ✅ C203: Duplicate Banette -> **Corsola_Hoenn** (Ghost/Rock, Lv47, Spell Tag, Shadow Claw/Rock Slide/Double Edge/Curse)
-- **Wallace** ✅ C204: Swap Tentacruel -> **Arcanine_Hoenn** (Water/Fire, Lv55, Lum Berry, Surf/Flamethrower/ExtremeSpeed/Crunch)
-- Sidney, Glacia, Drake: No species changes
+**Why standalone (no evo line)**: The researcher says juveniles are "changing" — present tense, in progress. Whether these Bagon eventually evolve into something beyond Salamence is an open question for the player and for future versions. Shipping Bagon_Hoenn alone keeps the narrative honest and avoids pseudo-legendary balance scrutiny that comes with a full 3-stage line.
 
-### Rematches ✅ C206
+**Encounter**: Meteor Falls, postgame, requires Champion + researcher callback seen. 4% encounter rate, Lv28-30. The researcher's presence contextualizes the find.
 
-- All 20 rematch parties (5 members × 4 tiers) rewritten with migration-themed rosters
-- Regional forms: Corsola_Hoenn (Phoebe T2+), Arcanine_Hoenn (Wallace T2+), Garchomp (Drake T3+), Weavile (Glacia T2+)
-- Duplicate species eliminated, level progression validated, competitive items on every mon
-- Challenge Mode E4 variants deferred to C207
+**Drake connection**: Drake's E4 speech references the colony ("When the world shifts beneath you — do you change, or hold the line?"). Encountering the answer — they changed — is the payoff.
 
-## "The Exhale" — Post-Rayquaza World State ✅ C205
+## Postgame Density Audit (C211)
 
-6 NPCs gain post-Rayquaza resolved dialogue. R126 fog thins to WEATHER_FOG_DIAGONAL. Mossdeep StormResearcher connects weather omens to resolution via WEATHER INSTITUTE callback.
+12 distinct postgame content threads exist. Assessment:
 
-## Regional Form Strategy
+1. **"What next?" signal**: GOOD. Birch's postgame call (Research Quest) fires immediately. Beast release triggers automatically. Side quests discovered through organic travel.
+2. **Gating logic**: GOOD. Quests require Champion status; some chain (Second Signal requires Mossdeep Signal). Legendary saga gates progression (beasts → Ho-Oh → Primal → Rayquaza).
+3. **Location overload**: MINOR. Space Center hosts 2 quests, but they're sequential (Signal → Second Signal). Acceptable.
+4. **Dead-end threads**: ONE. Bagon Colony researcher callback (C209) leads nowhere gameplay-wise. v2.0 resolves this (C215).
+5. **Emotional pacing**: GOOD. Alternates legendary urgency and quiet discovery. Second Signal ends on mystery (Deoxys), giving a hook.
 
-### Pipeline (C202 ✓)
-
-`scripts/add_regional_form.cjs` — config-driven, 27-file insertion from JSON spec. Future species ~10 actions.
-
-### New Forms (C208-C209)
-
-- **Mid-game accessible (#109)**: ✅ C208 Hoennian Vulpix + Ninetales (Ice/Fairy, R113 4% Lv21-22, Moon Stone evo). FrostTracker NPC.
-- **Narrative form**: Bagon Colony variant. Seeded narratively in C209 (researcher postgame callback — juveniles changing, Drake "choosing to stay"). Design/implementation planned C210-C211.
-
-## Community Issue Roadmap
-
-| Issue | Cycles | Approach |
-|-------|--------|----------|
-| #112 E4/Champion | C203 ✓ + C204-C205 | Flagship: dialogue + teams + rematches |
-| #109 Accessible forms | C207 ✓ + C208 ✓ | Mt. Pyre Corsola (C207) + R113 Vulpix/Ninetales (C208) |
-| #97 More regional forms | C202 ✓ + C208-C209 | Pipeline enables, then 2-3 species |
-| #114 Migration lore | C205 ✓ | Folded into "The Exhale" — StormResearcher bridges weather omens to resolution |
-| #110 Deoxys quest | C210 ✓ | "The Second Signal" — postgame Deoxys quest at Space Center |
-| #104 Level cap display | C207 ✓ | In-battle EXP message when cap reduces EXP |
-| #80 Playtesting bugs | Ongoing | Check remaining items |
-| #108 Graphical tweaks | C212+ | Evaluate per-item |
-| #115 Improved docs | Defer | Multi-cycle outside ROM scope |
+**Verdict**: Rich but not cluttered. One genuine gap (Bagon Colony) addressed by v2.0.
 
 ## Multi-Cycle Roadmap
 
-| Cycle | Mode | Objective | Status |
-|-------|------|-----------|--------|
-| C201 | planning | v1.9 vision, roadmap, seams audit | **DONE** |
-| C202 | refactor | Ship `add_regional_form.cjs` pipeline | **DONE** |
-| C203 | feature | E4 dialogue: Sidney + Phoebe + Glacia + Phoebe team swap | **DONE** |
-| C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | **DONE** |
-| C205 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning | **DONE** |
-| C206 | feature | E4 rematches: 20 parties rewritten, validation script shipped | **DONE** |
-| C207 | feature | Mid-game Corsola_Hoenn encounter (Mt. Pyre) + level cap message | **DONE** |
-| C208 | feature | Vulpix_Hoenn + Ninetales_Hoenn (Ice/Fairy, R113) + FrostTracker NPC | **DONE** |
-| C209 | feature | Bagon Colony researcher callback + Corsola sprite v2 iteration | **DONE** |
-| C210 | feature | Deoxys quest (#110) + challenge_mode_scaling.h | **DONE** |
-| C211+ | polish | Level cap display (#104), Petalburg downgrade, remaining | -- |
+| Cycle | Mode | Objective | Dependencies |
+|-------|------|-----------|--------------|
+| C211 | planning | v2.0 vision, Bagon decision, postgame audit, roadmap | — |
+| C212 | feature | Cross-gen batch 1: **Dusknoir** + **Honchkrow**. Phoebe + Sidney teams updated. | — |
+| C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia team updated. | — |
+| C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza team updated. **Petalburg downgrade NPC**. | — |
+| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. | C209 seed |
+| C216 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. | C212-C215 |
+| C217 | feature | Graphical tweaks (#108) — evaluate and implement feasible items. | C216 review |
+| C218 | feature | Documentation pass (#115) — README expansion, player guide, feature list. | — |
+| C219 | feature | Community-driven or polish — slot determined by C216. | C216 |
+| C220 | feature | Community-driven or polish — slot determined by C216. | C216 |
+| C221 | refactor | Quality pass — validation scripts, sprite iterations from community feedback. | — |
+| C222 | feature | Open — new character (#128) if approved at C216, or additional forms (#118). | C216 |
+| C223 | feature | Open — Deoxys expansion (#130) if approved at C216, or polish. | C216 |
+| C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | All |
+| C225 | feature | Final v2.0 polish and ship. | C224 |
+
+### Cross-Gen Implementation Notes
+
+The species pipeline (`add_regional_form.cjs`) handles regional forms but not new evolutionary stages. Cross-gen evos add entirely new species (not variants of existing ones) and must also update the pre-evolution's evolution table. Options: (a) extend the script, (b) create a new `add_cross_gen_evo.cjs`, or (c) manual pipeline (~40-60 actions per species). Recommend evaluating at C212 start — if 2 species per cycle is tight, build the script first.
+
+## Issue Triage
+
+| Issue | Deferrals | v2.0 Plan |
+|-------|-----------|-----------|
+| #127 Cross-gen species | 1 | **HIGH**. C212-C214 ships all 5 species. v2.0 flagship. |
+| #108 Graphical tweaks | 2 | MEDIUM. C217. Evaluate per-item; implement what's feasible. |
+| #115 Improved docs | 2 | MEDIUM. C218. README expansion + feature list. |
+| #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand at C216. |
+| #126 Bagon/Vulpix redundancy | — | **RESOLVED**. Bagon_Hoenn proceeds as Dragon/Rock. Vulpix_Hoenn stays (embedded in E4+3 cycles). |
+| #128 New character | 1 | LOW. Evaluate at C216. Custom characters need narrative justification + multi-cycle commitment. |
+| #130 Deoxys quest expansion | 1 | LOW. Evaluate at C216 after player feedback. 10-cycle ask is overscoped; max 2-3 cycles if expanded. |
 
 ---
 
