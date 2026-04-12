@@ -5,6 +5,6 @@
 
 | Species | Type | Version | Cycle | Issue | Status |
 |---------|------|---------|-------|-------|--------|
-| Corsola Hoenn | Ghost/Rock | v1 | 195 | — | awaiting feedback |
+| Corsola Hoenn | Ghost/Rock | v1 | 195 | #116 | awaiting feedback |
 | Growlithe Hoenn | Water | v1 | 196 | — | awaiting feedback |
 | Arcanine Hoenn | Water/Fire | v1 | 196 | — | awaiting feedback |
