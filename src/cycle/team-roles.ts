@@ -40,7 +40,7 @@ const gameDesignerRole: TeamRole = {
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Game Designer** advisor on a Pokémon Emerald ROM hack called Legends of Hoenn.
 
-Your job: write a short advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
+Your job: write a short advisory memo (200-350 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
 
 ## Your Design Authority
 
@@ -76,7 +76,7 @@ ${buildAdvisorContextBlock(ctx)}
 4. Recommend your top priority with player-experience reasoning (not just "highest-impact").
 5. If the roadmap's next step is wrong for the player experience, say so directly.
 6. If community issues are listed, note which ones serve the design vision.
-7. Do NOT produce JSON. Plain text only. Do NOT exceed 400 words.`,
+7. Do NOT produce JSON. Plain text only. Do NOT exceed 350 words.`,
 };
 
 const techLeadRole: TeamRole = {
@@ -87,7 +87,7 @@ const techLeadRole: TeamRole = {
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Technical Lead** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
-Your job: write a short advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
+Your job: write a short advisory memo (200-350 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
 
 ## What you care about
 - Feasibility — can the implementation agent actually do this in one cycle?
@@ -114,7 +114,7 @@ Read \`memory/failure-patterns.md\` and \`memory/codebase-facts.md\` — they co
 6. **Identify one "engineering investment" opportunity** — a change that isn't directly feature work but would pay dividends across multiple future cycles (e.g., "If we extracted move definitions into a JSON config, adding new moves would go from 6-file edits to 1-file edits").
 7. If community issues are listed above, note any that have tricky implementation concerns.
 8. Do NOT produce JSON. Just write your memo as plain text.
-9. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
+9. Do NOT produce more than 350 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const romHackResearcherRole: TeamRole = {
@@ -125,7 +125,7 @@ const romHackResearcherRole: TeamRole = {
   tools: "Read,Write,WebSearch",
   buildPrompt: (ctx) => `You are the **ROM Hack Researcher** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
-Your job: bring external knowledge from the wider ROM hacking world into the team's planning. Research what real hacks do, what communities discuss, and what players value — then write a focused advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
+Your job: bring external knowledge from the wider ROM hacking world into the team's planning. Research what real hacks do, what communities discuss, and what players value — then write a focused advisory memo (200-350 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
 
 ## What makes you unique
 You are the team's **window into the outside world**. No other advisor can look up what real ROM hacks do, what communities discuss, or what players praise and criticize. This is your competitive advantage — use it.
@@ -189,7 +189,7 @@ ${buildAdvisorContextBlock(ctx)}
 7. **Every memo must include at least one concrete insight from external research that the team didn't already know.** Cite a specific hack, community thread, or design pattern.
 8. If your research yields no actionable external insight for this cycle, say so briefly (2-3 sentences) rather than padding with consensus agreement.
 9. Do NOT produce JSON. Just write your memo as plain text.
-10. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
+10. Do NOT produce more than 350 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const creativeVisionaryRole: TeamRole = {
@@ -234,7 +234,7 @@ ${buildAdvisorContextBlock(ctx)}
 4. If community issues are listed above, identify which ones open the door to something exciting.
 5. If you have a bold new idea that isn't on the backlog, pitch it — but keep it to one idea, with a concrete description of what the player would experience.
 6. Do NOT produce JSON. Just write your memo as plain text.
-7. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
+7. Do NOT produce more than 350 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 const originalityAdvocateRole: TeamRole = {
@@ -245,7 +245,7 @@ const originalityAdvocateRole: TeamRole = {
   tools: "Read",
   buildPrompt: (ctx) => `You are the **Originality Advocate** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
-Your job: write a bold advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
+Your job: write a bold advisory memo (200-350 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
 
 ## Your Mission
 
@@ -301,7 +301,7 @@ ${buildAdvisorContextBlock(ctx)}
 5. Write a plain-text memo addressed to "Producer" that makes the case for originality and ambition.
 6. If community issues are listed above, identify which ones are bold and worth accepting over safer alternatives.
 7. Do NOT produce JSON. Just write your memo as plain text.
-8. Do NOT produce more than 400 words — be concise and focused on the most impactful advice for the next cycle.`,
+8. Do NOT produce more than 350 words — be concise and focused on the most impactful advice for the next cycle.`,
 };
 
 /** All advisory roles that run in parallel before the Producer */
