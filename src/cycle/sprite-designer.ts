@@ -93,9 +93,9 @@ export async function runSpriteDesigner(
     model: process.env.ANTHROPIC_MODEL,
   });
 
-  const spriteReport = result.narrativeText || result.resultText || "";
+  const rawReport = result.narrativeText || result.resultText || "";
 
-  if (!spriteReport.trim()) {
+  if (!rawReport.trim()) {
     throw new Error("Sprite Designer produced no output");
   }
 
@@ -104,7 +104,9 @@ export async function runSpriteDesigner(
     (f) => f.includes("graphics/pokemon/") || f.endsWith(".py"),
   );
 
-  const metadata = parseSpriteFeedbackMetadata(spriteReport);
+  // Parse metadata from raw report BEFORE stripping, then extract clean report
+  const metadata = parseSpriteFeedbackMetadata(rawReport);
+  const spriteReport = extractSpriteReport(rawReport);
 
   logger.info(
     `[Sprite Designer] Design complete: ${result.toolCallCount} tool calls, ${filesCreated.length} files created/modified`,
@@ -126,6 +128,40 @@ export async function runSpriteDesigner(
     tokenUsage: result.tokenUsage,
     metadata,
   };
+}
+
+/** Regex matching the ```sprite-metadata``` fenced block. */
+const SPRITE_METADATA_BLOCK_RE = /```sprite-metadata\s*\n[\s\S]*?\n```/;
+
+/**
+ * Remove the ```sprite-metadata``` fenced block from a sprite report string.
+ */
+export function stripSpriteMetadataBlock(report: string): string {
+  return report.replace(SPRITE_METADATA_BLOCK_RE, "").trimEnd();
+}
+
+/**
+ * Extract the clean "Sprite Report" section from the full agent narrative.
+ *
+ * The Sprite Designer is instructed to end its output with a "## Sprite Report"
+ * section. This function finds that header and returns content from there up to
+ * the sprite-metadata block (exclusive) or end of text.
+ *
+ * Falls back to stripping just the metadata block when no header is found.
+ */
+export function extractSpriteReport(rawReport: string): string {
+  const headerMatch = rawReport.match(/^(#{1,4}\s+Sprite Report.*)/im);
+  if (!headerMatch) {
+    return stripSpriteMetadataBlock(rawReport);
+  }
+  const headerIndex = rawReport.indexOf(headerMatch[0]);
+  const afterHeader = rawReport.slice(headerIndex);
+
+  const metaBlockIndex = afterHeader.search(/```sprite-metadata\s*\n/);
+  if (metaBlockIndex !== -1) {
+    return afterHeader.slice(0, metaBlockIndex).trimEnd();
+  }
+  return stripSpriteMetadataBlock(afterHeader);
 }
 
 /**

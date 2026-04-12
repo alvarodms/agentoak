@@ -531,6 +531,28 @@ export async function createHelpRequest(
 export const MAX_SPRITE_ITERATIONS = 5;
 
 /**
+ * Format image paths as markdown image links.
+ * When repoSlug and commitSha are provided, uses raw.githubusercontent.com
+ * URLs pinned to the commit (immutable, resolves once pushed). Falls back
+ * to repo-relative paths for local/test scenarios.
+ */
+function formatImageUrls(
+  repoImagePaths: string[],
+  repoSlug?: string,
+  commitSha?: string,
+): string {
+  return repoImagePaths
+    .map((p) => {
+      const name = path.basename(p);
+      if (repoSlug && commitSha) {
+        return `![${name}](https://raw.githubusercontent.com/${repoSlug}/${commitSha}/${p})`;
+      }
+      return `![${name}](/${p})`;
+    })
+    .join("\n");
+}
+
+/**
  * Create a sprite-feedback issue to solicit community feedback on a new
  * or updated regional form sprite.
  * Returns the new issue number, or null on failure.
@@ -541,10 +563,10 @@ export async function createSpriteFeedbackIssue(
   spriteReport: string,
   repoImagePaths: string[],
   version: number,
+  repoSlug?: string,
+  commitSha?: string,
 ): Promise<number | null> {
-  const imageSection = repoImagePaths
-    .map((p) => `![${path.basename(p)}](/${p})`)
-    .join("\n");
+  const imageSection = formatImageUrls(repoImagePaths, repoSlug, commitSha);
   const title = `[Sprite Feedback] Hoenn ${speciesName} (${typing})`;
   const body =
     `🎨 **Agent Oak — Sprite Feedback Request**\n\n` +
@@ -568,10 +590,10 @@ export async function postSpriteIterationUpdate(
   spriteReport: string,
   repoImagePaths: string[],
   version: number,
+  repoSlug?: string,
+  commitSha?: string,
 ): Promise<void> {
-  const imageSection = repoImagePaths
-    .map((p) => `![${path.basename(p)}](/${p})`)
-    .join("\n");
+  const imageSection = formatImageUrls(repoImagePaths, repoSlug, commitSha);
   const body =
     `🎨 **Sprite Update — v${version}**\n\n` +
     `${imageSection}\n\n` +
