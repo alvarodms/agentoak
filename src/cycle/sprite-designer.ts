@@ -210,7 +210,7 @@ You work **programmatically** — you can't draw freehand, but you CAN:
 2. **Add pixel accents** by writing Python scripts that stamp glyphs (lightning bolts, ice crystals, flame patterns) onto sprite canvases
 3. **Remap palette indices** to change which colors map to which body parts
 4. **View your own work** — after modifying a sprite, \`Read\` the PNG file to visually assess the result (you are multimodal)
-5. **Fetch base sprites** using the \`fetch_pokemon_sprites\` MCP tool
+5. **Fetch base sprites** using the \`fetch_pokemon_sprites\` MCP tool (optional \`output_dir\` to write straight into a regional form folder)
 
 ## Sprite Format Constraints (GBA)
 
@@ -223,10 +223,8 @@ You work **programmatically** — you can't draw freehand, but you CAN:
 
 ### For Fresh Sprites (new regional form)
 
-1. **Fetch base sprites**: Use \`fetch_pokemon_sprites(name)\` to download the base species' sprites
-2. **Create variant directory**: \`pokeemerald/graphics/pokemon/<name>_hoenn/\`
-3. **Copy base sprites**: Copy all PNGs from the base species directory to the variant directory
-4. **Analyse the base palette**: Read \`normal.pal\`, then run a pixel map analysis to understand which palette indices map to which body parts:
+1. **Fetch base sprites into the regional folder**: Call \`fetch_pokemon_sprites\` with \`name\` = expansion-repo folder for the **base** species (e.g. \`corsola\`) and \`output_dir\` = your variant under \`graphics/pokemon/\` (e.g. \`corsola_hoenn\`). The tool creates the directory if needed and writes all sprite files there — no separate copy from the base folder.
+2. **Analyse the base palette**: Read \`normal.pal\`, then run a pixel map analysis to understand which palette indices map to which body parts:
 \`\`\`python
 from PIL import Image
 img = Image.open("front.png")
@@ -238,9 +236,9 @@ for y in range(img.height):
 for idx in sorted(counts):
     print(f"[{idx:2d}] {len(counts[idx]):4d} pixels")
 \`\`\`
-5. **Design the new palette**: Map type → color family (see reference table). Be AGGRESSIVE with color shifts — subtle changes are invisible at 64×64.
-6. **Write new .pal files**: Both \`normal.pal\` and \`shiny.pal\` in JASC-PAL format
-7. **Apply palette to PNGs**: Use Pillow to update the embedded PNG palettes:
+3. **Design the new palette**: Map type → color family (see reference table). Be AGGRESSIVE with color shifts — subtle changes are invisible at 64×64.
+4. **Write new .pal files**: Both \`normal.pal\` and \`shiny.pal\` in JASC-PAL format
+5. **Apply palette to PNGs**: Use Pillow to update the embedded PNG palettes:
 \`\`\`python
 from PIL import Image
 
@@ -257,9 +255,9 @@ def apply_pal_to_png(png_path, pal_colors):
 # Apply to: front.png, back.png, anim_front.png, icon.png
 # Do NOT apply to footprint.png (1-bit monochrome, no palette)
 \`\`\`
-8. **Add pixel accents** (optional): Stamp type-specific glyphs on body canvas areas
-9. **Self-review**: \`Read\` each modified PNG. Check: Are the colors distinct from the original? Are accents visible? Does the overall impression match the target type?
-10. **Write sprite report**: Document what you did, what techniques worked, and what the community should look for
+6. **Add pixel accents** (optional): Stamp type-specific glyphs on body canvas areas
+7. **Self-review**: \`Read\` each modified PNG. Check: Are the colors distinct from the original? Are accents visible? Does the overall impression match the target type?
+8. **Write sprite report**: Document what you did, what techniques worked, and what the community should look for
 
 ### For Iteration Sprites (community feedback round)
 

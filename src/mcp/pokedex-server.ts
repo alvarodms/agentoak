@@ -764,7 +764,8 @@ server.registerTool(
     title: "Fetch Pokémon Sprites from Expansion",
     description:
       "Download sprite files (front, back, icon, footprint, palettes) for a Pokémon from the " +
-      "pokeemerald-expansion GitHub repository and save them to pokeemerald/graphics/pokemon/<name>/. " +
+      "pokeemerald-expansion GitHub repository and save them under pokeemerald/graphics/pokemon/ " +
+      "(default folder matches `name`; optional `output_dir` for regional forms, e.g. corsola_hoenn). " +
       "Also generates front.png by cropping the top half of anim_front.png. " +
       "Use this when adding a new Pokémon species to get real sprites instead of placeholders.",
     inputSchema: z.object({
@@ -772,7 +773,7 @@ server.registerTool(
         .string()
         .describe(
           "Pokémon name matching the expansion repo directory name, e.g. 'lucario', 'mr_mime', 'nidoran_f'. " +
-            "Use lowercase with underscores.",
+            "Use lowercase with underscores. This selects the download source; use output_dir to change the save folder.",
         ),
       overwrite: z
         .boolean()
@@ -780,13 +781,22 @@ server.registerTool(
         .describe(
           "If true, overwrite existing sprite files. If false (default), skip files that already exist.",
         ),
+      output_dir: z
+        .string()
+        .optional()
+        .describe(
+          "Optional subdirectory under pokeemerald/graphics/pokemon/ where files are written " +
+            "(e.g. 'corsola_hoenn'). Must stay inside graphics/pokemon (no '..'). " +
+            "Created if missing. Omit to use the same path as `name`.",
+        ),
     }),
   },
-  async ({ name, overwrite }) => {
+  async ({ name, overwrite, output_dir }) => {
     const result = await fetchPokemonSprites(
       name,
       POKEEMERALD_ROOT,
       overwrite ?? false,
+      output_dir,
     );
     return {
       content: [{ type: "text", text: formatSpriteResult(result) }],

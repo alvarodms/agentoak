@@ -5,6 +5,8 @@
  * object, OR a single JSON array containing all messages.
  */
 
+import { getSpriteGraphicsSubpath } from "../mcp/sprite-fetcher.js";
+
 /**
  * Per-issue delivery outcome reported by the implementation agent in CYCLE_COMPLETE.
  *
@@ -223,16 +225,17 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
 
         // Track files created by fetch_pokemon_sprites MCP tool
         if (toolName === "fetch_pokemon_sprites" && typeof input.name === "string") {
-          const spriteName = (input.name as string)
-            .toLowerCase()
-            .replace(/\s+/g, "_")
-            .replace(/-/g, "_");
-          const spriteDir = `pokeemerald/graphics/pokemon/${spriteName}`;
-          for (const f of [
-            "anim_front.png", "front.png", "back.png",
-            "icon.png", "footprint.png", "normal.pal", "shiny.pal",
-          ]) {
-            filesModified.add(`${spriteDir}/${f}`);
+          const outDir =
+            typeof input.output_dir === "string" ? input.output_dir : undefined;
+          const subpath = getSpriteGraphicsSubpath(input.name, outDir);
+          if (subpath !== null) {
+            const spriteDir = `pokeemerald/graphics/pokemon/${subpath}`;
+            for (const f of [
+              "anim_front.png", "front.png", "back.png",
+              "icon.png", "footprint.png", "normal.pal", "shiny.pal",
+            ]) {
+              filesModified.add(`${spriteDir}/${f}`);
+            }
           }
         }
 

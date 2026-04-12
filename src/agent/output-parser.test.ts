@@ -252,6 +252,23 @@ describe("parseClaudeOutput", () => {
     expect(result.filesModified).toContain("pokeemerald/graphics/pokemon/lucario/shiny.pal");
   });
 
+  it("tracks fetch_pokemon_sprites paths under custom output_dir", () => {
+    const input = msg("assistant", [
+      toolUse("fetch_pokemon_sprites", {
+        name: "corsola",
+        output_dir: "corsola_hoenn",
+      }),
+    ]);
+    const result = parseClaudeOutput(input);
+    expect(result.filesModified).toHaveLength(7);
+    expect(result.filesModified).toContain(
+      "pokeemerald/graphics/pokemon/corsola_hoenn/front.png",
+    );
+    expect(result.filesModified).toContain(
+      "pokeemerald/graphics/pokemon/corsola_hoenn/normal.pal",
+    );
+  });
+
   it("deduplicates file modifications", () => {
     const input = [
       msg("assistant", [toolUse("Write", { file_path: "/tmp/a.ts" })]),

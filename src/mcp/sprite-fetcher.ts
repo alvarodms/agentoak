@@ -255,6 +255,106 @@ async function fetchSingleFile(url: string): Promise<Buffer | null> {
   return null;
 }
 
+// ─── Output directory (graphics/pokemon subtree) ─────────────────────────────
+
+/** Slug used for expansion repo URLs and default output folder name. */
+export function normalizeExpansionSlug(pokemonName: string): string {
+  return pokemonName.toLowerCase().replace(/\s+/g, "_").replace(/-/g, "_");
+}
+
+export type ValidateGraphicsPokemonSubpathResult =
+  | { ok: true; subpathPosix: string }
+  | { ok: false; error: string };
+
+/**
+ * Validates a user-supplied path relative to `graphics/pokemon`.
+ * Returns a posix subpath (no leading/trailing slashes) or an error.
+ */
+export function validateGraphicsPokemonSubpath(
+  outputDirRelative: string,
+): ValidateGraphicsPokemonSubpathResult {
+  const trimmed = outputDirRelative.trim().replace(/\\/g, "/");
+  if (!trimmed) {
+    return { ok: false, error: "output_dir cannot be empty or whitespace-only." };
+  }
+  if (/^[a-zA-Z]:/.test(trimmed)) {
+    return { ok: false, error: "output_dir must be a relative path under graphics/pokemon." };
+  }
+  if (trimmed.startsWith("/")) {
+    return { ok: false, error: "output_dir must not be an absolute path." };
+  }
+
+  const norm = path.posix.normalize(trimmed);
+  if (norm === "." || norm === "..") {
+    return { ok: false, error: "output_dir must name a subdirectory under graphics/pokemon." };
+  }
+  const parts = norm.split("/").filter((p) => p.length > 0);
+  if (parts.length === 0 || parts.some((p) => p === "..")) {
+    return {
+      ok: false,
+      error: "output_dir cannot contain '..' or resolve outside graphics/pokemon.",
+    };
+  }
+
+  return { ok: true, subpathPosix: parts.join("/") };
+}
+
+export type ResolvePokemonSpriteOutputDirResult =
+  | { ok: true; subpathPosix: string; outputDirAbs: string }
+  | { ok: false; error: string };
+
+/**
+ * Resolves the absolute output directory under pokeemerald/graphics/pokemon.
+ * When `outputDirRelative` is omitted, uses the expansion species slug.
+ */
+export function resolvePokemonSpriteOutputDir(
+  pokeemeraldRoot: string,
+  expansionSlug: string,
+  outputDirRelative?: string,
+): ResolvePokemonSpriteOutputDirResult {
+  const graphicsRoot = path.resolve(path.join(pokeemeraldRoot, "graphics", "pokemon"));
+
+  if (!outputDirRelative?.trim()) {
+    const outputDirAbs = path.join(graphicsRoot, expansionSlug);
+    return { ok: true, subpathPosix: expansionSlug, outputDirAbs };
+  }
+
+  const validated = validateGraphicsPokemonSubpath(outputDirRelative);
+  if (!validated.ok) {
+    return { ok: false, error: validated.error };
+  }
+
+  const outputDirAbs = path.resolve(graphicsRoot, ...validated.subpathPosix.split("/"));
+  const relCheck = path.relative(graphicsRoot, outputDirAbs);
+  if (relCheck.startsWith("..") || path.isAbsolute(relCheck)) {
+    return {
+      ok: false,
+      error: "output_dir must stay inside pokeemerald/graphics/pokemon.",
+    };
+  }
+
+  return { ok: true, subpathPosix: validated.subpathPosix, outputDirAbs };
+}
+
+/**
+ * Posix path segment(s) under `graphics/pokemon/` for git tracking and tool summaries.
+ * Returns `null` if `output_dir` is present but invalid (caller should skip path hints).
+ */
+export function getSpriteGraphicsSubpath(
+  pokemonName: string,
+  outputDir?: string,
+): string | null {
+  const slug = normalizeExpansionSlug(pokemonName);
+  if (!outputDir?.trim()) {
+    return slug;
+  }
+  const v = validateGraphicsPokemonSubpath(outputDir);
+  if (!v.ok) {
+    return null;
+  }
+  return v.subpathPosix;
+}
+
 // ─── Main export ────────────────────────────────────────────────────────────
 
 /**
@@ -263,24 +363,41 @@ async function fetchSingleFile(url: string): Promise<Buffer | null> {
  *
  * Downloads: anim_front.png, back.png, normal.pal, shiny.pal, icon.png, footprint.png
  * Generates: front.png (top half of anim_front.png)
+ *
+ * @param outputDirRelative Optional path under `graphics/pokemon/` (e.g. `corsola_hoenn`).
+ *        Expansion downloads still use `pokemonName` slug; files are written here.
  */
 export async function fetchPokemonSprites(
   pokemonName: string,
   pokeemeraldRoot: string,
   overwrite: boolean = false,
+  outputDirRelative?: string,
 ): Promise<SpriteResult> {
-  const name = pokemonName.toLowerCase().replace(/\s+/g, "_").replace(/-/g, "_");
-  const outputDir = path.join(pokeemeraldRoot, "graphics", "pokemon", name);
+  const name = normalizeExpansionSlug(pokemonName);
+  const resolved = resolvePokemonSpriteOutputDir(
+    pokeemeraldRoot,
+    name,
+    outputDirRelative,
+  );
+
   const result: SpriteResult = {
     success: false,
     pokemon: name,
-    outputDir,
+    outputDir: "",
     filesDownloaded: [],
     filesSkipped: [],
     filesFailed: [],
     frontPngGenerated: false,
     errors: [],
   };
+
+  if (!resolved.ok) {
+    result.errors.push(resolved.error);
+    return result;
+  }
+
+  const outputDir = resolved.outputDirAbs;
+  result.outputDir = outputDir;
 
   // Create output directory
   try {
