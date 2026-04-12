@@ -669,6 +669,9 @@ export async function runCycle(): Promise<void> {
   const sessionStartSha = await getHeadSha();
   log.info(`Session start SHA: ${sessionStartSha}`);
 
+  // Hoisted so the catch block can suppress unhandled rejections on crash
+  let spriteIterationPromise: Promise<SpriteDesignResult> | null = null;
+
   try {
     // ── Phase 1: Planning (separate agent context) ──
     const { memory, recentJournals, plan } = await runPlanningPhase(cycleNumber, log);
@@ -718,27 +721,41 @@ export async function runCycle(): Promise<void> {
     let spriteDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
 
     if (activePlan.spriteDesignBrief) {
-      log.info("Phase 1.75: Sprite Design...");
-      try {
-        spriteResult = await runSpriteDesigner(
+      if (activePlan.isSpriteIteration) {
+        // ITERATION: Launch sprite designer in parallel — don't block implementation.
+        // The species is already registered; iteration only overwrites existing PNGs/PALs.
+        log.info("Phase 1.75: Sprite Iteration (launching in parallel with implementation)...");
+        spriteIterationPromise = runSpriteDesigner(
           activePlan.objective,
           activePlan.spriteDesignBrief,
           activePlan.implementationPlan,
         );
-        activePlan = {
-          ...activePlan,
-          implementationPlan: `${activePlan.implementationPlan}\n\n## Sprite Design Report (from Sprite Designer)\n\n${spriteResult.spriteReport}\n\nFiles created/modified:\n${spriteResult.filesCreated.map(f => `- ${f}`).join("\n")}`,
-        };
-        spriteDesignTokenUsage = spriteResult.tokenUsage;
-        log.info(`  Sprite design complete: ${spriteResult.toolCallCount} tool calls, ${spriteResult.filesCreated.length} files`);
-      } catch (err) {
-        const errMsg = err instanceof Error ? err.message : String(err);
-        log.warn(`  Sprite Designer failed, proceeding with placeholder approach: ${errMsg}`);
-        // Fall through — implementation agent can copy sprites from base species as fallback
+        // Don't await — continues to Phase 2 immediately
+      } else {
+        // FRESH: Run sequentially — implementation needs the sprite report
+        log.info("Phase 1.75: Sprite Design (fresh)...");
+        try {
+          spriteResult = await runSpriteDesigner(
+            activePlan.objective,
+            activePlan.spriteDesignBrief,
+            activePlan.implementationPlan,
+          );
+          activePlan = {
+            ...activePlan,
+            implementationPlan: `${activePlan.implementationPlan}\n\n## Sprite Design Report (from Sprite Designer)\n\n${spriteResult.spriteReport}\n\nFiles created/modified:\n${spriteResult.filesCreated.map(f => `- ${f}`).join("\n")}`,
+          };
+          spriteDesignTokenUsage = spriteResult.tokenUsage;
+          log.info(`  Sprite design complete: ${spriteResult.toolCallCount} tool calls, ${spriteResult.filesCreated.length} files`);
+        } catch (err) {
+          const errMsg = err instanceof Error ? err.message : String(err);
+          log.warn(`  Sprite Designer failed, proceeding with placeholder approach: ${errMsg}`);
+          // Fall through — implementation agent can copy sprites from base species as fallback
+        }
       }
     }
 
     // ── Phase 2: Implementation (separate agent context) ──
+    // (runs concurrently with sprite iteration if one was launched above)
     let implResult = await runImplementationPhase(
       cycleNumber,
       activePlan,
@@ -746,6 +763,20 @@ export async function runCycle(): Promise<void> {
       recentJournals,
       log,
     );
+
+    // ── Collect parallel sprite iteration result (if launched) ──
+    if (spriteIterationPromise) {
+      log.info("  Collecting parallel sprite iteration result...");
+      try {
+        spriteResult = await spriteIterationPromise;
+        spriteDesignTokenUsage = spriteResult.tokenUsage;
+        log.info(`  Sprite iteration complete: ${spriteResult.toolCallCount} tool calls, ${spriteResult.filesCreated.length} files`);
+      } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        log.warn(`  Sprite iteration (parallel) failed, continuing without sprite changes: ${errMsg}`);
+        // spriteResult stays null — Phase 3.6 will be skipped, main cycle unaffected
+      }
+    }
 
     // ── Phase 3: Build verification + auto-fix loop ──
     let {
@@ -1123,6 +1154,9 @@ export async function runCycle(): Promise<void> {
     }
     log.info("═══════════════════════════════════════════════════");
   } catch (err) {
+    // Suppress unhandled rejection from any in-flight sprite iteration
+    spriteIterationPromise?.catch(() => {});
+
     log.error(`Cycle failed with error: ${err instanceof Error ? err.message : String(err)}`);
     if (err instanceof Error && err.stack) {
       log.error(err.stack);
