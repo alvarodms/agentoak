@@ -72,7 +72,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 ### New Forms (C208-C209)
 
 - **Mid-game accessible (#109)**: ✅ C208 Hoennian Vulpix + Ninetales (Ice/Fairy, R113 4% Lv21-22, Moon Stone evo). FrostTracker NPC.
-- **Narrative form**: Bagon Colony variant. TBD via MCP research.
+- **Narrative form**: Bagon Colony variant. Seeded narratively in C209 (researcher postgame callback — juveniles changing, Drake "choosing to stay"). Design/implementation planned C210-C211.
 
 ## Community Issue Roadmap
 
@@ -100,7 +100,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | C206 | feature | E4 rematches: 20 parties rewritten, validation script shipped | **DONE** |
 | C207 | feature | Mid-game Corsola_Hoenn encounter (Mt. Pyre) + level cap message | **DONE** |
 | C208 | feature | Vulpix_Hoenn + Ninetales_Hoenn (Ice/Fairy, R113) + FrostTracker NPC | **DONE** |
-| C209 | feature | New regional form #2 + Bagon Colony researcher callback | C202 ✓ |
+| C209 | feature | Bagon Colony researcher callback + Corsola sprite v2 iteration | **DONE** |
 | C210 | feature | Deoxys quest (#110) | -- |
 | C211+ | polish | Level cap display (#104), Petalburg downgrade, remaining | -- |
 

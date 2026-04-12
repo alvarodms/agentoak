@@ -357,7 +357,16 @@ MeteorFalls_1F_1R_EventScript_ColonyResearcher::
 	end
 
 MeteorFalls_1F_1R_EventScript_ColonyResearcherPost::
+	goto_if_set FLAG_SYS_GAME_CLEAR, MeteorFalls_1F_1R_EventScript_ColonyResearcherPostChampion
 	msgbox MeteorFalls_1F_1R_Text_ResearcherPostEvent, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonyResearcherPostChampion::
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion1, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion2, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion3, MSGBOX_DEFAULT
+	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion4, MSGBOX_DEFAULT
 	release
 	end
 
@@ -420,3 +429,50 @@ MeteorFalls_1F_1R_Text_ResearcherPostEvent:
 	.string "scattered deeper into the caves.\p"
 	.string "I'll keep studying what traces\n"
 	.string "they left behind.$"
+
+@ =============================================
+@ Colony Researcher Post-Champion Text (C209)
+@ Triggers after player becomes Champion
+@ Seeds future Hoennian Bagon regional form
+@ =============================================
+
+MeteorFalls_1F_1R_Text_ColonyPostChampion1:
+	.string "You're back! I was hoping you'd\n"
+	.string "return.\p"
+	.string "I've barely left these caves since\n"
+	.string "we last met. Weeks of observation,\l"
+	.string "and what I've found...\p"
+	.string "The juvenile BAGON near the inner\n"
+	.string "chambers are changing. Their scales\l"
+	.string "have hardened, taken on the\l"
+	.string "texture of meteor stone itself.$"
+
+MeteorFalls_1F_1R_Text_ColonyPostChampion2:
+	.string "And the strangest part?\n"
+	.string "They've stopped hurling themselves\l"
+	.string "off ledges.\p"
+	.string "Every BAGON dreams of flight.\n"
+	.string "It's their very nature.\p"
+	.string "But these ones dig deeper instead.\n"
+	.string "As if they've chosen the mountain\l"
+	.string "over the sky.$"
+
+MeteorFalls_1F_1R_Text_ColonyPostChampion3:
+	.string "DRAKE of the ELITE FOUR reached\n"
+	.string "out to me. He'd heard about the\l"
+	.string "colony through his DRACONID kin.\p"
+	.string "I told him what I'd seen.\n"
+	.string "He was quiet for a long time.\p"
+	.string "Then he said the DRACONID people\n"
+	.string "have a name for this:\l"
+	.string "'choosing to stay.'$"
+
+MeteorFalls_1F_1R_Text_ColonyPostChampion4:
+	.string "I need more time to understand.\n"
+	.string "But I believe we're witnessing\l"
+	.string "something unprecedented.\p"
+	.string "A new kind of dragon, shaped by\n"
+	.string "this very mountain.\p"
+	.string "The migration changed HOENN.\n"
+	.string "Perhaps it's changing what it\l"
+	.string "means to be a dragon, too.$"

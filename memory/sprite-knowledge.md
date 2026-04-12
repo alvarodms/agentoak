@@ -28,7 +28,8 @@
 
 ## Community Feedback Patterns
 
-_(Updated as feedback accumulates across iterations)_
+- **Expression matters for concept** (@alvarodms, Corsola #116): "bleached dead coral" should look sad/mournful. Facial expression must match the lore. Addressed via highlight/pupil swap creating downcast eyes (C209).
+- **Iris color must be aggressive**: Muted colors disappear at game scale. Push saturation hard — (100,50,150) reads as purple; (136,102,170) reads as gray.
 
 ## Techniques Validated
 
@@ -39,12 +40,18 @@ _(Updated as feedback accumulates across iterations)_
 - **Dedicated accent index via unused slots**: Repurpose unused palette indices (e.g., magenta 255,0,255 placeholders) as dedicated accent colors. Then pixel-remap specific features to use that index. Gives per-pixel color control without affecting other pixels sharing the original index.
 - **Eye detection heuristic**: White pixels (idx 1) within 2px of dark pixels (idx 3) reliably identifies eye locations in GBA sprites. Works for front and anim_front; back sprites typically have no visible eye.
 
+## Techniques Validated (New)
+
+- **Sad expression via highlight/pupil swap**: Move bright highlight pixel from eye-top to eye-bottom, move dark pupil from eye-bottom to eye-top. Creates "downcast/heavy-lidded" look universally readable as sad at 64x64. Minimal change (2 pixels per eye), high impact. Works because viewers read dark-on-top as closed/drooping eyelid.
+- **Ghost iris deepening**: Original muted purple (136,102,170) barely visible at game scale. Deepened to (100,50,150) — lower green channel pushes further into ghost-type purple range. Combined with highlight swap, iris becomes the eye's brightest mid-pixel, making color more noticeable.
+
 ## Palette Recipes
 
 - **Storm/Water dog** (Growlithe_Hoenn): Steel-blue fur (98-145,118-165,152-195), wave-foam underbelly (155-218,168-226,190-238), stormcloud stripes (68,78,98). Single warm amber eye (205,160,52) against all-cold body = "ember that survives" hook.
 - **Steam legend** (Arcanine_Hoenn): Deep indigo body (38-108,42-118,78-155), sea-spray mane (188-220,200-228,225-240), warm amber fire-stripes (115-232,75-172,22-68) weaving through mane. Amber-gold eyes (242,188,58).
 - **Winter fox** (Vulpix_Hoenn): Icy blue body (138-208,165-225,208-248), frost-white belly (168-230,178-238,218-255), deep blue shadows (38-72,44-88,75-132). Icy blue eye (160,215,255). Frost crystal emanations (6px) at tail tips.
 - **Ice queen** (Ninetales_Hoenn): Pale icy blue-white body (178-228,195-238,228-255), medium ice shadows (102-178,115-195,162-228), deep blue outlines (22,28,52). Crystal accents (140-202,178-218,232-245). Frost emanations (8px) at nine-tail tips.
+- **Bleached ghost coral** (Corsola_Hoenn): Warm gray body (160-240,156-235,148-222), amber fossil accents (135-185,88-135,42-70). Ghost iris: vivid lavender (170,130,220) + dark purple glow (90,60,145). Frown mouth using amber/dark-amber indices. Shiny: cool blue-gray body, teal accents, brighter purple eyes (145,90,235)/(65,45,150).
 - **Aurora shiny recipe** (Vulpix/Ninetales_Hoenn): Body → aurora green (105-192,170-232,138-198), belly → rose pink (198-245,160-228,188-238), shadows → deep teal/purple (32-82,40-105,55-108). Eye → bright aurora green.
 
 ## Reusable Scripts

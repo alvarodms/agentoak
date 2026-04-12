@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209) — RECURRING
 
-**Symptom**: 90-120 actions spent on reads before first edit. C197: 60 actions of research before writing bulk script, despite the pattern being documented in memory from C195-196.
-**Resolution**: For species pipeline: write script early. C198 succeeded by starting script by action 10. Use `grep -n` to find offsets in ONE pass.
+**Symptom**: 90-120 actions spent on reads before first edit. C209: 37 actions before first edit, partly due to `gh` CLI being unavailable (7 actions wasted discovering this).
+**Resolution**: For species pipeline: write script early. C198 succeeded by starting script by action 10. Use `grep -n` to find offsets in ONE pass. **`gh` is NOT available** — don't attempt it; search journals/memory directly.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -30,11 +30,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: pokeemerald `.string` only supports `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Any other `\X` is fatal. Non-charmap Unicode is also fatal.
 **Resolution**: Before `make`, run: `grep -nP '\\\\[^nlp$"\\]' <modified .inc files>` to catch invalid escapes. Use `cat >> file << 'HEREDOC'` for files with smart quotes. Em-dashes (—, –) NOT in charmap — use `--`.
 
-## Python3 Unavailable in Build Environment (Cycle 170)
-
-**Symptom**: `python3: command not found` when running validation scripts.
-**Resolution**: Use Node.js (always available) for validation scripts. Do NOT assume Python is installed.
-
 ## Trainer Party Macro/Struct Type Mismatch (Cycles 179, 190, 195) — RECURRING
 
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
@@ -50,12 +45,17 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Two-Species Pipeline Too Large for Manual Edits (Cycles 196, 197, fixed C198)
 
 **Symptom**: C196: 171 actions manual editing, never built. C197: script + manual but `\e` killed build.
-**Resolution (C198)**: Fresh script (`scripts/add_growlithe_arcanine.cjs`) + 8 manual Edit patches for graphics tables that have EGG/UNOWN entries after CORSOLA_HOENN. Also need extern declarations in `include/graphics.h`. Script anchors that assume `};` follows CORSOLA_HOENN are WRONG for graphics tables — always insert before `[SPECIES_EGG]`.
+**Resolution (C198)**: Fresh script + 8 manual Edit patches for graphics tables that have EGG/UNOWN entries after CORSOLA_HOENN. Script anchors that assume `};` follows CORSOLA_HOENN are WRONG for graphics tables — always insert before `[SPECIES_EGG]`.
 
 ## replace_all Footgun (Cycle 198)
 
 **Symptom**: Used `replace_all: true` to fix `MON_MALE` → `PERCENT_FEMALE(25)` in species_info.h; changed ALL species with MON_MALE, not just the two new ones.
 **Resolution**: NEVER use `replace_all` on common strings in large files. Use targeted edits or `git checkout --` to restore + re-apply.
+
+## PNG Palette Modification Requires PLTE Chunk Surgery (Cycle 209)
+
+**Symptom**: Writing .pal files doesn't update the embedded palette in PNG files. Build uses PNG PLTE, not .pal, for sprite graphics.
+**Resolution**: When modifying sprite palettes, must also update the PLTE chunk in the PNG binary directly using Node.js. Find PLTE chunk offset, write raw RGB bytes. Keep .pal and PNG PLTE in sync.
 
 ## Anticipated Pitfalls
 

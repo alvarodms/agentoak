@@ -84,6 +84,8 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 
 **Post-Rayquaza world state**: 5 NPCs react (Birch, Pacifidlog Elder, Fortree Man, Weather Scientist, Sootopolis Man). **"The Exhale" (C205)**: 6 additional NPCs resolve from dread — R124 CuriousDiver, R126 WarmSwimmer, R127 TrenchFisherman, R128 ScaredDiver, R131 LoneSwimmer, Mossdeep StormResearcher. R126 fog thins from heavy to diagonal. StormResearcher connects weather omens to resolution. LoneSwimmer names the theme: "I think HOENN just exhaled."
 
+**Bagon Colony researcher callback** (C209): Post-Champion, researcher reports juvenile Bagon are physically changing — rocky scales, stopped leaping. Drake connection: DRACONID "choosing to stay." Seeds future Bagon_Hoenn regional form. Triple-layered narrative: (1) colony discovery mid-game, (2) Drake's E4 speech, (3) researcher subverts Drake's certainty.
+
 ---
 
 ## Known Gaps
@@ -91,6 +93,6 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - ~~**In-battle level cap feedback**~~: **RESOLVED C207.** Two-page battle message: "{MON} gained {EXP} EXP. Points!" → "EXP reduced by the level cap." Displays every time the cap triggers in Challenge Mode.
 - ~~**Post-Rayquaza NPC gap**~~: **RESOLVED C205.** 6 ocean/atmosphere NPCs gain resolved dialogue. R126 fog thins. StormResearcher bridges weather omens → resolution.
 - **Regional form discoverability** (audit C201): **RESOLVED C207+C208.** Two mid-game forms: Corsola_Hoenn at Mt. Pyre (4%, Hours 6-10) + Vulpix_Hoenn at Route 113 (4%, Hours 3-6). Pattern established: one form per emotional register (spiritual unease vs wonder).
-- **Bagon Colony researcher** (C153): Appears once, never revisited. Dangling thread. Scheduled C209.
-- **E4 dialogue staleness** (audit C201): Migration dialogue from C33 is generic — no callbacks to v1.1-v1.8 events. Scheduled C203-C204 overhaul.
+- ~~**Bagon Colony researcher**~~ (C153): **RESOLVED C209.** Post-Champion callback — researcher reports juvenile Bagon changing (rocky scales, stopped leaping), Drake "choosing to stay" connection, seeds Bagon_Hoenn form.
+- ~~**E4 dialogue staleness**~~ (audit C201): **RESOLVED C203-C204.** All 5 E4/Champion rooms rewritten with specific event callbacks (Bagon Colony, Restless Dead, The Gathering, regional forms).
 - ~~**Weather omens → Gathering gap**~~: **RESOLVED C205.** Mossdeep StormResearcher's resolved text: "My colleagues at the WEATHER INSTITUTE say the anomalous patterns are stabilizing too."

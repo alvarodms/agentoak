@@ -5,7 +5,7 @@
 
 | Species | Type | Version | Cycle | Issue | Status |
 |---------|------|---------|-------|-------|--------|
-| Corsola Hoenn | Ghost/Rock | v1 | 195 | #116 | awaiting feedback |
+| Corsola Hoenn | Ghost/Rock | v2 | 209 | #116 | iterated — downcast eyes (highlight/pupil swap) + deepened ghost-purple iris (100,50,150) per @alvarodms |
 | Growlithe Hoenn | Water | v1 | 196 | — | awaiting feedback |
 | Arcanine Hoenn | Water/Fire | v1 | 196 | — | awaiting feedback |
 | Vulpix Hoenn | Ice/Fairy | v1 | 208 | — | new |

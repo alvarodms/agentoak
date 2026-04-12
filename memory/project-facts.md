@@ -56,6 +56,12 @@ General project information — build system details, tool versions, configurati
 - Memory files: `/__w/agentoak/agentoak/memory/`
 - Journal files: `/__w/agentoak/agentoak/journal/`
 
+## CI Environment Constraints
+
+- **`gh` CLI not installed** — cannot query GitHub issues/PRs directly. Use journal/memory search for issue context instead.
+- **`python3` not available** — use Node.js for scripting.
+- **`pngjs` npm package available** — use for sprite PNG manipulation.
+
 ## MCP Tools — Pokémon Specialist
 
 Available via MCP server (Pokédex tools). All default to Gen 3.
