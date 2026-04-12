@@ -29,6 +29,8 @@ export interface CyclePlan {
   creativeInvestment?: string;
   /** Optional brief for the Sprite Designer agent. When set, Phase 1.75 spawns a specialist to create or iterate on regional form sprites. For fresh sprites: describe the species, target typing, and aesthetic direction. For iterations: include community feedback quotes from the sprite-feedback issue. */
   spriteDesignBrief?: string;
+  /** When true, indicates this sprite brief is an iteration on existing sprites (community feedback rework) rather than fresh sprite creation. Iterations run in parallel with the implementation phase instead of blocking it. */
+  isSpriteIteration?: boolean;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
 }
@@ -69,6 +71,10 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     spriteDesignBrief: {
       type: "string",
       description: "Optional brief for the Sprite Designer agent. Set this when the cycle involves creating or iterating on regional form sprites. The Sprite Designer has access to Pillow, the sprite fetcher MCP tool, and memory of accumulated sprite techniques. For fresh sprites: describe the base species, target typing, and aesthetic direction (e.g., 'Create Hoenn Growlithe sprites: Electric/Fire. Base: growlithe. Electric-gold palette with lightning glyph accents.'). For iterations: include community feedback quotes from the sprite-feedback GitHub issue (e.g., 'Iterate on Arcanine Hoenn sprites based on feedback: gold is too close to original orange, needs more blue-electric accents on the mane.').",
+    },
+    isSpriteIteration: {
+      type: "boolean",
+      description: "Set to true when spriteDesignBrief is an iteration on existing sprites based on community feedback (not a fresh sprite creation). Iteration work runs in parallel with the implementation phase so it doesn't block or slow down the main cycle. Only relevant when spriteDesignBrief is set.",
     },
     issueActions: {
       type: "array",
@@ -145,6 +151,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     gameplayDesignBrief?: string;
     engineeringInvestment?: string;
     spriteDesignBrief?: string;
+    isSpriteIteration?: boolean;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
   }
@@ -222,6 +229,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
       engineeringInvestment: parsed.engineeringInvestment || undefined,
       spriteDesignBrief: parsed.spriteDesignBrief || undefined,
+      isSpriteIteration: parsed.isSpriteIteration ?? false,
       issueActions,
       helpRequests,
     };

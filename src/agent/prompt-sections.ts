@@ -212,6 +212,7 @@ You have access to a **Sprite Designer** agent that creates and iterates on regi
 - The species being iterated
 - Specific community feedback quotes from the sprite-feedback issue
 - What changes to prioritize
+- **Set \`isSpriteIteration: true\`** so the runner runs the iteration in parallel with implementation (faster cycles, no blocking)
 
 **When you set a brief**: Your \`implementationPlan\` should focus on species registration (constants, tables, stats) — the Sprite Designer handles the sprite files.
 
