@@ -119,5 +119,6 @@ node scripts/add_regional_form.cjs scripts/configs/<species>.json --dry-run # pr
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
 **EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases.
-**Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10.
+**Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10. C207: when cap triggers, uses `STRINGID_PKMNGAINEDEXPCAPPED` (381) for a two-page message including "EXP reduced by the level cap."
 **`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`.
+**BATTLESTRINGS_COUNT**: 382 (last ID: STRINGID_PKMNGAINEDEXPCAPPED = 381).

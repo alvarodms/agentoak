@@ -4909,9 +4909,9 @@
                 "species": "SPECIES_VULPIX"
               },
               {
-                "min_level": 27,
-                "max_level": 27,
-                "species": "SPECIES_WINGULL"
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_CORSOLA_HOENN"
               },
               {
                 "min_level": 27,

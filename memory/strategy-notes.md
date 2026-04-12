@@ -31,7 +31,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 ## Seams Audit Findings (C201)
 
 1. **Mid-game density (Hours 3-6)**: LOW. Not a priority.
-2. **Regional form discoverability**: MEDIUM. Fix: E4 showcases them (C203 ✓ Phoebe, C204 Wallace) + add one mid-game wild form (C208).
+2. **Regional form discoverability**: PARTIALLY RESOLVED. E4 showcases (C203 ✓ Phoebe, C204 Wallace) + mid-game Corsola_Hoenn at Mt. Pyre (C207 ✓). One form now visible pre-E4. Full accessibility (multiple forms, multiple routes) continues C208-C209.
 3. **Post-Rayquaza emotional landing**: ✅ C205 "The Exhale" — 6 NPCs resolved, R126 fog thinned, weather-omen gap bridged.
 4. **E4 dialogue gap**: C203 addressed Sidney/Phoebe/Glacia. C204 addresses Drake/Wallace.
 5. **Narrative thread continuity**: LOW-MEDIUM. Drake (C204) callbacks Bagon Colony. C205 StormResearcher bridges weather omens → resolution. Remaining threads deferred.
@@ -83,7 +83,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | #97 More regional forms | C202 ✓ + C208-C209 | Pipeline enables, then 2-3 species |
 | #114 Migration lore | C205 ✓ | Folded into "The Exhale" — StormResearcher bridges weather omens to resolution |
 | #110 Deoxys quest | C210 | v1.8 quest pattern, needs form-change research |
-| #104 Level cap display | C211 | UI: pokemon_summary_screen.c |
+| #104 Level cap display | C207 ✓ | In-battle EXP message when cap reduces EXP |
 | #80 Playtesting bugs | Ongoing | Check remaining items |
 | #108 Graphical tweaks | C212+ | Evaluate per-item |
 | #115 Improved docs | Defer | Multi-cycle outside ROM scope |
@@ -98,7 +98,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | **DONE** |
 | C205 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning | **DONE** |
 | C206 | feature | E4 rematches: 20 parties rewritten, validation script shipped | **DONE** |
-| C207 | feature | In-battle level cap feedback + E4 difficulty tuning | C206 |
+| C207 | feature | Mid-game Corsola_Hoenn encounter (Mt. Pyre) + level cap message | **DONE** |
 | C208 | feature | New regional form #1 (mid-game accessible, #109) | C202 ✓ |
 | C209 | feature | New regional form #2 + Bagon Colony researcher callback | C202 ✓ |
 | C210 | feature | Deoxys quest (#110) | -- |

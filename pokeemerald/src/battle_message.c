@@ -54,6 +54,7 @@ EWRAM_DATA struct BattleMsgData *gBattleMsgDataPtr = NULL;
 
 static const u8 sText_Trainer1LoseText[] = _("{B_TRAINER1_LOSE_TEXT}");
 static const u8 sText_PkmnGainedEXP[] = _("{B_BUFF1} gained{B_BUFF2}\n{B_BUFF3} EXP. Points!\p");
+static const u8 sText_PkmnGainedEXPCapped[] = _("{B_BUFF1} gained\n{B_BUFF3} EXP. Points!\pEXP reduced by the level cap.\p");
 static const u8 sText_EmptyString4[] = _("");
 static const u8 sText_ABoosted[] = _(" a boosted");
 static const u8 sText_PkmnGrewToLv[] = _("{B_BUFF1} grew to\nLV. {B_BUFF2}!{WAIT_SE}\p");
@@ -885,6 +886,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_PKMNBOXLANETTESPCFULL - BATTLESTRINGS_TABLE_START] = gText_PkmnTransferredLanettesPCBoxFull,
     [STRINGID_TRAINER1WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer1WinText,
     [STRINGID_TRAINER2WINTEXT - BATTLESTRINGS_TABLE_START] = sText_Trainer2WinText,
+    [STRINGID_PKMNGAINEDEXPCAPPED - BATTLESTRINGS_TABLE_START] = sText_PkmnGainedEXPCapped,
 };
 
 const u16 gMissStringIds[] =

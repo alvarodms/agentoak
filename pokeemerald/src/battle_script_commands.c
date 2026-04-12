@@ -3423,10 +3423,13 @@ static void Cmd_getexp(void)
                         u8 monLevel = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
                         u8 levelCap = GetChallengeLevelCap();
                         if (monLevel >= levelCap)
+                        {
                             gBattleMoveDamage = gBattleMoveDamage / 10;
+                            i = STRINGID_PKMNGAINEDEXPCAPPED;
+                        }
                     }
 
-                    // get exp getter battler
+                    /* get exp getter battler */
                     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
                         if (gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId && !(gAbsentBattlerFlags & gBitTable[2]))
@@ -3442,11 +3445,20 @@ static void Cmd_getexp(void)
                     }
 
                     PREPARE_MON_NICK_WITH_PREFIX_BUFFER(gBattleTextBuff1, gBattleStruct->expGetterBattlerId, gBattleStruct->expGetterMonId);
-                    // buffer 'gained' or 'gained a boosted'
-                    PREPARE_STRING_BUFFER(gBattleTextBuff2, i);
-                    PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gBattleMoveDamage);
-
-                    PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
+                    if (i == STRINGID_PKMNGAINEDEXPCAPPED)
+                    {
+                        i = STRINGID_EMPTYSTRING4;
+                        PREPARE_STRING_BUFFER(gBattleTextBuff2, i);
+                        PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gBattleMoveDamage);
+                        PrepareStringBattle(STRINGID_PKMNGAINEDEXPCAPPED, gBattleStruct->expGetterBattlerId);
+                    }
+                    else
+                    {
+                        /* buffer 'gained' or 'gained a boosted' */
+                        PREPARE_STRING_BUFFER(gBattleTextBuff2, i);
+                        PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff3, 5, gBattleMoveDamage);
+                        PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
+                    }
                     MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBattlerFainted].species);
                 }
                 gBattleStruct->sentInPokes >>= 1;

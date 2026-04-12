@@ -26,5 +26,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | E4 Dialogue & Regional Form Showcase Patterns | 203 | [e4-dialogue-and-form-showcase.md](pokemon-knowledge/e4-dialogue-and-form-showcase.md) |
 | Regional Form Accessibility — Early vs Postgame | 204 | [regional-form-accessibility-timing.md](pokemon-knowledge/regional-form-accessibility-timing.md) |
 | E4 Rematch & Challenge Mode Difficulty Patterns | 205 | [e4-rematch-and-challenge-mode-patterns.md](pokemon-knowledge/e4-rematch-and-challenge-mode-patterns.md) |
+| Level Cap In-Battle UX & Challenge Mode E4 | 207 | [level-cap-ux-and-challenge-e4.md](pokemon-knowledge/level-cap-ux-and-challenge-e4.md) |
 
 Older research files (Cycles 47-190) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.

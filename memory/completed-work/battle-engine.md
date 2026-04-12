@@ -94,4 +94,6 @@ Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files:
 | `include/constants/flags.h` | `FLAG_DIFFICULTY_CHALLENGE` = 0x286 + `IsChallengeModeActive()` macro | **181**, **182** | C182: added shared helper macro |
 | `include/constants/script_menu.h` | `MULTI_DIFFICULTY_SELECT` = 114 | **181** | New multichoice constant |
 | `src/data/script_menu.h` | `MultichoiceList_DifficultySelect` (Normal/Challenge) + array entry | **181** | 2 text strings + list + 1 array entry |
-| `src/battle_script_commands.c` | `GetChallengeLevelCap()` function + soft cap check in `Cmd_getexp()` | **182** | Badge-based caps (18/20/24/30/34/38/42/48/55), 10% EXP above cap |
+| `src/battle_script_commands.c` | `GetChallengeLevelCap()` function + soft cap check in `Cmd_getexp()` | **182**, **207** | Badge-based caps (18/20/24/30/34/38/42/48/55), 10% EXP above cap. C207: added in-battle feedback message when cap reduces EXP. |
+| `include/constants/battle_string_ids.h` | `STRINGID_PKMNGAINEDEXPCAPPED` (381), BATTLESTRINGS_COUNT → 382 | **207** | Level cap feedback string ID |
+| `src/battle_message.c` | `sText_PkmnGainedEXPCapped` string + table entry | **207** | Two-page message: EXP gained + "EXP reduced by the level cap." |

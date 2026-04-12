@@ -25,3 +25,17 @@ MtPyre_Exterior_EventScript_SunTrigger::
 	doweather
 	end
 
+MtPyre_Exterior_EventScript_CoralMourner::
+	msgbox MtPyre_Exterior_Text_CoralMourner, MSGBOX_NPC
+	end
+
+MtPyre_Exterior_Text_CoralMourner:
+	.string "Have you seen the pale coral near\n"
+	.string "the graves? It wasn't here before\l"
+	.string "the migration.\p"
+	.string "PHOEBE says they're spirits of\n"
+	.string "coral that didn't survive the\l"
+	.string "crossing.\p"
+	.string "I find them beautiful, in a\n"
+	.string "mournful sort of way.$"
+

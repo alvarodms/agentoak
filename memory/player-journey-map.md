@@ -29,6 +29,7 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - Route 119 thunderstorm event with Dr. Hartley (C149)
 - Weather omens: permanent sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160)
 - Mt. Pyre "Restless Dead" event — Misdreavus encounter (C154)
+- **Mt. Pyre Exterior: Corsola_Hoenn wild encounter (4%, Lv26-28) + Coral Mourner NPC (C207)** — first mid-game regional form. Player discovers Ghost/Rock bleached coral spirits near graves. NPC explains the connection to Phoebe. Seamless narrative bridge to E4.
 - Route identity NPCs: Birdwatcher, Volcanologist, Weather Intern, Berry Researcher (C162)
 - Norman expanded (C173), Winona expanded (C173), Tate & Liza redesigned (C131)
 
@@ -85,9 +86,9 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 
 ## Known Gaps
 
-- **In-battle level cap feedback** (C183): One-time EXP reduction message. Scheduled C207.
+- ~~**In-battle level cap feedback**~~: **RESOLVED C207.** Two-page battle message: "{MON} gained {EXP} EXP. Points!" → "EXP reduced by the level cap." Displays every time the cap triggers in Challenge Mode.
 - ~~**Post-Rayquaza NPC gap**~~: **RESOLVED C205.** 6 ocean/atmosphere NPCs gain resolved dialogue. R126 fog thins. StormResearcher bridges weather omens → resolution.
-- **Regional form discoverability** (audit C201): Both forms are postgame-only. No pre-E4 regional form exists. Scheduled C208-C209 (mid-game accessible form).
+- **Regional form discoverability** (audit C201): **PARTIALLY RESOLVED C207.** Corsola_Hoenn at Mt. Pyre Exterior (4%) gives players their first regional form encounter between Badges 5-7. Full accessibility (multiple forms, routes) continues C208-C209.
 - **Bagon Colony researcher** (C153): Appears once, never revisited. Dangling thread. Scheduled C209.
 - **E4 dialogue staleness** (audit C201): Migration dialogue from C33 is generic — no callbacks to v1.1-v1.8 events. Scheduled C203-C204 overhaul.
 - ~~**Weather omens → Gathering gap**~~: **RESOLVED C205.** Mossdeep StormResearcher's resolved text: "My colleagues at the WEATHER INSTITUTE say the anomalous patterns are stabilizing too."
