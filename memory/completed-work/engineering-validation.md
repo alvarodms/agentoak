@@ -15,3 +15,5 @@
 | `pokeemerald/scripts/add_regional_form.cjs` | **C202** | Generic config-driven species pipeline. Reads JSON, inserts into 27 files. `--dry-run` supported. Idempotent (skips existing species). Replaces bespoke per-species scripts. |
 | `pokeemerald/scripts/configs/corsola_hoenn.json` | **C202** | Validation config for Corsola_Hoenn. All values match codebase. Used for dry-run testing. |
 | `pokeemerald/scripts/check_quest_flags.sh` | **C202** | Quest flag orphan detector. Checks all FLAG_QUEST_* are both set and checked in scripts. |
+| `pokeemerald/scripts/check_e4_rematches.sh` | **C206** | E4 rematch validator: species uniqueness per party, level progression across tiers, regional form placement (Corsola_Hoenn/Arcanine_Hoenn/Garchomp). 33 checks, all PASS. |
+| `pokeemerald/Makefile` | **C206** | Added `check_e4_rematches` phony target. |

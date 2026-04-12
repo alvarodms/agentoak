@@ -52,10 +52,12 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 - **Wallace** ✅ C204: Swap Tentacruel -> **Arcanine_Hoenn** (Water/Fire, Lv55, Lum Berry, Surf/Flamethrower/ExtremeSpeed/Crunch)
 - Sidney, Glacia, Drake: No species changes
 
-### Rematches & Challenge Mode (C205)
+### Rematches ✅ C206
 
-- Update rematch tiers (C49-50, C71) with regional forms at T3-T4
-- Challenge Mode E4: held items on every mon, SETUP_FIRST_TURN AI, IV 200, tighter level spread
+- All 20 rematch parties (5 members × 4 tiers) rewritten with migration-themed rosters
+- Regional forms: Corsola_Hoenn (Phoebe T2+), Arcanine_Hoenn (Wallace T2+), Garchomp (Drake T3+), Weavile (Glacia T2+)
+- Duplicate species eliminated, level progression validated, competitive items on every mon
+- Challenge Mode E4 variants deferred to C207
 
 ## "The Exhale" — Post-Rayquaza World State ✅ C205
 
@@ -95,7 +97,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | C203 | feature | E4 dialogue: Sidney + Phoebe + Glacia + Phoebe team swap | **DONE** |
 | C204 | feature | E4 dialogue: Drake + Wallace + Wallace team swap (Arcanine_Hoenn) | **DONE** |
 | C205 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning | **DONE** |
-| C206 | feature | E4 rematches + Challenge Mode variants | C204 |
+| C206 | feature | E4 rematches: 20 parties rewritten, validation script shipped | **DONE** |
 | C207 | feature | In-battle level cap feedback + E4 difficulty tuning | C206 |
 | C208 | feature | New regional form #1 (mid-game accessible, #109) | C202 ✓ |
 | C209 | feature | New regional form #2 + Bagon Colony researcher callback | C202 ✓ |

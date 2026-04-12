@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -195,6 +195,10 @@ check_flags:
 # Encounter table validation
 check_encounters:
 	@bash scripts/check_encounters.sh
+
+# E4 rematch data validation
+check_e4_rematches:
+	@bash scripts/check_e4_rematches.sh
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

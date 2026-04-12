@@ -85,10 +85,11 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Build Validation Targets (C141, C170)
+## Build Validation Targets (C141, C170, C206)
 
 `make check_scripts` — Lints .inc files for non-charmap characters.
 `make check_encounters` — Node.js validator for `wild_encounters.json`.
+`make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
 **CI note**: `python3` unavailable. Use Node.js for validation scripts.
 
 ---
