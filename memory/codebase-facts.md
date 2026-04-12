@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420). NUM_SPECIES = 421.
+**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422). NUM_SPECIES = 423.
 
 ---
 
@@ -98,11 +98,11 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. Usage:
 ```
-node scripts/add_regional_form.cjs scripts/configs/<species>.json          # live
-node scripts/add_regional_form.cjs scripts/configs/<species>.json --dry-run # preview
+node scripts/add_regional_form.cjs configs/<species>.json          # live
+node scripts/add_regional_form.cjs configs/<species>.json --dry-run # preview
 ```
 
-**Config template**: `scripts/configs/corsola_hoenn.json` — copy and modify for new species.
+**Config template**: `configs/vulpix_hoenn.json` — copy and modify for new species. Directory: `pokeemerald/configs/`.
 
 **What the script handles**: species.h, pokedex.h (both enums + count), species_info.h, level_up_learnsets.h, learnset_pointers.h, egg_moves.h, tmhm_learnsets.h, evolution.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h (3 arrays), pokemon.c (4 tables), graphics/pokemon.h (6 INCBINs), anim_mon_front_pics.c, graphics.h (7 externs), 8 graphics table files, front_pic_anims.h (3 insertions), pokemon_icon.c (2 tables), cry_tables.inc (2 sections), enemy_mon_elevation.h (if needed).
 

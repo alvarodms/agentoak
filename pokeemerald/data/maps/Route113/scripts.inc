@@ -179,3 +179,19 @@ Route113_Text_Volcanologist:
 	.string "It started around the same time those\n"
 	.string "unfamiliar species began arriving.\l"
 	.string "Coincidence? I'm not so sure.$"
+
+Route113_EventScript_FrostTracker::
+	msgbox Route113_Text_FrostTracker, MSGBOX_NPC
+	end
+
+Route113_Text_FrostTracker:
+	.string "I've been tracking frost crystals\n"
+	.string "in the falling ash for weeks.\p"
+	.string "Something lives up here that\n"
+	.string "shouldn't -- a pale VULPIX.\p"
+	.string "An ICE-type, on a volcano route!\n"
+	.string "The migration must have driven\l"
+	.string "them from somewhere far colder.\p"
+	.string "The ash seems to nourish them\n"
+	.string "somehow. Their fur glistens\l"
+	.string "like fresh snow.$"

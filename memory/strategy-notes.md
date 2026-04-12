@@ -31,7 +31,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 ## Seams Audit Findings (C201)
 
 1. **Mid-game density (Hours 3-6)**: LOW. Not a priority.
-2. **Regional form discoverability**: PARTIALLY RESOLVED. E4 showcases (C203 ✓ Phoebe, C204 Wallace) + mid-game Corsola_Hoenn at Mt. Pyre (C207 ✓). One form now visible pre-E4. Full accessibility (multiple forms, multiple routes) continues C208-C209.
+2. **Regional form discoverability**: ✅ RESOLVED. E4 showcases (C203 ✓ Phoebe, C204 Wallace) + mid-game Corsola_Hoenn at Mt. Pyre (C207 ✓) + Vulpix_Hoenn at R113 (C208 ✓). Two forms visible pre-E4 in different emotional registers.
 3. **Post-Rayquaza emotional landing**: ✅ C205 "The Exhale" — 6 NPCs resolved, R126 fog thinned, weather-omen gap bridged.
 4. **E4 dialogue gap**: C203 addressed Sidney/Phoebe/Glacia. C204 addresses Drake/Wallace.
 5. **Narrative thread continuity**: LOW-MEDIUM. Drake (C204) callbacks Bagon Colony. C205 StormResearcher bridges weather omens → resolution. Remaining threads deferred.
@@ -71,7 +71,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 
 ### New Forms (C208-C209)
 
-- **Mid-game accessible (#109)**: Hoennian Vulpix (Ice/Fairy, R113), Hoennian Poliwag (Water/Fighting, R119), or wild Corsola_Hoenn
+- **Mid-game accessible (#109)**: ✅ C208 Hoennian Vulpix + Ninetales (Ice/Fairy, R113 4% Lv21-22, Moon Stone evo). FrostTracker NPC.
 - **Narrative form**: Bagon Colony variant. TBD via MCP research.
 
 ## Community Issue Roadmap
@@ -79,7 +79,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | Issue | Cycles | Approach |
 |-------|--------|----------|
 | #112 E4/Champion | C203 ✓ + C204-C205 | Flagship: dialogue + teams + rematches |
-| #109 Accessible forms | C208-C209 | Mid-game wild regional form + E4 showcase |
+| #109 Accessible forms | C207 ✓ + C208 ✓ | Mt. Pyre Corsola (C207) + R113 Vulpix/Ninetales (C208) |
 | #97 More regional forms | C202 ✓ + C208-C209 | Pipeline enables, then 2-3 species |
 | #114 Migration lore | C205 ✓ | Folded into "The Exhale" — StormResearcher bridges weather omens to resolution |
 | #110 Deoxys quest | C210 | v1.8 quest pattern, needs form-change research |
@@ -99,7 +99,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | C205 | feature | "The Exhale": post-Rayquaza NPC updates, fog thinning | **DONE** |
 | C206 | feature | E4 rematches: 20 parties rewritten, validation script shipped | **DONE** |
 | C207 | feature | Mid-game Corsola_Hoenn encounter (Mt. Pyre) + level cap message | **DONE** |
-| C208 | feature | New regional form #1 (mid-game accessible, #109) | C202 ✓ |
+| C208 | feature | Vulpix_Hoenn + Ninetales_Hoenn (Ice/Fairy, R113) + FrostTracker NPC | **DONE** |
 | C209 | feature | New regional form #2 + Bagon Colony researcher callback | C202 ✓ |
 | C210 | feature | Deoxys quest (#110) | -- |
 | C211+ | polish | Level cap display (#104), Petalburg downgrade, remaining | -- |
@@ -114,5 +114,5 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 114. Next: 115.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420). NUM_SPECIES=421.
+- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Vulpix_Hoenn(421), Ninetales_Hoenn(422). NUM_SPECIES=423.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

@@ -1,0 +1,70 @@
+{
+  "name": "NINETALES_HOENN",
+  "lowerName": "ninetales_hoenn",
+  "capitalName": "NinetalesHoenn",
+  "baseSpeciesCry": "Ninetales",
+  "types": ["TYPE_ICE", "TYPE_FAIRY"],
+  "catchRate": 75,
+  "genderRatio": "PERCENT_FEMALE(75)",
+  "eggCycles": 20,
+  "happiness": 70,
+  "growthRate": "GROWTH_MEDIUM_FAST",
+  "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "items": ["ITEM_NONE", "ITEM_NEVER_MELT_ICE"],
+  "frontPicSize": "MON_COORDS_SIZE(56, 56)",
+  "frontPicYOffset": 5,
+  "backPicSize": "MON_COORDS_SIZE(64, 56)",
+  "backPicYOffset": 4,
+  "animType": "ANIM_V_SQUISH_AND_BOUNCE",
+  "animFrames": 32,
+  "animDelay": 15,
+  "iconPaletteIndex": 0,
+  "elevation": 0,
+  "stats": {
+    "hp": 73,
+    "atk": 60,
+    "def": 75,
+    "speed": 107,
+    "spAtk": 90,
+    "spDef": 100
+  },
+  "evYield": {
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "speed": 0,
+    "spAtk": 1,
+    "spDef": 1
+  },
+  "expYield": 178,
+  "abilities": ["ABILITY_INNER_FOCUS", "ABILITY_FLASH_FIRE"],
+  "levelUpMoves": [
+    [1, "MOVE_CONFUSE_RAY"],
+    [1, "MOVE_QUICK_ATTACK"],
+    [1, "MOVE_MOONBLAST"],
+    [1, "MOVE_SAFEGUARD"],
+    [45, "MOVE_BLIZZARD"]
+  ],
+  "eggMoves": [],
+  "tmhm": [
+    "MOVE_CALM_MIND", "MOVE_ROAR", "MOVE_TOXIC", "MOVE_HAIL",
+    "MOVE_HIDDEN_POWER", "MOVE_ICE_BEAM", "MOVE_BLIZZARD",
+    "MOVE_HYPER_BEAM", "MOVE_PROTECT", "MOVE_SAFEGUARD",
+    "MOVE_FRUSTRATION", "MOVE_IRON_TAIL", "MOVE_RETURN", "MOVE_DIG",
+    "MOVE_PSYCHIC", "MOVE_SHADOW_BALL", "MOVE_DOUBLE_TEAM",
+    "MOVE_FACADE", "MOVE_SECRET_POWER", "MOVE_REST", "MOVE_ATTRACT"
+  ],
+  "dexEntry": {
+    "categoryName": "Fox",
+    "height": 11,
+    "weight": 199,
+    "descriptionText": "NINETALES adapted to HOENN's changed\nclimate. Its nine tails radiate cold\nthat freezes ash midair, creating\nshimmering curtains of ice crystals.",
+    "pokemonScale": 339,
+    "pokemonOffset": 10,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  }
+}

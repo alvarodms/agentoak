@@ -92,3 +92,24 @@ Second and third regional variants. Water (Growlithe) and Water/Fire (Arcanine) 
 | Cry | Reuses vanilla Cry_Growlithe and Cry_Arcanine |
 | Pipeline | Automated via Node.js script (scripts/add_growlithe_arcanine.cjs) + manual patches for graphics tables and include/graphics.h extern declarations |
 | Files modified | 27 source files + scripts/add_growlithe_arcanine.cjs + Quest 2 script modification |
+
+## Hoennian Vulpix & Ninetales (Cycle 208) — BUILD PENDING
+
+Fourth and fifth regional variants. Ice/Fairy typing. Second mid-game accessible form (Route 113).
+
+| Detail | Value |
+|--------|-------|
+| Species IDs | SPECIES_VULPIX_HOENN (421), SPECIES_NINETALES_HOENN (422), EGG→423 |
+| Stats | Vulpix: 38/36/40/55/65/65 BST 299 (Ice/Fairy), Ninetales: 73/60/75/90/100/107 BST 505 (Ice/Fairy) |
+| Abilities | Vulpix: Inner Focus / Cute Charm, Ninetales: Inner Focus / Flash Fire |
+| Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
+| Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 (replaces Baltoy) |
+| NPC | FrostTracker (PokeFan_M) at Route 113 x=56,y=12 — pacing NPC tracking frost crystals in volcanic ash |
+| Learnset (V) | Powder Snow(1), Tail Whip(5), Roar(9), Quick Attack(13), Icy Wind(17), Confuse Ray(21), Dazzling Gleam(25), Ice Beam(29), Safeguard(33), Grudge(37), Blizzard(41) |
+| Learnset (N) | Confuse Ray(1), Quick Attack(1), Moonblast(1), Safeguard(1), Blizzard(45) |
+| Egg moves | Hypnosis, Disable, Spite, Charm, Howl, Extrasensory, Moonblast |
+| TMs | V: 18 TMs (Calm Mind, Hail, Ice Beam, Blizzard, etc.). N: 21 TMs (adds Hyper Beam, Psychic, Shadow Ball) |
+| Assets | Sprite Designer created ice-blue recolor sprites (v1). All 7 files each. |
+| Cry | Reuses vanilla Cry_Vulpix and Cry_Ninetales |
+| Pipeline | Automated via `scripts/add_regional_form.cjs` with configs in `pokeemerald/configs/` |
+| Files modified | 26+24 source files (pipeline) + wild_encounters.json + Route113/scripts.inc + Route113/map.json |

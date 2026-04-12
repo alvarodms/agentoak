@@ -1,0 +1,88 @@
+{
+  "name": "VULPIX_HOENN",
+  "lowerName": "vulpix_hoenn",
+  "capitalName": "VulpixHoenn",
+  "baseSpeciesCry": "Vulpix",
+  "types": ["TYPE_ICE", "TYPE_FAIRY"],
+  "catchRate": 190,
+  "genderRatio": "PERCENT_FEMALE(75)",
+  "eggCycles": 20,
+  "happiness": 70,
+  "growthRate": "GROWTH_MEDIUM_FAST",
+  "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "items": ["ITEM_NONE", "ITEM_ASPEAR_BERRY"],
+  "frontPicSize": "MON_COORDS_SIZE(48, 48)",
+  "frontPicYOffset": 9,
+  "backPicSize": "MON_COORDS_SIZE(56, 48)",
+  "backPicYOffset": 9,
+  "animType": "ANIM_V_SQUISH_AND_BOUNCE",
+  "animFrames": 32,
+  "animDelay": 15,
+  "iconPaletteIndex": 0,
+  "elevation": 0,
+  "stats": {
+    "hp": 38,
+    "atk": 36,
+    "def": 40,
+    "speed": 65,
+    "spAtk": 55,
+    "spDef": 65
+  },
+  "evYield": {
+    "hp": 0,
+    "atk": 0,
+    "def": 0,
+    "speed": 1,
+    "spAtk": 0,
+    "spDef": 0
+  },
+  "expYield": 63,
+  "abilities": ["ABILITY_INNER_FOCUS", "ABILITY_CUTE_CHARM"],
+  "levelUpMoves": [
+    [1, "MOVE_POWDER_SNOW"],
+    [5, "MOVE_TAIL_WHIP"],
+    [9, "MOVE_ROAR"],
+    [13, "MOVE_QUICK_ATTACK"],
+    [17, "MOVE_ICY_WIND"],
+    [21, "MOVE_CONFUSE_RAY"],
+    [25, "MOVE_DAZZLING_GLEAM"],
+    [29, "MOVE_ICE_BEAM"],
+    [33, "MOVE_SAFEGUARD"],
+    [37, "MOVE_GRUDGE"],
+    [41, "MOVE_BLIZZARD"]
+  ],
+  "eggMoves": [
+    "MOVE_HYPNOSIS",
+    "MOVE_DISABLE",
+    "MOVE_SPITE",
+    "MOVE_CHARM",
+    "MOVE_HOWL",
+    "MOVE_EXTRASENSORY",
+    "MOVE_MOONBLAST"
+  ],
+  "tmhm": [
+    "MOVE_CALM_MIND", "MOVE_ROAR", "MOVE_TOXIC", "MOVE_HAIL",
+    "MOVE_HIDDEN_POWER", "MOVE_ICE_BEAM", "MOVE_BLIZZARD", "MOVE_PROTECT",
+    "MOVE_SAFEGUARD", "MOVE_FRUSTRATION", "MOVE_IRON_TAIL", "MOVE_RETURN",
+    "MOVE_DIG", "MOVE_DOUBLE_TEAM", "MOVE_FACADE", "MOVE_SECRET_POWER",
+    "MOVE_REST", "MOVE_ATTRACT"
+  ],
+  "evolution": {
+    "method": "EVO_ITEM",
+    "param": "ITEM_MOON_STONE",
+    "target": "SPECIES_NINETALES_HOENN"
+  },
+  "dexEntry": {
+    "categoryName": "Fox",
+    "height": 6,
+    "weight": 99,
+    "descriptionText": "This VULPIX adapted to HOENN's\nashfall by developing an icy coat.\nIts six tails leave frost patterns\nin volcanic ash as it walks.",
+    "pokemonScale": 424,
+    "pokemonOffset": 17,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  }
+}

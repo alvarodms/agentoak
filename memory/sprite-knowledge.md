@@ -43,6 +43,9 @@ _(Updated as feedback accumulates across iterations)_
 
 - **Storm/Water dog** (Growlithe_Hoenn): Steel-blue fur (98-145,118-165,152-195), wave-foam underbelly (155-218,168-226,190-238), stormcloud stripes (68,78,98). Single warm amber eye (205,160,52) against all-cold body = "ember that survives" hook.
 - **Steam legend** (Arcanine_Hoenn): Deep indigo body (38-108,42-118,78-155), sea-spray mane (188-220,200-228,225-240), warm amber fire-stripes (115-232,75-172,22-68) weaving through mane. Amber-gold eyes (242,188,58).
+- **Winter fox** (Vulpix_Hoenn): Icy blue body (138-208,165-225,208-248), frost-white belly (168-230,178-238,218-255), deep blue shadows (38-72,44-88,75-132). Icy blue eye (160,215,255). Frost crystal emanations (6px) at tail tips.
+- **Ice queen** (Ninetales_Hoenn): Pale icy blue-white body (178-228,195-238,228-255), medium ice shadows (102-178,115-195,162-228), deep blue outlines (22,28,52). Crystal accents (140-202,178-218,232-245). Frost emanations (8px) at nine-tail tips.
+- **Aurora shiny recipe** (Vulpix/Ninetales_Hoenn): Body → aurora green (105-192,170-232,138-198), belly → rose pink (198-245,160-228,188-238), shadows → deep teal/purple (32-82,40-105,55-108). Eye → bright aurora green.
 
 ## Reusable Scripts
 

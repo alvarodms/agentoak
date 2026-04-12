@@ -19,7 +19,9 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest mid-game narrative beat. Dr. Hartley at Weather Institute (C141). Routes 110-117 trainers themed (C147). Difficulty NPCs in every PkmnCenter through Mauville (C183).
 
-**Emotional arc**: Escalation → discovery (Bagon colony) → growing concern
+**Route 113**: Hoennian Vulpix (Ice/Fairy) wild encounter (4%, Lv21-22) + FrostTracker NPC (C208) — second mid-game regional form. Player discovers ice fox in volcanic ash, contrasting Mt. Pyre's ghost coral. Moon Stone → Ninetales_Hoenn (Ice/Fairy, BST 505).
+
+**Emotional arc**: Escalation → discovery (Bagon colony) → wonder (ice fox in ash) → growing concern
 
 ---
 
@@ -88,7 +90,7 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 
 - ~~**In-battle level cap feedback**~~: **RESOLVED C207.** Two-page battle message: "{MON} gained {EXP} EXP. Points!" → "EXP reduced by the level cap." Displays every time the cap triggers in Challenge Mode.
 - ~~**Post-Rayquaza NPC gap**~~: **RESOLVED C205.** 6 ocean/atmosphere NPCs gain resolved dialogue. R126 fog thins. StormResearcher bridges weather omens → resolution.
-- **Regional form discoverability** (audit C201): **PARTIALLY RESOLVED C207.** Corsola_Hoenn at Mt. Pyre Exterior (4%) gives players their first regional form encounter between Badges 5-7. Full accessibility (multiple forms, routes) continues C208-C209.
+- **Regional form discoverability** (audit C201): **RESOLVED C207+C208.** Two mid-game forms: Corsola_Hoenn at Mt. Pyre (4%, Hours 6-10) + Vulpix_Hoenn at Route 113 (4%, Hours 3-6). Pattern established: one form per emotional register (spiritual unease vs wonder).
 - **Bagon Colony researcher** (C153): Appears once, never revisited. Dangling thread. Scheduled C209.
 - **E4 dialogue staleness** (audit C201): Migration dialogue from C33 is generic — no callbacks to v1.1-v1.8 events. Scheduled C203-C204 overhaul.
 - ~~**Weather omens → Gathering gap**~~: **RESOLVED C205.** Mossdeep StormResearcher's resolved text: "My colleagues at the WEATHER INSTITUTE say the anomalous patterns are stabilizing too."
