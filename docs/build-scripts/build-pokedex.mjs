@@ -5,7 +5,8 @@
  * Extracts species info, learnsets, evolution, encounters, and move data.
  */
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,6 +16,8 @@ const ROOT = join(DOCS_DIR, '..');
 const POKE = join(ROOT, 'pokeemerald');
 const OUTPUT_DIR = join(DOCS_DIR, 'public', 'data');
 const OUTPUT_FILE = join(OUTPUT_DIR, 'pokedex.json');
+const SPRITES_DIR = join(DOCS_DIR, 'public', 'sprites');
+const GFX_DIR = join(POKE, 'graphics', 'pokemon');
 
 // ── Helpers ──
 
@@ -181,6 +184,7 @@ async function parseSpeciesInfo() {
 
     species.push({
       speciesConstant: specConst,
+      spriteKey: specConst.replace('SPECIES_', '').toLowerCase(),
       name: formatSpecies(specConst),
       types: type1 === type2 ? [type1] : [type1, type2],
       stats: { hp, atk, def, spa, spd, spe },
@@ -676,6 +680,7 @@ async function main() {
     pokemon.push({
       id: dexId,
       name: sp.name,
+      spriteKey: sp.spriteKey,
       types: sp.types,
       stats: sp.stats,
       bst: sp.bst,
@@ -716,9 +721,32 @@ async function main() {
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(output) + '\n');
 
+  // Copy sprites from pokeemerald graphics to public/sprites/
+  // Some Pokemon have form subdirectories instead of a top-level front.png
+  const SPRITE_FALLBACKS = {
+    unown: 'unown/a',
+    castform: 'castform/normal',
+  };
+  await mkdir(SPRITES_DIR, { recursive: true });
+  let spritesCopied = 0;
+  let spritesMissing = 0;
+  for (const p of pokemon) {
+    const dir = SPRITE_FALLBACKS[p.spriteKey] || p.spriteKey;
+    const src = join(GFX_DIR, dir, 'front.png');
+    const dest = join(SPRITES_DIR, `${p.spriteKey}.png`);
+    if (existsSync(src)) {
+      await copyFile(src, dest);
+      spritesCopied++;
+    } else {
+      console.warn(`  ⚠ Missing sprite: ${src}`);
+      spritesMissing++;
+    }
+  }
+
   console.log(`✔ Generated ${OUTPUT_FILE}`);
   console.log(`  Pokemon: ${pokemon.length}`);
   console.log(`  Moves: ${Object.keys(battleMoves).length}`);
+  console.log(`  Sprites: ${spritesCopied} copied, ${spritesMissing} missing`);
   console.log(`  File size: ${(JSON.stringify(output).length / 1024).toFixed(0)} KB`);
 }
 

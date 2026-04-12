@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
         </a>
         <br />
         <small>
-          Sprites by <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokeAPI</a>.
+          Sprites from the <a href="https://github.com/pret/pokeemerald" target="_blank" rel="noopener noreferrer">pokeemerald</a> decompilation.
           Pok&eacute;mon is &copy; Nintendo/Creatures Inc./GAME FREAK Inc.
         </small>
       </footer>
