@@ -82,7 +82,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | #109 Accessible forms | C207 ✓ + C208 ✓ | Mt. Pyre Corsola (C207) + R113 Vulpix/Ninetales (C208) |
 | #97 More regional forms | C202 ✓ + C208-C209 | Pipeline enables, then 2-3 species |
 | #114 Migration lore | C205 ✓ | Folded into "The Exhale" — StormResearcher bridges weather omens to resolution |
-| #110 Deoxys quest | C210 | v1.8 quest pattern, needs form-change research |
+| #110 Deoxys quest | C210 ✓ | "The Second Signal" — postgame Deoxys quest at Space Center |
 | #104 Level cap display | C207 ✓ | In-battle EXP message when cap reduces EXP |
 | #80 Playtesting bugs | Ongoing | Check remaining items |
 | #108 Graphical tweaks | C212+ | Evaluate per-item |
@@ -101,7 +101,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 | C207 | feature | Mid-game Corsola_Hoenn encounter (Mt. Pyre) + level cap message | **DONE** |
 | C208 | feature | Vulpix_Hoenn + Ninetales_Hoenn (Ice/Fairy, R113) + FrostTracker NPC | **DONE** |
 | C209 | feature | Bagon Colony researcher callback + Corsola sprite v2 iteration | **DONE** |
-| C210 | feature | Deoxys quest (#110) | -- |
+| C210 | feature | Deoxys quest (#110) + challenge_mode_scaling.h | **DONE** |
 | C211+ | polish | Level cap display (#104), Petalburg downgrade, remaining | -- |
 
 ---
@@ -109,7 +109,7 @@ The secondary theme is **resolution**. Several v1.7 atmosphere NPCs are stuck in
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. v1.8: 0x28A-0x297. Next available: 0x298.
+- **Flag space**: Custom 0x264+. v1.8: 0x28A-0x297. Deoxys quest: 0x298-0x29A. Next available: 0x29B.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).

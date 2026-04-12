@@ -711,9 +711,9 @@
 #define FLAG_QUEST_FOG_STARTED         0x295 /* Quest 4: Fog Beneath - started (C192) */
 #define FLAG_QUEST_FOG_INVESTIGATED    0x296 /* Quest 4: R126 dive spot checked (C192) */
 #define FLAG_QUEST_FOG_COMPLETE        0x297 /* Quest 4: Fog Beneath - complete (C192) */
-#define FLAG_UNUSED_0x298  0x298 // Unused Flag
-#define FLAG_UNUSED_0x299  0x299 // Unused Flag
-#define FLAG_UNUSED_0x29A  0x29A // Unused Flag
+#define FLAG_QUEST_DEOXYS_STARTED      0x298 /* Quest 5: The Second Signal - started (C210) */
+#define FLAG_QUEST_DEOXYS_INVESTIGATED 0x299 /* Quest 5: Terminal checked (C210) */
+#define FLAG_QUEST_DEOXYS_COMPLETE     0x29A /* Quest 5: The Second Signal - complete (C210) */
 #define FLAG_UNUSED_0x29B  0x29B // Unused Flag
 #define FLAG_UNUSED_0x29C  0x29C // Unused Flag
 #define FLAG_UNUSED_0x29D  0x29D // Unused Flag

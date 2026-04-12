@@ -94,8 +94,12 @@ MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated:
 MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	lock
 	faceplayer
-	@ v1.8 Quest states (highest priority)
-	goto_if_set FLAG_QUEST_MOSSDEEP_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestDone
+	@ Deoxys quest states (highest priority -- postgame)
+	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysQuestDone
+	goto_if_set FLAG_QUEST_DEOXYS_INVESTIGATED, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysRetry
+	goto_if_set FLAG_QUEST_DEOXYS_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysGoCheck
+	@ v1.8 Quest states
+	goto_if_set FLAG_QUEST_MOSSDEEP_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_CheckDeoxysOffer
 	goto_if_set FLAG_QUEST_MOSSDEEP_INVESTIGATED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReturn
 	goto_if_set FLAG_QUEST_MOSSDEEP_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResearcherQuestReminder
 	@ v1.8 Quest offer (post-Primal)
@@ -613,3 +617,224 @@ MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestReturnPost:
 	.string "I'll be monitoring that spot\n"
 	.string "on ROUTE 131 for a long,\l"
 	.string "long time.$"
+
+@ =============================================
+@ Quest 5: The Second Signal (C210)
+@ Postgame Deoxys quest -- requires Champion
+@ + Mossdeep Signal quest complete
+@ =============================================
+
+@ --- Scientist NPC branches ---
+
+MossdeepCity_SpaceCenter_2F_EventScript_CheckDeoxysOffer::
+	goto_if_set FLAG_SYS_GAME_CLEAR, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysQuestStart
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResearcherQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_DeoxysQuestStart::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysQuestStart, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_DEOXYS_STARTED
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_DeoxysQuestDone::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysQuestDone, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_DeoxysRetry::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysRetry, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_DeoxysGoCheck::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysGoCheck, MSGBOX_DEFAULT
+	release
+	end
+
+@ --- Terminal bg_event script ---
+
+MossdeepCity_SpaceCenter_2F_Script_DeoxysTerminal::
+	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalQuiet
+	goto_if_set FLAG_QUEST_DEOXYS_INVESTIGATED, MossdeepCity_SpaceCenter_2F_Script_DeoxysRetryEncounter
+	goto_if_set FLAG_QUEST_DEOXYS_STARTED, MossdeepCity_SpaceCenter_2F_Script_DeoxysInvestigate
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalNormal, MSGBOX_SIGN
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalQuiet::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalQuiet, MSGBOX_SIGN
+	end
+
+@ --- Investigation sequence (first encounter) ---
+
+MossdeepCity_SpaceCenter_2F_Script_DeoxysInvestigate::
+	lockall
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalReading1, MSGBOX_DEFAULT
+	@ Camera shake -- signal approaching
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalReading2, MSGBOX_DEFAULT
+	@ Stronger shake -- much closer
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 6
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalReading3, MSGBOX_DEFAULT
+	@ Violent shake -- arrival
+	setvar VAR_0x8004, 2
+	setvar VAR_0x8005, 3
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 2
+	special ShakeCamera
+	waitstate
+	setflag FLAG_QUEST_DEOXYS_INVESTIGATED
+	@ Music fades to silence
+	fadeoutbgm 1
+	delay 60
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysAppears, MSGBOX_DEFAULT
+	@ Legendary battle
+	setwildbattle SPECIES_DEOXYS, 70
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	compare VAR_RESULT, B_OUTCOME_CAUGHT
+	goto_if_eq MossdeepCity_SpaceCenter_2F_Script_DeoxysCaught
+	@ Player defeated or fled -- can retry
+	fadeinbgm 1
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysVanished, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_DeoxysCaught::
+	fadeinbgm 1
+	setflag FLAG_QUEST_DEOXYS_COMPLETE
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysCaughtReaction, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ --- Retry encounter ---
+
+MossdeepCity_SpaceCenter_2F_Script_DeoxysRetryEncounter::
+	lockall
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalFlicker, MSGBOX_DEFAULT
+	fadeoutbgm 1
+	delay 40
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysReappears, MSGBOX_DEFAULT
+	setwildbattle SPECIES_DEOXYS, 70
+	special BattleSetup_StartLegendaryBattle
+	waitstate
+	specialvar VAR_RESULT, GetBattleOutcome
+	compare VAR_RESULT, B_OUTCOME_CAUGHT
+	goto_if_eq MossdeepCity_SpaceCenter_2F_Script_DeoxysCaught
+	fadeinbgm 1
+	msgbox MossdeepCity_SpaceCenter_2F_Text_DeoxysVanished, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ --- Quest 5 text strings ---
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysQuestStart:
+	.string "...You. You investigated the\n"
+	.string "signal before.\p"
+	.string "It's back.\p"
+	.string "No... not back. Something else.\p"
+	.string "The first signal was random.\n"
+	.string "Bursts of noise from deep space.\p"
+	.string "This one has a rhythm.\n"
+	.string "Almost like breathing.\p"
+	.string "Our instruments can't explain\n"
+	.string "it. The telescope shows empty\l"
+	.string "sky.\p"
+	.string "But the array keeps receiving.\n"
+	.string "Closer. Every hour, closer.\p"
+	.string "That terminal is tracking it.\n"
+	.string "Would you check the readings?\p"
+	.string "I... I'd rather not look alone.$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysQuestDone:
+	.string "The array has been quiet ever\n"
+	.string "since that... encounter.\p"
+	.string "Whatever it was, it came from\n"
+	.string "beyond HOENN. Beyond anything\l"
+	.string "we've mapped.\p"
+	.string "I sleep better now. But I still\n"
+	.string "check the readings every\l"
+	.string "morning.$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysRetry:
+	.string "The terminal is still\n"
+	.string "flickering.\p"
+	.string "I think it's waiting for you.$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysGoCheck:
+	.string "Please... check the terminal.\n"
+	.string "I need to know what it says.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalNormal:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "All readings nominal.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalQuiet:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "No signal detected.\l"
+	.string "Array status: QUIET$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalReading1:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "SOURCE: UNIDENTIFIED\n"
+	.string "BEARING: 041.7 ZENITH\l"
+	.string "DISTANCE: 8,400 km$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalReading2:
+	.string "SOURCE: UNIDENTIFIED\n"
+	.string "BEARING: VARIABLE\l"
+	.string "DISTANCE: 430 km\p"
+	.string "SIGNAL STRENGTH: RISING$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalReading3:
+	.string "SOURCE: UN---FI--\n"
+	.string "BEAR--G: ---\l"
+	.string "DIST---E: 0\p"
+	.string "...\p"
+	.string "The screen goes dark.$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysAppears:
+	.string "The air turns cold.\p"
+	.string "Something is here.\p"
+	.string "A presence unlike anything\n"
+	.string "in HOENN...$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysCaughtReaction:
+	.string "The readings... stopped.\p"
+	.string "Whatever that was, it came\n"
+	.string "FROM the signal.\l"
+	.string "Or it WAS the signal.\p"
+	.string "I don't think HOENN has seen\n"
+	.string "anything like this before.\p"
+	.string "Thank you. I can think\n"
+	.string "clearly again.$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysVanished:
+	.string "It vanished when you drove\n"
+	.string "it back...\p"
+	.string "But the terminal is still\n"
+	.string "flickering.\p"
+	.string "I think it might return.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalFlicker:
+	.string "The terminal screen flickers\n"
+	.string "with static.\p"
+	.string "The readings are spiking\n"
+	.string "again...$"
+
+MossdeepCity_SpaceCenter_2F_Text_DeoxysReappears:
+	.string "The cold returns.\p"
+	.string "It's here again...$"

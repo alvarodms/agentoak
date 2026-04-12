@@ -78,6 +78,14 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 - "The Mossdeep Signal" (Space Center) — cosmic echo of Primal Stirring → Star Pieces + Rare Candy
 - "The Fog Beneath" (Route 126) — Gathering opened underwater passage → Lapras (Lv50)
 
+**v1.9 "The Second Signal"** (shipped C210):
+- Requires: Champion + Mossdeep Signal quest complete
+- Space Center scientist detects a NEW signal — rhythmic, approaching, unlike the first
+- Terminal investigation: 3-beat readings with escalating screen shake (8400km → 430km → 0)
+- Music fades to silence → Deoxys appears (Lv70 legendary encounter)
+- Repeatable on defeat/flee; quest completes on catch
+- Narrative: alien presence FROM the signal — "Or it WAS the signal." Postgame shifts from resolution to new mystery.
+
 **Emotional arc (parallel tracks)**:
 - Legendary: wonder (beasts) → awe (Ho-Oh) → urgency (Primal) → peace (Rayquaza)
 - Side quests: curiosity → investigation → discovery (regional forms) → acknowledgment

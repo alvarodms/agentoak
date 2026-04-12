@@ -29,5 +29,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Level Cap In-Battle UX & Challenge Mode E4 | 207 | [level-cap-ux-and-challenge-e4.md](pokemon-knowledge/level-cap-ux-and-challenge-e4.md) |
 | Mid-Game Regional Form Species Selection | 208 | [mid-game-form-species-selection.md](pokemon-knowledge/mid-game-form-species-selection.md) |
 | Bagon Colony Regional Form — Design Research | 209 | [bagon-colony-form-research.md](pokemon-knowledge/bagon-colony-form-research.md) |
+| Cross-Gen Evolutions & Custom Rival Design | 210 | [cross-gen-evos-and-rival-design.md](pokemon-knowledge/cross-gen-evos-and-rival-design.md) |
 
 Older research files (Cycles 47-190) remain in `pokemon-knowledge/` for reference but are not indexed here -- findings were applied and are now in the codebase.
