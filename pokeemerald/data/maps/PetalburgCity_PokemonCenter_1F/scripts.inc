@@ -92,3 +92,56 @@ PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
 	.string "But, it's weak against GRASS-type\n"
 	.string "and ELECTRIC-type POKéMON.$"
 
+@ C214 Difficulty Downgrade NPC
+PetalburgCity_PokemonCenter_1F_EventScript_DifficultyNPC::
+	lock
+	faceplayer
+	goto_if_unset FLAG_DIFFICULTY_CHALLENGE, PetalburgCity_PokemonCenter_1F_EventScript_DifficultyNPC_NormalMode
+	msgbox PetalburgCity_PokemonCenter_1F_Text_DifficultyOffer, MSGBOX_DEFAULT
+	multichoice 0, 0, MULTI_DIFFICULTY_DOWNGRADE, FALSE
+	switch VAR_RESULT
+	case 0, PetalburgCity_PokemonCenter_1F_EventScript_DifficultyDowngrade
+	case 1, PetalburgCity_PokemonCenter_1F_EventScript_DifficultyKeep
+	case MULTI_B_PRESSED, PetalburgCity_PokemonCenter_1F_EventScript_DifficultyKeep
+	end
+
+PetalburgCity_PokemonCenter_1F_EventScript_DifficultyDowngrade::
+	clearflag FLAG_DIFFICULTY_CHALLENGE
+	msgbox PetalburgCity_PokemonCenter_1F_Text_DifficultyChanged, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_PokemonCenter_1F_EventScript_DifficultyKeep::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_DifficultyKept, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_PokemonCenter_1F_EventScript_DifficultyNPC_NormalMode::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_DifficultyNormal, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgCity_PokemonCenter_1F_Text_DifficultyOffer:
+	.string "I've seen plenty of TRAINERS\n"
+	.string "stumble after choosing\lChallenge Mode.\p"
+	.string "If you want, I can switch\n"
+	.string "you back to Normal Mode.\p"
+	.string "Fair warning -- once I make\n"
+	.string "the change, it's permanent.$"
+
+PetalburgCity_PokemonCenter_1F_Text_DifficultyChanged:
+	.string "Done. Your battles should\n"
+	.string "feel a bit more manageable.\p"
+	.string "Knowing when to adapt is\n"
+	.string "its own kind of strength.$"
+
+PetalburgCity_PokemonCenter_1F_Text_DifficultyKept:
+	.string "Ha! Stubborn, aren't you?\n"
+	.string "NORMAN would approve.$"
+
+PetalburgCity_PokemonCenter_1F_Text_DifficultyNormal:
+	.string "Challenge Mode? I hear some\n"
+	.string "TRAINERS push themselves\lthat way.\p"
+	.string "Not for me, though.\n"
+	.string "I prefer a steady pace.$"
+

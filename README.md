@@ -24,6 +24,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology — every route has a unique identity, from ghostly Mt. Pyre waters to Horsea colonies and toxic shipwreck seas
 - **Ocean route differentiation** — all 17 sea routes feature unique species, themed ecosystems, and tiered fishing rewards; Tentacool/Wingull monoculture replaced with Kingdra, Lanturn, Mantine, Relicanth, and other rare 1% catches
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
+- **5 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass, Piloswine into Mamoswine, and Girafarig into Farigiraf. Elite Four members field these evolved forms, making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), and Hoennian Arcanine (Water/Fire) are discovered through postgame side quests — proof that Hoenn's ecosystem is evolving
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, a Wailord pod shakes the ocean on Route 128 — culminating in a special encounter with a curious young Wailmer — and on Route 126, fog rolls in as layered Pokemon cries converge toward Sootopolis in a moment the player can only witness, not fight
@@ -44,7 +45,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Elite Four and Champion** rebuilt with competitive teams and narrative depth — each E4 member's dialogue reflects their personal connection to the migration: Sidney names the dark predators that crept in behind the noble arrivals, Phoebe's grandmother on Mt. Pyre confirms the spirits settled, Glacia followed the cold south from a distant land, Drake confesses what the Bagon Colony in Meteor Falls taught him about perseverance, and Champion Wallace leads with Hoennian Arcanine — a fire that burns underwater, the migration's thesis statement made flesh. Phoebe fields Hoennian Corsola, Wallace fields Hoennian Arcanine — regional forms bookend the gauntlet. Zero duplicate species across the entire run
 - **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
 - **4-tier rematch progression** for all gym leaders and Elite Four with escalating teams — E4 rematches feature migration-themed rosters, regional forms from Tier 2 onward, and strategic evolution arcs (Drake's Gabite grows into Garchomp, Phoebe's Corsola_Hoenn strengthens, Wallace's Arcanine_Hoenn anchors his team)
-- **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1→2→3→4→5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
+- **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1->2->3->4->5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
 - **200+ route trainers** across every land route, ocean route, cave, and dungeon redesigned with migration species, held items, themed movesets, and new double battles — ocean swimmers carry route-coherent species matching their waters, Route 119 exploits rain, Victory Road veterans field evolved teams with competitive AI, Mt. Pyre ghosts haunt with Misdreavus and Houndour, and Meteor Falls dragon tamers raise Bagon and Shelgon from the caves they call home
 
@@ -82,6 +83,7 @@ Choose your challenge in Professor Birch's lab:
   - **Badge-based level caps** — soft EXP reduction when your Pokemon reach the cap for your current badge count, scaling from Lv18 (pre-Roxanne) to Lv55 (8 badges)
   - **Same encounters, same trainers** — the world doesn't change, but you must play smarter
 - Friendly NPCs in Pokemon Centers along the early routes explain your current mode and level cap
+- **Changed your mind?** A friendly NPC in the Petalburg Pokemon Center can switch you back to Normal Mode if Challenge Mode gets too tough
 
 ### How to Play
 

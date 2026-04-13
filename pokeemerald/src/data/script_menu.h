@@ -785,6 +785,15 @@ static const struct MenuAction MultichoiceList_DifficultySelect[] =
     {sText_ChallengeMode},
 };
 
+static const u8 sText_SwitchToNormal[] = _("Switch to Normal");
+static const u8 sText_KeepChallenge[] = _("Keep Challenge");
+
+static const struct MenuAction MultichoiceList_DifficultyDowngrade[] =
+{
+    {sText_SwitchToNormal},
+    {sText_KeepChallenge},
+};
+
 struct MultichoiceListStruct
 {
     const struct MenuAction *list;
@@ -908,6 +917,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_FALLARBOR_TENT_RULES]       = MULTICHOICE(MultichoiceList_FallarborTentRules),
     [MULTI_TAG_MATCH_TYPE]             = MULTICHOICE(MultichoiceList_TagMatchType),
     [MULTI_DIFFICULTY_SELECT]          = MULTICHOICE(MultichoiceList_DifficultySelect),
+    [MULTI_DIFFICULTY_DOWNGRADE]      = MULTICHOICE(MultichoiceList_DifficultyDowngrade),
 };
 
 const u8 *const gStdStrings[] =

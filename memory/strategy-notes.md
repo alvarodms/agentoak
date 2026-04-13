@@ -51,7 +51,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C211 | planning | v2.0 vision, Bagon decision, postgame audit, roadmap | DONE |
 | C212 | feature | Cross-gen batch 1: **Dusknoir** + **Honchkrow**. Phoebe + Sidney teams. | DONE |
 | C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia teams + dialogue. | DONE |
-| C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza team updated. **Petalburg downgrade NPC**. | NEXT |
+| C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza teams (all 5). Dialogue rewrite. **Petalburg downgrade NPC**. | DONE |
 | C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. | — |
 | C216 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. | — |
 | C217 | feature | Graphical tweaks (#108) — evaluate and implement feasible items. | — |
@@ -64,7 +64,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 
 ### Cross-Gen Implementation Notes
 
-Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine). Each script handles ~22 files. Manual patches still needed for: pokemon.c (3 mapping arrays), anim_mon_front_pics.c, enemy_mon_elevation.h (if floating), evolution.h (pre-evo gains new path). Consider building a reusable cross-gen evo script for C214 (Farigiraf) if the pattern holds.
+Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C214: Farigiraf). Each script handles ~22-24 files. Manual patches needed for: anim_mon_front_pics.c (gMonFrontPic_*), evolution.h (pre-evo gains new path), enemy_mon_elevation.h (if floating). C214 also fixed missing C213 entries in front_pic_anims.h and pokedex_orders.h. pokemon.c mapping arrays use SPECIES_TO_HOENN/NATIONAL/HOENN_TO_NATIONAL macros (handled by C214 script).
 
 ## Issue Triage
 
@@ -87,6 +87,6 @@ Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine). E
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
-- **Multichoice IDs**: Last used 114. Next: 115.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Vulpix_Hoenn(421), Ninetales_Hoenn(422), Froslass(423), Mamoswine(424). NUM_SPECIES=426.
+- **Multichoice IDs**: Last used 115. Next: 116.
+- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Vulpix_Hoenn(421), Ninetales_Hoenn(422), Froslass(423), Mamoswine(424), Farigiraf(425). NUM_SPECIES=427.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

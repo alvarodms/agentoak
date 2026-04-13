@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422), Froslass (423), Mamoswine (424). NUM_SPECIES = 426 (EGG=425).
+**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422), Froslass (423), Mamoswine (424), Farigiraf (425). NUM_SPECIES = 427 (EGG=426).
 
 ---
 
@@ -58,7 +58,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Constants**: `include/constants/script_menu.h` — `MULTI_*` IDs (0-114). `MULTI_B_PRESSED` = 127.
 **Data**: `src/data/script_menu.h` — `sMultichoiceLists[]` array indexed by MULTI_* constants.
-**Last used ID**: 114 (`MULTI_DIFFICULTY_SELECT`). Next available: 115.
+**Last used ID**: 115 (`MULTI_DIFFICULTY_DOWNGRADE`). Next available: 116.
 
 ---
 

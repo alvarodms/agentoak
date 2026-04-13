@@ -32,3 +32,21 @@ C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering 
 **Mid-game escalation** (C29, 94, 95, 141, 149, 153, 154, 159, 160, 162): Weather Institute Dr. Hartley, Meteor Falls Bagon Colony (flag 0x280), Mt. Pyre Restless Dead (flag 0x281), weather omen NPCs (flags 0x282-0x285), route identity NPCs (R110/113/119/123). R119 thunderstorm event (flags 0x27C-0x27D).
 **Late-game + The Gathering Storm** (C33, 112, 113, 186, 187, 188, 189, 190, **205**): City atmosphere (Mossdeep/Sootopolis/Pacifidlog badge-gated), ocean route witnesses (R124/126/127/128/131), Deep Migration R128 (flag 0x287), The Gathering R126 (flags 0x288-0x289). C205 "The Exhale": 6 ocean NPCs gain post-Rayquaza resolved dialogue, R126 fog thins.
 **Postgame quests** (C116, 118, 120, 135-137, 139, 192, 193, 194, 200, **207**, **209**, **210**): Beast sightings, Primal network, Sky Guardian arc, 4 side quests (Elder's Current/Hartley's Report/Mossdeep Signal/Fog Beneath). C207: Mt. Pyre Coral Mourner NPC. C209: Bagon Colony researcher postgame callback. C210: Deoxys "Second Signal" quest.
+
+## Cross-Gen Evolution Dialogue — Cycles 212-214
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **212** | Sidney intro+defeat+rematch rewritten for Honchkrow theme |
+| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | **212** | Phoebe intro+rematch rewritten for Dusknoir theme |
+| `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | **213** | Glacia intro+defeat+rematch rewritten for Froslass/Mamoswine |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | **214** | Tate & Liza intro+defeat+post-battle+pre-rematch+rematch-defeat+post-rematch rewritten for Farigiraf/duality theme. TATE:/LIZA: speaker tags throughout. |
+
+## Petalburg Difficulty Downgrade NPC — Cycle 214
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc` | **214** | New NPC: one-way Challenge→Normal downgrade. Multichoice (MULTI_DIFFICULTY_DOWNGRADE=115). Checks FLAG_DIFFICULTY_CHALLENGE. 4 text blocks. |
+| `data/maps/PetalburgCity_PokemonCenter_1F/map.json` | **214** | OBJ_EVENT_GFX_MAN_1 at (3,6), MOVEMENT_TYPE_FACE_DOWN |
+| `include/constants/script_menu.h` | **214** | Added MULTI_DIFFICULTY_DOWNGRADE (115) |
+| `src/data/script_menu.h` | **214** | MultichoiceList_DifficultyDowngrade (2 options), added to sMultichoiceLists[115] |

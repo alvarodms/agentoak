@@ -18,5 +18,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Cross-Gen Evolutions & Custom Rival Design | 210 | [cross-gen-evos-and-rival-design.md](pokemon-knowledge/cross-gen-evos-and-rival-design.md) |
 | Legendary Quest Depth Patterns | 211 | [legendary-quest-depth-patterns.md](pokemon-knowledge/legendary-quest-depth-patterns.md) |
 | Glacia Team Design Patterns — Froslass & Mamoswine | 213 | [glacia-team-design-patterns.md](pokemon-knowledge/glacia-team-design-patterns.md) |
+| Farigiraf in Emerald Hacks & Difficulty Toggle Patterns | 214 | [farigiraf-and-difficulty-toggle-patterns.md](pokemon-knowledge/farigiraf-and-difficulty-toggle-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

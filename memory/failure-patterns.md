@@ -63,6 +63,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: `pokeemerald/src/data/.gitignore` ignores `wild_encounters.h` (generated from `wild_encounters.json`). Runner staging tried to add it.
 **Resolution**: Only stage `wild_encounters.json`, never `wild_encounters.h`. When staging pokeemerald changes, skip gitignored generated files.
 
+## MCP Sprite Fetch Incomplete for Newer Pokemon (Cycle 214)
+
+**Symptom**: `fetch_pokemon_sprites("farigiraf")` returned only 5 of 7 files — missing `anim_front.png` and `front.png`.
+**Cause**: The expansion repo may not have all sprite variants for Gen 9 species, or the MCP tool's file detection missed them.
+**Resolution**: After calling `fetch_pokemon_sprites`, ALWAYS verify with `ls` that all 7 files exist. If any are missing, copy from the base species (e.g., Girafarig for Farigiraf) as fallback.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

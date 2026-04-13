@@ -546,22 +546,21 @@ MossdeepCity_Gym_Text_NicholasPostBattle:
 	.string "invincible POKéMON power next.$"
 
 MossdeepCity_Gym_Text_TateAndLizaIntro:
-	.string "The migration sends ripples through\n"
-	.string "every Pokemon mind in Hoenn.\l"
-	.string "We sense them all -- every one.\p"
-	.string "Our twin bond grows stronger with\l"
-	.string "each new presence that arrives.\n"
-	.string "Can your bond match what we share?$"
+	.string "TATE: The migration changed\n"
+	.string "GIRAFARIG into something new…\p"
+	.string "LIZA: FARIGIRAF! Two minds that\n"
+	.string "finally learned to think as one.\p"
+	.string "TATE: Just like us.\p"
+	.string "LIZA: Let us show you what real\n"
+	.string "cooperation looks like!$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
-	.string "TATE: You're stronger than\n"
-	.string "we foresaw.\p"
-	.string "LIZA: The migration brought\n"
-	.string "more than strange POKéMON --\l"
-	.string "it brought TRAINERS like you.\p"
-	.string "TATE: Unexpected.\n"
-	.string "LIZA: Remarkable.\p"
-	.string "Together: Well done.$"
+	.string "TATE: You broke through our\n"
+	.string "combined power…\p"
+	.string "LIZA: Even FARIGIRAF's unified\n"
+	.string "mind couldn't keep up!\p"
+	.string "TATE: Your bond with your\n"
+	.string "POKéMON is something special.$"
 
 MossdeepCity_Gym_Text_ReceivedMindBadge:
 	.string "{PLAYER} received the MIND BADGE\n"
@@ -588,11 +587,12 @@ MossdeepCity_Gym_Text_RegisteredTateAndLiza:
 	.string "in the POKéNAV.$"
 
 MossdeepCity_Gym_Text_TateAndLizaPostBattle:
-	.string "TATE: Looks like the bond between you\n"
-	.string "and your POKéMON is far stronger than\l"
-	.string "the bond that we share as twins.\p"
-	.string "LIZA: You will become even stronger!\n"
-	.string "We've battled you, so we know.$"
+	.string "TATE: Watching you battle showed\n"
+	.string "us something new.\p"
+	.string "LIZA: The strongest bond isn't\n"
+	.string "always between two minds…\p"
+	.string "TATE: Sometimes it's between\n"
+	.string "a TRAINER and their POKéMON.$"
 
 MossdeepCity_Gym_Text_TateAndLizaNeedTwoMons:
 	.string "TATE: Hehehe… Were you surprised?\p"
@@ -612,28 +612,28 @@ MossdeepCity_Gym_Text_GymStatueCertified:
 	.string "{PLAYER}$"
 
 MossdeepCity_Gym_Text_TateAndLizaPreRematch:
-	.string "TATE: {PLAYER}! A strange ghost\n"
-	.string "floated into MOSSDEEP from the sea…\p"
-	.string "LIZA: A Misdreavus! It speaks to\n"
-	.string "us in whispers we almost understand!\p"
-	.string "TATE: We've been training together\n"
-	.string "with it--\n"
-	.string "LIZA: --and our bond is stronger\n"
-	.string "than ever!\p"
-	.string "TATE: Let's show you!\n"
-	.string "LIZA: Both of us at once!$"
+	.string "TATE: {PLAYER}! Since you last\n"
+	.string "visited, FARIGIRAF has taught\lus something new.\p"
+	.string "LIZA: When two minds stop\n"
+	.string "competing and start cooperating…\p"
+	.string "TATE: …that's when real power\n"
+	.string "emerges.\p"
+	.string "LIZA: Want to see how much\n"
+	.string "we've grown together?$"
 
 MossdeepCity_Gym_Text_TateAndLizaRematchDefeat:
-	.string "TATE: We lost…\n"
-	.string "LIZA: …but we learned!$"
+	.string "TATE: We lost again…\n"
+	.string "LIZA: …but FARIGIRAF taught us\n"
+	.string "that growth never stops!$"
 
 MossdeepCity_Gym_Text_TateAndLizaPostRematch:
-	.string "TATE: The Misdreavus showed us…\n"
-	.string "LIZA: …that some bonds go beyond\n"
-	.string "what our eyes can see!\p"
-	.string "TATE: The migration brought\n"
-	.string "POKéMON we never imagined!\n"
-	.string "LIZA: Mossdeep feels alive!$"
+	.string "TATE: FARIGIRAF proved that two\n"
+	.string "minds can become something greater.\p"
+	.string "LIZA: The migration didn't just\n"
+	.string "bring new POKéMON to HOENN…\p"
+	.string "TATE: It unlocked new potential\n"
+	.string "in the ones already here!\n"
+	.string "LIZA: Even in us!$"
 
 MossdeepCity_Gym_Text_TateAndLizaRematchNeedTwoMons:
 	.string "TATE: Hey, hey!\n"
