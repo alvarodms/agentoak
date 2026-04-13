@@ -4728,6 +4728,18 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+    [NATIONAL_DEX_BAGON_HOENN] =
+    {
+        .categoryName = _("Cave Dragon"),
+        .height = 6,
+        .weight = 550,
+        .description = gBagonHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 1,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
     [NATIONAL_DEX_GROWLITHE_HOENN] =
     {
         .categoryName = _("Puppy"),

@@ -34,19 +34,19 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase (C215)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). NUM_SPECIES = 426 (EGG=426). **Missing from build**: Farigiraf (C214 reverted), Vulpix_Hoenn, Ninetales_Hoenn (overwritten by C212 species insertions). All three need re-addition.
+**Custom species in codebase (C216)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). NUM_SPECIES = 426 (EGG=426). All 14 species fully registered and building. **Missing from build**: Farigiraf (C214 reverted), Vulpix_Hoenn, Ninetales_Hoenn (overwritten by C212 species insertions). All three need re-addition.
 
 ---
 
 ## Roaming Pokemon System (Cycle 108-109)
 
-Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNextBeast()` sequentially releases Raikou→Entei→Suicune using 6 flags. Full ref: `memory/pokemon-knowledge/roamer-implementation-patterns.md`.
+Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNextBeast()` sequentially releases Raikou->Entei->Suicune using 6 flags. Full ref: `memory/pokemon-knowledge/roamer-implementation-patterns.md`.
 
 ---
 
 ## Flag System Layout (Cycle 117-118)
 
-**Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
+**Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
 
 **Custom flags**: 0x264-0x29B used (v6.0 through v2.0). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. 0x298-0x29A = Deoxys quest (C210): STARTED/INVESTIGATED/COMPLETE. 0x29B = `FLAG_BAGON_COLONY_CALLBACK` (C215). Next available: 0x29C.
 
@@ -64,7 +64,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Legendary Battle Pattern
 
-`setwildbattle` → `setflag` → `special BattleSetup_StartLegendaryBattle` → `waitstate` → check `B_OUTCOME_CAUGHT`. Used by all 5 shipped legendaries (including Deoxys C210).
+`setwildbattle` -> `setflag` -> `special BattleSetup_StartLegendaryBattle` -> `waitstate` -> check `B_OUTCOME_CAUGHT`. Used by all 5 shipped legendaries (including Deoxys C210).
 
 ## Challenge Mode Level Scaling (C210)
 
@@ -100,23 +100,11 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Regional Variant Species Pipeline (C195-202)
 
-**Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. Usage:
-```
-node scripts/add_regional_form.cjs configs/<species>.json          # live
-node scripts/add_regional_form.cjs configs/<species>.json --dry-run # preview
-```
+**Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. **WARNING (C215-216)**: Pipeline catastrophically broken — only populates ~7/23 required files. DO NOT use without audit. See failure-patterns.md.
 
 **Config template**: `configs/vulpix_hoenn.json` — copy and modify for new species. Directory: `pokeemerald/configs/`.
 
-**What the script handles**: species.h, pokedex.h (both enums + count), species_info.h, level_up_learnsets.h, learnset_pointers.h, egg_moves.h, tmhm_learnsets.h, evolution.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h (3 arrays), pokemon.c (4 tables), graphics/pokemon.h (6 INCBINs), anim_mon_front_pics.c, graphics.h (7 externs), 8 graphics table files, front_pic_anims.h (3 insertions), pokemon_icon.c (2 tables), cry_tables.inc (2 sections), enemy_mon_elevation.h (if needed).
-
-**What it does NOT handle**: Sprite files (use `fetch_pokemon_sprites` MCP tool). Encounter tables. Trainer parties.
-
-**Key anchors**: Most tables use `[SPECIES_EGG]` or `};`. Graphics tables use macros like `SPECIES_SPRITE(EGG`, `SPECIES_PAL(EGG`. Cry table forward uses `.align 2`, reverse appends to EOF.
-
-**front_pic_anims.h structure**: AnimCmd arrays → SINGLE_ANIMATION macro → `gMonFrontAnimsPtrTable[]`. Script handles all three.
-
-**Cry reuse**: Regional forms reuse base species cry via `Cry_*` label in `cry_tables.inc`.
+**Species registration checklist (23+ files)**: species.h, pokedex.h (national+hoenn), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h, pokedex_orders.h (3 arrays), cry_tables.inc (2 sections), enemy_mon_elevation.h (if floating).
 
 ---
 
@@ -124,7 +112,7 @@ node scripts/add_regional_form.cjs configs/<species>.json --dry-run # preview
 
 **Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), similar in C212. Covers ~22 files (species_info, learnsets, TM/HM, egg moves, pokedex text/entries/orders, graphics tables, icons, cries). 
 
-**Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species→hoenn, species→national, hoenn→national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
+**Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species->hoenn, species->national, hoenn->national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
 
 **egg_moves.h pitfall**: `EGG_MOVES_TERMINATOR` MUST separate species blocks. Missing it causes silent data corruption or build errors.
 

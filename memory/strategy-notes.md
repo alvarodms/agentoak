@@ -35,8 +35,8 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 
 **Decision**: Ship Bagon_Hoenn as Dragon/Rock. Standalone form — no Shelgon_Hoenn or Salamence_Hoenn in v2.0.
 
-**Species**: Bagon_Hoenn | **Typing**: Dragon/Rock | **BST**: ~310 (base Bagon is 300: shift +Def, +SpDef, -Spd, -Atk)
-**Ability**: Rock Head (retained) / Sturdy (hidden — thematic for a cave-hardened dragon)
+**Species**: Bagon_Hoenn | **Typing**: Dragon/Rock | **BST**: 450 (HP 65, Atk 85, Def 120, SpA 45, SpD 75, Spe 60)
+**Ability**: Rock Head / Sturdy — the dragon that hardened into stone. Rock Head + Double-Edge = 120 power, no recoil.
 
 **Encounter**: Meteor Falls, postgame, requires Champion + researcher callback seen. 4% encounter rate, Lv28-30. The researcher's presence contextualizes the find.
 
@@ -53,7 +53,8 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia teams + dialogue. | DONE |
 | C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza teams (all 5). Dialogue rewrite. **Petalburg downgrade NPC**. | DONE |
 | C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Also cleaned up C214 Farigiraf revert residue (stale refs in 5 files). | DONE |
-| C216 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. | — |
+| C216 | repair | Bagon_Hoenn broken species registration (16 missing files) — fixed all entries, revised BST 310→450. | DONE |
+| C217 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. Farigiraf/Vulpix_Hoenn re-addition scheduling. | — |
 | C217 | feature | Graphical tweaks (#108) — evaluate and implement feasible items. | — |
 | C218 | feature | Documentation pass (#115) — README expansion, player guide, feature list. | — |
 | C219-C220 | feature | Community-driven or polish — determined by C216 review. | — |
@@ -88,5 +89,5 @@ Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C2
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425). NUM_SPECIES=426. **Note**: Farigiraf (C214) was reverted — needs re-addition in future cycle. Vulpix_Hoenn/Ninetales_Hoenn IDs shifted when C212 species were added; they share IDs with Dusknoir/Honchkrow now (see species.h for truth).
+- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425). NUM_SPECIES=426. **Note**: Farigiraf reverted (C214) — needs full re-addition. Vulpix_Hoenn/Ninetales_Hoenn completely absent from codebase (zero references except FrostTracker NPC dialogue on Route 113) — need full re-addition, not just ID restoration.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

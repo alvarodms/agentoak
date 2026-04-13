@@ -423,5 +423,6 @@ const u8 *const gMonFootprintTable[] =
     [SPECIES_ARCANINE_HOENN] = gMonFootprint_ArcanineHoenn,
     [SPECIES_DUSKNOIR] = gMonFootprint_Dusknoir,
     [SPECIES_HONCHKROW] = gMonFootprint_Honchkrow,
+    [SPECIES_BAGON_HOENN] = gMonFootprint_BagonHoenn,
     [SPECIES_EGG] = gMonFootprint_Bulbasaur,
 };

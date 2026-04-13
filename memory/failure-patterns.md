@@ -52,11 +52,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Used `replace_all: true` to fix `MON_MALE` → `PERCENT_FEMALE(25)` in species_info.h; changed ALL species with MON_MALE, not just the two new ones.
 **Resolution**: NEVER use `replace_all` on common strings in large files. Use targeted edits or `git checkout --` to restore + re-apply.
 
-## add_regional_form.cjs Pipeline Placement Bugs (Cycle 215)
+## add_regional_form.cjs Catastrophic Failure (Cycles 215-216) — CRITICAL
 
-**Symptom**: Pipeline inserts entries at wrong locations in tmhm_learnsets.h (inside struct definition instead of array) and pokemon.c (all 3 mapping macros placed in first array instead of split across 3 arrays).
-**Cause**: Pipeline insertion logic uses simple text anchors; if the file structure has a preceding section (struct def in tmhm_learnsets.h) or multiple similarly-shaped arrays (pokemon.c), the anchor matches the wrong location.
-**Resolution**: After running `add_regional_form.cjs`, verify: (1) tmhm_learnsets.h entry is inside the `gTMHMLearnsets` array (not the `struct TMHMLearnset` definition); (2) pokemon.c has exactly 1 entry per mapping array (SPECIES_TO_HOENN, SPECIES_TO_NATIONAL, HOENN_TO_NATIONAL). Fix manually if misplaced. Pipeline fix deferred to C221.
+**Symptom**: Pipeline only populated 7 of 23+ required files for Bagon_Hoenn. Build failed with `SPECIES_BAGON_HOENN undeclared`. Missing from: species.h, pokedex.h, species_info.h, all graphics tables (12 files), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, front_pic_anims.h, graphics.h (externs), graphics/pokemon.h (declarations).
+**Cause**: Pipeline has TWO categories of bugs: (1) placement bugs — tmhm_learnsets.h entry placed in struct def, pokemon.c macros all in first array; (2) COMPLETE OMISSIONS — 16+ files never touched at all. The pipeline's file list is fundamentally incomplete.
+**Resolution**: DO NOT trust `add_regional_form.cjs` for any future species addition without a comprehensive audit. After running, verify EVERY file in the 23-file species registration checklist. C216 manually added all 16 missing entries. Pipeline needs a complete rewrite before next use — scheduled for C221 at latest.
+**Species registration checklist**: species.h, pokedex.h (national+hoenn), species_info.h, graphics/pokemon.h, graphics.h, front/back_pic_coordinates.h, front/back/still_front_pic_table.h, palette/shiny_palette_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h, pokedex_orders.h (3 arrays).
 
 ## PNG Palette Modification Requires PLTE Chunk Surgery (Cycle 209)
 

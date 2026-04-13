@@ -2377,6 +2377,13 @@ const u8 gArcanineHoennPokedexText[] = _(
     "with grace, never slowing in\n"
     "the deepest water.");
 
+const u8 gBagonHoennPokedexText[] = _(
+    "Its scales hardened into living stone\n"
+    "after generations in METEOR FALLS.\n"
+    "Unlike its kin who dream of flight,\n"
+    "this BAGON found something worth\n"
+    "staying for.");
+
 const u8 gDusknoirPokedexText[] = _(
     "The antenna on its head receives\n"
     "signals from the spirit world\n"

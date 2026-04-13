@@ -19,7 +19,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, 139, 140, 141, 142, 144, 145, 146, 149, 152, 153, 154, 159, 160, 161(reverted), 162, 180, 181, 183, 186, 187, 188, 189, 190, 192, 193, 194, 195, 200, 203, 204, 205, **207**, **208**, **209**, **210**, **213**, **214** | ~90 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves + Difficulty) | 43–46, 52, 129, 181, 182, **207**, **210** | 18 (+10 modified) | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214** | 14 | [qol-and-release.md](completed-work/qol-and-release.md) |
-| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
+| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206** | Makefile + 6 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |

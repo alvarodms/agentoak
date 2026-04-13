@@ -2790,6 +2790,14 @@ const u32 gMonBackPic_Honchkrow[] = INCBIN_U32("graphics/pokemon/honchkrow/back.
 const u32 gMonShinyPalette_Honchkrow[] = INCBIN_U32("graphics/pokemon/honchkrow/shiny.gbapal.lz");
 const u8 gMonIcon_Honchkrow[] = INCBIN_U8("graphics/pokemon/honchkrow/icon.4bpp");
 const u8 gMonFootprint_Honchkrow[] = INCBIN_U8("graphics/pokemon/honchkrow/footprint.1bpp");
+
+const u32 gMonStillFrontPic_BagonHoenn[] = INCBIN_U32("graphics/pokemon/bagon_hoenn/front.4bpp.lz");
+const u32 gMonPalette_BagonHoenn[] = INCBIN_U32("graphics/pokemon/bagon_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_BagonHoenn[] = INCBIN_U32("graphics/pokemon/bagon_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_BagonHoenn[] = INCBIN_U32("graphics/pokemon/bagon_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_BagonHoenn[] = INCBIN_U8("graphics/pokemon/bagon_hoenn/icon.4bpp");
+const u8 gMonFootprint_BagonHoenn[] = INCBIN_U8("graphics/pokemon/bagon_hoenn/footprint.1bpp");
+
 const u32 gMonStillFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/front.4bpp.lz");
 const u32 gMonPalette_Egg[] = INCBIN_U32("graphics/pokemon/egg/normal.gbapal.lz");
 

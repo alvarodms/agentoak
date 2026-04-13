@@ -71,15 +71,15 @@ Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for p
 
 C214 partially committed but SPECIES_FARIGIRAF was missing from species.h. C215 cleaned up stale references: removed from evolution.h, egg_moves.h, pokedex_orders.h, anim_mon_front_pics.c. Tate & Liza teams reverted to SPECIES_GIRAFARIG. Dialogue strings in MossdeepCity_Gym/scripts.inc still reference "FARIGIRAF" by name (text only, compiles fine). Sprites exist in graphics/pokemon/farigiraf/. Farigiraf needs full re-addition in a future cycle.
 
-## Hoennian Bagon (Cycle 215)
+## Hoennian Bagon (Cycle 215, repaired C216)
 
 | Detail | Value |
 |--------|-------|
 | Species ID | SPECIES_BAGON_HOENN (425) |
-| Stats | 45/65/75/40/45/40 BST 310, Dragon/Rock |
+| Stats | 65/85/120/45/75/60 BST 450, Dragon/Rock |
 | Abilities | Rock Head / Sturdy |
 | Encounter | Meteor Falls B1F_2R slot 6 (5%): Lv28-30 |
-| Key moves | Rock Tomb, Rock Slide, Ancient Power, Dragon Claw, Double-Edge |
+| Key moves | Rock Tomb, Rock Slide, Ancient Power, Dragon Claw, Double-Edge, Iron Defense |
 | Evolution | None (standalone form) |
 
-Pipeline: `add_regional_form.cjs` (25 files). Manual fixes: tmhm_learnsets.h (pipeline placed entry in struct def instead of array), pokemon.c (pipeline placed all 3 mapping macros in first array — split to correct arrays). Sprites: Sprite Designer created custom cave-stone palette (grey-brown body, rust-red accents, warm ivory eyes) + obsidian/gold shiny. Cry reuses Bagon. Researcher NPC: FLAG_BAGON_COLONY_CALLBACK (0x29B) gates first-visit vs. revisit dialogue. Revisit hints at B1F_2R encounter.
+Pipeline: `add_regional_form.cjs` (25 files) CATASTROPHICALLY FAILED — only 7/23+ files populated. C215 only got: pokemon.c (3 macros), anim_mon_front_pics.c, tmhm_learnsets.h, pokedex_orders.h, egg_moves.h. C216 repair added 16 missing entries: species.h, pokedex.h (national+hoenn), species_info.h, graphics/pokemon.h (6 declarations), graphics.h (7 externs), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette index), front_pic_anims.h (anim def + SINGLE_ANIMATION + table entry), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h. BST revised 310→450 (defensive wall niche). Sprites by Sprite Designer. Cry reuses Bagon.

@@ -2822,6 +2822,15 @@ extern const u32 gMonShinyPalette_Honchkrow[];
 extern const u32 gMonStillFrontPic_Honchkrow[];
 extern const u8 gMonIcon_Honchkrow[];
 extern const u8 gMonFootprint_Honchkrow[];
+
+extern const u32 gMonFrontPic_BagonHoenn[];
+extern const u32 gMonPalette_BagonHoenn[];
+extern const u32 gMonBackPic_BagonHoenn[];
+extern const u32 gMonShinyPalette_BagonHoenn[];
+extern const u32 gMonStillFrontPic_BagonHoenn[];
+extern const u8 gMonIcon_BagonHoenn[];
+extern const u8 gMonFootprint_BagonHoenn[];
+
 extern const u32 gMonFrontPic_Egg[];
 extern const u32 gMonStillFrontPic_Egg[];
 extern const u8 gMonIcon_Egg[];
