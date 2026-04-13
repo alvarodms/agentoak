@@ -363,10 +363,17 @@ MeteorFalls_1F_1R_EventScript_ColonyResearcherPost::
 	end
 
 MeteorFalls_1F_1R_EventScript_ColonyResearcherPostChampion::
+	goto_if_set FLAG_BAGON_COLONY_CALLBACK, MeteorFalls_1F_1R_EventScript_ColonyResearcherRevisit
 	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion1, MSGBOX_DEFAULT
 	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion2, MSGBOX_DEFAULT
 	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion3, MSGBOX_DEFAULT
 	msgbox MeteorFalls_1F_1R_Text_ColonyPostChampion4, MSGBOX_DEFAULT
+	setflag FLAG_BAGON_COLONY_CALLBACK
+	release
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonyResearcherRevisit::
+	msgbox MeteorFalls_1F_1R_Text_ColonyResearcherRevisit, MSGBOX_DEFAULT
 	release
 	end
 
@@ -476,3 +483,21 @@ MeteorFalls_1F_1R_Text_ColonyPostChampion4:
 	.string "The migration changed HOENN.\n"
 	.string "Perhaps it's changing what it\l"
 	.string "means to be a dragon, too.$"
+
+@ =============================================
+@ Colony Researcher Revisit Text (C215)
+@ Hints at Bagon_Hoenn encounter in B1F_2R
+@ =============================================
+
+MeteorFalls_1F_1R_Text_ColonyResearcherRevisit:
+	.string "I keep coming back to watch them.\p"
+	.string "The juveniles near the deepest\n"
+	.string "waterfall chamber are the most\l"
+	.string "changed.\p"
+	.string "Their scales are the color of the\n"
+	.string "mountain itself now.\p"
+	.string "And so still you might mistake\n"
+	.string "one for a rock.\p"
+	.string "If you venture down there, tread\n"
+	.string "carefully.\l"
+	.string "They're shy of footsteps.$"

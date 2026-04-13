@@ -92,7 +92,7 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 
 **Post-Rayquaza world state**: 5 NPCs react (Birch, Pacifidlog Elder, Fortree Man, Weather Scientist, Sootopolis Man). **"The Exhale" (C205)**: 6 additional NPCs resolve from dread — R124 CuriousDiver, R126 WarmSwimmer, R127 TrenchFisherman, R128 ScaredDiver, R131 LoneSwimmer, Mossdeep StormResearcher. R126 fog thins from heavy to diagonal. StormResearcher connects weather omens to resolution. LoneSwimmer names the theme: "I think HOENN just exhaled."
 
-**Bagon Colony researcher callback** (C209): Post-Champion, researcher reports juvenile Bagon are physically changing — rocky scales, stopped leaping. Drake connection: DRACONID "choosing to stay." Seeds future Bagon_Hoenn regional form. Triple-layered narrative: (1) colony discovery mid-game, (2) Drake's E4 speech, (3) researcher subverts Drake's certainty.
+**Bagon Colony researcher callback** (C209): Post-Champion, researcher reports juvenile Bagon are physically changing — rocky scales, stopped leaping. Drake connection: DRACONID "choosing to stay." **RESOLVED (C215)**: Revisit dialogue hints at B1F_2R encounter. Bagon_Hoenn (Dragon/Rock) at 5%, Lv28-30 in Meteor Falls B1F_2R. The three-beat narrative lands: (1) colony discovery mid-game, (2) Drake's "choosing to stay" E4 speech, (3) the encounter proves it.
 
 ---
 
@@ -101,4 +101,4 @@ Brawly/Wattson redesigned (C130). Meteor Falls Bagon Colony (C153) — strongest
 All v1.0-v1.9 gaps resolved (level cap feedback C207, post-Rayquaza NPCs C205, form discoverability C207+C208, Bagon researcher C209, E4 dialogue C203-C204, weather-Gathering bridge C205).
 
 **New (C211 audit)**:
-- **Bagon Colony gameplay resolution**: C209 researcher reports juveniles changing, but no encounter exists yet. Addressed in v2.0 roadmap — Bagon_Hoenn (Dragon/Rock) at Meteor Falls, C215.
+- ~~**Bagon Colony gameplay resolution**~~: RESOLVED C215. Bagon_Hoenn (Dragon/Rock) in B1F_2R at 5%. Researcher revisit dialogue hints at location.

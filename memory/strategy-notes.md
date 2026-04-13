@@ -52,7 +52,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C212 | feature | Cross-gen batch 1: **Dusknoir** + **Honchkrow**. Phoebe + Sidney teams. | DONE |
 | C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia teams + dialogue. | DONE |
 | C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza teams (all 5). Dialogue rewrite. **Petalburg downgrade NPC**. | DONE |
-| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. | — |
+| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Also cleaned up C214 Farigiraf revert residue (stale refs in 5 files). | DONE |
 | C216 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. | — |
 | C217 | feature | Graphical tweaks (#108) — evaluate and implement feasible items. | — |
 | C218 | feature | Documentation pass (#115) — README expansion, player guide, feature list. | — |
@@ -83,10 +83,10 @@ Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C2
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x29B.
+- **Flag space**: Custom 0x264+. Next available: 0x29C.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Vulpix_Hoenn(421), Ninetales_Hoenn(422), Froslass(423), Mamoswine(424), Farigiraf(425). NUM_SPECIES=427.
+- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425). NUM_SPECIES=426. **Note**: Farigiraf (C214) was reverted — needs re-addition in future cycle. Vulpix_Hoenn/Ninetales_Hoenn IDs shifted when C212 species were added; they share IDs with Dusknoir/Honchkrow now (see species.h for truth).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422), Froslass (423), Mamoswine (424), Farigiraf (425). NUM_SPECIES = 427 (EGG=426).
+**Custom species in codebase (C215)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). NUM_SPECIES = 426 (EGG=426). **Missing from build**: Farigiraf (C214 reverted), Vulpix_Hoenn, Ninetales_Hoenn (overwritten by C212 species insertions). All three need re-addition.
 
 ---
 
@@ -48,7 +48,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+)
 
-**Custom flags**: 0x264-0x29A used (v6.0 through v1.9). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. 0x298-0x29A = Deoxys quest (C210): STARTED/INVESTIGATED/COMPLETE. Next available: 0x29B.
+**Custom flags**: 0x264-0x29B used (v6.0 through v2.0). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. 0x298-0x29A = Deoxys quest (C210): STARTED/INVESTIGATED/COMPLETE. 0x29B = `FLAG_BAGON_COLONY_CALLBACK` (C215). Next available: 0x29C.
 
 **Beast flags**: System flags 0x881-0x886.
 

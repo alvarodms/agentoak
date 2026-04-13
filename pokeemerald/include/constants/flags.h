@@ -714,7 +714,7 @@
 #define FLAG_QUEST_DEOXYS_STARTED      0x298 /* Quest 5: The Second Signal - started (C210) */
 #define FLAG_QUEST_DEOXYS_INVESTIGATED 0x299 /* Quest 5: Terminal checked (C210) */
 #define FLAG_QUEST_DEOXYS_COMPLETE     0x29A /* Quest 5: The Second Signal - complete (C210) */
-#define FLAG_UNUSED_0x29B  0x29B // Unused Flag
+#define FLAG_BAGON_COLONY_CALLBACK  0x29B /* Bagon colony researcher postgame callback seen (C215) */
 #define FLAG_UNUSED_0x29C  0x29C // Unused Flag
 #define FLAG_UNUSED_0x29D  0x29D // Unused Flag
 #define FLAG_UNUSED_0x29E  0x29E // Unused Flag

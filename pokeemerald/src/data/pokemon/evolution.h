@@ -118,7 +118,7 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     [SPECIES_SLUGMA]     = {{EVO_LEVEL, 38, SPECIES_MAGCARGO}},
     [SPECIES_SWINUB]     = {{EVO_LEVEL, 33, SPECIES_PILOSWINE}},
     [SPECIES_PILOSWINE]  = {{EVO_LEVEL, 45, SPECIES_MAMOSWINE}},
-    [SPECIES_GIRAFARIG]  = {{EVO_LEVEL, 38, SPECIES_FARIGIRAF}},
+    // Girafarig → Farigiraf evolution removed (C214 reverted; will re-add when species is restored)
     [SPECIES_REMORAID]   = {{EVO_LEVEL, 25, SPECIES_OCTILLERY}},
     [SPECIES_HOUNDOUR]   = {{EVO_LEVEL, 24, SPECIES_HOUNDOOM}},
     [SPECIES_PHANPY]     = {{EVO_LEVEL, 25, SPECIES_DONPHAN}},

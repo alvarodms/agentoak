@@ -4203,7 +4203,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza1[] = {
     {
     .iv = 200,
     .lvl = 42,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_GIRAFARIG,
     .heldItem = ITEM_SITRUS_BERRY,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
@@ -13839,7 +13839,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza2[] = {
     {
     .iv = 150,
     .lvl = 42,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_GIRAFARIG,
     .heldItem = ITEM_TWISTED_SPOON,
     .moves = {MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_CRUNCH, MOVE_STOMP}
     }
@@ -13877,7 +13877,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza3[] = {
     {
     .iv = 175,
     .lvl = 52,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_GIRAFARIG,
     .heldItem = ITEM_TWISTED_SPOON,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
@@ -13922,7 +13922,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza4[] = {
     {
     .iv = 200,
     .lvl = 63,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_GIRAFARIG,
     .heldItem = ITEM_LEFTOVERS,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
@@ -13967,7 +13967,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza5[] = {
     {
     .iv = 250,
     .lvl = 75,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_GIRAFARIG,
     .heldItem = ITEM_LEFTOVERS,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }

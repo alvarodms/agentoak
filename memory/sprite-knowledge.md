@@ -53,6 +53,7 @@
 - **Ice queen** (Ninetales_Hoenn): Pale icy blue-white body (178-228,195-238,228-255), medium ice shadows (102-178,115-195,162-228), deep blue outlines (22,28,52). Crystal accents (140-202,178-218,232-245). Frost emanations (8px) at nine-tail tips.
 - **Bleached ghost coral** (Corsola_Hoenn): Warm gray body (160-240,156-235,148-222), amber fossil accents (135-185,88-135,42-70). Ghost iris: vivid lavender (170,130,220) + dark purple glow (90,60,145). Frown mouth using amber/dark-amber indices. Shiny: cool blue-gray body, teal accents, brighter purple eyes (145,90,235)/(65,45,150).
 - **Aurora shiny recipe** (Vulpix/Ninetales_Hoenn): Body → aurora green (105-192,170-232,138-198), belly → rose pink (198-245,160-228,188-238), shadows → deep teal/purple (32-82,40-105,55-108). Eye → bright aurora green.
+- **Cave stone dragon** (Bagon_Hoenn): Stony grey-brown body (82-175,68-158,52-130), light stone head armor (98-178,90-165,78-145), dull amber underbelly (158-198,128-168,78-108), rust-red mineral accents (115-150,55-72,38-48). Shiny: obsidian body (52-118,48-112,42-100) + bright gold belly (185-228,155-195,62-88), amber accents (85-178,52-98,38-42).
 
 ## Reusable Scripts
 

@@ -52,6 +52,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Used `replace_all: true` to fix `MON_MALE` → `PERCENT_FEMALE(25)` in species_info.h; changed ALL species with MON_MALE, not just the two new ones.
 **Resolution**: NEVER use `replace_all` on common strings in large files. Use targeted edits or `git checkout --` to restore + re-apply.
 
+## add_regional_form.cjs Pipeline Placement Bugs (Cycle 215)
+
+**Symptom**: Pipeline inserts entries at wrong locations in tmhm_learnsets.h (inside struct definition instead of array) and pokemon.c (all 3 mapping macros placed in first array instead of split across 3 arrays).
+**Cause**: Pipeline insertion logic uses simple text anchors; if the file structure has a preceding section (struct def in tmhm_learnsets.h) or multiple similarly-shaped arrays (pokemon.c), the anchor matches the wrong location.
+**Resolution**: After running `add_regional_form.cjs`, verify: (1) tmhm_learnsets.h entry is inside the `gTMHMLearnsets` array (not the `struct TMHMLearnset` definition); (2) pokemon.c has exactly 1 entry per mapping array (SPECIES_TO_HOENN, SPECIES_TO_NATIONAL, HOENN_TO_NATIONAL). Fix manually if misplaced. Pipeline fix deferred to C221.
+
 ## PNG Palette Modification Requires PLTE Chunk Surgery (Cycle 209)
 
 **Symptom**: Writing .pal files doesn't update the embedded palette in PNG files. Build uses PNG PLTE, not .pal, for sprite graphics.

@@ -1,0 +1,82 @@
+{
+  "name": "BAGON_HOENN",
+  "lowerName": "bagon_hoenn",
+  "capitalName": "BagonHoenn",
+  "baseSpeciesCry": "Bagon",
+  "types": ["TYPE_DRAGON", "TYPE_ROCK"],
+  "catchRate": 45,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 40,
+  "happiness": 35,
+  "growthRate": "GROWTH_SLOW",
+  "eggGroups": ["EGG_GROUP_DRAGON", "EGG_GROUP_DRAGON"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GRAY",
+  "noFlip": false,
+  "items": ["ITEM_NONE", "ITEM_NONE"],
+  "frontPicSize": "MON_COORDS_SIZE(32, 40)",
+  "frontPicYOffset": 13,
+  "backPicSize": "MON_COORDS_SIZE(48, 48)",
+  "backPicYOffset": 11,
+  "animType": "ANIM_V_SQUISH_AND_BOUNCE",
+  "animFrames": 20,
+  "animDelay": 10,
+  "iconPaletteIndex": 0,
+  "elevation": 0,
+  "stats": {
+    "hp": 45,
+    "atk": 65,
+    "def": 75,
+    "speed": 40,
+    "spAtk": 40,
+    "spDef": 45
+  },
+  "evYield": {
+    "hp": 0,
+    "atk": 0,
+    "def": 1,
+    "speed": 0,
+    "spAtk": 0,
+    "spDef": 0
+  },
+  "expYield": 89,
+  "abilities": ["ABILITY_ROCK_HEAD", "ABILITY_STURDY"],
+  "levelUpMoves": [
+    [1, "MOVE_RAGE"],
+    [5, "MOVE_BITE"],
+    [9, "MOVE_LEER"],
+    [13, "MOVE_ROCK_TOMB"],
+    [17, "MOVE_HEADBUTT"],
+    [21, "MOVE_FOCUS_ENERGY"],
+    [25, "MOVE_ROCK_SLIDE"],
+    [33, "MOVE_ANCIENT_POWER"],
+    [37, "MOVE_SCARY_FACE"],
+    [41, "MOVE_CRUNCH"],
+    [49, "MOVE_DRAGON_CLAW"],
+    [53, "MOVE_DOUBLE_EDGE"]
+  ],
+  "eggMoves": [
+    "MOVE_DRAGON_DANCE",
+    "MOVE_DRAGON_RAGE",
+    "MOVE_THRASH",
+    "MOVE_TWISTER"
+  ],
+  "tmhm": [
+    "MOVE_ROAR", "MOVE_TOXIC", "MOVE_HIDDEN_POWER", "MOVE_SUNNY_DAY",
+    "MOVE_PROTECT", "MOVE_RAIN_DANCE", "MOVE_FRUSTRATION", "MOVE_RETURN",
+    "MOVE_BRICK_BREAK", "MOVE_DOUBLE_TEAM", "MOVE_FLAMETHROWER",
+    "MOVE_FIRE_BLAST", "MOVE_ROCK_TOMB", "MOVE_AERIAL_ACE", "MOVE_FACADE",
+    "MOVE_SECRET_POWER", "MOVE_REST", "MOVE_ATTRACT", "MOVE_CUT",
+    "MOVE_STRENGTH", "MOVE_ROCK_SMASH", "MOVE_DRAGON_CLAW"
+  ],
+  "dexEntry": {
+    "categoryName": "Cave Dragon",
+    "height": 6,
+    "weight": 550,
+    "descriptionText": "Over generations in METEOR FALLS,\nits scales hardened into stone.\nIt no longer dreams of flight,\nhaving chosen the mountain over sky.",
+    "pokemonScale": 256,
+    "pokemonOffset": 1,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  }
+}

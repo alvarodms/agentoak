@@ -10,3 +10,4 @@
 | Arcanine Hoenn | Water/Fire | v1 | 196 | — | awaiting feedback |
 | Vulpix Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Ninetales Hoenn | Ice/Fairy | v1 | 208 | — | new |
+| Bagon Hoenn | Dragon/Rock | v1 | 215 | — | new |

@@ -67,10 +67,19 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 
 Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for pokemon.c (3 arrays), anim_mon_front_pics.c, enemy_mon_elevation.h (Froslass floats), evolution.h (Snorunt+Piloswine gain new evo paths). Sprites via `fetch_pokemon_sprites`. Cries: Froslass reuses Glalie, Mamoswine reuses Piloswine. Glacia teams updated via `scripts/update_glacia_teams.cjs`. Glacia intro dialogue rewritten.
 
-## Cross-Gen Evolutions — Batch 3 (Cycle 214)
+## Cross-Gen Evolutions — Batch 3 (Cycle 214) — REVERTED
 
-| Species | ID | Type | BST | Pre-evo | Trainer usage |
-|---------|-----|------|-----|---------|---------------|
-| Farigiraf | 425 | Normal/Psychic | 520 | Girafarig → Farigiraf (Lv38) | Tate & Liza main + all 4 rematches |
+C214 partially committed but SPECIES_FARIGIRAF was missing from species.h. C215 cleaned up stale references: removed from evolution.h, egg_moves.h, pokedex_orders.h, anim_mon_front_pics.c. Tate & Liza teams reverted to SPECIES_GIRAFARIG. Dialogue strings in MossdeepCity_Gym/scripts.inc still reference "FARIGIRAF" by name (text only, compiles fine). Sprites exist in graphics/pokemon/farigiraf/. Farigiraf needs full re-addition in a future cycle.
 
-Pipeline: `scripts/add_farigiraf.cjs` (24 files) + manual patches for evolution.h (Girafarig gains EVO_LEVEL 38), anim_mon_front_pics.c (gMonFrontPic_Farigiraf). Also fixed missing C213 entries: Froslass+Mamoswine added to front_pic_anims.h (AnimCmd, SINGLE_ANIMATION, gMonFrontAnimsPtrTable) and pokedex_orders.h (all 3 arrays). Sprites: back/icon/footprint/palettes via `fetch_pokemon_sprites`; front sprites copied from Girafarig placeholder. Cry reuses Girafarig. Tate & Liza teams updated (all 5 parties). Tate & Liza dialogue rewritten for Farigiraf/duality theme. Petalburg difficulty downgrade NPC added.
+## Hoennian Bagon (Cycle 215)
+
+| Detail | Value |
+|--------|-------|
+| Species ID | SPECIES_BAGON_HOENN (425) |
+| Stats | 45/65/75/40/45/40 BST 310, Dragon/Rock |
+| Abilities | Rock Head / Sturdy |
+| Encounter | Meteor Falls B1F_2R slot 6 (5%): Lv28-30 |
+| Key moves | Rock Tomb, Rock Slide, Ancient Power, Dragon Claw, Double-Edge |
+| Evolution | None (standalone form) |
+
+Pipeline: `add_regional_form.cjs` (25 files). Manual fixes: tmhm_learnsets.h (pipeline placed entry in struct def instead of array), pokemon.c (pipeline placed all 3 mapping macros in first array — split to correct arrays). Sprites: Sprite Designer created custom cave-stone palette (grey-brown body, rust-red accents, warm ivory eyes) + obsidian/gold shiny. Cry reuses Bagon. Researcher NPC: FLAG_BAGON_COLONY_CALLBACK (0x29B) gates first-visit vs. revisit dialogue. Revisit hints at B1F_2R encounter.
