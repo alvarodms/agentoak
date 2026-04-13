@@ -3886,9 +3886,9 @@ static const struct TrainerMonItemCustomMoves sParty_Sidney[] = {
     {
     .iv = 250,
     .lvl = 47,
-    .species = SPECIES_UMBREON,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_TOXIC, MOVE_MOONLIGHT, MOVE_SUCKER_PUNCH, MOVE_CONFUSE_RAY}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_AERIAL_ACE, MOVE_STEEL_WING, MOVE_TAUNT}
     },
     {
     .iv = 255,
@@ -3910,9 +3910,9 @@ static const struct TrainerMonItemCustomMoves sParty_Phoebe[] = {
     {
     .iv = 250,
     .lvl = 47,
-    .species = SPECIES_DUSCLOPS,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SHADOW_CLAW, MOVE_WILL_O_WISP, MOVE_EARTHQUAKE, MOVE_CONFUSE_RAY}
+    .species = SPECIES_DUSKNOIR,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_SHADOW_PUNCH, MOVE_WILL_O_WISP, MOVE_ICE_PUNCH, MOVE_EARTHQUAKE}
     },
     {
     .iv = 250,
@@ -5160,9 +5160,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch1[] = {
     {
     .iv = 255,
     .lvl = 60,
-    .species = SPECIES_MIGHTYENA,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_CRUNCH, MOVE_SUCKER_PUNCH, MOVE_TOXIC, MOVE_SWAGGER}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_TAUNT}
     },
     {
     .iv = 255,
@@ -5226,9 +5226,9 @@ static const struct TrainerMonItemCustomMoves sParty_PhoebeRematch1[] = {
     {
     .iv = 255,
     .lvl = 66,
-    .species = SPECIES_DUSCLOPS,
+    .species = SPECIES_DUSKNOIR,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SHADOW_PUNCH, MOVE_EARTHQUAKE, MOVE_WILL_O_WISP, MOVE_CONFUSE_RAY}
+    .moves = {MOVE_SHADOW_PUNCH, MOVE_WILL_O_WISP, MOVE_EARTHQUAKE, MOVE_ICE_PUNCH}
     },
     {
     .iv = 255,
@@ -5394,9 +5394,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch2[] = {
     {
     .iv = 255,
     .lvl = 72,
-    .species = SPECIES_SHIFTRY,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_BRICK_BREAK, MOVE_SUCKER_PUNCH, MOVE_EXPLOSION}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_SUCKER_PUNCH, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_TAUNT}
     },
     {
     .iv = 255,
@@ -5453,9 +5453,9 @@ static const struct TrainerMonItemCustomMoves sParty_PhoebeRematch2[] = {
     {
     .iv = 255,
     .lvl = 77,
-    .species = SPECIES_DUSCLOPS,
+    .species = SPECIES_DUSKNOIR,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_WILL_O_WISP, MOVE_CURSE, MOVE_SHADOW_PUNCH, MOVE_EARTHQUAKE}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_WILL_O_WISP, MOVE_EARTHQUAKE, MOVE_FIRE_PUNCH}
     },
     {
     .iv = 255,
@@ -5614,9 +5614,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch3[] = {
     {
     .iv = 255,
     .lvl = 80,
-    .species = SPECIES_CACTURNE,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SPIKES, MOVE_DESTINY_BOND, MOVE_SUCKER_PUNCH, MOVE_GIGA_DRAIN}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_SUCKER_PUNCH, MOVE_BRAVE_BIRD, MOVE_STEEL_WING, MOVE_TAUNT}
     },
     {
     .iv = 255,
@@ -5680,9 +5680,9 @@ static const struct TrainerMonItemCustomMoves sParty_PhoebeRematch3[] = {
     {
     .iv = 255,
     .lvl = 86,
-    .species = SPECIES_DUSCLOPS,
+    .species = SPECIES_DUSKNOIR,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_WILL_O_WISP, MOVE_SHADOW_BALL, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_CURSE, MOVE_EARTHQUAKE, MOVE_ICE_PUNCH}
     },
     {
     .iv = 255,
@@ -5841,9 +5841,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch4[] = {
     {
     .iv = 255,
     .lvl = 88,
-    .species = SPECIES_UMBREON,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_TOXIC, MOVE_MOONLIGHT, MOVE_MEAN_LOOK, MOVE_CONFUSE_RAY}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_SUCKER_PUNCH, MOVE_BRAVE_BIRD, MOVE_STEEL_WING, MOVE_SWAGGER}
     },
     {
     .iv = 255,
@@ -5900,9 +5900,9 @@ static const struct TrainerMonItemCustomMoves sParty_PhoebeRematch4[] = {
     {
     .iv = 255,
     .lvl = 91,
-    .species = SPECIES_DUSCLOPS,
+    .species = SPECIES_DUSKNOIR,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_WILL_O_WISP, MOVE_CURSE, MOVE_SHADOW_BALL, MOVE_EARTHQUAKE}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_CURSE, MOVE_EARTHQUAKE, MOVE_WILL_O_WISP}
     },
     {
     .iv = 255,

@@ -527,6 +527,8 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(CORSOLA_HOENN),
     SPECIES_TO_HOENN(GROWLITHE_HOENN),
     SPECIES_TO_HOENN(ARCANINE_HOENN),
+    SPECIES_TO_HOENN(DUSKNOIR),
+    SPECIES_TO_HOENN(HONCHKROW),
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -952,6 +954,8 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(CORSOLA_HOENN),
     SPECIES_TO_NATIONAL(GROWLITHE_HOENN),
     SPECIES_TO_NATIONAL(ARCANINE_HOENN),
+    SPECIES_TO_NATIONAL(DUSKNOIR),
+    SPECIES_TO_NATIONAL(HONCHKROW),
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index

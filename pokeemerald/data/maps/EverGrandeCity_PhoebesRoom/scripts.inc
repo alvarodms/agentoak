@@ -70,12 +70,10 @@ EverGrandeCity_PhoebesRoom_Text_IntroSpeech:
 	.string "The dead felt it too --\l"
 	.string "something shifting beneath\l"
 	.string "HOENN.\p"
-	.string "One of my partners knows that\n"
-	.string "feeling. A CORSOLA from the\l"
-	.string "reefs that lost its ocean\l"
-	.string "and became stone.\p"
-	.string "She endured. That's what\n"
-	.string "ghosts teach you.\p"
+	.string "My DUSCLOPS felt it most.\n"
+	.string "It crossed over and came\l"
+	.string "back as DUSKNOIR -- a guide\l"
+	.string "for spirits in transit.\p"
 	.string "Can you face what endures?$"
 
 EverGrandeCity_PhoebesRoom_Text_Defeat:

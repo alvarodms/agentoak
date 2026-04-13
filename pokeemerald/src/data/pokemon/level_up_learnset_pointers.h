@@ -421,4 +421,6 @@ const u16 *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_CORSOLA_HOENN] = sCorsolaHoennLevelUpLearnset,
     [SPECIES_GROWLITHE_HOENN] = sGrowlitheHoennLevelUpLearnset,
     [SPECIES_ARCANINE_HOENN] = sArcanineHoennLevelUpLearnset,
+    [SPECIES_DUSKNOIR] = sDusknoirLevelUpLearnset,
+    [SPECIES_HONCHKROW] = sHonchkrowLevelUpLearnset,
 };

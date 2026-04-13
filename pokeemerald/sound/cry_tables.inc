@@ -1,3 +1,5 @@
+	cry Cry_Dusclops
+	cry Cry_Murkrow
 	.align 2
 gCryTable::
 	cry Cry_Bulbasaur
@@ -797,3 +799,5 @@ gCryTable_Reverse::
 	cry_reverse Cry_Gabite
 	cry_reverse Cry_Garchomp
 	cry_reverse Cry_Corsola
+	cry_reverse Cry_Dusclops
+	cry_reverse Cry_Murkrow

@@ -57,6 +57,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Writing .pal files doesn't update the embedded palette in PNG files. Build uses PNG PLTE, not .pal, for sprite graphics.
 **Resolution**: When modifying sprite palettes, must also update the PLTE chunk in the PNG binary directly using Node.js. Find PLTE chunk offset, write raw RGB bytes. Keep .pal and PNG PLTE in sync.
 
+## wild_encounters.h Is Gitignored — Do Not Stage (Cycle 212)
+
+**Symptom**: `git add` fails with "The following paths are ignored by one of your .gitignore files: pokeemerald/src/data/wild_encounters.h".
+**Cause**: `pokeemerald/src/data/.gitignore` ignores `wild_encounters.h` (generated from `wild_encounters.json`). Runner staging tried to add it.
+**Resolution**: Only stage `wild_encounters.json`, never `wild_encounters.h`. When staging pokeemerald changes, skip gitignored generated files.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

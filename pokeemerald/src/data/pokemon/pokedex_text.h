@@ -2377,3 +2377,19 @@ const u8 gArcanineHoennPokedexText[] = _(
     "with grace, never slowing in\n"
     "the deepest water.");
 
+const u8 gDusknoirPokedexText[] = _(
+    "The antenna on its head receives\n"
+    "signals from the spirit world\n"
+    "that tell it to guide lost souls.\n"
+    "It was drawn to HOENN by the\n"
+    "surge of energy that followed\n"
+    "the great migration.");
+
+const u8 gHonchkrowPokedexText[] = _(
+    "It makes its MURKROW minions\n"
+    "bring it food while it lounges.\n"
+    "It rules its flock with an\n"
+    "iron will. Since the migration,\n"
+    "it has claimed the dark forests\n"
+    "of HOENN as its territory.");
+

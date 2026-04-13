@@ -402,6 +402,8 @@ const u32 gMonFrontPic_CorsolaHoenn[] = INCBIN_U32("graphics/pokemon/corsola_hoe
 const u32 gMonFrontPic_GrowlitheHoenn[] = INCBIN_U32("graphics/pokemon/growlithe_hoenn/anim_front.4bpp.lz");
 const u32 gMonFrontPic_ArcanineHoenn[] = INCBIN_U32("graphics/pokemon/arcanine_hoenn/anim_front.4bpp.lz");
 
+const u32 gMonFrontPic_Dusknoir[] = INCBIN_U32("graphics/pokemon/dusknoir/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Honchkrow[] = INCBIN_U32("graphics/pokemon/honchkrow/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/anim_front.4bpp.lz");
 
 const u32 gMonFrontPic_UnownB[] = INCBIN_U32("graphics/pokemon/unown/b/anim_front.4bpp.lz");
