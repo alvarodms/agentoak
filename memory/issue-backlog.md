@@ -8,4 +8,3 @@ Deferred community issues for future consideration.
 - #128: Add a new character (deferred: cycle 210) | v2.0: evaluate at C216 (deferred: cycle 212) | deferrals: 2
 - #130: Deoxys Quest II (deferred: cycle 211) | v2.0: evaluate at C216 (deferred: cycle 212) | deferrals: 2
 - #131: Unknown (deferred: cycle 216) | pending: Bulkier sprite appearance
-- #125: Unknown (deferred: cycle 216)

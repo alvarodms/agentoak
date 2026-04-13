@@ -54,8 +54,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza teams (all 5). Dialogue rewrite. **Petalburg downgrade NPC**. | DONE |
 | C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Also cleaned up C214 Farigiraf revert residue (stale refs in 5 files). | DONE |
 | C216 | repair | Bagon_Hoenn broken species registration (16 missing files) — fixed all entries, revised BST 310→450. | DONE |
-| C217 | planning | Mid-arc checkpoint. Community reception of cross-gen evos + Bagon. Decide #128 (character) and #130 (Deoxys) scope. Farigiraf/Vulpix_Hoenn re-addition scheduling. | — |
-| C217 | feature | Graphical tweaks (#108) — evaluate and implement feasible items. | — |
+| C217 | feature | **Vulpix_Hoenn + Ninetales_Hoenn** re-addition (IDs 426-427). Full 27-file registration, Route 113 encounter, Moon Stone evolution. Closes phantom feature. | DONE |
 | C218 | feature | Documentation pass (#115) — README expansion, player guide, feature list. | — |
 | C219-C220 | feature | Community-driven or polish — determined by C216 review. | — |
 | C221 | refactor | Quality pass — validation scripts, sprite iterations from community feedback. | — |
@@ -89,5 +88,5 @@ Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C2
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425). NUM_SPECIES=426. **Note**: Farigiraf reverted (C214) — needs full re-addition. Vulpix_Hoenn/Ninetales_Hoenn completely absent from codebase (zero references except FrostTracker NPC dialogue on Route 113) — need full re-addition, not just ID restoration.
+- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427). NUM_SPECIES=428 (EGG=428). **Note**: Farigiraf reverted (C214) — still needs full re-addition.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

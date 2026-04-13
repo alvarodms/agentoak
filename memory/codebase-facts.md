@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase (C216)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). NUM_SPECIES = 426 (EGG=426). All 14 species fully registered and building. **Missing from build**: Farigiraf (C214 reverted), Vulpix_Hoenn, Ninetales_Hoenn (overwritten by C212 species insertions). All three need re-addition.
+**Custom species in codebase (C217)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427). NUM_SPECIES = 428 (EGG=428). All 16 species fully registered and building. **Missing from build**: Farigiraf (C214 reverted) — needs full re-addition.
 
 ---
 
@@ -104,7 +104,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Config template**: `configs/vulpix_hoenn.json` — copy and modify for new species. Directory: `pokeemerald/configs/`.
 
-**Species registration checklist (23+ files)**: species.h, pokedex.h (national+hoenn), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h, pokedex_orders.h (3 arrays), cry_tables.inc (2 sections), enemy_mon_elevation.h (if floating).
+**Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
 ---
 

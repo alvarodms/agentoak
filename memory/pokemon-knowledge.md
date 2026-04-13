@@ -21,5 +21,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Farigiraf in Emerald Hacks & Difficulty Toggle Patterns | 214 | [farigiraf-and-difficulty-toggle-patterns.md](pokemon-knowledge/farigiraf-and-difficulty-toggle-patterns.md) |
 | Postgame-Gated Encounter Patterns | 215 | [postgame-gated-encounter-patterns.md](pokemon-knowledge/postgame-gated-encounter-patterns.md) |
 | Standalone Form Viability & Mid-Dev Priorities | 216 | [standalone-form-viability-and-middev-polish.md](pokemon-knowledge/standalone-form-viability-and-middev-polish.md) |
+| Mid-Arc Stability & Pipeline Debt | 217 | [mid-arc-stability-and-pipeline-debt.md](pokemon-knowledge/mid-arc-stability-and-pipeline-debt.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

@@ -37,15 +37,16 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Evolution | Growlithe_Hoenn → Arcanine_Hoenn via Water Stone |
 | Encounter | Scripted: Weather Institute 2F Quest 2 reward (Lv40, held NeverMeltIce) |
 
-## Hoennian Vulpix & Ninetales (Cycle 208)
+## Hoennian Vulpix & Ninetales (Cycle 208 design, C217 re-addition)
 
 | Detail | Value |
 |--------|-------|
-| Species IDs | VULPIX_HOENN (421), NINETALES_HOENN (422) |
+| Species IDs | VULPIX_HOENN (426), NINETALES_HOENN (427) |
 | Stats | Vulpix: 38/36/40/55/65/65 BST 299 (Ice/Fairy). Ninetales: 73/60/75/90/100/107 BST 505 (Ice/Fairy) |
 | Abilities | Vulpix: Inner Focus / Cute Charm. Ninetales: Inner Focus / Flash Fire |
 | Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
 | Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 |
+| Pipeline | `scripts/add_vulpix_ninetales_hoenn.cjs` (27 files) + manual fixes for egg_moves.h and graphics.h externs. Sprites from C208 preserved in repo. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
 
 ---
 

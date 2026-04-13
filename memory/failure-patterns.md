@@ -76,6 +76,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: The expansion repo may not have all sprite variants for Gen 9 species, or the MCP tool's file detection missed them.
 **Resolution**: After calling `fetch_pokemon_sprites`, ALWAYS verify with `ls` that all 7 files exist. If any are missing, copy from the base species (e.g., Girafarig for Farigiraf) as fallback.
 
+## Ad-Hoc Registration Scripts Still Need Manual Fixes (Cycle 217)
+
+**Symptom**: Fresh one-off script (`add_vulpix_ninetales_hoenn.cjs`) handled 24 of 27 files correctly but missed: (1) egg_moves.h — inserted entries but left TERMINATOR in wrong position; (2) graphics.h — forgot extern declarations for gMonFrontPic_*, gMonBackPic_*, etc.; (3) cry_tables.inc — not handled at all (cries mapped via cry_ids.h instead).
+**Resolution**: Even with a fresh per-species script, always verify: (a) egg_moves.h TERMINATOR placement, (b) graphics.h has all 7 extern declarations per species, (c) cry system is handled (either cry_tables.inc entries or cry_ids.h mapping). Build twice — first after script, then after manual patches.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.
