@@ -26,7 +26,6 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Ability | Weak Armor |
 | Encounter | Scripted: PacifidlogTown Quest 1 reward (setwildbattle Lv45) |
 | Key moves | Shadow Ball, Rock Slide, Curse, Destiny Bond, Ancient Power |
-| Pipeline | Automated via Node.js scripts. Also fixed 17 pre-existing trainer macro warnings. |
 
 ## Hoennian Growlithe & Arcanine (Cycle 198)
 
@@ -37,7 +36,6 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Abilities | Growlithe: Swift Swim. Arcanine: Intimidate / Flash Fire |
 | Evolution | Growlithe_Hoenn → Arcanine_Hoenn via Water Stone |
 | Encounter | Scripted: Weather Institute 2F Quest 2 reward (Lv40, held NeverMeltIce) |
-| Pipeline | Automated via `scripts/add_growlithe_arcanine.cjs` + manual patches |
 
 ## Hoennian Vulpix & Ninetales (Cycle 208)
 
@@ -48,5 +46,23 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Abilities | Vulpix: Inner Focus / Cute Charm. Ninetales: Inner Focus / Flash Fire |
 | Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
 | Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 |
-| NPC | FrostTracker (PokeFan_M) at Route 113 — pacing NPC tracking frost crystals in volcanic ash |
-| Pipeline | Automated via `scripts/add_regional_form.cjs` with configs in `pokeemerald/configs/` |
+
+---
+
+## Cross-Gen Evolutions — Batch 1 (Cycle 212)
+
+| Species | ID | Type | BST | Pre-evo | Key notes |
+|---------|-----|------|-----|---------|-----------|
+| Dusknoir | 421→** | Ghost | 525 | Dusclops → Dusknoir (Lv45) | On Phoebe's teams |
+| Honchkrow | 422→** | Dark/Flying | 505 | Murkrow → Honchkrow (Lv37) | On Sidney's teams |
+
+**Note**: IDs shifted when Vulpix_Hoenn/Ninetales_Hoenn were added C208. Actual C212 IDs were after those.
+
+## Cross-Gen Evolutions — Batch 2 (Cycle 213)
+
+| Species | ID | Type | BST | Pre-evo | E4 usage |
+|---------|-----|------|-----|---------|----------|
+| Froslass | 423 | Ice/Ghost | 480 | Snorunt → Froslass (Lv42) | Glacia main + all 4 rematches |
+| Mamoswine | 424 | Ice/Ground | 530 | Piloswine → Mamoswine (Lv44) | Glacia main + all 4 rematches |
+
+Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for pokemon.c (3 arrays), anim_mon_front_pics.c, enemy_mon_elevation.h (Froslass floats), evolution.h (Snorunt+Piloswine gain new evo paths). Sprites via `fetch_pokemon_sprites`. Cries: Froslass reuses Glalie, Mamoswine reuses Piloswine. Glacia teams updated via `scripts/update_glacia_teams.cjs`. Glacia intro dialogue rewritten.

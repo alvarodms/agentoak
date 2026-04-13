@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422). NUM_SPECIES = 423.
+**Custom species in codebase**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Vulpix_Hoenn (421), Ninetales_Hoenn (422), Froslass (423), Mamoswine (424). NUM_SPECIES = 426 (EGG=425).
 
 ---
 
@@ -117,6 +117,16 @@ node scripts/add_regional_form.cjs configs/<species>.json --dry-run # preview
 **front_pic_anims.h structure**: AnimCmd arrays → SINGLE_ANIMATION macro → `gMonFrontAnimsPtrTable[]`. Script handles all three.
 
 **Cry reuse**: Regional forms reuse base species cry via `Cry_*` label in `cry_tables.inc`.
+
+---
+
+## Cross-Gen Evolution Pipeline (C212-213)
+
+**Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), similar in C212. Covers ~22 files (species_info, learnsets, TM/HM, egg moves, pokedex text/entries/orders, graphics tables, icons, cries). 
+
+**Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species→hoenn, species→national, hoenn→national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
+
+**egg_moves.h pitfall**: `EGG_MOVES_TERMINATOR` MUST separate species blocks. Missing it causes silent data corruption or build errors.
 
 ---
 

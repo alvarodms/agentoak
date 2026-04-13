@@ -17,5 +17,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Bagon Colony Regional Form — Design Research | 209 | [bagon-colony-form-research.md](pokemon-knowledge/bagon-colony-form-research.md) |
 | Cross-Gen Evolutions & Custom Rival Design | 210 | [cross-gen-evos-and-rival-design.md](pokemon-knowledge/cross-gen-evos-and-rival-design.md) |
 | Legendary Quest Depth Patterns | 211 | [legendary-quest-depth-patterns.md](pokemon-knowledge/legendary-quest-depth-patterns.md) |
+| Glacia Team Design Patterns — Froslass & Mamoswine | 213 | [glacia-team-design-patterns.md](pokemon-knowledge/glacia-team-design-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
