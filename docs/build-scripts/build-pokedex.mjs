@@ -5,10 +5,11 @@
  * Extracts species info, learnsets, evolution, encounters, and move data.
  */
 
-import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { crc32 } from 'node:zlib';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = join(__dirname, '..');
@@ -564,6 +565,69 @@ async function parseLearnsetPointers() {
   return map;
 }
 
+// ── Sprite copy with transparency normalisation ──
+
+/**
+ * Copies a pokeemerald front sprite to the docs public directory, ensuring
+ * that indexed PNGs have a tRNS chunk so palette index 0 renders as
+ * transparent in browsers. pokeemerald sprites are 4-bit indexed PNGs whose
+ * palette index 0 is the "transparent" colour (conventionally a light green),
+ * but some sprites are exported without the tRNS chunk, causing that colour
+ * to render as an opaque background on the docs Pokédex page.
+ *
+ * Returns `true` if a tRNS chunk had to be injected, `false` if the file was
+ * copied unchanged (either it already had one, it is not an indexed PNG, or
+ * it is not a PNG at all).
+ */
+async function copySpriteWithTransparency(src, dest) {
+  const buf = await readFile(src);
+  const PNG_SIG = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  if (buf.length < 8 || !buf.slice(0, 8).equals(PNG_SIG)) {
+    await writeFile(dest, buf);
+    return false;
+  }
+
+  let colorType = null;
+  let firstIdatOffset = -1;
+  let hasTrns = false;
+  let off = 8;
+  while (off + 8 <= buf.length) {
+    const len = buf.readUInt32BE(off);
+    const type = buf.slice(off + 4, off + 8).toString('latin1');
+    if (type === 'IHDR') {
+      // IHDR layout: width(4) height(4) bitDepth(1) colorType(1) ...
+      colorType = buf[off + 8 + 9];
+    } else if (type === 'tRNS') {
+      hasTrns = true;
+    } else if (type === 'IDAT' && firstIdatOffset === -1) {
+      firstIdatOffset = off;
+    }
+    off += 12 + len; // length(4) + type(4) + data(len) + crc(4)
+    if (type === 'IEND') break;
+  }
+
+  if (colorType !== 3 || hasTrns || firstIdatOffset === -1) {
+    await writeFile(dest, buf);
+    return false;
+  }
+
+  // Build a tRNS chunk marking palette index 0 as fully transparent.
+  // Chunk: length(4) type(4) data(1) crc(4). CRC covers type+data.
+  const trns = Buffer.alloc(13);
+  trns.writeUInt32BE(1, 0);                    // data length = 1
+  trns.write('tRNS', 4, 4, 'latin1');          // chunk type
+  trns[8] = 0x00;                              // alpha=0 for palette index 0
+  trns.writeUInt32BE(crc32(trns.slice(4, 9)), 9); // CRC over type+data
+
+  const patched = Buffer.concat([
+    buf.slice(0, firstIdatOffset),
+    trns,
+    buf.slice(firstIdatOffset),
+  ]);
+  await writeFile(dest, patched);
+  return true;
+}
+
 // ── Main ──
 
 async function main() {
@@ -729,13 +793,15 @@ async function main() {
   };
   await mkdir(SPRITES_DIR, { recursive: true });
   let spritesCopied = 0;
+  let spritesPatched = 0;
   let spritesMissing = 0;
   for (const p of pokemon) {
     const dir = SPRITE_FALLBACKS[p.spriteKey] || p.spriteKey;
     const src = join(GFX_DIR, dir, 'front.png');
     const dest = join(SPRITES_DIR, `${p.spriteKey}.png`);
     if (existsSync(src)) {
-      await copyFile(src, dest);
+      const patched = await copySpriteWithTransparency(src, dest);
+      if (patched) spritesPatched++;
       spritesCopied++;
     } else {
       console.warn(`  ⚠ Missing sprite: ${src}`);
@@ -746,7 +812,7 @@ async function main() {
   console.log(`✔ Generated ${OUTPUT_FILE}`);
   console.log(`  Pokemon: ${pokemon.length}`);
   console.log(`  Moves: ${Object.keys(battleMoves).length}`);
-  console.log(`  Sprites: ${spritesCopied} copied, ${spritesMissing} missing`);
+  console.log(`  Sprites: ${spritesCopied} copied (${spritesPatched} patched for transparency), ${spritesMissing} missing`);
   console.log(`  File size: ${(JSON.stringify(output).length / 1024).toFixed(0)} KB`);
 }
 
