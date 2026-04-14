@@ -1,0 +1,12 @@
+{
+  "speciesName": "ninetales_hoenn",
+  "eggMoves": ["MOVE_HYPNOSIS", "MOVE_DISABLE", "MOVE_SPITE", "MOVE_FAINT_ATTACK", "MOVE_FLAIL"],
+  "iconPalIndex": 0,
+  "cryBase": "Ninetales",
+  "cryId": 37,
+  "frontAnim": "ANIM_V_SHAKE",
+  "evolutionFrom": "vulpix_hoenn",
+  "evolutionTo": null,
+  "evolutionMethod": "EVO_ITEM",
+  "evolutionParam": "ITEM_MOON_STONE"
+}

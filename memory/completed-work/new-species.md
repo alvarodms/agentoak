@@ -46,7 +46,7 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Abilities | Vulpix: Inner Focus / Cute Charm. Ninetales: Inner Focus / Flash Fire |
 | Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
 | Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 |
-| Pipeline | C217: partial registration. C218: wrote `scripts/add_three_species_c218.cjs` but never executed it. C219: ran the script, fixed `\x1E` escape in pokedex_text.h → `POKéMON`, build green. Sprites from C208 preserved. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
+| Pipeline | C217-C219: partial registration + script execution. C222: `complete_species_registration.cjs` filled 7 gaps (egg_moves, pokedex_orders, pokemon_icon, pokemon.c mappings, cry_tables, cry_ids, evolution). Updated learnset per Gameplay Designer spec (13 moves: Powder Snow→Sweet Kiss→Icy Wind→Mist→Aurora Beam→Charm→Ice Beam→Moonlight→Attract→Blizzard). Added 5 egg moves (Hypnosis, Disable, Spite, Faint Attack, Flail). Vulpix_Hoenn→Ninetales_Hoenn Moon Stone evolution restored. Now 19/19. |
 
 ---
 
@@ -74,7 +74,7 @@ Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for p
 | Type | Normal/Psychic |
 | Pre-evo | Girafarig → Farigiraf (via Twin Beam — mapped to level-up) |
 | E4 usage | Tate & Liza main + all 4 rematches |
-| Pipeline | C214: initial attempt reverted due to missing species.h entry. C215: cleaned stale refs. C218: wrote script but never executed. C219: ran `add_three_species_c218.cjs`, fixed `\x1E` → `POKéMON` in pokedex_text.h, removed obsolete evolution.h comment, build green. Trainer parties updated: Farigiraf replaces Girafarig on Tate & Liza main (Lv41), added to R1, replaces on R2 (Lv50) and rematch tiers 3-4. |
+| Pipeline | C214: initial attempt reverted. C215: cleaned stale refs. C218-C219: script execution + fixes, build green. C222: `complete_species_registration.cjs` filled 6 gaps (egg_moves, pokedex_orders, pokemon_icon, pokemon.c mappings, cry_tables, cry_ids). Updated learnset per Gameplay Designer spec (14 moves: Tackle→Stomp→Psybeam→Crunch→Calm Mind→Psychic→Skill Swap→Future Sight). Added 5 egg moves (Amnesia, Wish, Magic Coat, Take Down, Beat Up). Girafarig→Farigiraf evolution restored (EVO_LEVEL 32). Now 19/19. |
 
 ## Hoennian Bagon (Cycle 215, repaired C216)
 
@@ -88,3 +88,4 @@ Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for p
 | Evolution | None (standalone form) |
 
 Pipeline: `add_regional_form.cjs` catastrophically failed (7/23 files). C216 repair added 16 missing entries. Sprites by Sprite Designer. Cry reuses Bagon.
+**C222**: `complete_species_registration.cjs` filled remaining 3 gaps (cry_tables, cry_ids, evolution). Updated learnset per Gameplay Designer spec (14 moves, stone dragon progression: Rage→Harden→Rock Tomb→...→Dragon Claw→Double-Edge). Added ENDURE to egg moves. Now 19/19.

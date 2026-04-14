@@ -11,18 +11,24 @@ if [ -z "$1" ]; then
 fi
 
 SPECIES="$1"
+# Extract the name portion (e.g., BAGON_HOENN from SPECIES_BAGON_HOENN)
+NAME="${SPECIES#SPECIES_}"
+# Convert to PascalCase (e.g., BAGON_HOENN -> BagonHoenn, RIOLU -> Riolu)
+PASCAL=$(echo "$NAME" | awk -F'_' '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}{gsub(/ /,""); print}')
+
 PASS=0
 FAIL=0
 
 check() {
     local file="$1"
     local label="$2"
+    local pattern="${3:-$NAME|$PASCAL}"
     if [ ! -f "$file" ]; then
         echo "? $label — FILE NOT FOUND"
         ((FAIL++))
         return
     fi
-    if grep -q "$SPECIES" "$file" 2>/dev/null; then
+    if grep -qE "$pattern" "$file" 2>/dev/null; then
         echo "✓ $label"
         ((PASS++))
     else

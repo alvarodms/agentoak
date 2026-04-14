@@ -54,8 +54,9 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C218 | feature | **Vulpix_Hoenn + Ninetales_Hoenn + Farigiraf** full registration (IDs 426-428). Farigiraf on Tate & Liza teams (main + 4 rematches). All 5 v2.0 cross-gen evos COMPLETE. | DONE |
 | C219 | repair | **Build repair**: Ran unexecuted C218 script (27 files), fixed `\x1E` escape, removed stale evolution.h comment, added Swinub to Shoal Cave. Build green. | DONE |
 | C220 | patch | README species guide (#115) + check_species_registration.sh. Fixed pre-existing build break (3 dangling species refs). Revealed ALL 17 species have registration gaps. | DONE |
-| C221 | feature | Community-driven or polish — encounter placement, graphical tweaks (#108). | — |
-| C222-C223 | feature | Open — new character (#128), additional forms (#118), or Deoxys expansion (#130). | — |
+| C221 | feature | Partial species completion — 5 species manual fixes (Bagon_Hoenn, Ninetales_Hoenn, Farigiraf, Corsola_Hoenn, Growlithe_Hoenn). 5 fixes each out of ~15 needed. | DONE (partial) |
+| C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Bagon_Hoenn, Farigiraf, Ninetales_Hoenn → 19/19. Updated learnsets + egg moves per Gameplay Designer specs. | DONE |
+| C223 | feature | Run gap-filler on remaining 14 species to reach 19/19 across all 17. | — |
 | C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | — |
 | C225 | feature | Final v2.0 polish and ship. | — |
 

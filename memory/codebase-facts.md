@@ -4,6 +4,17 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Species Registration System (C222)
+
+**19 files** per species. Check script: `scripts/check_species_registration.sh`. Gap-filler: `scripts/complete_species_registration.cjs`. Files use 3 naming conventions:
+- `SPECIES_X` (species.h, species_info.h, pokemon_icon.c, pokemon.c, cry_ids.h, evolution.h, front_pic_anims.h, level_up_learnset_pointers.h, tmhm_learnsets.h)
+- `NATIONAL_DEX_X` (pokedex.h, pokedex_entries.h, pokedex_orders.h)
+- PascalCase `gMon*_X` (pokemon.h, graphics.h, anim_mon_front_pics.c, level_up_learnsets.h, pokedex_text.h, cry_tables.inc)
+
+**Cry system**: `SpeciesToCryId()` in pokemon.c. Gen 1-2: cry ID = species - 1. Gen 3+: `gSpeciesIdToCryId[species - 276]`. Custom species MUST add cry_ids.h entries mapping `[SPECIES_X - 277] = <base_cry_id>`. Without entries, all custom species default to cry ID 0 (Growlithe). cry_tables.inc entries are for unique cries only; reuse species just need cry_ids.h.
+
+---
+
 ## Trainer System
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
@@ -34,9 +45,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in species.h (14 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). SPECIES_EGG=426, NUM_SPECIES=426.
-**NOT in species.h (3)**: Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf — dangling references removed C220. Must be re-added from scratch.
-**Registration gaps (C220 audit)**: ALL 14 defined species are missing 10-16 of 19 required files (pokedex, graphics, cries, learnsets). Worst: Froslass (3/19), Mamoswine (3/19). Best: Growlithe_Hoenn (9/19). Build compiles because missing array slots use zero-initialized data (wrong sprites, no Pokédex entries, no cries). `make check_species` audits this.
+**Custom species in species.h (17 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428). SPECIES_EGG=429, NUM_SPECIES=429.
+**Registration status (C222)**: Bagon_Hoenn, Ninetales_Hoenn, Farigiraf at 19/19. Remaining 14 species have gaps (8-16 of 19 files missing). Gap-filler tool: `scripts/complete_species_registration.cjs`.
 
 ---
 
@@ -91,20 +101,18 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Build Validation Targets (C141, C170, C206, C220)
+## Build Validation Targets (C141, C170, C206, C220, C222)
 
 `make check_scripts` — Lints .inc files for non-charmap characters.
 `make check_encounters` — Node.js validator for `wild_encounters.json`.
 `make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
-`make check_species` — Runs `scripts/check_species_registration.sh` on all 14 defined custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
+`make check_species` — Runs `scripts/check_species_registration.sh` on all custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
 
 ---
 
 ## Regional Variant Species Pipeline (C195-202)
 
 **Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. **WARNING (C215-216)**: Pipeline catastrophically broken — only populates ~7/23 required files. DO NOT use without audit. See failure-patterns.md.
-
-**Config template**: `configs/vulpix_hoenn.json` — copy and modify for new species. Directory: `pokeemerald/configs/`.
 
 **Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
@@ -113,8 +121,6 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 ## Cross-Gen Evolution Pipeline (C212-218)
 
 **Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), `scripts/add_three_species_c218.cjs` (C218 — Vulpix_Hoenn/Ninetales_Hoenn/Farigiraf). Covers ~22-27 files per run.
-
-**Cry system**: Forward (`gCryTable`) and reverse (`gCryTable_Reverse`) are parallel arrays in `sound/cry_tables.inc`. Custom species reuse base form cries. `gSpeciesIdToCryId[]` in `src/data/pokemon/cry_ids.h` maps species IDs to cry table indices using `SPECIES_X - 277` as array index.
 
 **Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species->hoenn, species->national, hoenn->national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
 

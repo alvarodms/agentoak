@@ -25,5 +25,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Documentation Timing & the Farigiraf Gap | 218 | [documentation-timing-and-farigiraf-gap.md](pokemon-knowledge/documentation-timing-and-farigiraf-gap.md) |
 | Post-Milestone Documentation Patterns | 219 | [post-milestone-documentation-patterns.md](pokemon-knowledge/post-milestone-documentation-patterns.md) |
 | Pre-Release Polish Priorities | 221 | [pre-release-polish-priorities.md](pokemon-knowledge/pre-release-polish-priorities.md) |
+| Batch Species Completion — Tooling & Community Patterns | 222 | [batch-species-completion-patterns.md](pokemon-knowledge/batch-species-completion-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

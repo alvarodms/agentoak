@@ -1,0 +1,12 @@
+{
+  "speciesName": "bagon_hoenn",
+  "eggMoves": ["MOVE_DRAGON_DANCE", "MOVE_THRASH", "MOVE_DRAGON_RAGE", "MOVE_TWISTER", "MOVE_ENDURE"],
+  "iconPalIndex": 0,
+  "cryBase": "Bagon",
+  "cryId": 351,
+  "frontAnim": "ANIM_V_SQUISH_AND_BOUNCE",
+  "evolutionFrom": null,
+  "evolutionTo": null,
+  "evolutionMethod": null,
+  "evolutionParam": null
+}
