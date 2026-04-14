@@ -34,7 +34,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase (C217)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427). NUM_SPECIES = 428 (EGG=428). All 16 species fully registered and building. **Missing from build**: Farigiraf (C214 reverted) — needs full re-addition.
+**Custom species in codebase (C218)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428). NUM_SPECIES = 429 (EGG=429). All 17 species fully registered and building. All 5 v2.0 cross-gen evolutions complete.
 
 ---
 
@@ -108,9 +108,11 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Cross-Gen Evolution Pipeline (C212-213)
+## Cross-Gen Evolution Pipeline (C212-218)
 
-**Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), similar in C212. Covers ~22 files (species_info, learnsets, TM/HM, egg moves, pokedex text/entries/orders, graphics tables, icons, cries). 
+**Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), `scripts/add_three_species_c218.cjs` (C218 — Vulpix_Hoenn/Ninetales_Hoenn/Farigiraf). Covers ~22-27 files per run.
+
+**Cry system**: Forward (`gCryTable`) and reverse (`gCryTable_Reverse`) are parallel arrays in `sound/cry_tables.inc`. Custom species reuse base form cries. `gSpeciesIdToCryId[]` in `src/data/pokemon/cry_ids.h` maps species IDs to cry table indices using `SPECIES_X - 277` as array index.
 
 **Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species->hoenn, species->national, hoenn->national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
 

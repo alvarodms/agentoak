@@ -40,10 +40,6 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 
 **Encounter**: Meteor Falls, postgame, requires Champion + researcher callback seen. 4% encounter rate, Lv28-30. The researcher's presence contextualizes the find.
 
-## Postgame Density Audit (C211)
-
-12 distinct postgame content threads exist. One genuine gap (Bagon Colony) addressed by v2.0 C215.
-
 ## Multi-Cycle Roadmap
 
 | Cycle | Mode | Objective | Status |
@@ -51,32 +47,28 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C211 | planning | v2.0 vision, Bagon decision, postgame audit, roadmap | DONE |
 | C212 | feature | Cross-gen batch 1: **Dusknoir** + **Honchkrow**. Phoebe + Sidney teams. | DONE |
 | C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia teams + dialogue. | DONE |
-| C214 | feature | Cross-gen batch 3: **Farigiraf**. Tate & Liza teams (all 5). Dialogue rewrite. **Petalburg downgrade NPC**. | DONE |
-| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Also cleaned up C214 Farigiraf revert residue (stale refs in 5 files). | DONE |
+| C214 | feature | Cross-gen batch 3: **Farigiraf** (reverted). Tate & Liza dialogue. Petalburg downgrade NPC. | DONE (partial — Farigiraf reverted) |
+| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Cleaned C214 residue. | DONE |
 | C216 | repair | Bagon_Hoenn broken species registration (16 missing files) — fixed all entries, revised BST 310→450. | DONE |
-| C217 | feature | **Vulpix_Hoenn + Ninetales_Hoenn** re-addition (IDs 426-427). Full 27-file registration, Route 113 encounter, Moon Stone evolution. Closes phantom feature. | DONE |
-| C218 | feature | Documentation pass (#115) — README expansion, player guide, feature list. | — |
-| C219-C220 | feature | Community-driven or polish — determined by C216 review. | — |
-| C221 | refactor | Quality pass — validation scripts, sprite iterations from community feedback. | — |
+| C217 | feature | **Vulpix_Hoenn + Ninetales_Hoenn** re-addition (IDs 426-427). Full 27-file registration, Route 113 encounter, Moon Stone evolution. | DONE |
+| C218 | feature | **Vulpix_Hoenn + Ninetales_Hoenn + Farigiraf** full registration (IDs 426-428). Farigiraf on Tate & Liza teams (main + 4 rematches). All 5 v2.0 cross-gen evos COMPLETE. | DONE |
+| C219 | feature | Documentation pass (#115) — README expansion, feature list. OR encounter placement for new species. | — |
+| C220-C221 | feature | Community-driven or polish — encounter placement, graphical tweaks (#108). | — |
 | C222-C223 | feature | Open — new character (#128), additional forms (#118), or Deoxys expansion (#130). | — |
 | C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | — |
 | C225 | feature | Final v2.0 polish and ship. | — |
-
-### Cross-Gen Implementation Notes
-
-Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C214: Farigiraf). Each script handles ~22-24 files. Manual patches needed for: anim_mon_front_pics.c (gMonFrontPic_*), evolution.h (pre-evo gains new path), enemy_mon_elevation.h (if floating). C214 also fixed missing C213 entries in front_pic_anims.h and pokedex_orders.h. pokemon.c mapping arrays use SPECIES_TO_HOENN/NATIONAL/HOENN_TO_NATIONAL macros (handled by C214 script).
 
 ## Issue Triage
 
 | Issue | Deferrals | v2.0 Plan |
 |-------|-----------|-----------|
-| #127 Cross-gen species | 1 | **HIGH**. C212-C214 ships all 5 species. v2.0 flagship. |
-| #108 Graphical tweaks | 2 | MEDIUM. C217. Evaluate per-item; implement what's feasible. |
-| #115 Improved docs | 2 | MEDIUM. C218. README expansion + feature list. |
-| #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand at C216. |
+| #127 Cross-gen species | 1 | **COMPLETE (C218)**. All 5 species shipped: Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf. |
+| #108 Graphical tweaks | 2 | MEDIUM. C220-221. Evaluate per-item; implement what's feasible. |
+| #115 Improved docs | 2 | MEDIUM. C219. README expansion + feature list. |
+| #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand. |
 | #126 Bagon/Vulpix redundancy | — | **RESOLVED**. Bagon_Hoenn proceeds as Dragon/Rock. Vulpix_Hoenn stays. |
-| #128 New character | 1 | LOW. Evaluate at C216. |
-| #130 Deoxys quest expansion | 1 | LOW. Evaluate at C216. |
+| #128 New character | 1 | LOW. Evaluate at C222. |
+| #130 Deoxys quest expansion | 1 | LOW. Evaluate at C222. |
 
 ---
 
@@ -88,5 +80,5 @@ Ad-hoc scripts per batch (C212: Dusknoir+Honchkrow, C213: Froslass+Mamoswine, C2
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427). NUM_SPECIES=428 (EGG=428). **Note**: Farigiraf reverted (C214) — still needs full re-addition.
+- **Custom species (17 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428). NUM_SPECIES=429 (EGG=429).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

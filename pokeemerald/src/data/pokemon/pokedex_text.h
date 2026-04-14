@@ -2400,3 +2400,21 @@ const u8 gHonchkrowPokedexText[] = _(
     "it has claimed the dark forests\n"
     "of HOENN as its territory.");
 
+const u8 gVulpixHoennPokedexText[] = _(
+    "This VULPIX adapted to HOENN's\n"
+    "ashfall by developing an icy coat.\n"
+    "Its six tails leave frost patterns\n"
+    "in volcanic ash as it walks.");
+
+const u8 gNinetalesHoennPokedexText[] = _(
+    "NINETALES adapted to HOENN's changed\n"
+    "climate. Its nine tails radiate cold\n"
+    "that freezes ash midair, creating\n"
+    "shimmering curtains of ice crystals.");
+
+const u8 gFarigirafPokedexText[] = _(
+    "A POKéMON whose two minds have\n"
+    "merged into one. It can sense\n"
+    "danger with the psychic radar of\n"
+    "its unified brain and crush\n"
+    "threats with powerful headbutts.");

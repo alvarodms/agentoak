@@ -37,7 +37,7 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Evolution | Growlithe_Hoenn → Arcanine_Hoenn via Water Stone |
 | Encounter | Scripted: Weather Institute 2F Quest 2 reward (Lv40, held NeverMeltIce) |
 
-## Hoennian Vulpix & Ninetales (Cycle 208 design, C217 re-addition)
+## Hoennian Vulpix & Ninetales (C208 design, C217 partial, C218 completed)
 
 | Detail | Value |
 |--------|-------|
@@ -46,7 +46,7 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Abilities | Vulpix: Inner Focus / Cute Charm. Ninetales: Inner Focus / Flash Fire |
 | Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
 | Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 |
-| Pipeline | `scripts/add_vulpix_ninetales_hoenn.cjs` (27 files) + manual fixes for egg_moves.h and graphics.h externs. Sprites from C208 preserved in repo. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
+| Pipeline | C217: partial registration. C218: `scripts/add_three_species_c218.cjs` completed remaining files. Sprites from C208 preserved. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
 
 ---
 
@@ -54,10 +54,8 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 
 | Species | ID | Type | BST | Pre-evo | Key notes |
 |---------|-----|------|-----|---------|-----------|
-| Dusknoir | 421→** | Ghost | 525 | Dusclops → Dusknoir (Lv45) | On Phoebe's teams |
-| Honchkrow | 422→** | Dark/Flying | 505 | Murkrow → Honchkrow (Lv37) | On Sidney's teams |
-
-**Note**: IDs shifted when Vulpix_Hoenn/Ninetales_Hoenn were added C208. Actual C212 IDs were after those.
+| Dusknoir | 421 | Ghost | 525 | Dusclops → Dusknoir (Lv45) | On Phoebe + Sidney teams |
+| Honchkrow | 422 | Dark/Flying | 505 | Murkrow → Honchkrow (Lv37) | On Sidney's teams |
 
 ## Cross-Gen Evolutions — Batch 2 (Cycle 213)
 
@@ -66,11 +64,17 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Froslass | 423 | Ice/Ghost | 480 | Snorunt → Froslass (Lv42) | Glacia main + all 4 rematches |
 | Mamoswine | 424 | Ice/Ground | 530 | Piloswine → Mamoswine (Lv44) | Glacia main + all 4 rematches |
 
-Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for pokemon.c (3 arrays), anim_mon_front_pics.c, enemy_mon_elevation.h (Froslass floats), evolution.h (Snorunt+Piloswine gain new evo paths). Sprites via `fetch_pokemon_sprites`. Cries: Froslass reuses Glalie, Mamoswine reuses Piloswine. Glacia teams updated via `scripts/update_glacia_teams.cjs`. Glacia intro dialogue rewritten.
+Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for pokemon.c, anim_mon_front_pics.c, enemy_mon_elevation.h (Froslass floats), evolution.h. Sprites via `fetch_pokemon_sprites`. Glacia teams updated via `scripts/update_glacia_teams.cjs`.
 
-## Cross-Gen Evolutions — Batch 3 (Cycle 214) — REVERTED
+## Cross-Gen Evolutions — Batch 3: Farigiraf (C214 reverted, C218 completed)
 
-C214 partially committed but SPECIES_FARIGIRAF was missing from species.h. C215 cleaned up stale references: removed from evolution.h, egg_moves.h, pokedex_orders.h, anim_mon_front_pics.c. Tate & Liza teams reverted to SPECIES_GIRAFARIG. Dialogue strings in MossdeepCity_Gym/scripts.inc still reference "FARIGIRAF" by name (text only, compiles fine). Sprites exist in graphics/pokemon/farigiraf/. Farigiraf needs full re-addition in a future cycle.
+| Detail | Value |
+|--------|-------|
+| Species ID | SPECIES_FARIGIRAF (428) |
+| Type | Normal/Psychic |
+| Pre-evo | Girafarig → Farigiraf (via Twin Beam — mapped to level-up) |
+| E4 usage | Tate & Liza main + all 4 rematches |
+| Pipeline | C214: initial attempt reverted due to missing species.h entry. C215: cleaned stale refs. C218: `scripts/add_three_species_c218.cjs` completed full registration across 27 files. Trainer parties updated: Farigiraf replaces Girafarig on Tate & Liza main (Lv41), added to R1, replaces on R2 (Lv50) and rematch tiers 3-4. |
 
 ## Hoennian Bagon (Cycle 215, repaired C216)
 
@@ -83,4 +87,4 @@ C214 partially committed but SPECIES_FARIGIRAF was missing from species.h. C215 
 | Key moves | Rock Tomb, Rock Slide, Ancient Power, Dragon Claw, Double-Edge, Iron Defense |
 | Evolution | None (standalone form) |
 
-Pipeline: `add_regional_form.cjs` (25 files) CATASTROPHICALLY FAILED — only 7/23+ files populated. C215 only got: pokemon.c (3 macros), anim_mon_front_pics.c, tmhm_learnsets.h, pokedex_orders.h, egg_moves.h. C216 repair added 16 missing entries: species.h, pokedex.h (national+hoenn), species_info.h, graphics/pokemon.h (6 declarations), graphics.h (7 externs), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette index), front_pic_anims.h (anim def + SINGLE_ANIMATION + table entry), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h. BST revised 310→450 (defensive wall niche). Sprites by Sprite Designer. Cry reuses Bagon.
+Pipeline: `add_regional_form.cjs` catastrophically failed (7/23 files). C216 repair added 16 missing entries. Sprites by Sprite Designer. Cry reuses Bagon.
