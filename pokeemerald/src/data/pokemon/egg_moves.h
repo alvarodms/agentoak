@@ -1371,13 +1371,6 @@ const u16 gEggMoves[] = {
     MOVE_THRASH,
     MOVE_TWISTER,
 
-    EGG_MOVES_SPECIES_OFFSET + SPECIES_VULPIX_HOENN,
-    MOVE_HYPNOSIS,
-    MOVE_DISABLE,
-    MOVE_SPITE,
-    MOVE_CHARM,
-    MOVE_HOWL,
-    MOVE_EXTRASENSORY,
-    MOVE_MOONBLAST,
+    // SPECIES_VULPIX_HOENN egg moves removed: species not yet registered (see tech-debt-backlog)
 EGG_MOVES_TERMINATOR
 };

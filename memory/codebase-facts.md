@@ -34,7 +34,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in codebase (C218)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428). NUM_SPECIES = 429 (EGG=429). All 17 species fully registered and building. All 5 v2.0 cross-gen evolutions complete.
+**Custom species in species.h (14 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425). SPECIES_EGG=426, NUM_SPECIES=426.
+**NOT in species.h (3)**: Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf — dangling references removed C220. Must be re-added from scratch.
+**Registration gaps (C220 audit)**: ALL 14 defined species are missing 10-16 of 19 required files (pokedex, graphics, cries, learnsets). Worst: Froslass (3/19), Mamoswine (3/19). Best: Growlithe_Hoenn (9/19). Build compiles because missing array slots use zero-initialized data (wrong sprites, no Pokédex entries, no cries). `make check_species` audits this.
 
 ---
 
@@ -89,12 +91,12 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Build Validation Targets (C141, C170, C206)
+## Build Validation Targets (C141, C170, C206, C220)
 
 `make check_scripts` — Lints .inc files for non-charmap characters.
 `make check_encounters` — Node.js validator for `wild_encounters.json`.
 `make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
-**CI note**: `python3` unavailable. Use Node.js for validation scripts.
+`make check_species` — Runs `scripts/check_species_registration.sh` on all 14 defined custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
 
 ---
 

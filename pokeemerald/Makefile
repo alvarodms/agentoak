@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_species
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -199,6 +199,18 @@ check_encounters:
 # E4 rematch data validation
 check_e4_rematches:
 	@bash scripts/check_e4_rematches.sh
+
+# Species registration completeness check
+check_species:
+	@echo "Checking species registration..."
+	@FAIL=0; \
+	for species in RIOLU LUCARIO WEAVILE GIBLE GABITE GARCHOMP CORSOLA_HOENN GROWLITHE_HOENN ARCANINE_HOENN DUSKNOIR HONCHKROW FROSLASS MAMOSWINE BAGON_HOENN VULPIX_HOENN NINETALES_HOENN FARIGIRAF; do \
+		echo "--- SPECIES_$$species ---"; \
+		./scripts/check_species_registration.sh "SPECIES_$$species" || FAIL=1; \
+		echo ""; \
+	done; \
+	if [ $$FAIL -eq 1 ]; then echo "Some species have registration gaps."; exit 1; fi; \
+	echo "All species fully registered!"
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

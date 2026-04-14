@@ -16,4 +16,5 @@
 | `pokeemerald/scripts/configs/corsola_hoenn.json` | **C202** | Validation config for Corsola_Hoenn. All values match codebase. Used for dry-run testing. |
 | `pokeemerald/scripts/check_quest_flags.sh` | **C202** | Quest flag orphan detector. Checks all FLAG_QUEST_* are both set and checked in scripts. |
 | `pokeemerald/scripts/check_e4_rematches.sh` | **C206** | E4 rematch validator: species uniqueness per party, level progression across tiers, regional form placement (Corsola_Hoenn/Arcanine_Hoenn/Garchomp). 33 checks, all PASS. |
-| `pokeemerald/Makefile` | **C206** | Added `check_e4_rematches` phony target. |
+| `pokeemerald/Makefile` | C206, **C220** | Added `check_e4_rematches` (C206), `check_species` (C220) phony targets. |
+| `pokeemerald/scripts/check_species_registration.sh` | **C220** | Species registration completeness checker. Given a SPECIES_* constant, greps 19 required files and reports pass/fail. Used via `make check_species` to audit all 17 custom species. Revealed ALL species have 8-11 missing files (best: 8/19, worst: 0/19). |

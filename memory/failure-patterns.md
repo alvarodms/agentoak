@@ -89,6 +89,21 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Additional C219 fix**: The script used `\x1E` hex escape for é in `gFarigirafPokedexText`. agbcc doesn't support `\x` escapes — use literal `POKéMON` (UTF-8 é character) instead. Added to Invalid Escape Sequences pattern.
 
+## Dangling Species References Breaking Build (Cycle 220) — CRITICAL
+
+**Symptom**: `SPECIES_FARIGIRAF undeclared` in trainer_parties.h. Build broken at cycle start.
+**Cause**: Three species (FARIGIRAF, VULPIX_HOENN, NINETALES_HOENN) had references in compiled source files (evolution.h, trainer_parties.h, wild_encounters.h, egg_moves.h) but were never added to species.h. C218/C219 scripts were executed but their registrations were incomplete or reverted.
+**Resolution**: Commented out dangling evolution entries, replaced FARIGIRAF with GIRAFARIG in trainer parties, replaced VULPIX_HOENN with VULPIX in encounters. Fixed both wild_encounters.h (generated file) AND wild_encounters.json (source of truth).
+**Prevention**: Run `make check_species` before and after every species-related cycle. The new script catches exactly this class of error.
+
+## All 17 Custom Species Have Registration Gaps (Cycle 220 Discovery) — CRITICAL
+
+**Symptom**: `make check_species` reveals every custom species is missing 8-16 of 19 required files.
+**Common missing files across ALL species**: pokedex.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h, pokemon.h (graphics), graphics.h (externs), cry_tables.inc, cry_ids.h, anim_mon_front_pics.c, level_up_learnsets.h.
+**Worst cases**: Froslass (3/19), Mamoswine (3/19), Vulpix_Hoenn (2/19), Ninetales_Hoenn (0/19), Farigiraf (1/19).
+**Impact**: Species appear in-game using fallback data (wrong sprites, no Pokédex entries, no cries, default learnsets). The ROM compiles because these files use array indexing — missing indices silently use zero-initialized data.
+**Resolution**: Requires a dedicated species registration cycle to complete all 17 species. Priority: Froslass/Mamoswine (3/19 each, used by Glacia).
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

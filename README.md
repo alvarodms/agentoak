@@ -85,6 +85,48 @@ Choose your challenge in Professor Birch's lab:
 - Friendly NPCs in Pokemon Centers along the early routes explain your current mode and level cap
 - **Changed your mind?** A friendly NPC in the Petalburg Pokemon Center can switch you back to Normal Mode if Challenge Mode gets too tough
 
+### Custom Species Guide
+
+*Seventeen new species call Hoenn home. Here's where to find them and how they evolve.*
+
+#### Migration Arrivals
+
+Species drawn from distant regions by the migration event.
+
+| Species | Type | Where to Find | Evolution |
+|---------|------|---------------|-----------|
+| Riolu | Fighting | Route 116 (4%) | Friendship → Lucario |
+| Lucario | Fighting/Steel | — | Evolved from Riolu |
+| Gible | Dragon/Ground | Route 111 (1%), Meteor Falls B1F (2%) | Lv24 → Gabite → Lv48 Garchomp |
+| Gabite | Dragon/Ground | — | Evolved from Gible at Lv24 |
+| Garchomp | Dragon/Ground | — | Evolved from Gabite at Lv48 |
+| Weavile | Dark/Ice | Mt. Pyre Summit (4%) | Also: Sneasel → Weavile at Lv40 |
+
+#### Cross-Generation Evolutions
+
+The migration unlocked latent evolutionary potential in species already living in Hoenn. Gym leaders and Elite Four members field these evolved forms.
+
+| New Evolution | Type | Base Species (Location) | How to Evolve | Who Uses It |
+|---------------|------|-------------------------|---------------|-------------|
+| Honchkrow | Dark/Flying | Murkrow (Mt. Pyre, Route 113) | Level 37 | Sidney |
+| Dusknoir | Ghost | Dusclops (from Duskull, Mt. Pyre) | Level 45 | Phoebe |
+| Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Level 38 | Glacia |
+| Mamoswine | Ice/Ground | Piloswine (from Swinub, Shoal Cave Ice Room 10%) | Level 45 | Glacia |
+| Farigiraf | Normal/Psychic | Girafarig (Route 118, Safari Zone) | Level 32 | Tate & Liza *(coming soon — species in progress)* |
+
+#### Hoennian Regional Forms
+
+Familiar species transformed by Hoenn's unique environment. Some are discovered through postgame quests; others wait in the wild.
+
+| Species | Type | Where to Find | Evolution |
+|---------|------|---------------|-----------|
+| Corsola (Hoenn) | Ghost/Rock | Postgame quest: The Elder's Current | — |
+| Growlithe (Hoenn) | Water | Postgame quest: Hartley's Field Report | Water Stone → Arcanine (Hoenn) |
+| Arcanine (Hoenn) | Water/Fire | — | Evolved from Growlithe (Hoenn) |
+| Bagon (Hoenn) | Dragon/Rock | Meteor Falls deep (5%) | — (standalone form) |
+| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Moon Stone → Ninetales (Hoenn) *(coming soon)* |
+| Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) *(coming soon)* |
+
 ### How to Play
 
 **Requirements:** A GBA emulator ([mGBA](https://mgba.io/) recommended) or a GBA flash cart.
