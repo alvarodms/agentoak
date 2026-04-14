@@ -407,6 +407,9 @@ const u32 gMonFrontPic_Honchkrow[] = INCBIN_U32("graphics/pokemon/honchkrow/anim
 const u32 gMonFrontPic_Froslass[] = INCBIN_U32("graphics/pokemon/froslass/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Mamoswine[] = INCBIN_U32("graphics/pokemon/mamoswine/anim_front.4bpp.lz");
 const u32 gMonFrontPic_BagonHoenn[] = INCBIN_U32("graphics/pokemon/bagon_hoenn/anim_front.4bpp.lz");
+const u32 gMonFrontPic_VulpixHoenn[] = INCBIN_U32("graphics/pokemon/vulpix_hoenn/anim_front.4bpp.lz");
+const u32 gMonFrontPic_NinetalesHoenn[] = INCBIN_U32("graphics/pokemon/ninetales_hoenn/anim_front.4bpp.lz");
+const u32 gMonFrontPic_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/anim_front.4bpp.lz");
 
 const u32 gMonFrontPic_UnownB[] = INCBIN_U32("graphics/pokemon/unown/b/anim_front.4bpp.lz");

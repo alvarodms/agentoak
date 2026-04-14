@@ -2418,3 +2418,15 @@ const u8 gFarigirafPokedexText[] = _(
     "danger with the psychic radar of\n"
     "its unified brain and crush\n"
     "threats with powerful headbutts.");
+
+const u8 gFroslassPokedexText[] = _(
+    "A spirit born when a SNORUNT was exposed\n"
+    "to intense cold in SHOAL CAVE. It adorns\n"
+    "its lair with frozen prey and cries\n"
+    "hauntingly at night.");
+
+const u8 gMamoswinePokedexText[] = _(
+    "As HOENN's climate shifted during the\n"
+    "great migration, PILOSWINE in the deepest\n"
+    "ice caves evolved into this massive,\n"
+    "twin-tusked beast.");

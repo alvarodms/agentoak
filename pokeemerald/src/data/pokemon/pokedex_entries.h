@@ -4787,4 +4787,64 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
+    [NATIONAL_DEX_VULPIX_HOENN] =
+    {
+        .categoryName = _("Fox"),
+        .height = 6,
+        .weight = 99,
+        .description = gVulpixHoennPokedexText,
+        .pokemonScale = 424,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_NINETALES_HOENN] =
+    {
+        .categoryName = _("Fox"),
+        .height = 11,
+        .weight = 199,
+        .description = gNinetalesHoennPokedexText,
+        .pokemonScale = 339,
+        .pokemonOffset = 10,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_FARIGIRAF] =
+    {
+        .categoryName = _("Long Neck"),
+        .height = 32,
+        .weight = 1600,
+        .description = gFarigirafPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_FROSLASS] =
+    {
+        .categoryName = _("Snow Land"),
+        .height = 13,
+        .weight = 266,
+        .description = gFroslassPokedexText,
+        .pokemonScale = 290,
+        .pokemonOffset = 5,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_MAMOSWINE] =
+    {
+        .categoryName = _("Twin Tusk"),
+        .height = 25,
+        .weight = 2910,
+        .description = gMamoswinePokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
 };

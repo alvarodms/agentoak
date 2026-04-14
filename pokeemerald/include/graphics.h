@@ -2844,7 +2844,27 @@ extern const u32 gMonShinyPalette_NinetalesHoenn[];
 extern const u32 gMonStillFrontPic_NinetalesHoenn[];
 extern const u8 gMonIcon_NinetalesHoenn[];
 extern const u8 gMonFootprint_NinetalesHoenn[];
-
+extern const u32 gMonFrontPic_Farigiraf[];
+extern const u32 gMonPalette_Farigiraf[];
+extern const u32 gMonBackPic_Farigiraf[];
+extern const u32 gMonShinyPalette_Farigiraf[];
+extern const u32 gMonStillFrontPic_Farigiraf[];
+extern const u8 gMonIcon_Farigiraf[];
+extern const u8 gMonFootprint_Farigiraf[];
+extern const u32 gMonFrontPic_Froslass[];
+extern const u32 gMonPalette_Froslass[];
+extern const u32 gMonBackPic_Froslass[];
+extern const u32 gMonShinyPalette_Froslass[];
+extern const u32 gMonStillFrontPic_Froslass[];
+extern const u8 gMonIcon_Froslass[];
+extern const u8 gMonFootprint_Froslass[];
+extern const u32 gMonFrontPic_Mamoswine[];
+extern const u32 gMonPalette_Mamoswine[];
+extern const u32 gMonBackPic_Mamoswine[];
+extern const u32 gMonShinyPalette_Mamoswine[];
+extern const u32 gMonStillFrontPic_Mamoswine[];
+extern const u8 gMonIcon_Mamoswine[];
+extern const u8 gMonFootprint_Mamoswine[];
 
 extern const u32 gMonFrontPic_Egg[];
 extern const u32 gMonStillFrontPic_Egg[];

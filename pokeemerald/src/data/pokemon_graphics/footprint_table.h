@@ -424,5 +424,10 @@ const u8 *const gMonFootprintTable[] =
     [SPECIES_DUSKNOIR] = gMonFootprint_Dusknoir,
     [SPECIES_HONCHKROW] = gMonFootprint_Honchkrow,
     [SPECIES_BAGON_HOENN] = gMonFootprint_BagonHoenn,
+    [SPECIES_VULPIX_HOENN] = gMonFootprint_VulpixHoenn,
+    [SPECIES_NINETALES_HOENN] = gMonFootprint_NinetalesHoenn,
+    [SPECIES_FARIGIRAF] = gMonFootprint_Farigiraf,
+    [SPECIES_FROSLASS] = gMonFootprint_Froslass,
+    [SPECIES_MAMOSWINE] = gMonFootprint_Mamoswine,
     [SPECIES_EGG] = gMonFootprint_Bulbasaur,
 };
