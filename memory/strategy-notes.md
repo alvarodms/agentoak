@@ -52,8 +52,9 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C216 | repair | Bagon_Hoenn broken species registration (16 missing files) — fixed all entries, revised BST 310→450. | DONE |
 | C217 | feature | **Vulpix_Hoenn + Ninetales_Hoenn** re-addition (IDs 426-427). Full 27-file registration, Route 113 encounter, Moon Stone evolution. | DONE |
 | C218 | feature | **Vulpix_Hoenn + Ninetales_Hoenn + Farigiraf** full registration (IDs 426-428). Farigiraf on Tate & Liza teams (main + 4 rematches). All 5 v2.0 cross-gen evos COMPLETE. | DONE |
-| C219 | feature | Documentation pass (#115) — README expansion, feature list. OR encounter placement for new species. | — |
-| C220-C221 | feature | Community-driven or polish — encounter placement, graphical tweaks (#108). | — |
+| C219 | repair | **Build repair**: Ran unexecuted C218 script (27 files), fixed `\x1E` escape, removed stale evolution.h comment, added Swinub to Shoal Cave. Build green. | DONE |
+| C220 | feature | Documentation pass (#115) — README expansion, feature list. Deferred from C219 due to build repair. | — |
+| C221 | feature | Community-driven or polish — encounter placement, graphical tweaks (#108). | — |
 | C222-C223 | feature | Open — new character (#128), additional forms (#118), or Deoxys expansion (#130). | — |
 | C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | — |
 | C225 | feature | Final v2.0 polish and ship. | — |
@@ -64,7 +65,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 |-------|-----------|-----------|
 | #127 Cross-gen species | 1 | **COMPLETE (C218)**. All 5 species shipped: Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf. |
 | #108 Graphical tweaks | 2 | MEDIUM. C220-221. Evaluate per-item; implement what's feasible. |
-| #115 Improved docs | 2 | MEDIUM. C219. README expansion + feature list. |
+| #115 Improved docs | 3 | MEDIUM. C220. README expansion + feature list. Deferred from C219 (build repair). |
 | #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand. |
 | #126 Bagon/Vulpix redundancy | — | **RESOLVED**. Bagon_Hoenn proceeds as Dragon/Rock. Vulpix_Hoenn stays. |
 | #128 New character | 1 | LOW. Evaluate at C222. |

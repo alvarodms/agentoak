@@ -23,5 +23,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Standalone Form Viability & Mid-Dev Priorities | 216 | [standalone-form-viability-and-middev-polish.md](pokemon-knowledge/standalone-form-viability-and-middev-polish.md) |
 | Mid-Arc Stability & Pipeline Debt | 217 | [mid-arc-stability-and-pipeline-debt.md](pokemon-knowledge/mid-arc-stability-and-pipeline-debt.md) |
 | Documentation Timing & the Farigiraf Gap | 218 | [documentation-timing-and-farigiraf-gap.md](pokemon-knowledge/documentation-timing-and-farigiraf-gap.md) |
+| Post-Milestone Documentation Patterns | 219 | [post-milestone-documentation-patterns.md](pokemon-knowledge/post-milestone-documentation-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

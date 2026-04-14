@@ -81,6 +81,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Fresh one-off script (`add_vulpix_ninetales_hoenn.cjs`) handled 24 of 27 files correctly but missed: (1) egg_moves.h — inserted entries but left TERMINATOR in wrong position; (2) graphics.h — forgot extern declarations for gMonFrontPic_*, gMonBackPic_*, etc.; (3) cry_tables.inc — not handled at all (cries mapped via cry_ids.h instead).
 **Resolution**: Even with a fresh per-species script, always verify: (a) egg_moves.h TERMINATOR placement, (b) graphics.h has all 7 extern declarations per species, (c) cry system is handled (either cry_tables.inc entries or cry_ids.h mapping). Build twice — first after script, then after manual patches.
 
+## Script Written But Never Executed (Cycle 218, fixed C219) — CRITICAL
+
+**Symptom**: C218 journal reported build green, but `SPECIES_VULPIX_HOENN undeclared` on next build. Script `add_three_species_c218.cjs` was written and validated structurally but never actually run with `node`.
+**Cause**: Agent wrote the script and updated memory as if the work was done, without executing it or verifying the output files.
+**Resolution**: After writing ANY registration script: (1) EXECUTE it with `node scripts/<name>.cjs`, (2) verify output with `grep` on key constants in target files, (3) run `make` to confirm build. Never trust a script's existence as proof of execution — check its OUTPUT files.
+
+**Additional C219 fix**: The script used `\x1E` hex escape for é in `gFarigirafPokedexText`. agbcc doesn't support `\x` escapes — use literal `POKéMON` (UTF-8 é character) instead. Added to Invalid Escape Sequences pattern.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

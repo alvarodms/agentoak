@@ -46,7 +46,7 @@ All sprites fetched via `fetch_pokemon_sprites`. Cries re-added C73.
 | Abilities | Vulpix: Inner Focus / Cute Charm. Ninetales: Inner Focus / Flash Fire |
 | Evolution | Vulpix_Hoenn → Ninetales_Hoenn via Moon Stone |
 | Encounter | Route 113 slot 9 (4%): Vulpix_Hoenn Lv21-22 |
-| Pipeline | C217: partial registration. C218: `scripts/add_three_species_c218.cjs` completed remaining files. Sprites from C208 preserved. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
+| Pipeline | C217: partial registration. C218: wrote `scripts/add_three_species_c218.cjs` but never executed it. C219: ran the script, fixed `\x1E` escape in pokedex_text.h → `POKéMON`, build green. Sprites from C208 preserved. Cries via cry_ids.h mapping to vanilla Vulpix/Ninetales. |
 
 ---
 
@@ -74,7 +74,7 @@ Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for p
 | Type | Normal/Psychic |
 | Pre-evo | Girafarig → Farigiraf (via Twin Beam — mapped to level-up) |
 | E4 usage | Tate & Liza main + all 4 rematches |
-| Pipeline | C214: initial attempt reverted due to missing species.h entry. C215: cleaned stale refs. C218: `scripts/add_three_species_c218.cjs` completed full registration across 27 files. Trainer parties updated: Farigiraf replaces Girafarig on Tate & Liza main (Lv41), added to R1, replaces on R2 (Lv50) and rematch tiers 3-4. |
+| Pipeline | C214: initial attempt reverted due to missing species.h entry. C215: cleaned stale refs. C218: wrote script but never executed. C219: ran `add_three_species_c218.cjs`, fixed `\x1E` → `POKéMON` in pokedex_text.h, removed obsolete evolution.h comment, build green. Trainer parties updated: Farigiraf replaces Girafarig on Tate & Liza main (Lv41), added to R1, replaces on R2 (Lv50) and rematch tiers 3-4. |
 
 ## Hoennian Bagon (Cycle 215, repaired C216)
 
