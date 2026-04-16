@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_species
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_species check_evolution check_all
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -211,6 +211,15 @@ check_species:
 	done; \
 	if [ $$FAIL -eq 1 ]; then echo "Some species have registration gaps."; exit 1; fi; \
 	echo "All species fully registered!"
+
+# Evolution consistency validation
+check_evolution:
+	@bash scripts/check_evolution_consistency.sh
+
+# Run all validation checks
+check_all: check_species check_encounters check_e4_rematches check_evolution
+	@echo ""
+	@echo "=== All validation checks passed ==="
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

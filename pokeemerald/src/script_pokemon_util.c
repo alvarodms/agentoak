@@ -226,3 +226,11 @@ void ReducePlayerPartyToSelectedMons(void)
 
     CalculatePlayerPartyCount();
 }
+
+// Returns TRUE if the species in gSpecialVar_0x8004 has been seen in the Pokédex.
+bool8 ScriptCheckPokedexSeen(void)
+{
+    u16 nationalDexNum = SpeciesToNationalPokedexNum(gSpecialVar_0x8004);
+    gSpecialVar_Result = GetSetPokedexFlag(nationalDexNum, FLAG_GET_SEEN);
+    return gSpecialVar_Result;
+}

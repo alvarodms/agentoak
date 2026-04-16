@@ -58,7 +58,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Tool validated on 3 species. | DONE |
 | C223 | feature | **Species foundation complete.** All 17 species → 19/19. Farigiraf sprites fixed (#134). Froslass gender-gated evolution (#133 partial). `EVO_LEVEL_FEMALE` added. | DONE |
 | C224 | feature | Mom migration send-off (#135). Running Shoes → 5 Poké Balls + migration dialogue. | DONE |
-| C225 | feature | Final v2.0 polish and ship. | — |
+| C225 | feature | Final v2.0 polish and ship. Evolution validator + `check_all`. Researcher witness dialogue. Graphical audit (17/17 pass). | DONE |
 
 ## Issue Triage
 

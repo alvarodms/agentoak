@@ -373,7 +373,16 @@ MeteorFalls_1F_1R_EventScript_ColonyResearcherPostChampion::
 	end
 
 MeteorFalls_1F_1R_EventScript_ColonyResearcherRevisit::
+	setvar VAR_0x8004, SPECIES_BAGON_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexSeen
+	compare VAR_RESULT, 1
+	goto_if_eq MeteorFalls_1F_1R_EventScript_ColonyResearcherWitness
 	msgbox MeteorFalls_1F_1R_Text_ColonyResearcherRevisit, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_1F_1R_EventScript_ColonyResearcherWitness::
+	msgbox MeteorFalls_1F_1R_Text_ColonyResearcherWitness, MSGBOX_DEFAULT
 	release
 	end
 
@@ -501,3 +510,24 @@ MeteorFalls_1F_1R_Text_ColonyResearcherRevisit:
 	.string "If you venture down there, tread\n"
 	.string "carefully.\l"
 	.string "They're shy of footsteps.$"
+
+@ =============================================
+@ Colony Researcher Witness Text (C225)
+@ Triggers after player has seen Bagon_Hoenn
+@ Environmental storytelling -- "the world noticed"
+@ =============================================
+
+MeteorFalls_1F_1R_Text_ColonyResearcherWitness:
+	.string "You've seen one, haven't you?\p"
+	.string "I can tell. That look in your\n"
+	.string "eyes -- I had it too, the first\l"
+	.string "time.\p"
+	.string "DRAGON and ROCK, fused into\n"
+	.string "something new. They don't dream\l"
+	.string "of flying anymore.\p"
+	.string "They dream of enduring.\p"
+	.string "I've written it all down.\n"
+	.string "Every observation, every change.\l"
+	.string "The DRACONID will want to know.\p"
+	.string "The mountain made them.\n"
+	.string "And they chose to stay.$"

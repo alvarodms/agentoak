@@ -103,12 +103,18 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Build Validation Targets (C141, C170, C206, C220, C222)
+## Build Validation Targets (C141, C170, C206, C220, C222, C225)
 
 `make check_scripts` — Lints .inc files for non-charmap characters.
 `make check_encounters` — Node.js validator for `wild_encounters.json`.
 `make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
 `make check_species` — Runs `scripts/check_species_registration.sh` on all custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
+`make check_evolution` — Bash validator for evolution.h: source/target species, method validity, duplicates, gender-gated evos, branching uniqueness.
+`make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution.
+
+## Script Pokédex Check (C225)
+
+`ScriptCheckPokedexSeen` — special function for checking if a species has been seen in the Pokédex from event scripts. Usage: `setvar VAR_0x8004, SPECIES_X` then `specialvar VAR_RESULT, ScriptCheckPokedexSeen`. Returns 1 if seen, 0 if not.
 
 ---
 

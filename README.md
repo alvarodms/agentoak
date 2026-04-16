@@ -27,6 +27,8 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **5 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass, Piloswine into Mamoswine, and Girafarig into Farigiraf. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine — making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), Hoennian Arcanine (Water/Fire), Hoennian Bagon (Dragon/Rock) — a fossil variant discovered in the depths of Meteor Falls — and Hoennian Vulpix (Ice/Fairy) and Hoennian Ninetales (Ice/Fairy), ice foxes adapted to the volcanic ash of Route 113, evolving via Moon Stone. Some forms are discovered through postgame quests; others wait in the wild for trainers sharp-eyed enough to find them
+- **Environmental storytelling** — the world notices its own changes. Return to the Meteor Falls researcher after encountering Hoennian Bagon and he'll acknowledge what you've seen: "DRAGON and ROCK, fused into something new. They dream of enduring." NPCs remember, react, and evolve alongside the player
+- **Mom's migration send-off** — your journey begins with purpose. Instead of Running Shoes, Mom hands you 5 Poke Balls and shares what she's heard about the migration. The world is changing before you even step onto Route 101
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, a Wailord pod shakes the ocean on Route 128 — culminating in a special encounter with a curious young Wailmer — and on Route 126, fog rolls in as layered Pokemon cries converge toward Sootopolis in a moment the player can only witness, not fight
 - **Weather omens** — Hoenn's climate destabilizes as you earn badges: sandstorms engulf Route 111 after Badge 5, thunderstorms rage on Route 119 and downpours drown Route 120 after Badge 6, and hail blankets Route 125 near Shoal Cave after Badge 7 — four routes transformed, foreshadowing the Primal Stirring
 - **Migration narrative arc** — NPCs across Hoenn react to the migration, from Birch's earliest research notes through Weather Institute scientists tracking atmospheric anomalies, ocean divers reporting vast shapes below the surface, and late-game cities buzzing with unease to postgame revelations
@@ -124,8 +126,8 @@ Familiar species transformed by Hoenn's unique environment. Some are discovered 
 | Growlithe (Hoenn) | Water | Postgame quest: Hartley's Field Report | Water Stone → Arcanine (Hoenn) |
 | Arcanine (Hoenn) | Water/Fire | — | Evolved from Growlithe (Hoenn) |
 | Bagon (Hoenn) | Dragon/Rock | Meteor Falls deep (5%) | — (standalone form) |
-| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Moon Stone → Ninetales (Hoenn) *(coming soon)* |
-| Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) *(coming soon)* |
+| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Moon Stone → Ninetales (Hoenn) |
+| Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) |
 
 ### How to Play
 

@@ -42,12 +42,14 @@ C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering 
 | `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | **213** | Glacia intro+defeat+rematch rewritten for Froslass/Mamoswine |
 | `data/maps/MossdeepCity_Gym/scripts.inc` | **214** | Tate & Liza intro+defeat+post-battle+pre-rematch+rematch-defeat+post-rematch rewritten for Farigiraf/duality theme. TATE:/LIZA: speaker tags throughout. |
 
-## Bagon Colony Researcher Update — Cycle 215
+## Bagon Colony Researcher Update — Cycles 215, 225
 
 | File | Cycle | Notes |
 |------|-------|-------|
-| `data/maps/MeteorFalls_1F_1R/scripts.inc` | **215** | PostChampion script: FLAG_BAGON_COLONY_CALLBACK (0x29B) gates first-visit vs. revisit. First visit: C209 dialogue (4 blocks) + setflag. Revisit: new text hinting at B1F_2R encounter ("deepest waterfall chamber", "scales the color of the mountain"). |
+| `data/maps/MeteorFalls_1F_1R/scripts.inc` | **215**, **225** | PostChampion script: FLAG_BAGON_COLONY_CALLBACK (0x29B) gates first-visit vs. revisit. C215: revisit text hinting at B1F_2R encounter. C225: added 4th state — witness dialogue triggers when player has seen SPECIES_BAGON_HOENN in Pokédex. Uses `ScriptCheckPokedexSeen` special. "They dream of enduring." |
 | `include/constants/flags.h` | **215** | FLAG_BAGON_COLONY_CALLBACK at 0x29B |
+| `src/script_pokemon_util.c` | **225** | Added `ScriptCheckPokedexSeen()` special — checks if species in VAR_0x8004 has been seen in Pokédex |
+| `data/specials.inc` | **225** | Registered `ScriptCheckPokedexSeen` (line 541) |
 
 ## Petalburg Difficulty Downgrade NPC — Cycle 214
 
