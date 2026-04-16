@@ -532,6 +532,9 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(FROSLASS),
     SPECIES_TO_HOENN(MAMOSWINE),
     SPECIES_TO_HOENN(BAGON_HOENN),
+    SPECIES_TO_HOENN(VULPIX_HOENN),
+    SPECIES_TO_HOENN(NINETALES_HOENN),
+    SPECIES_TO_HOENN(FARIGIRAF),
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -962,6 +965,9 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(FROSLASS),
     SPECIES_TO_NATIONAL(MAMOSWINE),
     SPECIES_TO_NATIONAL(BAGON_HOENN),
+    SPECIES_TO_NATIONAL(VULPIX_HOENN),
+    SPECIES_TO_NATIONAL(NINETALES_HOENN),
+    SPECIES_TO_NATIONAL(FARIGIRAF),
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index
@@ -1367,6 +1373,9 @@ static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(FROSLASS),
     HOENN_TO_NATIONAL(MAMOSWINE),
     HOENN_TO_NATIONAL(BAGON_HOENN),
+    HOENN_TO_NATIONAL(VULPIX_HOENN),
+    HOENN_TO_NATIONAL(NINETALES_HOENN),
+    HOENN_TO_NATIONAL(FARIGIRAF),
     HOENN_TO_NATIONAL(OLD_UNOWN_B),
     HOENN_TO_NATIONAL(OLD_UNOWN_C),
     HOENN_TO_NATIONAL(OLD_UNOWN_D),
@@ -1841,6 +1850,9 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_CORSOLA_HOENN - 1] = ANIM_H_SLIDE,
     [SPECIES_GROWLITHE_HOENN - 1] = ANIM_V_SQUISH_AND_BOUNCE,
     [SPECIES_ARCANINE_HOENN - 1] = ANIM_V_SHAKE,
+    [SPECIES_VULPIX_HOENN - 1] = ANIM_V_SQUISH_AND_BOUNCE,
+    [SPECIES_NINETALES_HOENN - 1] = ANIM_GROW_VIBRATE,
+    [SPECIES_FARIGIRAF - 1] = ANIM_V_SQUISH_AND_BOUNCE,
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =
@@ -5577,6 +5589,11 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
             case EVO_LEVEL:
                 if (gEvolutionTable[species][i].param <= level)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
+                break;
+            case EVO_LEVEL_FEMALE:
+                if (gEvolutionTable[species][i].param <= level)
+                    if (GetGenderFromSpeciesAndPersonality(species, GetMonData(mon, MON_DATA_PERSONALITY, 0)) == MON_FEMALE)
+                        targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
             case EVO_LEVEL_ATK_GT_DEF:
                 if (gEvolutionTable[species][i].param <= level)

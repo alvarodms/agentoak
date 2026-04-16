@@ -88,4 +88,26 @@ Pipeline: `scripts/add_froslass_mamoswine.cjs` (22 files) + manual patches for p
 | Evolution | None (standalone form) |
 
 Pipeline: `add_regional_form.cjs` catastrophically failed (7/23 files). C216 repair added 16 missing entries. Sprites by Sprite Designer. Cry reuses Bagon.
-**C222**: `complete_species_registration.cjs` filled remaining 3 gaps (cry_tables, cry_ids, evolution). Updated learnset per Gameplay Designer spec (14 moves, stone dragon progression: Rage→Harden→Rock Tomb→...→Dragon Claw→Double-Edge). Added ENDURE to egg moves. Now 19/19.
+
+---
+
+## Cycle 223: Species Foundation Completion
+
+All 17 species brought to 19/19 registration via `complete_species_registration.cjs`.
+
+**Gap-filler batch results:**
+- cry_ids.h: All 17 species added (was universally missing)
+- cry_tables.inc: 11 species added with comments (Corsola_Hoenn, Growlithe_Hoenn, Arcanine_Hoenn, Dusknoir, Honchkrow, Froslass, Mamoswine, Bagon_Hoenn, Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf)
+- egg_moves.h: 6 species added (Lucario, Weavile, Gabite, Garchomp, Arcanine_Hoenn, Vulpix_Hoenn)
+- pokemon_icon.c: 5 species added (Froslass, Mamoswine, Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf)
+- pokemon.c mappings: 3 species added (Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf)
+- pokedex_orders.h: 3 species added (Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf)
+- evolution.h: 1 species added (Corsola_Hoenn standalone comment)
+
+**Farigiraf sprite fix (#134):** Downloaded correct front/back/icon/footprint/palettes from expansion repo. Front sprite now shows Farigiraf (was showing Girafarig's face).
+
+**Froslass gender-gated evolution (#133 partial):**
+- Added `EVO_LEVEL_FEMALE` constant (16) to `include/constants/pokemon.h`
+- Added handler in `src/pokemon.c` `GetEvolutionTargetSpecies()` — checks `GetGenderFromSpeciesAndPersonality()` == MON_FEMALE
+- Changed Snorunt→Froslass evolution from `EVO_LEVEL` to `EVO_LEVEL_FEMALE` in `evolution.h`
+- Changed Froslass gender ratio from `PERCENT_FEMALE(50)` to `MON_FEMALE` in `species_info.h`

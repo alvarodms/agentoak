@@ -167,7 +167,7 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     [SPECIES_SEALEO]     = {{EVO_LEVEL, 44, SPECIES_WALREIN}},
     [SPECIES_CACNEA]     = {{EVO_LEVEL, 32, SPECIES_CACTURNE}},
     [SPECIES_SNORUNT]    = {{EVO_LEVEL, 42, SPECIES_GLALIE},
-                            {EVO_LEVEL, 38, SPECIES_FROSLASS}},
+                            {EVO_LEVEL_FEMALE, 38, SPECIES_FROSLASS}},
     [SPECIES_AZURILL]    = {{EVO_FRIENDSHIP, 0, SPECIES_MARILL}},
     [SPECIES_SPOINK]     = {{EVO_LEVEL, 32, SPECIES_GRUMPIG}},
     [SPECIES_MEDITITE]   = {{EVO_LEVEL, 37, SPECIES_MEDICHAM}},
@@ -196,4 +196,5 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     [SPECIES_GIRAFARIG]  = {{EVO_LEVEL, 32, SPECIES_FARIGIRAF}},
     // SPECIES_BAGON_HOENN — standalone form, no evolution chain
     [SPECIES_VULPIX_HOENN] = {{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NINETALES_HOENN}},
+    // SPECIES_CORSOLA_HOENN — standalone form, no evolution chain
 };

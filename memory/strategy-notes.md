@@ -55,8 +55,8 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C219 | repair | **Build repair**: Ran unexecuted C218 script (27 files), fixed `\x1E` escape, removed stale evolution.h comment, added Swinub to Shoal Cave. Build green. | DONE |
 | C220 | patch | README species guide (#115) + check_species_registration.sh. Fixed pre-existing build break (3 dangling species refs). Revealed ALL 17 species have registration gaps. | DONE |
 | C221 | feature | Partial species completion — 5 species manual fixes (Bagon_Hoenn, Ninetales_Hoenn, Farigiraf, Corsola_Hoenn, Growlithe_Hoenn). 5 fixes each out of ~15 needed. | DONE (partial) |
-| C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Bagon_Hoenn, Farigiraf, Ninetales_Hoenn → 19/19. Updated learnsets + egg moves per Gameplay Designer specs. | DONE |
-| C223 | feature | Run gap-filler on remaining 14 species to reach 19/19 across all 17. | — |
+| C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Tool validated on 3 species. | DONE |
+| C223 | feature | **Species foundation complete.** All 17 species → 19/19. Farigiraf sprites fixed (#134). Froslass gender-gated evolution (#133 partial). `EVO_LEVEL_FEMALE` added. | DONE |
 | C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | — |
 | C225 | feature | Final v2.0 polish and ship. | — |
 

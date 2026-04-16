@@ -110,9 +110,9 @@ The migration unlocked latent evolutionary potential in species already living i
 |---------------|------|-------------------------|---------------|-------------|
 | Honchkrow | Dark/Flying | Murkrow (Mt. Pyre, Route 113) | Level 37 | Sidney |
 | Dusknoir | Ghost | Dusclops (from Duskull, Mt. Pyre) | Level 45 | Phoebe |
-| Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Level 38 | Glacia |
+| Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Female Snorunt, Level 38 | Glacia |
 | Mamoswine | Ice/Ground | Piloswine (from Swinub, Shoal Cave Ice Room 10%) | Level 45 | Glacia |
-| Farigiraf | Normal/Psychic | Girafarig (Route 118, Safari Zone) | Level 32 | Tate & Liza *(coming soon — species in progress)* |
+| Farigiraf | Normal/Psychic | Girafarig (Route 118, Safari Zone) | Level 32 | Tate & Liza |
 
 #### Hoennian Regional Forms
 
