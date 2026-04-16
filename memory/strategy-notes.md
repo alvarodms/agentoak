@@ -16,61 +16,57 @@
 **v1.7** (C184-191): "The Gathering Storm" — Late-game atmosphere arc. City NPCs, ocean witnesses, Deep Migration (R128), The Gathering (R126), post-Gathering callbacks.
 **v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline.
 **v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul (dialogue+teams+rematches), "The Exhale" post-Rayquaza resolution, 2 mid-game forms (Vulpix_Hoenn, Ninetales_Hoenn), Corsola encounter, Bagon Colony callback, Deoxys quest, challenge_mode_scaling.h.
+**v2.0** (C212-225): "Deeper Roots" — 5 cross-gen evos (Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf), Bagon_Hoenn (Dragon/Rock), species 19/19 validation suite, evolution validator, Mom's migration send-off, researcher witness dialogue.
 
 ---
 
-# v2.0: "Deeper Roots" (C212-C225)
+# v2.1: "A Changed Hoenn, A Changed Trainer" (C226-C240)
 
 ## Creative Vision
 
-v1.9 completed the narrative arc — from Birch's lab to Deoxys, the story lands. v2.0 asks: **what grows in settled ground?**
+v2.0 completed the migration narrative — every arc resolves, from Birch's lab to Deoxys. v2.1 asks: **who is the trainer who walked through all of this?**
 
-"Deeper Roots" has a dual meaning. First, cross-generation evolutions — species that already live in Hoenn discovering new evolutionary paths (Dusknoir, Froslass, Mamoswine, Honchkrow, Farigiraf). The migration didn't just bring new species; it unlocked latent potential in existing ones. Second, the Bagon Colony's resolution: the dragon that dreamed of flight has put down roots in Meteor Falls, its children hardening into something new.
+The migration changed Hoenn. Now the player avatar reflects that change — cyan-tinted, visually distinct from vanilla Emerald from the first frame. The protagonist's new palette is the visual anchor: a statement that this is a different game, a different journey.
 
-Where v1.9 was wide (E4 overhaul, quests, forms, resolution), v2.0 is deep. No new quest chains. No new narrative arcs. Instead: making every existing system richer. The E4 gains cross-gen evolutions that make their teams feel modern and complete. The Bagon Colony thread resolves with a tangible encounter. The Petalburg difficulty NPC ships. Graphical rough edges get smoothed. Documentation catches up to the feature set.
+Three pillars:
+1. **Visual Identity** — Cyan protagonist palette (#136), graphical polish (#108), sprite refinements (#131)
+2. **Ecological Depth** — New regional forms (#118) in the Badge 3-6 stretch to thicken the mid-game
+3. **Postgame Mystery** — Deoxys Quest II (#130) expands the cosmic thread beyond the first signal
 
-The player experience goal: a second playthrough reveals new details. Glacia fields a Froslass. Sidney's Honchkrow presides. Tate & Liza share a Farigiraf. And in Meteor Falls, where Drake once spoke of dragons who "choose to stay," the proof waits in the dark.
+## Backlog Triage
 
-## Design Ruling: Bagon_Hoenn (Dragon/Rock)
-
-**Decision**: Ship Bagon_Hoenn as Dragon/Rock. Standalone form — no Shelgon_Hoenn or Salamence_Hoenn in v2.0.
-
-**Species**: Bagon_Hoenn | **Typing**: Dragon/Rock | **BST**: 450 (HP 65, Atk 85, Def 120, SpA 45, SpD 75, Spe 60)
-**Ability**: Rock Head / Sturdy — the dragon that hardened into stone. Rock Head + Double-Edge = 120 power, no recoil.
-
-**Encounter**: Meteor Falls, postgame, requires Champion + researcher callback seen. 4% encounter rate, Lv28-30. The researcher's presence contextualizes the find.
+| Issue | Deferrals | Decision | Rationale |
+|-------|-----------|----------|-----------|
+| #108 Graphical tweaks | 4 | ACCEPT (C229) | Visual polish fits the identity theme. Bundle with #133. |
+| #118 More regional forms | 4 | ACCEPT (C231-232) | Enriches mid-game encounter ecology. Requires pipeline rewrite first (C230). |
+| #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
+| #130 Deoxys Quest II | 4 | ACCEPT (C233) | Natural sequel to v1.9's cosmic signal. Postgame mystery pillar. |
+| #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. Bundle with #108. |
+| #133 Froslass Dawn Stone | 2 | ACCEPT (C229) | Completes the species properly. Requires new item infrastructure. |
+| #136 Player palette | 1 | ACCEPT (C228) | v2.1's visual anchor — first feature cycle after research. |
 
 ## Multi-Cycle Roadmap
 
-| Cycle | Mode | Objective | Status |
-|-------|------|-----------|--------|
-| C211 | planning | v2.0 vision, Bagon decision, postgame audit, roadmap | DONE |
-| C212 | feature | Cross-gen batch 1: **Dusknoir** + **Honchkrow**. Phoebe + Sidney teams. | DONE |
-| C213 | feature | Cross-gen batch 2: **Froslass** + **Mamoswine**. Glacia teams + dialogue. | DONE |
-| C214 | feature | Cross-gen batch 3: **Farigiraf** (reverted). Tate & Liza dialogue. Petalburg downgrade NPC. | DONE (partial — Farigiraf reverted) |
-| C215 | feature | **Bagon_Hoenn** (Dragon/Rock) — species pipeline + Meteor Falls encounter + researcher update. Cleaned C214 residue. | DONE |
-| C216 | repair | Bagon_Hoenn broken species registration (16 missing files) — fixed all entries, revised BST 310→450. | DONE |
-| C217 | feature | **Vulpix_Hoenn + Ninetales_Hoenn** re-addition (IDs 426-427). Full 27-file registration, Route 113 encounter, Moon Stone evolution. | DONE |
-| C218 | feature | **Vulpix_Hoenn + Ninetales_Hoenn + Farigiraf** full registration (IDs 426-428). Farigiraf on Tate & Liza teams (main + 4 rematches). All 5 v2.0 cross-gen evos COMPLETE. | DONE |
-| C219 | repair | **Build repair**: Ran unexecuted C218 script (27 files), fixed `\x1E` escape, removed stale evolution.h comment, added Swinub to Shoal Cave. Build green. | DONE |
-| C220 | patch | README species guide (#115) + check_species_registration.sh. Fixed pre-existing build break (3 dangling species refs). Revealed ALL 17 species have registration gaps. | DONE |
-| C221 | feature | Partial species completion — 5 species manual fixes (Bagon_Hoenn, Ninetales_Hoenn, Farigiraf, Corsola_Hoenn, Growlithe_Hoenn). 5 fixes each out of ~15 needed. | DONE (partial) |
-| C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Tool validated on 3 species. | DONE |
-| C223 | feature | **Species foundation complete.** All 17 species → 19/19. Farigiraf sprites fixed (#134). Froslass gender-gated evolution (#133 partial). `EVO_LEVEL_FEMALE` added. | DONE |
-| C224 | feature | Mom migration send-off (#135). Running Shoes → 5 Poké Balls + migration dialogue. | DONE |
-| C225 | feature | Final v2.0 polish and ship. Evolution validator + `check_all`. Researcher witness dialogue. Graphical audit (17/17 pass). | DONE |
+| Cycle | Mode | Objective | Depends On |
+|-------|------|-----------|------------|
+| C226 | planning | v2.1 vision, backlog triage, roadmap, memory maintenance | — |
+| C227 | research | Catalog ALL Brendan/May sprite + palette files for #136. Build complete manifest. | C226 |
+| C228 | feature | Player palette recolor (#136): cyan/muted-blue across all cataloged files. | C227 |
+| C229 | feature | Polish bundle: #133 Dawn Stone evo + #108 graphical tweaks + #131 sprite fixes. | C228 |
+| C230 | refactor | Pipeline rewrite: config-driven species generator replacing add_regional_form.cjs. | — |
+| C231 | feature | #118 Regional forms batch 1: 2 new mid-game species (Badge 3-5 stretch). Design TBD. | C230 |
+| C232 | feature | #118 Regional forms batch 2: 1 more species + encounter placement + NPC dialogue. | C231 |
+| C233 | feature | #130 Deoxys Quest II: second postgame cosmic event expanding the signal thread. | — |
+| C234 | planning | Mid-v2.1 check-in. Evaluate progress, community feedback, adjust remaining roadmap. | C233 |
+| C235-240 | TBD | Polish, iteration on community feedback, v2.1 ship prep. | C234 |
 
-## Issue Triage
+## Issue Triage (v2.1)
 
-| Issue | Deferrals | v2.0 Plan |
-|-------|-----------|-----------|
-| #127 Cross-gen species | 1 | **COMPLETE (C218)**. All 5 species shipped: Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf. |
-| #108 Graphical tweaks | 4 | MEDIUM. Evaluate per-item; implement what's feasible. |
-| #115 Improved docs | — | **COMPLETE (C220)**. README species guide + check_species_registration.sh shipped. |
-| #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand. |
-| #126 Bagon/Vulpix redundancy | — | **RESOLVED**. Bagon_Hoenn proceeds as Dragon/Rock. Vulpix_Hoenn stays. |
-| #128 New character | 1 | LOW. Evaluate at C222. |
-| #130 Deoxys quest expansion | 1 | LOW. Evaluate at C222. |
+All issues triaged in Backlog Triage table above. Key decisions:
+- #128 REJECTED: narrative risk at this maturity level
+- #136 leads the roadmap as v2.1's visual anchor
+- #118 and #130 are the major content deliverables
+- #108/#131/#133 bundled into a single polish cycle (C229)
 
 ---
 

@@ -5,5 +5,6 @@ The Producer should review this list when planning — bold ideas that have been
 
 | Cycle | Idea | Status |
 |-------|------|--------|
-| 184 | **Petalburg downgrade NPC**: Shipped C214. One-way Challenge→Normal valve in Petalburg PkmnCenter. | done |
-| 211 | **Meteor Falls postgame environmental change**: Researcher's updated dialogue (C215) fulfills this — describes the colony's physical transformation via NPC text rather than tile changes. Encounter table shifted (B1F_2R slot 6 → Bagon_Hoenn). | done |
+| 226 | **"Changed Trainer" diegetic dialogue**: NPCs who comment on the player's changed appearance ("You look different from the trainers I remember"). Requires #136 palette to ship first. | pending — after C228 |
+| 226 | **Mid-game encounter thickening (Badge 3-6)**: The stretch between Dewford and Mossdeep could use 1-2 more discovery moments. New regional forms (#118) should be placed here for maximum impact. | pending — C231+ |
+| 226 | **Deoxys Quest II narrative design**: Expand the cosmic thread — what was the second signal? Where did it come from? Needs dedicated design before implementation. | pending — pre-C233 |
