@@ -20,6 +20,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves + Difficulty) | 43–46, 52, 129, 181, 182, **207**, **210** | 18 (+10 modified) | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214** | 14 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
+| Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
 | Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225** | Makefile + 9 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |

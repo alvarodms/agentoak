@@ -51,7 +51,7 @@ Three pillars:
 |-------|------|-----------|------------|
 | C226 | planning | v2.1 vision, backlog triage, roadmap, memory maintenance | — |
 | C227 | research | Catalog ALL Brendan/May sprite + palette files for #136. Build complete manifest. | C226 |
-| C228 | feature | Player palette recolor (#136): cyan/muted-blue across all cataloged files. | C227 |
+| C228 | feature | **DONE** — Player palette recolor (#136): sea-glass teal across 22 files. | C227 |
 | C229 | feature | Polish bundle: #133 Dawn Stone evo + #108 graphical tweaks + #131 sprite fixes. | C228 |
 | C230 | refactor | Pipeline rewrite: config-driven species generator replacing add_regional_form.cjs. | — |
 | C231 | feature | #118 Regional forms batch 1: 2 new mid-game species (Badge 3-5 stretch). Design TBD. | C230 |

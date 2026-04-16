@@ -66,6 +66,10 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
   - *The Mossdeep Signal* — A Space Center researcher tracked an energy pulse that bounced off the upper atmosphere during the Primal Stirring. Something shimmers on Route 131 where the sky grew thin
   - *The Fog Beneath* — A swimmer on Route 126 found an opening in the seabed that wasn't there before the Gathering. Something massive and gentle waits below the fog
 
+### Visual Identity
+
+- **Custom protagonist palette** — Brendan and May wear sea-glass teal instead of vanilla blue/red, tying their look to Hoenn's ocean-and-migration theme from the very first frame
+
 ### Quality of Life
 
 - **Reusable TMs** with halved prices

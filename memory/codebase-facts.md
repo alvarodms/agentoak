@@ -52,15 +52,17 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Player Sprite Palette System (C227)
+## Player Sprite Palette System (C227, updated C228)
 
-**Palette architecture**: All Brendan overworld sprites share `OBJ_EVENT_PAL_TAG_BRENDAN` (loaded from `graphics/object_events/palettes/brendan.pal`). Same for May. Palette slot: `PALSLOT_PLAYER` (enum in `include/event_object_movement.h`). Reflections loaded via `LoadPlayerObjectReflectionPalette()` from separate `_reflect.pal` files.
+**Palette architecture**: All Brendan overworld sprites share `OBJ_EVENT_PAL_TAG_BRENDAN` (loaded from `graphics/object_events/palettes/brendan.pal`). Same for May. Palette slot: `PALSLOT_PLAYER` (enum in `include/event_object_movement.h`). Reflections loaded via `LoadPlayerObjectReflectionPalette()` from separate `_reflection.pal` files.
 
-**Full manifest**: 13 `.pal` files + 4 `.gbapal` embedded binaries + region map icon PNGs + code references across 8 source files. Complete list in `memory/pokemon-knowledge/player-sprite-manifest.md`.
+**Full manifest**: 16 `.pal` files + 6 PNGs with embedded palettes = 22 files total. Complete list in `memory/pokemon-knowledge/player-sprite-manifest.md`. All recolored to sea-glass teal in C228.
 
-**Key risk**: Diving sprites may use palette slot 15 instead of `PALSLOT_PLAYER`. Must verify in `object_event_graphics_info.h` before recoloring.
+**Runtime palette sources**: Intro bicycle scene uses `player.pal` for BOTH genders (`gIntroPlayer_Pal`). Credits scene uses PNG-generated `.gbapal` per gender. Pokenav icons use PNG-embedded palette.
 
-**Battle transition mugshots**: `sMugshotPal_Brendan`/`sMugshotPal_May` in `src/battle_transition.c` — these are gradient palettes (blue for Brendan, pink for May), not the same as overworld palettes.
+**Battle transition mugshots**: `brendan_bg.pal`/`may_bg.pal` — gradient palettes (originally blue/pink, now teal). Not overworld palettes.
+
+**Underwater palette**: Separate tag `OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER` from `player_underwater.pal`.
 
 ---
 
