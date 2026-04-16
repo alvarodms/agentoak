@@ -52,6 +52,18 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
+## Player Sprite Palette System (C227)
+
+**Palette architecture**: All Brendan overworld sprites share `OBJ_EVENT_PAL_TAG_BRENDAN` (loaded from `graphics/object_events/palettes/brendan.pal`). Same for May. Palette slot: `PALSLOT_PLAYER` (enum in `include/event_object_movement.h`). Reflections loaded via `LoadPlayerObjectReflectionPalette()` from separate `_reflect.pal` files.
+
+**Full manifest**: 13 `.pal` files + 4 `.gbapal` embedded binaries + region map icon PNGs + code references across 8 source files. Complete list in `memory/pokemon-knowledge/player-sprite-manifest.md`.
+
+**Key risk**: Diving sprites may use palette slot 15 instead of `PALSLOT_PLAYER`. Must verify in `object_event_graphics_info.h` before recoloring.
+
+**Battle transition mugshots**: `sMugshotPal_Brendan`/`sMugshotPal_May` in `src/battle_transition.c` — these are gradient palettes (blue for Brendan, pink for May), not the same as overworld palettes.
+
+---
+
 ## Roaming Pokemon System (Cycle 108-109)
 
 Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNextBeast()` sequentially releases Raikou->Entei->Suicune using 6 flags. Full ref: `memory/pokemon-knowledge/roamer-implementation-patterns.md`.
