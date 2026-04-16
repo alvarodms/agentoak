@@ -57,7 +57,7 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | C221 | feature | Partial species completion — 5 species manual fixes (Bagon_Hoenn, Ninetales_Hoenn, Farigiraf, Corsola_Hoenn, Growlithe_Hoenn). 5 fixes each out of ~15 needed. | DONE (partial) |
 | C222 | refactor | **Gap-filler tool** (`complete_species_registration.cjs`). Fixed check script patterns. Tool validated on 3 species. | DONE |
 | C223 | feature | **Species foundation complete.** All 17 species → 19/19. Farigiraf sprites fixed (#134). Froslass gender-gated evolution (#133 partial). `EVO_LEVEL_FEMALE` added. | DONE |
-| C224 | planning | v2.0 wrap-up review. Assess completeness, plan v2.1 or v3.0. | — |
+| C224 | feature | Mom migration send-off (#135). Running Shoes → 5 Poké Balls + migration dialogue. | DONE |
 | C225 | feature | Final v2.0 polish and ship. | — |
 
 ## Issue Triage
@@ -65,8 +65,8 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 | Issue | Deferrals | v2.0 Plan |
 |-------|-----------|-----------|
 | #127 Cross-gen species | 1 | **COMPLETE (C218)**. All 5 species shipped: Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf. |
-| #108 Graphical tweaks | 2 | MEDIUM. C220-221. Evaluate per-item; implement what's feasible. |
-| #115 Improved docs | 3 | MEDIUM. C220. README expansion + feature list. Deferred from C219 (build repair). |
+| #108 Graphical tweaks | 4 | MEDIUM. Evaluate per-item; implement what's feasible. |
+| #115 Improved docs | — | **COMPLETE (C220)**. README species guide + check_species_registration.sh shipped. |
 | #118 More regional forms | 1 | LOW. Bagon_Hoenn (C215) partially addresses. More only if demand. |
 | #126 Bagon/Vulpix redundancy | — | **RESOLVED**. Bagon_Hoenn proceeds as Dragon/Rock. Vulpix_Hoenn stays. |
 | #128 New character | 1 | LOW. Evaluate at C222. |
@@ -82,5 +82,5 @@ The player experience goal: a second playthrough reveals new details. Glacia fie
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (17 total, 14 registered)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425). **UNREGISTERED**: Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf — missing from species.h, no species_info entries. EGG=426, NUM_SPECIES=426. All 17 have registration gaps (8-11 missing files each); `make check_species` audits this.
+- **Custom species (17 total, all 19/19 registered)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428). EGG=429, NUM_SPECIES=429. All species fully registered (C223).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

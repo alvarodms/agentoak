@@ -27,5 +27,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Pre-Release Polish Priorities | 221 | [pre-release-polish-priorities.md](pokemon-knowledge/pre-release-polish-priorities.md) |
 | Batch Species Completion — Tooling & Community Patterns | 222 | [batch-species-completion-patterns.md](pokemon-knowledge/batch-species-completion-patterns.md) |
 | Dawn Stone Implementation & Mom Event Replacement | 223 | [dawn-stone-and-mom-event-patterns.md](pokemon-knowledge/dawn-stone-and-mom-event-patterns.md) |
+| v2.0 Milestone Release Patterns | 224 | [v20-milestone-release-patterns.md](pokemon-knowledge/v20-milestone-release-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
