@@ -45,9 +45,6 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in species.h (18 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428), Pinsir_Hoenn (429). SPECIES_EGG=430, NUM_SPECIES=430.
-**Registration status (C230)**: 18 species. Pinsir_Hoenn at 18/19 (cry_tables.inc expected miss for regional forms sharing base cry).
-
 **Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom additions: `EVO_LEVEL_FEMALE` (16) — level-up gated by female gender; `EVO_ITEM_FEMALE` (17) — item-use gated by female gender (C229). Both use `GetGenderFromSpeciesAndPersonality()` in `GetEvolutionTargetSpecies()`. Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
 
 **Dawn Stone item**: `ITEM_DAWN_STONE` = 99 (slot 0x063). Uses Moon Stone icon. Item effect: `gItemEffect_DawnStone` with `ITEM4_EVO_STONE`. Placed in Shoal Cave Ice Room (flag 0x468).
@@ -128,9 +125,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 `make check_evolution` — Bash validator for evolution.h: source/target species, method validity, duplicates, gender-gated evos, branching uniqueness.
 `make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution.
 
-## Script Pokédex Check (C225)
-
-`ScriptCheckPokedexSeen` — special function for checking if a species has been seen in the Pokédex from event scripts. Usage: `setvar VAR_0x8004, SPECIES_X` then `specialvar VAR_RESULT, ScriptCheckPokedexSeen`. Returns 1 if seen, 0 if not.
+**ScriptCheckPokedexSeen** (C225): `setvar VAR_0x8004, SPECIES_X` → `specialvar VAR_RESULT, ScriptCheckPokedexSeen` → returns 1/0.
 
 ---
 
@@ -144,17 +139,10 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Cross-Gen Evolution Pipeline (C212-218)
 
-**Ad-hoc scripts per batch**: `scripts/add_froslass_mamoswine.cjs` (C213), `scripts/add_three_species_c218.cjs` (C218 — Vulpix_Hoenn/Ninetales_Hoenn/Farigiraf). Covers ~22-27 files per run.
-
-**Files NOT covered by scripts** (need manual edits): `pokemon.c` (3 mapping arrays: species->hoenn, species->national, hoenn->national), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating species only), `evolution.h` (pre-evo must gain new evo path).
-
-**egg_moves.h pitfall**: `EGG_MOVES_TERMINATOR` MUST separate species blocks. Missing it causes silent data corruption or build errors.
+Ad-hoc scripts per batch (C213, C218) cover ~22-27 files. Manual edits still needed: `pokemon.c` (3 mapping arrays), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating only), `evolution.h`. **Pitfall**: `egg_moves.h` MUST have `EGG_MOVES_TERMINATOR` between species blocks.
 
 ---
 
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
-**EXP function**: `Cmd_getexp()` in `src/battle_script_commands.c`. State machine with 6 cases.
-**Level cap**: `GetChallengeLevelCap()` returns cap per badge count (18/20/24/30/34/38/42/48/55). Soft cap in case 2: if mon level >= cap, EXP /= 10. C207: when cap triggers, uses `STRINGID_PKMNGAINEDEXPCAPPED` (381) for a two-page message including "EXP reduced by the level cap."
-**`IsChallengeModeActive()`**: Defined as a `#define` macro in `include/constants/flags.h`.
-**BATTLESTRINGS_COUNT**: 382 (last ID: STRINGID_PKMNGAINEDEXPCAPPED = 381).
+`Cmd_getexp()` in battle_script_commands.c. `GetChallengeLevelCap()` returns per-badge cap (18/20/24/30/34/38/42/48/55); EXP /= 10 when over. `IsChallengeModeActive()` macro in flags.h. BATTLESTRINGS_COUNT = 382.

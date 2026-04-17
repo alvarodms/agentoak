@@ -55,4 +55,8 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 ## Known Gaps
 
-All v1.0-v1.9 gaps resolved. v2.0 complete. v2.1 gaps TBD after planning (C226).
+**v2.1 gaps identified (C234 planning):**
+- "Changed Trainer" motif incomplete — only 1 of 4 planned witnesses shipped (Fortree birdwatcher). Target: C235.
+- Resonance Residue missing — Quest II has no environmental follow-through. Target: C236.
+- #108 graphical polish outstanding — deferred 5 times, must address C236.
+All other v2.1 content complete. Ship target: C238.

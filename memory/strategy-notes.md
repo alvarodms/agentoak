@@ -45,20 +45,52 @@ Three pillars:
 | C231 | feature | **DONE** — Stantler_Hoenn (Ghost/Grass) on Route 119. Badge 5-6 gap filled. | C230 |
 | C232 | feature | **DONE** — Echo dialogue layer: 5 NPCs connecting 4 regional forms + Changed Trainer debut. | C231 |
 | C233 | feature | **DONE** — #130 Deoxys Quest II: "The Resonance" — 3-location postgame investigation. 4 flags, 3 maps, ~250 lines of script. | — |
-| C234 | planning | Mid-v2.1 check-in. All 3 pillars complete. Evaluate community feedback, plan v2.1 ship or extension. | C233 |
-| C235-240 | TBD | Polish, iteration on community feedback, v2.1 ship prep. | C234 |
+| C234 | planning | **DONE** — v2.1 holistic eval, C235-240 plan, v2.2 vision, memory maintenance. | C233 |
+| C235 | feature | "Changed Trainer Witnesses" — Mom, Rival, Norman, Nurse Joy acknowledge cyan palette. | C234 |
+| C236 | feature | "Resonance Residue" + #108 polish — Post-Quest II environmental details + graphical tweaks. | C235 |
+| C237 | patch | v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
+| C238 | feature | v2.1 ship — Final README, version_bump: "minor", release_stage: "v2.1 Complete". | C237 |
+| C239-240 | planning+feature | v2.2 kickoff — "The Cosmic Form": custom Deoxys, Toxic Touch, cross-gen regional forms. | C238 |
 
 ## Issue Triage (v2.1)
 
 | Issue | Deferrals | Decision | Rationale |
 |-------|-----------|----------|-----------|
-| #108 Graphical tweaks | 4 | ACCEPT (C229) | Visual polish fits the identity theme. |
-| #118 More regional forms | 4 | ACCEPT (C230-232) | Enriches mid-game encounter ecology. |
+| #108 Graphical tweaks | 5 | DEFER (C236, 5th final) | Planned for C229 but scope deferred. Must address C236. |
+| #118 More regional forms | 5 | PARTIAL / DEFER (5th final) | C215 Bagon_Hoenn, C230 Pinsir_Hoenn, C231 Stantler_Hoenn shipped. Remaining → v2.2. |
 | #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
 | #130 Deoxys Quest II | 4 | **DONE (C233)** | Three-location investigation chain with 4 flags, atmospheric setpieces, open-ended "handshake" conclusion. |
 | #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. |
-| #133 Froslass Dawn Stone | 2 | ACCEPT (C229) | Completes the species properly. |
-| #136 Player palette | 1 | ACCEPT (C228) | v2.1's visual anchor. |
+| #133 Froslass Dawn Stone | 2 | **DONE (C229)** | Dawn Stone + EVO_ITEM_FEMALE + Shoal Cave placement. |
+| #136 Player palette | 1 | **DONE (C228)** | Sea-glass teal across 22 files. |
+| #145 Special Deoxys form | 1 | DEFER (v2.2) | Same ask as #140. Custom species + ability = v2.2 package. |
+| #146 Combine Deoxys quests | 0 | REJECT | Two-quest structure is intentional design. The gap is where narrative dread lives. |
+
+---
+
+# v2.2: "The Cosmic Form" (C239-C260, tentative)
+
+## Creative Vision
+
+The Resonance's handshake demands an answer. v2.2 delivers it: a custom Deoxys form born from Hoenn's cosmic connection — Poison/Fairy, visually distinct (hot pink/cyan palette), with a new ability (Toxic Touch). This is the project's first fully custom species, not a regional variant.
+
+The form caps the Deoxys quest chain (Quest III: "The Answer") and represents the culmination of the postgame mystery arc that began in v1.9.
+
+Alongside the Deoxys centerpiece:
+- Cross-generation evolutions reimagined as regional forms (#142)
+- Comprehensive trainer team audit for consistency (#143)
+- Team Magma/Aqua narrative rework (#144)
+- Additional regional forms (#118 remaining asks)
+
+## Engineering Prerequisites
+- RGBA auto-conversion script (7x deferred) — MUST ship before custom species work (target C239)
+- Custom ability implementation (Toxic Touch) — uncharted territory, needs research cycle
+- Species pipeline for fully custom (non-variant) species — may need pipeline extension
+
+## Key Risks
+- Custom ability requires battle engine modifications — high regression risk
+- Custom species (not a regional form) may need pipeline changes
+- 680 BST Poison/Fairy is extremely powerful — needs careful balancing against postgame context
 
 ---
 

@@ -35,5 +35,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Mid-Game Regional Form Gating Patterns | 231 | [midgame-regional-form-gating-patterns.md](pokemon-knowledge/midgame-regional-form-gating-patterns.md) |
 | NPC Echo Dialogue & Capstone Regional Form Patterns | 232 | [npc-echo-dialogue-and-capstone-forms.md](pokemon-knowledge/npc-echo-dialogue-and-capstone-forms.md) |
 | Custom Legendary Forms & Abilities in ROM Hacks | 233 | [custom-legendary-forms-and-abilities.md](pokemon-knowledge/custom-legendary-forms-and-abilities.md) |
+| Release Timing & Quest Chain Patterns | 234 | [release-timing-and-quest-chain-patterns.md](pokemon-knowledge/release-timing-and-quest-chain-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

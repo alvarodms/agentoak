@@ -10,16 +10,11 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 |------|-------|-------|
 | `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181** | Lab aide + Birch rescue; C180: migration hint; C181: difficulty selection multichoice |
-| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | 181, **183** | Difficulty-aware reminder NPC |
-| `data/maps/RustboroCity_PokemonCenter_1F/scripts.inc` | **183** | Hiker NPC: difficulty-aware level cap explainer |
-| `data/maps/DewfordTown_PokemonCenter_1F/scripts.inc` | **183** | Boy NPC: difficulty-aware |
-| `data/maps/MauvilleCity_PokemonCenter_1F/scripts.inc` | **183** | Researcher NPC: difficulty-aware |
+| Oldale/Rustboro/Dewford/Mauville PokemonCenter scripts | 181, **183** | Difficulty-aware helper NPCs (4 maps) |
 
-## Rival, Villains, Gym Leaders
+## Rival, Villains, Gym Leaders (C25-173)
 
-- **Rival** (C25, 29, 36, 38, 94, 104): Routes 103/110/119, LilycoveCity — 4 encounters rewritten with migration theme
-- **Villains** (C27, 36, 38): Maxie (MtChimney), Archie (SeafloorCavern, OceanicMuseum, Harbor)
-- **Gym Leaders** (C32, 36, 103, **173**): All 8 pre-battle + migration-themed rematch dialogue. C173: Norman/Winona expanded
+Rival (4 encounters rewritten), Villains (Maxie/Archie), all 8 Gym Leaders (pre-battle + rematch). C173: Norman/Winona expanded.
 
 ## Elite Four & Champion — Cycles 33, 42, **203**, **204**
 
@@ -51,14 +46,9 @@ C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering 
 | `src/script_pokemon_util.c` | **225** | Added `ScriptCheckPokedexSeen()` special — checks if species in VAR_0x8004 has been seen in Pokédex |
 | `data/specials.inc` | **225** | Registered `ScriptCheckPokedexSeen` (line 541) |
 
-## Petalburg Difficulty Downgrade NPC — Cycle 214
+## Difficulty Downgrade NPC — C214
 
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc` | **214** | New NPC: one-way Challenge→Normal downgrade. Multichoice (MULTI_DIFFICULTY_DOWNGRADE=115). Checks FLAG_DIFFICULTY_CHALLENGE. 4 text blocks. |
-| `data/maps/PetalburgCity_PokemonCenter_1F/map.json` | **214** | OBJ_EVENT_GFX_MAN_1 at (3,6), MOVEMENT_TYPE_FACE_DOWN |
-| `include/constants/script_menu.h` | **214** | Added MULTI_DIFFICULTY_DOWNGRADE (115) |
-| `src/data/script_menu.h` | **214** | MultichoiceList_DifficultyDowngrade (2 options), added to sMultichoiceLists[115] |
+PetalburgCity PokemonCenter: scripts.inc + map.json + script_menu.h (constants + data). Challenge→Normal downgrade, MULTI_DIFFICULTY_DOWNGRADE=115.
 
 ## Echo Dialogue Layer — Cycle 232
 

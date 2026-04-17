@@ -40,8 +40,6 @@
 - **Dedicated accent index via unused slots**: Repurpose unused palette indices (e.g., magenta 255,0,255 placeholders) as dedicated accent colors. Then pixel-remap specific features to use that index. Gives per-pixel color control without affecting other pixels sharing the original index.
 - **Eye detection heuristic**: White pixels (idx 1) within 2px of dark pixels (idx 3) reliably identifies eye locations in GBA sprites. Works for front and anim_front; back sprites typically have no visible eye.
 
-## Techniques Validated (New)
-
 - **Sad expression via highlight/pupil swap**: Move bright highlight pixel from eye-top to eye-bottom, move dark pupil from eye-bottom to eye-top. Creates "downcast/heavy-lidded" look. Works because viewers read dark-on-top as closed/drooping eyelid.
 - **Frown mouth via ∩ pixel pattern**: Replace flat horizontal mouth with dark idx 4 pixels arranged as: center line at y (closer to eyes) + corners at y+1 (drooping away from eyes). At 64x64, even a 1-row vertical offset reads as curved. Use dark body-outline color, not amber — amber reads warm/happy.
 - **Ghost iris: push past 130 saturation**: (100,50,150) still too muted at game scale. (130,60,180) clearly reads as vivid purple. The green channel is key — keep it low (≤60) to avoid muddy lavender.
@@ -58,6 +56,3 @@
 - **Volcanic beetle** (Pinsir_Hoenn): Deep crimson body (55-210,18-70,15-40), amber heat-glow pincers (120-255,40-200,8-80) with bright yellow tips. Warm cream highlights (255,240,200). Shiny: obsidian body (25-95,22-88,20-78) + blue-white cooling pincers (30-210,55-235,85-255).
 - **Forest spirit deer** (Stantler_Hoenn): Mossy green body (27-88,64-140,38-95), spectral teal antlers (78,205,196)/(136,216,176), bright emerald eyes (50,235,130)/(90,255,160) — brightest element. Sage belly (106-128,148-168,102-118). Leaf pixel accents (1-2px) at antler edges + ghostly emanation wisps at hoof bases. Shiny: twilight purple body (42-115,30-95,55-128) + rose-pink vines (220-230,130-160,170-185), golden-amber eyes (255,200,60).
 
-## Reusable Scripts
-
-- **PLTE binary recolor**: `/tmp/recolor_sprites.js` pattern — reads PNG binary, finds PLTE chunk offset, replaces 48 bytes (16×RGB), recalculates CRC. Works with `pngjs` npm package for analysis, raw `Buffer` for editing.
