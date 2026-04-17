@@ -78,7 +78,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
 
-**Custom flags**: 0x264-0x29B used (v6.0 through v2.0). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. 0x298-0x29A = Deoxys quest (C210): STARTED/INVESTIGATED/COMPLETE. 0x29B = `FLAG_BAGON_COLONY_CALLBACK` (C215). Next available: 0x29C.
+**Custom flags**: 0x264-0x29F used (v6.0 through v2.1). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x287-0x289 = migration events (C188-189). 0x28A-0x297 = v1.8 quest flags (C192): Elder 28A-28C, Hartley 28D-291, Mossdeep 292-294, Fog 295-297. 0x298-0x29A = Deoxys quest (C210): STARTED/INVESTIGATED/COMPLETE. 0x29B = `FLAG_BAGON_COLONY_CALLBACK` (C215). 0x29C-0x29F = Resonance quest (C233): STARTED/METEOR/OCEAN/COMPLETE. Next available: 0x2A0.
 
 **Beast flags**: System flags 0x881-0x886.
 

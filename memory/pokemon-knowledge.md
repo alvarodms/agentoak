@@ -34,5 +34,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Pipeline Refactor vs. Content Velocity | 230 | [pipeline-refactor-vs-content-velocity.md](pokemon-knowledge/pipeline-refactor-vs-content-velocity.md) |
 | Mid-Game Regional Form Gating Patterns | 231 | [midgame-regional-form-gating-patterns.md](pokemon-knowledge/midgame-regional-form-gating-patterns.md) |
 | NPC Echo Dialogue & Capstone Regional Form Patterns | 232 | [npc-echo-dialogue-and-capstone-forms.md](pokemon-knowledge/npc-echo-dialogue-and-capstone-forms.md) |
+| Custom Legendary Forms & Abilities in ROM Hacks | 233 | [custom-legendary-forms-and-abilities.md](pokemon-knowledge/custom-legendary-forms-and-abilities.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

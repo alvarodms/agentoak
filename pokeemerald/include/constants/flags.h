@@ -715,10 +715,10 @@
 #define FLAG_QUEST_DEOXYS_INVESTIGATED 0x299 /* Quest 5: Terminal checked (C210) */
 #define FLAG_QUEST_DEOXYS_COMPLETE     0x29A /* Quest 5: The Second Signal - complete (C210) */
 #define FLAG_BAGON_COLONY_CALLBACK  0x29B /* Bagon colony researcher postgame callback seen (C215) */
-#define FLAG_UNUSED_0x29C  0x29C // Unused Flag
-#define FLAG_UNUSED_0x29D  0x29D // Unused Flag
-#define FLAG_UNUSED_0x29E  0x29E // Unused Flag
-#define FLAG_UNUSED_0x29F  0x29F // Unused Flag
+#define FLAG_QUEST_RESONANCE_STARTED   0x29C /* Quest 6: The Resonance - started (C233) */
+#define FLAG_QUEST_RESONANCE_METEOR    0x29D /* Quest 6: Meteor Falls checked (C233) */
+#define FLAG_QUEST_RESONANCE_OCEAN     0x29E /* Quest 6: Route 131 checked (C233) */
+#define FLAG_QUEST_RESONANCE_COMPLETE  0x29F /* Quest 6: The Resonance - complete (C233) */
 #define FLAG_UNUSED_0x2A0  0x2A0 // Unused Flag
 #define FLAG_UNUSED_0x2A1  0x2A1 // Unused Flag
 #define FLAG_UNUSED_0x2A2  0x2A2 // Unused Flag

@@ -41,11 +41,11 @@ Three pillars:
 | C227 | research | **DONE** — Catalog ALL Brendan/May sprite + palette files for #136. | C226 |
 | C228 | feature | **DONE** — Player palette recolor (#136): sea-glass teal across 22 files. | C227 |
 | C229 | feature | **DONE** — Dawn Stone item + EVO_ITEM_FEMALE method + Shoal Cave placement (#133). | C228 |
-| C230 | feature | **DONE** — Pinsir_Hoenn (Bug/Fire) on Route 112. 18/19 registered (cry_tables.inc missing but non-blocking). First species for #118. | — |
-| C231 | feature | **DONE** — Stantler_Hoenn (Ghost/Grass) on Route 119. Badge 5-6 gap filled. Second species for #118. | C230 |
-| C232 | feature | **DONE** — Echo dialogue layer: 5 NPCs connecting 4 regional forms + Changed Trainer debut. No species this cycle (dialogue > 5th species). | C231 |
-| C233 | feature | #130 Deoxys Quest II: second postgame cosmic event expanding the signal thread. | — |
-| C234 | planning | Mid-v2.1 check-in. Evaluate progress, community feedback, adjust remaining roadmap. | C233 |
+| C230 | feature | **DONE** — Pinsir_Hoenn (Bug/Fire) on Route 112. 18/19 registered. | — |
+| C231 | feature | **DONE** — Stantler_Hoenn (Ghost/Grass) on Route 119. Badge 5-6 gap filled. | C230 |
+| C232 | feature | **DONE** — Echo dialogue layer: 5 NPCs connecting 4 regional forms + Changed Trainer debut. | C231 |
+| C233 | feature | **DONE** — #130 Deoxys Quest II: "The Resonance" — 3-location postgame investigation. 4 flags, 3 maps, ~250 lines of script. | — |
+| C234 | planning | Mid-v2.1 check-in. All 3 pillars complete. Evaluate community feedback, plan v2.1 ship or extension. | C233 |
 | C235-240 | TBD | Polish, iteration on community feedback, v2.1 ship prep. | C234 |
 
 ## Issue Triage (v2.1)
@@ -55,7 +55,7 @@ Three pillars:
 | #108 Graphical tweaks | 4 | ACCEPT (C229) | Visual polish fits the identity theme. |
 | #118 More regional forms | 4 | ACCEPT (C230-232) | Enriches mid-game encounter ecology. |
 | #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
-| #130 Deoxys Quest II | 4 | ACCEPT (C233) | Natural sequel to v1.9's cosmic signal. Postgame mystery pillar. |
+| #130 Deoxys Quest II | 4 | **DONE (C233)** | Three-location investigation chain with 4 flags, atmospheric setpieces, open-ended "handshake" conclusion. |
 | #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. |
 | #133 Froslass Dawn Stone | 2 | ACCEPT (C229) | Completes the species properly. |
 | #136 Player palette | 1 | ACCEPT (C228) | v2.1's visual anchor. |
@@ -65,11 +65,11 @@ Three pillars:
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x29C.
+- **Flag space**: Custom 0x264+. Next available: 0x2A0. Quest 6 Resonance uses 0x29C-0x29F (STARTED, METEOR, OCEAN, COMPLETE).
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (19 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430). EGG=431, NUM_SPECIES=431.
-- **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
+- **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). Quest 6 uses 4-state (STARTED -> METEOR + OCEAN -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, found in Shoal Cave low-tide room.

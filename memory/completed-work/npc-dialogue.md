@@ -74,3 +74,15 @@ Cross-referencing NPC dialogue connecting all 4 regional forms (Vulpix_Hoenn, Pi
 | `data/maps/Route119_WeatherInstitute_1F/scripts.inc` | **232** | MODIFIED: Dr. Hartley gains badge-gated (FLAG_BADGE05_GET) post-migration dialogue referencing 3 regional forms + "transformation" thesis |
 | `data/maps/FortreeCity/scripts.inc` | **232** | NEW: ChangedTrainer — notices player's cyan palette, "HOENN changes everyone who walks through it. Not just POKéMON." |
 | `data/maps/FortreeCity/map.json` | **232** | Added OBJ_EVENT_GFX_WOMAN_2 at (34,5) elev 4, MOVEMENT_TYPE_FACE_LEFT |
+
+## Quest 6: The Resonance (C233)
+
+Deoxys Quest II — Three-location postgame investigation. Scientist dialogue, terminal readouts, Meteor Falls meteorite, Route 131 ocean vision.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `include/constants/flags.h` | **233** | FLAGS 0x29C-0x29F: RESONANCE_STARTED, RESONANCE_METEOR, RESONANCE_OCEAN, RESONANCE_COMPLETE |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233** | Scientist: Resonance offer/progress/completion/post-complete branches + terminal Resonance readouts. Camera shake on completion. Star Piece ×2 reward. |
+| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **233** | NEW: Meteorite bg_event investigation — camera shake, rhythmic glow text, 3 states (inert/active/done) |
+| `data/maps/MeteorFalls_B1F_2R/map.json` | **233** | Added bg_event "sign" at (3,5), BG_EVENT_PLAYER_FACING_ANY |
+| `data/maps/Route131/scripts.inc` | **233** | MODIFIED: ShimmerSpotTrigger gains Resonance branches. NEW: Ocean vision sequence — fadescreen effect, alien luminescence text |

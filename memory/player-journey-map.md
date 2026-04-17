@@ -45,6 +45,8 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 **v1.9 "The Second Signal"**: Mossdeep terminal → Deoxys Lv70. Postgame shifts from resolution to new mystery.
 
+**v2.1 "The Resonance" (C233)**: After Deoxys, terminal begins SENDING a signal to Meteor Falls + Route 131. Player investigates both: pulsing meteorites underground, alien luminescence beneath the waves. Returns to learn: "This isn't a message. It's a handshake." Cosmic thread left open — something knows Hoenn answered. Star Piece ×2 reward.
+
 **"The Exhale" (C205)**: 6 ocean NPCs resolve from dread. R126 fog thins. "I think HOENN just exhaled."
 
 **Bagon Colony resolution (C209/C215)**: Researcher reports physical changes → Bagon_Hoenn encounter Meteor Falls B1F_2R.

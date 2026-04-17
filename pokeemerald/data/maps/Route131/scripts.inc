@@ -90,6 +90,10 @@ Route131_Text_LoneSwimmerResolved:
 
 Route131_EventScript_ShimmerSpotTrigger::
 	lock
+	@ Quest 6: Resonance ocean investigation
+	goto_if_set FLAG_QUEST_RESONANCE_OCEAN, Route131_EventScript_ShimmerResonanceDone
+	goto_if_set FLAG_QUEST_RESONANCE_STARTED, Route131_EventScript_ResonanceOcean
+	@ Quest 3: Mossdeep Signal shimmer
 	goto_if_set FLAG_QUEST_MOSSDEEP_INVESTIGATED, Route131_EventScript_ShimmerSpotDone
 	goto_if_set FLAG_QUEST_MOSSDEEP_STARTED, Route131_EventScript_ShimmerSequence
 	release
@@ -146,4 +150,41 @@ Route131_Text_Shimmer_Beat3:
 	.string "even briefly.\p"
 	.string "The researcher in MOSSDEEP\n"
 	.string "will want to hear about this.$"
+
+@ =============================================
+@ Quest 6: The Resonance — Ocean Investigation (C233)
+@ =============================================
+
+Route131_EventScript_ShimmerResonanceDone::
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route131_EventScript_ResonanceOcean::
+	fadescreen FADE_TO_BLACK
+	delay 40
+	msgbox Route131_Text_ResonanceOceanVision1, MSGBOX_DEFAULT
+	delay 20
+	fadescreen FADE_FROM_BLACK
+	delay 20
+	msgbox Route131_Text_ResonanceOceanVision2, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_RESONANCE_OCEAN
+	setvar VAR_TEMP_1, 1
+	release
+	end
+
+Route131_Text_ResonanceOceanVision1:
+	.string "The air shimmers, but this time\n"
+	.string "the distortion comes from below.\p"
+	.string "The ocean glows with a faint,\n"
+	.string "alien luminescence.\p"
+	.string "For an instant, you see\n"
+	.string "something beneath the waves --\l"
+	.string "vast and still.$"
+
+Route131_Text_ResonanceOceanVision2:
+	.string "The vision fades as quickly\n"
+	.string "as it appeared.\p"
+	.string "Only the warmth of the water\n"
+	.string "remains.$"
 

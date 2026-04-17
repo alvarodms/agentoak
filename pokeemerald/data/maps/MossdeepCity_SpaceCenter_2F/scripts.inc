@@ -94,8 +94,11 @@ MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated:
 MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	lock
 	faceplayer
-	@ Deoxys quest states (highest priority -- postgame)
-	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysQuestDone
+	@ Quest 6: The Resonance states (highest priority -- post-Deoxys)
+	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostComplete
+	goto_if_set FLAG_QUEST_RESONANCE_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceCheck
+	@ Quest 5 / Quest 6 offer
+	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceOffer
 	goto_if_set FLAG_QUEST_DEOXYS_INVESTIGATED, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysRetry
 	goto_if_set FLAG_QUEST_DEOXYS_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_DeoxysGoCheck
 	@ v1.8 Quest states
@@ -656,6 +659,8 @@ MossdeepCity_SpaceCenter_2F_EventScript_DeoxysGoCheck::
 @ --- Terminal bg_event script ---
 
 MossdeepCity_SpaceCenter_2F_Script_DeoxysTerminal::
+	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceDone
+	goto_if_set FLAG_QUEST_RESONANCE_STARTED, MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceActive
 	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalQuiet
 	goto_if_set FLAG_QUEST_DEOXYS_INVESTIGATED, MossdeepCity_SpaceCenter_2F_Script_DeoxysRetryEncounter
 	goto_if_set FLAG_QUEST_DEOXYS_STARTED, MossdeepCity_SpaceCenter_2F_Script_DeoxysInvestigate
@@ -838,3 +843,144 @@ MossdeepCity_SpaceCenter_2F_Text_TerminalFlicker:
 MossdeepCity_SpaceCenter_2F_Text_DeoxysReappears:
 	.string "The cold returns.\p"
 	.string "It's here again...$"
+
+@ =============================================
+@ Quest 6: The Resonance (C233)
+@ Post-Deoxys investigation -- requires Quest 5 complete
+@ =============================================
+
+@ --- Scientist NPC branches ---
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResonanceOffer::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonanceOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_RESONANCE_STARTED
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResonanceCheck::
+	goto_if_unset FLAG_QUEST_RESONANCE_METEOR, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceProgress
+	goto_if_unset FLAG_QUEST_RESONANCE_OCEAN, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceProgress
+	goto MossdeepCity_SpaceCenter_2F_EventScript_ResonanceComplete
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResonanceProgress::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonanceProgress, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResonanceComplete::
+	playse SE_PIN
+	waitse
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete1, MSGBOX_DEFAULT
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 4
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete2, MSGBOX_DEFAULT
+	giveitem ITEM_STAR_PIECE, 2
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_QUEST_RESONANCE_COMPLETE
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete3, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostComplete::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonancePostComplete, MSGBOX_DEFAULT
+	release
+	end
+
+@ --- Terminal bg_event branches ---
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceActive::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceActive, MSGBOX_SIGN
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceDone::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceDone, MSGBOX_SIGN
+	end
+
+@ --- Quest 6 text strings ---
+
+MossdeepCity_SpaceCenter_2F_Text_ResonanceOffer:
+	.string "CHAMPION! Thank goodness\n"
+	.string "you're here.\p"
+	.string "After your encounter, the\n"
+	.string "terminal stopped. We thought\l"
+	.string "it was over.\p"
+	.string "But now it's doing something\n"
+	.string "new. It isn't receiving a\l"
+	.string "signal -- it's SENDING one.\p"
+	.string "We can't shut it off. The\n"
+	.string "broadcast points at two sites\l"
+	.string "inside HOENN.\p"
+	.string "METEOR FALLS, deep underground.\n"
+	.string "And ROUTE 131 -- where you\l"
+	.string "found the shimmer.\p"
+	.string "Please investigate both sites.\n"
+	.string "I fear this isn't over.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResonanceProgress:
+	.string "Have you checked both sites?\p"
+	.string "METEOR FALLS and ROUTE 131.\n"
+	.string "The signal won't stop until\l"
+	.string "we understand what it wants.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete1:
+	.string "You investigated both sites?\n"
+	.string "Tell me everything.\p"
+	.string "Glowing meteorites in\n"
+	.string "METEOR FALLS. Luminescence\l"
+	.string "beneath ROUTE 131.\p"
+	.string "...It's as I feared.\p"
+	.string "The two sites are resonating\n"
+	.string "with each other. Your encounter\l"
+	.string "didn't just bring a visitor.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete2:
+	.string "It opened a connection.\n"
+	.string "A bridge between HOENN and\l"
+	.string "whatever is out there.\p"
+	.string "I shut the terminal down.\n"
+	.string "But the resonance continues\l"
+	.string "without it.\p"
+	.string "CHAMPION, I've studied signals\n"
+	.string "my whole career.\p"
+	.string "This isn't a message.\n"
+	.string "It's a handshake.\p"
+	.string "Something out there knows\n"
+	.string "we answered.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResonanceComplete3:
+	.string "Take these. We found them\n"
+	.string "embedded in the terminal casing\l"
+	.string "after it went silent.\p"
+	.string "Whatever comes next...\n"
+	.string "HOENN will need its CHAMPION.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResonancePostComplete:
+	.string "The terminal is quiet now.\n"
+	.string "But METEOR FALLS and ROUTE 131\l"
+	.string "still resonate.\p"
+	.string "Whatever connection opened,\n"
+	.string "it hasn't closed.\l"
+	.string "It's just... waiting.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceActive:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "MODE: BROADCAST\n"
+	.string "TARGET 1: METEOR FALLS\l"
+	.string "TARGET 2: ROUTE 131\p"
+	.string "STATUS: TRANSMITTING\n"
+	.string "CANNOT OVERRIDE.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceDone:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "MODE: IDLE\n"
+	.string "BROADCAST TERMINATED\p"
+	.string "RESIDUAL RESONANCE:\n"
+	.string "DETECTED AT 2 SITES\l"
+	.string "STATUS: PERSISTENT$"
