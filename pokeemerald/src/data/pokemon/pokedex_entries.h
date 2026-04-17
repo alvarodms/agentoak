@@ -4836,6 +4836,18 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+    [NATIONAL_DEX_STANTLER_HOENN] =
+    {
+        .categoryName = _("Spirit Deer"),
+        .height = 14,
+        .weight = 712,
+        .description = gStantlerHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 2,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
     [NATIONAL_DEX_FROSLASS] =
     {
         .categoryName = _("Snow Land"),

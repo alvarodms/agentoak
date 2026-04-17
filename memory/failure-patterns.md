@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230, 231) — RECURRING
 
-**Symptom**: 90-120 actions spent on reads before first edit. C230: first edit at action 105/227 (46% research) — Agent subagent with wrong paths (/root/ instead of /__w/) wasted ~10 actions, plus 8 "file not read" errors on graphics tables.
-**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) Use `grep -n` to find anchor patterns in ONE pass. (4) NEVER use Agent subagent for simple file searches — use Grep directly. (5) Always use `/__w/agentoak/agentoak/` prefix for absolute paths. (6) Avoid parallel Bash calls that get cancelled — run species checks sequentially. (7) ALWAYS Read a file before Edit — batch-reading all 8 graphics tables before editing saves 8 wasted actions.
+**Symptom**: 90-132 actions spent on reads before first edit. C231: first edit at action 133/191 (70% research) — worst ratio yet. Agent subagent used twice (actions 4, 8), path errors at actions 5-6 (/w/ instead of /__w/), and ~40 redundant greps for patterns already found.
+**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) Use `grep -n` to find anchor patterns in ONE pass. (4) NEVER use Agent subagent for simple file searches — use Grep directly. (5) Always use `/__w/agentoak/agentoak/` prefix for absolute paths. (6) Avoid parallel Bash calls that get cancelled — run species checks sequentially. (7) ALWAYS Read a file before Edit — batch-reading all 8 graphics tables before editing saves 8 wasted actions. (8) After finding the pattern for ONE existing species (e.g. Pinsir_Hoenn), DON'T grep for the same pattern in 20+ more files — the species pipeline is well-understood after 19 species.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -40,11 +40,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: `fetch_pokemon_sprites` downloaded Farigiraf sprites as RGBA (color type 6) instead of indexed 16-color (color type 3) required by GBA build.
 **Resolution**: Use Node.js + pngjs to convert RGBA→indexed PNG. No Python/Pillow in CI. Extract palette from existing working sprite (e.g., Lucario), map colors to palette indices.
-
-## All 17 Custom Species Had Registration Gaps (C220-C223) — RESOLVED
-
-**Symptom**: `make check_species` revealed registration gaps across all custom species.
-**Resolution**: C223 used `complete_species_registration.cjs` to batch-fill all remaining gaps. All 17 species now at 19/19.
 
 ## Anticipated Pitfalls
 

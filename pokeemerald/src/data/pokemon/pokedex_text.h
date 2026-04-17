@@ -2426,6 +2426,13 @@ const u8 gPinsirHoennPokedexText[] = _(
     "red-hot and can slice through\n"
     "cooled lava.");
 
+const u8 gStantlerHoennPokedexText[] = _(
+    "STANTLER that migrated to HOENN's\n"
+    "deep rain forests gradually merged\n"
+    "with the ancient canopy. Their\n"
+    "antlers sprouted living vines, and\n"
+    "their bodies became semi-spectral.");
+
 const u8 gFroslassPokedexText[] = _(
     "A spirit born when a SNORUNT was exposed\n"
     "to intense cold in SHOAL CAVE. It adorns\n"

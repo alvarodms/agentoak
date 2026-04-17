@@ -32,5 +32,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Player Sprite & Palette Manifest — Complete File List | 227 | [player-sprite-manifest.md](pokemon-knowledge/player-sprite-manifest.md) |
 | Community Ambition & Polish Feedback Patterns | 229 | [community-ambition-feedback-patterns.md](pokemon-knowledge/community-ambition-feedback-patterns.md) |
 | Pipeline Refactor vs. Content Velocity | 230 | [pipeline-refactor-vs-content-velocity.md](pokemon-knowledge/pipeline-refactor-vs-content-velocity.md) |
+| Mid-Game Regional Form Gating Patterns | 231 | [midgame-regional-form-gating-patterns.md](pokemon-knowledge/midgame-regional-form-gating-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

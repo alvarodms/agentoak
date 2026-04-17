@@ -56,6 +56,7 @@
 - **Aurora shiny recipe** (Vulpix/Ninetales_Hoenn): Body → aurora green (105-192,170-232,138-198), belly → rose pink (198-245,160-228,188-238), shadows → deep teal/purple (32-82,40-105,55-108). Eye → bright aurora green.
 - **Cave stone dragon** (Bagon_Hoenn): Stony grey-brown body (82-175,68-158,52-130), light stone head armor (98-178,90-165,78-145), dull amber underbelly (158-198,128-168,78-108), rust-red mineral accents (115-150,55-72,38-48). Shiny: obsidian body (52-118,48-112,42-100) + bright gold belly (185-228,155-195,62-88), amber accents (85-178,52-98,38-42).
 - **Volcanic beetle** (Pinsir_Hoenn): Deep crimson body (55-210,18-70,15-40), amber heat-glow pincers (120-255,40-200,8-80) with bright yellow tips. Warm cream highlights (255,240,200). Shiny: obsidian body (25-95,22-88,20-78) + blue-white cooling pincers (30-210,55-235,85-255).
+- **Forest spirit deer** (Stantler_Hoenn): Mossy green body (27-88,64-140,38-95), spectral teal antlers (78,205,196)/(136,216,176), bright emerald eyes (50,235,130)/(90,255,160) — brightest element. Sage belly (106-128,148-168,102-118). Leaf pixel accents (1-2px) at antler edges + ghostly emanation wisps at hoof bases. Shiny: twilight purple body (42-115,30-95,55-128) + rose-pink vines (220-230,130-160,170-185), golden-amber eyes (255,200,60).
 
 ## Reusable Scripts
 

@@ -12,3 +12,4 @@
 | Ninetales Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Bagon Hoenn | Dragon/Rock | v1 | 215 | — | new |
 | Pinsir Hoenn | Bug/Fire | v1 | 230 | — | new |
+| Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |

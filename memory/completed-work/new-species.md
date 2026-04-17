@@ -36,6 +36,23 @@ Six species across ~29 source files each. Collapsed — see git history for deta
 | Mamoswine | 424 | Ice/Ground | 530 | Piloswine (Lv44) | Glacia all tiers |
 | Farigiraf | 428 | Normal/Psychic | — | Girafarig (Lv32) | Tate & Liza all tiers |
 
+## C231: Stantler_Hoenn (Ghost/Grass) — Badge 5-6 Regional Form
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Stantler_Hoenn | 430 | Ghost/Grass | 465 | Route 119 4% Lv26-28 |
+
+Stats: 73/65/72/95/80/80. Abilities: Intimidate / Natural Cure. Growth: Slow.
+Learnset: Tackle, Leer, Astonish, Leech Seed, Mega Drain, Confuse Ray, Hypnosis, Shadow Ball, Giga Drain, Will-O-Wisp, Calm Mind, Dream Eater, Destiny Bond.
+TMs: 22 (includes Calm Mind, Shadow Ball, Giga Drain, SolarBeam, Psychic).
+Egg moves: Disable, Spite, Curse, Psych Up.
+Cry: Mapped to base Stantler via cry_ids.h.
+Sprites: Custom forest spirit recolor by Sprite Designer (mossy green body, spectral teal antlers).
+
+Files modified: Same 19+7+1 pattern as Pinsir_Hoenn (all tables, graphics, encounter).
+
+---
+
 ## C230: Pinsir_Hoenn (Bug/Fire) — First Mid-Game Regional Form
 
 | Species | ID | Type | BST | Encounter |

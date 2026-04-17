@@ -3588,9 +3588,9 @@
                 "species": "SPECIES_BELLSPROUT"
               },
               {
-                "min_level": 27,
-                "max_level": 29,
-                "species": "SPECIES_NATU"
+                "min_level": 26,
+                "max_level": 28,
+                "species": "SPECIES_STANTLER_HOENN"
               },
               {
                 "min_level": 28,
