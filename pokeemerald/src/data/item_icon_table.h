@@ -111,7 +111,7 @@ const u32 *const gItemIconTable[ITEMS_COUNT + 1][2] =
     [ITEM_WATER_STONE] = {gItemIcon_WaterStone, gItemIconPalette_WaterStone},
     [ITEM_LEAF_STONE] = {gItemIcon_LeafStone, gItemIconPalette_LeafStone},
     // ????????
-    [ITEM_063] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
+    [ITEM_DAWN_STONE] = {gItemIcon_MoonStone, gItemIconPalette_MoonStone},
     [ITEM_064] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
     [ITEM_065] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},
     [ITEM_066] = {gItemIcon_QuestionMark, gItemIconPalette_QuestionMark},

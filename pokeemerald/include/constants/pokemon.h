@@ -252,6 +252,7 @@
 #define EVO_LEVEL_SHEDINJA   14 // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           15 // Pokémon levels up with beauty ≥ specified value
 #define EVO_LEVEL_FEMALE     16 // Pokémon reaches the specified level and is female
+#define EVO_ITEM_FEMALE      17 // Specified item is used on Pokémon and Pokémon is female
 
 #define EVOS_PER_MON 5
 

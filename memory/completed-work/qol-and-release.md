@@ -26,6 +26,18 @@ Quality-of-life improvements and release artifacts.
 | `include/strings.h` | Added extern declarations for battle speed strings | 105 | |
 | `graphics_file_rules.mk` | Added move_categories to sprite sheet concatenation | 75 | physical/special/status appended after contest types |
 | `src/data/pokemon/evolution.h` | All 11 trade evolutions removed — 4 pure-trade→EVO_LEVEL 37, 7 trade-item→EVO_ITEM | 158 | Kadabra, Machoke, Graveler, Haunter→level 37; Politoed, Slowking, Steelix, Kingdra, Scizor, Porygon2, Huntail, Gorebyss→item-based |
+| `include/constants/items.h` | ITEM_DAWN_STONE = 99 (slot 0x063) | 229 | New evolution stone item |
+| `src/data/text/item_descriptions.h` | sDawnStoneDesc added | 229 | |
+| `src/data/items.h` | Dawn Stone item data entry | 229 | Price 2100, POCKET_ITEMS, ItemUseOutOfBattle_EvolutionStone |
+| `src/data/pokemon/item_effects.h` | gItemEffect_DawnStone + table entry | 229 | ITEM4_EVO_STONE |
+| `src/data/item_icon_table.h` | Dawn Stone icon (reuses Moon Stone) | 229 | |
+| `include/constants/pokemon.h` | EVO_ITEM_FEMALE = 17 | 229 | Item-use evolution gated by female gender |
+| `src/pokemon.c` | EVO_ITEM_FEMALE handler in GetEvolutionTargetSpecies | 229 | Checks item match + female gender |
+| `src/data/pokemon/evolution.h` | Snorunt→Froslass: EVO_LEVEL_FEMALE→EVO_ITEM_FEMALE + ITEM_DAWN_STONE | 229 | Canonical Dawn Stone evolution |
+| `include/constants/flags.h` | FLAG_ITEM_SHOAL_CAVE_ICE_ROOM_DAWN_STONE = 0x468 | 229 | Repurposed unused flag |
+| `data/maps/ShoalCave_LowTideIceRoom/map.json` | Dawn Stone item ball at (9,14) | 229 | Third object_event in Ice Room |
+| `data/scripts/item_ball_scripts.inc` | ShoalCave_LowTideIceRoom_EventScript_ItemDawnStone | 229 | finditem ITEM_DAWN_STONE |
+| `scripts/check_evolution_consistency.sh` | Check 5b: EVO_ITEM_FEMALE validation | 229 | Validates target species + item constants |
 
 ## Release
 

@@ -7,4 +7,4 @@ Deferred community issues for future consideration.
 - #128: Add a new character (deferred: cycle 224) | deferrals: 4
 - #130: Deoxys Quest II (deferred: cycle 224) | deferrals: 4
 - #131: Unknown (deferred: cycle 226) | deferrals: 2 | pending: Bulkier sprite appearance
-- #133: Fix Froslass evolution method and gender rate | C223: gender ratio set to MON_FEMALE, EVO_LEVEL_FEMALE added (deferred: cycle 224) | deferrals: 2 | pending: Dawn Stone evolution method
+- #137: Feedback (deferred: cycle 229)

@@ -48,7 +48,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 **Custom species in species.h (17 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428). SPECIES_EGG=429, NUM_SPECIES=429.
 **Registration status (C223)**: All 17 species at 19/19. Species foundation complete.
 
-**Evolution methods**: Constants 1-16 in `include/constants/pokemon.h`. Custom addition: `EVO_LEVEL_FEMALE` (16) — level-up evolution gated by female gender. Handler in `GetEvolutionTargetSpecies()` uses `GetGenderFromSpeciesAndPersonality()`. Used for Snorunt→Froslass.
+**Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom additions: `EVO_LEVEL_FEMALE` (16) — level-up gated by female gender; `EVO_ITEM_FEMALE` (17) — item-use gated by female gender (C229). Both use `GetGenderFromSpeciesAndPersonality()` in `GetEvolutionTargetSpecies()`. Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
+
+**Dawn Stone item**: `ITEM_DAWN_STONE` = 99 (slot 0x063). Uses Moon Stone icon. Item effect: `gItemEffect_DawnStone` with `ITEM4_EVO_STONE`. Placed in Shoal Cave Ice Room (flag 0x468).
 
 ---
 

@@ -562,6 +562,10 @@ ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce::
 	finditem ITEM_NEVER_MELT_ICE
 	end
 
+ShoalCave_LowTideIceRoom_EventScript_ItemDawnStone::
+	finditem ITEM_DAWN_STONE
+	end
+
 SeafloorCavern_Room9_EventScript_ItemTMEarthquake::
 	finditem ITEM_TM_EARTHQUAKE
 	end

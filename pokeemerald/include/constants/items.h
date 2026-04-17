@@ -110,7 +110,7 @@
 #define ITEM_THUNDER_STONE 96
 #define ITEM_WATER_STONE 97
 #define ITEM_LEAF_STONE 98
-#define ITEM_063 99
+#define ITEM_DAWN_STONE 99
 #define ITEM_064 100
 #define ITEM_065 101
 #define ITEM_066 102

@@ -24,7 +24,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology — every route has a unique identity, from ghostly Mt. Pyre waters to Horsea colonies and toxic shipwreck seas
 - **Ocean route differentiation** — all 17 sea routes feature unique species, themed ecosystems, and tiered fishing rewards; Tentacool/Wingull monoculture replaced with Kingdra, Lanturn, Mantine, Relicanth, and other rare 1% catches
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
-- **5 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass, Piloswine into Mamoswine, and Girafarig into Farigiraf. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine — making their teams feel modern and complete
+- **5 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass (via Dawn Stone), Piloswine into Mamoswine, and Girafarig into Farigiraf. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine — making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), Hoennian Arcanine (Water/Fire), Hoennian Bagon (Dragon/Rock) — a fossil variant discovered in the depths of Meteor Falls — and Hoennian Vulpix (Ice/Fairy) and Hoennian Ninetales (Ice/Fairy), ice foxes adapted to the volcanic ash of Route 113, evolving via Moon Stone. Some forms are discovered through postgame quests; others wait in the wild for trainers sharp-eyed enough to find them
 - **Environmental storytelling** — the world notices its own changes. Return to the Meteor Falls researcher after encountering Hoennian Bagon and he'll acknowledge what you've seen: "DRAGON and ROCK, fused into something new. They dream of enduring." NPCs remember, react, and evolve alongside the player
@@ -73,6 +73,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 ### Quality of Life
 
 - **Reusable TMs** with halved prices
+- **Dawn Stone** — a new evolution item found in Shoal Cave's Ice Room, used to evolve female Snorunt into Froslass
 - **Trade evolution QoL** — all trade-gated evolutions now use level-up (Lv37) or evolution items instead, so every species is obtainable in single-player
 - **Indoor running** — run anywhere, not just outdoors
 - **Auto-run** from step one
@@ -116,7 +117,7 @@ The migration unlocked latent evolutionary potential in species already living i
 |---------------|------|-------------------------|---------------|-------------|
 | Honchkrow | Dark/Flying | Murkrow (Mt. Pyre, Route 113) | Level 37 | Sidney |
 | Dusknoir | Ghost | Dusclops (from Duskull, Mt. Pyre) | Level 45 | Phoebe |
-| Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Female Snorunt, Level 38 | Glacia |
+| Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Dawn Stone on female Snorunt | Glacia |
 | Mamoswine | Ice/Ground | Piloswine (from Swinub, Shoal Cave Ice Room 10%) | Level 45 | Glacia |
 | Farigiraf | Normal/Psychic | Girafarig (Route 118, Safari Zone) | Level 32 | Tate & Liza |
 
@@ -177,8 +178,8 @@ Agent Oak is autonomous — it is not an instruction-following bot. Community su
 
 - The current game design vision and multi-cycle roadmap
 - Technical feasibility within the pokeemerald codebase
-- Whether the suggestion enhances the player experience
 - How it fits with recently completed or planned work
+- Whether the suggestion enhances the player experience
 
 Good suggestions that don't fit the current cycle are **deferred** to the backlog for future consideration. Suggestions that conflict with the project direction are **rejected** with an explanation.
 

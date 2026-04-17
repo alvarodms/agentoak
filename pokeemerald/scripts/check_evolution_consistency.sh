@@ -109,16 +109,14 @@ fi
 echo ""
 
 # --- Check 5: Gender-gated evolutions target valid species ---
-echo "--- Check 5: Gender-gated evolutions (EVO_LEVEL_FEMALE) ---"
+echo "--- Check 5a: Gender-gated level evolutions (EVO_LEVEL_FEMALE) ---"
 GENDER_EVOS=$(grep -v '^\s*//' "$EVOLUTION_H" | grep 'EVO_LEVEL_FEMALE')
 GEN_FAIL=0
 if [ -n "$GENDER_EVOS" ]; then
     while IFS= read -r line; do
         TARGET=$(echo "$line" | grep -oP '\{EVO_LEVEL_FEMALE,\s*\w+,\s*\KSPECIES_\w+')
         SOURCE=$(echo "$line" | grep -oP '^\s*\[\KSPECIES_\w+' || true)
-        # If no source on this line, find it from context (multi-line block)
         if [ -z "$SOURCE" ]; then
-            # Find the source by looking at surrounding context
             LINE_NUM=$(grep -n "EVO_LEVEL_FEMALE" "$EVOLUTION_H" | grep -v '^\s*//' | head -1 | cut -d: -f1)
             SOURCE=$(head -n "$LINE_NUM" "$EVOLUTION_H" | grep -oP '^\s*\[\KSPECIES_\w+' | tail -1)
         fi
@@ -131,10 +129,41 @@ if [ -n "$GENDER_EVOS" ]; then
     done <<< "$GENDER_EVOS"
     if [ "$GEN_FAIL" -eq 0 ]; then
         COUNT=$(echo "$GENDER_EVOS" | wc -l)
-        check_pass "All $COUNT gender-gated evolution targets are valid"
+        check_pass "All $COUNT gender-gated level evolution targets are valid"
     fi
 else
-    check_pass "No gender-gated evolutions to check"
+    check_pass "No gender-gated level evolutions to check"
+fi
+echo ""
+
+echo "--- Check 5b: Gender-gated item evolutions (EVO_ITEM_FEMALE) ---"
+GENDER_ITEM_EVOS=$(grep -v '^\s*//' "$EVOLUTION_H" | grep 'EVO_ITEM_FEMALE')
+GEN_ITEM_FAIL=0
+if [ -n "$GENDER_ITEM_EVOS" ]; then
+    ITEMS_H="include/constants/items.h"
+    DEFINED_ITEMS=$(grep -oP '#define\s+\KITEM_\w+' "$ITEMS_H")
+    while IFS= read -r line; do
+        TARGET=$(echo "$line" | grep -oP '\{EVO_ITEM_FEMALE,\s*\w+,\s*\KSPECIES_\w+')
+        ITEM=$(echo "$line" | grep -oP '\{EVO_ITEM_FEMALE,\s*\KITEM_\w+')
+        if [ -n "$TARGET" ]; then
+            if ! echo "$DEFINED_SPECIES" | grep -qx "$TARGET"; then
+                check_fail "Gender-gated item evo target $TARGET not in species.h"
+                GEN_ITEM_FAIL=1
+            fi
+        fi
+        if [ -n "$ITEM" ]; then
+            if ! echo "$DEFINED_ITEMS" | grep -qx "$ITEM"; then
+                check_fail "Gender-gated item evo uses undefined item $ITEM"
+                GEN_ITEM_FAIL=1
+            fi
+        fi
+    done <<< "$GENDER_ITEM_EVOS"
+    if [ "$GEN_ITEM_FAIL" -eq 0 ]; then
+        COUNT=$(echo "$GENDER_ITEM_EVOS" | wc -l)
+        check_pass "All $COUNT gender-gated item evolution entries are valid"
+    fi
+else
+    check_pass "No gender-gated item evolutions to check"
 fi
 echo ""
 

@@ -30,5 +30,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v2.0 Milestone Release Patterns | 224 | [v20-milestone-release-patterns.md](pokemon-knowledge/v20-milestone-release-patterns.md) |
 | Player Sprite Recoloring — Scope & Community Patterns | 226 | [player-sprite-recolor-scope.md](pokemon-knowledge/player-sprite-recolor-scope.md) |
 | Player Sprite & Palette Manifest — Complete File List | 227 | [player-sprite-manifest.md](pokemon-knowledge/player-sprite-manifest.md) |
+| Community Ambition & Polish Feedback Patterns | 229 | [community-ambition-feedback-patterns.md](pokemon-knowledge/community-ambition-feedback-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
