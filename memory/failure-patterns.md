@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230) — RECURRING
 
-**Symptom**: 90-120 actions spent on reads before first edit. C223: ~56 actions before first productive edit, though gap-filler then completed all species in 3 actions. MCP sprite tool needed manual PNG conversion (RGBA→indexed).
-**Resolution**: For species registration: (1) Run `make check_species 2>&1` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) Use `grep -n` to find anchor patterns in ONE pass. (4) NEVER use Agent subagent for simple file searches — use Grep directly. (5) Always use `/__w/agentoak/agentoak/` prefix for absolute paths. (6) Avoid parallel Bash calls that get cancelled — run species checks sequentially.
+**Symptom**: 90-120 actions spent on reads before first edit. C230: first edit at action 105/227 (46% research) — Agent subagent with wrong paths (/root/ instead of /__w/) wasted ~10 actions, plus 8 "file not read" errors on graphics tables.
+**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) Use `grep -n` to find anchor patterns in ONE pass. (4) NEVER use Agent subagent for simple file searches — use Grep directly. (5) Always use `/__w/agentoak/agentoak/` prefix for absolute paths. (6) Avoid parallel Bash calls that get cancelled — run species checks sequentially. (7) ALWAYS Read a file before Edit — batch-reading all 8 graphics tables before editing saves 8 wasted actions.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

@@ -5851,6 +5851,20 @@ static const u16 sFarigirafLevelUpLearnset[] = {
     LEVEL_UP_END
 };
 
+static const u16 sPinsirHoennLevelUpLearnset[] = {
+    LEVEL_UP_MOVE( 1, MOVE_FOCUS_ENERGY),
+    LEVEL_UP_MOVE( 1, MOVE_VICE_GRIP),
+    LEVEL_UP_MOVE( 7, MOVE_EMBER),
+    LEVEL_UP_MOVE(13, MOVE_FURY_CUTTER),
+    LEVEL_UP_MOVE(17, MOVE_HARDEN),
+    LEVEL_UP_MOVE(21, MOVE_FLAME_WHEEL),
+    LEVEL_UP_MOVE(27, MOVE_X_SCISSOR),
+    LEVEL_UP_MOVE(33, MOVE_GUILLOTINE),
+    LEVEL_UP_MOVE(39, MOVE_FIRE_PUNCH),
+    LEVEL_UP_MOVE(49, MOVE_SWORDS_DANCE),
+    LEVEL_UP_END
+};
+
 static const u16 sFroslassLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_POWDER_SNOW),
     LEVEL_UP_MOVE( 1, MOVE_LEER),

@@ -4928,6 +4928,14 @@ static const union AnimCmd sAnim_Farigiraf_1[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sAnim_PinsirHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd sAnim_Froslass_1[] =
 {
     ANIMCMD_FRAME(0, 20),
@@ -5373,6 +5381,7 @@ SINGLE_ANIMATION(BagonHoenn);
 SINGLE_ANIMATION(VulpixHoenn);
 SINGLE_ANIMATION(NinetalesHoenn);
 SINGLE_ANIMATION(Farigiraf);
+SINGLE_ANIMATION(PinsirHoenn);
 SINGLE_ANIMATION(Froslass);
 SINGLE_ANIMATION(Mamoswine);
 SINGLE_ANIMATION(Egg);
@@ -5835,6 +5844,7 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [SPECIES_VULPIX_HOENN] = sAnims_VulpixHoenn,
     [SPECIES_NINETALES_HOENN] = sAnims_NinetalesHoenn,
     [SPECIES_FARIGIRAF] = sAnims_Farigiraf,
+    [SPECIES_PINSIR_HOENN] = sAnims_PinsirHoenn,
     [SPECIES_FROSLASS] = sAnims_Froslass,
     [SPECIES_MAMOSWINE] = sAnims_Mamoswine,
     [SPECIES_EGG]         = sAnims_Egg,

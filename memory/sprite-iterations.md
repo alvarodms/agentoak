@@ -11,3 +11,4 @@
 | Vulpix Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Ninetales Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Bagon Hoenn | Dragon/Rock | v1 | 215 | — | new |
+| Pinsir Hoenn | Bug/Fire | v1 | 230 | — | new |

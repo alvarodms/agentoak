@@ -36,6 +36,33 @@ Six species across ~29 source files each. Collapsed — see git history for deta
 | Mamoswine | 424 | Ice/Ground | 530 | Piloswine (Lv44) | Glacia all tiers |
 | Farigiraf | 428 | Normal/Psychic | — | Girafarig (Lv32) | Tate & Liza all tiers |
 
+## C230: Pinsir_Hoenn (Bug/Fire) — First Mid-Game Regional Form
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Pinsir_Hoenn | 429 | Bug/Fire | 500 | Route 112 5% Lv21-22 |
+
+Stats: 65/120/90/70/70/85. Abilities: Hyper Cutter / Flame Body. Growth: Slow.
+Learnset: Focus Energy, Vice Grip, Ember, Fury Cutter, Harden, Flame Wheel, X-Scissor, Guillotine, Fire Punch, Swords Dance.
+TMs: 22 (includes Flamethrower, Fire Blast, Overheat, Earthquake, Sunny Day).
+Egg moves: Blaze Kick, False Swipe, Flail, Rock Slide.
+Cry: Mapped to base Pinsir via cry_ids.h.
+Sprites: Custom volcanic beetle recolor by Sprite Designer (crimson body, amber pincers).
+
+Files modified (19 source + 7 sprite + 1 encounter):
+- include/constants/species.h, pokedex.h
+- src/data/pokemon/species_info.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h
+- src/data/pokemon/level_up_learnsets.h, level_up_learnset_pointers.h, tmhm_learnsets.h
+- src/data/pokemon/egg_moves.h, evolution.h, cry_ids.h
+- include/graphics.h, src/data/graphics/pokemon.h, src/anim_mon_front_pics.c
+- src/data/pokemon_graphics/ (8 tables: front/back pic, palette, shiny, still, footprint, coords)
+- src/data/pokemon_graphics/front_pic_anims.h
+- src/pokemon_icon.c, src/pokemon.c
+- src/data/wild_encounters.json (Route 112 slot 8)
+- graphics/pokemon/pinsir_hoenn/ (7 sprite files)
+
+---
+
 ## C223: Species Foundation Complete
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).

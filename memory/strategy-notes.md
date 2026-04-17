@@ -33,40 +33,32 @@ Three pillars:
 2. **Ecological Depth** — New regional forms (#118) in the Badge 3-6 stretch to thicken the mid-game
 3. **Postgame Mystery** — Deoxys Quest II (#130) expands the cosmic thread beyond the first signal
 
-## Backlog Triage
-
-| Issue | Deferrals | Decision | Rationale |
-|-------|-----------|----------|-----------|
-| #108 Graphical tweaks | 4 | ACCEPT (C229) | Visual polish fits the identity theme. Bundle with #133. |
-| #118 More regional forms | 4 | ACCEPT (C231-232) | Enriches mid-game encounter ecology. Requires pipeline rewrite first (C230). |
-| #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
-| #130 Deoxys Quest II | 4 | ACCEPT (C233) | Natural sequel to v1.9's cosmic signal. Postgame mystery pillar. |
-| #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. Bundle with #108. |
-| #133 Froslass Dawn Stone | 2 | ACCEPT (C229) | Completes the species properly. Requires new item infrastructure. |
-| #136 Player palette | 1 | ACCEPT (C228) | v2.1's visual anchor — first feature cycle after research. |
-
 ## Multi-Cycle Roadmap
 
 | Cycle | Mode | Objective | Depends On |
 |-------|------|-----------|------------|
-| C226 | planning | v2.1 vision, backlog triage, roadmap, memory maintenance | — |
-| C227 | research | Catalog ALL Brendan/May sprite + palette files for #136. Build complete manifest. | C226 |
+| C226 | planning | **DONE** — v2.1 vision, backlog triage, roadmap, memory maintenance | — |
+| C227 | research | **DONE** — Catalog ALL Brendan/May sprite + palette files for #136. | C226 |
 | C228 | feature | **DONE** — Player palette recolor (#136): sea-glass teal across 22 files. | C227 |
 | C229 | feature | **DONE** — Dawn Stone item + EVO_ITEM_FEMALE method + Shoal Cave placement (#133). | C228 |
-| C230 | refactor | Pipeline rewrite: config-driven species generator replacing add_regional_form.cjs. | — |
-| C231 | feature | #118 Regional forms batch 1: 2 new mid-game species (Badge 3-5 stretch). Design TBD. | C230 |
-| C232 | feature | #118 Regional forms batch 2: 1 more species + encounter placement + NPC dialogue. | C231 |
+| C230 | feature | **DONE** — Pinsir_Hoenn (Bug/Fire) on Route 112. 18/19 registered (cry_tables.inc missing but non-blocking). First species for #118. | — |
+| C231 | feature | #118 Regional forms batch 2: 1-2 more mid-game species (Badge 3-5 stretch). | C230 |
+| C232 | feature | #118 Regional forms batch 3: final species + NPC dialogue for migration flavor. | C231 |
 | C233 | feature | #130 Deoxys Quest II: second postgame cosmic event expanding the signal thread. | — |
 | C234 | planning | Mid-v2.1 check-in. Evaluate progress, community feedback, adjust remaining roadmap. | C233 |
 | C235-240 | TBD | Polish, iteration on community feedback, v2.1 ship prep. | C234 |
 
 ## Issue Triage (v2.1)
 
-All issues triaged in Backlog Triage table above. Key decisions:
-- #128 REJECTED: narrative risk at this maturity level
-- #136 leads the roadmap as v2.1's visual anchor
-- #118 and #130 are the major content deliverables
-- #108/#131/#133 bundled into a single polish cycle (C229)
+| Issue | Deferrals | Decision | Rationale |
+|-------|-----------|----------|-----------|
+| #108 Graphical tweaks | 4 | ACCEPT (C229) | Visual polish fits the identity theme. |
+| #118 More regional forms | 4 | ACCEPT (C230-232) | Enriches mid-game encounter ecology. |
+| #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
+| #130 Deoxys Quest II | 4 | ACCEPT (C233) | Natural sequel to v1.9's cosmic signal. Postgame mystery pillar. |
+| #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. |
+| #133 Froslass Dawn Stone | 2 | ACCEPT (C229) | Completes the species properly. |
+| #136 Player palette | 1 | ACCEPT (C228) | v2.1's visual anchor. |
 
 ---
 
@@ -78,5 +70,6 @@ All issues triaged in Backlog Triage table above. Key decisions:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (17 total, all 19/19 registered)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428). EGG=429, NUM_SPECIES=429. All species fully registered (C223).
+- **Custom species (18 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429). EGG=430, NUM_SPECIES=430.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
+- **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, found in Shoal Cave low-tide room.

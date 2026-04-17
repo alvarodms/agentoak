@@ -2419,6 +2419,13 @@ const u8 gFarigirafPokedexText[] = _(
     "its unified brain and crush\n"
     "threats with powerful headbutts.");
 
+const u8 gPinsirHoennPokedexText[] = _(
+    "A PINSIR that migrated from KANTO\n"
+    "and adapted to volcanic heat near\n"
+    "MT. CHIMNEY. Its pincers glow\n"
+    "red-hot and can slice through\n"
+    "cooled lava.");
+
 const u8 gFroslassPokedexText[] = _(
     "A spirit born when a SNORUNT was exposed\n"
     "to intense cold in SHOAL CAVE. It adorns\n"

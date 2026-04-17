@@ -2819,6 +2819,13 @@ const u32 gMonShinyPalette_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/
 const u8 gMonIcon_Farigiraf[] = INCBIN_U8("graphics/pokemon/farigiraf/icon.4bpp");
 const u8 gMonFootprint_Farigiraf[] = INCBIN_U8("graphics/pokemon/farigiraf/footprint.1bpp");
 
+const u32 gMonStillFrontPic_PinsirHoenn[] = INCBIN_U32("graphics/pokemon/pinsir_hoenn/front.4bpp.lz");
+const u32 gMonPalette_PinsirHoenn[] = INCBIN_U32("graphics/pokemon/pinsir_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_PinsirHoenn[] = INCBIN_U32("graphics/pokemon/pinsir_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_PinsirHoenn[] = INCBIN_U32("graphics/pokemon/pinsir_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_PinsirHoenn[] = INCBIN_U8("graphics/pokemon/pinsir_hoenn/icon.4bpp");
+const u8 gMonFootprint_PinsirHoenn[] = INCBIN_U8("graphics/pokemon/pinsir_hoenn/footprint.1bpp");
+
 const u32 gMonStillFrontPic_Froslass[] = INCBIN_U32("graphics/pokemon/froslass/front.4bpp.lz");
 const u32 gMonPalette_Froslass[] = INCBIN_U32("graphics/pokemon/froslass/normal.gbapal.lz");
 const u32 gMonBackPic_Froslass[] = INCBIN_U32("graphics/pokemon/froslass/back.4bpp.lz");

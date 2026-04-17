@@ -12116,6 +12116,36 @@ const struct SpeciesInfo gSpeciesInfo[] =
         .noFlip = FALSE,
     },
 
+    [SPECIES_PINSIR_HOENN] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 120,
+        .baseDefense   = 90,
+        .baseSpeed     = 85,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 70,
+        .types = { TYPE_BUG, TYPE_FIRE },
+        .catchRate = 45,
+        .expYield = 200,
+        .evYield_HP        = 0,
+        .evYield_Attack    = 2,
+        .evYield_Defense   = 0,
+        .evYield_Speed     = 0,
+        .evYield_SpAttack  = 0,
+        .evYield_SpDefense = 0,
+        .itemCommon = ITEM_NONE,
+        .itemRare   = ITEM_NONE,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 25,
+        .friendship = 70,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = { EGG_GROUP_BUG, EGG_GROUP_BUG },
+        .abilities = {ABILITY_HYPER_CUTTER, ABILITY_FLAME_BODY},
+        .safariZoneFleeRate = 0,
+        .bodyColor = BODY_COLOR_RED,
+        .noFlip = FALSE,
+    },
+
     [SPECIES_FROSLASS] =
     {
         .baseHP        = 70,

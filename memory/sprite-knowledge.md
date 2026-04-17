@@ -55,6 +55,7 @@
 - **Bleached ghost coral** (Corsola_Hoenn): Warm gray body (160-240,156-235,148-222), amber fossil accents (135-185,88-135,42-70). Ghost iris: vivid purple (130,60,180). Dark frown mouth (idx 4: 48,42,38) in ∩ shape. Shiny: cool blue-gray body, teal accents, vivid purple iris (120,50,200).
 - **Aurora shiny recipe** (Vulpix/Ninetales_Hoenn): Body → aurora green (105-192,170-232,138-198), belly → rose pink (198-245,160-228,188-238), shadows → deep teal/purple (32-82,40-105,55-108). Eye → bright aurora green.
 - **Cave stone dragon** (Bagon_Hoenn): Stony grey-brown body (82-175,68-158,52-130), light stone head armor (98-178,90-165,78-145), dull amber underbelly (158-198,128-168,78-108), rust-red mineral accents (115-150,55-72,38-48). Shiny: obsidian body (52-118,48-112,42-100) + bright gold belly (185-228,155-195,62-88), amber accents (85-178,52-98,38-42).
+- **Volcanic beetle** (Pinsir_Hoenn): Deep crimson body (55-210,18-70,15-40), amber heat-glow pincers (120-255,40-200,8-80) with bright yellow tips. Warm cream highlights (255,240,200). Shiny: obsidian body (25-95,22-88,20-78) + blue-white cooling pincers (30-210,55-235,85-255).
 
 ## Reusable Scripts
 

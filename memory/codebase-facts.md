@@ -45,8 +45,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
-**Custom species in species.h (17 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428). SPECIES_EGG=429, NUM_SPECIES=429.
-**Registration status (C223)**: All 17 species at 19/19. Species foundation complete.
+**Custom species in species.h (18 defined)**: Riolu (412), Lucario (413), Weavile (414), Gible (415), Gabite (416), Garchomp (417), Corsola_Hoenn (418), Growlithe_Hoenn (419), Arcanine_Hoenn (420), Dusknoir (421), Honchkrow (422), Froslass (423), Mamoswine (424), Bagon_Hoenn (425), Vulpix_Hoenn (426), Ninetales_Hoenn (427), Farigiraf (428), Pinsir_Hoenn (429). SPECIES_EGG=430, NUM_SPECIES=430.
+**Registration status (C230)**: 18 species. Pinsir_Hoenn at 18/19 (cry_tables.inc expected miss for regional forms sharing base cry).
 
 **Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom additions: `EVO_LEVEL_FEMALE` (16) — level-up gated by female gender; `EVO_ITEM_FEMALE` (17) — item-use gated by female gender (C229). Both use `GetGenderFromSpeciesAndPersonality()` in `GetEvolutionTargetSpecies()`. Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
 

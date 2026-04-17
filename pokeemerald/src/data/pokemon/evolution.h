@@ -197,4 +197,5 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     // SPECIES_BAGON_HOENN — standalone form, no evolution chain
     [SPECIES_VULPIX_HOENN] = {{EVO_ITEM, ITEM_MOON_STONE, SPECIES_NINETALES_HOENN}},
     // SPECIES_CORSOLA_HOENN — standalone form, no evolution chain
+    // SPECIES_PINSIR_HOENN — standalone form, no evolution chain
 };

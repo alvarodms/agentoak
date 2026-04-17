@@ -427,6 +427,7 @@ const u8 *const gMonFootprintTable[] =
     [SPECIES_VULPIX_HOENN] = gMonFootprint_VulpixHoenn,
     [SPECIES_NINETALES_HOENN] = gMonFootprint_NinetalesHoenn,
     [SPECIES_FARIGIRAF] = gMonFootprint_Farigiraf,
+    [SPECIES_PINSIR_HOENN] = gMonFootprint_PinsirHoenn,
     [SPECIES_FROSLASS] = gMonFootprint_Froslass,
     [SPECIES_MAMOSWINE] = gMonFootprint_Mamoswine,
     [SPECIES_EGG] = gMonFootprint_Bulbasaur,

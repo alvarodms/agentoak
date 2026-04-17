@@ -4824,6 +4824,18 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+    [NATIONAL_DEX_PINSIR_HOENN] =
+    {
+        .categoryName = _("Lava Beetle"),
+        .height = 15,
+        .weight = 550,
+        .description = gPinsirHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 2,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
     [NATIONAL_DEX_FROSLASS] =
     {
         .categoryName = _("Snow Land"),
