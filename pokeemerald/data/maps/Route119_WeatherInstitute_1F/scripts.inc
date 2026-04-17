@@ -153,8 +153,28 @@ Route119_WeatherInstitute_1F_Text_MigrationScientist:
 @ =============================================
 
 WeatherInstitute_EventScript_DrHartley::
+	goto_if_set FLAG_BADGE05_GET, WeatherInstitute_EventScript_DrHartley_Migration
 	msgbox WeatherInstitute_Text_DrHartley, MSGBOX_NPC
 	end
+
+WeatherInstitute_EventScript_DrHartley_Migration::
+	msgbox WeatherInstitute_Text_DrHartley_Migration, MSGBOX_NPC
+	end
+
+WeatherInstitute_Text_DrHartley_Migration:
+	.string "I'm DR. HARTLEY. I study atmospheric\n"
+	.string "patterns at the WEATHER INSTITUTE.\p"
+	.string "The migration data keeps evolving.\n"
+	.string "It's not just foreign species now.\p"
+	.string "HOENN's own wildlife is changing.\n"
+	.string "Fire-type PINSIR near the volcano.\l"
+	.string "Ice VULPIX in the ash fields.\l"
+	.string "Spectral STANTLER in this forest.\p"
+	.string "Our climate data correlates exactly.\n"
+	.string "Wherever weather patterns shift,\l"
+	.string "the POKéMON adapt to match.\p"
+	.string "This isn't just migration anymore.\n"
+	.string "It's transformation.$"
 
 WeatherInstitute_Text_DrHartley:
 	.string "I'm DR. HARTLEY. I study atmospheric\n"

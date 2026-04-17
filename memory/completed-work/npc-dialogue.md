@@ -59,3 +59,18 @@ C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering 
 | `data/maps/PetalburgCity_PokemonCenter_1F/map.json` | **214** | OBJ_EVENT_GFX_MAN_1 at (3,6), MOVEMENT_TYPE_FACE_DOWN |
 | `include/constants/script_menu.h` | **214** | Added MULTI_DIFFICULTY_DOWNGRADE (115) |
 | `src/data/script_menu.h` | **214** | MultichoiceList_DifficultyDowngrade (2 options), added to sMultichoiceLists[115] |
+
+## Echo Dialogue Layer — Cycle 232
+
+Cross-referencing NPC dialogue connecting all 4 regional forms (Vulpix_Hoenn, Pinsir_Hoenn, Stantler_Hoenn, Corsola_Hoenn) + "Changed Trainer" diegetic motif debut.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/Route112/scripts.inc` | **232** | NEW: MigrationHiker — references Pinsir_Hoenn (local) + Stantler_Hoenn (R119 ranger report) |
+| `data/maps/Route112/map.json` | **232** | Added OBJ_EVENT_GFX_HIKER at (9,34), MOVEMENT_TYPE_FACE_RIGHT |
+| `data/maps/Route113/scripts.inc` | **232** | MODIFIED: FrostTracker text extended — cross-references R112 fire-type Pinsir, fire-and-ice parallel |
+| `data/maps/Route119/scripts.inc` | **232** | NEW: Ecologist — references ALL 4 regional forms, sends findings to Dr. Hartley |
+| `data/maps/Route119/map.json` | **232** | Added OBJ_EVENT_GFX_SCIENTIST_1 at (7,100), MOVEMENT_TYPE_FACE_RIGHT |
+| `data/maps/Route119_WeatherInstitute_1F/scripts.inc` | **232** | MODIFIED: Dr. Hartley gains badge-gated (FLAG_BADGE05_GET) post-migration dialogue referencing 3 regional forms + "transformation" thesis |
+| `data/maps/FortreeCity/scripts.inc` | **232** | NEW: ChangedTrainer — notices player's cyan palette, "HOENN changes everyone who walks through it. Not just POKéMON." |
+| `data/maps/FortreeCity/map.json` | **232** | Added OBJ_EVENT_GFX_WOMAN_2 at (34,5) elev 4, MOVEMENT_TYPE_FACE_LEFT |

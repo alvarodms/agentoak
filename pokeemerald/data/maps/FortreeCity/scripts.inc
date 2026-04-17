@@ -272,3 +272,19 @@ FortreeCity_Text_MigrationBirdwatcher:
 	.string "The local SWELLOW don't seem\n"
 	.string "to mind, but... it's strange\n"
 	.string "how quickly things are changing.$"
+
+@ =============================================
+@ Echo Dialogue — Changed Trainer (C232)
+@ =============================================
+
+FortreeCity_EventScript_ChangedTrainer::
+	msgbox FortreeCity_Text_ChangedTrainer, MSGBOX_NPC
+	end
+
+FortreeCity_Text_ChangedTrainer:
+	.string "Hm? Your outfit…\n"
+	.string "It's not the usual trainer look.\p"
+	.string "There's something about you that\n"
+	.string "reminds me of the sea. Or the sky.\p"
+	.string "Maybe HOENN changes everyone who\n"
+	.string "walks through it. Not just POKéMON.$"

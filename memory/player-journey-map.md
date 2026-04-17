@@ -23,7 +23,7 @@ Brawly/Wattson redesigned. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weat
 
 ## Hour 6-10: Fortree → Mossdeep (Badges 4-7)
 
-Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160). Route 112: Pinsir_Hoenn (Bug/Fire) 5% Lv21-22 (C230). Route 119: Stantler_Hoenn (Ghost/Grass) 4% Lv26-28 (C231). Mt. Pyre "Restless Dead" + Corsola_Hoenn 4% Lv26-28 (C154, C207). Route identity NPCs (C162). Norman/Winona/Tate & Liza expanded.
+Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160). Route 112: Pinsir_Hoenn (Bug/Fire) 5% Lv21-22 (C230). Route 119: Stantler_Hoenn (Ghost/Grass) 4% Lv26-28 (C231). Mt. Pyre "Restless Dead" + Corsola_Hoenn 4% Lv26-28 (C154, C207). Route identity NPCs (C162). Norman/Winona/Tate & Liza expanded. **Echo dialogue layer (C232)**: R112 Hiker (Pinsir+Stantler), R113 FrostTracker extended (Vulpix+Pinsir), R119 Ecologist (all 4 forms→Hartley), WeatherInstitute Hartley badge-gated evolution, Fortree ChangedTrainer (player palette).
 
 **Pacing**: Strongest stretch — weather omens + narrative events + NPC perspectives.
 

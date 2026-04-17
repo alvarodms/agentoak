@@ -140,3 +140,24 @@ Route112_Text_RouteSignLavaridge:
 	.string "ROUTE 112\n"
 	.string "{LEFT_ARROW} LAVARIDGE TOWN$"
 
+@ =============================================
+@ Echo Dialogue — Migration Hiker (C232)
+@ =============================================
+
+Route112_EventScript_MigrationHiker::
+	msgbox Route112_Text_MigrationHiker, MSGBOX_NPC
+	end
+
+Route112_Text_MigrationHiker:
+	.string "The PINSIR around here have changed.\n"
+	.string "Their shells burn to the touch now.\p"
+	.string "I had one singe my pack yesterday!\n"
+	.string "Fire-types, right on the mountain.\p"
+	.string "A ranger from ROUTE 119 told me\n"
+	.string "the STANTLER in the rain forest\l"
+	.string "have gone ghostly.\p"
+	.string "Translucent, she said.\n"
+	.string "Like morning mist with antlers.\p"
+	.string "Something is happening to HOENN's\n"
+	.string "wildlife. I can feel it.$"
+

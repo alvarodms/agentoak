@@ -43,7 +43,7 @@ Three pillars:
 | C229 | feature | **DONE** — Dawn Stone item + EVO_ITEM_FEMALE method + Shoal Cave placement (#133). | C228 |
 | C230 | feature | **DONE** — Pinsir_Hoenn (Bug/Fire) on Route 112. 18/19 registered (cry_tables.inc missing but non-blocking). First species for #118. | — |
 | C231 | feature | **DONE** — Stantler_Hoenn (Ghost/Grass) on Route 119. Badge 5-6 gap filled. Second species for #118. | C230 |
-| C232 | feature | #118 Regional forms batch 3: final species + NPC dialogue for migration flavor. | C231 |
+| C232 | feature | **DONE** — Echo dialogue layer: 5 NPCs connecting 4 regional forms + Changed Trainer debut. No species this cycle (dialogue > 5th species). | C231 |
 | C233 | feature | #130 Deoxys Quest II: second postgame cosmic event expanding the signal thread. | — |
 | C234 | planning | Mid-v2.1 check-in. Evaluate progress, community feedback, adjust remaining roadmap. | C233 |
 | C235-240 | TBD | Polish, iteration on community feedback, v2.1 ship prep. | C234 |
