@@ -13,3 +13,4 @@
 | Bagon Hoenn | Dragon/Rock | v1 | 215 | — | new |
 | Pinsir Hoenn | Bug/Fire | v1 | 230 | — | new |
 | Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |
+| Deoxys Hoenn | Poison/Fairy | v1 | 240 | — | new |

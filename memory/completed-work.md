@@ -19,7 +19,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, 139, 140, 141, 142, 144, 145, 146, 149, 152, 153, 154, 159, 160, 161(reverted), 162, 180, 181, 183, 186, 187, 188, 189, 190, 192, 193, 194, 195, 200, 203, 204, 205, **207**, **208**, **209**, **210**, **213**, **214**, **224**, **225**, **232**, **233**, **235**, **236**, **237** | ~90 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves + Difficulty) | 43–46, 52, 129, 181, 182, **207**, **210** | 18 (+10 modified) | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229** | 27 | [qol-and-release.md](completed-work/qol-and-release.md) |
-| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
+| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
 | Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225** | Makefile + 9 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
@@ -40,6 +40,7 @@ Before modifying ANY file: check the system index below → open detail file →
 - **trainer_parties.h / trainers.h**: ~33 cycles each — all trainer data. Macro must match struct. C195 fixed 17 macro mismatches.
 - **wild_encounters.json**: 26 cycles (last: C237) — all encounter tables
 - **include/constants/flags.h**: Many cycles — custom flags through 0x2A2 (Resonance Residue C236), next: 0x2A3
+- **include/constants/species.h**: Many cycles — custom species through 431 (Deoxys_Hoenn C240), EGG=432
 - **EverGrandeCity_GlaciasRoom/scripts.inc**: C213 — Glacia intro dialogue rewritten for cross-gen evo theming
 - **MossdeepCity_Gym/scripts.inc**: C214 — Tate & Liza intro+defeat+post-battle+rematch dialogue rewritten for Farigiraf
 - **PetalburgCity_PokemonCenter_1F/scripts.inc**: C214 — Difficulty downgrade NPC added

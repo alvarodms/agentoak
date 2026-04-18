@@ -4848,6 +4848,18 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+    [NATIONAL_DEX_DEOXYS_HOENN] =
+    {
+        .categoryName = _("Cosmic"),
+        .height = 17,
+        .weight = 608,
+        .description = gDeoxysHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 290,
+        .trainerOffset = 2,
+    },
+
     [NATIONAL_DEX_FROSLASS] =
     {
         .categoryName = _("Snow Land"),

@@ -537,6 +537,7 @@ static const u16 sSpeciesToHoennPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_HOENN(FARIGIRAF),
     SPECIES_TO_HOENN(PINSIR_HOENN),
     SPECIES_TO_HOENN(STANTLER_HOENN),
+    SPECIES_TO_HOENN(DEOXYS_HOENN),
 };
 
 // Assigns all species to the National Dex Index (Summary No. for National Dex)
@@ -972,6 +973,7 @@ static const u16 sSpeciesToNationalPokedexNum[NUM_SPECIES - 1] =
     SPECIES_TO_NATIONAL(FARIGIRAF),
     SPECIES_TO_NATIONAL(PINSIR_HOENN),
     SPECIES_TO_NATIONAL(STANTLER_HOENN),
+    SPECIES_TO_NATIONAL(DEOXYS_HOENN),
 };
 
 // Assigns all Hoenn Dex Indexes to a National Dex Index
@@ -1382,6 +1384,7 @@ static const u16 sHoennToNationalOrder[NUM_SPECIES - 1] =
     HOENN_TO_NATIONAL(FARIGIRAF),
     HOENN_TO_NATIONAL(PINSIR_HOENN),
     HOENN_TO_NATIONAL(STANTLER_HOENN),
+    HOENN_TO_NATIONAL(DEOXYS_HOENN),
     HOENN_TO_NATIONAL(OLD_UNOWN_B),
     HOENN_TO_NATIONAL(OLD_UNOWN_C),
     HOENN_TO_NATIONAL(OLD_UNOWN_D),
@@ -1861,6 +1864,7 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_FARIGIRAF - 1] = ANIM_V_SQUISH_AND_BOUNCE,
     [SPECIES_PINSIR_HOENN - 1] = ANIM_V_STRETCH,
     [SPECIES_STANTLER_HOENN - 1] = ANIM_GROW_VIBRATE,
+    [SPECIES_DEOXYS_HOENN - 1] = ANIM_ZIGZAG_FAST,
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =

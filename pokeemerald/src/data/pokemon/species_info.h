@@ -12176,6 +12176,36 @@ const struct SpeciesInfo gSpeciesInfo[] =
         .noFlip = FALSE,
     },
 
+    [SPECIES_DEOXYS_HOENN] =
+    {
+        .baseHP        = 60,
+        .baseAttack    = 80,
+        .baseDefense   = 70,
+        .baseSpeed     = 160,
+        .baseSpAttack  = 150,
+        .baseSpDefense = 80,
+        .types = { TYPE_POISON, TYPE_FAIRY },
+        .catchRate = 3,
+        .expYield = 215,
+        .evYield_HP        = 0,
+        .evYield_Attack    = 0,
+        .evYield_Defense   = 0,
+        .evYield_Speed     = 0,
+        .evYield_SpAttack  = 3,
+        .evYield_SpDefense = 0,
+        .itemCommon = ITEM_NONE,
+        .itemRare   = ITEM_NONE,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 120,
+        .friendship = 0,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = { EGG_GROUP_NO_EGGS_DISCOVERED, EGG_GROUP_NO_EGGS_DISCOVERED },
+        .abilities = {ABILITY_PRESSURE, ABILITY_PRESSURE},
+        .safariZoneFleeRate = 0,
+        .bodyColor = BODY_COLOR_PINK,
+        .noFlip = FALSE,
+    },
+
     [SPECIES_FROSLASS] =
     {
         .baseHP        = 70,

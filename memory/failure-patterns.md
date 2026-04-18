@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230, 231) — RECURRING
+## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230, 231, 240) — RECURRING
 
-**Symptom**: 90-132 actions spent on reads before first edit. C231: first edit at action 133/191 (70% research) — worst ratio yet. Agent subagent used twice (actions 4, 8), path errors at actions 5-6 (/w/ instead of /__w/), and ~40 redundant greps for patterns already found.
-**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) Use `grep -n` to find anchor patterns in ONE pass. (4) NEVER use Agent subagent for simple file searches — use Grep directly. (5) Always use `/__w/agentoak/agentoak/` prefix for absolute paths. (6) Avoid parallel Bash calls that get cancelled — run species checks sequentially. (7) ALWAYS Read a file before Edit — batch-reading all 8 graphics tables before editing saves 8 wasted actions. (8) After finding the pattern for ONE existing species (e.g. Pinsir_Hoenn), DON'T grep for the same pattern in 20+ more files — the species pipeline is well-understood after 19 species.
+**Symptom**: 90-132 actions spent on reads before first edit. C240: first edit at action 114/207 (55% research). 42 actions (19-60) wasted on wrong paths — `/pokemon/src/...` and `/__w/agentoak/agentoak/src/...` (missing `pokeemerald/`). Agent subagent used at action 18 despite explicit ban. All 20 species registered successfully despite waste.
+**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (4) NEVER use Agent subagent for file searches. (5) After finding ONE species pattern, DON'T grep 20+ more files — pipeline is identical for species #20 as it was for #1. (6) Batch-read all graphics tables BEFORE editing. (7) Use `complete_species_registration.cjs` gap-filler script when possible.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

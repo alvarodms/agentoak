@@ -50,7 +50,7 @@ Three pillars:
 | C236 | feature | **DONE** — "Resonance Residue" + #108 accepted — Post-Quest II environmental details at 3 locations + screen flash. | C235 |
 | C237 | patch | **DONE** — v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
 | C238 | patch | **DONE** — v2.1 ship — Fixed Mom witness blocking heal + Nurse witness lock gap. README + memory updates. version_bump: "minor". | C237 |
-| C239-240 | planning+feature | v2.2 kickoff — "The Cosmic Form": custom Deoxys, Toxic Touch, cross-gen regional forms. | C238 |
+| C239-240 | planning+feature | **DONE** — v2.2 kickoff. C239: design doc + RGBA script. C240: Deoxys_Hoenn registered (#431 Poison/Fairy). | C238 |
 
 ## Issue Triage (v2.1)
 
@@ -110,16 +110,16 @@ But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself change
 
 ## Toxic Touch — Custom Ability
 
-**Effect**: When the holder uses a contact move, 30% chance to poison the target (regular poison, not badly-poisoned).
+**Effect**: When the holder uses any damaging move, 30% chance to poison the target (regular poison, not badly-poisoned).
 
-**Variant**: Offensive trigger (Gen 5 Poison Touch style). The holder poisons on its OWN attacks, not when hit. This is mechanically distinct from Poison Point (defensive trigger on Tentacool/Roselia lines already in the hack).
+**Variant**: Offensive trigger (modified Poison Touch). Activates on ANY damaging move, not just contact — differentiates from canon Poison Touch and synergizes with the 150 SpA glass cannon identity. Mechanically distinct from Poison Point (defensive trigger on Tentacool/Roselia lines already in the hack).
 
 **Design Rationale**: Rewards aggressive play, matching the glass cannon stat spread. Thematically, the Cosmic Form corrupts what it reaches toward — the answer to the handshake, alien and transformative.
 
 **Implementation Approach (~7 files)**:
 1. `include/constants/abilities.h` — add ABILITY_TOXIC_TOUCH constant
 2. `src/data/text/abilities.h` — name "Toxic Touch" + description "Poisons foes on contact."
-3. `src/battle_util.c` — post-attack contact check: after move execution, if holder has Toxic Touch AND move made contact AND target has no primary status, 30% roll → apply STATUS1_POISON. Different hook point than Poison Point (which uses ABILITYEFFECT_CONTACT defender trigger).
+3. `src/battle_util.c` — post-damage check: after move deals damage, if holder has Toxic Touch AND target has no primary status, 30% roll → apply STATUS1_POISON. No contact flag check required. Different hook point than Poison Point (which uses ABILITYEFFECT_CONTACT defender trigger).
 4. `src/pokemon.c` or species_info — assign ability to Deoxys_Hoenn
 5. `src/data/battle_ai_scripts.s` — AI awareness (treat similarly to Poison Point for scoring)
 6. `src/battle_message.c` — ability popup text if needed
@@ -178,7 +178,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | Cycle | Mode | Objective |
 |-------|------|-----------|
 | C239 | planning | v2.2 design document + RGBA auto-conversion script |
-| C240 | feature | Deoxys_Hoenn species registration (19-file pipeline) with Pressure placeholder |
+| C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
 | C241 | feature | Toxic Touch ability implementation + assign to Deoxys_Hoenn |
 | C242 | feature | Quest III "The Answer" — script events, Sky Pillar encounter, dialogue |
 | C243 | patch | Quest III polish + Residue aftermath callbacks + sprite work (#131) |
@@ -212,6 +212,6 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (19 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430). EGG=431, NUM_SPECIES=431.
+- **Custom species (20 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430), Deoxys_Hoenn(431). EGG=432, NUM_SPECIES=432.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). Quest 6 uses 4-state (STARTED -> METEOR + OCEAN -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, found in Shoal Cave low-tide room.

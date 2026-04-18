@@ -36,6 +36,23 @@ Six species across ~29 source files each. Collapsed — see git history for deta
 | Mamoswine | 424 | Ice/Ground | 530 | Piloswine (Lv44) | Glacia all tiers |
 | Farigiraf | 428 | Normal/Psychic | — | Girafarig (Lv32) | Tate & Liza all tiers |
 
+## C240: Deoxys_Hoenn (Poison/Fairy) — First Fully Custom Species
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Deoxys_Hoenn | 431 | Poison/Fairy | 600 | Quest III reward, Lv 70 (quest C242) |
+
+Stats: 60/80/70/150/80/160. Abilities: Pressure/Pressure (Toxic Touch → C241).
+Growth: Slow. Catch Rate: 3. Genderless. Undiscovered egg group.
+Learnset: 12 moves (Cosmic Power L1 → Moonblast L61). At Lv70 catch: Shadow Ball/Recover/Sludge Bomb/Moonblast.
+TMs: 22 (Calm Mind, Toxic, HP, Ice Beam, Hyper Beam, Protect, TBolt, Thunder, Return, Psychic, Shadow Ball, Double Team, Reflect, Sludge Bomb, Facade, Rest, Skill Swap, Snatch + Cut/Strength/Flash/Rock Smash).
+Cry: Mapped to vanilla Deoxys. Elevation: 8 (floats). Dex category: "Cosmic".
+Sprites: Custom hot pink/cyan Poison/Fairy recolor by Sprite Designer v1.
+
+Files modified: 23 source files (standard species pipeline + enemy_mon_elevation.h).
+
+---
+
 ## C231: Stantler_Hoenn (Ghost/Grass) — Badge 5-6 Regional Form
 
 | Species | ID | Type | BST | Encounter |

@@ -2433,6 +2433,13 @@ const u8 gStantlerHoennPokedexText[] = _(
     "antlers sprouted living vines, and\n"
     "their bodies became semi-spectral.");
 
+const u8 gDeoxysHoennPokedexText[] = _(
+    "Its body shimmers between states\n"
+    "that should not coexist. Those\n"
+    "who study it report a taste of\n"
+    "ozone and a sound like something\n"
+    "learning to breathe.");
+
 const u8 gFroslassPokedexText[] = _(
     "A spirit born when a SNORUNT was exposed\n"
     "to intense cold in SHOAL CAVE. It adorns\n"
