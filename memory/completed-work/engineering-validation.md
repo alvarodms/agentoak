@@ -22,3 +22,4 @@
 | `pokeemerald/scripts/species_configs/*.json` | **C222** | Config files for 3 species (bagon_hoenn, farigiraf, ninetales_hoenn). Schema: speciesName, eggMoves, cryBase, cryId, frontAnim, evolution fields. |
 | `pokeemerald/scripts/check_evolution_consistency.sh` | **C225** | Evolution consistency validator: source/target species exist in species.h, evolution methods valid, no duplicate entries, gender-gated evos valid, branching evo targets unique. 6 checks. |
 | `pokeemerald/Makefile` | **C225** | Added `check_evolution` and `check_all` (runs check_species + check_encounters + check_e4_rematches + check_evolution) phony targets. |
+| `pokeemerald/scripts/convert_sprites_indexed.cjs` | **C239** | RGBA-to-indexed PNG converter. 16-color palette quantization (14 opaque + transparent + padding). Merges similar colors when >14 unique. Manual PNG writer (pngjs doesn't support indexed output). `--dry-run` supported. Skips already-indexed files. |

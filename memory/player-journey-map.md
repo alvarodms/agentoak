@@ -53,6 +53,8 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 ---
 
-## Known Gaps
+## Known Gaps & v2.2 Planned
 
-v2.1 shipped. v2.2 planning begins C239.
+- **Hours 3-6 (Badge 2-3)**: Thinnest stretch. v2.2 targets 2 new regional forms here (C250-251).
+- **Postgame**: Quest III "The Answer" — Mossdeep trigger → Sky Pillar summit → Deoxys_Hoenn Lv70 encounter (C242).
+- **Throughout**: Trainer teams narrative pass for migration consistency (C244-247). Magma/Aqua rework (C248-249).

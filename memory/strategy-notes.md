@@ -68,36 +68,146 @@ Three pillars:
 
 ---
 
-# v2.2: "The Cosmic Form" (C239-C260, tentative)
+# v2.2: "The Cosmic Form" (C239-C255)
 
 ## Creative Vision
 
-The Resonance's handshake demands an answer. v2.2 delivers it: a custom Deoxys form born from Hoenn's cosmic connection — Poison/Fairy, visually distinct (hot pink/cyan palette), with a new ability (Toxic Touch). This is the project's first fully custom species, not a regional variant.
+The Resonance said "it's a handshake." v2.2 delivers the answer.
 
-The form caps the Deoxys quest chain (Quest III: "The Answer") and represents the culmination of the postgame mystery arc that began in v1.9.
+A custom Deoxys form — Poison/Fairy, born from Hoenn's cosmic entanglement — materializes as the quest chain's capstone. This is the project's first fully original species (not a regional variant), representing 40+ cycles of narrative buildup from the first Mossdeep signal through the Resonance Residue.
 
-Alongside the Deoxys centerpiece:
-- Cross-generation evolutions reimagined as regional forms (#142)
-- Comprehensive trainer team audit for consistency (#143)
-- Team Magma/Aqua narrative rework (#144)
-- Additional regional forms (#118 remaining asks)
+But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself changed? Trainer teams reflect a region in transformation. Magma and Aqua confront a world that's outgrown their old agenda. The mid-game thickens with new regional forms in the Badge 2-3 gap.
+
+## Deoxys_Hoenn — "The Cosmic Form"
+
+**Species**: #431 (EGG→432, NUM_SPECIES→432)
+**Type**: Poison / Fairy
+**BST**: 600 (matching standard Deoxys — powerful but not unprecedented)
+
+**Stat Spread**:
+| HP | Atk | Def | SpA | SpDef | Spe |
+|----|-----|-----|-----|-------|-----|
+| 60 | 80  | 70  | 150 | 80    | 160 |
+
+**Design Intent**: A fast special attacker. 160 Speed outpaces everything in the hack except Deoxys-Speed (180). 150 SpA with dual STAB delivers devastating hits. Defenses (60/70/80) are marginally less suicidal than Normal Deoxys (50/50/50) but still fragile — priority moves and Scarfers threaten it. The stat spread rewards players who earned the postgame encounter with something genuinely powerful without trivializing content.
+
+**Abilities**: Toxic Touch (slot 1) / Pressure (slot 2)
+**Catch Rate**: 3
+**Growth Rate**: Slow (GROWTH_SLOW)
+**EV Yield**: 3 SpA
+**Egg Groups**: Undiscovered / Undiscovered
+**Gender**: Genderless
+**Base Friendship**: 0
+**Held Items**: None (encountered via quest, not wild)
+**Dex Number**: Shares National #386 with standard Deoxys
+
+**Key Moves** (full learnset to be designed during C240 implementation):
+- Poison STAB: Sludge Bomb (TM36)
+- Fairy STAB: verify available Fairy moves in hack — Moonblast if present, else Dazzling Gleam
+- Coverage: Psychic, Shadow Ball, Ice Beam, Thunderbolt
+- Utility: Cosmic Power, Recover, Calm Mind, Taunt
+- Level-up flavor: starts with Cosmic Power at L1, learns Sludge Bomb by L50
+
+## Toxic Touch — Custom Ability
+
+**Effect**: When the holder uses a contact move, 30% chance to poison the target (regular poison, not badly-poisoned).
+
+**Variant**: Offensive trigger (Gen 5 Poison Touch style). The holder poisons on its OWN attacks, not when hit. This is mechanically distinct from Poison Point (defensive trigger on Tentacool/Roselia lines already in the hack).
+
+**Design Rationale**: Rewards aggressive play, matching the glass cannon stat spread. Thematically, the Cosmic Form corrupts what it reaches toward — the answer to the handshake, alien and transformative.
+
+**Implementation Approach (~7 files)**:
+1. `include/constants/abilities.h` — add ABILITY_TOXIC_TOUCH constant
+2. `src/data/text/abilities.h` — name "Toxic Touch" + description "Poisons foes on contact."
+3. `src/battle_util.c` — post-attack contact check: after move execution, if holder has Toxic Touch AND move made contact AND target has no primary status, 30% roll → apply STATUS1_POISON. Different hook point than Poison Point (which uses ABILITYEFFECT_CONTACT defender trigger).
+4. `src/pokemon.c` or species_info — assign ability to Deoxys_Hoenn
+5. `src/data/battle_ai_scripts.s` — AI awareness (treat similarly to Poison Point for scoring)
+6. `src/battle_message.c` — ability popup text if needed
+7. Build + test
+
+**Edge Cases to Test**: Trace copying Toxic Touch, Gastro Acid suppressing it, double battles (only target hit), Substitute blocking, Steel/Poison type immunity to poison status.
+
+## Quest III: "The Answer"
+
+**Trigger**: Quest II complete (FLAG_QUEST6_COMPLETE set) → visit Mossdeep Space Center 2F.
+
+**Scene 1 — "The Signal Converges"**:
+- New NPC (or existing scientist) on Space Center 2F
+- Dialogue: "The three Resonance sites are pulsing in sync now. Whatever answered your signal — it's locked onto Hoenn. The convergence point is... the summit of Sky Pillar."
+- Sets FLAG_QUEST7_STARTED (0x2A3)
+
+**Scene 2 — "The Arrival"** (Sky Pillar Summit):
+- Reuse existing Sky Pillar summit map with new event layer
+- On entry: screen dims (fadescreen), cosmic palette flash (reuse C236 Resonance Residue technique), brief pause
+- Text: "The air shimmers with an impossible color — pink and violet, sweet and wrong."
+- Cosmic Form overworld sprite materializes (object event appears)
+
+**Scene 3 — "The Encounter"**:
+- Player interacts with sprite → Level 70 Deoxys_Hoenn battle
+- No fleeing (legendary battle flags)
+- If KO'd: respawns after defeating E4 again (standard legendary respawn pattern)
+
+**Scene 4 — "The Aftermath"**:
+- Residue NPCs at Meteor Falls, Route 131, and Mossdeep terminal update: "The hum stopped... like it found what it was looking for."
+- Space Center scientist: "The signal went quiet. Whatever crossed over... it's here now."
+- Sets FLAG_QUEST7_COMPLETE (0x2A4)
+
+**Flags**: FLAG_QUEST7_STARTED (0x2A3), FLAG_QUEST7_COMPLETE (0x2A4). Next available: 0x2A5.
+
+## v2.2 Trainer & Narrative Layer
+
+**Trainer Teams Pass (#143)**:
+- Scope: ~50 story trainers reviewed for migration narrative consistency
+- NOT a full rebalance — a narrative alignment pass. Trainers whose teams should reference migration species (regional forms, cross-gen evos) get 1-2 swaps.
+- Priority: Gym Leaders badges 3-6 (mid-game density), Rival battles 3-5
+- Dedicated cycles: C244-247
+
+**Team Magma/Aqua Rework (#144)**:
+- Scope: Dialogue + 2-3 team adjustments per admin
+- Theme: land-vs-sea agenda feels small now that cosmic forces are confirmed. Not doubt — quiet reckoning.
+- Dedicated cycles: C248-249
+
+## Cross-Gen Regional Forms (#142)
+
+Target the Badge 2-3 gap (Hours 3-6) where the player journey is thinnest.
+Candidates to be designed during implementation. Consider Johto/Sinnoh species with unused evolutions that fit Hoenn's ecology.
+Dedicated cycles: C250-251 (2 forms, 1 per cycle).
+
+## v2.2 Multi-Cycle Roadmap
+
+| Cycle | Mode | Objective |
+|-------|------|-----------|
+| C239 | planning | v2.2 design document + RGBA auto-conversion script |
+| C240 | feature | Deoxys_Hoenn species registration (19-file pipeline) with Pressure placeholder |
+| C241 | feature | Toxic Touch ability implementation + assign to Deoxys_Hoenn |
+| C242 | feature | Quest III "The Answer" — script events, Sky Pillar encounter, dialogue |
+| C243 | patch | Quest III polish + Residue aftermath callbacks + sprite work (#131) |
+| C244-245 | feature | Trainer teams narrative pass — early & mid game (#143) |
+| C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
+| C248-249 | feature | Team Magma/Aqua rework (#144) |
+| C250-251 | feature | Cross-gen regional forms x2 (#142) |
+| C252 | patch | v2.2 consistency pass |
+| C253 | planning | v2.2 ship evaluation |
 
 ## Engineering Prerequisites
-- RGBA auto-conversion script (7x deferred) — MUST ship before custom species work (target C239)
-- Custom ability implementation (Toxic Touch) — uncharted territory, needs research cycle
-- Species pipeline for fully custom (non-variant) species — may need pipeline extension
+- ✅ RGBA auto-conversion script (shipped C239)
+- Toxic Touch custom ability — C241, ~7 files, offensive contact variant
+- Species pipeline validation for custom (non-variant) species — C240, verify during registration
+- Sprite creation for Deoxys_Hoenn — Sprite Designer agent, hot pink/cyan palette, unsettling beauty aesthetic
 
-## Key Risks
-- Custom ability requires battle engine modifications — high regression risk
-- Custom species (not a regional form) may need pipeline changes
-- 680 BST Poison/Fairy is extremely powerful — needs careful balancing against postgame context
+## Key Design Decisions
+- BST 600 (not 680): matches standard Deoxys, avoids unprecedented power creep
+- Offensive Toxic Touch (not defensive Poison Point clone): differentiates, rewards aggression, fits glass cannon
+- Separate species entry (not dynamic form-change): validated as fewer bugs on vanilla pokeemerald
+- Sky Pillar summit for Quest III: thematic resonance with Rayquaza's domain and cosmic connection
+- 30% poison rate on Toxic Touch: matches Gen 5 Poison Touch, strong but not overwhelming
 
 ---
 
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A3. Quest 6 Resonance uses 0x29C-0x29F. C235 Nurse witness: 0x2A0. C236 Resonance Residue: 0x2A1-0x2A2.
+- **Flag space**: Custom 0x264+. Next available: 0x2A5. Quest 6 Resonance uses 0x29C-0x29F. C235 Nurse witness: 0x2A0. C236 Resonance Residue: 0x2A1-0x2A2. Quest 7 reserved: 0x2A3-0x2A4.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
