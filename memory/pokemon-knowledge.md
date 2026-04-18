@@ -39,5 +39,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Changed Trainer Witness Patterns | 235 | [changed-trainer-witness-patterns.md](pokemon-knowledge/changed-trainer-witness-patterns.md) |
 | Resonance Residue & Graphical Polish Patterns | 236 | [resonance-residue-and-graphical-polish.md](pokemon-knowledge/resonance-residue-and-graphical-polish.md) |
 | v2.1 Consistency Pass — Quest Reward & QA Patterns | 237 | [v21-consistency-pass-patterns.md](pokemon-knowledge/v21-consistency-pass-patterns.md) |
+| Toxic Touch Ability — Implementation Scope | 238 | [toxic-touch-ability-scope.md](pokemon-knowledge/toxic-touch-ability-scope.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

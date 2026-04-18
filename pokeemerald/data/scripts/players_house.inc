@@ -319,7 +319,7 @@ PlayersHouse_1F_EventScript_DontPushYourselfTooHard::
 
 PlayersHouse_1F_EventScript_MomWitness::
 	msgbox PlayersHouse_1F_Text_MomChangedTrainer, MSGBOX_DEFAULT
-	release
+	goto PlayersHouse_1F_EventScript_HealParty
 	end
 
 PlayersHouse_1F_EventScript_TryRegisterMom::

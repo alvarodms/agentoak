@@ -15,7 +15,6 @@ OldaleTown_PokemonCenter_1F_EventScript_Nurse::
 	faceplayer
 	msgbox OldaleTown_PokemonCenter_1F_Text_NurseWitness, MSGBOX_DEFAULT
 	setflag FLAG_CHANGED_TRAINER_NURSE
-	release
 OldaleTown_PokemonCenter_1F_EventScript_NurseHeal::
 	setvar VAR_0x800B, LOCALID_OLDALE_NURSE
 	call Common_EventScript_PkmnCenterNurse

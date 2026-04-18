@@ -65,11 +65,12 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
   - *Hartley's Field Report* — Dr. Hartley at the Weather Institute needs field data from three weather anomaly sites — and a strange bark echoes outside when his hypothesis proves true, revealing Hoennian Growlithe
   - *The Mossdeep Signal* — A Space Center researcher tracked an energy pulse that bounced off the upper atmosphere during the Primal Stirring. Something shimmers on Route 131 where the sky grew thin
   - *The Fog Beneath* — A swimmer on Route 126 found an opening in the seabed that wasn't there before the Gathering. Something massive and gentle waits below the fog
-- **The Resonance** — After catching Deoxys, the Space Center terminal begins transmitting. Investigate pulsing meteorites in Meteor Falls and alien luminescence beneath Route 131's waves. Return to learn the truth: "This isn't a message. It's a handshake." The cosmic mystery deepens
+- **The Resonance** — After catching Deoxys, the Space Center terminal begins transmitting. Investigate pulsing meteorites in Meteor Falls and alien luminescence beneath Route 131's waves. Return to learn the truth: "This isn't a message. It's a handshake." The cosmic mystery deepens — and the evidence lingers. Return to any investigation site and find residue: crystallized energy at the Space Center, meteorites that still pulse faintly, deep water that shimmers with something not quite light. Whatever answered, it's still listening
 
 ### Visual Identity
 
 - **Custom protagonist palette** — Brendan and May wear sea-glass teal instead of vanilla blue/red, tying their look to Hoenn's ocean-and-migration theme from the very first frame
+- **Changed Trainer witnesses** — after becoming Champion, the people who know you best notice what the migration did to you. Your mom sees it the moment you walk in, your rival struggles to put it into words, Norman acknowledges it with quiet pride, and a Pokémon Center nurse remarks that you carry yourself differently now. The journey changed Hoenn — and it changed you
 
 ### Quality of Life
 

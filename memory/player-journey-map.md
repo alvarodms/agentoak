@@ -55,4 +55,4 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 ## Known Gaps
 
-All v2.1 content shipped and verified. C238: version bump + README update.
+v2.1 shipped. v2.2 planning begins C239.

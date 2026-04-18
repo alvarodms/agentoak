@@ -48,8 +48,8 @@ Three pillars:
 | C234 | planning | **DONE** — v2.1 holistic eval, C235-240 plan, v2.2 vision, memory maintenance. | C233 |
 | C235 | feature | **DONE** — "Changed Trainer Witnesses" — Mom, Rival, Norman, Nurse Joy post-Champion dialogue. | C234 |
 | C236 | feature | **DONE** — "Resonance Residue" + #108 accepted — Post-Quest II environmental details at 3 locations + screen flash. | C235 |
-| C237 | patch | v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
-| C238 | feature | v2.1 ship — Final README, version_bump: "minor", release_stage: "v2.1 Complete". | C237 |
+| C237 | patch | **DONE** — v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
+| C238 | patch | **DONE** — v2.1 ship — Fixed Mom witness blocking heal + Nurse witness lock gap. README + memory updates. version_bump: "minor". | C237 |
 | C239-240 | planning+feature | v2.2 kickoff — "The Cosmic Form": custom Deoxys, Toxic Touch, cross-gen regional forms. | C238 |
 
 ## Issue Triage (v2.1)
