@@ -85,7 +85,7 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | File | Cycle | Notes |
 |------|-------|-------|
 | `include/constants/flags.h` | **233**, **236** | C233: FLAGS 0x29C-0x29F (RESONANCE_STARTED/METEOR/OCEAN/COMPLETE). C236: FLAGS 0x2A1-0x2A2 (RESIDUE_MOSSDEEP/RESIDUE_OCEAN). |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233**, **236** | C233: Resonance offer/progress/completion/post-complete + terminal readouts. C236: ResonancePostCheck branch (screen flash FADE_TO_WHITE/FADE_FROM_WHITE), residue discovery dialogue, TerminalResidueStable branch. |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233**, **236**, **237** | C233: Resonance offer/progress/completion/post-complete + terminal readouts. C236: ResonancePostCheck branch (screen flash FADE_TO_WHITE/FADE_FROM_WHITE), residue discovery dialogue, TerminalResidueStable branch. C237: Rare Candy reward added to Residue first-visit branch (giveitem + ResidueGift text). |
 | `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **233**, **236** | C233: Meteorite bg_event 3 states. C236: ResonanceMeteorResidue — steady glow + warmth text after Resonance completion. |
 | `data/maps/MeteorFalls_B1F_2R/map.json` | **233** | Added bg_event "sign" at (3,5), BG_EVENT_PLAYER_FACING_ANY |
 | `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |

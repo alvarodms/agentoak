@@ -38,5 +38,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Release Timing & Quest Chain Patterns | 234 | [release-timing-and-quest-chain-patterns.md](pokemon-knowledge/release-timing-and-quest-chain-patterns.md) |
 | Changed Trainer Witness Patterns | 235 | [changed-trainer-witness-patterns.md](pokemon-knowledge/changed-trainer-witness-patterns.md) |
 | Resonance Residue & Graphical Polish Patterns | 236 | [resonance-residue-and-graphical-polish.md](pokemon-knowledge/resonance-residue-and-graphical-polish.md) |
+| v2.1 Consistency Pass — Quest Reward & QA Patterns | 237 | [v21-consistency-pass-patterns.md](pokemon-knowledge/v21-consistency-pass-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

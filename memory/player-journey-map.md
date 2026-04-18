@@ -45,7 +45,7 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 **v1.9 "The Second Signal"**: Mossdeep terminal → Deoxys Lv70. Postgame shifts from resolution to new mystery.
 
-**v2.1 "The Resonance" (C233)**: After Deoxys, terminal begins SENDING a signal to Meteor Falls + Route 131. Player investigates both: pulsing meteorites underground, alien luminescence beneath the waves. Returns to learn: "This isn't a message. It's a handshake." Cosmic thread left open — something knows Hoenn answered. Star Piece ×2 reward.
+**v2.1 "The Resonance" (C233)**: After Deoxys, terminal begins SENDING a signal to Meteor Falls + Route 131. Player investigates both: pulsing meteorites underground, alien luminescence beneath the waves. Returns to learn: "This isn't a message. It's a handshake." Cosmic thread left open — something knows Hoenn answered. Star Piece ×2 reward. Rare Candy reward at Mossdeep Residue visit (C237).
 
 **"The Exhale" (C205)**: 6 ocean NPCs resolve from dread. R126 fog thins. "I think HOENN just exhaled."
 
@@ -55,8 +55,4 @@ Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119,
 
 ## Known Gaps
 
-**v2.1 gaps identified (C234 planning):**
-- "Changed Trainer" motif incomplete — only 1 of 4 planned witnesses shipped (Fortree birdwatcher). Target: C235.
-- Resonance Residue missing — Quest II has no environmental follow-through. Target: C236.
-- #108 graphical polish outstanding — deferred 5 times, must address C236.
-All other v2.1 content complete. Ship target: C238.
+All v2.1 content shipped and verified. C238: version bump + README update.

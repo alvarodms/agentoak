@@ -893,6 +893,10 @@ MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostCheck::
 	delay 4
 	fadescreen FADE_FROM_WHITE
 	msgbox MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery2, MSGBOX_DEFAULT
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResidueGift, MSGBOX_DEFAULT
+	giveitem ITEM_RARE_CANDY
+	compare VAR_RESULT, FALSE
+	goto_if_eq Common_EventScript_ShowBagIsFull
 	setflag FLAG_RESONANCE_RESIDUE_MOSSDEEP
 	release
 	end
@@ -1022,6 +1026,12 @@ MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery2:
 	.string "Go see for yourself.\n"
 	.string "METEOR FALLS. ROUTE 131.\l"
 	.string "Something changed.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResidueGift:
+	.string "The residual wavelengths concentrated\n"
+	.string "near our equipment overnight.\p"
+	.string "This crystallized from the readings.\n"
+	.string "I can't explain it. Please, take it.$"
 
 MossdeepCity_SpaceCenter_2F_Text_TerminalResidueStable:
 	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
