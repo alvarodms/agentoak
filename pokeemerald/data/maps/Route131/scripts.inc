@@ -188,3 +188,47 @@ Route131_Text_ResonanceOceanVision2:
 	.string "Only the warmth of the water\n"
 	.string "remains.$"
 
+@ =============================================
+@ Resonance Residue — Ocean Witness (C236)
+@ =============================================
+
+Route131_EventScript_ResidueSwimmer::
+	lock
+	faceplayer
+	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, Route131_EventScript_ResidueSwimmerPostResonance
+	msgbox Route131_Text_ResidueSwimmerNormal, MSGBOX_DEFAULT
+	release
+	end
+
+Route131_EventScript_ResidueSwimmerPostResonance::
+	goto_if_set FLAG_RESONANCE_RESIDUE_OCEAN, Route131_EventScript_ResidueSwimmerRevisit
+	msgbox Route131_Text_ResidueSwimmerFirstTime, MSGBOX_DEFAULT
+	setflag FLAG_RESONANCE_RESIDUE_OCEAN
+	release
+	end
+
+Route131_EventScript_ResidueSwimmerRevisit::
+	msgbox Route131_Text_ResidueSwimmerRevisit, MSGBOX_DEFAULT
+	release
+	end
+
+Route131_Text_ResidueSwimmerNormal:
+	.string "The current's strong out here.\n"
+	.string "Good for training, though.$"
+
+Route131_Text_ResidueSwimmerFirstTime:
+	.string "Lights under the water some\n"
+	.string "nights now. Faint. Blue-green.\p"
+	.string "Fish don't mind.\n"
+	.string "I don't mind.\p"
+	.string "Started after that tremor.\n"
+	.string "You know the one.\p"
+	.string "My grandfather would've called\n"
+	.string "them sea spirits.\l"
+	.string "I just call them Tuesday.$"
+
+Route131_Text_ResidueSwimmerRevisit:
+	.string "Lights were out again last\n"
+	.string "night. Getting used to\l"
+	.string "them, honestly.$"
+

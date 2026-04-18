@@ -7,6 +7,7 @@ MeteorFalls_B1F_2R_MapScripts::
 
 MeteorFalls_B1F_2R_EventScript_ResonanceMeteor::
 	lock
+	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorResidue
 	goto_if_set FLAG_QUEST_RESONANCE_METEOR, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorDone
 	goto_if_unset FLAG_QUEST_RESONANCE_STARTED, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorInert
 	@ Investigation sequence
@@ -53,3 +54,23 @@ MeteorFalls_B1F_2R_Text_ResonanceMeteorAfter:
 MeteorFalls_B1F_2R_Text_ResonanceMeteorInert:
 	.string "Meteorite fragments. They look\n"
 	.string "ordinary enough.$"
+
+@ =============================================
+@ Resonance Residue — Meteorite Post-Resonance (C236)
+@ =============================================
+
+MeteorFalls_B1F_2R_EventScript_ResonanceMeteorResidue::
+	msgbox MeteorFalls_B1F_2R_Text_ResonanceMeteorResidue, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_B1F_2R_Text_ResonanceMeteorResidue:
+	.string "The meteorite fragments glow\n"
+	.string "with a steady light. Not\l"
+	.string "pulsing. Constant.\p"
+	.string "The cavern air is warm here.\n"
+	.string "Warmer than it should be.\p"
+	.string "You hold your hand near the\n"
+	.string "stone. The warmth doesn't\l"
+	.string "come from the surface.\p"
+	.string "It comes from deeper.$"

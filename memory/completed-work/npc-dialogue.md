@@ -78,14 +78,15 @@ Post-Champion dialogue: Mom, Rival, Norman, and Nurse Joy notice the player's tr
 | `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **235** | MODIFIED: Nurse gains one-time witness message gated by FLAG_CHANGED_TRAINER_NURSE (0x2A0) + FLAG_SYS_GAME_CLEAR. Falls through to normal healing. |
 | `include/constants/flags.h` | **235** | FLAG_CHANGED_TRAINER_NURSE at 0x2A0. |
 
-## Quest 6: The Resonance (C233)
+## Quest 6: The Resonance (C233) + Resonance Residue (C236)
 
-Deoxys Quest II — Three-location postgame investigation. Scientist dialogue, terminal readouts, Meteor Falls meteorite, Route 131 ocean vision.
+Deoxys Quest II — Three-location postgame investigation, then environmental follow-through.
 
 | File | Cycle | Notes |
 |------|-------|-------|
-| `include/constants/flags.h` | **233** | FLAGS 0x29C-0x29F: RESONANCE_STARTED, RESONANCE_METEOR, RESONANCE_OCEAN, RESONANCE_COMPLETE |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233** | Scientist: Resonance offer/progress/completion/post-complete branches + terminal Resonance readouts. Camera shake on completion. Star Piece ×2 reward. |
-| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **233** | NEW: Meteorite bg_event investigation — camera shake, rhythmic glow text, 3 states (inert/active/done) |
+| `include/constants/flags.h` | **233**, **236** | C233: FLAGS 0x29C-0x29F (RESONANCE_STARTED/METEOR/OCEAN/COMPLETE). C236: FLAGS 0x2A1-0x2A2 (RESIDUE_MOSSDEEP/RESIDUE_OCEAN). |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233**, **236** | C233: Resonance offer/progress/completion/post-complete + terminal readouts. C236: ResonancePostCheck branch (screen flash FADE_TO_WHITE/FADE_FROM_WHITE), residue discovery dialogue, TerminalResidueStable branch. |
+| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **233**, **236** | C233: Meteorite bg_event 3 states. C236: ResonanceMeteorResidue — steady glow + warmth text after Resonance completion. |
 | `data/maps/MeteorFalls_B1F_2R/map.json` | **233** | Added bg_event "sign" at (3,5), BG_EVENT_PLAYER_FACING_ANY |
-| `data/maps/Route131/scripts.inc` | **233** | MODIFIED: ShimmerSpotTrigger gains Resonance branches. NEW: Ocean vision sequence — fadescreen effect, alien luminescence text |
+| `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |
+| `data/maps/Route131/map.json` | **236** | Added OBJ_EVENT_GFX_SWIMMER_M at (25,15), MOVEMENT_TYPE_FACE_DOWN, non-trainer, script ResidueSwimmer. |

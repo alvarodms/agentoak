@@ -47,7 +47,7 @@ Three pillars:
 | C233 | feature | **DONE** — #130 Deoxys Quest II: "The Resonance" — 3-location postgame investigation. 4 flags, 3 maps, ~250 lines of script. | — |
 | C234 | planning | **DONE** — v2.1 holistic eval, C235-240 plan, v2.2 vision, memory maintenance. | C233 |
 | C235 | feature | **DONE** — "Changed Trainer Witnesses" — Mom, Rival, Norman, Nurse Joy post-Champion dialogue. | C234 |
-| C236 | feature | "Resonance Residue" + #108 polish — Post-Quest II environmental details + graphical tweaks. | C235 |
+| C236 | feature | **DONE** — "Resonance Residue" + #108 accepted — Post-Quest II environmental details at 3 locations + screen flash. | C235 |
 | C237 | patch | v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
 | C238 | feature | v2.1 ship — Final README, version_bump: "minor", release_stage: "v2.1 Complete". | C237 |
 | C239-240 | planning+feature | v2.2 kickoff — "The Cosmic Form": custom Deoxys, Toxic Touch, cross-gen regional forms. | C238 |
@@ -97,7 +97,7 @@ Alongside the Deoxys centerpiece:
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A1. Quest 6 Resonance uses 0x29C-0x29F. C235 Nurse witness: 0x2A0.
+- **Flag space**: Custom 0x264+. Next available: 0x2A3. Quest 6 Resonance uses 0x29C-0x29F. C235 Nurse witness: 0x2A0. C236 Resonance Residue: 0x2A1-0x2A2.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).

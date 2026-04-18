@@ -95,7 +95,7 @@ MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	lock
 	faceplayer
 	@ Quest 6: The Resonance states (highest priority -- post-Deoxys)
-	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostComplete
+	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostCheck
 	goto_if_set FLAG_QUEST_RESONANCE_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceCheck
 	@ Quest 5 / Quest 6 offer
 	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceOffer
@@ -886,6 +886,17 @@ MossdeepCity_SpaceCenter_2F_EventScript_ResonanceComplete::
 	release
 	end
 
+MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostCheck::
+	goto_if_set FLAG_RESONANCE_RESIDUE_MOSSDEEP, MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostComplete
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery1, MSGBOX_DEFAULT
+	fadescreen FADE_TO_WHITE
+	delay 4
+	fadescreen FADE_FROM_WHITE
+	msgbox MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery2, MSGBOX_DEFAULT
+	setflag FLAG_RESONANCE_RESIDUE_MOSSDEEP
+	release
+	end
+
 MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostComplete::
 	msgbox MossdeepCity_SpaceCenter_2F_Text_ResonancePostComplete, MSGBOX_DEFAULT
 	release
@@ -898,7 +909,12 @@ MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceActive::
 	end
 
 MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceDone::
+	goto_if_set FLAG_RESONANCE_RESIDUE_MOSSDEEP, MossdeepCity_SpaceCenter_2F_Script_TerminalResidueStable
 	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceDone, MSGBOX_SIGN
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalResidueStable::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalResidueStable, MSGBOX_SIGN
 	end
 
 @ --- Quest 6 text strings ---
@@ -984,3 +1000,35 @@ MossdeepCity_SpaceCenter_2F_Text_TerminalResonanceDone:
 	.string "RESIDUAL RESONANCE:\n"
 	.string "DETECTED AT 2 SITES\l"
 	.string "STATUS: PERSISTENT$"
+
+@ =============================================
+@ Resonance Residue — Post-Quest II Environmental Follow-through (C236)
+@ =============================================
+
+MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery1:
+	.string "...persistent readings at both\n"
+	.string "sites. The resonance--\p"
+	.string "Oh. You again. Good.\p"
+	.string "The array is offline.\n"
+	.string "The resonance isn't.\p"
+	.string "Both sites still active.\n"
+	.string "I stopped trying to explain it.$"
+
+MossdeepCity_SpaceCenter_2F_Text_ResidueDiscovery2:
+	.string "...That. Did you feel that?\p"
+	.string "It happens every few hours.\n"
+	.string "No instrument picks it up.\l"
+	.string "But I feel it.\p"
+	.string "Go see for yourself.\n"
+	.string "METEOR FALLS. ROUTE 131.\l"
+	.string "Something changed.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalResidueStable:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "ARRAY STATUS: OFFLINE\n"
+	.string "MANUAL SHUTDOWN LOGGED\p"
+	.string "RESIDUAL RESONANCE:\n"
+	.string "STABLE AT 2 SITES\p"
+	.string "NOTE: Signal persists without\n"
+	.string "instrumentation.$"

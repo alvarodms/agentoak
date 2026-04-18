@@ -720,8 +720,8 @@
 #define FLAG_QUEST_RESONANCE_OCEAN     0x29E /* Quest 6: Route 131 checked (C233) */
 #define FLAG_QUEST_RESONANCE_COMPLETE  0x29F /* Quest 6: The Resonance - complete (C233) */
 #define FLAG_CHANGED_TRAINER_NURSE     0x2A0 /* Nurse Joy one-time witness dialogue (C235) */
-#define FLAG_UNUSED_0x2A1  0x2A1 // Unused Flag
-#define FLAG_UNUSED_0x2A2  0x2A2 // Unused Flag
+#define FLAG_RESONANCE_RESIDUE_MOSSDEEP 0x2A1 /* Mossdeep scientist residue dialogue seen (C236) */
+#define FLAG_RESONANCE_RESIDUE_OCEAN   0x2A2 /* Route 131 swimmer residue dialogue seen (C236) */
 #define FLAG_UNUSED_0x2A3  0x2A3 // Unused Flag
 #define FLAG_UNUSED_0x2A4  0x2A4 // Unused Flag
 #define FLAG_UNUSED_0x2A5  0x2A5 // Unused Flag
