@@ -1313,15 +1313,13 @@ PetalburgCity_Gym_Text_DadGoingToKeepTraining:
 	.string "not avenge my loss to you, {PLAYER}!$"
 
 PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough:
-	.string "DAD: {PLAYER}...\p"
-	.string "You have surpassed even me, and\n"
-	.string "now you face the ELITE FOUR again\l"
-	.string "and again.\p"
-	.string "I hear they are not the same\n"
-	.string "trainers you first defeated.\p"
-	.string "The migration changed their\n"
-	.string "strategies too.\p"
-	.string "Do not underestimate them.$"
+	.string "DAD: That look in your step, {PLAYER}.\n"
+	.string "It's not just the badges talking.\p"
+	.string "You carry yourself like someone\n"
+	.string "who walked through something\l"
+	.string "and came out different.\p"
+	.string "A trainer who stays the same\n"
+	.string "isn't growing.$"
 
 PetalburgCity_Gym_Text_GymGuideAdvice:
 	.string "Hey, how's it going, CHAMPION-\n"

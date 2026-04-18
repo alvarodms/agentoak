@@ -350,6 +350,14 @@ PlayersHouse_1F_Text_DontPushYourselfTooHard:
 	.string "You can always come home.\p"
 	.string "Go for it, honey!$"
 
+PlayersHouse_1F_Text_MomChangedTrainer:
+	.string "MOM: {PLAYER}, your eyes…\n"
+	.string "They're different somehow.\p"
+	.string "You've seen things out there that\n"
+	.string "changed you, haven't you?\p"
+	.string "The child who left isn't quite the\n"
+	.string "one who came back. And that's okay.$"
+
 PlayersHouse_1F_Text_IsThatAPokenav:
 	.string "MOM: What is that, honey? A POKéNAV?\n"
 	.string "Someone from DEVON gave it to you?\p"

@@ -235,6 +235,7 @@ LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayEast:
 
 RivalsHouse_2F_EventScript_Rival::
 	lockall
+	goto_if_set FLAG_SYS_GAME_CLEAR, RivalsHouse_2F_EventScript_RivalWitness
 	goto_if_set FLAG_MET_RIVAL_LILYCOVE, RivalsHouse_2F_EventScript_RivalPostLilycove
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, RivalsHouse_2F_EventScript_May
@@ -248,6 +249,13 @@ RivalsHouse_2F_EventScript_May::
 
 RivalsHouse_2F_EventScript_Brendan::
 	msgbox RivalsHouse_2F_Text_BrendanGettingReady, MSGBOX_DEFAULT
+	releaseall
+	end
+
+RivalsHouse_2F_EventScript_RivalWitness::
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox RivalsHouse_2F_Text_RivalChangedTrainer, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -395,3 +403,11 @@ RivalsHouse_2F_Text_BrendanWhereShouldIGoNext:
 	.string "Hey, {PLAYER}, if I see you while I'm out\n"
 	.string "catching POKéMON, I can pitch you a\l"
 	.string "battle if you'd like.$"
+
+RivalsHouse_2F_Text_RivalChangedTrainer:
+	.string "Hey, {PLAYER}. Is it just me,\n"
+	.string "or do you seem… different lately?\p"
+	.string "I can't put my finger on it.\n"
+	.string "You just feel heavier, somehow.\p"
+	.string "Like you've seen things out there\n"
+	.string "that I haven't. …Yet.$"

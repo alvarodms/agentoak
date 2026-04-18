@@ -9,6 +9,14 @@ OldaleTown_PokemonCenter_1F_OnTransition:
 	end
 
 OldaleTown_PokemonCenter_1F_EventScript_Nurse::
+	goto_if_set FLAG_CHANGED_TRAINER_NURSE, OldaleTown_PokemonCenter_1F_EventScript_NurseHeal
+	goto_if_unset FLAG_SYS_GAME_CLEAR, OldaleTown_PokemonCenter_1F_EventScript_NurseHeal
+	lock
+	faceplayer
+	msgbox OldaleTown_PokemonCenter_1F_Text_NurseWitness, MSGBOX_DEFAULT
+	setflag FLAG_CHANGED_TRAINER_NURSE
+	release
+OldaleTown_PokemonCenter_1F_EventScript_NurseHeal::
 	setvar VAR_0x800B, LOCALID_OLDALE_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
@@ -85,4 +93,13 @@ OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub:
 	.string "The POKéMON WIRELESS CLUB on\n"
 	.string "the second floor was built recently.\p"
 	.string "I traded POKéMON right away.$"
+
+OldaleTown_PokemonCenter_1F_Text_NurseWitness:
+	.string "I've treated a lot of trainers\n"
+	.string "over the years, dear.\p"
+	.string "But I've never seen someone come\n"
+	.string "back from a journey looking\l"
+	.string "quite like you.\p"
+	.string "Your POKéMON are in fine health,\n"
+	.string "though. That's what matters.$"
 

@@ -65,6 +65,19 @@ Cross-referencing NPC dialogue connecting all 4 regional forms (Vulpix_Hoenn, Pi
 | `data/maps/FortreeCity/scripts.inc` | **232** | NEW: ChangedTrainer — notices player's cyan palette, "HOENN changes everyone who walks through it. Not just POKéMON." |
 | `data/maps/FortreeCity/map.json` | **232** | Added OBJ_EVENT_GFX_WOMAN_2 at (34,5) elev 4, MOVEMENT_TYPE_FACE_LEFT |
 
+## Changed Trainer Witnesses — Cycle 235
+
+Post-Champion dialogue: Mom, Rival, Norman, and Nurse Joy notice the player's transformation. Each reacts through their relationship lens (emotional/competitive/evaluative/clinical).
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/scripts/players_house.inc` | **235** | MODIFIED: `PlayersHouse_1F_EventScript_Mom` gains FLAG_SYS_GAME_CLEAR branch → `MomWitness`. Replaces all post-Champion Mom interactions. |
+| `data/maps/LittlerootTown_BrendansHouse_1F/scripts.inc` | **235** | MODIFIED: Added `PlayersHouse_1F_Text_MomChangedTrainer` text label. |
+| `data/maps/LittlerootTown_MaysHouse_2F/scripts.inc` | **235** | MODIFIED: `RivalsHouse_2F_EventScript_Rival` gains FLAG_SYS_GAME_CLEAR branch → `RivalWitness`. Added `RivalsHouse_2F_Text_RivalChangedTrainer`. Shared by both houses. |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | **235** | MODIFIED: `PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough` rewritten as witness dialogue. Same script flow, new text. |
+| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **235** | MODIFIED: Nurse gains one-time witness message gated by FLAG_CHANGED_TRAINER_NURSE (0x2A0) + FLAG_SYS_GAME_CLEAR. Falls through to normal healing. |
+| `include/constants/flags.h` | **235** | FLAG_CHANGED_TRAINER_NURSE at 0x2A0. |
+
 ## Quest 6: The Resonance (C233)
 
 Deoxys Quest II — Three-location postgame investigation. Scientist dialogue, terminal readouts, Meteor Falls meteorite, Route 131 ocean vision.

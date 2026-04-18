@@ -719,7 +719,7 @@
 #define FLAG_QUEST_RESONANCE_METEOR    0x29D /* Quest 6: Meteor Falls checked (C233) */
 #define FLAG_QUEST_RESONANCE_OCEAN     0x29E /* Quest 6: Route 131 checked (C233) */
 #define FLAG_QUEST_RESONANCE_COMPLETE  0x29F /* Quest 6: The Resonance - complete (C233) */
-#define FLAG_UNUSED_0x2A0  0x2A0 // Unused Flag
+#define FLAG_CHANGED_TRAINER_NURSE     0x2A0 /* Nurse Joy one-time witness dialogue (C235) */
 #define FLAG_UNUSED_0x2A1  0x2A1 // Unused Flag
 #define FLAG_UNUSED_0x2A2  0x2A2 // Unused Flag
 #define FLAG_UNUSED_0x2A3  0x2A3 // Unused Flag
