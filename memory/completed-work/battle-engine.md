@@ -69,3 +69,14 @@ Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files: `moves.h`, `batt
 | `src/battle_script_commands.c` | `GetChallengeLevelCap()` function + soft cap check in `Cmd_getexp()` | **182**, **207** | Badge-based caps (18/20/24/30/34/38/42/48/55), 10% EXP above cap. C207: added in-battle feedback message when cap reduces EXP. |
 | `include/constants/battle_string_ids.h` | `STRINGID_PKMNGAINEDEXPCAPPED` (381), BATTLESTRINGS_COUNT → 382 | **207** | Level cap feedback string ID |
 | `src/battle_message.c` | `sText_PkmnGainedEXPCapped` string + table entry | **207** | Two-page message: EXP gained + "EXP reduced by the level cap." |
+
+## Custom Ability: Toxic Touch (C241)
+
+First custom ability in the hack. 30% chance to poison the target when the holder uses ANY damaging move (no contact required).
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/abilities.h` | Added ABILITY_TOXIC_TOUCH = 78, ABILITIES_COUNT → 79 | **241** | First custom ability constant |
+| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **241** | "TOXIC TOUCH", "Its attacks leave a toxic residue." |
+| `src/battle_util.c` | Toxic Touch logic in ABILITYEFFECT_ON_DAMAGE case, after inner switch | **241** | Checks attacker ability directly (not gLastUsedAbility). No FLAG_MAKES_CONTACT. Blocks: Substitute, status1, confusionSelfDmg, no-effect, power==0 |
+| `src/data/pokemon/species_info.h` | Deoxys_Hoenn ability1: ABILITY_PRESSURE → ABILITY_TOXIC_TOUCH | **241** | ability2 stays ABILITY_PRESSURE |

@@ -143,6 +143,14 @@ Ad-hoc scripts per batch (C213, C218) cover ~22-27 files. Manual edits still nee
 
 ---
 
+## Custom Ability Implementation Pattern (C241)
+
+**4 files minimum**: (1) `include/constants/abilities.h` — constant + bump ABILITIES_COUNT. (2) `src/data/text/abilities.h` — 3 additions: description string, gAbilityNames entry, gAbilityDescriptionPointers entry. (3) `src/battle_util.c` — battle effect logic. (4) `src/data/pokemon/species_info.h` — assign to species.
+
+**Battle hook for attacker-triggered abilities**: Add logic AFTER the inner `switch (gLastUsedAbility)` in the `ABILITYEFFECT_ON_DAMAGE` case. Check `gBattleMons[gBattlerAttacker].ability` directly (not gLastUsedAbility, which is the target's ability). Set `gLastUsedAbility` to the custom ability for battle script display. Call `RecordAbilityBattle(gBattlerAttacker, ...)` explicitly since the default recording uses `battler` (= target). Use `BattleScript_ApplySecondaryEffect` with `MOVE_EFFECT_POISON` (no `MOVE_EFFECT_AFFECTS_USER` — that flag applies to the ATTACKER, not the target).
+
+---
+
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
 `Cmd_getexp()` in battle_script_commands.c. `GetChallengeLevelCap()` returns per-badge cap (18/20/24/30/34/38/42/48/55); EXP /= 10 when over. `IsChallengeModeActive()` macro in flags.h. BATTLESTRINGS_COUNT = 382.

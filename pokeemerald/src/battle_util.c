@@ -2869,6 +2869,24 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 }
                 break;
             }
+            if (effect == 0
+             && gBattleMons[gBattlerAttacker].ability == ABILITY_TOXIC_TOUCH
+             && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+             && gBattleMons[gBattlerTarget].hp != 0
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && TARGET_TURN_DAMAGED
+             && gBattleMoves[move].power != 0
+             && !(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
+             && (Random() % 3) == 0)
+            {
+                gLastUsedAbility = ABILITY_TOXIC_TOUCH;
+                RecordAbilityBattle(gBattlerAttacker, gLastUsedAbility);
+                gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_POISON;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_ApplySecondaryEffect;
+                gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
+                effect++;
+            }
             break;
         case ABILITYEFFECT_IMMUNITY: // 5
             for (battler = 0; battler < gBattlersCount; battler++)

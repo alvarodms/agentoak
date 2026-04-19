@@ -40,6 +40,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
+- **Custom ability: Toxic Touch** — the hack's first original game mechanic. Deoxys (Hoenn) carries this signature ability, which gives any damaging move a 30% chance to poison the target. Offensive and aggressive, rewarding the glass cannon playstyle
 
 ### Trainer Overhaul
 
@@ -137,6 +138,14 @@ Familiar species transformed by Hoenn's unique environment. Some are discovered 
 | Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) |
 | Pinsir (Hoenn) | Bug/Fire | Route 112 (5%) | — (standalone form) |
 | Stantler (Hoenn) | Ghost/Grass | Route 119 (4%) | — (standalone form) |
+
+#### The Cosmic Form
+
+The migration's ultimate legacy — a being born from Hoenn's entanglement with cosmic forces.
+
+| Species | Type | Where to Find | Custom Ability |
+|---------|------|---------------|----------------|
+| Deoxys (Hoenn) | Poison/Fairy | Postgame quest: The Answer | Toxic Touch — 30% chance to poison on any damaging move |
 
 ### How to Play
 

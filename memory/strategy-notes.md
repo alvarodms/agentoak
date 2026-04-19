@@ -179,7 +179,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 |-------|------|-----------|
 | C239 | planning | v2.2 design document + RGBA auto-conversion script |
 | C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
-| C241 | feature | Toxic Touch ability implementation + assign to Deoxys_Hoenn |
+| C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
 | C242 | feature | Quest III "The Answer" — script events, Sky Pillar encounter, dialogue |
 | C243 | patch | Quest III polish + Residue aftermath callbacks + sprite work (#131) |
 | C244-245 | feature | Trainer teams narrative pass — early & mid game (#143) |
@@ -191,7 +191,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 
 ## Engineering Prerequisites
 - ✅ RGBA auto-conversion script (shipped C239)
-- Toxic Touch custom ability — C241, ~7 files, offensive contact variant
+- ✅ Toxic Touch custom ability (C241) — 4 files, ABILITYEFFECT_ON_DAMAGE hook
 - Species pipeline validation for custom (non-variant) species — C240, verify during registration
 - Sprite creation for Deoxys_Hoenn — Sprite Designer agent, hot pink/cyan palette, unsettling beauty aesthetic
 
