@@ -104,6 +104,12 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | `data/maps/MossdeepCity_Gym/scripts.inc` | **245** | Tate & Liza: SURGICAL INSERT of cosmic foreshadowing before existing C214 Farigiraf dialogue. "We've been feeling something -- from very far away. It hasn't arrived yet." |
 | `data/maps/SootopolisCity_Gym_1F/scripts.inc` | **245** | Juan intro rewritten: quietest leader, fewest words. "The tides carry new things since the Stirring." Understated certainty. |
 
+## Late-Game Trainer Narrative Pass — Cycle 246
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/VictoryRoad_1F/scripts.inc` | **246** | Wally entrance pre-fight: Petalburg callback + "New POKéMON found me on the way here." Defeat: pride in growth. Post-entrance: migration Pokémon "showed me who I could be." Exit intro: post-Champion training. Exit defeat: "getting closer every time." PostBattle left unchanged. |
+
 ## Quest 7: The Answer (C242)
 
 Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.

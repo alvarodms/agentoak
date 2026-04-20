@@ -1142,9 +1142,9 @@ static const struct TrainerMonItemCustomMoves sParty_Edgar[] = {
     {
     .iv = 180,
     .lvl = 41,
-    .species = SPECIES_GOLEM,
+    .species = SPECIES_MAMOSWINE,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_EXPLOSION, MOVE_DOUBLE_EDGE}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_PUNCH, MOVE_ROCK_SLIDE, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 180,
@@ -1183,9 +1183,9 @@ static const struct TrainerMonItemCustomMoves sParty_Samuel[] = {
     {
     .iv = 180,
     .lvl = 43,
-    .species = SPECIES_DONPHAN,
+    .species = SPECIES_MAMOSWINE,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_RAPID_SPIN, MOVE_ROAR}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_PUNCH, MOVE_ROCK_SLIDE, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 180,
@@ -1238,9 +1238,9 @@ static const struct TrainerMonItemCustomMoves sParty_Owen[] = {
     {
     .iv = 180,
     .lvl = 46,
-    .species = SPECIES_GLALIE,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_ICE_BEAM, MOVE_CRUNCH, MOVE_SHADOW_BALL, MOVE_EXPLOSION}
+    .species = SPECIES_WEAVILE,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_ICE_PUNCH, MOVE_BRICK_BREAK, MOVE_AERIAL_ACE}
     },
     {
     .iv = 180,
@@ -8635,9 +8635,9 @@ static const struct TrainerMonItemCustomMoves sParty_WallyVR1[] = {
     {
     .iv = 200,
     .lvl = 57,
-    .species = SPECIES_TAUROS,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_RETURN, MOVE_EARTHQUAKE, MOVE_IRON_TAIL, MOVE_ROCK_SLIDE}
+    .species = SPECIES_NINETALES_HOENN,
+    .heldItem = ITEM_NEVER_MELT_ICE,
+    .moves = {MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_ENERGY_BALL}
     },
     {
     .iv = 200,
@@ -10893,8 +10893,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR2[] = {
     {
     .iv = 150,
     .lvl = 46,
-    .species = SPECIES_JYNX,
-    .moves = {MOVE_BLIZZARD, MOVE_PSYCHIC, MOVE_LOVELY_KISS, MOVE_ICE_PUNCH}
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_ENERGY_BALL}
     },
     {
     .iv = 250,
@@ -10926,8 +10926,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR3[] = {
     {
     .iv = 150,
     .lvl = 49,
-    .species = SPECIES_JYNX,
-    .moves = {MOVE_BLIZZARD, MOVE_PSYCHIC, MOVE_LOVELY_KISS, MOVE_ICE_PUNCH}
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_SHADOW_BALL}
     },
     {
     .iv = 250,
@@ -10959,8 +10959,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR4[] = {
     {
     .iv = 150,
     .lvl = 52,
-    .species = SPECIES_JYNX,
-    .moves = {MOVE_BLIZZARD, MOVE_PSYCHIC, MOVE_LOVELY_KISS, MOVE_ICE_PUNCH}
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_SHADOW_BALL}
     },
     {
     .iv = 250,
@@ -10992,8 +10992,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR5[] = {
     {
     .iv = 150,
     .lvl = 55,
-    .species = SPECIES_JYNX,
-    .moves = {MOVE_BLIZZARD, MOVE_PSYCHIC, MOVE_LOVELY_KISS, MOVE_ICE_PUNCH}
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_ICE_BEAM, MOVE_SHADOW_BALL}
     },
     {
     .iv = 250,

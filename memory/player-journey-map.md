@@ -33,6 +33,8 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 **"The Gathering Storm" arc (v1.7)**: City atmosphere NPCs (C186) → ocean witnesses (C187) → Deep Migration R128 (C188) → The Gathering R126 (C189) → permanent fog + post-Gathering callbacks (C190). Victory Road redesigned (C175). E4 + Champion redesigned with cross-gen evos (C203-204, C212-218).
 
+**Wally's Migration Bond (C246)**: Tauros→Ninetales_Hoenn (Ice/Fairy) — "New POKéMON found me on the way here." Fairy pairing with Gardevoir ace. VR rematches evolve into Calm Mind sweeper. **3 VR silent swaps**: Edgar (Golem→Mamoswine), Samuel (Donphan→Mamoswine), Owen (Glalie→Weavile). Migration species appear without commentary — "silent normalization."
+
 **Emotional arc**: Unease → observation → shock → dread → triumph
 
 ---

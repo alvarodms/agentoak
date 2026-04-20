@@ -155,7 +155,8 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C243 | patch | **DONE** — Quest III aftermath polish: 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement |
 | C244 | feature | **DONE** — Trainer narrative pass Badges 1-4: Roxanne (Bagon_Hoenn), Flannery (Pinsir_Hoenn), R112/R113 route trainers, Rival R119 (Stantler_Hoenn), 4 gym intros rewritten (#143 partial) |
 | C245 | feature | **DONE** — Trainer narrative pass Badges 5-8: Norman/Winona/Tate&Liza/Juan dialogue rewritten, Honchkrow on Winona, Stantler_Hoenn Lv25→28 fix |
-| C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
+| C246 | feature | **DONE** — Late-game trainer pass: Wally VR Ninetales_Hoenn swap + dialogue rewrite, 3 VR silent swaps (Mamoswine×2, Weavile) |
+| C247 | feature | Trainer teams narrative pass — postgame (#143) |
 | C248-249 | feature | Team Magma/Aqua rework (#144) |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |
 | C252 | patch | v2.2 consistency pass |
