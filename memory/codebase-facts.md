@@ -31,6 +31,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_TEMP_* reset on map transition — coord_events using them as guards fire once per visit.
 
+**Quest 7 flag space**: FLAG_QUEST_COSMIC_STARTED (0x2A3), FLAG_QUEST_COSMIC_COMPLETE (0x2A4), FLAG_QUEST_COSMIC_APPEARED (0x2A5). Next available: 0x2A6.
+
 ---
 
 ## Wild Encounter JSON Rules

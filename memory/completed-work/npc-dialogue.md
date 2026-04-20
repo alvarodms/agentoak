@@ -90,3 +90,16 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | `data/maps/MeteorFalls_B1F_2R/map.json` | **233** | Added bg_event "sign" at (3,5), BG_EVENT_PLAYER_FACING_ANY |
 | `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |
 | `data/maps/Route131/map.json` | **236** | Added OBJ_EVENT_GFX_SWIMMER_M at (25,15), MOVEMENT_TYPE_FACE_DOWN, non-trainer, script ResidueSwimmer. |
+
+## Quest 7: The Answer (C242)
+
+Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `include/constants/flags.h` | **242** | FLAGS 0x2A3-0x2A5 (QUEST_COSMIC_STARTED/COMPLETE/APPEARED). |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **242** | Quest 7 branches added to Scientist NPC (CosmicOffer/Reminder/Done) and Terminal (CosmicPending/Active/Done). ~112 new lines of script + text. |
+| `data/maps/SkyPillar_Top/scripts.inc` | **242** | CosmicArrival coord_event handler: 6-beat atmospheric sequence (silence→shimmer→double flash→cry→shake→presence), retry path, caught/not-caught outcomes. ~138 new lines. |
+| `data/maps/SkyPillar_Top/map.json` | **242** | Added coord_event at (14,9) with VAR_TEMP_1 guard for CosmicArrival script. |
+| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242** | CosmicAftermath branch: meteorites cooled, energy found its target. |
+| `data/maps/Route131/scripts.inc` | **242** | CosmicAftermath branch: lights out, sea waiting-still. |

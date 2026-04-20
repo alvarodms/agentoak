@@ -7,6 +7,7 @@ MeteorFalls_B1F_2R_MapScripts::
 
 MeteorFalls_B1F_2R_EventScript_ResonanceMeteor::
 	lock
+	goto_if_set FLAG_QUEST_COSMIC_COMPLETE, MeteorFalls_B1F_2R_EventScript_CosmicAftermath
 	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorResidue
 	goto_if_set FLAG_QUEST_RESONANCE_METEOR, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorDone
 	goto_if_unset FLAG_QUEST_RESONANCE_STARTED, MeteorFalls_B1F_2R_EventScript_ResonanceMeteorInert
@@ -74,3 +75,21 @@ MeteorFalls_B1F_2R_Text_ResonanceMeteorResidue:
 	.string "stone. The warmth doesn't\l"
 	.string "come from the surface.\p"
 	.string "It comes from deeper.$"
+
+@ =============================================
+@ Quest 7: The Answer -- Meteor Falls Aftermath (C242)
+@ =============================================
+
+MeteorFalls_B1F_2R_EventScript_CosmicAftermath::
+	msgbox MeteorFalls_B1F_2R_Text_CosmicAftermath, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_B1F_2R_Text_CosmicAftermath:
+	.string "The hum stopped.\p"
+	.string "The meteorites are cool to\n"
+	.string "the touch for the first time\l"
+	.string "in weeks.\p"
+	.string "Whatever energy was building\n"
+	.string "here... it found what it\l"
+	.string "was looking for.$"

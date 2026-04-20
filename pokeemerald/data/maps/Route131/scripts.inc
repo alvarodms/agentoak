@@ -195,6 +195,7 @@ Route131_Text_ResonanceOceanVision2:
 Route131_EventScript_ResidueSwimmer::
 	lock
 	faceplayer
+	goto_if_set FLAG_QUEST_COSMIC_COMPLETE, Route131_EventScript_CosmicAftermath
 	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, Route131_EventScript_ResidueSwimmerPostResonance
 	msgbox Route131_Text_ResidueSwimmerNormal, MSGBOX_DEFAULT
 	release
@@ -231,4 +232,23 @@ Route131_Text_ResidueSwimmerRevisit:
 	.string "Lights were out again last\n"
 	.string "night. Getting used to\l"
 	.string "them, honestly.$"
+
+@ =============================================
+@ Quest 7: The Answer -- Route 131 Aftermath (C242)
+@ =============================================
+
+Route131_EventScript_CosmicAftermath::
+	msgbox Route131_Text_CosmicAftermath, MSGBOX_DEFAULT
+	release
+	end
+
+Route131_Text_CosmicAftermath:
+	.string "The lights went out last\n"
+	.string "night.\p"
+	.string "The water went still.\n"
+	.string "Like it's holding its breath.\p"
+	.string "Not scared-still.\n"
+	.string "Waiting-still.\p"
+	.string "Like the sea knows something\n"
+	.string "happened.$"
 

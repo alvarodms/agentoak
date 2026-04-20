@@ -152,7 +152,9 @@ But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself change
 - Space Center scientist: "The signal went quiet. Whatever crossed over... it's here now."
 - Sets FLAG_QUEST7_COMPLETE (0x2A4)
 
-**Flags**: FLAG_QUEST7_STARTED (0x2A3), FLAG_QUEST7_COMPLETE (0x2A4). Next available: 0x2A5.
+**Flags**: FLAG_QUEST_COSMIC_STARTED (0x2A3), FLAG_QUEST_COSMIC_COMPLETE (0x2A4), FLAG_QUEST_COSMIC_APPEARED (0x2A5). Next available: 0x2A6.
+
+**Status**: **DONE (C242)** — Full encounter implemented: coord_event trigger, 6-beat atmospheric buildup, retry path, aftermath callbacks at 3 locations, terminal branches.
 
 ## v2.2 Trainer & Narrative Layer
 
@@ -180,7 +182,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C239 | planning | v2.2 design document + RGBA auto-conversion script |
 | C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
 | C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
-| C242 | feature | Quest III "The Answer" — script events, Sky Pillar encounter, dialogue |
+| C242 | feature | **DONE** — Quest III "The Answer": 6-beat atmospheric buildup, Lv70 encounter, 3-location aftermath callbacks |
 | C243 | patch | Quest III polish + Residue aftermath callbacks + sprite work (#131) |
 | C244-245 | feature | Trainer teams narrative pass — early & mid game (#143) |
 | C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
@@ -207,7 +209,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A5. Quest 6 Resonance uses 0x29C-0x29F. C235 Nurse witness: 0x2A0. C236 Resonance Residue: 0x2A1-0x2A2. Quest 7 reserved: 0x2A3-0x2A4.
+- **Flag space**: Custom 0x264+. Next available: 0x2A6. Quest 6: 0x29C-0x29F. C235 Nurse: 0x2A0. C236 Residue: 0x2A1-0x2A2. Quest 7 Cosmic: 0x2A3-0x2A5.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).

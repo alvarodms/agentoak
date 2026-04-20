@@ -94,7 +94,11 @@ MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated:
 MossdeepCity_SpaceCenter_2F_EventScript_Scientist::
 	lock
 	faceplayer
-	@ Quest 6: The Resonance states (highest priority -- post-Deoxys)
+	@ Quest 7: The Answer states (highest priority)
+	goto_if_set FLAG_QUEST_COSMIC_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_CosmicDone
+	goto_if_set FLAG_QUEST_COSMIC_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_CosmicReminder
+	goto_if_set FLAG_RESONANCE_RESIDUE_MOSSDEEP, MossdeepCity_SpaceCenter_2F_EventScript_CosmicOffer
+	@ Quest 6: The Resonance states
 	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_EventScript_ResonancePostCheck
 	goto_if_set FLAG_QUEST_RESONANCE_STARTED, MossdeepCity_SpaceCenter_2F_EventScript_ResonanceCheck
 	@ Quest 5 / Quest 6 offer
@@ -659,6 +663,9 @@ MossdeepCity_SpaceCenter_2F_EventScript_DeoxysGoCheck::
 @ --- Terminal bg_event script ---
 
 MossdeepCity_SpaceCenter_2F_Script_DeoxysTerminal::
+	goto_if_set FLAG_QUEST_COSMIC_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicDone
+	goto_if_set FLAG_QUEST_COSMIC_STARTED, MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicActive
+	goto_if_set FLAG_RESONANCE_RESIDUE_MOSSDEEP, MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicPending
 	goto_if_set FLAG_QUEST_RESONANCE_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceDone
 	goto_if_set FLAG_QUEST_RESONANCE_STARTED, MossdeepCity_SpaceCenter_2F_Script_TerminalResonanceActive
 	goto_if_set FLAG_QUEST_DEOXYS_COMPLETE, MossdeepCity_SpaceCenter_2F_Script_TerminalQuiet
@@ -1042,3 +1049,106 @@ MossdeepCity_SpaceCenter_2F_Text_TerminalResidueStable:
 	.string "STABLE AT 2 SITES\p"
 	.string "NOTE: Signal persists without\n"
 	.string "instrumentation.$"
+
+@ =============================================
+@ Quest 7: The Answer (C242)
+@ Post-Resonance convergence -- requires Residue seen
+@ =============================================
+
+@ --- Scientist NPC branches ---
+
+MossdeepCity_SpaceCenter_2F_EventScript_CosmicOffer::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_CosmicOffer, MSGBOX_DEFAULT
+	setflag FLAG_QUEST_COSMIC_STARTED
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_CosmicReminder::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_CosmicReminder, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_CosmicDone::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_CosmicDone, MSGBOX_DEFAULT
+	release
+	end
+
+@ --- Terminal bg_event branches ---
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicPending::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicPending, MSGBOX_SIGN
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicActive::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicActive, MSGBOX_SIGN
+	end
+
+MossdeepCity_SpaceCenter_2F_Script_TerminalCosmicDone::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicDone, MSGBOX_SIGN
+	end
+
+@ --- Quest 7 text strings ---
+
+MossdeepCity_SpaceCenter_2F_Text_CosmicOffer:
+	.string "...You need to hear this.\p"
+	.string "The three sites stopped\n"
+	.string "resonating independently.\p"
+	.string "They've synchronized.\n"
+	.string "Same frequency. Same rhythm.\l"
+	.string "All at once.\p"
+	.string "But that isn't why I need\n"
+	.string "you.\p"
+	.string "The signal isn't broadcasting\n"
+	.string "anymore. It's narrowing.\l"
+	.string "Focusing on a single point.\p"
+	.string "I need you to understand--\n"
+	.string "the signal isn't calling to\l"
+	.string "us anymore.\p"
+	.string "It's calling to you.\p"
+	.string "The convergence point is\n"
+	.string "the summit of SKY PILLAR.\p"
+	.string "Whatever answered your\n"
+	.string "handshake... it's waiting\l"
+	.string "there.\p"
+	.string "For you.$"
+
+MossdeepCity_SpaceCenter_2F_Text_CosmicReminder:
+	.string "SKY PILLAR. The summit.\p"
+	.string "The signal is still focused\n"
+	.string "there. Still waiting.\p"
+	.string "Please. Go.$"
+
+MossdeepCity_SpaceCenter_2F_Text_CosmicDone:
+	.string "The array has been quiet since\n"
+	.string "you returned from the summit.\p"
+	.string "No more resonance. No more\n"
+	.string "signals. Just quiet.\p"
+	.string "Whatever crossed over...\n"
+	.string "it chose HOENN. It chose you.\p"
+	.string "I think the story is over.\n"
+	.string "Ours and theirs.$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicPending:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "MODE: CONVERGENCE\n"
+	.string "TARGET: SKY PILLAR SUMMIT\p"
+	.string "SIGNAL NARROWING\n"
+	.string "FOCUS: SINGLE POINT\l"
+	.string "STATUS: LOCKED$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicActive:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "MODE: CONVERGENCE\n"
+	.string "TARGET: SKY PILLAR SUMMIT\p"
+	.string "AWAITING FIELD REPORT\n"
+	.string "STATUS: TRANSMITTING$"
+
+MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicDone:
+	.string "MOSSDEEP DEEP-SPACE ARRAY\n"
+	.string "SIGNAL MONITOR v3.1\p"
+	.string "ALL SIGNALS: TERMINATED\n"
+	.string "ARRAY STATUS: NOMINAL\p"
+	.string "FINAL LOG: Contact confirmed.\n"
+	.string "File closed.$"
