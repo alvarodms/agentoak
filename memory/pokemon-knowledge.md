@@ -47,5 +47,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Trainer Teams Narrative Pass — Design Patterns | 243 | [trainer-narrative-pass-patterns.md](pokemon-knowledge/trainer-narrative-pass-patterns.md) |
 | Badges 5-8 Narrative Pass — Community Patterns | 245 | [badges-5-8-narrative-pass-patterns.md](pokemon-knowledge/badges-5-8-narrative-pass-patterns.md) |
 | Late-Game & Postgame Trainer Narrative Patterns | 246 | [late-postgame-trainer-narrative-patterns.md](pokemon-knowledge/late-postgame-trainer-narrative-patterns.md) |
+| Postgame Rematch & Trainer Design Patterns | 247 | [postgame-rematch-design-patterns.md](pokemon-knowledge/postgame-rematch-design-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

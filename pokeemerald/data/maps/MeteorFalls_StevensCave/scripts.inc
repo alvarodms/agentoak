@@ -29,6 +29,10 @@ MeteorFalls_StevensCave_EventScript_Defeated::
 MeteorFalls_StevensCave_Text_ShouldKnowHowGoodIAmExpectWorst:
 	.string "STEVEN: Oh, wow, {PLAYER}{KUN}.\n"
 	.string "I'm amazed you knew where to find me.\p"
+	.string "I climbed SKY PILLAR after the\n"
+	.string "disturbance, {PLAYER}{KUN}.\p"
+	.string "Whatever stirred up there…\n"
+	.string "it wasn't meant for me.\p"
 	.string "Do you, uh…maybe think of me as\n"
 	.string "just a rock maniac?\p"
 	.string "No, that can't be right.\p"

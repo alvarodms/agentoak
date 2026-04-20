@@ -19,6 +19,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
+**Validator checks (C247)**: 6 checks total. Check 1-4: ID/entry/party cross-references, party count consistency. **Check 5**: Field-level validation per struct type (TrainerMonNoItemDefaultMoves needs .iv/.lvl/.species; ItemCustomMoves adds .heldItem/.moves). **Check 6**: Species/move/item constant existence validation against include/constants/. Pre-existing bugs found: sParty_Sawyer1 and sParty_GruntAquaHideout1 are empty arrays (0 members).
+
 **Capacity**: TRAINERS_COUNT = 885 (at cap). 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
 
 ---
@@ -77,7 +79,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
 
-**Custom flags**: 0x264-0x2A2 used (v6.0 through v2.1). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. Next available: 0x2A3.
+**Custom flags**: 0x264-0x2A5 used (v6.0 through v2.2). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. 0x2A3-0x2A5 = Quest III Cosmic. Next available: 0x2A6.
 
 **Beast flags**: System flags 0x881-0x886.
 
@@ -118,13 +120,14 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Build Validation Targets (C141, C170, C206, C220, C222, C225)
+## Build Validation Targets (C141, C170, C206, C220, C222, C225, C247)
 
 `make check_scripts` — Lints .inc files for non-charmap characters.
 `make check_encounters` — Node.js validator for `wild_encounters.json`.
 `make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
 `make check_species` — Runs `scripts/check_species_registration.sh` on all custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
 `make check_evolution` — Bash validator for evolution.h: source/target species, method validity, duplicates, gender-gated evos, branching uniqueness.
+`make check_trainers` — Bash validator (6 checks): cross-references IDs/entries/parties, party count, field-level struct validation, constant existence.
 `make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution.
 
 **ScriptCheckPokedexSeen** (C225): `setvar VAR_0x8004, SPECIES_X` → `specialvar VAR_RESULT, ScriptCheckPokedexSeen` → returns 1/0.

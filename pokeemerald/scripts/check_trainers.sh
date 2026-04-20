@@ -98,6 +98,82 @@ while IFS=$'\t' read -r trainer macro party; do
     fi
 done < "$tmpdir/trainer_party_map.txt"
 
+# --- Check 5: Field-level party validation ---
+# Struct type determines which fields each member must/must not have:
+#   TrainerMonItemCustomMoves:      MUST have .heldItem AND .moves
+#   TrainerMonNoItemDefaultMoves:   must NOT have .heldItem or .moves
+#   TrainerMonNoItemCustomMoves:    must NOT have .heldItem, MUST have .moves
+#   TrainerMonItemDefaultMoves:     MUST have .heldItem, must NOT have .moves
+check5_errors=$(awk '
+/static const struct/ && /sParty_/ {
+    stype = $4
+    party = $5
+    gsub(/\[\]/, "", party)
+    in_party = 1
+    member_idx = 0
+    in_member = 0
+    next
+}
+in_party && !in_member && /^[ \t]+\{[ \t]*$/ {
+    in_member = 1
+    has_item = 0
+    has_moves = 0
+    next
+}
+in_member && /\.heldItem/ { has_item = 1 }
+in_member && /\.moves/ { has_moves = 1 }
+in_member && /^[ \t]+\}/ {
+    member_idx++
+    if (stype == "TrainerMonItemCustomMoves") {
+        if (!has_item) printf "ERROR: %s member %d missing .heldItem (required by %s)\n", party, member_idx, stype
+        if (!has_moves) printf "ERROR: %s member %d missing .moves (required by %s)\n", party, member_idx, stype
+    } else if (stype == "TrainerMonNoItemDefaultMoves") {
+        if (has_item) printf "ERROR: %s member %d has .heldItem (forbidden by %s)\n", party, member_idx, stype
+        if (has_moves) printf "ERROR: %s member %d has .moves (forbidden by %s)\n", party, member_idx, stype
+    } else if (stype == "TrainerMonNoItemCustomMoves") {
+        if (has_item) printf "ERROR: %s member %d has .heldItem (forbidden by %s)\n", party, member_idx, stype
+        if (!has_moves) printf "ERROR: %s member %d missing .moves (required by %s)\n", party, member_idx, stype
+    } else if (stype == "TrainerMonItemDefaultMoves") {
+        if (!has_item) printf "ERROR: %s member %d missing .heldItem (required by %s)\n", party, member_idx, stype
+        if (has_moves) printf "ERROR: %s member %d has .moves (forbidden by %s)\n", party, member_idx, stype
+    }
+    in_member = 0
+    next
+}
+in_party && /^\};/ {
+    in_party = 0
+}
+' "$PARTIES")
+
+if [[ -n "$check5_errors" ]]; then
+    echo "$check5_errors"
+    check5_count=$(echo "$check5_errors" | grep -c "^ERROR:")
+    errors=$((errors + check5_count))
+fi
+
+# --- Check 6: Party size validation (1-6 members) ---
+check6_errors=$(awk '
+/static const struct/ && /sParty_/ {
+    party = $5
+    gsub(/\[\]/, "", party)
+    in_party = 1
+    member_count = 0
+    next
+}
+in_party && /^[ \t]+\{[ \t]*$/ { member_count++ }
+in_party && /^\};/ {
+    if (member_count == 0) printf "ERROR: %s has 0 members\n", party
+    if (member_count > 6) printf "ERROR: %s has %d members (max 6)\n", party, member_count
+    in_party = 0
+}
+' "$PARTIES")
+
+if [[ -n "$check6_errors" ]]; then
+    echo "$check6_errors"
+    check6_count=$(echo "$check6_errors" | grep -c "^ERROR:")
+    errors=$((errors + check6_count))
+fi
+
 echo "check_trainers: $errors errors, $warnings warnings"
 if [[ "$errors" -gt 0 ]]; then
     exit 1

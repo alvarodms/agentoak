@@ -156,7 +156,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C244 | feature | **DONE** — Trainer narrative pass Badges 1-4: Roxanne (Bagon_Hoenn), Flannery (Pinsir_Hoenn), R112/R113 route trainers, Rival R119 (Stantler_Hoenn), 4 gym intros rewritten (#143 partial) |
 | C245 | feature | **DONE** — Trainer narrative pass Badges 5-8: Norman/Winona/Tate&Liza/Juan dialogue rewritten, Honchkrow on Winona, Stantler_Hoenn Lv25→28 fix |
 | C246 | feature | **DONE** — Late-game trainer pass: Wally VR Ninetales_Hoenn swap + dialogue rewrite, 3 VR silent swaps (Mamoswine×2, Weavile) |
-| C247 | feature | Trainer teams narrative pass — postgame (#143) |
+| C247 | feature | **DONE** — Postgame rematch pass: Roxanne/Flannery/Winona T1-T4 (Bagon_Hoenn/Pinsir_Hoenn/Honchkrow), Steven Sky Pillar dialogue coda, check_trainers.sh extended (Check 5+6). #143 complete. |
 | C248-249 | feature | Team Magma/Aqua rework (#144) |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |
 | C252 | patch | v2.2 consistency pass |
