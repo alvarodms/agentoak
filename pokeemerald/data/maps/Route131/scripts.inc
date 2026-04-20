@@ -243,12 +243,12 @@ Route131_EventScript_CosmicAftermath::
 	end
 
 Route131_Text_CosmicAftermath:
-	.string "The lights went out last\n"
-	.string "night.\p"
-	.string "The water went still.\n"
-	.string "Like it's holding its breath.\p"
-	.string "Not scared-still.\n"
-	.string "Waiting-still.\p"
-	.string "Like the sea knows something\n"
-	.string "happened.$"
+	.string "The lights stopped last\n"
+	.string "night. All at once.\p"
+	.string "The water went dead still.\n"
+	.string "No waves. No current.\l"
+	.string "For maybe ten seconds.\p"
+	.string "Then something moved\n"
+	.string "underneath. Big.\p"
+	.string "I didn't look down.$"
 

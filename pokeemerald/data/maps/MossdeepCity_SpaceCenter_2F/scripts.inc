@@ -1064,7 +1064,13 @@ MossdeepCity_SpaceCenter_2F_EventScript_CosmicOffer::
 	end
 
 MossdeepCity_SpaceCenter_2F_EventScript_CosmicReminder::
+	goto_if_set FLAG_QUEST_COSMIC_APPEARED, MossdeepCity_SpaceCenter_2F_EventScript_CosmicReturnReminder
 	msgbox MossdeepCity_SpaceCenter_2F_Text_CosmicReminder, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_SpaceCenter_2F_EventScript_CosmicReturnReminder::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_CosmicReturnReminder, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1118,6 +1124,14 @@ MossdeepCity_SpaceCenter_2F_Text_CosmicReminder:
 	.string "there. Still waiting.\p"
 	.string "Please. Go.$"
 
+MossdeepCity_SpaceCenter_2F_Text_CosmicReturnReminder:
+	.string "You saw it. You fought it.\p"
+	.string "The signal scattered when\n"
+	.string "it withdrew. But it's\l"
+	.string "reforming.\p"
+	.string "It's still there.\n"
+	.string "Still waiting for you.$"
+
 MossdeepCity_SpaceCenter_2F_Text_CosmicDone:
 	.string "The array has been quiet since\n"
 	.string "you returned from the summit.\p"
@@ -1150,5 +1164,6 @@ MossdeepCity_SpaceCenter_2F_Text_TerminalCosmicDone:
 	.string "SIGNAL MONITOR v3.1\p"
 	.string "ALL SIGNALS: TERMINATED\n"
 	.string "ARRAY STATUS: NOMINAL\p"
-	.string "FINAL LOG: Contact confirmed.\n"
+	.string "FINAL LOG: Signal did not\n"
+	.string "cease. Signal completed.\l"
 	.string "File closed.$"

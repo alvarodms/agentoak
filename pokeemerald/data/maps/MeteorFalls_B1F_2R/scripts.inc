@@ -87,9 +87,9 @@ MeteorFalls_B1F_2R_EventScript_CosmicAftermath::
 
 MeteorFalls_B1F_2R_Text_CosmicAftermath:
 	.string "The hum stopped.\p"
-	.string "The meteorites are cool to\n"
-	.string "the touch for the first time\l"
-	.string "in weeks.\p"
-	.string "Whatever energy was building\n"
-	.string "here... it found what it\l"
-	.string "was looking for.$"
+	.string "You press your hand to the\n"
+	.string "stone. Cool. For the first\l"
+	.string "time in weeks, cool.\p"
+	.string "The warmth that lived here\n"
+	.string "has gone somewhere.\p"
+	.string "You think you know where.$"

@@ -98,8 +98,8 @@ Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger,
 | File | Cycle | Notes |
 |------|-------|-------|
 | `include/constants/flags.h` | **242** | FLAGS 0x2A3-0x2A5 (QUEST_COSMIC_STARTED/COMPLETE/APPEARED). |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **242** | Quest 7 branches added to Scientist NPC (CosmicOffer/Reminder/Done) and Terminal (CosmicPending/Active/Done). ~112 new lines of script + text. |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **242**, **243** | Quest 7 branches added to Scientist NPC (CosmicOffer/Reminder/Done) and Terminal (CosmicPending/Active/Done). ~112 new lines of script + text. C243: CosmicReminder branches on FLAG_QUEST_COSMIC_APPEARED → CosmicReturnReminder (post-fight retry text). TerminalCosmicDone text refined: "Signal did not cease. Signal completed." |
 | `data/maps/SkyPillar_Top/scripts.inc` | **242** | CosmicArrival coord_event handler: 6-beat atmospheric sequence (silence→shimmer→double flash→cry→shake→presence), retry path, caught/not-caught outcomes. ~138 new lines. |
 | `data/maps/SkyPillar_Top/map.json` | **242** | Added coord_event at (14,9) with VAR_TEMP_1 guard for CosmicArrival script. |
-| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242** | CosmicAftermath branch: meteorites cooled, energy found its target. |
-| `data/maps/Route131/scripts.inc` | **242** | CosmicAftermath branch: lights out, sea waiting-still. |
+| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Relief register — player touches cool stone, warmth "has gone somewhere." |
+| `data/maps/Route131/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Unease register — dead still water, something moved underneath, "I didn't look down." |

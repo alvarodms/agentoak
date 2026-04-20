@@ -183,7 +183,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
 | C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
 | C242 | feature | **DONE** — Quest III "The Answer": 6-beat atmospheric buildup, Lv70 encounter, 3-location aftermath callbacks |
-| C243 | patch | Quest III polish + Residue aftermath callbacks + sprite work (#131) |
+| C243 | patch | **DONE** — Quest III aftermath polish: 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement |
 | C244-245 | feature | Trainer teams narrative pass — early & mid game (#143) |
 | C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
 | C248-249 | feature | Team Magma/Aqua rework (#144) |
