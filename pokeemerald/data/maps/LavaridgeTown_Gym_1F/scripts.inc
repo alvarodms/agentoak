@@ -299,12 +299,12 @@ LavaridgeTown_Gym_B1F_Text_EliPostBattle:
 	.string "Hehehehe.$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryIntro:
-	.string "Mt. Chimney has new arrivals daily!\n"
-	.string "Magmar, Ninetales -- flowing down\l"
-	.string "the slopes since migration began.\p"
-	.string "My team's trained with every one.\l"
-	.string "We burn hotter than ever!\n"
-	.string "Now show me YOUR flame!$"
+	.string "Have you seen the PINSIR on\n"
+	.string "ROUTE 112? They breathe fire\l"
+	.string "now -- the volcanic slopes\l"
+	.string "changed them somehow.\p"
+	.string "My grandpa would have loved\n"
+	.string "this. Now feel OUR heat!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryDefeat:
 	.string "Oh…\n"

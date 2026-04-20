@@ -380,11 +380,13 @@ DewfordTown_Gym_Text_CristianPostBattle:
 	.string "Go after that BADGE!$"
 
 DewfordTown_Gym_Text_BrawlyIntro:
-	.string "The migration brought fierce\n"
-	.string "fighters right to Dewford's shores!\p"
-	.string "Machamp, Hitmonchan on our beach...\l"
-	.string "I sparred with every single one.\n"
-	.string "My fists have never hit harder!$"
+	.string "A HITMONLEE washed up on DEWFORD's\n"
+	.string "shore last month. Fierce little\l"
+	.string "fighter -- never seen one in\l"
+	.string "HOENN before.\p"
+	.string "We spar on the beach every\n"
+	.string "morning. It keeps up!\l"
+	.string "Show me YOUR fighting spirit!$"
 
 DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "Whoah, wow! You made a much bigger\n"

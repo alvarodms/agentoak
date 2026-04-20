@@ -7,7 +7,7 @@
 
 ## Hour 0-3: Littleroot → Rustboro (Badges 0-1)
 
-Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes.
+Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes. **Roxanne now references Bagon_Hoenn near Meteor Falls (C244)** — academic curiosity, "living stone" hide. Team includes Bagon_Hoenn (Dragon/Rock).
 
 **Emotional arc**: Curiosity → wonder (Pikachu) → confidence (first gym)
 
@@ -15,7 +15,7 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 ## Hour 3-6: Dewford → Mauville (Badges 1-3)
 
-Brawly/Wattson redesigned. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weather Institute (C141). Route 113: Hoennian Vulpix (Ice/Fairy) 4% Lv21-22 + FrostTracker NPC (C208).
+Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford shore (C244)** — casual sparring buddy. **Wattson references Electabuzz wandering into Power Plant (C244)** — jovial wonder at its voltage. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weather Institute (C141). Route 113: Hoennian Vulpix (Ice/Fairy) 4% Lv21-22 + FrostTracker NPC (C208). **Route 113 trainers (Jaylen, Madeline) now carry Vulpix_Hoenn (C244)**.
 
 **Emotional arc**: Escalation → discovery (Bagon colony) → wonder (ice fox in ash)
 
@@ -23,7 +23,7 @@ Brawly/Wattson redesigned. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weat
 
 ## Hour 6-10: Fortree → Mossdeep (Badges 4-7)
 
-Route 119 thunderstorm (C149). Weather omens: sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160). Route 112: Pinsir_Hoenn (Bug/Fire) 5% Lv21-22 (C230). Route 119: Stantler_Hoenn (Ghost/Grass) 4% Lv26-28 (C231). Mt. Pyre "Restless Dead" + Corsola_Hoenn 4% Lv26-28 (C154, C207). Route identity NPCs (C162). Norman/Winona/Tate & Liza expanded. **Echo dialogue layer (C232)**: R112 Hiker (Pinsir+Stantler), R113 FrostTracker extended (Vulpix+Pinsir), R119 Ecologist (all 4 forms→Hartley), WeatherInstitute Hartley badge-gated evolution, Fortree ChangedTrainer (player palette).
+**Flannery references Pinsir on Route 112 (C244)** — fire-breathing adaptation, grandpa legacy. Team includes Pinsir_Hoenn (Bug/Fire). **Route 112 trainers (Bryant, Brice) carry Pinsir_Hoenn (C244)**. Route 119 thunderstorm (C149). **Rival Route 119 now carries Stantler_Hoenn (C244)** — Ghost/Grass disruptor with Hypnosis+Leech Seed. Weather omens: sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160). Route 112: Pinsir_Hoenn (Bug/Fire) 5% Lv21-22 (C230). Route 119: Stantler_Hoenn (Ghost/Grass) 4% Lv26-28 (C231). Mt. Pyre "Restless Dead" + Corsola_Hoenn 4% Lv26-28 (C154, C207). Route identity NPCs (C162). Norman/Winona/Tate & Liza expanded. **Echo dialogue layer (C232)**: R112 Hiker (Pinsir+Stantler), R113 FrostTracker extended (Vulpix+Pinsir), R119 Ecologist (all 4 forms→Hartley), WeatherInstitute Hartley badge-gated evolution, Fortree ChangedTrainer (player palette).
 
 **Pacing**: Strongest stretch — weather omens + narrative events + NPC perspectives.
 

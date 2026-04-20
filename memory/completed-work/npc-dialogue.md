@@ -91,6 +91,15 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |
 | `data/maps/Route131/map.json` | **236** | Added OBJ_EVENT_GFX_SWIMMER_M at (25,15), MOVEMENT_TYPE_FACE_DOWN, non-trainer, script ResidueSwimmer. |
 
+## Gym Leader Narrative Pass — Cycle 244
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/RustboroCity_Gym/scripts.inc` | **244** | Roxanne intro rewritten: Bagon_Hoenn near Meteor Falls, living stone hide, academic curiosity |
+| `data/maps/DewfordTown_Gym/scripts.inc` | **244** | Brawly intro rewritten: Hitmonlee washed up on Dewford shore, sparring buddy, casual respect |
+| `data/maps/MauvilleCity_Gym/scripts.inc` | **244** | Wattson intro rewritten: Electabuzz wandered into Power Plant, magnificent voltage, jovial wonder |
+| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | **244** | Flannery intro rewritten: Pinsir on Route 112 breathe fire, grandpa legacy, eager passion |
+
 ## Quest 7: The Answer (C242)
 
 Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.

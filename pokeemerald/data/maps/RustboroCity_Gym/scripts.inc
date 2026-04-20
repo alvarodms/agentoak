@@ -176,11 +176,13 @@ RustboroCity_Gym_Text_MarcPostBattle:
 	.string "pick the ROCK type at her young age.$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
-	.string "The migration stirred Granite Cave.\n"
-	.string "Fossils cracked open -- Aerodactyl\l"
-	.string "soared out after a thousand years!\p"
-	.string "My team has trained alongside them.\l"
-	.string "Now face the power of ancient rock!$"
+	.string "A peculiar BAGON was spotted near\n"
+	.string "METEOR FALLS. Its hide has turned\l"
+	.string "to living stone -- harder than\l"
+	.string "anything in my textbooks.\p"
+	.string "I had to add it to my research\n"
+	.string "team. Now, shall we see what\l"
+	.string "you've learned about rock?$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
 	.string "So…\n"

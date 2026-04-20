@@ -184,7 +184,8 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
 | C242 | feature | **DONE** — Quest III "The Answer": 6-beat atmospheric buildup, Lv70 encounter, 3-location aftermath callbacks |
 | C243 | patch | **DONE** — Quest III aftermath polish: 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement |
-| C244-245 | feature | Trainer teams narrative pass — early & mid game (#143) |
+| C244 | feature | **DONE** — Trainer narrative pass Badges 1-4: Roxanne (Bagon_Hoenn), Flannery (Pinsir_Hoenn), R112/R113 route trainers, Rival R119 (Stantler_Hoenn), 4 gym intros rewritten (#143 partial) |
+| C245 | feature | Trainer teams narrative pass — mid game Badges 5-8 (#143 continued) |
 | C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
 | C248-249 | feature | Team Magma/Aqua rework (#144) |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |

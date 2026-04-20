@@ -333,11 +333,12 @@ MauvilleCity_Gym_Text_AngeloPostBattle:
 	.string "forehead. It makes me happy!$"
 
 MauvilleCity_Gym_Text_WattsonIntro:
-	.string "Wahahaha! The migration's brought\n"
-	.string "real ZINGERS to Mauville, ho ho!\p"
-	.string "Electric-types flocking here --\l"
-	.string "they love our power plant, they do!\n"
-	.string "My team's buzzing with new energy!$"
+	.string "Wahaha! An ELECTABUZZ wandered\n"
+	.string "right into my POWER PLANT!\p"
+	.string "Not native to HOENN, but the\n"
+	.string "voltage it puts out? Magnificent!\l"
+	.string "My circuits have never been\l"
+	.string "this charged! Wahahahaha!$"
 
 MauvilleCity_Gym_Text_WattsonDefeat:
 	.string "Wahahahah!\n"
