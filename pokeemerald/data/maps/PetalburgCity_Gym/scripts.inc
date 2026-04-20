@@ -1253,12 +1253,11 @@ PetalburgCity_Gym_Text_YouHaveGottenStronger:
 	.string "that you've earned.$"
 
 PetalburgCity_Gym_Text_NormanIntro:
-	.string "{PLAYER}... I've been watching\n"
-	.string "this migration as a Gym Leader.\l"
-	.string "Hoenn's routes are unrecognizable.\p"
-	.string "But a true trainer doesn't fear\n"
-	.string "change -- they adapt to it.\l"
-	.string "Let me see if you have done that.$"
+	.string "{PLAYER}.\p"
+	.string "The world changed while you were\n"
+	.string "out there.\p"
+	.string "But so did you. I can see it.\p"
+	.string "…Show me.$"
 
 PetalburgCity_Gym_Text_NormanDefeat:
 	.string "…\p"

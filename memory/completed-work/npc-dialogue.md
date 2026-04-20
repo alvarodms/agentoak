@@ -91,7 +91,7 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |
 | `data/maps/Route131/map.json` | **236** | Added OBJ_EVENT_GFX_SWIMMER_M at (25,15), MOVEMENT_TYPE_FACE_DOWN, non-trainer, script ResidueSwimmer. |
 
-## Gym Leader Narrative Pass — Cycle 244
+## Gym Leader Narrative Pass — Cycles 244-245
 
 | File | Cycle | Notes |
 |------|-------|-------|
@@ -99,6 +99,10 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 | `data/maps/DewfordTown_Gym/scripts.inc` | **244** | Brawly intro rewritten: Hitmonlee washed up on Dewford shore, sparring buddy, casual respect |
 | `data/maps/MauvilleCity_Gym/scripts.inc` | **244** | Wattson intro rewritten: Electabuzz wandered into Power Plant, magnificent voltage, jovial wonder |
 | `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | **244** | Flannery intro rewritten: Pinsir on Route 112 breathe fire, grandpa legacy, eager passion |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | **245** | Norman intro rewritten: father-focused, no migration species. "The world changed while you were out there. But so did you." Shortest leader speech. |
+| `data/maps/FortreeCity_Gym/scripts.inc` | **245** | Winona intro rewritten: dark bird from migration, "I took it under my wing." Honchkrow foreshadowing. |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | **245** | Tate & Liza: SURGICAL INSERT of cosmic foreshadowing before existing C214 Farigiraf dialogue. "We've been feeling something -- from very far away. It hasn't arrived yet." |
+| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | **245** | Juan intro rewritten: quietest leader, fewest words. "The tides carry new things since the Stirring." Understated certainty. |
 
 ## Quest 7: The Answer (C242)
 

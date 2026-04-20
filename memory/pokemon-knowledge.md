@@ -45,5 +45,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Custom Ability Implementation Patterns | 241 | [custom-ability-implementation-patterns.md](pokemon-knowledge/custom-ability-implementation-patterns.md) |
 | Legendary Encounter Atmosphere Patterns | 242 | [legendary-encounter-atmosphere-patterns.md](pokemon-knowledge/legendary-encounter-atmosphere-patterns.md) |
 | Trainer Teams Narrative Pass — Design Patterns | 243 | [trainer-narrative-pass-patterns.md](pokemon-knowledge/trainer-narrative-pass-patterns.md) |
+| Badges 5-8 Narrative Pass — Community Patterns | 245 | [badges-5-8-narrative-pass-patterns.md](pokemon-knowledge/badges-5-8-narrative-pass-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

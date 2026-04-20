@@ -4172,9 +4172,9 @@ static const struct TrainerMonItemCustomMoves sParty_Winona1[] = {
     {
     .iv = 255,
     .lvl = 33,
-    .species = SPECIES_SWELLOW,
-    .heldItem = ITEM_SHARP_BEAK,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_RETURN, MOVE_QUICK_ATTACK, MOVE_STEEL_WING}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
     }
 };
 
@@ -8704,7 +8704,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Mudkip[] = {
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8767,7 +8767,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Treecko[] = 
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8830,7 +8830,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Torchic[] = 
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8893,7 +8893,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Mudkip[] = {
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8956,7 +8956,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Treecko[] = {
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -9019,7 +9019,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Torchic[] = {
     },
     {
     .iv = 100,
-    .lvl = 25,
+    .lvl = 28,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}

@@ -195,13 +195,11 @@ SootopolisCity_Gym_1F_Text_GymGuidePostVictory:
 	.string "set for the POKéMON LEAGUE challenge!$"
 
 SootopolisCity_Gym_1F_Text_JuanIntro:
-	.string "The currents bring many things,\n"
-	.string "young trainer. The migration\l"
-	.string "has stirred things from the deep.\p"
-	.string "Ancient water Pokemon now swim\l"
-	.string "these waters for the first time\n"
-	.string "in living memory.\p"
-	.string "Let us see if you are worthy!$"
+	.string "The tides carry new things since\n"
+	.string "the Stirring.\p"
+	.string "Most trainers would not notice.\p"
+	.string "I notice everything.\p"
+	.string "Shall we begin?$"
 
 @ NOTE: This defeat text was previously too long for the gDisplayedStringBattle buffer.
 @ The replacement text is shorter to avoid that overflow.

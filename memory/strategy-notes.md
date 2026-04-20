@@ -116,45 +116,14 @@ But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself change
 
 **Design Rationale**: Rewards aggressive play, matching the glass cannon stat spread. Thematically, the Cosmic Form corrupts what it reaches toward — the answer to the handshake, alien and transformative.
 
-**Implementation Approach (~7 files)**:
-1. `include/constants/abilities.h` — add ABILITY_TOXIC_TOUCH constant
-2. `src/data/text/abilities.h` — name "Toxic Touch" + description "Poisons foes on contact."
-3. `src/battle_util.c` — post-damage check: after move deals damage, if holder has Toxic Touch AND target has no primary status, 30% roll → apply STATUS1_POISON. No contact flag check required. Different hook point than Poison Point (which uses ABILITYEFFECT_CONTACT defender trigger).
-4. `src/pokemon.c` or species_info — assign ability to Deoxys_Hoenn
-5. `src/data/battle_ai_scripts.s` — AI awareness (treat similarly to Poison Point for scoring)
-6. `src/battle_message.c` — ability popup text if needed
-7. Build + test
-
-**Edge Cases to Test**: Trace copying Toxic Touch, Gastro Acid suppressing it, double battles (only target hit), Substitute blocking, Steel/Poison type immunity to poison status.
+**Status**: **DONE (C241)** — ABILITY_TOXIC_TOUCH #78, 4-file implementation, ABILITYEFFECT_ON_DAMAGE hook.
 
 ## Quest III: "The Answer"
 
-**Trigger**: Quest II complete (FLAG_QUEST6_COMPLETE set) → visit Mossdeep Space Center 2F.
-
-**Scene 1 — "The Signal Converges"**:
-- New NPC (or existing scientist) on Space Center 2F
-- Dialogue: "The three Resonance sites are pulsing in sync now. Whatever answered your signal — it's locked onto Hoenn. The convergence point is... the summit of Sky Pillar."
-- Sets FLAG_QUEST7_STARTED (0x2A3)
-
-**Scene 2 — "The Arrival"** (Sky Pillar Summit):
-- Reuse existing Sky Pillar summit map with new event layer
-- On entry: screen dims (fadescreen), cosmic palette flash (reuse C236 Resonance Residue technique), brief pause
-- Text: "The air shimmers with an impossible color — pink and violet, sweet and wrong."
-- Cosmic Form overworld sprite materializes (object event appears)
-
-**Scene 3 — "The Encounter"**:
-- Player interacts with sprite → Level 70 Deoxys_Hoenn battle
-- No fleeing (legendary battle flags)
-- If KO'd: respawns after defeating E4 again (standard legendary respawn pattern)
-
-**Scene 4 — "The Aftermath"**:
-- Residue NPCs at Meteor Falls, Route 131, and Mossdeep terminal update: "The hum stopped... like it found what it was looking for."
-- Space Center scientist: "The signal went quiet. Whatever crossed over... it's here now."
-- Sets FLAG_QUEST7_COMPLETE (0x2A4)
+**Status**: **DONE (C242)** — Full encounter implemented: coord_event trigger, 6-beat atmospheric buildup, retry path, aftermath callbacks at 3 locations, terminal branches.
+**Polish**: **DONE (C243)** — 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement.
 
 **Flags**: FLAG_QUEST_COSMIC_STARTED (0x2A3), FLAG_QUEST_COSMIC_COMPLETE (0x2A4), FLAG_QUEST_COSMIC_APPEARED (0x2A5). Next available: 0x2A6.
-
-**Status**: **DONE (C242)** — Full encounter implemented: coord_event trigger, 6-beat atmospheric buildup, retry path, aftermath callbacks at 3 locations, terminal branches.
 
 ## v2.2 Trainer & Narrative Layer
 
@@ -179,13 +148,13 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 
 | Cycle | Mode | Objective |
 |-------|------|-----------|
-| C239 | planning | v2.2 design document + RGBA auto-conversion script |
+| C239 | planning | **DONE** — v2.2 design document + RGBA auto-conversion script |
 | C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
 | C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
 | C242 | feature | **DONE** — Quest III "The Answer": 6-beat atmospheric buildup, Lv70 encounter, 3-location aftermath callbacks |
 | C243 | patch | **DONE** — Quest III aftermath polish: 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement |
 | C244 | feature | **DONE** — Trainer narrative pass Badges 1-4: Roxanne (Bagon_Hoenn), Flannery (Pinsir_Hoenn), R112/R113 route trainers, Rival R119 (Stantler_Hoenn), 4 gym intros rewritten (#143 partial) |
-| C245 | feature | Trainer teams narrative pass — mid game Badges 5-8 (#143 continued) |
+| C245 | feature | **DONE** — Trainer narrative pass Badges 5-8: Norman/Winona/Tate&Liza/Juan dialogue rewritten, Honchkrow on Winona, Stantler_Hoenn Lv25→28 fix |
 | C246-247 | feature | Trainer teams narrative pass — late & postgame (#143) |
 | C248-249 | feature | Team Magma/Aqua rework (#144) |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |

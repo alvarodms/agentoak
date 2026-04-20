@@ -546,6 +546,10 @@ MossdeepCity_Gym_Text_NicholasPostBattle:
 	.string "invincible POKéMON power next.$"
 
 MossdeepCity_Gym_Text_TateAndLizaIntro:
+	.string "TATE: We've been feeling\n"
+	.string "something --\p"
+	.string "LIZA: -- from very far away.\p"
+	.string "TATE: It hasn't arrived yet.\p"
 	.string "TATE: The migration changed\n"
 	.string "GIRAFARIG into something new…\p"
 	.string "LIZA: FARIGIRAF! Two minds that\n"
