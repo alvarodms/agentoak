@@ -173,8 +173,9 @@ MagmaHideout_4F_Text_TabithaIntro:
 	.string "Hehe! Hehehe!$"
 
 MagmaHideout_4F_Text_TabithaDefeat:
-	.string "Taken down again…\n"
-	.string "Hehe…$"
+	.string "Taken down again...\p"
+	.string "............\p"
+	.string "Hehe.$"
 
 MagmaHideout_4F_Text_TabithaPostBattle:
 	.string "…And while you wasted time with me,\n"

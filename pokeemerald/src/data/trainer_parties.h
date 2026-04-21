@@ -11919,9 +11919,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntMagmaHideout1[] = {
     {
     .iv = 75,
     .lvl = 34,
-    .species = SPECIES_NUMEL,
+    .species = SPECIES_PINSIR_HOENN,
     .heldItem = ITEM_CHARCOAL,
-    .moves = {MOVE_FLAMETHROWER, MOVE_EARTHQUAKE, MOVE_TAKE_DOWN, MOVE_AMNESIA}
+    .moves = {MOVE_X_SCISSOR, MOVE_FLAME_WHEEL, MOVE_ROCK_TOMB, MOVE_HARDEN}
     }
 };
 
@@ -11946,9 +11946,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntMagmaHideout3[] = {
     {
     .iv = 75,
     .lvl = 33,
-    .species = SPECIES_NUMEL,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_FLAMETHROWER, MOVE_MAGNITUDE, MOVE_TAKE_DOWN, MOVE_AMNESIA}
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_X_SCISSOR, MOVE_FLAME_WHEEL, MOVE_ROCK_TOMB, MOVE_HARDEN}
     },
     {
     .iv = 75,
@@ -12004,9 +12004,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntMagmaHideout6[] = {
     {
     .iv = 75,
     .lvl = 34,
-    .species = SPECIES_NUMEL,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_FLAMETHROWER, MOVE_EARTHQUAKE, MOVE_ROCK_TOMB, MOVE_AMNESIA}
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_X_SCISSOR, MOVE_FLAME_WHEEL, MOVE_ROCK_TOMB, MOVE_HARDEN}
     }
 };
 
@@ -15124,9 +15124,9 @@ static const struct TrainerMonItemCustomMoves sParty_MagmaAdminTerraCave[] = {
     {
     .iv = 150,
     .lvl = 48,
-    .species = SPECIES_NINETALES,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_FLAMETHROWER, MOVE_WILL_O_WISP, MOVE_CONFUSE_RAY, MOVE_QUICK_ATTACK}
+    .species = SPECIES_NINETALES_HOENN,
+    .heldItem = ITEM_NEVER_MELT_ICE,
+    .moves = {MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_WILL_O_WISP, MOVE_SHADOW_BALL}
     }
 };
 

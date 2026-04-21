@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (Cycles 110, 111, 136, 146, 147, 150, 195, 196, 197, 209, 221, 222, 223, 230, 231, 240) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-248, 17 occurrences) — RECURRING
 
-**Symptom**: 90-132 actions spent on reads before first edit. C240: first edit at action 114/207 (55% research). 42 actions (19-60) wasted on wrong paths — `/pokemon/src/...` and `/__w/agentoak/agentoak/src/...` (missing `pokeemerald/`). Agent subagent used at action 18 despite explicit ban. All 20 species registered successfully despite waste.
-**Resolution**: For species registration: (1) Run `check_species_registration.sh` in ONE action to get all gaps. (2) Start edits by action 15 max. (3) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (4) NEVER use Agent subagent for file searches. (5) After finding ONE species pattern, DON'T grep 20+ more files — pipeline is identical for species #20 as it was for #1. (6) Batch-read all graphics tables BEFORE editing. (7) Use `complete_species_registration.cjs` gap-filler script when possible.
+**Symptom**: 64-132 actions before first edit. C248: first edit at action 80/125 (64% research). 3 Agent subagent calls despite ban. ~10 path errors from wrong prefixes.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For trainer/dialogue work: read target files directly — don't grep for every constant first.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

@@ -157,7 +157,8 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C245 | feature | **DONE** — Trainer narrative pass Badges 5-8: Norman/Winona/Tate&Liza/Juan dialogue rewritten, Honchkrow on Winona, Stantler_Hoenn Lv25→28 fix |
 | C246 | feature | **DONE** — Late-game trainer pass: Wally VR Ninetales_Hoenn swap + dialogue rewrite, 3 VR silent swaps (Mamoswine×2, Weavile) |
 | C247 | feature | **DONE** — Postgame rematch pass: Roxanne/Flannery/Winona T1-T4 (Bagon_Hoenn/Pinsir_Hoenn/Honchkrow), Steven Sky Pillar dialogue coda, check_trainers.sh extended (Check 5+6). #143 complete. |
-| C248-249 | feature | Team Magma/Aqua rework (#144) |
+| C248 | feature | **DONE** — Team Magma quiet reckoning (#144 partial, Magma only): Courtney Terra Cave rewrite (Ninetales_Hoenn + sparse dialogue), Tabitha defeat text cracks ×3, 3 grunt Pinsir_Hoenn swaps, postgame Mt. Chimney NPC |
+| C249 | feature | Team Aqua rework (#144 remainder: Aqua admins + grunts + postgame NPC) |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |
 | C252 | patch | v2.2 consistency pass |
 | C253 | planning | v2.2 ship evaluation |

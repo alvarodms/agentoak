@@ -211,23 +211,31 @@ TerraCave_End_Text_MagmaGrunt2Post:
 	.string "will expand as MAXIE envisioned.$"
 
 TerraCave_End_EventScript_MagmaAdmin::
-	trainerbattle_single TRAINER_MAGMA_ADMIN_TERRA_CAVE, TerraCave_End_Text_MagmaAdminIntro, TerraCave_End_Text_MagmaAdminDefeat
-	msgbox TerraCave_End_Text_MagmaAdminPost, MSGBOX_AUTOCLOSE
+	lockall
+	faceplayer
+	waitse
+	delay 60
+	msgbox TerraCave_End_Text_MagmaAdminIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_MAGMA_ADMIN_TERRA_CAVE, TerraCave_End_Text_MagmaAdminDefeat
+	msgbox TerraCave_End_Text_MagmaAdminPost, MSGBOX_DEFAULT
+	releaseall
 	end
 
 TerraCave_End_Text_MagmaAdminIntro:
-	.string "I am COURTNEY, Admin of TEAM MAGMA.\p"
-	.string "GROUDON stirs again because the\n"
-	.string "land demands it. The migration\l"
-	.string "has awakened the continent's fury.\p"
-	.string "Stand aside, child.$"
+	.string "...\p"
+	.string "I've been measuring this cavern\n"
+	.string "for weeks.\p"
+	.string "The readings are perfect.\n"
+	.string "GROUDON's expansion held.\p"
+	.string "...\p"
+	.string "It doesn't matter, does it.$"
 
 TerraCave_End_Text_MagmaAdminDefeat:
-	.string "Impressive... but it changes\n"
-	.string "nothing.$"
+	.string "...As expected.$"
 
 TerraCave_End_Text_MagmaAdminPost:
-	.string "GROUDON chose to awaken. Neither\n"
-	.string "you nor I can change that.\p"
-	.string "The only question is whether you\n"
-	.string "have the strength to face it.$"
+	.string "...\p"
+	.string "That POKéMON of yours.\p"
+	.string "It's from somewhere else.\p"
+	.string "I keep finding things that are\n"
+	.string "from somewhere else.$"

@@ -33,6 +33,8 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 **"The Gathering Storm" arc (v1.7)**: City atmosphere NPCs (C186) → ocean witnesses (C187) → Deep Migration R128 (C188) → The Gathering R126 (C189) → permanent fog + post-Gathering callbacks (C190). Victory Road redesigned (C175). E4 + Champion redesigned with cross-gen evos (C203-204, C212-218).
 
+**Team Magma Quiet Reckoning (C248)**: Tabitha's defeat text cracks across 3 encounters — forced laugh at Mt. Chimney ("Hehehe... heh."), hollow silence at Magma Hideout ("............\pHehe."), self-doubt at Mossdeep ("...Right?"). 3 Magma Hideout grunts carry Pinsir_Hoenn (Bug/Fire) — adopted a migration species without understanding it's alien. Courtney's Terra Cave encounter rewritten: measured silence, spare dialogue, Ninetales→Ninetales_Hoenn (Ice/Fairy) as her silent adoption of the new world.
+
 **Wally's Migration Bond (C246)**: Tauros→Ninetales_Hoenn (Ice/Fairy) — "New POKéMON found me on the way here." Fairy pairing with Gardevoir ace. VR rematches evolve into Calm Mind sweeper. **3 VR silent swaps**: Edgar (Golem→Mamoswine), Samuel (Donphan→Mamoswine), Owen (Glalie→Weavile). Migration species appear without commentary — "silent normalization."
 
 **Emotional arc**: Unease → observation → shock → dread → triumph
@@ -53,10 +55,12 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 **Bagon Colony resolution (C209/C215)**: Researcher reports physical changes → Bagon_Hoenn encounter Meteor Falls B1F_2R.
 
+**Mt. Chimney Postgame Magma Grunt (C248)**: Lone ex-Magma member appears after Champion, stares south at the landscape. "The land's the same size, but there's more of everything anyway." Confused deflection, not redemption.
+
 ---
 
 ## Known Gaps & v2.2 Planned
 
 - **Hours 3-6 (Badge 2-3)**: Thinnest stretch. v2.2 targets 2 new regional forms here (C250-251).
 - **Postgame**: Quest III "The Answer" — Mossdeep trigger → Sky Pillar summit → Deoxys_Hoenn Lv70 encounter (C242).
-- **Throughout**: Trainer teams narrative pass for migration consistency (C244-247). Magma/Aqua rework (C248-249).
+- **Throughout**: Trainer teams narrative pass (C244-247 complete). Team Magma reckoning (C248 complete). Team Aqua rework (C249 planned).

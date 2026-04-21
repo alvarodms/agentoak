@@ -5,6 +5,12 @@ MtChimney_MapScripts::
 
 MtChimney_OnTransition:
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 1
+	goto_if_set FLAG_SYS_GAME_CLEAR, MtChimney_OnTransition_ShowPostgameGrunt
+	setflag FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT
+	end
+
+MtChimney_OnTransition_ShowPostgameGrunt:
+	clearflag FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT
 	end
 
 MtChimney_OnResume:
@@ -564,9 +570,9 @@ MtChimney_Text_TabithaIntro:
 	.string "from METEOR FALLS to the BOSS!$"
 
 MtChimney_Text_TabithaDefeat:
-	.string "Hehehe…\p"
-	.string "Even though I've lost, if our leader\n"
-	.string "awakens that thing…$"
+	.string "Hehehe... heh.\p"
+	.string "...Well.\n"
+	.string "The BOSS got what he needed.$"
 
 MtChimney_Text_TabithaPostBattle:
 	.string "BOSS, hurry!\n"
@@ -816,4 +822,17 @@ MtChimney_Text_SawyerRematchDefeat:
 MtChimney_Text_SawyerPostRematch:
 	.string "Actually, it really is hot here.\n"
 	.string "I'm overdressed for these parts.$"
+
+@ C248: Postgame Magma grunt — quiet reckoning
+MtChimney_EventScript_PostgameMagmaGrunt::
+	msgbox MtChimney_Text_PostgameMagmaGrunt, MSGBOX_NPC
+	end
+
+MtChimney_Text_PostgameMagmaGrunt:
+	.string "...We wanted to expand the land.\p"
+	.string "Make room for more POKéMON,\n"
+	.string "more people.\p"
+	.string "Funny.\p"
+	.string "The land's the same size, but\n"
+	.string "there's more of everything anyway.$"
 

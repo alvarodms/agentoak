@@ -75,11 +75,13 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Flag System Layout (Cycle 117-118)
+## Flag System Layout (Cycle 117-118, updated C248)
 
 **Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
 
 **Custom flags**: 0x264-0x2A5 used (v6.0 through v2.2). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. 0x2A3-0x2A5 = Quest III Cosmic. Next available: 0x2A6.
+
+**Repurposed vanilla flags**: 0x2C = `FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT` (C248, was FLAG_UNUSED_0x02C).
 
 **Beast flags**: System flags 0x881-0x886.
 

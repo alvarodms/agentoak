@@ -110,6 +110,19 @@ Deoxys Quest II — Three-location postgame investigation, then environmental fo
 |------|-------|-------|
 | `data/maps/VictoryRoad_1F/scripts.inc` | **246** | Wally entrance pre-fight: Petalburg callback + "New POKéMON found me on the way here." Defeat: pride in growth. Post-entrance: migration Pokémon "showed me who I could be." Exit intro: post-Champion training. Exit defeat: "getting closer every time." PostBattle left unchanged. |
 
+## Team Magma Quiet Reckoning — Cycle 248
+
+Magma faction dialogue rewrite: admin defeat text cracks, Courtney Terra Cave full rewrite, postgame NPC.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/TerraCave_End/scripts.inc` | **248** | Courtney intro/defeat/post-battle rewritten: sparse, measured dialogue. 1-second delay before speaking. trainerbattle_single→trainerbattle_no_intro with lockall/releaseall. "It doesn't matter, does it." |
+| `data/maps/MtChimney/scripts.inc` | **248** | Tabitha defeat: "Hehehe… → Hehehe... heh." Forced, hollow. Postgame Magma grunt NPC added (FLAG_SYS_GAME_CLEAR gated via OnTransition + FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT 0x2C). "The land's the same size, but there's more of everything anyway." |
+| `data/maps/MtChimney/map.json` | **248** | Added postgame Magma grunt object event at (16,38), FACE_DOWN, non-trainer. |
+| `data/maps/MagmaHideout_4F/scripts.inc` | **248** | Tabitha defeat: "Taken down again…\nHehe…" → "Taken down again...\p............\pHehe." Extended pause, hollow laugh isolated. |
+| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **248** | Tabitha defeat: "I'm with our leader…" → "I'm with our leader...\pAlways have been.\p...Right?" Self-doubt surfaces. |
+| `include/constants/flags.h` | **248** | FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT at 0x2C (repurposed FLAG_UNUSED_0x02C). |
+
 ## Quest 7: The Answer (C242)
 
 Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.
