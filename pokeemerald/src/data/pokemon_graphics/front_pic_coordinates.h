@@ -433,6 +433,7 @@ const struct MonCoords gMonFrontPicCoords[] =
     [SPECIES_FARIGIRAF] = { .size = MON_COORDS_SIZE(56, 64), .y_offset = 2 },
     [SPECIES_PINSIR_HOENN] = { .size = MON_COORDS_SIZE(48, 48), .y_offset = 8 },
     [SPECIES_STANTLER_HOENN] = { .size = MON_COORDS_SIZE(56, 56), .y_offset = 4 },
+    [SPECIES_GLIGAR_HOENN] = { .size = MON_COORDS_SIZE(48, 48), .y_offset = 8 },
     [SPECIES_DEOXYS_HOENN] = { .size = MON_COORDS_SIZE(64, 64), .y_offset = 0 },
     [SPECIES_FROSLASS] = { .size = MON_COORDS_SIZE(48, 56), .y_offset = 5 },
     [SPECIES_MAMOSWINE] = { .size = MON_COORDS_SIZE(64, 56), .y_offset = 4 },

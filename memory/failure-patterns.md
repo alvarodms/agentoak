@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-248, 17 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-250, 18 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C248: first edit at action 80/125 (64% research). 3 Agent subagent calls despite ban. ~10 path errors from wrong prefixes.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For trainer/dialogue work: read target files directly — don't grep for every constant first.
+**Symptom**: 64-132 actions before first edit. C250: first edit at action 65/115 (56% research) for a well-understood species pipeline. C248: first edit at action 80/125 (64% research).
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For species work: write the node.js bulk script FIRST, then read only the files needed for anchor text. Don't grep every constant in every file before writing.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -49,3 +49,4 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
 - **Trainer capacity**: TRAINERS_COUNT = 885, AT CAPACITY. Must reuse unused IDs for new trainers.
 - **Cancelled parallel tool calls**: Bash tool sometimes cancels parallel calls. Run species checks sequentially, not in parallel.
+- **egg_moves.h**: Regional forms still need an entry (even if empty) — C250 Gligar_Hoenn missed this (17/19).

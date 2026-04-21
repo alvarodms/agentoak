@@ -2433,6 +2433,14 @@ const u8 gStantlerHoennPokedexText[] = _(
     "antlers sprouted living vines, and\n"
     "their bodies became semi-spectral.");
 
+
+const u8 gGligarHoennPokedexText[] = _(
+    "A GLIGAR adapted to HOENN's coastal\n"
+    "sea caves. Mineral-rich water has\n"
+    "calcified its pincers and tail into\n"
+    "stony armor. It clings to wet walls,\n"
+    "clicking its hardened tail to\n"
+    "echolocate in the dark.");
 const u8 gDeoxysHoennPokedexText[] = _(
     "Its body shimmers between states\n"
     "that should not coexist. Those\n"

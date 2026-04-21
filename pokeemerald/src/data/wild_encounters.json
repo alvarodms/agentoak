@@ -2609,8 +2609,8 @@
               },
               {
                 "min_level": 10,
-                "max_level": 12,
-                "species": "SPECIES_GEODUDE"
+                "max_level": 13,
+                "species": "SPECIES_GLIGAR_HOENN"
               },
               {
                 "min_level": 10,

@@ -8,47 +8,17 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 
 | Topic | Cycle | File |
 |---|---|---|
-| Quest Infrastructure Patterns in pokeemerald | 192 | [quest-infrastructure-patterns.md](pokemon-knowledge/quest-infrastructure-patterns.md) |
-| Regional Form Delivery & Ability Design Patterns | 195 | [regional-form-delivery-patterns.md](pokemon-knowledge/regional-form-delivery-patterns.md) |
-| Post-Climax World State & Custom Elite Four | 197 | [post-climax-world-elite-four.md](pokemon-knowledge/post-climax-world-elite-four.md) |
-| ROM Hack Documentation & Wiki Patterns | 199 | [rom-hack-documentation-patterns.md](pokemon-knowledge/rom-hack-documentation-patterns.md) |
-| v1.9 Direction — What Separates Great from Good | 201 | [v19-direction-what-separates-great.md](pokemon-knowledge/v19-direction-what-separates-great.md) |
-| Species Addition Pipeline — Community Patterns | 202 | [species-pipeline-community-patterns.md](pokemon-knowledge/species-pipeline-community-patterns.md) |
-| Bagon Colony Regional Form — Design Research | 209 | [bagon-colony-form-research.md](pokemon-knowledge/bagon-colony-form-research.md) |
 | Cross-Gen Evolutions & Custom Rival Design | 210 | [cross-gen-evos-and-rival-design.md](pokemon-knowledge/cross-gen-evos-and-rival-design.md) |
-| Legendary Quest Depth Patterns | 211 | [legendary-quest-depth-patterns.md](pokemon-knowledge/legendary-quest-depth-patterns.md) |
-| Glacia Team Design Patterns — Froslass & Mamoswine | 213 | [glacia-team-design-patterns.md](pokemon-knowledge/glacia-team-design-patterns.md) |
-| Farigiraf in Emerald Hacks & Difficulty Toggle Patterns | 214 | [farigiraf-and-difficulty-toggle-patterns.md](pokemon-knowledge/farigiraf-and-difficulty-toggle-patterns.md) |
-| Postgame-Gated Encounter Patterns | 215 | [postgame-gated-encounter-patterns.md](pokemon-knowledge/postgame-gated-encounter-patterns.md) |
-| Standalone Form Viability & Mid-Dev Priorities | 216 | [standalone-form-viability-and-middev-polish.md](pokemon-knowledge/standalone-form-viability-and-middev-polish.md) |
-| Mid-Arc Stability & Pipeline Debt | 217 | [mid-arc-stability-and-pipeline-debt.md](pokemon-knowledge/mid-arc-stability-and-pipeline-debt.md) |
-| Documentation Timing & the Farigiraf Gap | 218 | [documentation-timing-and-farigiraf-gap.md](pokemon-knowledge/documentation-timing-and-farigiraf-gap.md) |
-| Post-Milestone Documentation Patterns | 219 | [post-milestone-documentation-patterns.md](pokemon-knowledge/post-milestone-documentation-patterns.md) |
-| Pre-Release Polish Priorities | 221 | [pre-release-polish-priorities.md](pokemon-knowledge/pre-release-polish-priorities.md) |
-| Batch Species Completion — Tooling & Community Patterns | 222 | [batch-species-completion-patterns.md](pokemon-knowledge/batch-species-completion-patterns.md) |
-| Dawn Stone Implementation & Mom Event Replacement | 223 | [dawn-stone-and-mom-event-patterns.md](pokemon-knowledge/dawn-stone-and-mom-event-patterns.md) |
-| v2.0 Milestone Release Patterns | 224 | [v20-milestone-release-patterns.md](pokemon-knowledge/v20-milestone-release-patterns.md) |
-| Player Sprite Recoloring — Scope & Community Patterns | 226 | [player-sprite-recolor-scope.md](pokemon-knowledge/player-sprite-recolor-scope.md) |
-| Player Sprite & Palette Manifest — Complete File List | 227 | [player-sprite-manifest.md](pokemon-knowledge/player-sprite-manifest.md) |
-| Community Ambition & Polish Feedback Patterns | 229 | [community-ambition-feedback-patterns.md](pokemon-knowledge/community-ambition-feedback-patterns.md) |
-| Pipeline Refactor vs. Content Velocity | 230 | [pipeline-refactor-vs-content-velocity.md](pokemon-knowledge/pipeline-refactor-vs-content-velocity.md) |
 | Mid-Game Regional Form Gating Patterns | 231 | [midgame-regional-form-gating-patterns.md](pokemon-knowledge/midgame-regional-form-gating-patterns.md) |
 | NPC Echo Dialogue & Capstone Regional Form Patterns | 232 | [npc-echo-dialogue-and-capstone-forms.md](pokemon-knowledge/npc-echo-dialogue-and-capstone-forms.md) |
 | Custom Legendary Forms & Abilities in ROM Hacks | 233 | [custom-legendary-forms-and-abilities.md](pokemon-knowledge/custom-legendary-forms-and-abilities.md) |
-| Release Timing & Quest Chain Patterns | 234 | [release-timing-and-quest-chain-patterns.md](pokemon-knowledge/release-timing-and-quest-chain-patterns.md) |
-| Changed Trainer Witness Patterns | 235 | [changed-trainer-witness-patterns.md](pokemon-knowledge/changed-trainer-witness-patterns.md) |
-| Resonance Residue & Graphical Polish Patterns | 236 | [resonance-residue-and-graphical-polish.md](pokemon-knowledge/resonance-residue-and-graphical-polish.md) |
-| v2.1 Consistency Pass — Quest Reward & QA Patterns | 237 | [v21-consistency-pass-patterns.md](pokemon-knowledge/v21-consistency-pass-patterns.md) |
 | Toxic Touch Ability — Implementation Scope | 238 | [toxic-touch-ability-scope.md](pokemon-knowledge/toxic-touch-ability-scope.md) |
 | v2.2 Custom Species & Ability Landscape | 239 | [v22-custom-species-landscape.md](pokemon-knowledge/v22-custom-species-landscape.md) |
-| Toxic Touch + Special Attacker Anti-Synergy | 240 | [toxic-touch-contact-antisynergy.md](pokemon-knowledge/toxic-touch-contact-antisynergy.md) |
 | Custom Ability Implementation Patterns | 241 | [custom-ability-implementation-patterns.md](pokemon-knowledge/custom-ability-implementation-patterns.md) |
 | Legendary Encounter Atmosphere Patterns | 242 | [legendary-encounter-atmosphere-patterns.md](pokemon-knowledge/legendary-encounter-atmosphere-patterns.md) |
 | Trainer Teams Narrative Pass — Design Patterns | 243 | [trainer-narrative-pass-patterns.md](pokemon-knowledge/trainer-narrative-pass-patterns.md) |
-| Badges 5-8 Narrative Pass — Community Patterns | 245 | [badges-5-8-narrative-pass-patterns.md](pokemon-knowledge/badges-5-8-narrative-pass-patterns.md) |
-| Late-Game & Postgame Trainer Narrative Patterns | 246 | [late-postgame-trainer-narrative-patterns.md](pokemon-knowledge/late-postgame-trainer-narrative-patterns.md) |
-| Postgame Rematch & Trainer Design Patterns | 247 | [postgame-rematch-design-patterns.md](pokemon-knowledge/postgame-rematch-design-patterns.md) |
 | Team Magma/Aqua Rework Patterns | 248 | [magma-aqua-rework-patterns.md](pokemon-knowledge/magma-aqua-rework-patterns.md) |
 | Aqua Admin Characterization — Shelly & Matt ORAS Patterns | 249 | [aqua-admin-characterization-patterns.md](pokemon-knowledge/aqua-admin-characterization-patterns.md) |
+| Badge 2-3 Regional Form Gap & Species Tooling Landscape | 250 | [badge-2-3-form-gap-and-tooling.md](pokemon-knowledge/badge-2-3-form-gap-and-tooling.md) |
 
-Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
+Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

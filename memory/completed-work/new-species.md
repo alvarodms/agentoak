@@ -97,6 +97,24 @@ Files modified (19 source + 7 sprite + 1 encounter):
 
 ---
 
+## C250: Gligar_Hoenn (Water/Rock) — First Cross-Gen Regional Form
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Gligar_Hoenn | 432 | Water/Rock | 430 | Granite Cave B2F 5% Lv10-13 |
+
+Stats: 75/80/115/35/75/50. Abilities: Battle Armor / Rock Head. Growth: Medium Slow.
+Learnset: Harden, Water Gun, Sand Attack, Metal Claw, Rock Tomb, Bite, Screech, Rock Slide, Iron Defense, Slash, Aqua Tail, Ancient Power, Rock Blast.
+TMs: 25 (Water Pulse, Roar, Toxic, HP, Protect, Rain Dance, Frustration, Iron Tail, EQ, Return, Dig, Brick Break, Double Team, Sandstorm, Rock Tomb, Facade, Secret Power, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
+Cry: Mapped to base Gligar via cry_ids.h.
+Sprites: Custom teal-blue/stone-gray sea cave recolor by Sprite Designer v1.
+Evolution: Placeholder comment for Gliscor_Hoenn at Lv35 (C251).
+Discovery NPC: Hiker on B1F (x:28, y:19) — "clicking against the stone" hint.
+
+Files modified: 28 source + 7 sprite + 2 map + 1 JSON = 38 total.
+
+---
+
 ## C223: Species Foundation Complete
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).

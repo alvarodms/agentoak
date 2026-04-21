@@ -15,9 +15,9 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 ## Hour 3-6: Dewford → Mauville (Badges 1-3)
 
-Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford shore (C244)** — casual sparring buddy. **Wattson references Electabuzz wandering into Power Plant (C244)** — jovial wonder at its voltage. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weather Institute (C141). Route 113: Hoennian Vulpix (Ice/Fairy) 4% Lv21-22 + FrostTracker NPC (C208). **Route 113 trainers (Jaylen, Madeline) now carry Vulpix_Hoenn (C244)**.
+Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford shore (C244)** — casual sparring buddy. **Wattson references Electabuzz wandering into Power Plant (C244)** — jovial wonder at its voltage. Meteor Falls Bagon Colony (C153). Dr. Hartley at Weather Institute (C141). Route 113: Hoennian Vulpix (Ice/Fairy) 4% Lv21-22 + FrostTracker NPC (C208). **Route 113 trainers (Jaylen, Madeline) now carry Vulpix_Hoenn (C244)**. **Granite Cave B2F: Gligar_Hoenn (Water/Rock) 5% Lv10-13 (C250)** — teal-blue scorpion-bat adapted to coastal sea caves. 115 Def wall with Battle Armor/Rock Head. Hiker NPC on B1F hints: "clicking against the stone."
 
-**Emotional arc**: Escalation → discovery (Bagon colony) → wonder (ice fox in ash)
+**Emotional arc**: Escalation → discovery (Bagon colony, cave creature) → wonder (ice fox in ash)
 
 ---
 
@@ -61,6 +61,6 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 ## Known Gaps & v2.2 Planned
 
-- **Hours 3-6 (Badge 2-3)**: Thinnest stretch. v2.2 targets 2 new regional forms here (C250-251).
+- **Hours 3-6 (Badge 2-3)**: Gap partially filled. Gligar_Hoenn in Granite Cave B2F (C250). Second form planned (C251).
 - **Postgame**: Quest III "The Answer" — Mossdeep trigger → Sky Pillar summit → Deoxys_Hoenn Lv70 encounter (C242).
 - **Throughout**: Trainer teams narrative pass (C244-247 complete). Team Magma reckoning (C248 complete). Team Aqua rework (C249 planned).

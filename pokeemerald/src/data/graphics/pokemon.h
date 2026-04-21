@@ -2833,6 +2833,13 @@ const u32 gMonShinyPalette_StantlerHoenn[] = INCBIN_U32("graphics/pokemon/stantl
 const u8 gMonIcon_StantlerHoenn[] = INCBIN_U8("graphics/pokemon/stantler_hoenn/icon.4bpp");
 const u8 gMonFootprint_StantlerHoenn[] = INCBIN_U8("graphics/pokemon/stantler_hoenn/footprint.1bpp");
 
+
+const u32 gMonStillFrontPic_GligarHoenn[] = INCBIN_U32("graphics/pokemon/gligar_hoenn/front.4bpp.lz");
+const u32 gMonPalette_GligarHoenn[] = INCBIN_U32("graphics/pokemon/gligar_hoenn/normal.gbapal.lz");
+const u32 gMonBackPic_GligarHoenn[] = INCBIN_U32("graphics/pokemon/gligar_hoenn/back.4bpp.lz");
+const u32 gMonShinyPalette_GligarHoenn[] = INCBIN_U32("graphics/pokemon/gligar_hoenn/shiny.gbapal.lz");
+const u8 gMonIcon_GligarHoenn[] = INCBIN_U8("graphics/pokemon/gligar_hoenn/icon.4bpp");
+const u8 gMonFootprint_GligarHoenn[] = INCBIN_U8("graphics/pokemon/gligar_hoenn/footprint.1bpp");
 const u32 gMonStillFrontPic_DeoxysHoenn[] = INCBIN_U32("graphics/pokemon/deoxys_hoenn/front.4bpp.lz");
 const u32 gMonPalette_DeoxysHoenn[] = INCBIN_U32("graphics/pokemon/deoxys_hoenn/normal.gbapal.lz");
 const u32 gMonBackPic_DeoxysHoenn[] = INCBIN_U32("graphics/pokemon/deoxys_hoenn/back.4bpp.lz");

@@ -199,5 +199,6 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     // SPECIES_CORSOLA_HOENN — standalone form, no evolution chain
     // SPECIES_PINSIR_HOENN — standalone form, no evolution chain
     // SPECIES_STANTLER_HOENN — standalone form, no evolution chain
+    // SPECIES_GLIGAR_HOENN — evolves to Gliscor_Hoenn at Lv35 (C251)
     // SPECIES_DEOXYS_HOENN — custom cosmic form, no evolution chain
 };

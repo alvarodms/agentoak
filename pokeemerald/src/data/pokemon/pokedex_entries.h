@@ -4848,6 +4848,18 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+
+    [NATIONAL_DEX_GLIGAR_HOENN] =
+    {
+        .categoryName = _("CaveCling"),
+        .height = 11,
+        .weight = 725,
+        .description = gGligarHoennPokedexText,
+        .pokemonScale = 316,
+        .pokemonOffset = 8,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
     [NATIONAL_DEX_DEOXYS_HOENN] =
     {
         .categoryName = _("Cosmic"),

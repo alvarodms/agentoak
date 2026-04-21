@@ -9,3 +9,16 @@ GraniteCave_B1F_SetHoleWarp:
 	setholewarp MAP_GRANITE_CAVE_B2F
 	end
 
+GraniteCave_B1F_EventScript_CaveHiker::
+	lock
+	faceplayer
+	msgbox GraniteCave_B1F_Text_CaveHiker, MSGBOX_DEFAULT
+	release
+	end
+
+GraniteCave_B1F_Text_CaveHiker:
+	.string "Watch your step below.\p"
+	.string "The deeper chambers are wetter\n"
+	.string "than any cave I've been in.\p"
+	.string "I keep hearing something\n"
+	.string "clicking against the stone.$"

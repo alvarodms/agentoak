@@ -14,3 +14,4 @@
 | Pinsir Hoenn | Bug/Fire | v1 | 230 | — | new |
 | Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |
 | Deoxys Hoenn | Poison/Fairy | v1 | 240 | — | new |
+| Gligar Hoenn | Water/Rock | v1 | 250 | — | new |
