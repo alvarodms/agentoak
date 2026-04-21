@@ -24,7 +24,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **73 routes + 34 dungeons** redesigned with thematic encounter tables reflecting the migration ecology — every route has a unique identity, from ghostly Mt. Pyre waters to Horsea colonies and toxic shipwreck seas
 - **Ocean route differentiation** — all 17 sea routes feature unique species, themed ecosystems, and tiered fishing rewards; Tentacool/Wingull monoculture replaced with Kingdra, Lanturn, Mantine, Relicanth, and other rare 1% catches
 - **6 new species** — Riolu, Lucario, Gible, Gabite, Garchomp, and Weavile added as migration arrivals
-- **5 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass (via Dawn Stone), Piloswine into Mamoswine, and Girafarig into Farigiraf. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine — making their teams feel modern and complete
+- **6 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass (via Dawn Stone), Piloswine into Mamoswine, Girafarig into Farigiraf, and Hoennian Gligar into Hoennian Gliscor. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine, and Archie leads with Hoennian Gliscor — making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), Hoennian Arcanine (Water/Fire), Hoennian Bagon (Dragon/Rock) — a fossil variant discovered in the depths of Meteor Falls — Hoennian Vulpix (Ice/Fairy) and Hoennian Ninetales (Ice/Fairy), ice foxes adapted to the volcanic ash of Route 113, Hoennian Pinsir (Bug/Fire), a volcanic beetle forged in Route 112's heat, Hoennian Stantler (Ghost/Grass), a forest spirit glimpsed in Route 119's perpetual rain, and Hoennian Gligar (Water/Rock), a teal scorpion-bat whose pincers have calcified in Granite Cave's mineral-rich seawater. Some forms are discovered through postgame quests; others wait in the wild for trainers sharp-eyed enough to find them
 - **Environmental storytelling** — the world notices its own changes. Hikers, researchers, and scientists across the mid-game cross-reference each other's regional form sightings, building a connected ecological narrative. Return to the Meteor Falls researcher after encountering Hoennian Bagon and he'll acknowledge what you've seen: "DRAGON and ROCK, fused into something new. They dream of enduring." NPCs remember, react, and evolve alongside the player
@@ -138,7 +138,8 @@ Familiar species transformed by Hoenn's unique environment. Some are discovered 
 | Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) |
 | Pinsir (Hoenn) | Bug/Fire | Route 112 (5%) | — (standalone form) |
 | Stantler (Hoenn) | Ghost/Grass | Route 119 (4%) | — (standalone form) |
-| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (5%) | — (evolution coming soon) |
+| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (5%) | Lv35 → Gliscor (Hoenn) |
+| Gliscor (Hoenn) | Water/Rock | — | Evolved from Gligar (Hoenn) |
 
 #### The Cosmic Form
 

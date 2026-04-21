@@ -37,6 +37,8 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 **Wally's Migration Bond (C246)**: Tauros→Ninetales_Hoenn (Ice/Fairy) — "New POKéMON found me on the way here." Fairy pairing with Gardevoir ace. VR rematches evolve into Calm Mind sweeper. **3 VR silent swaps**: Edgar (Golem→Mamoswine), Samuel (Donphan→Mamoswine), Owen (Glalie→Weavile). Migration species appear without commentary — "silent normalization."
 
+**Archie's Gliscor_Hoenn (C251)**: Seafloor Cavern team now includes Gliscor_Hoenn (Water/Rock, Lv44) replacing Tentacruel. The leader of Team Aqua has adopted a creature born from the intersection of ocean and stone — the region's transformation is systemic, reaching even the faction leaders.
+
 **Emotional arc**: Unease → observation → shock → dread → triumph
 
 ---

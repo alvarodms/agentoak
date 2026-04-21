@@ -115,6 +115,25 @@ Files modified: 28 source + 7 sprite + 2 map + 1 JSON = 38 total.
 
 ---
 
+## C251: Gliscor_Hoenn (Water/Rock) — Cross-Gen Evolution of Gligar_Hoenn
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Gliscor_Hoenn | 433 | Water/Rock | 510 | Evolution only (Gligar_Hoenn Lv35) |
+
+Stats: 75/95/130/45/75/90. Abilities: Battle Armor / Rock Head. Growth: Slow.
+Learnset: Poison Sting, Harden, Sand Attack, Water Pulse, Quick Attack, Screech, Rock Tomb, Crunch, Rock Slide, Swords Dance, Guillotine.
+TMs: 21 (Water Pulse, Toxic, HP, Hyper Beam, Protect, EQ, Return, Dig, Brick Break, Double Team, Rock Tomb, Aerial Ace, Facade, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
+Egg moves: Empty (inherits from Gligar_Hoenn line).
+Cry: Mapped to base Gligar via cry_ids.h.
+Sprites: Custom deep ocean teal + mineral grey recolor by Sprite Designer v1.
+Archie team swap: Replaces Tentacruel (Lv44) on Seafloor Cavern team with Gliscor_Hoenn (Surf/Rock Slide/Crunch/Swords Dance).
+Also fixed: Gligar_Hoenn egg_moves.h gap from C250.
+
+Files modified: 26 source + 7 sprite = 33 total.
+
+---
+
 ## C223: Species Foundation Complete
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).

@@ -160,7 +160,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C248 | feature | **DONE** — Team Magma quiet reckoning (#144 partial, Magma only): Courtney Terra Cave rewrite (Ninetales_Hoenn + sparse dialogue), Tabitha defeat text cracks ×3, 3 grunt Pinsir_Hoenn swaps, postgame Mt. Chimney NPC |
 | C249 | feature | **DONE** — Team Aqua reckoning (#144 complete): Shelly Seafloor Cavern rewrite (Corsola_Hoenn + analytical dialogue), Matt defeat text shortened (BOSS loyalty), 3 grunt Corsola_Hoenn swaps, postgame Lilycove NPC |
 | C250 | feature | **DONE** — Gligar_Hoenn (Water/Rock) in Granite Cave B2F slot 7 at 5%, Hiker NPC on B1F. First cross-gen form (#142 partial). |
-| C251 | feature | Cross-gen regional form #2 (#142) + Gliscor_Hoenn evolution |
+| C251 | feature | **DONE** — Gliscor_Hoenn (Water/Rock, #433) evolution of Gligar_Hoenn at Lv35. Archie Seafloor team swap (Tentacruel→Gliscor_Hoenn). Fixed C250 egg_moves.h gap. Completes #142, partial #148. |
 | C252 | patch | v2.2 consistency pass |
 | C253 | planning | v2.2 ship evaluation |
 
@@ -187,6 +187,6 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (21 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430), Deoxys_Hoenn(431), Gligar_Hoenn(432). EGG=433, NUM_SPECIES=433.
+- **Custom species (22 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430), Deoxys_Hoenn(431), Gligar_Hoenn(432), Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). Quest 6 uses 4-state (STARTED -> METEOR + OCEAN -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, found in Shoal Cave low-tide room.

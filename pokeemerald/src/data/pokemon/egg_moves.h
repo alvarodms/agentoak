@@ -724,6 +724,12 @@ const u16 gEggMoves[] = {
               MOVE_COUNTER,
               MOVE_SAND_TOMB),
 
+    egg_moves(GLIGAR_HOENN,
+              MOVE_COUNTER,
+              MOVE_METAL_CLAW,
+              MOVE_WING_ATTACK,
+              MOVE_BATON_PASS),
+
     egg_moves(SNUBBULL,
               MOVE_METRONOME,
               MOVE_FAINT_ATTACK,

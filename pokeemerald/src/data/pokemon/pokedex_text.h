@@ -2441,6 +2441,11 @@ const u8 gGligarHoennPokedexText[] = _(
     "stony armor. It clings to wet walls,\n"
     "clicking its hardened tail to\n"
     "echolocate in the dark.");
+const u8 gGliscorHoennPokedexText[] = _(
+    "An evolved form unique to HOENN.\n"
+    "Its mineral-encrusted body hardens\n"
+    "with age, making it a powerful\n"
+    "defensive battler in coastal caves.");
 const u8 gDeoxysHoennPokedexText[] = _(
     "Its body shimmers between states\n"
     "that should not coexist. Those\n"

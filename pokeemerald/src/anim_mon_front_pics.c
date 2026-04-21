@@ -413,6 +413,7 @@ const u32 gMonFrontPic_Farigiraf[] = INCBIN_U32("graphics/pokemon/farigiraf/anim
 const u32 gMonFrontPic_PinsirHoenn[] = INCBIN_U32("graphics/pokemon/pinsir_hoenn/anim_front.4bpp.lz");
 const u32 gMonFrontPic_StantlerHoenn[] = INCBIN_U32("graphics/pokemon/stantler_hoenn/anim_front.4bpp.lz");
 const u32 gMonFrontPic_GligarHoenn[] = INCBIN_U32("graphics/pokemon/gligar_hoenn/anim_front.4bpp.lz");
+const u32 gMonFrontPic_GliscorHoenn[] = INCBIN_U32("graphics/pokemon/gliscor_hoenn/anim_front.4bpp.lz");
 const u32 gMonFrontPic_DeoxysHoenn[] = INCBIN_U32("graphics/pokemon/deoxys_hoenn/anim_front.4bpp.lz");
 const u32 gMonFrontPic_Egg[] = INCBIN_U32("graphics/pokemon/egg/anim_front.4bpp.lz");
 

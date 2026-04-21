@@ -548,8 +548,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_Archie[] = {
     {
     .iv = 150,
     .lvl = 44,
-    .species = SPECIES_TENTACRUEL,
-    .moves = {MOVE_SURF, MOVE_SLUDGE_BOMB, MOVE_ICE_BEAM, MOVE_TOXIC}
+    .species = SPECIES_GLISCOR_HOENN,
+    .moves = {MOVE_SURF, MOVE_ROCK_SLIDE, MOVE_CRUNCH, MOVE_SWORDS_DANCE}
     },
     {
     .iv = 200,
