@@ -61,8 +61,8 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 ---
 
-## Known Gaps & v2.2 Planned
+## Known Gaps & v2.3 Priorities
 
-- **Hours 3-6 (Badge 2-3)**: Gap partially filled. Gligar_Hoenn in Granite Cave B2F (C250). Second form planned (C251).
-- **Postgame**: Quest III "The Answer" — Mossdeep trigger → Sky Pillar summit → Deoxys_Hoenn Lv70 encounter (C242).
-- **Throughout**: Trainer teams narrative pass (C244-247 complete). Team Magma reckoning (C248 complete). Team Aqua rework (C249 planned).
+- **Hours 0-3 (Pre-Badge 1)**: No regional form encounters. Player's first form discovery is Granite Cave B2F (~Hour 3). v2.3 priority: add 1-2 early-game forms on Routes 101-104 or Petalburg Woods.
+- **Hours 3-6 (Badge 2-3)**: Partially filled by Gligar_Hoenn (C250) and R113 Vulpix_Hoenn. Still thinner than Badge 4-7 stretch. v2.3: discovery NPCs and ecological texture.
+- **Type diversity**: 4/10 regional forms carry Rock typing (Corsola, Bagon, Gligar, Gliscor). v2.3 forms should NOT add more Rock.

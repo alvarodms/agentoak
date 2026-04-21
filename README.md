@@ -50,6 +50,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **4-tier rematch progression** for all gym leaders and Elite Four with escalating teams — E4 rematches feature migration-themed rosters, regional forms from Tier 2 onward, and strategic evolution arcs (Drake's Gabite grows into Garchomp, Phoebe's Corsola_Hoenn strengthens, Wallace's Arcanine_Hoenn anchors his team)
 - **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1->2->3->4->5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
+- **Quiet reckoning** — Team Magma and Team Aqua didn't just lose; the migration outgrew them. Tabitha's bravado cracks across three encounters until nothing's left but silence and doubt. Courtney adopted a Hoennian Ninetales without a word — her answer was always action, not ideology. Shelly dissects the migration with clinical precision, recognizing what Archie cannot. Three Magma grunts carry Hoennian Pinsir without understanding what it means. In the postgame, an ex-Magma member stares south from Mt. Chimney: "The land's the same size, but there's more of everything anyway"
 - **200+ route trainers** across every land route, ocean route, cave, and dungeon redesigned with migration species, held items, themed movesets, and new double battles — ocean swimmers carry route-coherent species matching their waters, Route 119 exploits rain, Victory Road veterans field evolved teams with competitive AI, Mt. Pyre ghosts haunt with Misdreavus and Houndour, and Meteor Falls dragon tamers raise Bagon and Shelgon from the caves they call home
 
 ### The Postgame Saga
@@ -67,6 +68,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
   - *The Mossdeep Signal* — A Space Center researcher tracked an energy pulse that bounced off the upper atmosphere during the Primal Stirring. Something shimmers on Route 131 where the sky grew thin
   - *The Fog Beneath* — A swimmer on Route 126 found an opening in the seabed that wasn't there before the Gathering. Something massive and gentle waits below the fog
 - **The Resonance** — After catching Deoxys, the Space Center terminal begins transmitting. Investigate pulsing meteorites in Meteor Falls and alien luminescence beneath Route 131's waves. Return to learn the truth: "This isn't a message. It's a handshake." The cosmic mystery deepens — and the evidence lingers. Return to any investigation site and find residue: crystallized energy at the Space Center, meteorites that still pulse faintly, deep water that shimmers with something not quite light. Whatever answered, it's still listening
+- **The Answer** — The Resonance was a handshake. Now something answers. Return to the Mossdeep terminal when signals spike toward the sky, then climb Sky Pillar to its storm-wracked summit. What waits there is not Rayquaza — it is something stranger, born from Hoenn's entanglement with forces beyond the atmosphere. A Poison/Fairy being with the custom ability Toxic Touch. The three-quest arc — Signal, Resonance, Answer — resolves the cosmic thread that began with a blinking terminal and ends with an alien standing where the sky guardian once roosted
 
 ### Visual Identity
 
@@ -97,7 +99,7 @@ Choose your challenge in Professor Birch's lab:
 
 ### Custom Species Guide
 
-*Twenty-one new species call Hoenn home. Here's where to find them and how they evolve.*
+*Twenty-two new species call Hoenn home. Here's where to find them and how they evolve.*
 
 #### Migration Arrivals
 

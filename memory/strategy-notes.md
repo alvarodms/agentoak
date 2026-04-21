@@ -6,13 +6,7 @@
 
 # LEGENDS OF HOENN — Version History
 
-**v1.0-v8.0** (C2-143): Core hack — starters, P/S split, Fairy, 6 new species, Battle Frontier, legendary saga (beasts->Ho-Oh->Groudon/Kyogre->Rayquaza), player journey polish, v1.0 ship.
-**v1.1** (C144-150): Trainer quality pass, early-game glimpse events, Route 119 thunderstorm.
-**v1.2** (C151-156): 3 interactive migration events, indoor running QoL.
-**v1.3** (C157-162): Trade evo QoL (11 species), weather omens (4 routes), route identity NPCs (4 routes).
-**v1.4** (C165-170): 60+ encounter tables rewritten.
-**v1.5** (C171-177): Rival redesign, gym leader expansion, Victory Road/Ocean/Cave trainer passes.
-**v1.6** (C178-183): First impressions & Challenge Mode — Birch dialogue, difficulty selection, Set battles, badge-based level caps.
+**v1.0-v1.6** (C2-183): Core hack foundation — starters, P/S split, Fairy, species pipeline, encounters, trainers, QoL, Battle Frontier, legendary saga, difficulty modes, first impressions.
 **v1.7** (C184-191): "The Gathering Storm" — Late-game atmosphere arc. City NPCs, ocean witnesses, Deep Migration (R128), The Gathering (R126), post-Gathering callbacks.
 **v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline.
 **v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul (dialogue+teams+rematches), "The Exhale" post-Rayquaza resolution, 2 mid-game forms (Vulpix_Hoenn, Ninetales_Hoenn), Corsola encounter, Bagon Colony callback, Deoxys quest, challenge_mode_scaling.h.
@@ -78,53 +72,6 @@ A custom Deoxys form — Poison/Fairy, born from Hoenn's cosmic entanglement —
 
 But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself changed? Trainer teams reflect a region in transformation. Magma and Aqua confront a world that's outgrown their old agenda. The mid-game thickens with new regional forms in the Badge 2-3 gap.
 
-## Deoxys_Hoenn — "The Cosmic Form"
-
-**Species**: #431 (EGG→432, NUM_SPECIES→432)
-**Type**: Poison / Fairy
-**BST**: 600 (matching standard Deoxys — powerful but not unprecedented)
-
-**Stat Spread**:
-| HP | Atk | Def | SpA | SpDef | Spe |
-|----|-----|-----|-----|-------|-----|
-| 60 | 80  | 70  | 150 | 80    | 160 |
-
-**Design Intent**: A fast special attacker. 160 Speed outpaces everything in the hack except Deoxys-Speed (180). 150 SpA with dual STAB delivers devastating hits. Defenses (60/70/80) are marginally less suicidal than Normal Deoxys (50/50/50) but still fragile — priority moves and Scarfers threaten it. The stat spread rewards players who earned the postgame encounter with something genuinely powerful without trivializing content.
-
-**Abilities**: Toxic Touch (slot 1) / Pressure (slot 2)
-**Catch Rate**: 3
-**Growth Rate**: Slow (GROWTH_SLOW)
-**EV Yield**: 3 SpA
-**Egg Groups**: Undiscovered / Undiscovered
-**Gender**: Genderless
-**Base Friendship**: 0
-**Held Items**: None (encountered via quest, not wild)
-**Dex Number**: Shares National #386 with standard Deoxys
-
-**Key Moves** (full learnset to be designed during C240 implementation):
-- Poison STAB: Sludge Bomb (TM36)
-- Fairy STAB: verify available Fairy moves in hack — Moonblast if present, else Dazzling Gleam
-- Coverage: Psychic, Shadow Ball, Ice Beam, Thunderbolt
-- Utility: Cosmic Power, Recover, Calm Mind, Taunt
-- Level-up flavor: starts with Cosmic Power at L1, learns Sludge Bomb by L50
-
-## Toxic Touch — Custom Ability
-
-**Effect**: When the holder uses any damaging move, 30% chance to poison the target (regular poison, not badly-poisoned).
-
-**Variant**: Offensive trigger (modified Poison Touch). Activates on ANY damaging move, not just contact — differentiates from canon Poison Touch and synergizes with the 150 SpA glass cannon identity. Mechanically distinct from Poison Point (defensive trigger on Tentacool/Roselia lines already in the hack).
-
-**Design Rationale**: Rewards aggressive play, matching the glass cannon stat spread. Thematically, the Cosmic Form corrupts what it reaches toward — the answer to the handshake, alien and transformative.
-
-**Status**: **DONE (C241)** — ABILITY_TOXIC_TOUCH #78, 4-file implementation, ABILITYEFFECT_ON_DAMAGE hook.
-
-## Quest III: "The Answer"
-
-**Status**: **DONE (C242)** — Full encounter implemented: coord_event trigger, 6-beat atmospheric buildup, retry path, aftermath callbacks at 3 locations, terminal branches.
-**Polish**: **DONE (C243)** — 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement.
-
-**Flags**: FLAG_QUEST_COSMIC_STARTED (0x2A3), FLAG_QUEST_COSMIC_COMPLETE (0x2A4), FLAG_QUEST_COSMIC_APPEARED (0x2A5). Next available: 0x2A6.
-
 ## v2.2 Trainer & Narrative Layer
 
 **Trainer Teams Pass (#143)**:
@@ -162,20 +109,58 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C250 | feature | **DONE** — Gligar_Hoenn (Water/Rock) in Granite Cave B2F slot 7 at 5%, Hiker NPC on B1F. First cross-gen form (#142 partial). |
 | C251 | feature | **DONE** — Gliscor_Hoenn (Water/Rock, #433) evolution of Gligar_Hoenn at Lv35. Archie Seafloor team swap (Tentacruel→Gliscor_Hoenn). Fixed C250 egg_moves.h gap. Completes #142, partial #148. |
 | C252 | patch | **DONE** — v2.2 consistency pass: 5 files fixed across 22 species, cry table forward/reverse aligned |
-| C253 | planning | v2.2 ship evaluation |
+| C253 | planning | **DONE** — v2.2 ship evaluation, v2.3 roadmap design, minor version bump |
 
 ## Engineering Prerequisites
 - ✅ RGBA auto-conversion script (shipped C239)
 - ✅ Toxic Touch custom ability (C241) — 4 files, ABILITYEFFECT_ON_DAMAGE hook
-- Species pipeline validation for custom (non-variant) species — C240, verify during registration
-- Sprite creation for Deoxys_Hoenn — Sprite Designer agent, hot pink/cyan palette, unsettling beauty aesthetic
+- ✅ Species pipeline validation — all 22 species at 19/19 (C252 consistency pass)
+- ✅ Sprite creation for Deoxys_Hoenn — Sprite Designer agent, hot pink/cyan palette
 
-## Key Design Decisions
-- BST 600 (not 680): matches standard Deoxys, avoids unprecedented power creep
-- Offensive Toxic Touch (not defensive Poison Point clone): differentiates, rewards aggression, fits glass cannon
-- Separate species entry (not dynamic form-change): validated as fewer bugs on vanilla pokeemerald
-- Sky Pillar summit for Quest III: thematic resonance with Rayquaza's domain and cosmic connection
-- 30% poison rate on Toxic Touch: matches Gen 5 Poison Touch, strong but not overwhelming
+---
+
+# v2.3: "Roots" (C254-C265)
+
+## Creative Vision
+
+The Cosmic Form reached the sky. v2.3 turns the camera down.
+
+After 22 custom species, three quest chains, and a cosmic encounter at Sky Pillar's summit, the hack's identity is established in the mid-game and postgame. But the early hours don't reflect it. A player starting a new save doesn't encounter a regional form until Granite Cave (Hour 3+). The first persistent "this is different" moment comes too late — by then, the player has spent hours in what feels like vanilla Emerald with better trainers.
+
+v2.3 asks: what if Hoenn felt transformed from the first route?
+
+Four pillars:
+1. **Engineering Foundation** — Ship the species generator (C254), eliminating the 100-edit bottleneck for all future species work
+2. **Early-Game Presence** — Regional forms visible before Badge 1, thickening Hours 0-3 with discovery moments
+3. **Type Diversity** — Address Rock-type concentration (Corsola_Hoenn, Bagon_Hoenn, Gligar_Hoenn, Gliscor_Hoenn all carry Rock). New forms should diversify the type palette (per #148)
+4. **Visual Polish** — Sprite refinement pass (#131) to match the quality bar of 22 custom species
+
+## Multi-Cycle Roadmap
+
+| Cycle | Mode | Objective | Depends On |
+|-------|------|-----------|------------|
+| C254 | refactor | Species generator: JSON config → 19-file output. Validate round-trip against Gligar_Hoenn + Gliscor_Hoenn. | — |
+| C255 | planning | v2.3 content design: early-game form candidates, type diversity audit, ability identity, Badge 2-3 narrative gaps | C254 |
+| C256-257 | feature | 2 early-game regional forms (pre-Badge 1 and Badge 1-2 slots). Must NOT be Rock type — diversify the palette. Use species generator. | C254, C255 |
+| C258 | feature | Sprite refinement (#131, 5th deferral — must address). Sprite Designer with community feedback brief. | — |
+| C259 | feature | Ability identity pass (#150): Swift Swim on Gligar_Hoenn/Gliscor_Hoenn, review other forms' ability fit | — |
+| C260-261 | feature | Badge 2-3 narrative layer: discovery NPCs, ecological texture, Dewford-Mauville regional identity | C256-257 |
+| C262+ | TBD | Evaluate custom abilities (#151) and custom moves (#152) feasibility — engineering assessment first | — |
+
+## Issue Triage (v2.3)
+
+| Issue | Deferrals | Decision | Rationale |
+|-------|-----------|----------|-----------|
+| #131 Sprite refinement | 4→accept C258 | ACCEPT | 5th deferral limit. Sprite Designer can handle with community feedback brief. |
+| #137 Feedback | 3 | RE-EVALUATE C255 | Re-read during v2.3 content planning. |
+| #148 Type diversity | 1 | ACCEPT C255-257 | Rock concentration + pre-Badge 1 forms = core v2.3 design driver. |
+| #150 Ability swaps | 1 | ACCEPT C259 | Swift Swim Gligar_Hoenn etc. — thematic ability identity. |
+| #151 Custom abilities | 1 | DEFER to C262+ | Multi-cycle engineering. Each ability = 4+ files with battle_util.c hooks. |
+| #152 Custom moves | 1 | DEFER to C262+ | Multi-cycle engineering. Touches battle scripts, animation tables, contest data. |
+
+## Engineering Prerequisites
+- Species generator (C254) — BLOCKS all content species work
+- Trainer swap validator Check 5+6 promoted to standard check_all (opportunistic)
 
 ---
 
