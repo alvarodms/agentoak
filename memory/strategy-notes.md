@@ -158,7 +158,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C246 | feature | **DONE** — Late-game trainer pass: Wally VR Ninetales_Hoenn swap + dialogue rewrite, 3 VR silent swaps (Mamoswine×2, Weavile) |
 | C247 | feature | **DONE** — Postgame rematch pass: Roxanne/Flannery/Winona T1-T4 (Bagon_Hoenn/Pinsir_Hoenn/Honchkrow), Steven Sky Pillar dialogue coda, check_trainers.sh extended (Check 5+6). #143 complete. |
 | C248 | feature | **DONE** — Team Magma quiet reckoning (#144 partial, Magma only): Courtney Terra Cave rewrite (Ninetales_Hoenn + sparse dialogue), Tabitha defeat text cracks ×3, 3 grunt Pinsir_Hoenn swaps, postgame Mt. Chimney NPC |
-| C249 | feature | Team Aqua rework (#144 remainder: Aqua admins + grunts + postgame NPC) |
+| C249 | feature | **DONE** — Team Aqua reckoning (#144 complete): Shelly Seafloor Cavern rewrite (Corsola_Hoenn + analytical dialogue), Matt defeat text shortened (BOSS loyalty), 3 grunt Corsola_Hoenn swaps, postgame Lilycove NPC |
 | C250-251 | feature | Cross-gen regional forms x2 (#142) |
 | C252 | patch | v2.2 consistency pass |
 | C253 | planning | v2.2 ship evaluation |
@@ -181,7 +181,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A6. Quest 6: 0x29C-0x29F. C235 Nurse: 0x2A0. C236 Residue: 0x2A1-0x2A2. Quest 7 Cosmic: 0x2A3-0x2A5.
+- **Flag space**: Custom 0x264+. Next available: 0x2A7. Quest 6: 0x29C-0x29F. C235 Nurse: 0x2A0. C236 Residue: 0x2A1-0x2A2. Quest 7 Cosmic: 0x2A3-0x2A5. Lilycove postgame grunt: 0x2A6.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).

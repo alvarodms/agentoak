@@ -123,6 +123,18 @@ Magma faction dialogue rewrite: admin defeat text cracks, Courtney Terra Cave fu
 | `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **248** | Tabitha defeat: "I'm with our leader…" → "I'm with our leader...\pAlways have been.\p...Right?" Self-doubt surfaces. |
 | `include/constants/flags.h` | **248** | FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT at 0x2C (repurposed FLAG_UNUSED_0x02C). |
 
+## Team Aqua Reckoning — Cycle 249
+
+Aqua faction dialogue rewrite: Shelly analytical acceptance, Matt deflection through loyalty, postgame NPC.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/SeafloorCavern_Room3/scripts.inc` | **249** | Shelly intro/defeat/post-battle rewritten: analytical, not aggressive. "After I've tested you." Post-battle plants core seed: "The ocean didn't need us for that." |
+| `data/maps/AquaHideout_B2F/scripts.inc` | **249** | Matt defeat/post-submarine/post-battle rewritten: shorter than vanilla, every line references "the BOSS." "Hehehe" laugh removed. Personal loyalty, not ideology. |
+| `data/maps/LilycoveCity/scripts.inc` | **249** | Postgame Aqua grunt NPC added (FLAG_SYS_GAME_CLEAR gated via OnTransition + FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT 0x2A6). "We were right… Weren't we? …Then why does it feel like the sea forgot we existed?" |
+| `data/maps/LilycoveCity/map.json` | **249** | Added postgame Aqua grunt object event at (37,37) elev 5, FACE_DOWN, non-trainer. |
+| `include/constants/flags.h` | **249** | FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT at 0x2A6. |
+
 ## Quest 7: The Answer (C242)
 
 Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.

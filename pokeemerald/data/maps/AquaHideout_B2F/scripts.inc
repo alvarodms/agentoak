@@ -97,23 +97,21 @@ AquaHideout_B2F_Text_MattIntro:
 	.string "I'm going to pulverize you!$"
 
 AquaHideout_B2F_Text_MattDefeat:
-	.string "Hehehe…\n"
-	.string "So, I lost, too…$"
+	.string "…Heh.\p"
+	.string "The BOSS needs this.\n"
+	.string "That's enough.$"
 
 AquaHideout_B2F_Text_OurBossGotThroughHisPreparations:
-	.string "Hehehe!\p"
-	.string "While I was toying with you, our BOSS\n"
-	.string "got through his preparations!$"
+	.string "…The BOSS went ahead.\n"
+	.string "While we were busy here.$"
 
 AquaHideout_B2F_Text_MattPostBattle:
-	.string "Hehehe!\p"
-	.string "Our BOSS has already gone on his way to\n"
-	.string "some cave under the sea!\p"
-	.string "If you're going to give chase, you'd\n"
-	.string "better search the big, wide sea beyond\l"
-	.string "LILYCOVE.\p"
-	.string "But will you find it then?\n"
-	.string "Hehehe!$"
+	.string "Past LILYCOVE.\n"
+	.string "Deep under the sea.\p"
+	.string "You want to chase him?\n"
+	.string "Go ahead.\p"
+	.string "The BOSS believes in this.\n"
+	.string "Always has.$"
 
 AquaHideout_B2F_Text_Grunt4Intro:
 	.string "Wahahah, I grew weary of waiting!\n"

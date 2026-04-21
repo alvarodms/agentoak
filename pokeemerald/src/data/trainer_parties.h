@@ -17,9 +17,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntAquaHideout1[] = {
     {
     .iv = 75,
     .lvl = 34,
-    .species = SPECIES_CARVANHA,
+    .species = SPECIES_CORSOLA_HOENN,
     .heldItem = ITEM_NONE,
-    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_SCARY_FACE, MOVE_SCREECH}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_TOMB, MOVE_SPITE, MOVE_HARDEN}
     }
 };
 
@@ -51,9 +51,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntAquaHideout3[] = {
     {
     .iv = 75,
     .lvl = 34,
-    .species = SPECIES_MIGHTYENA,
+    .species = SPECIES_CORSOLA_HOENN,
     .heldItem = ITEM_NONE,
-    .moves = {MOVE_CRUNCH, MOVE_TAKE_DOWN, MOVE_SCARY_FACE, MOVE_SAND_ATTACK}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_TOMB, MOVE_CURSE, MOVE_HARDEN}
     }
 };
 
@@ -404,9 +404,9 @@ static const struct TrainerMonItemCustomMoves sParty_GruntAquaHideout6[] = {
     {
     .iv = 75,
     .lvl = 34,
-    .species = SPECIES_GOLBAT,
+    .species = SPECIES_CORSOLA_HOENN,
     .heldItem = ITEM_NONE,
-    .moves = {MOVE_SLUDGE_BOMB, MOVE_AIR_CUTTER, MOVE_CONFUSE_RAY, MOVE_BITE}
+    .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_TOMB, MOVE_SPITE, MOVE_ASTONISH}
     },
     {
     .iv = 75,
@@ -504,10 +504,10 @@ static const struct TrainerMonNoItemCustomMoves sParty_ShellyWeatherInstitute[] 
 static const struct TrainerMonItemCustomMoves sParty_ShellySeafloorCavern[] = {
     {
     .iv = 150,
-    .lvl = 39,
-    .species = SPECIES_WEEZING,
-    .heldItem = ITEM_POISON_BARB,
-    .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_SHADOW_BALL, MOVE_TOXIC}
+    .lvl = 40,
+    .species = SPECIES_CORSOLA_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_SLIDE, MOVE_CURSE, MOVE_ANCIENT_POWER}
     },
     {
     .iv = 150,

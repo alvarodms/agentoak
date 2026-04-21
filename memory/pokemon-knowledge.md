@@ -49,5 +49,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Late-Game & Postgame Trainer Narrative Patterns | 246 | [late-postgame-trainer-narrative-patterns.md](pokemon-knowledge/late-postgame-trainer-narrative-patterns.md) |
 | Postgame Rematch & Trainer Design Patterns | 247 | [postgame-rematch-design-patterns.md](pokemon-knowledge/postgame-rematch-design-patterns.md) |
 | Team Magma/Aqua Rework Patterns | 248 | [magma-aqua-rework-patterns.md](pokemon-knowledge/magma-aqua-rework-patterns.md) |
+| Aqua Admin Characterization — Shelly & Matt ORAS Patterns | 249 | [aqua-admin-characterization-patterns.md](pokemon-knowledge/aqua-admin-characterization-patterns.md) |
 
 Older research files (Cycles 47-208) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

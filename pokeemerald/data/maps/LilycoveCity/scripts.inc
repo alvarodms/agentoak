@@ -9,6 +9,12 @@ LilycoveCity_OnTransition:
 	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	call Common_EventScript_SetupRivalGfxId
+	goto_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_OnTransition_ShowPostgameGrunt
+	setflag FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT
+	end
+
+LilycoveCity_OnTransition_ShowPostgameGrunt:
+	clearflag FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT
 	end
 
 LilycoveCity_OnLoad:
@@ -755,6 +761,10 @@ LilycoveCity_Text_HoneymoonVowToSeeRarePokemon:
 	.string "POKéMON as soon as we arrived.\p"
 	.string "I mean, we are totally happy!$"
 
+LilycoveCity_EventScript_PostgameAquaGrunt::
+	msgbox LilycoveCity_Text_PostgameAquaGrunt, MSGBOX_NPC
+	end
+
 LilycoveCity_EventScript_BeastSighting::
 	lock
 	faceplayer
@@ -840,3 +850,12 @@ LilycoveCity_Text_BeastSightingPostClimax:
 	.string "Calmer than they have been\l"
 	.string "in years, actually.$"
 
+LilycoveCity_Text_PostgameAquaGrunt:
+	.string "…See? The ocean's thriving.\n"
+	.string "New species everywhere.\p"
+	.string "We were right.\n"
+	.string "TEAM AQUA was right about\l"
+	.string "the sea all along.\p"
+	.string "…Weren't we?\p"
+	.string "…Then why does it feel like\n"
+	.string "the sea forgot we existed?$"

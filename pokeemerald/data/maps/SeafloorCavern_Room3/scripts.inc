@@ -13,28 +13,30 @@ SeafloorCavern_Room3_EventScript_Grunt5::
 
 SeafloorCavern_Room3_Text_ShellyIntro:
 	.string "Ahahahaha!\p"
-	.string "How did you manage to get here without\n"
-	.string "a submarine?\l"
-	.string "What an impressive child!\p"
-	.string "But… It won't do to have you\n"
-	.string "meddling about here.\p"
-	.string "And, I do want payback for what\n"
-	.string "happened at the WEATHER INSTITUTE…\p"
-	.string "I'm going to give you a little taste\n"
-	.string "of pain! Resign yourself to it!$"
+	.string "All the way down here.\n"
+	.string "Without a submarine, even.\p"
+	.string "…You've seen what's happening,\n"
+	.string "haven't you?\l"
+	.string "The new species. The changes.\p"
+	.string "I've been watching too.\p"
+	.string "But we can discuss that\n"
+	.string "after I've tested you.$"
 
 SeafloorCavern_Room3_Text_ShellyDefeat:
-	.string "Ahahahaha!\p"
-	.string "Ouch!$"
+	.string "Ahaha…\p"
+	.string "…Yes.\n"
+	.string "I thought so.$"
 
 SeafloorCavern_Room3_Text_ShellyPostBattle:
-	.string "Ahahahaha!\n"
-	.string "You're so darn strong.\p"
-	.string "It's terribly disappointing that you're\n"
-	.string "not a TEAM AQUA member.\p"
-	.string "You could have enjoyed the fabulous\n"
-	.string "world our BOSS has promised as\l"
-	.string "one of us…$"
+	.string "You know what I've noticed?\n"
+	.string "The sea is changing.\p"
+	.string "New species. New patterns.\l"
+	.string "Things we never planned for.\p"
+	.string "We wanted to expand the ocean.\n"
+	.string "But the ocean…\p"
+	.string "…It didn't need us for that.\p"
+	.string "Keep going.\n"
+	.string "You'll see what I mean.$"
 
 SeafloorCavern_Room3_Text_Grunt5Intro:
 	.string "For our dream to become real, we need\n"
