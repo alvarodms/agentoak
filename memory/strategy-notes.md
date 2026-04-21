@@ -161,7 +161,7 @@ Dedicated cycles: C250-251 (2 forms, 1 per cycle).
 | C249 | feature | **DONE** — Team Aqua reckoning (#144 complete): Shelly Seafloor Cavern rewrite (Corsola_Hoenn + analytical dialogue), Matt defeat text shortened (BOSS loyalty), 3 grunt Corsola_Hoenn swaps, postgame Lilycove NPC |
 | C250 | feature | **DONE** — Gligar_Hoenn (Water/Rock) in Granite Cave B2F slot 7 at 5%, Hiker NPC on B1F. First cross-gen form (#142 partial). |
 | C251 | feature | **DONE** — Gliscor_Hoenn (Water/Rock, #433) evolution of Gligar_Hoenn at Lv35. Archie Seafloor team swap (Tentacruel→Gliscor_Hoenn). Fixed C250 egg_moves.h gap. Completes #142, partial #148. |
-| C252 | patch | v2.2 consistency pass |
+| C252 | patch | **DONE** — v2.2 consistency pass: 5 files fixed across 22 species, cry table forward/reverse aligned |
 | C253 | planning | v2.2 ship evaluation |
 
 ## Engineering Prerequisites

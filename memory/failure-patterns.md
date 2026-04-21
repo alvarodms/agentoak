@@ -50,3 +50,5 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **Trainer capacity**: TRAINERS_COUNT = 885, AT CAPACITY. Must reuse unused IDs for new trainers.
 - **Cancelled parallel tool calls**: Bash tool sometimes cancels parallel calls. Run species checks sequentially, not in parallel.
 - **egg_moves.h**: Regional forms still need an entry (even if empty) — C250 Gligar_Hoenn missed this (17/19). Fixed in C251.
+- **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts. C252 found a 2-entry mismatch (duplicate Growlithe/Arcanine in vanilla reverse section + misplaced entries before gCryTable:: label). New species using base-species cries need ONLY a cry_ids.h entry, NOT new cry_tables.inc entries.
+- **check_species_registration.sh**: cry_tables.inc check is a known false positive for 16/22 species — validator greps for regional form name but cry table uses base species labels. 18/19 is the expected ceiling for species that reuse base cries.

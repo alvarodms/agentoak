@@ -137,3 +137,17 @@ Files modified: 26 source + 7 sprite = 33 total.
 ## C223: Species Foundation Complete
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).
+
+## C252: v2.2 Consistency Pass — Species Registration Sweep
+
+Ran all 8 validators across 22 custom species. Fixed 5 files:
+
+| File | Gap Count | Species Fixed |
+|------|-----------|---------------|
+| cry_ids.h | 17 entries | All species Riolu→Farigiraf (6 custom cry IDs + 11 base-species mappings) |
+| egg_moves.h | 8 entries | Lucario, Weavile, Gabite, Garchomp, Arcanine_Hoenn, Vulpix_Hoenn, Deoxys_Hoenn, Gliscor_Hoenn |
+| pokemon_icon.c | 5+5 entries | Froslass, Mamoswine, Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf (icon + palette) |
+| pokedex_orders.h | 3×3 entries | Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf (alphabetical + weight + height) |
+| cry_tables.inc | Alignment fix | Forward/reverse table mismatch: removed 2 misplaced pre-table entries, added 2 forward (Dusclops, Murkrow), added 2 reverse (Growlithe, Arcanine), removed 2 duplicate vanilla reverse entries. Both tables now 399 entries. |
+
+Post-fix: 6 species at 19/19, 16 at 18/19 (cry_tables.inc false positive — validator checks for regional name string but cry table uses base species labels). All other validators clean: trainers 0 errors, evolution PASS, E4 rematches PASS, flags verified, quest flags 24/24 OK.
