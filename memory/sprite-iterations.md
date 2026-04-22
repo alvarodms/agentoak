@@ -6,7 +6,7 @@
 | Species | Type | Version | Cycle | Issue | Status |
 |---------|------|---------|-------|-------|--------|
 | Corsola Hoenn | Ghost/Rock | v3 | 216 | #116 | iterated — frown mouth (∩ shape: center y37 + drooping corners y38), vivid purple iris (130,60,180) per @alvarodms |
-| Growlithe Hoenn | Water | v1 | 196 | — | awaiting feedback |
+| Growlithe Hoenn | Water | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 26.6%→34.7% front, 34.0%→41.0% back |
 | Arcanine Hoenn | Water/Fire | v1 | 196 | — | awaiting feedback |
 | Vulpix Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Ninetales Hoenn | Ice/Fairy | v1 | 208 | — | new |
@@ -15,6 +15,6 @@
 | Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |
 | Deoxys Hoenn | Poison/Fairy | v1 | 240 | — | new |
 | Gligar Hoenn | Water/Rock | v1 | 250 | — | new |
-| Gliscor Hoenn | Water/Rock | v2 | 255 | #149 | iterated — aquatic palette shift (grey→blue), scorpion barb→V-fork caudal fin, per @manta89640 |
-| Lotad Hoenn | Electric/Grass | v1 | 256 | — | new — citrine gold lily pad, warm green body, 23px lightning vein accents |
-| Shroomish Hoenn | Poison/Ice | v1 | 257 | — | new — frost-purple cap, cold lavender body, 13 frost crystal px, 2 emanation px |
+| Gliscor Hoenn | Water/Rock | v3 | 258 | #149 | iterated — wider V-fork caudal fin (±2px per lobe + row 59 tips), 12 fin-ray px on right wing (idx 10 aqua striation), 6 barnacle px (idx 3 dark) on body edges, fill 45.7%→47.0% |
+| Lotad Hoenn | Electric/Grass | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 19.7%→25.0% front, 37.2%→43.3% back |
+| Shroomish Hoenn | Poison/Ice | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 18.3%→23.1% front, 33.2%→39.1% back |

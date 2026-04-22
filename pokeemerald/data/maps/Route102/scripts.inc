@@ -73,8 +73,8 @@ Route102_EventScript_Allen::
 	msgbox Route102_Text_AllenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route102_EventScript_Fisherman::
-	msgbox Route102_Text_FishermanFizzing, MSGBOX_NPC
+Route102_EventScript_MigrationFisherman::
+	msgbox Route102_Text_MigrationFisherman, MSGBOX_NPC
 	end
 
 Route102_Text_WatchMeCatchPokemon:
@@ -145,6 +145,10 @@ Route102_Text_MigrationGlimpse2:
 	.string "eye, then shot away like a bullet.\p"
 	.string "That was no ordinary Hoenn POKéMON.$"
 
-Route102_Text_FishermanFizzing:
-	.string "The pond's been fizzing all week.\n"
-	.string "My MAGIKARP won't go near it.$"
+Route102_Text_MigrationFisherman:
+	.string "Careful near the shallows.\p"
+	.string "The LOTAD in this pond have\n"
+	.string "changed somehow.\p"
+	.string "My line keeps getting shocked\n"
+	.string "when I cast near 'em.\l"
+	.string "Never had that problem before.$"

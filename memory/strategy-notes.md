@@ -40,49 +40,23 @@ Four pillars:
 
 **Species ID**: 434. **Location**: Slot 2 (0-indexed), 10%, Lv3-4. Replaces vanilla Lotad; both forms coexist on route.
 **Narrative**: Cosmic fallout saturated Route 102's shallow ponds. Lotad's lily pad became a natural capacitor — crackling static, faint electrical arcs. Fishermen notice ponds fizzing before rainstorms. Adaptation is recent: deeper-water Lotad remain unchanged.
-**Stats**: HP 40 / Atk 30 / Def 30 / **SpA 50** / SpD 40 / Spe 30 (BST 220). SpD→SpA swap — capacitor stores and releases energy. 50 SpA is highest stat; ThunderShock at Lv10 off STAB actually stings early-game.
-**Typing**: Weaknesses (4): Fire, Ice, Poison, Bug 2x. Resists: Water 0.5x, Grass 0.5x, Steel 0.5x, Electric 0.25x. **Ground neutral** (Electric weak × Grass resist = 1x) — an Electric-type that isn't scared of Ground.
+**Stats**: HP 40 / Atk 30 / Def 30 / **SpA 50** / SpD 40 / Spe 30 (BST 220). SpD->SpA swap — capacitor stores and releases energy. 50 SpA is highest stat; ThunderShock at Lv10 off STAB actually stings early-game.
+**Typing**: Weaknesses (4): Fire, Ice, Poison, Bug 2x. Resists: Water 0.5x, Grass 0.5x, Steel 0.5x, Electric 0.25x. **Ground neutral** (Electric weak x Grass resist = 1x) — an Electric-type that isn't scared of Ground.
 **Abilities**: Slot 0 **Lightning Rod** (draws single-target Electric moves in doubles — Gen 3, no SpA boost). Slot 1 **Rain Dish** (1/16 HP in rain — water heritage preserved).
-**Moves**: Lv1 Astonish, Lv3 Growl, Lv7 Absorb, Lv10 ThunderShock, Lv15 Charge, Lv21 Mega Drain, Lv25 Thunder Wave, Lv31 Shock Wave, Lv36 Giga Drain. 9 moves total. All offensive moves Special (aligned with 50 SpA). **Key play**: Charge → Shock Wave = 120 BP never-miss STAB. Thunder Wave at Lv25 = speed control for 30 Spe base.
-**Evolution**: → Lombre_Hoenn (Water Stone) → Ludicolo_Hoenn (Leaf Stone). **C256 registers base form only** — no evo entries yet.
+**Moves**: Lv1 Astonish, Lv3 Growl, Lv7 Absorb, Lv10 ThunderShock, Lv15 Charge, Lv21 Mega Drain, Lv25 Thunder Wave, Lv31 Shock Wave, Lv36 Giga Drain. 9 moves total.
+**Evolution**: -> Lombre_Hoenn (Water Stone) -> Ludicolo_Hoenn (Leaf Stone). **C256 registers base form only**.
 **Visual direction**: Yellow-green palette replacing blue. Lightning-bolt vein patterns on lily pad. Same silhouette — double-take from color, not shape.
 
 #### Shroomish_Hoenn (Poison/Ice) — Petalburg Woods
 
-**Species ID**: 435. **Location**: Slot 8 (0-indexed), 4%, Lv6-7. Replaces second vanilla Shroomish (Lv7-8). Vanilla stays in slot 0 (20%, Lv5-7) — player finds normal Shroomish first, then the wrong one. ~25 encounters to find at 4%, roughly 2-3 minutes of searching.
+**Species ID**: 435. **Location**: Slot 8 (0-indexed), 4%, Lv6-7. Replaces second vanilla Shroomish (Lv7-8). Vanilla stays in slot 0 (20%, Lv5-7) — player finds normal Shroomish first, then the wrong one.
 **Narrative**: Mycorrhizal network carried migration influence underground. Cryogenic spores — toxic compounds crystallize at low temperatures. Frost patches on warm forest floor where Shroomish_Hoenn cluster. The wrongness is quiet: a cold spot in a warm forest.
-**Stats**: HP 65 / Atk 35 / Def 60 / **SpA 45** / SpD 60 / Spe 30 (BST 295). Bulk-oriented tank: -5 Atk/Spe → +5 HP/SpA. Won't out-damage or outspeed anything — wins by tanking and statusing.
-**Typing**: Weaknesses (5): Fire, Ground, Psychic, Rock, Steel 2x. Resists (5): Grass, Poison, Bug, Ice, Fairy 0.5x. Fighting neutral (Poison resist × Ice weak = 1x). Five weaknesses sounds bad but early-game opponents rarely carry those coverage moves.
-**Abilities**: Slot 0 **Poison Point** (30% poison on contact). Slot 1 **Effect Spore** (10% each poison/paralysis/sleep on contact). Both punish physical contact — "don't touch the mushroom." Pairs with bulky stats to create attrition.
-**Moves**: Lv1 Poison Sting, Lv4 Tackle, Lv7 Stun Spore, Lv10 Powder Snow, Lv16 Acid, Lv22 Icy Wind, Lv26 Acid Armor, Lv31 Toxic, Lv36 Aurora Beam, Lv40 Sludge, Lv45 Ice Beam. 11 moves total. Physical filler early (Poison Sting/Tackle); all real damage Special (Powder Snow, Acid, Icy Wind, Aurora Beam, Sludge, Ice Beam). **Key play**: Acid Armor + Toxic stall. Icy Wind for speed control at 30 Spe base.
-**Evolution**: → Breloom_Hoenn (Poison/Ice) at Lv23 (matching vanilla). **C257 registers base form only**.
+**Stats**: HP 65 / Atk 35 / Def 60 / **SpA 45** / SpD 60 / Spe 30 (BST 295). Bulk-oriented tank.
+**Typing**: Weaknesses (5): Fire, Ground, Psychic, Rock, Steel 2x. Resists (5): Grass, Poison, Bug, Ice, Fairy 0.5x.
+**Abilities**: Slot 0 **Poison Point** (30% poison on contact). Slot 1 **Effect Spore** (10% each poison/paralysis/sleep on contact).
+**Moves**: Lv1 Poison Sting, Lv4 Tackle, Lv7 Stun Spore, Lv10 Powder Snow, Lv16 Acid, Lv22 Icy Wind, Lv26 Acid Armor, Lv31 Toxic, Lv36 Aurora Beam, Lv40 Sludge, Lv45 Ice Beam. 11 moves total.
+**Evolution**: -> Breloom_Hoenn (Poison/Ice) at Lv23 (matching vanilla). **C257 registers base form only**.
 **Visual direction**: Frosted cap with purple-blue undertones replacing warm brown/green. Pale icy spots on body. Crystalline spore cloud.
-
-#### Design Complementarity
-
-| | Lotad_Hoenn | Shroomish_Hoenn |
-|---|---|---|
-| **Role** | Offensive special attacker | Bulky status tank |
-| **Best stat** | SpA 50 | HP 65 / Def 60 / SpD 60 |
-| **Signature** | Charge → Shock Wave (120 BP) | Acid Armor + Toxic stall |
-| **Rate** | 10% (find naturally) | 4% (hunt for it) |
-| **Player lesson** | Setup + execute beats raw power | Bulk + status beats speed |
-| **Type gap filled** | First Electric regional form | First Poison regional form |
-
-Both viable through mid-game, not disposable novelties. Coexistence with vanilla counterparts reinforces: the migration changed *some* Pokémon, not all. Together they teach complementary lessons about the hack's combat design.
-
-#### Type Diversity After +2
-
-| Type | Current (22 forms) | After (24) | Change |
-|------|-------------------|------------|--------|
-| Rock | 6 | 6 | — |
-| Fire | 3 | 3 | — |
-| **Electric** | **0** | **1** | +Lotad_Hoenn |
-| **Poison** | **0** | **1** | +Shroomish_Hoenn |
-| Ice | 2 | 3 | +Shroomish_Hoenn |
-| Grass | 1 | 2 | +Lotad_Hoenn |
-
-Two previously unrepresented types filled. Rock untouched. Progress toward balanced palette.
 
 ### Updated Multi-Cycle Roadmap
 
@@ -92,10 +66,10 @@ Two previously unrepresented types filled. Rock untouched. Progress toward balan
 | C255 | planning | **DONE** — Early-game form design + type diversity audit | C254 |
 | C256 | feature | **DONE** — Lotad_Hoenn: generator + Route 102 encounter + fisherman NPC | C255 |
 | C257 | feature | **DONE** — Shroomish_Hoenn(434) + Lotad_Hoenn(435) re-registered (C256 revert fix) + Petalburg Woods encounter + frost NPC | C255 |
-| C258 | feature | Sprite refinement (#131, 5th deferral). Sprite Designer. | — |
+| C258 | patch | **DONE** — Sprite iterations (Growlithe v2, Lotad v2, Shroomish v2, Gliscor v3) + Route 102 fisherman NPC rewrite | — |
 | C259 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
 | C260-261 | feature | Evo lines: Lombre_Hoenn, Ludicolo_Hoenn, Breloom_Hoenn | C256-257 |
-| C262-263 | feature | Badge 1-2 narrative layer + discovery NPCs (incl. Route 102 fisherman NPC lost in C256 revert) | C256-257 |
+| C262-263 | feature | Badge 1-2 narrative layer + discovery NPCs | C256-257 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
 | C265 | planning | v2.3 ship evaluation, v2.4 roadmap | C264 |
 
@@ -103,9 +77,9 @@ Two previously unrepresented types filled. Rock untouched. Progress toward balan
 
 | Issue | Def | Decision | Rationale |
 |-------|-----|----------|-----------|
-| #131 Sprite refinement | 4 | ACCEPT C258 | 5th deferral limit. Sprite Designer handles. |
-| #148 Type diversity | 1→partial | IN PROGRESS | Lotad+Shroomish = Electric+Poison gaps filled. |
-| #149 Gliscor sprite | 0 | ITERATION | "More aquatic, fish-like tail" — Sprite Designer. |
+| #131 Sprite refinement | 5 | **DONE C258** | Growlithe v2, Lotad v2, Shroomish v2 bulkified; Gliscor v3 aquatic tail. |
+| #148 Type diversity | 1->partial | IN PROGRESS | Lotad+Shroomish = Electric+Poison gaps filled. |
+| #149 Gliscor sprite | 1 | **DONE C258** | v3: wider V-fork caudal fin, fin-ray striations, barnacle accents. |
 | #150 Ability swaps | 1 | ACCEPT C259 | Thematic ability identity pass. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
 | #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
@@ -114,8 +88,8 @@ Two previously unrepresented types filled. Rock untouched. Progress toward balan
 | #156 Rival fight | 1 | DEFER C262-263 | Narrative layer cycle. |
 
 ## Engineering Prerequisites
-- ✅ Species generator (C254) — `scripts/generate_species.cjs`, 18-file scope, configs in `species_configs/`
-- ✅ Trainer validator promoted to check_all (C254)
+- Species generator (C254) — `scripts/generate_species.cjs`, 18-file scope, configs in `species_configs/`
+- Trainer validator promoted to check_all (C254)
 
 ---
 
