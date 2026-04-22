@@ -217,7 +217,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

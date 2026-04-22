@@ -1,0 +1,85 @@
+{
+  "name": "GLIGAR_HOENN",
+  "pascalName": "GligarHoenn",
+  "graphicsDir": "gligar_hoenn",
+  "baseSpeciesCry": "SPECIES_GLIGAR",
+
+  "stats": {
+    "hp": 75, "atk": 80, "def": 115, "spa": 35, "spd": 75, "spe": 50
+  },
+  "types": ["TYPE_WATER", "TYPE_ROCK"],
+  "abilities": ["ABILITY_BATTLE_ARMOR", "ABILITY_ROCK_HEAD"],
+  "catchRate": 60,
+  "expYield": 86,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_BUG", "EGG_GROUP_BUG"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 1, "spa": 0, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "CaveCling",
+    "height": 11,
+    "weight": 725,
+    "description": [
+      "A GLIGAR adapted to HOENN's coastal",
+      "sea caves. Mineral-rich water has",
+      "calcified its pincers and tail into",
+      "stony armor. It clings to wet walls,",
+      "clicking its hardened tail to",
+      "echolocate in the dark."
+    ],
+    "pokemonScale": 316,
+    "pokemonOffset": 8,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_HARDEN"],
+    [1, "MOVE_WATER_GUN"],
+    [6, "MOVE_SAND_ATTACK"],
+    [10, "MOVE_METAL_CLAW"],
+    [14, "MOVE_ROCK_TOMB"],
+    [18, "MOVE_BITE"],
+    [22, "MOVE_SCREECH"],
+    [26, "MOVE_ROCK_SLIDE"],
+    [30, "MOVE_IRON_DEFENSE"],
+    [34, "MOVE_SLASH"],
+    [38, "MOVE_AQUA_TAIL"],
+    [42, "MOVE_ANCIENT_POWER"],
+    [46, "MOVE_ROCK_BLAST"]
+  ],
+
+  "tmhm": [
+    "WATER_PULSE", "ROAR", "TOXIC", "HIDDEN_POWER", "PROTECT",
+    "RAIN_DANCE", "FRUSTRATION", "IRON_TAIL", "EARTHQUAKE", "RETURN",
+    "DIG", "BRICK_BREAK", "DOUBLE_TEAM", "SANDSTORM", "ROCK_TOMB",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "CUT", "SURF", "STRENGTH", "ROCK_SMASH", "WATERFALL", "DIVE"
+  ],
+
+  "eggMoves": ["MOVE_COUNTER", "MOVE_METAL_CLAW", "MOVE_WING_ATTACK", "MOVE_BATON_PASS"],
+
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "35", "target": "SPECIES_GLISCOR_HOENN" }
+  ],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(48, 48)",
+    "frontPicYOffset": 8,
+    "backPicSize": "MON_COORDS_SIZE(48, 48)",
+    "backPicYOffset": 9,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_STRETCH"
+  }
+}

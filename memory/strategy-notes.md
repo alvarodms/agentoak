@@ -139,7 +139,7 @@ Four pillars:
 
 | Cycle | Mode | Objective | Depends On |
 |-------|------|-----------|------------|
-| C254 | refactor | Species generator: JSON config → 19-file output. Validate round-trip against Gligar_Hoenn + Gliscor_Hoenn. | — |
+| C254 | refactor | **DONE** — Species generator (`scripts/generate_species.cjs`): JSON → 18 files, validated via test species (18/19 check, build pass), idempotency on Gligar_Hoenn, check_trainers promoted to check_all. | — |
 | C255 | planning | v2.3 content design: early-game form candidates, type diversity audit, ability identity, Badge 2-3 narrative gaps | C254 |
 | C256-257 | feature | 2 early-game regional forms (pre-Badge 1 and Badge 1-2 slots). Must NOT be Rock type — diversify the palette. Use species generator. | C254, C255 |
 | C258 | feature | Sprite refinement (#131, 5th deferral — must address). Sprite Designer with community feedback brief. | — |
@@ -159,8 +159,8 @@ Four pillars:
 | #152 Custom moves | 1 | DEFER to C262+ | Multi-cycle engineering. Touches battle scripts, animation tables, contest data. |
 
 ## Engineering Prerequisites
-- Species generator (C254) — BLOCKS all content species work
-- Trainer swap validator Check 5+6 promoted to standard check_all (opportunistic)
+- ✅ Species generator (C254) — `scripts/generate_species.cjs`, 18-file scope, configs in `species_configs/`
+- ✅ Trainer swap validator promoted to check_all (C254)
 
 ---
 

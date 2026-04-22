@@ -23,5 +23,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Cross-Gen Evo Regional Form Design Patterns | 251 | [cross-gen-evo-form-design-patterns.md](pokemon-knowledge/cross-gen-evo-form-design-patterns.md) |
 | Custom Moves — Scope & Risk on Vanilla pokeemerald | 252 | [custom-moves-scope-and-risk.md](pokemon-knowledge/custom-moves-scope-and-risk.md) |
 | ROM Hack Ship Evaluation & Release Quality | 253 | [ship-evaluation-release-quality.md](pokemon-knowledge/ship-evaluation-release-quality.md) |
+| ROM Hack Starter Design Patterns | 254 | [starter-design-patterns.md](pokemon-knowledge/starter-design-patterns.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

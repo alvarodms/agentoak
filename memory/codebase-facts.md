@@ -130,15 +130,17 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 `make check_species` — Runs `scripts/check_species_registration.sh` on all custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
 `make check_evolution` — Bash validator for evolution.h: source/target species, method validity, duplicates, gender-gated evos, branching uniqueness.
 `make check_trainers` — Bash validator (6 checks): cross-references IDs/entries/parties, party count, field-level struct validation, constant existence.
-`make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution.
+`make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers.
 
 **ScriptCheckPokedexSeen** (C225): `setvar VAR_0x8004, SPECIES_X` → `specialvar VAR_RESULT, ScriptCheckPokedexSeen` → returns 1/0.
 
 ---
 
-## Regional Variant Species Pipeline (C195-202)
+## Species Generator (C254)
 
-**Generic pipeline script**: `scripts/add_regional_form.cjs` — config-driven, inserts into 27 files from a single JSON spec. **WARNING (C215-216)**: Pipeline catastrophically broken — only populates ~7/23 required files. DO NOT use without audit. See failure-patterns.md.
+**New tool**: `scripts/generate_species.cjs` — JSON config → 18-file code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files except cry_tables.inc (cry_ids.h handles base cry mapping). Idempotency: exits cleanly if species already exists in species.h. Auto-increments SPECIES_EGG and NATIONAL_DEX_COUNT.
+
+**Legacy pipeline**: `scripts/add_regional_form.cjs` — 27-file scope but **WARNING (C215-216)**: catastrophically broken. Superseded by generate_species.cjs for the 19-file scope.
 
 **Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
