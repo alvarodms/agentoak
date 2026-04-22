@@ -15,4 +15,4 @@
 | Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |
 | Deoxys Hoenn | Poison/Fairy | v1 | 240 | — | new |
 | Gligar Hoenn | Water/Rock | v1 | 250 | — | new |
-| Gliscor Hoenn | Water/Rock | v1 | 251 | — | new |
+| Gliscor Hoenn | Water/Rock | v2 | 255 | #149 | iterated — aquatic palette shift (grey→blue), scorpion barb→V-fork caudal fin, per @manta89640 |

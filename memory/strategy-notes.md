@@ -11,111 +11,8 @@
 **v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline.
 **v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul (dialogue+teams+rematches), "The Exhale" post-Rayquaza resolution, 2 mid-game forms (Vulpix_Hoenn, Ninetales_Hoenn), Corsola encounter, Bagon Colony callback, Deoxys quest, challenge_mode_scaling.h.
 **v2.0** (C212-225): "Deeper Roots" — 5 cross-gen evos (Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf), Bagon_Hoenn (Dragon/Rock), species 19/19 validation suite, evolution validator, Mom's migration send-off, researcher witness dialogue.
-
----
-
-# v2.1: "A Changed Hoenn, A Changed Trainer" (C226-C240)
-
-## Creative Vision
-
-v2.0 completed the migration narrative — every arc resolves, from Birch's lab to Deoxys. v2.1 asks: **who is the trainer who walked through all of this?**
-
-The migration changed Hoenn. Now the player avatar reflects that change — cyan-tinted, visually distinct from vanilla Emerald from the first frame. The protagonist's new palette is the visual anchor: a statement that this is a different game, a different journey.
-
-Three pillars:
-1. **Visual Identity** — Cyan protagonist palette (#136), graphical polish (#108), sprite refinements (#131)
-2. **Ecological Depth** — New regional forms (#118) in the Badge 3-6 stretch to thicken the mid-game
-3. **Postgame Mystery** — Deoxys Quest II (#130) expands the cosmic thread beyond the first signal
-
-## Multi-Cycle Roadmap
-
-| Cycle | Mode | Objective | Depends On |
-|-------|------|-----------|------------|
-| C226 | planning | **DONE** — v2.1 vision, backlog triage, roadmap, memory maintenance | — |
-| C227 | research | **DONE** — Catalog ALL Brendan/May sprite + palette files for #136. | C226 |
-| C228 | feature | **DONE** — Player palette recolor (#136): sea-glass teal across 22 files. | C227 |
-| C229 | feature | **DONE** — Dawn Stone item + EVO_ITEM_FEMALE method + Shoal Cave placement (#133). | C228 |
-| C230 | feature | **DONE** — Pinsir_Hoenn (Bug/Fire) on Route 112. 18/19 registered. | — |
-| C231 | feature | **DONE** — Stantler_Hoenn (Ghost/Grass) on Route 119. Badge 5-6 gap filled. | C230 |
-| C232 | feature | **DONE** — Echo dialogue layer: 5 NPCs connecting 4 regional forms + Changed Trainer debut. | C231 |
-| C233 | feature | **DONE** — #130 Deoxys Quest II: "The Resonance" — 3-location postgame investigation. 4 flags, 3 maps, ~250 lines of script. | — |
-| C234 | planning | **DONE** — v2.1 holistic eval, C235-240 plan, v2.2 vision, memory maintenance. | C233 |
-| C235 | feature | **DONE** — "Changed Trainer Witnesses" — Mom, Rival, Norman, Nurse Joy post-Champion dialogue. | C234 |
-| C236 | feature | **DONE** — "Resonance Residue" + #108 accepted — Post-Quest II environmental details at 3 locations + screen flash. | C235 |
-| C237 | patch | **DONE** — v2.1 consistency pass — Echo NPC flag checks, Quest II rewards, encounter rates, pacing. | C236 |
-| C238 | patch | **DONE** — v2.1 ship — Fixed Mom witness blocking heal + Nurse witness lock gap. README + memory updates. version_bump: "minor". | C237 |
-| C239-240 | planning+feature | **DONE** — v2.2 kickoff. C239: design doc + RGBA script. C240: Deoxys_Hoenn registered (#431 Poison/Fairy). | C238 |
-
-## Issue Triage (v2.1)
-
-| Issue | Deferrals | Decision | Rationale |
-|-------|-----------|----------|-----------|
-| #108 Graphical tweaks | 5 | DEFER (C236, 5th final) | Planned for C229 but scope deferred. Must address C236. |
-| #118 More regional forms | 5 | PARTIAL / DEFER (5th final) | C215 Bagon_Hoenn, C230 Pinsir_Hoenn, C231 Stantler_Hoenn shipped. Remaining → v2.2. |
-| #128 New character | 4 | REJECT | Pacing risk — narrative additions at this maturity could disrupt existing arcs. |
-| #130 Deoxys Quest II | 4 | **DONE (C233)** | Three-location investigation chain with 4 flags, atmospheric setpieces, open-ended "handshake" conclusion. |
-| #131 Sprite refinement | 2 | ACCEPT (C229) | Fits visual polish pillar. |
-| #133 Froslass Dawn Stone | 2 | **DONE (C229)** | Dawn Stone + EVO_ITEM_FEMALE + Shoal Cave placement. |
-| #136 Player palette | 1 | **DONE (C228)** | Sea-glass teal across 22 files. |
-| #145 Special Deoxys form | 1 | DEFER (v2.2) | Same ask as #140. Custom species + ability = v2.2 package. |
-| #146 Combine Deoxys quests | 0 | REJECT | Two-quest structure is intentional design. The gap is where narrative dread lives. |
-
----
-
-# v2.2: "The Cosmic Form" (C239-C255)
-
-## Creative Vision
-
-The Resonance said "it's a handshake." v2.2 delivers the answer.
-
-A custom Deoxys form — Poison/Fairy, born from Hoenn's cosmic entanglement — materializes as the quest chain's capstone. This is the project's first fully original species (not a regional variant), representing 40+ cycles of narrative buildup from the first Mossdeep signal through the Resonance Residue.
-
-But the Cosmic Form isn't the only story. v2.2 asks: how has Hoenn itself changed? Trainer teams reflect a region in transformation. Magma and Aqua confront a world that's outgrown their old agenda. The mid-game thickens with new regional forms in the Badge 2-3 gap.
-
-## v2.2 Trainer & Narrative Layer
-
-**Trainer Teams Pass (#143)**:
-- Scope: ~50 story trainers reviewed for migration narrative consistency
-- NOT a full rebalance — a narrative alignment pass. Trainers whose teams should reference migration species (regional forms, cross-gen evos) get 1-2 swaps.
-- Priority: Gym Leaders badges 3-6 (mid-game density), Rival battles 3-5
-- Dedicated cycles: C244-247
-
-**Team Magma/Aqua Rework (#144)**:
-- Scope: Dialogue + 2-3 team adjustments per admin
-- Theme: land-vs-sea agenda feels small now that cosmic forces are confirmed. Not doubt — quiet reckoning.
-- Dedicated cycles: C248-249
-
-## Cross-Gen Regional Forms (#142)
-
-Target the Badge 2-3 gap (Hours 3-6) where the player journey is thinnest.
-Candidates to be designed during implementation. Consider Johto/Sinnoh species with unused evolutions that fit Hoenn's ecology.
-Dedicated cycles: C250-251 (2 forms, 1 per cycle).
-
-## v2.2 Multi-Cycle Roadmap
-
-| Cycle | Mode | Objective |
-|-------|------|-----------|
-| C239 | planning | **DONE** — v2.2 design document + RGBA auto-conversion script |
-| C240 | feature | **DONE** — Deoxys_Hoenn species registration (23-file pipeline) with Pressure placeholder |
-| C241 | feature | **DONE** — Toxic Touch ability (ABILITY_TOXIC_TOUCH #78) + assigned to Deoxys_Hoenn |
-| C242 | feature | **DONE** — Quest III "The Answer": 6-beat atmospheric buildup, Lv70 encounter, 3-location aftermath callbacks |
-| C243 | patch | **DONE** — Quest III aftermath polish: 3 tonal registers (relief/unease/wonder), scientist post-fight branch, terminal text refinement |
-| C244 | feature | **DONE** — Trainer narrative pass Badges 1-4: Roxanne (Bagon_Hoenn), Flannery (Pinsir_Hoenn), R112/R113 route trainers, Rival R119 (Stantler_Hoenn), 4 gym intros rewritten (#143 partial) |
-| C245 | feature | **DONE** — Trainer narrative pass Badges 5-8: Norman/Winona/Tate&Liza/Juan dialogue rewritten, Honchkrow on Winona, Stantler_Hoenn Lv25→28 fix |
-| C246 | feature | **DONE** — Late-game trainer pass: Wally VR Ninetales_Hoenn swap + dialogue rewrite, 3 VR silent swaps (Mamoswine×2, Weavile) |
-| C247 | feature | **DONE** — Postgame rematch pass: Roxanne/Flannery/Winona T1-T4 (Bagon_Hoenn/Pinsir_Hoenn/Honchkrow), Steven Sky Pillar dialogue coda, check_trainers.sh extended (Check 5+6). #143 complete. |
-| C248 | feature | **DONE** — Team Magma quiet reckoning (#144 partial, Magma only): Courtney Terra Cave rewrite (Ninetales_Hoenn + sparse dialogue), Tabitha defeat text cracks ×3, 3 grunt Pinsir_Hoenn swaps, postgame Mt. Chimney NPC |
-| C249 | feature | **DONE** — Team Aqua reckoning (#144 complete): Shelly Seafloor Cavern rewrite (Corsola_Hoenn + analytical dialogue), Matt defeat text shortened (BOSS loyalty), 3 grunt Corsola_Hoenn swaps, postgame Lilycove NPC |
-| C250 | feature | **DONE** — Gligar_Hoenn (Water/Rock) in Granite Cave B2F slot 7 at 5%, Hiker NPC on B1F. First cross-gen form (#142 partial). |
-| C251 | feature | **DONE** — Gliscor_Hoenn (Water/Rock, #433) evolution of Gligar_Hoenn at Lv35. Archie Seafloor team swap (Tentacruel→Gliscor_Hoenn). Fixed C250 egg_moves.h gap. Completes #142, partial #148. |
-| C252 | patch | **DONE** — v2.2 consistency pass: 5 files fixed across 22 species, cry table forward/reverse aligned |
-| C253 | planning | **DONE** — v2.2 ship evaluation, v2.3 roadmap design, minor version bump |
-
-## Engineering Prerequisites
-- ✅ RGBA auto-conversion script (shipped C239)
-- ✅ Toxic Touch custom ability (C241) — 4 files, ABILITYEFFECT_ON_DAMAGE hook
-- ✅ Species pipeline validation — all 22 species at 19/19 (C252 consistency pass)
-- ✅ Sprite creation for Deoxys_Hoenn — Sprite Designer agent, hot pink/cyan palette
+**v2.1** (C226-238): "A Changed Hoenn" — Cyan protagonist palette, 2 mid-game forms (Pinsir_Hoenn Bug/Fire, Stantler_Hoenn Ghost/Grass), Echo dialogue layer, Deoxys Quest II "The Resonance", Changed Trainer witness reactions.
+**v2.2** (C239-253): "The Cosmic Form" — Deoxys_Hoenn (Poison/Fairy) with Toxic Touch ability, Quest III "The Answer", trainer narrative pass (Badges 1-8 + E4 + rematches), Magma/Aqua quiet reckoning, Gligar_Hoenn + Gliscor_Hoenn (Water/Rock), v2.2 ship + consistency pass.
 
 ---
 
@@ -132,46 +29,104 @@ v2.3 asks: what if Hoenn felt transformed from the first route?
 Four pillars:
 1. **Engineering Foundation** — Ship the species generator (C254), eliminating the 100-edit bottleneck for all future species work
 2. **Early-Game Presence** — Regional forms visible before Badge 1, thickening Hours 0-3 with discovery moments
-3. **Type Diversity** — Address Rock-type concentration (Corsola_Hoenn, Bagon_Hoenn, Gligar_Hoenn, Gliscor_Hoenn all carry Rock). New forms should diversify the type palette (per #148)
+3. **Type Diversity** — Address Rock-type concentration (6/22 forms carry Rock). New forms must diversify the palette (per #148)
 4. **Visual Polish** — Sprite refinement pass (#131) to match the quality bar of 22 custom species
 
-## Multi-Cycle Roadmap
+### Early-Game Form Design: "The Thesis Statement" (C255)
+
+**Design intent**: A new player should feel "this isn't vanilla Emerald" before reaching Roxanne. Both forms appear in normal tall grass — ambient, not gated. The first regional form encounter defines the player's expectation for the entire hack.
+
+#### Lotad_Hoenn (Electric/Grass) — Route 102
+
+**Species ID**: 434. **Location**: Slot 2 (0-indexed), 10%, Lv3-4. Replaces vanilla Lotad; both forms coexist on route.
+**Narrative**: Cosmic fallout saturated Route 102's shallow ponds. Lotad's lily pad became a natural capacitor — crackling static, faint electrical arcs. Fishermen notice ponds fizzing before rainstorms. Adaptation is recent: deeper-water Lotad remain unchanged.
+**Stats**: HP 40 / Atk 30 / Def 30 / **SpA 50** / SpD 40 / Spe 30 (BST 220). SpD→SpA swap — capacitor stores and releases energy. 50 SpA is highest stat; ThunderShock at Lv10 off STAB actually stings early-game.
+**Typing**: Weaknesses (4): Fire, Ice, Poison, Bug 2x. Resists: Water 0.5x, Grass 0.5x, Steel 0.5x, Electric 0.25x. **Ground neutral** (Electric weak × Grass resist = 1x) — an Electric-type that isn't scared of Ground.
+**Abilities**: Slot 0 **Lightning Rod** (draws single-target Electric moves in doubles — Gen 3, no SpA boost). Slot 1 **Rain Dish** (1/16 HP in rain — water heritage preserved).
+**Moves**: Lv1 Astonish, Lv3 Growl, Lv7 Absorb, Lv10 ThunderShock, Lv15 Charge, Lv21 Mega Drain, Lv25 Thunder Wave, Lv31 Shock Wave, Lv36 Giga Drain. 9 moves total. All offensive moves Special (aligned with 50 SpA). **Key play**: Charge → Shock Wave = 120 BP never-miss STAB. Thunder Wave at Lv25 = speed control for 30 Spe base.
+**Evolution**: → Lombre_Hoenn (Water Stone) → Ludicolo_Hoenn (Leaf Stone). **C256 registers base form only** — no evo entries yet.
+**Visual direction**: Yellow-green palette replacing blue. Lightning-bolt vein patterns on lily pad. Same silhouette — double-take from color, not shape.
+
+#### Shroomish_Hoenn (Poison/Ice) — Petalburg Woods
+
+**Species ID**: 435. **Location**: Slot 8 (0-indexed), 4%, Lv6-7. Replaces second vanilla Shroomish (Lv7-8). Vanilla stays in slot 0 (20%, Lv5-7) — player finds normal Shroomish first, then the wrong one. ~25 encounters to find at 4%, roughly 2-3 minutes of searching.
+**Narrative**: Mycorrhizal network carried migration influence underground. Cryogenic spores — toxic compounds crystallize at low temperatures. Frost patches on warm forest floor where Shroomish_Hoenn cluster. The wrongness is quiet: a cold spot in a warm forest.
+**Stats**: HP 65 / Atk 35 / Def 60 / **SpA 45** / SpD 60 / Spe 30 (BST 295). Bulk-oriented tank: -5 Atk/Spe → +5 HP/SpA. Won't out-damage or outspeed anything — wins by tanking and statusing.
+**Typing**: Weaknesses (5): Fire, Ground, Psychic, Rock, Steel 2x. Resists (5): Grass, Poison, Bug, Ice, Fairy 0.5x. Fighting neutral (Poison resist × Ice weak = 1x). Five weaknesses sounds bad but early-game opponents rarely carry those coverage moves.
+**Abilities**: Slot 0 **Poison Point** (30% poison on contact). Slot 1 **Effect Spore** (10% each poison/paralysis/sleep on contact). Both punish physical contact — "don't touch the mushroom." Pairs with bulky stats to create attrition.
+**Moves**: Lv1 Poison Sting, Lv4 Tackle, Lv7 Stun Spore, Lv10 Powder Snow, Lv16 Acid, Lv22 Icy Wind, Lv26 Acid Armor, Lv31 Toxic, Lv36 Aurora Beam, Lv40 Sludge, Lv45 Ice Beam. 11 moves total. Physical filler early (Poison Sting/Tackle); all real damage Special (Powder Snow, Acid, Icy Wind, Aurora Beam, Sludge, Ice Beam). **Key play**: Acid Armor + Toxic stall. Icy Wind for speed control at 30 Spe base.
+**Evolution**: → Breloom_Hoenn (Poison/Ice) at Lv23 (matching vanilla). **C257 registers base form only**.
+**Visual direction**: Frosted cap with purple-blue undertones replacing warm brown/green. Pale icy spots on body. Crystalline spore cloud.
+
+#### Design Complementarity
+
+| | Lotad_Hoenn | Shroomish_Hoenn |
+|---|---|---|
+| **Role** | Offensive special attacker | Bulky status tank |
+| **Best stat** | SpA 50 | HP 65 / Def 60 / SpD 60 |
+| **Signature** | Charge → Shock Wave (120 BP) | Acid Armor + Toxic stall |
+| **Rate** | 10% (find naturally) | 4% (hunt for it) |
+| **Player lesson** | Setup + execute beats raw power | Bulk + status beats speed |
+| **Type gap filled** | First Electric regional form | First Poison regional form |
+
+Both viable through mid-game, not disposable novelties. Coexistence with vanilla counterparts reinforces: the migration changed *some* Pokémon, not all. Together they teach complementary lessons about the hack's combat design.
+
+#### Type Diversity After +2
+
+| Type | Current (22 forms) | After (24) | Change |
+|------|-------------------|------------|--------|
+| Rock | 6 | 6 | — |
+| Fire | 3 | 3 | — |
+| **Electric** | **0** | **1** | +Lotad_Hoenn |
+| **Poison** | **0** | **1** | +Shroomish_Hoenn |
+| Ice | 2 | 3 | +Shroomish_Hoenn |
+| Grass | 1 | 2 | +Lotad_Hoenn |
+
+Two previously unrepresented types filled. Rock untouched. Progress toward balanced palette.
+
+### Updated Multi-Cycle Roadmap
 
 | Cycle | Mode | Objective | Depends On |
 |-------|------|-----------|------------|
-| C254 | refactor | **DONE** — Species generator (`scripts/generate_species.cjs`): JSON → 18 files, validated via test species (18/19 check, build pass), idempotency on Gligar_Hoenn, check_trainers promoted to check_all. | — |
-| C255 | planning | v2.3 content design: early-game form candidates, type diversity audit, ability identity, Badge 2-3 narrative gaps | C254 |
-| C256-257 | feature | 2 early-game regional forms (pre-Badge 1 and Badge 1-2 slots). Must NOT be Rock type — diversify the palette. Use species generator. | C254, C255 |
-| C258 | feature | Sprite refinement (#131, 5th deferral — must address). Sprite Designer with community feedback brief. | — |
-| C259 | feature | Ability identity pass (#150): Swift Swim on Gligar_Hoenn/Gliscor_Hoenn, review other forms' ability fit | — |
-| C260-261 | feature | Badge 2-3 narrative layer: discovery NPCs, ecological texture, Dewford-Mauville regional identity | C256-257 |
-| C262+ | TBD | Evaluate custom abilities (#151) and custom moves (#152) feasibility — engineering assessment first | — |
+| C254 | refactor | **DONE** — Species generator (18 files, Gligar_Hoenn validated) | — |
+| C255 | planning | **DONE** — Early-game form design + type diversity audit | C254 |
+| C256 | feature | Lotad_Hoenn: generator + Route 102 encounter + discovery NPC | C255 |
+| C257 | feature | Shroomish_Hoenn: generator + Petalburg Woods encounter + frost NPC | C255 |
+| C258 | feature | Sprite refinement (#131, 5th deferral). Sprite Designer. | — |
+| C259 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
+| C260-261 | feature | Evo lines: Lombre_Hoenn, Ludicolo_Hoenn, Breloom_Hoenn | C256-257 |
+| C262-263 | feature | Badge 1-2 narrative layer + discovery NPCs | C256-257 |
+| C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
+| C265 | planning | v2.3 ship evaluation, v2.4 roadmap | C264 |
 
-## Issue Triage (v2.3)
+### Issue Triage (v2.3)
 
-| Issue | Deferrals | Decision | Rationale |
-|-------|-----------|----------|-----------|
-| #131 Sprite refinement | 4→accept C258 | ACCEPT | 5th deferral limit. Sprite Designer can handle with community feedback brief. |
-| #137 Feedback | 3 | RE-EVALUATE C255 | Re-read during v2.3 content planning. |
-| #148 Type diversity | 1 | ACCEPT C255-257 | Rock concentration + pre-Badge 1 forms = core v2.3 design driver. |
-| #150 Ability swaps | 1 | ACCEPT C259 | Swift Swim Gligar_Hoenn etc. — thematic ability identity. |
-| #151 Custom abilities | 1 | DEFER to C262+ | Multi-cycle engineering. Each ability = 4+ files with battle_util.c hooks. |
-| #152 Custom moves | 1 | DEFER to C262+ | Multi-cycle engineering. Touches battle scripts, animation tables, contest data. |
+| Issue | Def | Decision | Rationale |
+|-------|-----|----------|-----------|
+| #131 Sprite refinement | 4 | ACCEPT C258 | 5th deferral limit. Sprite Designer handles. |
+| #148 Type diversity | 1→partial | IN PROGRESS | Lotad+Shroomish = Electric+Poison gaps filled. |
+| #149 Gliscor sprite | 0 | ITERATION | "More aquatic, fish-like tail" — Sprite Designer. |
+| #150 Ability swaps | 1 | ACCEPT C259 | Thematic ability identity pass. |
+| #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
+| #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
+| #153 Trainer teams | 1 | DEFER C262-263 | Remaining gaps need early-game forms first. |
+| #154 Regional starters | 1 | DEFER v2.4+ | Serious design needed — not a quick swap. |
+| #156 Rival fight | 1 | DEFER C262-263 | Narrative layer cycle. |
 
 ## Engineering Prerequisites
 - ✅ Species generator (C254) — `scripts/generate_species.cjs`, 18-file scope, configs in `species_configs/`
-- ✅ Trainer swap validator promoted to check_all (C254)
+- ✅ Trainer validator promoted to check_all (C254)
 
 ---
 
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A7. Quest 6: 0x29C-0x29F. C235 Nurse: 0x2A0. C236 Residue: 0x2A1-0x2A2. Quest 7 Cosmic: 0x2A3-0x2A5. Lilycove postgame grunt: 0x2A6.
+- **Flag space**: Custom 0x264+. Next available: 0x2A7.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
-- **Trainer capacity**: 885/885, 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853.
+- **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (22 total)**: Riolu(412), Lucario(413), Weavile(414), Gible(415), Gabite(416), Garchomp(417), Corsola_Hoenn(418), Growlithe_Hoenn(419), Arcanine_Hoenn(420), Dusknoir(421), Honchkrow(422), Froslass(423), Mamoswine(424), Bagon_Hoenn(425), Vulpix_Hoenn(426), Ninetales_Hoenn(427), Farigiraf(428), Pinsir_Hoenn(429), Stantler_Hoenn(430), Deoxys_Hoenn(431), Gligar_Hoenn(432), Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434.
-- **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). Quest 6 uses 4-state (STARTED -> METEOR + OCEAN -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
-- **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, found in Shoal Cave low-tide room.
+- **Custom species (22 active)**: ...through Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. **C256-257 targets**: Lotad_Hoenn(434), Shroomish_Hoenn(435) → EGG=436, NUM_SPECIES=436.
+- **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
+- **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

@@ -9,7 +9,9 @@
 
 Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes. **Roxanne now references Bagon_Hoenn near Meteor Falls (C244)** — academic curiosity, "living stone" hide. Team includes Bagon_Hoenn (Dragon/Rock).
 
-**Emotional arc**: Curiosity → wonder (Pikachu) → confidence (first gym)
+**v2.3 planned (C255 design)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 10% — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 4% — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts.
+
+**Emotional arc**: Curiosity → wonder (Pikachu) → surprise (electric lily pad / frost mushroom) → confidence (first gym)
 
 ---
 
@@ -63,6 +65,6 @@ Brawly/Wattson redesigned. **Brawly references Hitmonlee washed up on Dewford sh
 
 ## Known Gaps & v2.3 Priorities
 
-- **Hours 0-3 (Pre-Badge 1)**: No regional form encounters. Player's first form discovery is Granite Cave B2F (~Hour 3). v2.3 priority: add 1-2 early-game forms on Routes 101-104 or Petalburg Woods.
+- **Hours 0-3 (Pre-Badge 1)**: ~~No regional form encounters.~~ Designed C255: Lotad_Hoenn (Route 102, 10%) and Shroomish_Hoenn (Petalburg Woods, 4%). Implementation C256-257.
 - **Hours 3-6 (Badge 2-3)**: Partially filled by Gligar_Hoenn (C250) and R113 Vulpix_Hoenn. Still thinner than Badge 4-7 stretch. v2.3: discovery NPCs and ecological texture.
 - **Type diversity**: 4/10 regional forms carry Rock typing (Corsola, Bagon, Gligar, Gliscor). v2.3 forms should NOT add more Rock.
