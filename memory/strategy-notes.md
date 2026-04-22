@@ -90,7 +90,7 @@ Two previously unrepresented types filled. Rock untouched. Progress toward balan
 |-------|------|-----------|------------|
 | C254 | refactor | **DONE** — Species generator (18 files, Gligar_Hoenn validated) | — |
 | C255 | planning | **DONE** — Early-game form design + type diversity audit | C254 |
-| C256 | feature | Lotad_Hoenn: generator + Route 102 encounter + discovery NPC | C255 |
+| C256 | feature | **DONE** — Lotad_Hoenn: generator + Route 102 encounter + fisherman NPC | C255 |
 | C257 | feature | Shroomish_Hoenn: generator + Petalburg Woods encounter + frost NPC | C255 |
 | C258 | feature | Sprite refinement (#131, 5th deferral). Sprite Designer. | — |
 | C259 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
@@ -127,6 +127,6 @@ Two previously unrepresented types filled. Rock untouched. Progress toward balan
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (22 active)**: ...through Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. **C256-257 targets**: Lotad_Hoenn(434), Shroomish_Hoenn(435) → EGG=436, NUM_SPECIES=436.
+- **Custom species (23 active)**: ...through Lotad_Hoenn(434). EGG=435, NUM_SPECIES=435. **C257 target**: Shroomish_Hoenn(435) → EGG=436, NUM_SPECIES=436.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

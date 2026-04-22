@@ -138,6 +138,25 @@ Files modified: 26 source + 7 sprite = 33 total.
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).
 
+## C256: Lotad_Hoenn (Electric/Grass) — First Pre-Badge 1 Regional Form
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Lotad_Hoenn | 434 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 |
+
+Stats: 40/30/30/50/40/30. Abilities: Lightning Rod / Rain Dish. Growth: Medium Slow.
+Learnset: Astonish L1, Growl L3, Absorb L7, ThunderShock L10, Charge L15, Mega Drain L21, Thunder Wave L25, Shock Wave L31, Giga Drain L36.
+TMs: 19 (Bullet Seed, Toxic, HP, Light Screen, Protect, Rain Dance, Giga Drain, Frustration, Solar Beam, Thunderbolt, Thunder, Return, Double Team, Shock Wave, Facade, Secret Power, Rest, Attract, Flash).
+Egg moves: Leech Seed, Razor Leaf, Synthesis, Spark.
+Cry: Mapped to base Lotad via cry_ids.h.
+Sprites: Custom citrine gold Electric/Grass recolor by Sprite Designer v1 (lightning-bolt vein patterns).
+Discovery NPC: Fisherman on Route 102 (x:14, y:13) — "The pond's been fizzing all week."
+Evolution: None registered yet (→ Lombre_Hoenn planned C260-261).
+
+Files modified: 27 source + 8 graphics tables + 7 sprites + 1 encounter JSON + 2 Route 102 map files = 38 total.
+
+---
+
 ## C252: v2.2 Consistency Pass — Species Registration Sweep
 
 Ran all 8 validators across 22 custom species. Fixed 5 files:

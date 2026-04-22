@@ -73,6 +73,10 @@ Route102_EventScript_Allen::
 	msgbox Route102_Text_AllenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route102_EventScript_Fisherman::
+	msgbox Route102_Text_FishermanFizzing, MSGBOX_NPC
+	end
+
 Route102_Text_WatchMeCatchPokemon:
 	.string "WALLY: {PLAYER}…\n"
 	.string "POKéMON hide in tall grass like this,\l"
@@ -140,3 +144,7 @@ Route102_Text_MigrationGlimpse2:
 	.string "It locked onto you with a single red\n"
 	.string "eye, then shot away like a bullet.\p"
 	.string "That was no ordinary Hoenn POKéMON.$"
+
+Route102_Text_FishermanFizzing:
+	.string "The pond's been fizzing all week.\n"
+	.string "My MAGIKARP won't go near it.$"

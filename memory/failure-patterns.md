@@ -14,6 +14,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
+## "File Has Not Been Read Yet" on Edit Calls (Cycle 256) — 8 wasted actions
+
+**Symptom**: Edit tool rejected 8 consecutive calls with "File has not been read yet. Read it first before writing to it."
+**Cause**: Attempted to Edit graphics table files after grepping them (grep doesn't count as "read"). The Edit tool requires an explicit Read call for each file before editing.
+**Resolution**: Before editing ANY file, call Read on it first. Batch: read all 8 graphics table files in parallel, then edit all 8. For species work, the 8 graphics tables always need Read→Edit after running generate_species.cjs.
+
 ## Claiming Completion Without Git Changes (Cycles 107, 143) — RECURRING
 
 **Symptom**: Cycle summary claims work is done but git diff shows 0 pokeemerald/ changes.

@@ -1,0 +1,79 @@
+{
+  "name": "LOTAD_HOENN",
+  "pascalName": "LotadHoenn",
+  "graphicsDir": "lotad_hoenn",
+  "baseSpeciesCry": "SPECIES_LOTAD",
+
+  "stats": {
+    "hp": 40, "atk": 30, "def": 30, "spa": 50, "spd": 40, "spe": 30
+  },
+  "types": ["TYPE_ELECTRIC", "TYPE_GRASS"],
+  "abilities": ["ABILITY_LIGHTNING_ROD", "ABILITY_RAIN_DISH"],
+  "catchRate": 255,
+  "expYield": 44,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 15,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_WATER_1", "EGG_GROUP_GRASS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_YELLOW",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 1, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "Capacitor",
+    "height": 5,
+    "weight": 26,
+    "description": [
+      "A LOTAD found near HOENN's electrified",
+      "ponds. Its lily pad stores static",
+      "charge from the altered water,",
+      "releasing sparks when startled.",
+      "Fishermen say the ponds fizz and",
+      "crackle before rainstorms."
+    ],
+    "pokemonScale": 406,
+    "pokemonOffset": 19,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_ASTONISH"],
+    [3, "MOVE_GROWL"],
+    [7, "MOVE_ABSORB"],
+    [10, "MOVE_THUNDER_SHOCK"],
+    [15, "MOVE_CHARGE"],
+    [21, "MOVE_MEGA_DRAIN"],
+    [25, "MOVE_THUNDER_WAVE"],
+    [31, "MOVE_SHOCK_WAVE"],
+    [36, "MOVE_GIGA_DRAIN"]
+  ],
+
+  "tmhm": [
+    "BULLET_SEED", "TOXIC", "HIDDEN_POWER", "LIGHT_SCREEN", "PROTECT",
+    "RAIN_DANCE", "GIGA_DRAIN", "FRUSTRATION", "SOLAR_BEAM", "THUNDERBOLT",
+    "THUNDER", "RETURN", "DOUBLE_TEAM", "SHOCK_WAVE",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "FLASH"
+  ],
+
+  "eggMoves": ["MOVE_LEECH_SEED", "MOVE_RAZOR_LEAF", "MOVE_SYNTHESIS", "MOVE_SPARK"],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(48, 40)",
+    "frontPicYOffset": 14,
+    "backPicSize": "MON_COORDS_SIZE(56, 40)",
+    "backPicYOffset": 15,
+    "iconPaletteIndex": 1,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}

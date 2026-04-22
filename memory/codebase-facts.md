@@ -136,9 +136,11 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Species Generator (C254)
+## Species Generator (C254, updated C256)
 
 **New tool**: `scripts/generate_species.cjs` — JSON config → 18-file code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files except cry_tables.inc (cry_ids.h handles base cry mapping). Idempotency: exits cleanly if species already exists in species.h. Auto-increments SPECIES_EGG and NATIONAL_DEX_COUNT.
+
+**Generator does NOT handle 8 graphics table files** (C256 confirmed): front_pic_table.h, back_pic_table.h, front_pic_coordinates.h, back_pic_coordinates.h, palette_table.h, shiny_palette_table.h, footprint_table.h, still_front_pic_table.h. These must be manually edited after running the generator — insert after the last custom species entry. Each follows a one-line pattern; read the file to find the anchor, then append.
 
 **Legacy pipeline**: `scripts/add_regional_form.cjs` — 27-file scope but **WARNING (C215-216)**: catastrophically broken. Superseded by generate_species.cjs for the 19-file scope.
 
