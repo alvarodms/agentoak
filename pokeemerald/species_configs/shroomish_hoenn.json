@@ -1,0 +1,81 @@
+{
+  "name": "SHROOMISH_HOENN",
+  "pascalName": "ShroomishHoenn",
+  "graphicsDir": "shroomish_hoenn",
+  "baseSpeciesCry": "SPECIES_SHROOMISH",
+
+  "stats": {
+    "hp": 65, "atk": 35, "def": 60, "spa": 45, "spd": 60, "spe": 30
+  },
+  "types": ["TYPE_POISON", "TYPE_ICE"],
+  "abilities": ["ABILITY_POISON_POINT", "ABILITY_EFFECT_SPORE"],
+  "catchRate": 255,
+  "expYield": 65,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 15,
+  "friendship": 70,
+  "growthRate": "GROWTH_FLUCTUATING",
+  "eggGroups": ["EGG_GROUP_FAIRY", "EGG_GROUP_GRASS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_PURPLE",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 1, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "Frost Spore",
+    "height": 4,
+    "weight": 45,
+    "description": [
+      "A SHROOMISH found in cold patches",
+      "of PETALBURG WOODS. Its cap has",
+      "crystallized from exposure to",
+      "underground migration currents.",
+      "The toxic spores it releases",
+      "freeze on contact with warm air."
+    ],
+    "pokemonScale": 536,
+    "pokemonOffset": 20,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_POISON_STING"],
+    [4, "MOVE_TACKLE"],
+    [7, "MOVE_STUN_SPORE"],
+    [10, "MOVE_POWDER_SNOW"],
+    [16, "MOVE_ACID"],
+    [22, "MOVE_ICY_WIND"],
+    [26, "MOVE_ACID_ARMOR"],
+    [31, "MOVE_TOXIC"],
+    [36, "MOVE_AURORA_BEAM"],
+    [40, "MOVE_SLUDGE"],
+    [45, "MOVE_ICE_BEAM"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "ICE_BEAM", "BLIZZARD", "PROTECT",
+    "GIGA_DRAIN", "FRUSTRATION", "SOLAR_BEAM", "SLUDGE_BOMB",
+    "RETURN", "DOUBLE_TEAM", "LIGHT_SCREEN",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "BULLET_SEED", "SNATCH", "FLASH"
+  ],
+
+  "eggMoves": ["MOVE_LEECH_SEED", "MOVE_FAKE_TEARS", "MOVE_SWAGGER", "MOVE_CHARM"],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(40, 40)",
+    "frontPicYOffset": 14,
+    "backPicSize": "MON_COORDS_SIZE(48, 40)",
+    "backPicYOffset": 14,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}

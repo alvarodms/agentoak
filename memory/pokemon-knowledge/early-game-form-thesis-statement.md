@@ -1,6 +1,6 @@
 # Early-Game Regional Forms as "Thesis Statements"
 
-**Cycle**: 256 | **Date**: April 2026
+**Cycle**: 257 | **Date**: April 2026
 
 ---
 
@@ -22,12 +22,21 @@ A growing PokéCommunity thread ("Many rom hacks feel kinda bloated") criticizes
 
 **LoH implication**: The quality-over-quantity approach is validated by community sentiment. But 0 forms before Badge 1 is below the floor. The solution is 1-2 forms with strong thematic justification, not a density dump.
 
-## Encounter Rate Pacing (C256 Update)
+## Encounter Rate Pacing
 
 - **Fool's Gold** changes every Pokémon — overwhelming. Coexistence (vanilla + form on same route) is better received.
 - **Gaia** inverts rarity on some routes for surprise factor. 10% is "findable naturally" (1-in-10 encounters); 4% is "hunt for it" (~25 encounters). Both are valid for different discovery intentions.
 - **Radical Red / Inclement Emerald** frontload changes (new moves, abilities, forms visible immediately) — these hacks have higher player retention than hacks that gate the good stuff behind hours of vanilla gameplay.
 - No major hack uses Electric/Grass as an early-game regional form typing — genuinely novel for LoH.
+
+## Out-of-Context Typing (C257 Update)
+
+Key finding for Shroomish_Hoenn (Poison/Ice in warm Petalburg Woods):
+- **Inclement Emerald** distributes encounters across alternate methods (Cut trees, sand mounds, berry trees) to avoid overcrowding grass — LoH's 4% grass slot is simpler but works for single-variant-per-route.
+- **WaterRed** places Ice/Flying Fridgey (Pidgey variant) in Route 1 — Ice types in warm early routes are accepted when the form concept sells it.
+- **Blazing Emerald** moves Juan to Ice specialization — precedent for Ice presence in "warm Hoenn."
+- **Pokémon Reborn**: every notable encounter has a tied story event. The frost NPC pattern (environmental clue for rare encounter) follows this principle. Community praises this over random placement.
+- Risk: NPC that says "frost patches here" too explicitly becomes a quest marker. Best pattern from Reborn/Unbound: NPC remarks on the phenomenon for its own sake, not as a directive.
 
 ## Type Recommendations (PokéCommunity Consensus)
 
@@ -41,3 +50,5 @@ Community advice for regional form types: prioritize **Ghost, Steel, Dark, Ice, 
 - [PokéCommunity — Regional Forms Advice](https://www.pokecommunity.com/threads/rom-hack-ideas-feedback-and-advice-regional-forms.455914/)
 - [FandomSpot — ROM Hacks with Regional Variants](https://www.fandomspot.com/pokemon-hacks-with-regional-variants/)
 - [PokéCommunity — Pokémon Variant Emerald](https://www.pokecommunity.com/threads/pok%C3%A9mon-variant-emerald.489855/)
+- [PokéCommunity — Inclement Emerald](https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/)
+- [DualShockers — ROM Hacks Ranked by Story](https://www.dualshockers.com/best-pokmon-rom-hacks-ranked-by-story/)

@@ -538,3 +538,13 @@ PetalburgWoods_Text_MigrationSighting2:
 	.string "The forest feels different somehow.\n"
 	.string "Like the world is shifting.$"
 
+PetalburgWoods_EventScript_FrostBugCatcher::
+	msgbox PetalburgWoods_Text_FrostBugCatcher, MSGBOX_NPC
+	end
+
+PetalburgWoods_Text_FrostBugCatcher:
+	.string "The bugs won't go near those\n"
+	.string "purple ones.\p"
+	.string "I touched one and my hands\n"
+	.string "went numb. It's cold here.$"
+

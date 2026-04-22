@@ -1938,9 +1938,9 @@
                 "species": "SPECIES_SPINARAK"
               },
               {
-                "min_level": 7,
-                "max_level": 8,
-                "species": "SPECIES_SHROOMISH"
+                "min_level": 6,
+                "max_level": 7,
+                "species": "SPECIES_SHROOMISH_HOENN"
               },
               {
                 "min_level": 6,

@@ -138,22 +138,32 @@ Files modified: 26 source + 7 sprite = 33 total.
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).
 
-## C256: Lotad_Hoenn (Electric/Grass) — First Pre-Badge 1 Regional Form
+## C256/C257: Lotad_Hoenn (Electric/Grass) — Re-registered in C257
 
 | Species | ID | Type | BST | Encounter |
 |---------|-----|------|-----|-----------|
-| Lotad_Hoenn | 434 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 |
+| Lotad_Hoenn | 435 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 |
 
-Stats: 40/30/30/50/40/30. Abilities: Lightning Rod / Rain Dish. Growth: Medium Slow.
-Learnset: Astonish L1, Growl L3, Absorb L7, ThunderShock L10, Charge L15, Mega Drain L21, Thunder Wave L25, Shock Wave L31, Giga Drain L36.
-TMs: 19 (Bullet Seed, Toxic, HP, Light Screen, Protect, Rain Dance, Giga Drain, Frustration, Solar Beam, Thunderbolt, Thunder, Return, Double Team, Shock Wave, Facade, Secret Power, Rest, Attract, Flash).
-Egg moves: Leech Seed, Razor Leaf, Synthesis, Spark.
-Cry: Mapped to base Lotad via cry_ids.h.
-Sprites: Custom citrine gold Electric/Grass recolor by Sprite Designer v1 (lightning-bolt vein patterns).
-Discovery NPC: Fisherman on Route 102 (x:14, y:13) — "The pond's been fizzing all week."
+C256 code was reverted (graphics tables + sprites survived, but species.h/species_info/learnsets/etc. were lost). C257 re-ran generate_species.cjs to restore all 18 data files. ID shifted from 434→435 because Shroomish_Hoenn was registered first.
+Discovery NPC: NOT added (Route 102 fisherman was part of reverted C256 work — needs re-implementation).
 Evolution: None registered yet (→ Lombre_Hoenn planned C260-261).
 
-Files modified: 27 source + 8 graphics tables + 7 sprites + 1 encounter JSON + 2 Route 102 map files = 38 total.
+---
+
+## C257: Shroomish_Hoenn (Poison/Ice) — Pre-Badge 1 Regional Form #2
+
+| Species | ID | Type | BST | Encounter |
+|---------|-----|------|-----|-----------|
+| Shroomish_Hoenn | 434 | Poison/Ice | 295 | Petalburg Woods slot 8, 4% Lv6-7 |
+
+Stats: 65/35/60/45/60/30. Abilities: Poison Point / Effect Spore. Growth: Fluctuating.
+Learnset: Poison Sting L1, Tackle L4, Stun Spore L7, Powder Snow L10, Acid L16, Icy Wind L22, Acid Armor L26, Toxic L31, Aurora Beam L36, Sludge L40, Ice Beam L45.
+TMs: 19 (Toxic, HP, Ice Beam, Blizzard, Protect, Giga Drain, Frustration, Solar Beam, Sludge Bomb, Return, Double Team, Light Screen, Facade, Secret Power, Rest, Attract, Bullet Seed, Snatch, Flash).
+Egg moves: Leech Seed, Fake Tears, Swagger, Charm.
+Cry: Mapped to base Shroomish via cry_ids.h.
+Sprites: Custom frost-purple recolor by Sprite Designer v1 (icy blue crystal spots, cold lavender body).
+Discovery NPC: Bug Catcher at Petalburg Woods (10, 24) — "The bugs won't go near those purple ones."
+Evolution: None registered (→ Breloom_Hoenn at Lv23, planned C260-261).
 
 ---
 

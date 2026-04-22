@@ -17,3 +17,4 @@
 | Gligar Hoenn | Water/Rock | v1 | 250 | — | new |
 | Gliscor Hoenn | Water/Rock | v2 | 255 | #149 | iterated — aquatic palette shift (grey→blue), scorpion barb→V-fork caudal fin, per @manta89640 |
 | Lotad Hoenn | Electric/Grass | v1 | 256 | — | new — citrine gold lily pad, warm green body, 23px lightning vein accents |
+| Shroomish Hoenn | Poison/Ice | v1 | 257 | — | new — frost-purple cap, cold lavender body, 13 frost crystal px, 2 emanation px |
