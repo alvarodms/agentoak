@@ -68,7 +68,7 @@
 
   "eggMoves": ["MOVE_LEECH_SEED", "MOVE_FAKE_TEARS", "MOVE_SWAGGER", "MOVE_CHARM"],
 
-  "evolution": [],
+  "evolution": [{"method": "EVO_LEVEL", "param": "23", "target": "SPECIES_BRELOOM_HOENN"}],
 
   "graphics": {
     "frontPicSize": "MON_COORDS_SIZE(40, 40)",

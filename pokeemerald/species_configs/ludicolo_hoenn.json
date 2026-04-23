@@ -1,0 +1,80 @@
+{
+  "name": "LUDICOLO_HOENN",
+  "pascalName": "LudicoloHoenn",
+  "graphicsDir": "ludicolo_hoenn",
+  "baseSpeciesCry": "SPECIES_LUDICOLO",
+
+  "stats": {
+    "hp": 80, "atk": 50, "def": 65, "spa": 110, "spd": 85, "spe": 90
+  },
+  "types": ["TYPE_ELECTRIC", "TYPE_GRASS"],
+  "abilities": ["ABILITY_LIGHTNING_ROD", "ABILITY_RAIN_DISH"],
+  "catchRate": 45,
+  "expYield": 168,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 15,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_WATER_1", "EGG_GROUP_GRASS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_YELLOW",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 3, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "STORMDANCER",
+    "height": 15,
+    "weight": 550,
+    "description": [
+      "Fishermen say if you hear drumming",
+      "during a thunderstorm, a LUDICOLO",
+      "is dancing on the shore. Lightning",
+      "always strikes where it dances",
+      "but never seems to hit it."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 3,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_ASTONISH"],
+    [1, "MOVE_GROWL"],
+    [1, "MOVE_ABSORB"],
+    [1, "MOVE_THUNDER_SHOCK"],
+    [14, "MOVE_CHARGE"],
+    [20, "MOVE_MEGA_DRAIN"],
+    [26, "MOVE_THUNDER_WAVE"],
+    [32, "MOVE_SHOCK_WAVE"],
+    [38, "MOVE_NASTY_PLOT"],
+    [44, "MOVE_GIGA_DRAIN"],
+    [50, "MOVE_THUNDERBOLT"],
+    [56, "MOVE_THUNDER"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "ICE_BEAM", "BLIZZARD", "HYPER_BEAM",
+    "LIGHT_SCREEN", "PROTECT", "RAIN_DANCE", "GIGA_DRAIN", "FRUSTRATION",
+    "SOLAR_BEAM", "THUNDERBOLT", "THUNDER", "RETURN", "DOUBLE_TEAM",
+    "SHOCK_WAVE", "FACADE", "SECRET_POWER", "REST", "ATTRACT", "FLASH"
+  ],
+
+  "eggMoves": ["MOVE_LEECH_SEED", "MOVE_RAZOR_LEAF", "MOVE_SYNTHESIS", "MOVE_SPARK"],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(64, 56)",
+    "frontPicYOffset": 5,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 8,
+    "iconPaletteIndex": 1,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}

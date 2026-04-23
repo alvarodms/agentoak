@@ -69,7 +69,7 @@ Four pillars:
 | C258 | patch | **DONE** — Sprite iterations (Growlithe v2, Lotad v2, Shroomish v2, Gliscor v3) + Route 102 fisherman NPC rewrite | — |
 | C259 | feature | **DONE** — Lombre_Hoenn(436) + Breloom_Hoenn(437): evo lines complete, pre-evos re-registered | C256-257 |
 | C260 | refactor | **DONE** — Generator extended to 26-file scope (8 graphics tables added) + C259 premature entry cleanup | — |
-| C261 | feature | Ludicolo_Hoenn: final evo of Lotad line | C259 |
+| C261 | feature | **DONE** — 5 species registered (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), evo chains, Route 102 + Petalburg Woods encounters | C259 |
 | C262 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
 | C263 | feature | Badge 1-2 narrative layer + discovery NPCs | C259 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
@@ -80,7 +80,7 @@ Four pillars:
 | Issue | Def | Decision | Rationale |
 |-------|-----|----------|-----------|
 | #131 Sprite refinement | 5 | **DONE C258** | Growlithe v2, Lotad v2, Shroomish v2 bulkified; Gliscor v3 aquatic tail. |
-| #148 Type diversity | 1->partial | IN PROGRESS | Lotad+Shroomish = Electric+Poison gaps filled. |
+| #148 Type diversity | 1->partial | **DONE C261** | 5 species registered: Electric/Grass (Lotad/Lombre/Ludicolo line) + Poison/Ice (Shroomish/Breloom line). Pre-Badge 1 encounters live. |
 | #149 Gliscor sprite | 1 | **DONE C258** | v3: wider V-fork caudal fin, fin-ray striations, barnacle accents. |
 | #150 Ability swaps | 1 | ACCEPT C259 | Thematic ability identity pass. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
@@ -90,7 +90,7 @@ Four pillars:
 | #156 Rival fight | 1 | DEFER C262-263 | Narrative layer cycle. |
 
 ## Engineering Prerequisites
-- Species generator (C254) — `scripts/generate_species.cjs`, 18-file scope, configs in `species_configs/`
+- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`. C261: validated 5 sequential runs.
 - Trainer validator promoted to check_all (C254)
 
 ---
@@ -103,6 +103,6 @@ Four pillars:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (23 registered)**: Last registered = Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. 4 early-game forms (Lotad_Hoenn, Shroomish_Hoenn, Lombre_Hoenn, Breloom_Hoenn) have configs in species_configs/ but are NOT yet registered in species.h — C259 premature entries were cleaned up in C260. Note: Lotad_Hoenn evo changed from Water Stone to Lv14 (matches vanilla). Breloom_Hoenn ability2 changed from Effect Spore to Thick Fat.
+- **Custom species (28 registered)**: Last registered = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. All 5 early-game forms registered in C261: Lotad_Hoenn(434), Shroomish_Hoenn(435), Lombre_Hoenn(436), Breloom_Hoenn(437), Ludicolo_Hoenn(438). Evo chains: Lotad→Lombre(Lv14)→Ludicolo(LeafStone), Shroomish→Breloom(Lv23). categoryName max 11 chars (u8[12] field).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

@@ -28,5 +28,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Sprite Refinement — Community Standards & Patterns | 258 | [sprite-refinement-community-standards.md](pokemon-knowledge/sprite-refinement-community-standards.md) |
 | Ability Identity Pass — Community Patterns | 259 | [ability-identity-pass-patterns.md](pokemon-knowledge/ability-identity-pass-patterns.md) |
 | pokeemerald-expansion Species Architecture | 260 | [expansion-species-architecture.md](pokemon-knowledge/expansion-species-architecture.md) |
+| Electric/Grass Ludicolo_Hoenn Design Context | 261 | [electric-grass-ludicolo-design.md](pokemon-knowledge/electric-grass-ludicolo-design.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

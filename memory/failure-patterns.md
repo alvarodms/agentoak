@@ -53,6 +53,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: C259 added entries for 4 future species (Shroomish/Lotad/Lombre/Breloom_Hoenn) across 11 files BEFORE defining their SPECIES_ constants in species.h.
 **Resolution**: C260 removed all premature entries. **Rule**: NEVER add entries for a species until `generate_species.cjs` has created its SPECIES_ constant. The generator handles all 26 files atomically — manual pre-population causes build breaks.
 
+## Pokédex categoryName Max Length (C261)
+
+**Symptom**: `warning: excess elements in array initializer after gPokedexEntries[N].categoryName` — treated as error.
+**Cause**: `PokedexEntry.categoryName` is `u8[12]`. The `_()` macro produces GBA-encoded bytes + null terminator. Any categoryName over 11 characters overflows the 12-byte buffer.
+**Resolution**: Keep all Pokédex category names to **11 characters max**. "Storm Dancer" (12) → "STORMDANCER" (11). Existing entries top out at 11 chars.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

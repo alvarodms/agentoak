@@ -2,8 +2,7 @@
 
 Deferred community issues for future consideration.
 
-- #137: Feedback (deferred: cycle 259) | deferrals: 4
-- #148: Cross-gen evolution regional form correction (deferred: cycle 251) | pending: Type diversity — too much Rock; Pre-Badge 1 regional forms
+- #148: Cross-gen evolution regional form correction (deferred: cycle 261) | deferrals: 2 | pending: Type diversity — too much Rock
 - #150: Ability suggestions (deferred: cycle 252)
 - #151: Original abilities (deferred: cycle 252)
 - #152: Original moves (deferred: cycle 252)

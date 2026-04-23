@@ -138,67 +138,28 @@ Files modified: 26 source + 7 sprite = 33 total.
 
 All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).
 
-## C256/C257: Lotad_Hoenn (Electric/Grass) — Re-registered in C257
+## C261: Early-Game Hoenn Forms — 5 Species Bulk Registration
 
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Lotad_Hoenn | 435 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 |
+All 5 species registered via 26-file generator in one cycle. Evolution chains and encounters added.
 
-C256 code was reverted (graphics tables + sprites survived, but species.h/species_info/learnsets/etc. were lost). C257 re-ran generate_species.cjs to restore all 18 data files. ID shifted from 434→435 because Shroomish_Hoenn was registered first.
-Discovery NPC: NOT added (Route 102 fisherman was part of reverted C256 work — needs re-implementation).
-Evolution: → Lombre_Hoenn at Lv14 (C259).
+| Species | ID | Type | BST | Encounter | Evolution |
+|---------|-----|------|-----|-----------|-----------|
+| Lotad_Hoenn | 434 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 | → Lombre_Hoenn (Lv14) |
+| Shroomish_Hoenn | 435 | Poison/Ice | 295 | Petalburg Woods slot 8, 4% Lv6-7 | → Breloom_Hoenn (Lv23) |
+| Lombre_Hoenn | 436 | Electric/Grass | 340 | Evolution only | → Ludicolo_Hoenn (Leaf Stone) |
+| Breloom_Hoenn | 437 | Poison/Ice | 460 | Evolution only | Final form |
+| Ludicolo_Hoenn | 438 | Electric/Grass | 480 | Evolution only | Final form |
 
----
-
-## C257: Shroomish_Hoenn (Poison/Ice) — Pre-Badge 1 Regional Form #2
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Shroomish_Hoenn | 434 | Poison/Ice | 295 | Petalburg Woods slot 8, 4% Lv6-7 |
-
-Stats: 65/35/60/45/60/30. Abilities: Poison Point / Effect Spore. Growth: Fluctuating.
-Learnset: Poison Sting L1, Tackle L4, Stun Spore L7, Powder Snow L10, Acid L16, Icy Wind L22, Acid Armor L26, Toxic L31, Aurora Beam L36, Sludge L40, Ice Beam L45.
-TMs: 19 (Toxic, HP, Ice Beam, Blizzard, Protect, Giga Drain, Frustration, Solar Beam, Sludge Bomb, Return, Double Team, Light Screen, Facade, Secret Power, Rest, Attract, Bullet Seed, Snatch, Flash).
-Egg moves: Leech Seed, Fake Tears, Swagger, Charm.
-Cry: Mapped to base Shroomish via cry_ids.h.
-Sprites: Custom frost-purple recolor by Sprite Designer v1 (icy blue crystal spots, cold lavender body).
-Discovery NPC: Bug Catcher at Petalburg Woods (10, 24) — "The bugs won't go near those purple ones."
-Evolution: → Breloom_Hoenn at Lv23 (C259).
-
----
-
-## C259: Lombre_Hoenn (Electric/Grass) — Evolution of Lotad_Hoenn
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Lombre_Hoenn | 436 | Electric/Grass | 340 | Evolution only (Lotad_Hoenn Lv14) |
-
-Stats: 50/35/45/80/55/75. Abilities: Lightning Rod / Rain Dish. Growth: Medium Slow.
-Learnset: Astonish L1, Growl L1, Absorb L1, ThunderShock L1, Charge L14, Mega Drain L19, Thunder Wave L24, Shock Wave L30, Nasty Plot L36, Giga Drain L42, Thunderbolt L48.
-TMs: 20 (Bullet Seed, Toxic, HP, Light Screen, Protect, Rain Dance, Giga Drain, Frustration, Solar Beam, Thunderbolt, Thunder, Return, Double Team, Shock Wave, Thief, Facade, Secret Power, Rest, Attract, Flash).
+**Ludicolo_Hoenn** (new this cycle):
+Stats: 80/50/65/110/85/90. Abilities: Lightning Rod / Rain Dish. Growth: Medium Slow.
+Dex category: STORMDANCER. SpA 110 + Spe 90 fast special sweeper.
+TMs include Ice Beam (Dragon coverage), Hyper Beam, Thunderbolt, Thunder, Rain Dance, Giga Drain.
 Egg moves: Leech Seed, Razor Leaf, Synthesis, Spark.
-Cry: Mapped to base Lombre via cry_ids.h.
-Sprites: Custom electric lily pad recolor by Sprite Designer.
-EV yield: 2 SpA. Catch rate: 120.
-Evolution: → Ludicolo_Hoenn (planned future cycle).
+Sprites: Vanilla Ludicolo placeholders (Sprite Designer iteration planned).
 
----
+**Build fix**: categoryName "Storm Dancer" (12 chars) exceeded u8[12] limit — shortened to "STORMDANCER" (11 chars).
 
-## C259: Breloom_Hoenn (Poison/Ice) — Evolution of Shroomish_Hoenn
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Breloom_Hoenn | 437 | Poison/Ice | 460 | Evolution only (Shroomish_Hoenn Lv23) |
-
-Stats: 65/130/80/45/60/80. Abilities: Poison Point / Thick Fat. Growth: Fluctuating.
-Learnset: Poison Sting L1, Tackle L1, Stun Spore L1, Powder Snow L1, Mach Punch L23, Cross Poison L28, Ice Shard L33, Poison Jab L38, Ice Punch L43, Swords Dance L48, Close Combat L53.
-TMs: 24 (Toxic, HP, Ice Beam, Blizzard, Hyper Beam, Protect, Giga Drain, Frustration, Solar Beam, Sludge Bomb, Return, Brick Break, Double Team, Light Screen, Focus Punch, Bulk Up, Iron Tail, Facade, Secret Power, Rest, Attract, Bullet Seed, Snatch, Flash + CUT, STRENGTH, ROCK_SMASH).
-Egg moves: Leech Seed, Fake Tears, Swagger, Charm.
-Cry: Mapped to base Breloom via cry_ids.h.
-Sprites: Custom cryogenic frostfist recolor by Sprite Designer.
-EV yield: 2 Atk. Catch rate: 90.
-Key design: Ability2 changed from Effect Spore to Thick Fat (Fire weakness mitigation, thematic temperature resistance). Dual priority (Mach Punch + Ice Shard). 130 Atk physical powerhouse.
-Evolution: Final form — no further evolution.
+**IDs shifted** from C257/C259 values due to C260 cleanup + fresh re-registration order.
 
 ---
 
