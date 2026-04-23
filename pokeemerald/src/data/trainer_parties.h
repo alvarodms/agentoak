@@ -4203,7 +4203,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza1[] = {
     {
     .iv = 200,
     .lvl = 42,
-    .species = SPECIES_GIRAFARIG, // TODO: restore SPECIES_FARIGIRAF when registered
+    .species = SPECIES_FARIGIRAF,
     .heldItem = ITEM_SITRUS_BERRY,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
@@ -10085,7 +10085,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Haley1[] = {
     {
     .iv = 0,
     .lvl = 9,
-    .species = SPECIES_LOTAD_HOENN,
+    .species = SPECIES_LOTAD,
     },
     {
     .iv = 0,
@@ -10228,7 +10228,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Rick[] = {
     {
     .iv = 0,
     .lvl = 7,
-    .species = SPECIES_LOTAD_HOENN,
+    .species = SPECIES_LOTAD,
     },
     {
     .iv = 0,
@@ -10319,7 +10319,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_James1[] = {
     {
     .iv = 0,
     .lvl = 8,
-    .species = SPECIES_SHROOMISH_HOENN,
+    .species = SPECIES_SHROOMISH,
     },
     {
     .iv = 0,
@@ -13839,7 +13839,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza2[] = {
     {
     .iv = 150,
     .lvl = 42,
-    .species = SPECIES_GIRAFARIG, // TODO: restore SPECIES_FARIGIRAF when registered
+    .species = SPECIES_FARIGIRAF,
     .heldItem = ITEM_TWISTED_SPOON,
     .moves = {MOVE_PSYCHIC, MOVE_CRUNCH, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
@@ -13877,7 +13877,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza3[] = {
     {
     .iv = 175,
     .lvl = 52,
-    .species = SPECIES_GIRAFARIG, // TODO: restore SPECIES_FARIGIRAF when registered
+    .species = SPECIES_FARIGIRAF,
     .heldItem = ITEM_TWISTED_SPOON,
     .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }

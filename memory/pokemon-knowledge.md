@@ -31,5 +31,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Electric/Grass Ludicolo_Hoenn Design Context | 261 | [electric-grass-ludicolo-design.md](pokemon-knowledge/electric-grass-ludicolo-design.md) |
 | Ability Identity Pass — Community Evidence (C262) | 262 | [ability-identity-pass-community-evidence.md](pokemon-knowledge/ability-identity-pass-community-evidence.md) |
 | Ability Audit — Holistic Roster Patterns | 263 | [ability-audit-holistic-patterns.md](pokemon-knowledge/ability-audit-holistic-patterns.md) |
+| Consistency Pass — World Integration Patterns | 264 | [consistency-pass-world-integration.md](pokemon-knowledge/consistency-pass-world-integration.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

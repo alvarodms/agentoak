@@ -200,3 +200,44 @@ Comprehensive ability audit across all 27 custom species. 12 species received ne
 
 Inner Focus reduced from 7 users → 3 (Riolu, Lucario, Weavile — martial discipline family).
 File modified: `pokeemerald/src/data/pokemon/species_info.h` (12 `.abilities` lines).
+
+---
+
+## C264: v2.3 Consistency Pass — Three-Layer Audit
+
+### Critical Fix: C261 Species Never Registered
+
+Lotad_Hoenn (434), Shroomish_Hoenn (435), Lombre_Hoenn (436), Breloom_Hoenn (437), Ludicolo_Hoenn (438) were **never added to species.h, species_info.h, or evolution.h**. Only partial entries existed (species_names.h, pokedex_entries.h, wild_encounters.json, trainer_parties.h) causing build failure. C264 removed all dangling references — these 5 species must be re-registered in a future feature cycle.
+
+**Status after C264**: 22 actually-registered custom species (not 27). EGG=434, NUM_SPECIES=434.
+
+### Fixes Applied
+1. wild_encounters.json: SPECIES_LOTAD_HOENN → SPECIES_LOTAD, SPECIES_SHROOMISH_HOENN → SPECIES_SHROOMISH
+2. trainer_parties.h: Same replacements + resolved 3 Farigiraf TODOs (SPECIES_GIRAFARIG → SPECIES_FARIGIRAF on Tate & Liza teams)
+3. species_names.h: Removed 5 undefined Hoenn form entries
+4. pokedex_entries.h: Removed 5 undefined Hoenn form entries
+
+### Ability Audit: All 22 species PASS
+All 12 C263 reassignments verified correct in species_info.h. 10 kept species spot-checked — no ABILITY_NONE duplicates or mismatches.
+
+### Evolution Audit: All 22 species PASS
+All evolution entries present and correct. Minor discrepancies (memory vs code, not errors):
+- Froslass: Code uses EVO_ITEM_FEMALE + Dawn Stone (memory said EVO_LEVEL_FEMALE)
+- Mamoswine: Code uses Lv45 (memory said Lv44)
+
+### Three-Layer Gap Summary
+
+| Gap | Species | Detail |
+|-----|---------|--------|
+| No trainer | Froslass | Memory claims "Glacia all tiers" but NOT on any Glacia team |
+| No trainer | Gligar_Hoenn | Wild encounter only, no trainer carries it |
+| No NPC | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | No script dialogue mentioning these by name |
+| Encounter discrepancy | Weavile | Memory says Shoal Cave Ice; actual: Mt Pyre Summit |
+| Encounter discrepancy | Corsola_Hoenn | Memory says quest-only; actual: also in Mt Pyre Exterior wild |
+| Missing encounter | Garchomp | Memory says Victory Road B2F 2%; not in encounters file |
+
+### Early-Game Hypothesis: FAILS
+Before Badge 3, player sees only 1 regional form (Gligar_Hoenn in Granite Cave B2F) and 0 trainers with regional forms. C261 species were supposed to fix this but remain unregistered.
+
+### Type Distribution (22 species)
+Ice 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Fairy 3, Fighting 2, Dark 2, Fire 2, Steel 1, Flying 1, Normal 1, Psychic 1, Bug 1, Grass 1, Poison 1. Rock at 4/22 (18%) — no longer over-concentrated.

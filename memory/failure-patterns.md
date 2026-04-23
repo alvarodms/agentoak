@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-263, 20 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-264, 21 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C263: first edit at action 30/89 (34% research). Better than C262's 46%, but still high.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent (C263 used it at actions 1 and 70 despite this rule). (3) Start edits by action 15 max. (4) For species work: write the node.js bulk script FIRST, then read only the files needed for anchor text. Don't grep every constant in every file before writing. (5) For audit passes: read all species in one batch (parallel reads), design all changes, then execute all edits — don't interleave reading and editing.
+**Symptom**: 64-132 actions before first edit. C264: first edit at action 44/229 (19% mark). Used Agent subagent at actions 66+78 despite ban. The NPC audit layer (actions 78-205) read 60+ map scripts and produced ZERO edits — pure waste.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. Don't read 60 scripts that need no changes. (5) For species work: write the node.js bulk script FIRST, then read only files needed for anchor text.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -20,17 +20,17 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit graphics table files after grepping them (grep doesn't count as "read"). The Edit tool requires an explicit Read call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all 8 graphics table files in parallel, then edit all 8. For species work, the 8 graphics tables always need Read→Edit after running generate_species.cjs.
 
-## Incomplete Species Registration Across Cycles (C261→C262)
+## Incomplete Species Registration Across Cycles (C261→C262→C264)
 
-**Symptom**: C261 claimed "all 5 species registered" but C262 discovered most registration files were empty for these species.
-**Cause**: C261 committed species configs + wild encounter JSON references but did not run `generate_species.cjs` to populate the 26 C/H source files.
-**Resolution**: After ANY species registration cycle, verify with `make check_species` + spot-check `grep "SPECIES_X" species.h`. Never trust the previous cycle's summary — verify the source tree.
+**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C262 claimed to fix it. C264 audit found the build was STILL broken — SPECIES_LOTAD_HOENN etc. remained undefined in species.h while referenced in wild_encounters.json, trainer_parties.h, species_names.h, and pokedex_entries.h.
+**Cause**: Memory was updated as if work was complete, but source files were never actually modified. Multiple cycles relied on the (false) memory without verifying.
+**Resolution**: (1) After ANY species registration, run `make` to verify compilation. (2) Grep `species.h` for the constant before claiming success. (3) Memory claims ≠ source truth — always verify code before building on previous cycle's claims.
 
 ## Edit Tool "Multiple Matches" in species_info.h (C147, C263)
 
 **Symptom**: Edit calls fail with "Found N matches of the string to replace, but replace_all is false."
 **Cause**: species_info.h has repeated patterns like `.abilities = {ABILITY_X, ABILITY_Y}` across multiple species entries. Short snippets match multiple locations.
-**Resolution**: Include MORE context lines (species name or unique surrounding fields) in the old_string to ensure exactly one match. Alternatively, use line-range Read to get the exact surrounding context, then use a longer unique snippet.
+**Resolution**: Include MORE context lines (species name or unique surrounding fields) in the old_string to ensure exactly one match.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 

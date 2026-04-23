@@ -80,7 +80,7 @@ Four pillars:
 | Issue | Def | Decision | Rationale |
 |-------|-----|----------|-----------|
 | #131 Sprite refinement | 5 | **DONE C258** | Growlithe v2, Lotad v2, Shroomish v2 bulkified; Gliscor v3 aquatic tail. |
-| #148 Type diversity | 1->partial | **DONE C261** | 5 species registered: Electric/Grass (Lotad/Lombre/Ludicolo line) + Poison/Ice (Shroomish/Breloom line). Pre-Badge 1 encounters live. |
+| #148 Type diversity | 1->partial | **BLOCKED** | C261 species never registered (C264 audit). Encounter/trainer refs reverted to vanilla. Must re-register in C265+. |
 | #149 Gliscor sprite | 1 | **DONE C258** | v3: wider V-fork caudal fin, fin-ray striations, barnacle accents. |
 | #150 Ability swaps | 1 | **DONE C263** | 12 species reassigned: Inner Focus purge, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
@@ -90,8 +90,17 @@ Four pillars:
 | #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
 
 ## Engineering Prerequisites
-- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`. C261: validated 5 sequential runs.
+- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`. C261 claimed 5 runs but species were never committed.
 - Trainer validator promoted to check_all (C254)
+
+## v2.3 Audit Gaps (C264) — Priority Queue for C265+
+
+1. **Re-register 5 early-game species** (Lotad_Hoenn, Shroomish_Hoenn + evo chains). Run generate_species.cjs, verify `make` succeeds, verify constants in species.h. HIGHEST PRIORITY.
+2. **Add Froslass to Glacia teams** — memory claims it's there, it's not.
+3. **Add Gligar_Hoenn to at least 1 trainer** — only wild encounter, no trainer or NPC integration.
+4. **NPC dialogue for**: Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn.
+5. **Verify Garchomp encounter** — memory says Victory Road B2F 2% but not in encounters file.
+6. **Reconcile Weavile location** — memory says Shoal Cave Ice, actual: Mt Pyre Summit.
 
 ---
 
@@ -103,6 +112,6 @@ Four pillars:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (28 registered)**: Last registered = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. All 5 early-game forms registered in C261: Lotad_Hoenn(434), Shroomish_Hoenn(435), Lombre_Hoenn(436), Breloom_Hoenn(437), Ludicolo_Hoenn(438). Evo chains: Lotad→Lombre(Lv14)→Ludicolo(LeafStone), Shroomish→Breloom(Lv23). categoryName max 11 chars (u8[12] field).
+- **Custom species (22 registered)**: Last registered = Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. C261 early-game species (434-438) were NEVER registered — dangling refs cleaned in C264. Must re-register via generate_species.cjs in C265+. categoryName max 11 chars (u8[12] field).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
