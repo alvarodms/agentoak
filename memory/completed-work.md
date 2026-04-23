@@ -21,7 +21,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229** | 27 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240**, **250**, **251**, **252**, **256**, **257**, **259** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
-| Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225**, **247**, **254** | Makefile + 10 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler + **species generator** | [engineering-validation.md](completed-work/engineering-validation.md) |
+| Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225**, **247**, **254**, **260** | Makefile + 10 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler + **species generator (26-file)** | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
@@ -38,10 +38,9 @@ Before modifying ANY file: check the system index below → open detail file →
 - **SootopolisCity/scripts.inc**: 5 cycles (last: C190) — Rayquaza reactions, badge-conditional atmosphere
 - **PacifidlogTown/scripts.inc**: 10 cycles (last: C195) — Draconid legend, breadcrumbs, badge-conditional atmosphere, Quest 1 encounter
 - **trainer_parties.h / trainers.h**: ~33 cycles each — all trainer data. Macro must match struct. C195 fixed 17 macro mismatches.
-- **wild_encounters.json**: 28 cycles (last: C256) — all encounter tables
+- **wild_encounters.json**: 28 cycles (last: C260) — all encounter tables. C260: reverted premature LOTAD_HOENN/SHROOMISH_HOENN references to vanilla species
 - **include/constants/flags.h**: Many cycles — custom flags through 0x2A6 (Lilycove postgame grunt C249), next: 0x2A7
-- **wild_encounters.json**: 28 cycles (last: C257) — Petalburg Woods slot 8 changed to SHROOMISH_HOENN
-- **include/constants/species.h**: Many cycles — custom species through 437 (Breloom_Hoenn C259), EGG=438
+- **include/constants/species.h**: Many cycles — custom species through 433 (Gliscor_Hoenn C259), EGG=434. C259's Lombre/Breloom/Shroomish/Lotad_Hoenn entries were premature and removed in C260.
 - **EverGrandeCity_GlaciasRoom/scripts.inc**: C213 — Glacia intro dialogue rewritten for cross-gen evo theming
 - **MossdeepCity_Gym/scripts.inc**: C214 — Tate & Liza intro+defeat+post-battle+rematch dialogue rewritten for Farigiraf
 - **PetalburgCity_PokemonCenter_1F/scripts.inc**: C214 — Difficulty downgrade NPC added

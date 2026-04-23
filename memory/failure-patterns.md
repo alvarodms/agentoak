@@ -47,6 +47,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `fetch_pokemon_sprites` downloaded Farigiraf sprites as RGBA (color type 6) instead of indexed 16-color (color type 3) required by GBA build.
 **Resolution**: Use Node.js + pngjs to convert RGBA→indexed PNG. No Python/Pillow in CI. Extract palette from existing working sprite (e.g., Lucario), map colors to palette indices.
 
+## Premature Entries for Unregistered Species (C259→C260 fix)
+
+**Symptom**: Build fails with `undeclared` errors for SPECIES_X constants in graphics tables, tmhm_learnsets.h, evolution.h, and wild_encounters.json.
+**Cause**: C259 added entries for 4 future species (Shroomish/Lotad/Lombre/Breloom_Hoenn) across 11 files BEFORE defining their SPECIES_ constants in species.h.
+**Resolution**: C260 removed all premature entries. **Rule**: NEVER add entries for a species until `generate_species.cjs` has created its SPECIES_ constant. The generator handles all 26 files atomically — manual pre-population causes build breaks.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

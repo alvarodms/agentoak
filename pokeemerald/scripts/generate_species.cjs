@@ -206,6 +206,38 @@ function genIconPaletteEntry(N, cfg) {
   return `    [SPECIES_${N.NAME}] = ${idx},\n`;
 }
 
+function genFrontPicTableEntry(N) {
+  return `    SPECIES_SPRITE(${N.NAME}, gMonFrontPic_${N.pascal}),\n`;
+}
+
+function genBackPicTableEntry(N) {
+  return `    SPECIES_SPRITE(${N.NAME}, gMonBackPic_${N.pascal}),\n`;
+}
+
+function genStillFrontPicTableEntry(N) {
+  return `    SPECIES_SPRITE(${N.NAME}, gMonStillFrontPic_${N.pascal}),\n`;
+}
+
+function genPaletteTableEntry(N) {
+  return `    SPECIES_PAL(${N.NAME}, gMonPalette_${N.pascal}),\n`;
+}
+
+function genShinyPaletteTableEntry(N) {
+  return `    SPECIES_SHINY_PAL(${N.NAME}, gMonShinyPalette_${N.pascal}),\n`;
+}
+
+function genFootprintTableEntry(N) {
+  return `    [SPECIES_${N.NAME}] = gMonFootprint_${N.pascal},\n`;
+}
+
+function genFrontPicCoordsEntry(N, cfg) {
+  return `    [SPECIES_${N.NAME}] = { .size = ${cfg.graphics.frontPicSize}, .y_offset = ${cfg.graphics.frontPicYOffset} },\n`;
+}
+
+function genBackPicCoordsEntry(N, cfg) {
+  return `    [SPECIES_${N.NAME}] = { .size = ${cfg.graphics.backPicSize}, .y_offset = ${cfg.graphics.backPicYOffset} },\n`;
+}
+
 // ---------------------------------------------------------------------------
 // File handlers — each returns { relPath, content } or throws
 // ---------------------------------------------------------------------------
@@ -465,6 +497,82 @@ function handleAnimMonFrontPics(cfg, N) {
 }
 
 // ---------------------------------------------------------------------------
+// Graphics table handlers (8 files)
+// ---------------------------------------------------------------------------
+
+function handleFrontPicTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/front_pic_table.h';
+  let content = readFile(relPath);
+  const anchor = '    SPECIES_SPRITE(EGG, gMonFrontPic_Egg),';
+  content = insertBefore(content, anchor, genFrontPicTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG anchor`);
+  return { relPath, content };
+}
+
+function handleBackPicTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/back_pic_table.h';
+  let content = readFile(relPath);
+  const anchor = '    SPECIES_SPRITE(EGG, gMonStillFrontPic_Egg),';
+  content = insertBefore(content, anchor, genBackPicTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG anchor`);
+  return { relPath, content };
+}
+
+function handleFrontPicCoordinates(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/front_pic_coordinates.h';
+  let content = readFile(relPath);
+  const anchor = '    [SPECIES_EGG]';
+  content = insertBefore(content, anchor, genFrontPicCoordsEntry(N, cfg));
+  if (!content) throw new Error(`${relPath}: cannot find [SPECIES_EGG] anchor`);
+  return { relPath, content };
+}
+
+function handleBackPicCoordinates(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/back_pic_coordinates.h';
+  let content = readFile(relPath);
+  const anchor = '    [SPECIES_EGG]';
+  content = insertBefore(content, anchor, genBackPicCoordsEntry(N, cfg));
+  if (!content) throw new Error(`${relPath}: cannot find [SPECIES_EGG] anchor`);
+  return { relPath, content };
+}
+
+function handlePaletteTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/palette_table.h';
+  let content = readFile(relPath);
+  const anchor = '    SPECIES_PAL(EGG, gMonPalette_Egg),';
+  content = insertBefore(content, anchor, genPaletteTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG anchor`);
+  return { relPath, content };
+}
+
+function handleShinyPaletteTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/shiny_palette_table.h';
+  let content = readFile(relPath);
+  const anchor = '    SPECIES_SHINY_PAL(EGG, gMonPalette_Egg),';
+  content = insertBefore(content, anchor, genShinyPaletteTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG anchor`);
+  return { relPath, content };
+}
+
+function handleFootprintTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/footprint_table.h';
+  let content = readFile(relPath);
+  const anchor = '    [SPECIES_EGG] = gMonFootprint_Bulbasaur,';
+  content = insertBefore(content, anchor, genFootprintTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG footprint anchor`);
+  return { relPath, content };
+}
+
+function handleStillFrontPicTable(cfg, N) {
+  const relPath = 'src/data/pokemon_graphics/still_front_pic_table.h';
+  let content = readFile(relPath);
+  const anchor = '    SPECIES_SPRITE(EGG,';
+  content = insertBefore(content, anchor, genStillFrontPicTableEntry(N));
+  if (!content) throw new Error(`${relPath}: cannot find EGG anchor`);
+  return { relPath, content };
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -518,6 +626,14 @@ function main() {
     handleCryIds,
     handleEvolution,
     handleAnimMonFrontPics,
+    handleFrontPicTable,
+    handleBackPicTable,
+    handleFrontPicCoordinates,
+    handleBackPicCoordinates,
+    handlePaletteTable,
+    handleShinyPaletteTable,
+    handleFootprintTable,
+    handleStillFrontPicTable,
   ];
 
   const results = [];
@@ -539,7 +655,7 @@ function main() {
   }
 
   console.log(`\nSpecies: ${N.SPECIES} (${N.pascal})`);
-  console.log(`Files:   ${results.length}/18`);
+  console.log(`Files:   ${results.length}/26`);
   console.log(`Note:    cry_tables.inc skipped (cry_ids.h handles base cry mapping)\n`);
 
   if (dryRun) {

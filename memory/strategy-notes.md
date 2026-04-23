@@ -68,7 +68,7 @@ Four pillars:
 | C257 | feature | **DONE** — Shroomish_Hoenn(434) + Lotad_Hoenn(435) re-registered (C256 revert fix) + Petalburg Woods encounter + frost NPC | C255 |
 | C258 | patch | **DONE** — Sprite iterations (Growlithe v2, Lotad v2, Shroomish v2, Gliscor v3) + Route 102 fisherman NPC rewrite | — |
 | C259 | feature | **DONE** — Lombre_Hoenn(436) + Breloom_Hoenn(437): evo lines complete, pre-evos re-registered | C256-257 |
-| C260 | refactor | Generator extension for graphics tables (deferred from C254) | — |
+| C260 | refactor | **DONE** — Generator extended to 26-file scope (8 graphics tables added) + C259 premature entry cleanup | — |
 | C261 | feature | Ludicolo_Hoenn: final evo of Lotad line | C259 |
 | C262 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
 | C263 | feature | Badge 1-2 narrative layer + discovery NPCs | C259 |
@@ -103,6 +103,6 @@ Four pillars:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (27 active)**: ...through Shroomish_Hoenn(434), Lotad_Hoenn(435), Lombre_Hoenn(436), Breloom_Hoenn(437). EGG=438, NUM_SPECIES=438. Note: Lotad_Hoenn evo changed from Water Stone to Lv14 (matches vanilla, avoids mid-game gate). Breloom_Hoenn ability2 changed from Effect Spore to Thick Fat (fire resist, thematic fit).
+- **Custom species (23 registered)**: Last registered = Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. 4 early-game forms (Lotad_Hoenn, Shroomish_Hoenn, Lombre_Hoenn, Breloom_Hoenn) have configs in species_configs/ but are NOT yet registered in species.h — C259 premature entries were cleaned up in C260. Note: Lotad_Hoenn evo changed from Water Stone to Lv14 (matches vanilla). Breloom_Hoenn ability2 changed from Effect Spore to Thick Fat.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
