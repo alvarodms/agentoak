@@ -26,5 +26,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | ROM Hack Starter Design Patterns | 254 | [starter-design-patterns.md](pokemon-knowledge/starter-design-patterns.md) |
 | Early-Game Forms as Thesis Statements | 255 | [early-game-form-thesis-statement.md](pokemon-knowledge/early-game-form-thesis-statement.md) |
 | Sprite Refinement — Community Standards & Patterns | 258 | [sprite-refinement-community-standards.md](pokemon-knowledge/sprite-refinement-community-standards.md) |
+| Ability Identity Pass — Community Patterns | 259 | [ability-identity-pass-patterns.md](pokemon-knowledge/ability-identity-pass-patterns.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

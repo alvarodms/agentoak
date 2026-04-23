@@ -19,7 +19,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, 139, 140, 141, 142, 144, 145, 146, 149, 152, 153, 154, 159, 160, 161(reverted), 162, 180, 181, 183, 186, 187, 188, 189, 190, 192, 193, 194, 195, 200, 203, 204, 205, **207**, **208**, **209**, **210**, **213**, **214**, **224**, **225**, **232**, **233**, **235**, **236**, **237**, **242**, **243**, **244**, **248**, **249**, **250**, **257**, **258** | ~90 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves + Difficulty + Custom Abilities) | 43–46, 52, 129, 181, 182, **207**, **210**, **241** | 18 (+14 modified) | [battle-engine.md](completed-work/battle-engine.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229** | 27 | [qol-and-release.md](completed-work/qol-and-release.md) |
-| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240**, **250**, **251**, **252**, **256**, **257** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
+| New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240**, **250**, **251**, **252**, **256**, **257**, **259** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
 | Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225**, **247**, **254** | Makefile + 10 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler + **species generator** | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
@@ -41,7 +41,7 @@ Before modifying ANY file: check the system index below → open detail file →
 - **wild_encounters.json**: 28 cycles (last: C256) — all encounter tables
 - **include/constants/flags.h**: Many cycles — custom flags through 0x2A6 (Lilycove postgame grunt C249), next: 0x2A7
 - **wild_encounters.json**: 28 cycles (last: C257) — Petalburg Woods slot 8 changed to SHROOMISH_HOENN
-- **include/constants/species.h**: Many cycles — custom species through 435 (Lotad_Hoenn C257), EGG=436
+- **include/constants/species.h**: Many cycles — custom species through 437 (Breloom_Hoenn C259), EGG=438
 - **EverGrandeCity_GlaciasRoom/scripts.inc**: C213 — Glacia intro dialogue rewritten for cross-gen evo theming
 - **MossdeepCity_Gym/scripts.inc**: C214 — Tate & Liza intro+defeat+post-battle+rematch dialogue rewritten for Farigiraf
 - **PetalburgCity_PokemonCenter_1F/scripts.inc**: C214 — Difficulty downgrade NPC added

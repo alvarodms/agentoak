@@ -49,6 +49,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
 
+**TM/HM fields vs move constants**: The `tmhm_learnsets.h` struct fields correspond to TM/HM assignments, NOT to all moves. Custom Gen4/5 moves (ENERGY_BALL, NASTY_PLOT, etc.) are valid move constants but may NOT be TM fields unless assigned to a TM slot. Verify before using in TM learnsets.
+
 **Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom additions: `EVO_LEVEL_FEMALE` (16) — level-up gated by female gender; `EVO_ITEM_FEMALE` (17) — item-use gated by female gender (C229). Both use `GetGenderFromSpeciesAndPersonality()` in `GetEvolutionTargetSpecies()`. Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
 
 **Dawn Stone item**: `ITEM_DAWN_STONE` = 99 (slot 0x063). Uses Moon Stone icon. Item effect: `gItemEffect_DawnStone` with `ITEM4_EVO_STONE`. Placed in Shoal Cave Ice Room (flag 0x468).
@@ -79,7 +81,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
 
-**Custom flags**: 0x264-0x2A5 used (v6.0 through v2.2). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. 0x2A3-0x2A5 = Quest III Cosmic. Next available: 0x2A6.
+**Custom flags**: 0x264-0x2A5 used (v6.0 through v2.2). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. 0x2A3-0x2A5 = Quest III Cosmic. 0x2A6 = Lilycove postgame grunt (C249). Next available: 0x2A7.
 
 **Repurposed vanilla flags**: 0x2C = `FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT` (C248, was FLAG_UNUSED_0x02C).
 

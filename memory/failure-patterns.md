@@ -57,4 +57,5 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **Cancelled parallel tool calls**: Bash tool sometimes cancels parallel calls. Run species checks sequentially, not in parallel.
 - **egg_moves.h**: Regional forms still need an entry (even if empty) — C250 Gligar_Hoenn missed this (17/19). Fixed in C251.
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts. C252 found a 2-entry mismatch (duplicate Growlithe/Arcanine in vanilla reverse section + misplaced entries before gCryTable:: label). New species using base-species cries need ONLY a cry_ids.h entry, NOT new cry_tables.inc entries.
+- **TM/HM learnset fields**: Not all move constants are TM fields. Gen4/5 moves like ENERGY_BALL exist as MOVE_ constants but are NOT assigned to TM slots — using them in tmhm_learnsets.h causes "unknown field" error. Verify a field exists before adding to TM lists.
 - **check_species_registration.sh**: cry_tables.inc check is a known false positive for 16/22 species — validator greps for regional form name but cry table uses base species labels. 18/19 is the expected ceiling for species that reuse base cries.

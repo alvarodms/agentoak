@@ -201,7 +201,9 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     // SPECIES_STANTLER_HOENN — standalone form, no evolution chain
     [SPECIES_GLIGAR_HOENN] = {{EVO_LEVEL, 35, SPECIES_GLISCOR_HOENN}},
     // SPECIES_DEOXYS_HOENN — custom cosmic form, no evolution chain
-    // SPECIES_SHROOMISH_HOENN -> Breloom_Hoenn at Lv23 (planned C260-261)
-    // SPECIES_LOTAD_HOENN -> Lombre_Hoenn (planned C260-261)
+    [SPECIES_SHROOMISH_HOENN] = {{EVO_LEVEL, 23, SPECIES_BRELOOM_HOENN}},
+    [SPECIES_LOTAD_HOENN] = {{EVO_LEVEL, 14, SPECIES_LOMBRE_HOENN}},
+    // SPECIES_LOMBRE_HOENN — Ludicolo_Hoenn evolution planned for future cycle
+    // SPECIES_BRELOOM_HOENN — final form, no further evolution
 
 };

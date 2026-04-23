@@ -1,0 +1,81 @@
+{
+  "name": "BRELOOM_HOENN",
+  "pascalName": "BreloomHoenn",
+  "graphicsDir": "breloom_hoenn",
+  "baseSpeciesCry": "SPECIES_BRELOOM",
+
+  "stats": {
+    "hp": 65, "atk": 130, "def": 80, "spa": 45, "spd": 60, "spe": 80
+  },
+  "types": ["TYPE_POISON", "TYPE_ICE"],
+  "abilities": ["ABILITY_POISON_POINT", "ABILITY_THICK_FAT"],
+  "catchRate": 90,
+  "expYield": 165,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 15,
+  "friendship": 70,
+  "growthRate": "GROWTH_FLUCTUATING",
+  "eggGroups": ["EGG_GROUP_FAIRY", "EGG_GROUP_GRASS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_PURPLE",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 2, "def": 0, "spa": 0, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "Frostfist",
+    "height": 12,
+    "weight": 392,
+    "description": [
+      "BRELOOM's fists are coated in",
+      "a layer of toxic permafrost.",
+      "Each punch injects crystallized",
+      "venom that numbs on contact."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 6,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_POISON_STING"],
+    [1, "MOVE_TACKLE"],
+    [1, "MOVE_STUN_SPORE"],
+    [1, "MOVE_POWDER_SNOW"],
+    [23, "MOVE_MACH_PUNCH"],
+    [28, "MOVE_CROSS_POISON"],
+    [33, "MOVE_ICE_SHARD"],
+    [38, "MOVE_POISON_JAB"],
+    [43, "MOVE_ICE_PUNCH"],
+    [48, "MOVE_SWORDS_DANCE"],
+    [53, "MOVE_CLOSE_COMBAT"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "ICE_BEAM", "BLIZZARD", "HYPER_BEAM",
+    "PROTECT", "GIGA_DRAIN", "FRUSTRATION", "SOLAR_BEAM", "SLUDGE_BOMB",
+    "RETURN", "BRICK_BREAK", "DOUBLE_TEAM", "LIGHT_SCREEN",
+    "FOCUS_PUNCH", "BULK_UP", "IRON_TAIL",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "BULLET_SEED", "SNATCH", "FLASH",
+    "CUT", "STRENGTH", "ROCK_SMASH"
+  ],
+
+  "eggMoves": ["MOVE_LEECH_SEED", "MOVE_FAKE_TEARS", "MOVE_SWAGGER", "MOVE_CHARM"],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(56, 48)",
+    "frontPicYOffset": 9,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 6,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_H_SHAKE"
+  }
+}

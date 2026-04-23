@@ -1,0 +1,79 @@
+{
+  "name": "LOMBRE_HOENN",
+  "pascalName": "LombreHoenn",
+  "graphicsDir": "lombre_hoenn",
+  "baseSpeciesCry": "SPECIES_LOMBRE",
+
+  "stats": {
+    "hp": 50, "atk": 35, "def": 45, "spa": 80, "spd": 55, "spe": 75
+  },
+  "types": ["TYPE_ELECTRIC", "TYPE_GRASS"],
+  "abilities": ["ABILITY_LIGHTNING_ROD", "ABILITY_RAIN_DISH"],
+  "catchRate": 120,
+  "expYield": 141,
+  "genderRatio": "PERCENT_FEMALE(50)",
+  "eggCycles": 15,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_WATER_1", "EGG_GROUP_GRASS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GREEN",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 2, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "Conductor",
+    "height": 12,
+    "weight": 325,
+    "description": [
+      "LOMBRE stores electrical charge",
+      "in its oversized lily pad.",
+      "It releases crackling arcs to",
+      "stun prey in shallow ponds."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 6,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_ASTONISH"],
+    [1, "MOVE_GROWL"],
+    [1, "MOVE_ABSORB"],
+    [1, "MOVE_THUNDER_SHOCK"],
+    [14, "MOVE_CHARGE"],
+    [19, "MOVE_MEGA_DRAIN"],
+    [24, "MOVE_THUNDER_WAVE"],
+    [30, "MOVE_SHOCK_WAVE"],
+    [36, "MOVE_NASTY_PLOT"],
+    [42, "MOVE_GIGA_DRAIN"],
+    [48, "MOVE_THUNDERBOLT"]
+  ],
+
+  "tmhm": [
+    "BULLET_SEED", "TOXIC", "HIDDEN_POWER", "LIGHT_SCREEN", "PROTECT",
+    "RAIN_DANCE", "GIGA_DRAIN", "FRUSTRATION", "SOLAR_BEAM", "THUNDERBOLT",
+    "THUNDER", "RETURN", "DOUBLE_TEAM", "SHOCK_WAVE", "THIEF",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "FLASH"
+  ],
+
+  "eggMoves": ["MOVE_LEECH_SEED", "MOVE_RAZOR_LEAF", "MOVE_SYNTHESIS", "MOVE_SPARK"],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(56, 48)",
+    "frontPicYOffset": 10,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 9,
+    "iconPaletteIndex": 1,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}
