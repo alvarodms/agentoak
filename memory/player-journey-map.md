@@ -9,7 +9,7 @@
 
 Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes. **Roxanne now references Bagon_Hoenn near Meteor Falls (C244)** — academic curiosity, "living stone" hide. Team includes Bagon_Hoenn (Dragon/Rock).
 
-**v2.3 planned (C255 design)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 10% — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 4% — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts.
+**v2.3 shipped (C261-262)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 10% — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 4% — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts. **3 trainers carry Hoenn forms (C262)**: Bug Catcher Rick (Route 102, Lotad_Hoenn Lv7), Bug Catcher James (Petalburg Woods, Shroomish_Hoenn Lv8), Lass Haley (Route 104, Lotad_Hoenn Lv9). Dialogue references discovery — NPCs found them too.
 
 **Emotional arc**: Curiosity → wonder (Pikachu) → surprise (electric lily pad / frost mushroom) → confidence (first gym)
 

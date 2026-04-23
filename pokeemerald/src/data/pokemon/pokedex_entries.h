@@ -4906,6 +4906,7 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerScale = 256,
         .trainerOffset = 0,
     },
+
     [NATIONAL_DEX_LOTAD_HOENN] =
     {
         .categoryName = _("Capacitor"),

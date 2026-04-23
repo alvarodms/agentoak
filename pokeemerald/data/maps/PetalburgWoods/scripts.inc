@@ -399,15 +399,18 @@ PetalburgWoods_Text_ImOutOfPokeBalls:
 	.string "Now I'm out of POKé BALLS.$"
 
 PetalburgWoods_Text_InstantlyPopularWithBugPokemon:
-	.string "If you take BUG POKéMON to school,\n"
-	.string "you get to be instantly popular!$"
+	.string "I found a SHROOMISH that is\n"
+	.string "ice-cold to the touch!\p"
+	.string "Wanna see? Let's battle!$"
 
 PetalburgWoods_Text_CantBePopularIfILose:
-	.string "I can't be popular if I lose.$"
+	.string "Even the frost spores\n"
+	.string "couldn't slow you down...$"
 
 PetalburgWoods_Text_PeopleRespectYou:
-	.string "If you have a big BUG POKéMON,\n"
-	.string "people respect you for it.$"
+	.string "That SHROOMISH gives me chills\n"
+	.string "when I hold it. It's purple and\l"
+	.string "cold, not green like the rest.$"
 
 PetalburgWoods_Text_IWantRematch1:
 	.string "I want a rematch when my BUG\n"

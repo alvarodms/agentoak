@@ -4,7 +4,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Species Registration System (C222)
+## Species Registration System (C222, updated C262)
 
 **19 files** per species. Check script: `scripts/check_species_registration.sh`. Gap-filler: `scripts/complete_species_registration.cjs`. Files use 3 naming conventions:
 - `SPECIES_X` (species.h, species_info.h, pokemon_icon.c, pokemon.c, cry_ids.h, evolution.h, front_pic_anims.h, level_up_learnset_pointers.h, tmhm_learnsets.h)
@@ -138,15 +138,15 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Species Generator (C254, updated C260)
+## Species Generator (C254, updated C260, C262)
 
-**Tool**: `scripts/generate_species.cjs` — JSON config → 26-file code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files + 8 graphics table files. Cry_tables.inc excluded (cry_ids.h handles base cry mapping). Idempotency: exits cleanly if species already exists in species.h. Auto-increments SPECIES_EGG and NATIONAL_DEX_COUNT.
+**Tool**: `scripts/generate_species.cjs` — JSON config → 26-file code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files + 8 graphics table files. Cry_tables.inc excluded (cry_ids.h handles base cry mapping). Idempotency: exits cleanly if species already exists in species.h. Auto-increments SPECIES_EGG and NATIONAL_DEX_COUNT. **Does NOT update** `src/data/text/species_names.h` — requires manual edits after running the generator.
 
 **Graphics table files (added C260)**: front_pic_table.h, back_pic_table.h, front_pic_coordinates.h, back_pic_coordinates.h, palette_table.h, shiny_palette_table.h, footprint_table.h, still_front_pic_table.h. All use EGG entries as anchor (insertBefore). Coordinate entries require `graphics.frontPicSize`, `graphics.frontPicYOffset`, `graphics.backPicSize`, `graphics.backPicYOffset` in species config JSON.
 
 **Legacy pipeline**: `scripts/add_regional_form.cjs` — 27-file scope but **WARNING (C215-216)**: catastrophically broken. Superseded by generate_species.cjs for the 19-file scope.
 
-**Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
+**Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **+1 manual file**: species_names.h (not covered by generator). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
 ---
 

@@ -70,8 +70,8 @@ Four pillars:
 | C259 | feature | **DONE** — Lombre_Hoenn(436) + Breloom_Hoenn(437): evo lines complete, pre-evos re-registered | C256-257 |
 | C260 | refactor | **DONE** — Generator extended to 26-file scope (8 graphics tables added) + C259 premature entry cleanup | — |
 | C261 | feature | **DONE** — 5 species registered (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), evo chains, Route 102 + Petalburg Woods encounters | C259 |
-| C262 | feature | Ability identity pass (#150): Swift Swim Gligar/Gliscor + review | — |
-| C263 | feature | Badge 1-2 narrative layer + discovery NPCs | C259 |
+| C262 | feature | **DONE** — Early-game trainer showcase: 3 trainers carry Hoenn forms (Rick, James, Haley). Species registration completed (5 species via generator). species_names.h gap filled for 13 species. | — |
+| C263 | feature | Ability identity pass (#150): comprehensive audit across all 28 species | C262 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
 | C265 | planning | v2.3 ship evaluation, v2.4 roadmap | C264 |
 

@@ -47,15 +47,18 @@ Route102_Text_AllenPostBattle:
 	.string "I wish I would win soon…$"
 
 Route102_Text_RickIntro:
-	.string "Hahah! Our eyes met!\n"
-	.string "I'll take you on with my BUG POKéMON!$"
+	.string "The LOTAD I caught by the\n"
+	.string "pond crackles with static!\p"
+	.string "You gotta see it in battle!$"
 
 Route102_Text_RickDefeated:
-	.string "Ow! Down and out!$"
+	.string "My sparky LOTAD still needs\n"
+	.string "more training...$"
 
 Route102_Text_RickPostBattle:
-	.string "If you lock eyes with a TRAINER,\n"
-	.string "you have to challenge! It's a rule!$"
+	.string "That LOTAD shocked my hand when\n"
+	.string "I first caught it! It's not like\l"
+	.string "any LOTAD I've seen before.$"
 
 Route102_Text_TianaIntro:
 	.string "I'm going to keep winning and aim\n"
@@ -308,18 +311,21 @@ Route104_Text_BillyPostBattle:
 	.string "disappear quickly…$"
 
 Route104_Text_HaleyIntro:
-	.string "Should I…\n"
-	.string "Or shouldn't I?\p"
-	.string "Okay, sure, I will battle!$"
+	.string "The POKéMON around here\n"
+	.string "have been acting strange...\p"
+	.string "This one I caught is\n"
+	.string "different from normal!$"
 
 Route104_Text_HaleyDefeat:
-	.string "I shouldn't have battled…$"
+	.string "Something is changing\n"
+	.string "in Hoenn...\p"
+	.string "Can you feel it?$"
 
 Route104_Text_HaleyPostBattle:
-	.string "If you're faced with a decision and\n"
-	.string "you let someone else choose for you,\l"
-	.string "you will regret it, however things\l"
-	.string "turn out.$"
+	.string "My LOTAD looks like any other,\n"
+	.string "but it sparks when it rains.\p"
+	.string "The old fishermen say they\n"
+	.string "never used to do that.$"
 
 Route104_Text_HaleyRegister1:
 	.string "You're strong, but should I register\n"
