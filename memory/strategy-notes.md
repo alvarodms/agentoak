@@ -71,7 +71,7 @@ Four pillars:
 | C260 | refactor | **DONE** — Generator extended to 26-file scope (8 graphics tables added) + C259 premature entry cleanup | — |
 | C261 | feature | **DONE** — 5 species registered (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), evo chains, Route 102 + Petalburg Woods encounters | C259 |
 | C262 | feature | **DONE** — Early-game trainer showcase: 3 trainers carry Hoenn forms (Rick, James, Haley). Species registration completed (5 species via generator). species_names.h gap filled for 13 species. | — |
-| C263 | feature | Ability identity pass (#150): comprehensive audit across all 28 species | C262 |
+| C263 | feature | **DONE** — Ability identity pass (#150): 12 species reassigned in species_info.h. Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added. | C262 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
 | C265 | planning | v2.3 ship evaluation, v2.4 roadmap | C264 |
 
@@ -82,12 +82,12 @@ Four pillars:
 | #131 Sprite refinement | 5 | **DONE C258** | Growlithe v2, Lotad v2, Shroomish v2 bulkified; Gliscor v3 aquatic tail. |
 | #148 Type diversity | 1->partial | **DONE C261** | 5 species registered: Electric/Grass (Lotad/Lombre/Ludicolo line) + Poison/Ice (Shroomish/Breloom line). Pre-Badge 1 encounters live. |
 | #149 Gliscor sprite | 1 | **DONE C258** | v3: wider V-fork caudal fin, fin-ray striations, barnacle accents. |
-| #150 Ability swaps | 1 | ACCEPT C259 | Thematic ability identity pass. |
+| #150 Ability swaps | 1 | **DONE C263** | 12 species reassigned: Inner Focus purge, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
 | #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
-| #153 Trainer teams | 1 | DEFER C262-263 | Remaining gaps need early-game forms first. |
+| #153 Trainer teams | 1 | DEFER C264+ | Remaining gaps need early-game forms first. |
 | #154 Regional starters | 1 | DEFER v2.4+ | Serious design needed — not a quick swap. |
-| #156 Rival fight | 1 | DEFER C262-263 | Narrative layer cycle. |
+| #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
 
 ## Engineering Prerequisites
 - Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`. C261: validated 5 sequential runs.

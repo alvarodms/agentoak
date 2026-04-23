@@ -2,7 +2,6 @@
 
 Deferred community issues for future consideration.
 
-- #150: Ability suggestions (deferred: cycle 262) | deferrals: 2
 - #151: Original abilities (deferred: cycle 262) | deferrals: 2
 - #152: Original moves (deferred: cycle 262) | deferrals: 2
 - #154: Regional starters (deferred: cycle 254)

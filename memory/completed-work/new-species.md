@@ -103,7 +103,7 @@ Files modified (19 source + 7 sprite + 1 encounter):
 |---------|-----|------|-----|-----------|
 | Gligar_Hoenn | 432 | Water/Rock | 430 | Granite Cave B2F 5% Lv10-13 |
 
-Stats: 75/80/115/35/75/50. Abilities: Battle Armor / Rock Head. Growth: Medium Slow.
+Stats: 75/80/115/35/75/50. Abilities: Battle Armor / Water Absorb (C263). Growth: Medium Slow.
 Learnset: Harden, Water Gun, Sand Attack, Metal Claw, Rock Tomb, Bite, Screech, Rock Slide, Iron Defense, Slash, Aqua Tail, Ancient Power, Rock Blast.
 TMs: 25 (Water Pulse, Roar, Toxic, HP, Protect, Rain Dance, Frustration, Iron Tail, EQ, Return, Dig, Brick Break, Double Team, Sandstorm, Rock Tomb, Facade, Secret Power, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
 Cry: Mapped to base Gligar via cry_ids.h.
@@ -121,7 +121,7 @@ Files modified: 28 source + 7 sprite + 2 map + 1 JSON = 38 total.
 |---------|-----|------|-----|-----------|
 | Gliscor_Hoenn | 433 | Water/Rock | 510 | Evolution only (Gligar_Hoenn Lv35) |
 
-Stats: 75/95/130/45/75/90. Abilities: Battle Armor / Rock Head. Growth: Slow.
+Stats: 75/95/130/45/75/90. Abilities: Battle Armor / Water Absorb (C263). Growth: Slow.
 Learnset: Poison Sting, Harden, Sand Attack, Water Pulse, Quick Attack, Screech, Rock Tomb, Crunch, Rock Slide, Swords Dance, Guillotine.
 TMs: 21 (Water Pulse, Toxic, HP, Hyper Beam, Protect, EQ, Return, Dig, Brick Break, Double Team, Rock Tomb, Aerial Ace, Facade, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
 Egg moves: Empty (inherits from Gligar_Hoenn line).
@@ -176,3 +176,27 @@ Ran all 8 validators across 22 custom species. Fixed 5 files:
 | cry_tables.inc | Alignment fix | Forward/reverse table mismatch: removed 2 misplaced pre-table entries, added 2 forward (Dusclops, Murkrow), added 2 reverse (Growlithe, Arcanine), removed 2 duplicate vanilla reverse entries. Both tables now 399 entries. |
 
 Post-fix: 6 species at 19/19, 16 at 18/19 (cry_tables.inc false positive — validator checks for regional name string but cry table uses base species labels). All other validators clean: trainers 0 errors, evolution PASS, E4 rematches PASS, flags verified, quest flags 24/24 OK.
+
+---
+
+## C263: Ability Identity Pass (#150) — 12 Species Reassigned
+
+Comprehensive ability audit across all 27 custom species. 12 species received new abilities from the Gen 3 pool. 15 kept current abilities. Goal: each form's ability tells a migration story, eliminate niche duplication, ensure stat-ability alignment.
+
+| Species | Old Abilities | New Abilities | Rationale |
+|---------|--------------|---------------|-----------|
+| Growlithe_Hoenn | Swift Swim / Swift Swim | Swift Swim / **Water Veil** | Bug fix (duplicate) + burn-immune sea pup |
+| Vulpix_Hoenn | Inner Focus / Cute Charm | **Cute Charm** / **Serene Grace** | First non-mythical Serene Grace in Gen 3 |
+| Ninetales_Hoenn | Inner Focus / Flash Fire | **Cute Charm** / **Serene Grace** | Flash Fire on Ice-type was thematically wrong |
+| Froslass | Inner Focus / Pressure | **Levitate** / Pressure | Floating ice ghost, standard for spectral mons |
+| Farigiraf | Inner Focus / Synchronize | **Own Tempo** / Synchronize | Dual-brain = confusion immunity |
+| Corsola_Hoenn | Rock Head / None | Rock Head / **Pressure** | Ghost identity: PP drain + filled empty slot |
+| Bagon_Hoenn | Rock Head / Sturdy | Rock Head / **Shed Skin** | Sturdy useless in Gen 3; stone dragon sheds status |
+| Gligar_Hoenn | Battle Armor / Rock Head | Battle Armor / **Water Absorb** | Sea scorpion drinks water; unique vs Kabutops |
+| Gliscor_Hoenn | Battle Armor / Rock Head | Battle Armor / **Water Absorb** | Evo line consistency |
+| Gible | Sand Veil / None | Sand Veil / **Rough Skin** | Canonical hidden ability; contact punishment |
+| Gabite | Sand Veil / None | Sand Veil / **Rough Skin** | Evo line consistency |
+| Garchomp | Sand Veil / None | Sand Veil / **Rough Skin** | Only Dragon with contact-damage in Gen 3 |
+
+Inner Focus reduced from 7 users → 3 (Riolu, Lucario, Weavile — martial discipline family).
+File modified: `pokeemerald/src/data/pokemon/species_info.h` (12 `.abilities` lines).

@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-262, 19 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-263, 20 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C262: first edit at action 71/154 (46% research) — though much of it was necessary species registration.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For species work: write the node.js bulk script FIRST, then read only the files needed for anchor text. Don't grep every constant in every file before writing.
+**Symptom**: 64-132 actions before first edit. C263: first edit at action 30/89 (34% research). Better than C262's 46%, but still high.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent (C263 used it at actions 1 and 70 despite this rule). (3) Start edits by action 15 max. (4) For species work: write the node.js bulk script FIRST, then read only the files needed for anchor text. Don't grep every constant in every file before writing. (5) For audit passes: read all species in one batch (parallel reads), design all changes, then execute all edits — don't interleave reading and editing.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -22,9 +22,15 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Incomplete Species Registration Across Cycles (C261→C262)
 
-**Symptom**: C261 claimed "all 5 species registered" but C262 discovered most registration files were empty for these species. Actions #33-34 showed ✗ for species.h, graphics.h, species_names.h, pokemon.c, pokemon_icon.c, cry_ids.h, evolution.h, etc.
-**Cause**: C261 committed species configs + wild encounter JSON references but did not run `generate_species.cjs` to populate the 26 C/H source files. The working tree had unstaged modifications from a partial run.
+**Symptom**: C261 claimed "all 5 species registered" but C262 discovered most registration files were empty for these species.
+**Cause**: C261 committed species configs + wild encounter JSON references but did not run `generate_species.cjs` to populate the 26 C/H source files.
 **Resolution**: After ANY species registration cycle, verify with `make check_species` + spot-check `grep "SPECIES_X" species.h`. Never trust the previous cycle's summary — verify the source tree.
+
+## Edit Tool "Multiple Matches" in species_info.h (C147, C263)
+
+**Symptom**: Edit calls fail with "Found N matches of the string to replace, but replace_all is false."
+**Cause**: species_info.h has repeated patterns like `.abilities = {ABILITY_X, ABILITY_Y}` across multiple species entries. Short snippets match multiple locations.
+**Resolution**: Include MORE context lines (species name or unique surrounding fields) in the old_string to ensure exactly one match. Alternatively, use line-range Read to get the exact surrounding context, then use a longer unique snippet.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
