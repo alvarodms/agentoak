@@ -110,7 +110,7 @@ Species drawn from distant regions by the migration event.
 | Riolu | Fighting | Route 116 (4%) | Friendship → Lucario |
 | Lucario | Fighting/Steel | — | Evolved from Riolu |
 | Gible | Dragon/Ground | Route 111 (1%), Meteor Falls B1F (2%) | Lv24 → Gabite → Lv48 Garchomp |
-| Gabite | Dragon/Ground | — | Evolved from Gible at Lv24 |
+| Gabite | Dragon/Ground | Victory Road B2F (2%) | Evolved from Gible at Lv24 |
 | Garchomp | Dragon/Ground | — | Evolved from Gabite at Lv48 |
 | Weavile | Dark/Ice | Mt. Pyre Summit (4%) | Also: Sneasel → Weavile at Lv40 |
 

@@ -29,3 +29,4 @@ Modified files related to wild Pokémon encounter tables.
 | `src/data/wild_encounters.json` | Route 119: Natu slot 9 (4%) → Stantler_Hoenn Lv26-28 | **231** | Ghost/Grass forest spirit deer. Badge 5-6 discovery gap fill. Natu still available in Safari Zone. |
 | `src/data/wild_encounters.json` | Route 113: VULPIX slot 9 (4%) → VULPIX_HOENN Lv21-22 | **237** | Bug fix — Vulpix_Hoenn was registered as a species (C208) but never placed in encounter table. Regular Vulpix remains on other routes. |
 | `src/data/wild_encounters.json` | Granite Cave B2F: slot 7 Geodude (5% Lv10-12) → GLIGAR_HOENN (5% Lv10-13) | **250** | First cross-gen regional form. Water/Rock scorpion-bat in coastal cave. |
+| `src/data/wild_encounters.json` | Victory Road B2F: slots 10-11 (SHELGON Lv46-50 + MEDICHAM Lv46-50) → GABITE (Lv44 + Lv46), 2% total | **267** | v2.3 audit gap #5 closed. Gabite available in wild before Garchomp evo at Lv48. |

@@ -8,10 +8,10 @@ Six species across ~29 source files each. Collapsed — see git history for deta
 |---------|-----|------|-----|-----------|-----------|
 | Riolu | 412 | Fighting | 285 | Route 116 8%, Lv8-10 | → Lucario (Friendship) |
 | Lucario | 413 | Fight/Steel | 525 | Evolution | — |
-| Weavile | 414 | Dark/Ice | 510 | Shoal Cave Ice 8%, Lv32-36 | Sneasel → (Lv40) |
+| Weavile | 414 | Dark/Ice | 510 | Mt Pyre Summit 4%, Lv32-33 | Sneasel → (Lv40) |
 | Gible | 415 | Dragon/Ground | 300 | Meteor Falls B1F_1R 2%, Lv25-30 | → Gabite (Lv24) |
-| Gabite | 416 | Dragon/Ground | 410 | Evolution | → Garchomp (Lv48) |
-| Garchomp | 417 | Dragon/Ground | 600 | Victory Road B2F 2%, Lv40-44 | — |
+| Gabite | 416 | Dragon/Ground | 410 | Victory Road B2F 2%, Lv44-46 | → Garchomp (Lv48) |
+| Garchomp | 417 | Dragon/Ground | 600 | Evolution only | — |
 
 ---
 
@@ -92,11 +92,11 @@ C261 attempted registration but species were never committed to species.h. C264 
 
 | Gap | Species | Detail |
 |-----|---------|--------|
-| No trainer | Froslass | Memory claims "Glacia all tiers" but NOT on any Glacia team |
-| No trainer | Gligar_Hoenn | Wild encounter only, no trainer carries it |
-| No NPC | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | No script dialogue |
-| Encounter discrepancy | Weavile | Memory says Shoal Cave Ice; actual: Mt Pyre Summit |
-| Missing encounter | Garchomp | Memory says Victory Road B2F 2%; not in encounters file |
+| ~~No trainer~~ | Froslass | **DONE C267** — Added to all 5 Glacia parties (base + R1-R4) |
+| ~~No trainer~~ | Gligar_Hoenn | **DONE C267** — Added to Cristian (Dewford Gym) |
+| ~~No NPC~~ | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | **DONE C267** — 5 NPCs across Dewford, Lavaridge, Fortree, VR 1F, Route 123 |
+| ~~Encounter discrepancy~~ | Weavile | **DONE C267** — Memory corrected: Mt Pyre Summit 4%, Lv32-33 |
+| ~~Missing encounter~~ | Garchomp | **DONE C267** — Corrected: Garchomp is evolution only; Gabite now in VR B2F 2% Lv44-46 |
 
 ### Type Distribution (27 species)
 Ice 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Fairy 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Steel 1, Flying 1, Normal 1, Psychic 1, Bug 1. Rock at 4/27 (15%).

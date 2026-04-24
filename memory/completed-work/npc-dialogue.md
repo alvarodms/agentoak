@@ -147,3 +147,15 @@ Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger,
 | `data/maps/SkyPillar_Top/map.json` | **242** | Added coord_event at (14,9) with VAR_TEMP_1 guard for CosmicArrival script. |
 | `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Relief register — player touches cool stone, warmth "has gone somewhere." |
 | `data/maps/Route131/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Unease register — dead still water, something moved underneath, "I didn't look down." |
+
+## Migration Acknowledgment NPCs — Cycle 267
+
+5 NPCs added to acknowledge previously unmentioned species. Closes v2.3 audit gap #4.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/DewfordTown/scripts.inc` + `map.json` | **267** | MigrationFisherman (fisherman, 16×13 elev3) — Gligar_Hoenn: bat-creature with stone hide in Granite Cave. Echo of Gliscor_Hoenn. |
+| `data/maps/LavaridgeTown/scripts.inc` + `map.json` | **267** | ArcanineBreeder (woman, 7×8 elev3) — Arcanine_Hoenn: breeder's Arcanine changed, fur smooth and cool, runs on water. |
+| `data/maps/FortreeCity/scripts.inc` + `map.json` | **267** | NinetalesElder (old man, 15×4 elev4) — Ninetales_Hoenn: grandmother's golden Ninetales vs. water-remembering one. |
+| `data/maps/VictoryRoad_1F/scripts.inc` + `map.json` | **267** | ClawMarkHiker (hiker, 20×35 elev3) — Gabite: fresh claw marks on cave walls, getting deeper further down. |
+| `data/maps/Route123/scripts.inc` + `map.json` | **267** | GliscorRumor (fisherman, 45×18 elev3) — Gliscor_Hoenn: distant echo, Dewford fisherman's report of creature gliding through water and stone. |

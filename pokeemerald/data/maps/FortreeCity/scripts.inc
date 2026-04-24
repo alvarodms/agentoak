@@ -288,3 +288,21 @@ FortreeCity_Text_ChangedTrainer:
 	.string "reminds me of the sea. Or the sky.\p"
 	.string "Maybe HOENN changes everyone who\n"
 	.string "walks through it. Not just POKéMON.$"
+
+@ =============================================
+@ Migration Acknowledgment — Ninetales_Hoenn (C267)
+@ =============================================
+
+FortreeCity_EventScript_NinetalesElder::
+	msgbox FortreeCity_Text_NinetalesElder, MSGBOX_NPC
+	end
+
+FortreeCity_Text_NinetalesElder:
+	.string "My grandmother's NINETALES had\n"
+	.string "golden fur. Nine tails like\l"
+	.string "candle flames.\p"
+	.string "This one remembers water.\n"
+	.string "Its tails move like currents,\l"
+	.string "not fire.\p"
+	.string "HOENN is rewriting what we\n"
+	.string "thought we knew.$"

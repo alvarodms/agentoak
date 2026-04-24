@@ -4,11 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-266, 21 occurrences) — IMPROVING
+## Research Phase Consuming Implementation Budget (C110-267, 22 occurrences) — REGRESSED C267
 
-**Symptom**: 64-132 actions before first edit. C264: first edit at action 44/229 (19% mark).
-**C265 improvement**: First edit at action 15/55. C266: first edit (generate_trainer.cjs Write) at action 19/67 (28% mark) — 18 actions of research for a from-scratch generator is reasonable. Total 67 actions for generator + tests + memory = efficient.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max (action 19 acceptable for complex new tooling). (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h).
+**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. **C267 REGRESSION: first edit at action 154/241 (64% mark)**. Root cause: (a) `/w/agentoak/` path prefix used 30+ times instead of `/__w/agentoak/`; (b) Agent subagent used 6 times; (c) Same files read 3+ times unnecessarily.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent — it was removed for a reason. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h). (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

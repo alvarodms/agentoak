@@ -497,3 +497,21 @@ LavaridgeTown_Text_MigrationVisitor:
 	.string "Whatever is driving this migration,\n"
 	.string "it must be something powerful.$"
 
+@ =============================================
+@ Migration Acknowledgment — Arcanine_Hoenn (C267)
+@ =============================================
+
+LavaridgeTown_EventScript_ArcanineBreeder::
+	msgbox LavaridgeTown_Text_ArcanineBreeder, MSGBOX_NPC
+	end
+
+LavaridgeTown_Text_ArcanineBreeder:
+	.string "I raised my ARCANINE for twenty\n"
+	.string "years. Knew every hair on its coat.\p"
+	.string "Last season, the fur changed.\n"
+	.string "Went smooth. Cool to the touch.\l"
+	.string "Like river stone.\p"
+	.string "It still loves the hot springs.\n"
+	.string "But something in it remembers\l"
+	.string "water now.$"
+

@@ -852,3 +852,20 @@ DewfordTown_Text_TideWatcherResolved:
 	.string "in places I had never seen them.\p"
 	.string "Feels like the sea itself let\n"
 	.string "out a long sigh of relief.$"
+
+@ =============================================
+@ Migration Acknowledgment — Gligar_Hoenn (C267)
+@ =============================================
+
+DewfordTown_EventScript_MigrationFisherman::
+	msgbox DewfordTown_Text_MigrationFisherman, MSGBOX_NPC
+	end
+
+DewfordTown_Text_MigrationFisherman:
+	.string "Something keeps diving into the\n"
+	.string "shallows and scaring off my MAGIKARP.\p"
+	.string "Looked like a bat crossed with\n"
+	.string "a barnacle. Rough hide, like stone.\l"
+	.string "Wings that cut through water.\p"
+	.string "Started after the stirring.\n"
+	.string "Comes from GRANITE CAVE, I think.$"

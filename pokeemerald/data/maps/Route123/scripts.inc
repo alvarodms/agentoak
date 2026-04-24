@@ -208,3 +208,22 @@ Route123_Text_BerryResearcher:
 	.string "our native types never visited.\l"
 	.string "Change isn't always a bad thing!$"
 
+@ =============================================
+@ Migration Acknowledgment — Gliscor_Hoenn echo (C267)
+@ =============================================
+
+Route123_EventScript_GliscorRumor::
+	msgbox Route123_Text_GliscorRumor, MSGBOX_NPC
+	end
+
+Route123_Text_GliscorRumor:
+	.string "A DEWFORD fisherman told me\n"
+	.string "something strange.\p"
+	.string "Says there's a creature in\n"
+	.string "GRANITE CAVE that glides through\l"
+	.string "water and stone alike.\p"
+	.string "Bigger than any bat. Tail\n"
+	.string "like a rudder.\p"
+	.string "The ocean's reaching inland,\n"
+	.string "he says. Even into stone.$"
+

@@ -8138,14 +8138,14 @@
                 "species": "SPECIES_LAIRON"
               },
               {
-                "min_level": 46,
-                "max_level": 50,
-                "species": "SPECIES_SHELGON"
+                "min_level": 44,
+                "max_level": 44,
+                "species": "SPECIES_GABITE"
               },
               {
                 "min_level": 46,
-                "max_level": 50,
-                "species": "SPECIES_MEDICHAM"
+                "max_level": 46,
+                "species": "SPECIES_GABITE"
               }
             ]
           },

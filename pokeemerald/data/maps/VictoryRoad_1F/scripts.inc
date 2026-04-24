@@ -222,3 +222,20 @@ VictoryRoad_1F_Text_KatelynnDefeat:
 VictoryRoad_1F_Text_KatelynnPostBattle:
 	.string "Humph, go right on ahead.\n"
 	.string "See if I care.$"
+
+@ =============================================
+@ Migration Acknowledgment — Gabite (C267)
+@ =============================================
+
+VictoryRoad_1F_EventScript_ClawMarkHiker::
+	msgbox VictoryRoad_1F_Text_ClawMarkHiker, MSGBOX_NPC
+	end
+
+VictoryRoad_1F_Text_ClawMarkHiker:
+	.string "See these claw marks on the wall?\n"
+	.string "Fresh. Deep. Something with jaws.\p"
+	.string "I haven't seen what made them.\n"
+	.string "But the gouges get deeper the\l"
+	.string "further down you go.\p"
+	.string "Whatever lives down there has\n"
+	.string "a hide like cave rock.$"

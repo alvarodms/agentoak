@@ -3941,9 +3941,9 @@ static const struct TrainerMonItemCustomMoves sParty_Glacia[] = {
     {
     .iv = 250,
     .lvl = 48,
-    .species = SPECIES_JYNX,
+    .species = SPECIES_FROSLASS,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_ICE_BEAM, MOVE_LOVELY_KISS, MOVE_PSYCHIC, MOVE_ENERGY_BALL}
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_DESTINY_BOND}
     },
     {
     .iv = 250,
@@ -3955,9 +3955,9 @@ static const struct TrainerMonItemCustomMoves sParty_Glacia[] = {
     {
     .iv = 250,
     .lvl = 50,
-    .species = SPECIES_PILOSWINE,
+    .species = SPECIES_MAMOSWINE,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_ROCK_SLIDE, MOVE_BODY_SLAM}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_ROCK_SLIDE, MOVE_SUPERPOWER}
     },
     {
     .iv = 250,
@@ -5257,9 +5257,9 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch1[] = {
     {
     .iv = 255,
     .lvl = 64,
-    .species = SPECIES_JYNX,
-    .heldItem = ITEM_SALAC_BERRY,
-    .moves = {MOVE_ICE_BEAM, MOVE_LOVELY_KISS, MOVE_PSYCHIC, MOVE_SHADOW_BALL}
+    .species = SPECIES_FROSLASS,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_DESTINY_BOND}
     },
     {
     .iv = 255,
@@ -5271,9 +5271,9 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch1[] = {
     {
     .iv = 255,
     .lvl = 67,
-    .species = SPECIES_PILOSWINE,
-    .heldItem = ITEM_QUICK_CLAW,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_BEAM, MOVE_ROCK_SLIDE, MOVE_BODY_SLAM}
+    .species = SPECIES_MAMOSWINE,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_STONE_EDGE, MOVE_SUPERPOWER}
     },
     {
     .iv = 255,
@@ -5484,9 +5484,9 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch2[] = {
     {
     .iv = 255,
     .lvl = 74,
-    .species = SPECIES_JYNX,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_LOVELY_KISS, MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .species = SPECIES_FROSLASS,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_DESTINY_BOND}
     },
     {
     .iv = 255,
@@ -5498,9 +5498,9 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch2[] = {
     {
     .iv = 255,
     .lvl = 78,
-    .species = SPECIES_PILOSWINE,
+    .species = SPECIES_MAMOSWINE,
     .heldItem = ITEM_QUICK_CLAW,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_BEAM, MOVE_ROCK_SLIDE, MOVE_BODY_SLAM}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_STONE_EDGE, MOVE_SUPERPOWER}
     },
     {
     .iv = 255,
@@ -5718,16 +5718,16 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch3[] = {
     {
     .iv = 255,
     .lvl = 84,
-    .species = SPECIES_JYNX,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_LOVELY_KISS, MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_ENERGY_BALL}
+    .species = SPECIES_FROSLASS,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_DESTINY_BOND}
     },
     {
     .iv = 255,
     .lvl = 86,
-    .species = SPECIES_PILOSWINE,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_ICE_BEAM, MOVE_DOUBLE_EDGE}
+    .species = SPECIES_MAMOSWINE,
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_STONE_EDGE, MOVE_SUPERPOWER}
     },
     {
     .iv = 255,
@@ -5945,16 +5945,16 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch4[] = {
     {
     .iv = 255,
     .lvl = 91,
-    .species = SPECIES_JYNX,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_LOVELY_KISS, MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .species = SPECIES_FROSLASS,
+    .heldItem = ITEM_NEVER_MELT_ICE,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_DESTINY_BOND}
     },
     {
     .iv = 255,
     .lvl = 92,
-    .species = SPECIES_PILOSWINE,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_CURSE, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_ICE_BEAM}
+    .species = SPECIES_MAMOSWINE,
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_EARTHQUAKE, MOVE_ICE_SHARD, MOVE_STONE_EDGE, MOVE_SUPERPOWER}
     },
     {
     .iv = 255,
@@ -9693,11 +9693,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Lilith[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Cristian[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_Cristian[] = {
     {
     .iv = 200,
     .lvl = 13,
     .species = SPECIES_MAKUHITA,
+    .moves = {MOVE_ARM_THRUST, MOVE_VITAL_THROW, MOVE_SAND_ATTACK, MOVE_FOCUS_ENERGY}
+    },
+    {
+    .iv = 200,
+    .lvl = 13,
+    .species = SPECIES_GLIGAR_HOENN,
+    .moves = {MOVE_ROCK_TOMB, MOVE_HARDEN, MOVE_SAND_ATTACK, MOVE_POISON_STING}
     }
 };
 

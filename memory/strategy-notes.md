@@ -98,11 +98,11 @@ Four pillars:
 ## v2.3 Audit Gaps (C264) — Priority Queue for C265+
 
 1. ~~**Re-register 5 early-game species**~~ **DONE C265** — All 5 registered (IDs 434-438), encounters + trainers restored, build verified.
-2. **Add Froslass to Glacia teams** — memory claims it's there, it's not.
-3. **Add Gligar_Hoenn to at least 1 trainer** — only wild encounter, no trainer or NPC integration.
-4. **NPC dialogue for**: Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn.
-5. **Verify Garchomp encounter** — memory says Victory Road B2F 2% but not in encounters file.
-6. **Reconcile Weavile location** — memory says Shoal Cave Ice, actual: Mt Pyre Summit.
+2. ~~**Add Froslass to Glacia teams**~~ **DONE C267** — Froslass replaces Jynx, Mamoswine replaces Piloswine across all 5 parties.
+3. ~~**Add Gligar_Hoenn to at least 1 trainer**~~ **DONE C267** — Added to Cristian (Dewford Gym).
+4. ~~**NPC dialogue for**: Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn~~ **DONE C267** — 5 NPCs added.
+5. ~~**Verify Garchomp encounter**~~ **DONE C267** — Garchomp is evolution only; Gabite placed in VR B2F 2% Lv44-46.
+6. ~~**Reconcile Weavile location**~~ **DONE C267** — Memory corrected to Mt Pyre Summit 4%, Lv32-33.
 
 ---
 
