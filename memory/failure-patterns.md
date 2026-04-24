@@ -4,10 +4,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-264, 21 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-264, 21 occurrences) — IMPROVING
 
-**Symptom**: 64-132 actions before first edit. C264: first edit at action 44/229 (19% mark). Used Agent subagent at actions 66+78 despite ban. The NPC audit layer (actions 78-205) read 60+ map scripts and produced ZERO edits — pure waste.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. Don't read 60 scripts that need no changes. (5) For species work: write the node.js bulk script FIRST, then read only files needed for anchor text.
+**Symptom**: 64-132 actions before first edit. C264: first edit at action 44/229 (19% mark).
+**C265 improvement**: First edit (species_names.h) at action 15/55. Generator ran at actions 7-11. Total 55 actions for a 5-species + encounters + trainers cycle — within budget.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h).
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -20,11 +21,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit graphics table files after grepping them (grep doesn't count as "read"). The Edit tool requires an explicit Read call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all 8 graphics table files in parallel, then edit all 8. For species work, the 8 graphics tables always need Read→Edit after running generate_species.cjs.
 
-## Incomplete Species Registration Across Cycles (C261→C262→C264)
+## Incomplete Species Registration Across Cycles (C261→C262→C264→C265 RESOLVED)
 
-**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C262 claimed to fix it. C264 audit found the build was STILL broken — SPECIES_LOTAD_HOENN etc. remained undefined in species.h while referenced in wild_encounters.json, trainer_parties.h, species_names.h, and pokedex_entries.h.
-**Cause**: Memory was updated as if work was complete, but source files were never actually modified. Multiple cycles relied on the (false) memory without verifying.
-**Resolution**: (1) After ANY species registration, run `make` to verify compilation. (2) Grep `species.h` for the constant before claiming success. (3) Memory claims ≠ source truth — always verify code before building on previous cycle's claims.
+**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C262 claimed to fix it. C264 audit found the build was STILL broken. C264 cleaned dangling references.
+**Resolution**: C265 re-ran generate_species.cjs for all 5 species, verified SPECIES_ constants in species.h via grep, ran `make` successfully. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) run `make`, (3) only THEN update memory. Memory claims ≠ source truth.
 
 ## Edit Tool "Multiple Matches" in species_info.h (C147, C263)
 

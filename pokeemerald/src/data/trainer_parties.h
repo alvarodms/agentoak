@@ -10085,12 +10085,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Haley1[] = {
     {
     .iv = 0,
     .lvl = 9,
-    .species = SPECIES_LOTAD,
+    .species = SPECIES_LOTAD_HOENN,
     },
     {
     .iv = 0,
     .lvl = 10,
-    .species = SPECIES_SHROOMISH,
+    .species = SPECIES_SHROOMISH_HOENN,
     }
 };
 
@@ -10228,7 +10228,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Rick[] = {
     {
     .iv = 0,
     .lvl = 7,
-    .species = SPECIES_LOTAD,
+    .species = SPECIES_LOTAD_HOENN,
     },
     {
     .iv = 0,
@@ -10319,7 +10319,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_James1[] = {
     {
     .iv = 0,
     .lvl = 8,
-    .species = SPECIES_SHROOMISH,
+    .species = SPECIES_SHROOMISH_HOENN,
     },
     {
     .iv = 0,

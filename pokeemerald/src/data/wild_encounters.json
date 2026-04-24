@@ -164,7 +164,7 @@
               {
                 "min_level": 3,
                 "max_level": 4,
-                "species": "SPECIES_LOTAD"
+                "species": "SPECIES_LOTAD_HOENN"
               },
               {
                 "min_level": 3,
@@ -1940,7 +1940,7 @@
               {
                 "min_level": 6,
                 "max_level": 7,
-                "species": "SPECIES_SHROOMISH"
+                "species": "SPECIES_SHROOMISH_HOENN"
               },
               {
                 "min_level": 6,

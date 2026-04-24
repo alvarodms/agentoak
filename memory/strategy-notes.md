@@ -73,7 +73,7 @@ Four pillars:
 | C262 | feature | **DONE** — Early-game trainer showcase: 3 trainers carry Hoenn forms (Rick, James, Haley). Species registration completed (5 species via generator). species_names.h gap filled for 13 species. | — |
 | C263 | feature | **DONE** — Ability identity pass (#150): 12 species reassigned in species_info.h. Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added. | C262 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
-| C265 | planning | v2.3 ship evaluation, v2.4 roadmap | C264 |
+| C265 | feature | **DONE** — Re-registered 5 early-game species via generator, restored encounter/trainer integrations, build verified | C264 |
 
 ### Issue Triage (v2.3)
 
@@ -95,7 +95,7 @@ Four pillars:
 
 ## v2.3 Audit Gaps (C264) — Priority Queue for C265+
 
-1. **Re-register 5 early-game species** (Lotad_Hoenn, Shroomish_Hoenn + evo chains). Run generate_species.cjs, verify `make` succeeds, verify constants in species.h. HIGHEST PRIORITY.
+1. ~~**Re-register 5 early-game species**~~ **DONE C265** — All 5 registered (IDs 434-438), encounters + trainers restored, build verified.
 2. **Add Froslass to Glacia teams** — memory claims it's there, it's not.
 3. **Add Gligar_Hoenn to at least 1 trainer** — only wild encounter, no trainer or NPC integration.
 4. **NPC dialogue for**: Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn.
@@ -112,6 +112,6 @@ Four pillars:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (22 registered)**: Last registered = Gliscor_Hoenn(433). EGG=434, NUM_SPECIES=434. C261 early-game species (434-438) were NEVER registered — dangling refs cleaned in C264. Must re-register via generate_species.cjs in C265+. categoryName max 11 chars (u8[12] field).
+- **Custom species (27 registered)**: Last registered = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. C265 re-registered 5 early-game species (434-438) + restored encounter/trainer integrations. categoryName max 11 chars (u8[12] field).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

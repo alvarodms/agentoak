@@ -36,111 +36,34 @@ Six species across ~29 source files each. Collapsed — see git history for deta
 | Mamoswine | 424 | Ice/Ground | 530 | Piloswine (Lv44) | Glacia all tiers |
 | Farigiraf | 428 | Normal/Psychic | — | Girafarig (Lv32) | Tate & Liza all tiers |
 
-## C240: Deoxys_Hoenn (Poison/Fairy) — First Fully Custom Species
+## C240: Deoxys_Hoenn (Poison/Fairy)
 
 | Species | ID | Type | BST | Encounter |
 |---------|-----|------|-----|-----------|
 | Deoxys_Hoenn | 431 | Poison/Fairy | 600 | Quest III reward, Lv 70 (quest C242) |
 
-Stats: 60/80/70/150/80/160. Abilities: Toxic Touch/Pressure (C241: ability1 changed from Pressure).
+Stats: 60/80/70/150/80/160. Abilities: Toxic Touch/Pressure.
 Growth: Slow. Catch Rate: 3. Genderless. Undiscovered egg group.
-Learnset: 12 moves (Cosmic Power L1 → Moonblast L61). At Lv70 catch: Shadow Ball/Recover/Sludge Bomb/Moonblast.
-TMs: 22 (Calm Mind, Toxic, HP, Ice Beam, Hyper Beam, Protect, TBolt, Thunder, Return, Psychic, Shadow Ball, Double Team, Reflect, Sludge Bomb, Facade, Rest, Skill Swap, Snatch + Cut/Strength/Flash/Rock Smash).
-Cry: Mapped to vanilla Deoxys. Elevation: 8 (floats). Dex category: "Cosmic".
-Sprites: Custom hot pink/cyan Poison/Fairy recolor by Sprite Designer v1.
 
-Files modified: 23 source files (standard species pipeline + enemy_mon_elevation.h).
-
----
-
-## C231: Stantler_Hoenn (Ghost/Grass) — Badge 5-6 Regional Form
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Stantler_Hoenn | 430 | Ghost/Grass | 465 | Route 119 4% Lv26-28 |
-
-Stats: 73/65/72/95/80/80. Abilities: Intimidate / Natural Cure. Growth: Slow.
-Learnset: Tackle, Leer, Astonish, Leech Seed, Mega Drain, Confuse Ray, Hypnosis, Shadow Ball, Giga Drain, Will-O-Wisp, Calm Mind, Dream Eater, Destiny Bond.
-TMs: 22 (includes Calm Mind, Shadow Ball, Giga Drain, SolarBeam, Psychic).
-Egg moves: Disable, Spite, Curse, Psych Up.
-Cry: Mapped to base Stantler via cry_ids.h.
-Sprites: Custom forest spirit recolor by Sprite Designer (mossy green body, spectral teal antlers).
-
-Files modified: Same 19+7+1 pattern as Pinsir_Hoenn (all tables, graphics, encounter).
-
----
-
-## C230: Pinsir_Hoenn (Bug/Fire) — First Mid-Game Regional Form
+## C230-231: Mid-Game Regional Forms
 
 | Species | ID | Type | BST | Encounter |
 |---------|-----|------|-----|-----------|
 | Pinsir_Hoenn | 429 | Bug/Fire | 500 | Route 112 5% Lv21-22 |
+| Stantler_Hoenn | 430 | Ghost/Grass | 465 | Route 119 4% Lv26-28 |
 
-Stats: 65/120/90/70/70/85. Abilities: Hyper Cutter / Flame Body. Growth: Slow.
-Learnset: Focus Energy, Vice Grip, Ember, Fury Cutter, Harden, Flame Wheel, X-Scissor, Guillotine, Fire Punch, Swords Dance.
-TMs: 22 (includes Flamethrower, Fire Blast, Overheat, Earthquake, Sunny Day).
-Egg moves: Blaze Kick, False Swipe, Flail, Rock Slide.
-Cry: Mapped to base Pinsir via cry_ids.h.
-Sprites: Custom volcanic beetle recolor by Sprite Designer (crimson body, amber pincers).
-
-Files modified (19 source + 7 sprite + 1 encounter):
-- include/constants/species.h, pokedex.h
-- src/data/pokemon/species_info.h, pokedex_text.h, pokedex_entries.h, pokedex_orders.h
-- src/data/pokemon/level_up_learnsets.h, level_up_learnset_pointers.h, tmhm_learnsets.h
-- src/data/pokemon/egg_moves.h, evolution.h, cry_ids.h
-- include/graphics.h, src/data/graphics/pokemon.h, src/anim_mon_front_pics.c
-- src/data/pokemon_graphics/ (8 tables: front/back pic, palette, shiny, still, footprint, coords)
-- src/data/pokemon_graphics/front_pic_anims.h
-- src/pokemon_icon.c, src/pokemon.c
-- src/data/wild_encounters.json (Route 112 slot 8)
-- graphics/pokemon/pinsir_hoenn/ (7 sprite files)
-
----
-
-## C250: Gligar_Hoenn (Water/Rock) — First Cross-Gen Regional Form
+## C250-251: Gligar_Hoenn Line
 
 | Species | ID | Type | BST | Encounter |
 |---------|-----|------|-----|-----------|
 | Gligar_Hoenn | 432 | Water/Rock | 430 | Granite Cave B2F 5% Lv10-13 |
-
-Stats: 75/80/115/35/75/50. Abilities: Battle Armor / Water Absorb (C263). Growth: Medium Slow.
-Learnset: Harden, Water Gun, Sand Attack, Metal Claw, Rock Tomb, Bite, Screech, Rock Slide, Iron Defense, Slash, Aqua Tail, Ancient Power, Rock Blast.
-TMs: 25 (Water Pulse, Roar, Toxic, HP, Protect, Rain Dance, Frustration, Iron Tail, EQ, Return, Dig, Brick Break, Double Team, Sandstorm, Rock Tomb, Facade, Secret Power, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
-Cry: Mapped to base Gligar via cry_ids.h.
-Sprites: Custom teal-blue/stone-gray sea cave recolor by Sprite Designer v1.
-Evolution: Placeholder comment for Gliscor_Hoenn at Lv35 (C251).
-Discovery NPC: Hiker on B1F (x:28, y:19) — "clicking against the stone" hint.
-
-Files modified: 28 source + 7 sprite + 2 map + 1 JSON = 38 total.
-
----
-
-## C251: Gliscor_Hoenn (Water/Rock) — Cross-Gen Evolution of Gligar_Hoenn
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
 | Gliscor_Hoenn | 433 | Water/Rock | 510 | Evolution only (Gligar_Hoenn Lv35) |
 
-Stats: 75/95/130/45/75/90. Abilities: Battle Armor / Water Absorb (C263). Growth: Slow.
-Learnset: Poison Sting, Harden, Sand Attack, Water Pulse, Quick Attack, Screech, Rock Tomb, Crunch, Rock Slide, Swords Dance, Guillotine.
-TMs: 21 (Water Pulse, Toxic, HP, Hyper Beam, Protect, EQ, Return, Dig, Brick Break, Double Team, Rock Tomb, Aerial Ace, Facade, Rest, Attract + Cut/Surf/Strength/Rock Smash/Waterfall/Dive).
-Egg moves: Empty (inherits from Gligar_Hoenn line).
-Cry: Mapped to base Gligar via cry_ids.h.
-Sprites: Custom deep ocean teal + mineral grey recolor by Sprite Designer v1.
-Archie team swap: Replaces Tentacruel (Lv44) on Seafloor Cavern team with Gliscor_Hoenn (Surf/Rock Slide/Crunch/Swords Dance).
-Also fixed: Gligar_Hoenn egg_moves.h gap from C250.
-
-Files modified: 26 source + 7 sprite = 33 total.
-
 ---
 
-## C223: Species Foundation Complete
+## C261→C265: Early-Game Hoenn Forms — 5 Species Bulk Registration
 
-All 17 species → 19/19 via `complete_species_registration.cjs`. Key fixes: cry_ids.h (all 17), cry_tables.inc (11), egg_moves.h (6), pokemon_icon.c (5). Farigiraf sprites fixed (#134). Froslass gender-gated evo added (`EVO_LEVEL_FEMALE` constant + handler in pokemon.c, #133 partial).
-
-## C261: Early-Game Hoenn Forms — 5 Species Bulk Registration
-
-All 5 species registered via 26-file generator in one cycle. Evolution chains and encounters added.
+C261 attempted registration but species were never committed to species.h. C264 cleaned dangling references. **C265 re-registered all 5 successfully** via generate_species.cjs, restored encounter swaps and trainer integrations, verified build.
 
 | Species | ID | Type | BST | Encounter | Evolution |
 |---------|-----|------|-----|-----------|-----------|
@@ -150,94 +73,30 @@ All 5 species registered via 26-file generator in one cycle. Evolution chains an
 | Breloom_Hoenn | 437 | Poison/Ice | 460 | Evolution only | Final form |
 | Ludicolo_Hoenn | 438 | Electric/Grass | 480 | Evolution only | Final form |
 
-**Ludicolo_Hoenn** (new this cycle):
-Stats: 80/50/65/110/85/90. Abilities: Lightning Rod / Rain Dish. Growth: Medium Slow.
-Dex category: STORMDANCER. SpA 110 + Spe 90 fast special sweeper.
-TMs include Ice Beam (Dragon coverage), Hyper Beam, Thunderbolt, Thunder, Rain Dance, Giga Drain.
-Egg moves: Leech Seed, Razor Leaf, Synthesis, Spark.
-Sprites: Vanilla Ludicolo placeholders (Sprite Designer iteration planned).
+**Encounter integrations** (C265): Route 102 SPECIES_LOTAD → SPECIES_LOTAD_HOENN (slot 2). Petalburg Woods SPECIES_SHROOMISH → SPECIES_SHROOMISH_HOENN (slot 8).
+**Trainer integrations** (C265): sParty_Rick (Lotad_Hoenn), sParty_James1 (Shroomish_Hoenn), sParty_Haley1 (Lotad_Hoenn + Shroomish_Hoenn).
 
-**Build fix**: categoryName "Storm Dancer" (12 chars) exceeded u8[12] limit — shortened to "STORMDANCER" (11 chars).
-
-**IDs shifted** from C257/C259 values due to C260 cleanup + fresh re-registration order.
-
----
-
-## C252: v2.2 Consistency Pass — Species Registration Sweep
-
-Ran all 8 validators across 22 custom species. Fixed 5 files:
-
-| File | Gap Count | Species Fixed |
-|------|-----------|---------------|
-| cry_ids.h | 17 entries | All species Riolu→Farigiraf (6 custom cry IDs + 11 base-species mappings) |
-| egg_moves.h | 8 entries | Lucario, Weavile, Gabite, Garchomp, Arcanine_Hoenn, Vulpix_Hoenn, Deoxys_Hoenn, Gliscor_Hoenn |
-| pokemon_icon.c | 5+5 entries | Froslass, Mamoswine, Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf (icon + palette) |
-| pokedex_orders.h | 3×3 entries | Vulpix_Hoenn, Ninetales_Hoenn, Farigiraf (alphabetical + weight + height) |
-| cry_tables.inc | Alignment fix | Forward/reverse table mismatch: removed 2 misplaced pre-table entries, added 2 forward (Dusclops, Murkrow), added 2 reverse (Growlithe, Arcanine), removed 2 duplicate vanilla reverse entries. Both tables now 399 entries. |
-
-Post-fix: 6 species at 19/19, 16 at 18/19 (cry_tables.inc false positive — validator checks for regional name string but cry table uses base species labels). All other validators clean: trainers 0 errors, evolution PASS, E4 rematches PASS, flags verified, quest flags 24/24 OK.
+**Early-Game Hypothesis: PASSES (C265)** — Before Badge 1, player encounters Lotad_Hoenn (Route 102, 10%) and Shroomish_Hoenn (Petalburg Woods, 4%). 3 trainers also carry Hoenn forms pre-Roxanne.
 
 ---
 
 ## C263: Ability Identity Pass (#150) — 12 Species Reassigned
 
-Comprehensive ability audit across all 27 custom species. 12 species received new abilities from the Gen 3 pool. 15 kept current abilities. Goal: each form's ability tells a migration story, eliminate niche duplication, ensure stat-ability alignment.
-
-| Species | Old Abilities | New Abilities | Rationale |
-|---------|--------------|---------------|-----------|
-| Growlithe_Hoenn | Swift Swim / Swift Swim | Swift Swim / **Water Veil** | Bug fix (duplicate) + burn-immune sea pup |
-| Vulpix_Hoenn | Inner Focus / Cute Charm | **Cute Charm** / **Serene Grace** | First non-mythical Serene Grace in Gen 3 |
-| Ninetales_Hoenn | Inner Focus / Flash Fire | **Cute Charm** / **Serene Grace** | Flash Fire on Ice-type was thematically wrong |
-| Froslass | Inner Focus / Pressure | **Levitate** / Pressure | Floating ice ghost, standard for spectral mons |
-| Farigiraf | Inner Focus / Synchronize | **Own Tempo** / Synchronize | Dual-brain = confusion immunity |
-| Corsola_Hoenn | Rock Head / None | Rock Head / **Pressure** | Ghost identity: PP drain + filled empty slot |
-| Bagon_Hoenn | Rock Head / Sturdy | Rock Head / **Shed Skin** | Sturdy useless in Gen 3; stone dragon sheds status |
-| Gligar_Hoenn | Battle Armor / Rock Head | Battle Armor / **Water Absorb** | Sea scorpion drinks water; unique vs Kabutops |
-| Gliscor_Hoenn | Battle Armor / Rock Head | Battle Armor / **Water Absorb** | Evo line consistency |
-| Gible | Sand Veil / None | Sand Veil / **Rough Skin** | Canonical hidden ability; contact punishment |
-| Gabite | Sand Veil / None | Sand Veil / **Rough Skin** | Evo line consistency |
-| Garchomp | Sand Veil / None | Sand Veil / **Rough Skin** | Only Dragon with contact-damage in Gen 3 |
-
-Inner Focus reduced from 7 users → 3 (Riolu, Lucario, Weavile — martial discipline family).
-File modified: `pokeemerald/src/data/pokemon/species_info.h` (12 `.abilities` lines).
+12 species received new abilities. Key changes: Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically.
 
 ---
 
 ## C264: v2.3 Consistency Pass — Three-Layer Audit
 
-### Critical Fix: C261 Species Never Registered
-
-Lotad_Hoenn (434), Shroomish_Hoenn (435), Lombre_Hoenn (436), Breloom_Hoenn (437), Ludicolo_Hoenn (438) were **never added to species.h, species_info.h, or evolution.h**. Only partial entries existed (species_names.h, pokedex_entries.h, wild_encounters.json, trainer_parties.h) causing build failure. C264 removed all dangling references — these 5 species must be re-registered in a future feature cycle.
-
-**Status after C264**: 22 actually-registered custom species (not 27). EGG=434, NUM_SPECIES=434.
-
-### Fixes Applied
-1. wild_encounters.json: SPECIES_LOTAD_HOENN → SPECIES_LOTAD, SPECIES_SHROOMISH_HOENN → SPECIES_SHROOMISH
-2. trainer_parties.h: Same replacements + resolved 3 Farigiraf TODOs (SPECIES_GIRAFARIG → SPECIES_FARIGIRAF on Tate & Liza teams)
-3. species_names.h: Removed 5 undefined Hoenn form entries
-4. pokedex_entries.h: Removed 5 undefined Hoenn form entries
-
-### Ability Audit: All 22 species PASS
-All 12 C263 reassignments verified correct in species_info.h. 10 kept species spot-checked — no ABILITY_NONE duplicates or mismatches.
-
-### Evolution Audit: All 22 species PASS
-All evolution entries present and correct. Minor discrepancies (memory vs code, not errors):
-- Froslass: Code uses EVO_ITEM_FEMALE + Dawn Stone (memory said EVO_LEVEL_FEMALE)
-- Mamoswine: Code uses Lv45 (memory said Lv44)
-
-### Three-Layer Gap Summary
+### Remaining Gaps (post-C265)
 
 | Gap | Species | Detail |
 |-----|---------|--------|
 | No trainer | Froslass | Memory claims "Glacia all tiers" but NOT on any Glacia team |
 | No trainer | Gligar_Hoenn | Wild encounter only, no trainer carries it |
-| No NPC | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | No script dialogue mentioning these by name |
+| No NPC | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | No script dialogue |
 | Encounter discrepancy | Weavile | Memory says Shoal Cave Ice; actual: Mt Pyre Summit |
-| Encounter discrepancy | Corsola_Hoenn | Memory says quest-only; actual: also in Mt Pyre Exterior wild |
 | Missing encounter | Garchomp | Memory says Victory Road B2F 2%; not in encounters file |
 
-### Early-Game Hypothesis: FAILS
-Before Badge 3, player sees only 1 regional form (Gligar_Hoenn in Granite Cave B2F) and 0 trainers with regional forms. C261 species were supposed to fix this but remain unregistered.
-
-### Type Distribution (22 species)
-Ice 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Fairy 3, Fighting 2, Dark 2, Fire 2, Steel 1, Flying 1, Normal 1, Psychic 1, Bug 1, Grass 1, Poison 1. Rock at 4/22 (18%) — no longer over-concentrated.
+### Type Distribution (27 species)
+Ice 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Fairy 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Steel 1, Flying 1, Normal 1, Psychic 1, Bug 1. Rock at 4/27 (15%).
