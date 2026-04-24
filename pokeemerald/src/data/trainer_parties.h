@@ -3979,9 +3979,9 @@ static const struct TrainerMonItemCustomMoves sParty_Drake[] = {
     {
     .iv = 250,
     .lvl = 51,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_FLAMETHROWER}
+    .species = SPECIES_BAGON_HOENN,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
     },
     {
     .iv = 250,
@@ -4048,9 +4048,9 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly1[] = {
     {
     .iv = 100,
     .lvl = 16,
-    .species = SPECIES_HITMONLEE,
+    .species = SPECIES_GLIGAR_HOENN,
     .heldItem = ITEM_ORAN_BERRY,
-    .moves = {MOVE_HI_JUMP_KICK, MOVE_DOUBLE_KICK, MOVE_FOCUS_ENERGY, MOVE_BRICK_BREAK}
+    .moves = {MOVE_ROCK_TOMB, MOVE_WATER_GUN, MOVE_HARDEN, MOVE_SLASH}
     },
     {
     .iv = 200,
@@ -4120,9 +4120,9 @@ static const struct TrainerMonItemCustomMoves sParty_Norman1[] = {
     {
     .iv = 200,
     .lvl = 27,
-    .species = SPECIES_KANGASKHAN,
-    .heldItem = ITEM_SILK_SCARF,
-    .moves = {MOVE_FAKE_OUT, MOVE_RETURN, MOVE_BRICK_BREAK, MOVE_BITE}
+    .species = SPECIES_FARIGIRAF,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_RETURN, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 220,
@@ -5302,9 +5302,9 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch1[] = {
     {
     .iv = 255,
     .lvl = 64,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
+    .species = SPECIES_BAGON_HOENN,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
     },
     {
     .iv = 255,
@@ -5529,9 +5529,9 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch2[] = {
     {
     .iv = 255,
     .lvl = 74,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
+    .species = SPECIES_BAGON_HOENN,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
     },
     {
     .iv = 255,
@@ -5756,9 +5756,9 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch3[] = {
     {
     .iv = 255,
     .lvl = 83,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_HEAL_BELL}
+    .species = SPECIES_BAGON_HOENN,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
     },
     {
     .iv = 255,
@@ -5976,9 +5976,9 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     {
     .iv = 255,
     .lvl = 90,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_HEAL_BELL}
+    .species = SPECIES_BAGON_HOENN,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_EARTHQUAKE}
     },
     {
     .iv = 255,
@@ -13039,9 +13039,9 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly2[] = {
     {
     .iv = 100,
     .lvl = 40,
-    .species = SPECIES_MACHOKE,
-    .heldItem = ITEM_ORAN_BERRY,
-    .moves = {MOVE_CROSS_CHOP, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_BULK_UP}
+    .species = SPECIES_GLIGAR_HOENN,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_WATERFALL, MOVE_SLASH, MOVE_IRON_DEFENSE}
     },
     {
     .iv = 100,
@@ -13070,9 +13070,9 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly3[] = {
     {
     .iv = 100,
     .lvl = 50,
-    .species = SPECIES_MACHAMP,
-    .heldItem = ITEM_BLACK_BELT,
-    .moves = {MOVE_CROSS_CHOP, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_FIRE_PUNCH}
+    .species = SPECIES_GLIGAR_HOENN,
+    .heldItem = ITEM_HARD_STONE,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_WATERFALL, MOVE_SWORDS_DANCE, MOVE_SLASH}
     },
     {
     .iv = 100,
@@ -13108,9 +13108,9 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly4[] = {
     {
     .iv = 150,
     .lvl = 60,
-    .species = SPECIES_MACHAMP,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_CROSS_CHOP, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BULK_UP}
+    .species = SPECIES_GLISCOR_HOENN,
+    .heldItem = ITEM_SHELL_BELL,
+    .moves = {MOVE_STONE_EDGE, MOVE_WATERFALL, MOVE_SWORDS_DANCE, MOVE_EARTHQUAKE}
     },
     {
     .iv = 150,
@@ -13146,9 +13146,9 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly5[] = {
     {
     .iv = 200,
     .lvl = 70,
-    .species = SPECIES_MACHAMP,
+    .species = SPECIES_GLISCOR_HOENN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_CROSS_CHOP, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_FIRE_PUNCH}
+    .moves = {MOVE_STONE_EDGE, MOVE_WATERFALL, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE}
     },
     {
     .iv = 200,
@@ -13478,18 +13478,18 @@ static const struct TrainerMonItemCustomMoves sParty_Flannery5[] = {
 };
 
 // ===========================================
-// NORMAN REMATCH TIERS (Cycle 102 redesign)
+// NORMAN REMATCH TIERS (Cycle 102 redesign, C268 migration update)
 // Normal-type specialist — escalating setup sweepers
-// Migration species: Tauros (T3+), Ursaring (T4+)
+// Migration species: Farigiraf (all tiers), Tauros (T3+), Ursaring (T4+)
 // ===========================================
 
 static const struct TrainerMonItemCustomMoves sParty_Norman2[] = {
     {
     .iv = 100,
     .lvl = 38,
-    .species = SPECIES_VIGOROTH,
+    .species = SPECIES_FARIGIRAF,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_SLASH, MOVE_BRICK_BREAK, MOVE_SHADOW_BALL, MOVE_BULK_UP}
+    .moves = {MOVE_RETURN, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 100,
@@ -13518,9 +13518,9 @@ static const struct TrainerMonItemCustomMoves sParty_Norman3[] = {
     {
     .iv = 100,
     .lvl = 48,
-    .species = SPECIES_VIGOROTH,
-    .heldItem = ITEM_BLACK_BELT,
-    .moves = {MOVE_RETURN, MOVE_BRICK_BREAK, MOVE_SHADOW_BALL, MOVE_BULK_UP}
+    .species = SPECIES_FARIGIRAF,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_RETURN, MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
     },
     {
     .iv = 100,
@@ -13563,9 +13563,9 @@ static const struct TrainerMonItemCustomMoves sParty_Norman4[] = {
     {
     .iv = 150,
     .lvl = 59,
-    .species = SPECIES_LINOONE,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_BELLY_DRUM, MOVE_RETURN, MOVE_SHADOW_BALL, MOVE_IRON_TAIL}
+    .species = SPECIES_FARIGIRAF,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
     },
     {
     .iv = 150,
@@ -13608,9 +13608,9 @@ static const struct TrainerMonItemCustomMoves sParty_Norman5[] = {
     {
     .iv = 200,
     .lvl = 69,
-    .species = SPECIES_LINOONE,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_BELLY_DRUM, MOVE_RETURN, MOVE_SHADOW_BALL, MOVE_IRON_TAIL}
+    .species = SPECIES_FARIGIRAF,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
     },
     {
     .iv = 200,

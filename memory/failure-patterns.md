@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-267, 22 occurrences) — REGRESSED C267
+## Research Phase Consuming Implementation Budget (C110-268, 23 occurrences) — RECOVERING
 
-**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. **C267 REGRESSION: first edit at action 154/241 (64% mark)**. Root cause: (a) `/w/agentoak/` path prefix used 30+ times instead of `/__w/agentoak/`; (b) Agent subagent used 6 times; (c) Same files read 3+ times unnecessarily.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent — it was removed for a reason. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h). (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
+**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. C267 regressed to 154. **C268 RECOVERED: first edit at action 26/56 (46% mark)**. C268 had zero path errors and zero re-reads, but 25 research actions is still above the 15-action target — partly justified by needing to verify species_info entries for 5+ regional forms across multiple files.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For trainer party edits: grep party names + species constants in parallel, read only the specific line ranges needed, then edit. (5) For species work: run generator FIRST. (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
