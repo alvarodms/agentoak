@@ -74,6 +74,7 @@ Four pillars:
 | C263 | feature | **DONE** — Ability identity pass (#150): 12 species reassigned in species_info.h. Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added. | C262 |
 | C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
 | C265 | feature | **DONE** — Re-registered 5 early-game species via generator, restored encounter/trainer integrations, build verified | C264 |
+| C266 | refactor | **DONE** — Shipped `generate_trainer.cjs`: JSON config → synchronized trainer data across 3 files. Create + modify modes, dry-run, auto party-type detection. 6 deferrals (C258-C265) resolved. | — |
 
 ### Issue Triage (v2.3)
 
@@ -90,7 +91,8 @@ Four pillars:
 | #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
 
 ## Engineering Prerequisites
-- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`. C261 claimed 5 runs but species were never committed.
+- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`.
+- Trainer generator (C258→C266) — `scripts/generate_trainer.cjs`, JSON config → synchronized trainer_parties.h/trainers.h/opponents.h. Create + modify modes, dry-run, auto party-type detection. Configs in `trainer_configs/`.
 - Trainer validator promoted to check_all (C254)
 
 ## v2.3 Audit Gaps (C264) — Priority Queue for C265+

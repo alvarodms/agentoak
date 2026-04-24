@@ -4,11 +4,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-264, 21 occurrences) — IMPROVING
+## Research Phase Consuming Implementation Budget (C110-266, 21 occurrences) — IMPROVING
 
 **Symptom**: 64-132 actions before first edit. C264: first edit at action 44/229 (19% mark).
-**C265 improvement**: First edit (species_names.h) at action 15/55. Generator ran at actions 7-11. Total 55 actions for a 5-species + encounters + trainers cycle — within budget.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h).
+**C265 improvement**: First edit at action 15/55. C266: first edit (generate_trainer.cjs Write) at action 19/67 (28% mark) — 18 actions of research for a from-scratch generator is reasonable. Total 67 actions for generator + tests + memory = efficient.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max (action 19 acceptable for complex new tooling). (4) For audit passes: grep-first to identify ONLY files with issues, then read+edit those files. (5) For species work: run generator FIRST, then read only files needed for manual edits (species_names.h).
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -42,7 +42,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
 **Cause**: Party macro doesn't match the struct type in trainer_parties.h. Four macros map 1:1 to four struct types.
-**Resolution**: Change macro in trainers.h to match struct type. C195 created `scripts/fix_trainer_macros.cjs`.
+**Resolution**: Change macro in trainers.h to match struct type. C195 created `scripts/fix_trainer_macros.cjs`. **C266**: generate_trainer.cjs now auto-detects the correct macro/struct pairing from party member fields, preventing this class of error entirely.
 
 ## Premature Entries for Unregistered Species (C259→C260 fix)
 

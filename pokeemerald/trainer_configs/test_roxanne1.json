@@ -1,0 +1,35 @@
+{
+  "mode": "create",
+  "trainerId": "TRAINER_ROXANNE_1",
+  "partyName": "sParty_Roxanne1",
+  "trainerClass": "TRAINER_CLASS_LEADER",
+  "encounterMusic": "F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_FEMALE",
+  "trainerPic": "TRAINER_PIC_LEADER_ROXANNE",
+  "trainerName": "ROXANNE",
+  "items": ["ITEM_POTION", "ITEM_POTION", "ITEM_NONE", "ITEM_NONE"],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE", "AI_SCRIPT_TRY_TO_FAINT", "AI_SCRIPT_CHECK_VIABILITY"],
+  "party": [
+    {
+      "iv": 100,
+      "lvl": 12,
+      "species": "SPECIES_GEODUDE",
+      "heldItem": "ITEM_NONE",
+      "moves": ["MOVE_ROCK_THROW", "MOVE_MAGNITUDE", "MOVE_DEFENSE_CURL", "MOVE_ROLLOUT"]
+    },
+    {
+      "iv": 100,
+      "lvl": 13,
+      "species": "SPECIES_BAGON_HOENN",
+      "heldItem": "ITEM_ORAN_BERRY",
+      "moves": ["MOVE_ROCK_TOMB", "MOVE_HEADBUTT", "MOVE_LEER", "MOVE_HARDEN"]
+    },
+    {
+      "iv": 200,
+      "lvl": 15,
+      "species": "SPECIES_NOSEPASS",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": ["MOVE_ROCK_TOMB", "MOVE_THUNDER_WAVE", "MOVE_BLOCK", "MOVE_HARDEN"]
+    }
+  ]
+}

@@ -146,6 +146,16 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Legacy pipeline**: `scripts/add_regional_form.cjs` — 27-file scope but **WARNING (C215-216)**: catastrophically broken. Superseded by generate_species.cjs for the 19-file scope.
 
+## Trainer Generator (C266)
+
+**Tool**: `scripts/generate_trainer.cjs` — JSON config → synchronized trainer_parties.h/trainers.h/opponents.h. Usage: `node scripts/generate_trainer.cjs <config.json> [--dry-run]`. Config files in `trainer_configs/`.
+
+**Two modes**: `create` (new trainer: inserts define before TRAINERS_COUNT, appends party, inserts gTrainers[] entry) and `modify` (existing trainer: replaces party block, updates .party macro if type changed).
+
+**Party type auto-detection**: Scans party members for `heldItem`/`moves` fields → selects correct struct/macro from 4 types (NoItemDefaultMoves, NoItemCustomMoves, ItemDefaultMoves, ItemCustomMoves). Missing fields auto-filled with ITEM_NONE/MOVE_NONE to prevent check_trainers.sh Check 5 failures.
+
+**Idempotency**: In create mode, exits cleanly if trainerId already exists in opponents.h. **Atomic writes**: all file manipulations computed first; only written if all succeed.
+
 **Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **+1 manual file**: species_names.h (not covered by generator). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
 ---
