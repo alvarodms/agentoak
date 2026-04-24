@@ -148,6 +148,16 @@ Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger,
 | `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Relief register — player touches cool stone, warmth "has gone somewhere." |
 | `data/maps/Route131/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Unease register — dead still water, something moved underneath, "I didn't look down." |
 
+## Gym Leader Regional Form Dialogue — Cycle 269
+
+Brawly, Norman, and Drake intro+defeat rewritten to reference their C268 regional form teammates.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/DewfordTown_Gym/scripts.inc` | **269** | Brawly intro+defeat rewritten: Gligar_Hoenn from tidal pools in Granite Cave, "stone and sea" sparring partner. Fixes broken C244 Hitmonlee reference (C268 replaced Hitmonlee with Gligar_Hoenn). |
+| `data/maps/PetalburgCity_Gym/scripts.inc` | **269** | Norman intro+defeat rewritten: Farigiraf taught him NORMAL isn't simple, Psychic foresight — "both sensed your strength." Extends C245 father theme with migration species bond. |
+| `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | **269** | Drake intro+defeat rewritten: Bagon_Hoenn — young colony members changed by the migration, "harder scales, stone in their blood." Replaces C204 generic Bagon colony reference with specific Bagon_Hoenn transformation narrative. |
+
 ## Migration Acknowledgment NPCs — Cycle 267
 
 5 NPCs added to acknowledge previously unmentioned species. Closes v2.3 audit gap #4.

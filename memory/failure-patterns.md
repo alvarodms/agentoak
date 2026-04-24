@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-268, 23 occurrences) — RECOVERING
+## Research Phase Consuming Implementation Budget (C110-269, 23 occurrences) — RESOLVED
 
-**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. C267 regressed to 154. **C268 RECOVERED: first edit at action 26/56 (46% mark)**. C268 had zero path errors and zero re-reads, but 25 research actions is still above the 15-action target — partly justified by needing to verify species_info entries for 5+ regional forms across multiple files.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For trainer party edits: grep party names + species constants in parallel, read only the specific line ranges needed, then edit. (5) For species work: run generator FIRST. (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
+**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. C267 regressed to 154. C268 recovered: first edit at action 26/56. **C269 RESOLVED: first edit at action 9/27 (33% mark), zero errors, zero re-reads, zero path mistakes.** Dialogue-focused cycles with clear targets can hit action 9 consistently.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For dialogue edits: read memory + target scripts in parallel, then edit immediately. (5) For species work: run generator FIRST. (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

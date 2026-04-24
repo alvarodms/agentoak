@@ -380,20 +380,22 @@ DewfordTown_Gym_Text_CristianPostBattle:
 	.string "Go after that BADGE!$"
 
 DewfordTown_Gym_Text_BrawlyIntro:
-	.string "A HITMONLEE washed up on DEWFORD's\n"
-	.string "shore last month. Fierce little\l"
-	.string "fighter -- never seen one in\l"
-	.string "HOENN before.\p"
-	.string "We spar on the beach every\n"
-	.string "morning. It keeps up!\l"
-	.string "Show me YOUR fighting spirit!$"
+	.string "Heh! You made it through GRANITE\n"
+	.string "CAVE? Not bad!\p"
+	.string "I train down there every day.\n"
+	.string "Recently the tidal pools gave me\l"
+	.string "a surprise -- a GLIGAR.\p"
+	.string "Hard shell, quick claws, born from\n"
+	.string "stone and sea. My kind of\l"
+	.string "sparring partner!\p"
+	.string "Let's see if you can keep up!$"
 
 DewfordTown_Gym_Text_BrawlyDefeat:
-	.string "Whoah, wow! You made a much bigger\n"
-	.string "splash than I expected!\p"
-	.string "You swamped me!\p"
-	.string "Okay, you've got me.\n"
-	.string "Take this GYM BADGE!$"
+	.string "…Whoa.\p"
+	.string "You and your POKéMON fight like\n"
+	.string "the tide -- relentless.\p"
+	.string "GLIGAR and I have more training\n"
+	.string "to do in that cave.$"
 
 DewfordTown_Gym_Text_ReceivedKnuckleBadge:
 	.string "{PLAYER} received the KNUCKLE BADGE\n"

@@ -1253,19 +1253,25 @@ PetalburgCity_Gym_Text_YouHaveGottenStronger:
 	.string "that you've earned.$"
 
 PetalburgCity_Gym_Text_NormanIntro:
-	.string "{PLAYER}.\p"
+	.string "…{PLAYER}.\p"
 	.string "The world changed while you were\n"
-	.string "out there.\p"
-	.string "But so did you. I can see it.\p"
-	.string "…Show me.$"
+	.string "out there. And so did I.\p"
+	.string "FARIGIRAF taught me that NORMAL\n"
+	.string "isn't as simple as I thought.\n"
+	.string "Its mind reaches somewhere beyond.\p"
+	.string "If my own team can still\n"
+	.string "surprise me, this battle\l"
+	.string "matters.\p"
+	.string "Come. As your father -- and\n"
+	.string "as a GYM LEADER.$"
 
 PetalburgCity_Gym_Text_NormanDefeat:
 	.string "…\p"
-	.string "I… I can't…\p"
-	.string "I can't believe it. {PLAYER}…\p"
-	.string "I lost to {PLAYER}?\p"
-	.string "But, rules are rules!\n"
-	.string "Here, take this.$"
+	.string "I'm proud of you, {PLAYER}.\p"
+	.string "FARIGIRAF and I both sensed your\n"
+	.string "strength before the battle began.\n"
+	.string "Knowing wasn't enough to stop it.\p"
+	.string "You've earned this.$"
 
 PetalburgCity_Gym_Text_ReceivedBalanceBadge:
 	.string "{PLAYER} received the BALANCE BADGE\n"

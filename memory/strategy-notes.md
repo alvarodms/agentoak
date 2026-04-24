@@ -40,7 +40,7 @@ The migration changed the wild. v2.3 proved the player notices. Now Hoenn's inst
 |-------|------|-----------|--------|
 | C268 | feature | Gym leader migration pass (Brawly/Norman/Drake + Roxanne eval) | **DONE** |
 | C269+ | feature | Wattson integration (requires Lotad_Hoenn line full registration) | Pending |
-| C269+ | feature | Gym leader dialogue referencing their regional form teammates | Pending |
+| C269 | feature | Gym leader dialogue referencing their regional form teammates | **DONE** |
 | C270+ | feature | Juan/Wallace/Wally team tuning | Pending |
 | C271+ | feature | Rival arc (#156) | Pending |
 
