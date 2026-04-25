@@ -23,6 +23,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Capacity**: TRAINERS_COUNT = 885 (at cap). 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
 
+**Rival parties (C273)**: Brendan and May have MIRRORED party arrays — identical species, moves, items, levels per encounter. Only the starter-dependent slot differs (3 variants each: Mudkip/Treecko/Torchic). 4 encounters: Route 103, Route 110, Route 119, Lilycove = 24 total party arrays. Editing shared species slots matches 2 locations (Brendan+May); use `replace_all: true`.
+
 ---
 
 ## Dialogue Editing System (Cycles 24-26)

@@ -6,7 +6,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Research Phase Consuming Implementation Budget (C110-272, 25 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C272: first edit at action 20/56 (36%) — acceptable for dual-character pass. Still used `cd pokeemerald` in action 47 (build).
+**Symptom**: 64-132 actions before first edit. C272: first edit at action 20/56 (36%). C273: first edit at action 47/89 (53%) — excessive for a party+dialogue cycle; most research was navigating mirrored rival arrays.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)

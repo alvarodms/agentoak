@@ -416,11 +416,17 @@ LilycoveCity_EventScript_DontKnowAboutBerryBlender::
 	return
 
 LilycoveCity_Text_MayShoppingLetsBattle:
-	.string "Hey {PLAYER}{KUN}! This whole\n"
-	.string "journey has been shaped by\l"
-	.string "the migration.\p"
-	.string "Want to see how far we've\n"
-	.string "both come?$"
+	.string "MAY: {PLAYER}{KUN}, perfect!\n"
+	.string "I've filled half a notebook\l"
+	.string "already.\p"
+	.string "Electric LOTAD, frozen\n"
+	.string "SHROOMISH, ghost STANTLER...\l"
+	.string "and a fire PINSIR from near\l"
+	.string "MT. CHIMNEY!\p"
+	.string "Dad's going to lose his mind\n"
+	.string "when he reads my notes.\p"
+	.string "But first - let me test my\n"
+	.string "team against yours!$"
 
 LilycoveCity_Text_MayNotRaisingPokemon:
 	.string "MAY: Oh, why? {PLAYER}{KUN}, haven't you\n"
@@ -433,25 +439,26 @@ LilycoveCity_Text_MayBattleMe:
 	.string "check out your POKéMON!$"
 
 LilycoveCity_Text_MayWontBeBeaten:
-	.string "The migration changed everything\n"
-	.string "we know about this region.\l"
+	.string "MAY: The migration changed\n"
+	.string "everything we know about\l"
+	.string "this region.\l"
 	.string "But it won't change who wins!$"
 
 LilycoveCity_Text_MayDefeat:
-	.string "You've truly mastered this new\n"
-	.string "Hoenn, {PLAYER}{KUN}...\l"
-	.string "Your migrant has become\n"
-	.string "something extraordinary.$"
+	.string "Wow... your team's incredible.\n"
+	.string "The migration made both of us\l"
+	.string "stronger, didn't it?\p"
+	.string "I think Dad sent us out because\n"
+	.string "he KNEW the region was\l"
+	.string "changing.$"
 
 LilycoveCity_Text_MayGoingBackToLittleroot:
-	.string "MAY: I'm heading back\n"
-	.string "to LITTLEROOT.\p"
-	.string "BIRCH's research on the\n"
-	.string "migration event is nearly\l"
-	.string "complete. I should see it.\p"
-	.string "This changed HOENN needs\n"
-	.string "trainers like you, {PLAYER}{KUN}.\p"
-	.string "And rivals like me, too!$"
+	.string "MAY: Before I go - has it\n"
+	.string "hit you?\p"
+	.string "We left LITTLEROOT with normal\n"
+	.string "starters. Now look at us.\l"
+	.string "HOENN changed, and so did we.\p"
+	.string "...Dad would be so proud.$"
 
 LilycoveCity_Text_MayYouGoingToCollectBadges:
 	.string "{PLAYER}{KUN}, what are you going to do?\p"
@@ -484,10 +491,16 @@ LilycoveCity_Text_MayYouGoingToBattleFrontier:
 	.string "before you! See you!$"
 
 LilycoveCity_Text_BrendanShoppingLetsBattle:
-	.string "Hey {PLAYER}! This whole journey\n"
-	.string "has been shaped by the migration.\l"
-	.string "Want to see how far we've\n"
-	.string "both come?$"
+	.string "BRENDAN: {PLAYER}! Good, I need\n"
+	.string "a strong battle right now.\p"
+	.string "Every route, something new.\n"
+	.string "Electric LOTAD, ghost STANTLER,\l"
+	.string "fire PINSIR...\p"
+	.string "My team's half regional forms\n"
+	.string "now. They push me harder than\l"
+	.string "anything in Dad's lab.\p"
+	.string "Show me what your journey\n"
+	.string "taught you. No holding back!$"
 
 LilycoveCity_Text_BrendanNoConfidence:
 	.string "BRENDAN: Oh, what's the matter?\n"
@@ -498,25 +511,25 @@ LilycoveCity_Text_BrendanBattleMe:
 	.string "been raising POKéMON better?$"
 
 LilycoveCity_Text_BrendanWontBeBeaten:
-	.string "The migration changed everything\n"
-	.string "we know about this region.\l"
+	.string "BRENDAN: The migration changed\n"
+	.string "everything we know about\l"
+	.string "this region.\l"
 	.string "But it won't change who wins!$"
 
 LilycoveCity_Text_BrendanDefeat:
-	.string "You've truly mastered this new\n"
-	.string "Hoenn, {PLAYER}...\l"
-	.string "Your migrant has become\n"
-	.string "something extraordinary.$"
+	.string "Your team... you found things\n"
+	.string "I didn't even know existed.\p"
+	.string "Dad was right to send us out.\n"
+	.string "HOENN isn't what the textbooks\l"
+	.string "say anymore.$"
 
 LilycoveCity_Text_BrendanGoingBackToLittleroot:
-	.string "BRENDAN: I'm heading back\n"
-	.string "to LITTLEROOT.\p"
-	.string "BIRCH's research on the\n"
-	.string "migration event is nearly\l"
-	.string "complete. I should see it.\p"
-	.string "This changed HOENN needs\n"
-	.string "trainers like you, {PLAYER}.\p"
-	.string "And rivals like me, too.$"
+	.string "BRENDAN: I used to think\n"
+	.string "training was about type\l"
+	.string "matchups.\p"
+	.string "But these changed POKéMON make\n"
+	.string "you think differently. Adapt.\l"
+	.string "Maybe that's the real lesson.$"
 
 LilycoveCity_Text_BrendanYouGoingToCollectBadges:
 	.string "{PLAYER}, what are you going to do?\p"

@@ -78,6 +78,13 @@ Post-Champion dialogue: Mom, Rival, Norman, and Nurse Joy notice the player's tr
 | `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **235**, **238** | MODIFIED: Nurse gains one-time witness message gated by FLAG_CHANGED_TRAINER_NURSE (0x2A0) + FLAG_SYS_GAME_CLEAR. C238: Removed stray `release` between witness and heal (lock gap fix). |
 | `include/constants/flags.h` | **235** | FLAG_CHANGED_TRAINER_NURSE at 0x2A0. |
 
+## Rival Migration Arc Dialogue — Cycle 273
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/Route119/scripts.inc` | **273** | Route 119 May+Brendan intro/defeat/post-battle rewritten: discovery moment. May: "LOTAD that spark, SHROOMISH that frost over... ghost STANTLER." Brendan: "ROUTE 102's LOTAD crackle with static... STANTLER phases through tall grass." Both name specific regional forms + routes. |
+| `data/maps/LilycoveCity/scripts.inc` | **273** | Lilycove May+Brendan intro/defeat/post-battle rewritten: full embrace. May lists 4 changed species, "half a notebook." Brendan: "My team's half regional forms now." Both reflect on personal growth through migration. May's coda: "We left LITTLEROOT with normal starters. Now look at us." |
+
 ## Quest 6: The Resonance (C233) + Resonance Residue (C236)
 
 Deoxys Quest II — Three-location postgame investigation, then environmental follow-through.

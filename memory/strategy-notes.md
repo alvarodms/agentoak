@@ -43,7 +43,8 @@ The migration changed the wild. v2.3 proved the player notices. Now Hoenn's inst
 | C270 | feature | Wally VR_2-5 redesign + early-game species_info fix + VR dialogue | **DONE** |
 | C271 | feature | Wattson integration: Lotad_Hoenn line on all 5 tiers + gym dialogue rewrite + learnset/TM tables | **DONE** |
 | C272 | feature | Juan/Wallace differentiation: Corsola_Hoenn for Juan, Ludicolo_Hoenn+Arcanine_Hoenn+Ninetales_Hoenn for Wallace, full dialogue rewrite | **DONE** |
-| C273+ | feature | Rival arc (#156) | Pending |
+| C273 | feature | Rival arc: Brendan/May Route 110 + Lilycove teams (Lotad_Hoenn→Lombre_Hoenn+Stantler_Hoenn+Pinsir_Hoenn), Route 119 + Lilycove dialogue rewrite | **DONE** |
+| C274+ | feature | Route 103/110 dialogue polish, Wally Mauville refinement | Pending |
 
 ---
 
