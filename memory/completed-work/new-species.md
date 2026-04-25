@@ -78,6 +78,8 @@ C261 attempted registration but species were never committed to species.h. C264 
 
 **Early-Game Hypothesis: PASSES (C265)** — Before Badge 1, player encounters Lotad_Hoenn (Route 102, 10%) and Shroomish_Hoenn (Petalburg Woods, 4%). 3 trainers also carry Hoenn forms pre-Roxanne.
 
+**C270: species_info gap fix** — C265 registered constants, names, encounters, and trainer references but the species generator's idempotency check (skips if constant exists in species.h) meant species_info.h entries were never created. All 5 species had broken data at runtime. C270 manually added all 5 species_info entries. Wattson integration now unblocked.
+
 ---
 
 ## C263: Ability Identity Pass (#150) — 12 Species Reassigned

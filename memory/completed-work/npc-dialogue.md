@@ -158,6 +158,14 @@ Brawly, Norman, and Drake intro+defeat rewritten to reference their C268 regiona
 | `data/maps/PetalburgCity_Gym/scripts.inc` | **269** | Norman intro+defeat rewritten: Farigiraf taught him NORMAL isn't simple, Psychic foresight — "both sensed your strength." Extends C245 father theme with migration species bond. |
 | `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | **269** | Drake intro+defeat rewritten: Bagon_Hoenn — young colony members changed by the migration, "harder scales, stone in their blood." Replaces C204 generic Bagon colony reference with specific Bagon_Hoenn transformation narrative. |
 
+## Wally Victory Road Migration Dialogue — Cycle 270
+
+Wally's VR dialogue rewritten to reference finding Shroomish_Hoenn in Petalburg Woods — the first rival whose team narrative connects to a specific migration encounter location.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/VictoryRoad_1F/scripts.inc` | **270** | VR_1 pre-battle: Petalburg Woods frost on warm ground, found Shroomish that didn't run. VR_1 defeat: "Every one of them found me." VR_1 post-battle: PETALBURG WOODS/frost/SHROOMISH "showed me who I could be." VR_2+ intro: shortened, confident. VR_2+ defeat: "BRELOOM and I aren't giving up." VR_2+ post: POKéMON LEAGUE ambition. Rewrites C246 generic migration text into specific Shroomish_Hoenn/Petalburg Woods narrative. |
+
 ## Migration Acknowledgment NPCs — Cycle 267
 
 5 NPCs added to acknowledge previously unmentioned species. Closes v2.3 audit gap #4.

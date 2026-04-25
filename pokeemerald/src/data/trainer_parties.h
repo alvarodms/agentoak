@@ -10882,20 +10882,20 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR2[] = {
     {
     .iv = 150,
     .lvl = 46,
-    .species = SPECIES_ESPEON,
-    .moves = {MOVE_PSYCHIC, MOVE_MORNING_SUN, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
+    .species = SPECIES_ALTARIA,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_FLAMETHROWER}
     },
     {
     .iv = 150,
     .lvl = 46,
     .species = SPECIES_STARMIE,
-    .moves = {MOVE_SURF, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .moves = {MOVE_SURF, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_ICE_BEAM}
     },
     {
     .iv = 150,
-    .lvl = 47,
-    .species = SPECIES_ALAKAZAM,
-    .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_SHADOW_BALL, MOVE_RECOVER}
+    .lvl = 46,
+    .species = SPECIES_BRELOOM_HOENN,
+    .moves = {MOVE_POISON_JAB, MOVE_ICE_PUNCH, MOVE_ICE_SHARD, MOVE_BRICK_BREAK}
     },
     {
     .iv = 150,
@@ -10907,7 +10907,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR2[] = {
     .iv = 250,
     .lvl = 48,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_PSYCHIC, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
     }
 };
 
@@ -10915,20 +10915,20 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR3[] = {
     {
     .iv = 150,
     .lvl = 49,
-    .species = SPECIES_ESPEON,
-    .moves = {MOVE_PSYCHIC, MOVE_MORNING_SUN, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
+    .species = SPECIES_ALTARIA,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE}
     },
     {
     .iv = 150,
     .lvl = 49,
     .species = SPECIES_STARMIE,
-    .moves = {MOVE_SURF, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .moves = {MOVE_SURF, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_ICE_BEAM}
     },
     {
     .iv = 150,
-    .lvl = 50,
-    .species = SPECIES_ALAKAZAM,
-    .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_SHADOW_BALL, MOVE_RECOVER}
+    .lvl = 49,
+    .species = SPECIES_BRELOOM_HOENN,
+    .moves = {MOVE_POISON_JAB, MOVE_ICE_PUNCH, MOVE_ICE_SHARD, MOVE_BRICK_BREAK}
     },
     {
     .iv = 150,
@@ -10940,7 +10940,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR3[] = {
     .iv = 250,
     .lvl = 51,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_MOONBLAST, MOVE_THUNDERBOLT}
     }
 };
 
@@ -10948,20 +10948,20 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR4[] = {
     {
     .iv = 150,
     .lvl = 52,
-    .species = SPECIES_ESPEON,
-    .moves = {MOVE_PSYCHIC, MOVE_MORNING_SUN, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
+    .species = SPECIES_ALTARIA,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_STEEL_WING}
     },
     {
     .iv = 150,
     .lvl = 52,
     .species = SPECIES_STARMIE,
-    .moves = {MOVE_SURF, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .moves = {MOVE_SURF, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_RECOVER}
     },
     {
     .iv = 150,
-    .lvl = 53,
-    .species = SPECIES_ALAKAZAM,
-    .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_SHADOW_BALL, MOVE_RECOVER}
+    .lvl = 52,
+    .species = SPECIES_BRELOOM_HOENN,
+    .moves = {MOVE_POISON_JAB, MOVE_ICE_PUNCH, MOVE_ICE_SHARD, MOVE_SWORDS_DANCE}
     },
     {
     .iv = 150,
@@ -10973,7 +10973,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR4[] = {
     .iv = 250,
     .lvl = 54,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_MOONBLAST, MOVE_SHADOW_BALL}
     }
 };
 
@@ -10981,32 +10981,32 @@ static const struct TrainerMonNoItemCustomMoves sParty_WallyVR5[] = {
     {
     .iv = 150,
     .lvl = 55,
-    .species = SPECIES_ESPEON,
-    .moves = {MOVE_PSYCHIC, MOVE_MORNING_SUN, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
+    .species = SPECIES_ALTARIA,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
     },
     {
     .iv = 150,
     .lvl = 55,
     .species = SPECIES_STARMIE,
-    .moves = {MOVE_SURF, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_PSYCHIC}
+    .moves = {MOVE_SURF, MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_RECOVER}
     },
     {
     .iv = 150,
-    .lvl = 56,
-    .species = SPECIES_ALAKAZAM,
-    .moves = {MOVE_PSYCHIC, MOVE_CALM_MIND, MOVE_SHADOW_BALL, MOVE_RECOVER}
+    .lvl = 55,
+    .species = SPECIES_BRELOOM_HOENN,
+    .moves = {MOVE_POISON_JAB, MOVE_ICE_PUNCH, MOVE_SWORDS_DANCE, MOVE_CLOSE_COMBAT}
     },
     {
     .iv = 150,
     .lvl = 55,
     .species = SPECIES_NINETALES_HOENN,
-    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_ICE_BEAM, MOVE_SHADOW_BALL}
+    .moves = {MOVE_CALM_MIND, MOVE_ICE_BEAM, MOVE_MOONBLAST, MOVE_SHADOW_BALL}
     },
     {
     .iv = 250,
     .lvl = 57,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_MOONBLAST, MOVE_SHADOW_BALL}
     }
 };
 

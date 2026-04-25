@@ -36,5 +36,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | E4 Cross-Gen Integration & Species Acknowledgment Gaps | 267 | [e4-crossgen-and-acknowledgment-gaps.md](pokemon-knowledge/e4-crossgen-and-acknowledgment-gaps.md) |
 | v2.4 Direction — Ability Systems & Rival Design Landscape | 268 | [v24-direction-and-ability-systems.md](pokemon-knowledge/v24-direction-and-ability-systems.md) |
 | Juan/Wallace Differentiation — ROM Hack Approaches | 269 | [juan-wallace-differentiation.md](pokemon-knowledge/juan-wallace-differentiation.md) |
+| Wally Rival Arc — ROM Hack & Community Patterns | 270 | [wally-rival-arc-patterns.md](pokemon-knowledge/wally-rival-arc-patterns.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

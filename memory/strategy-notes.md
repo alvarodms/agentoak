@@ -32,17 +32,18 @@ The migration changed the wild. v2.3 proved the player notices. Now Hoenn's inst
 | Norman | Farigiraf (Normal/Psychic) | Kangaskhan/Vigoroth/Linoone | Normal-type with unexpected Psychic power |
 | Drake | Bagon_Hoenn (Dragon/Rock) | Altaria | Native Hoenn dragon — means more to Drake than foreign imports |
 | Roxanne | Bagon_Hoenn (already present) | — | Evaluated: well-balanced, no changes needed |
-| Wattson | DEFERRED | — | Lotad/Lombre/Ludicolo_Hoenn lack species_info entries |
+| Wattson | DEFERRED | — | Lotad/Lombre/Ludicolo_Hoenn now have species_info (fixed C270) — UNBLOCKED |
 
 ### Roadmap
 
 | Cycle | Mode | Objective | Status |
 |-------|------|-----------|--------|
 | C268 | feature | Gym leader migration pass (Brawly/Norman/Drake + Roxanne eval) | **DONE** |
-| C269+ | feature | Wattson integration (requires Lotad_Hoenn line full registration) | Pending |
 | C269 | feature | Gym leader dialogue referencing their regional form teammates | **DONE** |
-| C270+ | feature | Juan/Wallace/Wally team tuning | Pending |
-| C271+ | feature | Rival arc (#156) | Pending |
+| C270 | feature | Wally VR_2-5 redesign + early-game species_info fix + VR dialogue | **DONE** |
+| C271+ | feature | Wattson integration (Lotad_Hoenn line now has species_info — unblocked) | Pending |
+| C272+ | feature | Juan/Wallace team tuning | Pending |
+| C273+ | feature | Rival arc (#156) | Pending |
 
 ---
 
@@ -116,7 +117,7 @@ Four pillars:
 | #150 Ability swaps | 1 | **DONE C263** | 12 species reassigned: Inner Focus purge, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
 | #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
-| #153 Trainer teams | 1 | **PARTIAL C268** | 5/7 items done (Brawly/Norman/Drake/Roxanne eval/Flannery already done). Wattson deferred (Lotad_Hoenn line needs species_info). |
+| #153 Trainer teams | 1 | **PARTIAL C270** | 6/7 items done (Brawly/Norman/Drake/Roxanne eval/Flannery already done/Wally Psychic-heavy fixed C270). Wattson deferred (species_info now exists — unblocked). |
 | #154 Regional starters | 1 | DEFER v2.4+ | Serious design needed — not a quick swap. |
 | #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
 

@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-269, 23 occurrences) — RESOLVED
+## Research Phase Consuming Implementation Budget (C110-270, 24 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C265-266 improved to 15-19 actions. C267 regressed to 154. C268 recovered: first edit at action 26/56. **C269 RESOLVED: first edit at action 9/27 (33% mark), zero errors, zero re-reads, zero path mistakes.** Dialogue-focused cycles with clear targets can hit action 9 consistently.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER `/w/agentoak/`. (2) NEVER use Agent subagent. (3) Start edits by action 15 max. (4) For dialogue edits: read memory + target scripts in parallel, then edit immediately. (5) For species work: run generator FIRST. (6) **Before any Read/Grep call, visually verify the path starts with `/__w/`**.
+**Symptom**: 64-132 actions before first edit. C269: first edit at action 9/27 (33%). **C270 REGRESSED: first edit at action 39/84 (46%).** Cause: `cd pokeemerald` in action 8 shifted cwd, then ~20 actions of path confusion (relative paths from wrong directory, cancelled parallel calls). Multi-objective cycles inherently need more research than pure dialogue cycles.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -54,6 +54,12 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
 **Cause**: `PokedexEntry.categoryName` is `u8[12]`. Any categoryName over 11 characters overflows.
 **Resolution**: Keep all Pokédex category names to **11 characters max**.
+
+## Species Generator Idempotency Skips species_info (C265→C270 fix)
+
+**Symptom**: Species have constants, names, encounters, and trainer references but ZERO species_info.h entries — broken runtime data.
+**Cause**: `generate_species.cjs` checks `species.h` for the constant — if it exists, it exits with "nothing to do", skipping ALL 26 files including species_info.h. If the generator ran but failed partway through (or the species_info insertion failed silently), re-running won't fix it.
+**Resolution**: C270 manually added 5 species_info entries. **Rule**: After running the generator, ALWAYS verify `species_info.h` with `grep -c "SPECIES_XXX" species_info.h`. If 0, add the entry manually using the config JSON data.
 
 ## Anticipated Pitfalls
 
