@@ -4,9 +4,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-270, 24 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-272, 25 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C269: first edit at action 9/27 (33%). **C270 REGRESSED: first edit at action 39/84 (46%).** Cause: `cd pokeemerald` in action 8 shifted cwd, then ~20 actions of path confusion (relative paths from wrong directory, cancelled parallel calls). Multi-objective cycles inherently need more research than pure dialogue cycles.
+**Symptom**: 64-132 actions before first edit. C272: first edit at action 20/56 (36%) — acceptable for dual-character pass. Still used `cd pokeemerald` in action 47 (build).
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
@@ -14,11 +14,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (Cycle 256) — 8 wasted actions
+## "File Has Not Been Read Yet" on Edit Calls (C256, C272) — 13 wasted actions total
 
-**Symptom**: Edit tool rejected 8 consecutive calls with "File has not been read yet. Read it first before writing to it."
-**Cause**: Attempted to Edit graphics table files after grepping them (grep doesn't count as "read"). The Edit tool requires an explicit Read call for each file before editing.
-**Resolution**: Before editing ANY file, call Read on it first. Batch: read all 8 graphics table files in parallel, then edit all 8. For species work, the 8 graphics tables always need Read→Edit after running generate_species.cjs.
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted actions. C272: 5 more wasted actions on script files (actions 30-34).
+**Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
+**Resolution**: Before editing ANY file, call Read on it first. **For dialogue rewrites**: Read both script files BEFORE starting any edits. Batch: read all target files in parallel, then edit all. This pattern has now repeated twice — treat it as muscle memory.
 
 ## Incomplete Species Registration Across Cycles (C261→C262→C264→C265 RESOLVED)
 

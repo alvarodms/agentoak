@@ -42,7 +42,7 @@ The migration changed the wild. v2.3 proved the player notices. Now Hoenn's inst
 | C269 | feature | Gym leader dialogue referencing their regional form teammates | **DONE** |
 | C270 | feature | Wally VR_2-5 redesign + early-game species_info fix + VR dialogue | **DONE** |
 | C271 | feature | Wattson integration: Lotad_Hoenn line on all 5 tiers + gym dialogue rewrite + learnset/TM tables | **DONE** |
-| C272+ | feature | Juan/Wallace team tuning | Pending |
+| C272 | feature | Juan/Wallace differentiation: Corsola_Hoenn for Juan, Ludicolo_Hoenn+Arcanine_Hoenn+Ninetales_Hoenn for Wallace, full dialogue rewrite | **DONE** |
 | C273+ | feature | Rival arc (#156) | Pending |
 
 ---

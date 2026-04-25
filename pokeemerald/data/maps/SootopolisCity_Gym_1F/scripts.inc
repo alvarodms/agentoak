@@ -195,20 +195,25 @@ SootopolisCity_Gym_1F_Text_GymGuidePostVictory:
 	.string "set for the POKéMON LEAGUE challenge!$"
 
 SootopolisCity_Gym_1F_Text_JuanIntro:
-	.string "The tides carry new things since\n"
-	.string "the Stirring.\p"
-	.string "Most trainers would not notice.\p"
-	.string "I notice everything.\p"
-	.string "Shall we begin?$"
+	.string "I've fished these waters for\n"
+	.string "forty years.\p"
+	.string "The coral changed first.\n"
+	.string "New colors. New temperament.\p"
+	.string "My old CORSOLA transformed\n"
+	.string "before my eyes.\p"
+	.string "Its shell hardened.\n"
+	.string "Its nature turned.\p"
+	.string "I didn't understand it.\n"
+	.string "But I kept it close.\p"
+	.string "Show me what your journey\n"
+	.string "has taught you.$"
 
-@ NOTE: This defeat text was previously too long for the gDisplayedStringBattle buffer.
-@ The replacement text is shorter to avoid that overflow.
 SootopolisCity_Gym_1F_Text_JuanDefeat:
-	.string "Splendid! You move like the\n"
-	.string "tide -- inevitable and powerful.\p"
-	.string "The sea has judged you worthy,\n"
-	.string "my friend. Carry that blessing\l"
-	.string "to the CHAMPION.$"
+	.string "The tide turns, as it always\n"
+	.string "does.\p"
+	.string "You read the current well --\n"
+	.string "especially when my CORSOLA\l"
+	.string "surprised you.$"
 
 SootopolisCity_Gym_1F_Text_ReceivedRainBadge:
 	.string "{PLAYER} received the RAIN BADGE\n"
@@ -261,26 +266,25 @@ SootopolisCity_Gym_1F_Text_GymStatueCertified:
 	.string "{PLAYER}$"
 
 SootopolisCity_Gym_1F_Text_JuanPreRematch:
-	.string "JUAN: Ah, {PLAYER}… The tides of\n"
-	.string "migration have swept remarkable\n"
-	.string "creatures to SOOTOPOLIS.\p"
-	.string "A Poliwrath, strong and disciplined,\n"
-	.string "emerged from the depths one morning.\p"
-	.string "I have learned much from its\n"
-	.string "fighting spirit.\n"
-	.string "Come -- let us dance once more!$"
+	.string "JUAN: Ah, {PLAYER}!\n"
+	.string "The reef keeps changing.\p"
+	.string "Every season my team learns\n"
+	.string "something new from these waters.\p"
+	.string "Let me show you what the tides\n"
+	.string "brought in.$"
 
 SootopolisCity_Gym_1F_Text_JuanRematchDefeat:
-	.string "JUAN: Magnificent… You are truly\n"
-	.string "a force of nature, my friend!$"
+	.string "JUAN: You still read the current\n"
+	.string "better than this old fisherman.\p"
+	.string "Well earned.$"
 
 SootopolisCity_Gym_1F_Text_JuanPostRematch:
-	.string "JUAN: The seas carry life from\n"
-	.string "distant shores… and each new\n"
-	.string "arrival teaches an old master\n"
-	.string "something new.\p"
-	.string "The migration has made SOOTOPOLIS\n"
-	.string "richer -- and me, a humbler trainer.$"
+	.string "JUAN: WALLACE saw the migration\n"
+	.string "as art. I see it as tide.\p"
+	.string "It comes, it reshapes the shore,\n"
+	.string "and we learn to fish differently.\p"
+	.string "Come back when the current\n"
+	.string "shifts again.$"
 
 SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons:
 	.string "JUAN: Ah, my young friend…\n"
