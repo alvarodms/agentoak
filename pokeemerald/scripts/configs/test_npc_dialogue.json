@@ -1,0 +1,15 @@
+{
+  "npcs": [
+    {
+      "map": "Route103",
+      "label": "TestMigrationHiker",
+      "graphicsId": "OBJ_EVENT_GFX_HIKER",
+      "x": 20,
+      "y": 5,
+      "elevation": 3,
+      "movementType": "MOVEMENT_TYPE_FACE_LEFT",
+      "scriptType": "MSGBOX_NPC",
+      "dialogue": "I keep hearing something scraping\\nagainst the rock walls down there.\\pSounds like metal on metal.\\nStrange times in HOENN...$"
+    }
+  ]
+}

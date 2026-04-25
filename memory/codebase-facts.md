@@ -158,6 +158,20 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 **Idempotency**: In create mode, exits cleanly if trainerId already exists in opponents.h. **Atomic writes**: all file manipulations computed first; only written if all succeed.
 
+## NPC Dialogue Generator (C275)
+
+**Tool**: `scripts/generate_npc_dialogue.cjs` — JSON config → scripts.inc + map.json atomic writes. Usage: `node scripts/generate_npc_dialogue.cjs <config.json> [--dry-run] [--validate]`. Config files in `scripts/configs/`.
+
+**Config format**: `{"npcs": [{map, label, graphicsId, x, y, scriptType, dialogue, ...}]}`. Single-NPC shorthand: top-level object with `map` + `label` auto-wraps. `scriptType`: `MSGBOX_NPC` (simple) or `MSGBOX_DEFAULT` (lock/faceplayer/release). Optional: `elevation` (default 3), `movementType` (default FACE_DOWN), `movementRangeX/Y` (default 0), `flag` (default "0").
+
+**Charmap validation**: Rejects invalid escapes (only `\n`, `\l`, `\p` allowed), em-dash, en-dash, smart quotes, ASCII `"`. Warns on lines >35 chars. Checks `$` terminator.
+
+**Idempotency**: Skips NPC if `{MapName}_EventScript_{Label}::` already exists in scripts.inc or object_events.
+
+**Output**: Appends EventScript block + Text label to scripts.inc. Appends object_event to map.json.
+
+---
+
 **Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **+1 manual file**: species_names.h (not covered by generator). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
 
 ---

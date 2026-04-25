@@ -41,5 +41,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Rival Arc Implementation Landscape — Brendan/May & Wally | 273 | [rival-arc-implementation-landscape.md](pokemon-knowledge/rival-arc-implementation-landscape.md) |
 | Completeness & Postgame — What Community Values Most | 274 | [completeness-and-postgame-community-values.md](pokemon-knowledge/completeness-and-postgame-community-values.md) |
 | Regional Starter Designs — Full Species Specs | 274 | [regional-starter-designs.md](pokemon-knowledge/regional-starter-designs.md) |
+| Regional Starter Implementation — Patterns & Risks | 275 | [regional-starter-implementation-risks.md](pokemon-knowledge/regional-starter-implementation-risks.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
