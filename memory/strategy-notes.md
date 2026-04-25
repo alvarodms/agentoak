@@ -6,135 +6,100 @@
 
 # LEGENDS OF HOENN — Version History
 
-**v1.0-v1.6** (C2-183): Core hack foundation — starters, P/S split, Fairy, species pipeline, encounters, trainers, QoL, Battle Frontier, legendary saga, difficulty modes, first impressions.
-**v1.7** (C184-191): "The Gathering Storm" — Late-game atmosphere arc. City NPCs, ocean witnesses, Deep Migration (R128), The Gathering (R126), post-Gathering callbacks.
+**v1.0-v1.6** (C2-183): Core hack foundation — starters (Larvitar/Bagon/Dratini), P/S split, Fairy, species pipeline, encounters, trainers, QoL, Battle Frontier, legendary saga, difficulty modes, first impressions.
+**v1.7** (C184-191): "The Gathering Storm" — Late-game atmosphere arc. City NPCs, ocean witnesses, Deep Migration, The Gathering, post-Gathering callbacks.
 **v1.8** (C192-200): "The Living Region" — 4 postgame quests, 2 regional forms (Corsola_Hoenn, Growlithe_Hoenn/Arcanine_Hoenn), species pipeline.
-**v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul (dialogue+teams+rematches), "The Exhale" post-Rayquaza resolution, 2 mid-game forms (Vulpix_Hoenn, Ninetales_Hoenn), Corsola encounter, Bagon Colony callback, Deoxys quest, challenge_mode_scaling.h.
-**v2.0** (C212-225): "Deeper Roots" — 5 cross-gen evos (Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf), Bagon_Hoenn (Dragon/Rock), species 19/19 validation suite, evolution validator, Mom's migration send-off, researcher witness dialogue.
-**v2.1** (C226-238): "A Changed Hoenn" — Cyan protagonist palette, 2 mid-game forms (Pinsir_Hoenn Bug/Fire, Stantler_Hoenn Ghost/Grass), Echo dialogue layer, Deoxys Quest II "The Resonance", Changed Trainer witness reactions.
-**v2.2** (C239-253): "The Cosmic Form" — Deoxys_Hoenn (Poison/Fairy) with Toxic Touch ability, Quest III "The Answer", trainer narrative pass (Badges 1-8 + E4 + rematches), Magma/Aqua quiet reckoning, Gligar_Hoenn + Gliscor_Hoenn (Water/Rock), v2.2 ship + consistency pass.
+**v1.9** (C201-210): "The New Normal" — E4 & Champion overhaul, "The Exhale", 2 mid-game forms, Deoxys quest, challenge_mode_scaling.h.
+**v2.0** (C212-225): "Deeper Roots" — 5 cross-gen evos, Bagon_Hoenn (Dragon/Rock), species validation suite, Mom's send-off.
+**v2.1** (C226-238): "A Changed Hoenn" — Cyan protagonist palette, 2 mid-game forms, Echo dialogue layer, Deoxys Quest II, Changed Trainer reactions.
+**v2.2** (C239-253): "The Cosmic Form" — Deoxys_Hoenn (Poison/Fairy) + Toxic Touch, Quest III, trainer narrative pass, Magma/Aqua reckoning, Gligar_Hoenn + Gliscor_Hoenn.
+**v2.3** (C254-267): "Roots" — Species generator (26-file), trainer generator, 5 early-game regional forms (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), ability identity pass, Glacia redesign.
+**v2.4** (C268-273): "The Proving Ground" — Gym leader migration pass complete (Brawly/Norman/Drake/Wattson/Juan/Wallace), Wally VR redesign, rival arc (Brendan/May Route 110 + Lilycove teams + dialogue).
 
 ---
 
-# v2.4: "The Proving Ground" (C268+)
+# v2.5: "The Changed Three" (C274+)
 
 ## Creative Vision
 
-The migration changed the wild. v2.3 proved the player notices. Now Hoenn's institutions catch up — gym leaders, Elite Four, and the rival adopt regional forms that challenge the player's assumptions. Every gym leader's team should tell a story about their relationship to the changed landscape.
+The migration transformed Hoenn's wild Pokémon, its gym leaders' teams, its villain factions, its rival's journey. But the three species most iconic to Hoenn — Treecko, Torchic, Mudkip — haven't appeared through the migration lens. v2.5 completes the circle: regional forms of Hoenn's original starter trio, discoverable in the wild and earnable postgame.
 
-**Design hypothesis**: If gym leaders carry regional forms that challenge the player's team assumptions, players feel that the migration is a mechanical reality, not just flavor text.
+**Key insight**: The hack's actual starters are **Larvitar/Bagon/Dratini** (pseudo-legendaries since C2). This is the hack's signature — no other Emerald hack gives you pseudo-legendaries from minute one. Replacing or complicating them dilutes that identity. Regional Hoenn starters work better as **rare wild discoveries**: the player isn't given them, they find them. This mirrors the migration itself — transformation happens in the wild, not in a lab.
 
-### C268 Implementation — Gym Leader Migration Pass
+**Design hypothesis**: If the player discovers regional forms of Hoenn's original starter species — a crystal Treecko in Meteor Falls, a starlight Torchic on Mt. Pyre, a titan Mudkip in Shoal Cave — the migration feels total. Even the species that once defined this region have been reshaped by cosmic energy.
 
-| Leader | Species | Replaces | Narrative |
-|--------|---------|----------|-----------|
-| Brawly | Gligar_Hoenn→Gliscor_Hoenn (Water/Rock) | Hitmonlee/Machoke/Machamp | Cave training partner from Granite Cave |
-| Norman | Farigiraf (Normal/Psychic) | Kangaskhan/Vigoroth/Linoone | Normal-type with unexpected Psychic power |
-| Drake | Bagon_Hoenn (Dragon/Rock) | Altaria | Native Hoenn dragon — means more to Drake than foreign imports |
-| Roxanne | Bagon_Hoenn (already present) | — | Evaluated: well-balanced, no changes needed |
-| Wattson | DEFERRED | — | Lotad/Lombre/Ludicolo_Hoenn now have species_info (fixed C270) — UNBLOCKED |
+## Type Triangle: Steel → Fairy → Fighting
 
-### Roadmap
+The three lines form a complete super-effective triangle:
+- **Sceptile_Hoenn** (Steel) → Blaziken_Hoenn (Fairy/Flying): Steel 2x on Fairy
+- **Blaziken_Hoenn** (Fairy/Flying) → Swampert_Hoenn (Fighting/Psychic): Fairy 2x on Fighting
+- **Swampert_Hoenn** (Fighting/Psychic) → Sceptile_Hoenn (Steel): Fighting 2x on Steel
 
-| Cycle | Mode | Objective | Status |
-|-------|------|-----------|--------|
-| C268 | feature | Gym leader migration pass (Brawly/Norman/Drake + Roxanne eval) | **DONE** |
-| C269 | feature | Gym leader dialogue referencing their regional form teammates | **DONE** |
-| C270 | feature | Wally VR_2-5 redesign + early-game species_info fix + VR dialogue | **DONE** |
-| C271 | feature | Wattson integration: Lotad_Hoenn line on all 5 tiers + gym dialogue rewrite + learnset/TM tables | **DONE** |
-| C272 | feature | Juan/Wallace differentiation: Corsola_Hoenn for Juan, Ludicolo_Hoenn+Arcanine_Hoenn+Ninetales_Hoenn for Wallace, full dialogue rewrite | **DONE** |
-| C273 | feature | Rival arc: Brendan/May Route 110 + Lilycove teams (Lotad_Hoenn→Lombre_Hoenn+Stantler_Hoenn+Pinsir_Hoenn), Route 119 + Lilycove dialogue rewrite | **DONE** |
-| C274+ | feature | Route 103/110 dialogue polish, Wally Mauville refinement | Pending |
+No Rock types added (type diversity constraint satisfied). No duplicate typings with existing 27 regional forms.
 
----
+### Species Summary
 
-# v2.3: "Roots" (C254-C265)
+| Line | Final Type | BST | Stat Identity | Key Move | Playstyle |
+|------|-----------|-----|---------------|----------|-----------|
+| Treecko_Hoenn | Steel | 530 | 110 Atk / 120 Spe | Meteor Mash | Fast physical sweeper, 11 resistances |
+| Torchic_Hoenn | Fairy/Flying | 530 | 120 SpA / 95 Spe | Moonblast | Special sweeper, Dragon immune |
+| Mudkip_Hoenn | Fighting/Psychic | 535 | 100 Atk / 95 SpA | Cross Chop + Extrasensory | Mixed tank, Bulk Up OR Calm Mind |
 
-## Creative Vision
+Full species specs (stats per stage, movesets, TMs, abilities): `pokemon-knowledge/regional-starter-designs.md`
 
-The Cosmic Form reached the sky. v2.3 turns the camera down.
+## Presentation Model
 
-After 22 custom species, three quest chains, and a cosmic encounter at Sky Pillar's summit, the hack's identity is established in the mid-game and postgame. But the early hours don't reflect it. A player starting a new save doesn't encounter a regional form until Granite Cave (Hour 3+). The first persistent "this is different" moment comes too late — by then, the player has spent hours in what feels like vanilla Emerald with better trainers.
+### A. Wild Encounters (base forms only, 4% rarity)
 
-v2.3 asks: what if Hoenn felt transformed from the first route?
+| Species | Type | Location | Level | Thematic Connection |
+|---------|------|----------|-------|---------------------|
+| Treecko_Hoenn | Steel | Meteor Falls B1F 2R | 25-28 | Cosmic mineral deposits crystallized its plant tissue — same cave as Bagon colony |
+| Torchic_Hoenn | Fairy | Mt. Pyre Exterior | 27-30 | Sacred mountain's spiritual energy replaced fire with celestial light |
+| Mudkip_Hoenn | Fighting | Shoal Cave (low tide) | 28-32 | Tidal rhythms awakened primal martial discipline |
 
-Four pillars:
-1. **Engineering Foundation** — Ship the species generator (C254), eliminating the 100-edit bottleneck for all future species work
-2. **Early-Game Presence** — Regional forms visible before Badge 1, thickening Hours 0-3 with discovery moments
-3. **Type Diversity** — Address Rock-type concentration (6/22 forms carry Rock). New forms must diversify the palette (per #148)
-4. **Visual Polish** — Sprite refinement pass (#131) to match the quality bar of 22 custom species
+Each is a discovery moment. They're rare, reward exploration, and tell the player: "Even the species that once defined this region have been changed."
 
-### Early-Game Form Design: "The Thesis Statement" (C255)
+### B. Postgame Gift: Replace Johto Starters
 
-**Design intent**: A new player should feel "this isn't vanilla Emerald" before reaching Roxanne. Both forms appear in normal tall grass — ambient, not gated. The first regional form encounter defines the player's expectation for the entire hack.
+Current postgame gift (VAR_DEX_UPGRADE_JOHTO_STARTER_STATE): Cyndaquil/Totodile/Chikorita after National Dex.
+**Replace with**: Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn + migration-themed Birch dialogue.
+Guaranteed access even if the player missed the wild encounters. Uses existing Johto starter infrastructure.
 
-#### Lotad_Hoenn (Electric/Grass) — Route 102
+### C. Early Foreshadowing (BirchLab dialogue, pre-journey)
 
-**Species ID**: 434. **Location**: Slot 2 (0-indexed), 10%, Lv3-4. Replaces vanilla Lotad; both forms coexist on route.
-**Narrative**: Cosmic fallout saturated Route 102's shallow ponds. Lotad's lily pad became a natural capacitor — crackling static, faint electrical arcs. Fishermen notice ponds fizzing before rainstorms. Adaptation is recent: deeper-water Lotad remain unchanged.
-**Stats**: HP 40 / Atk 30 / Def 30 / **SpA 50** / SpD 40 / Spe 30 (BST 220). SpD->SpA swap — capacitor stores and releases energy. 50 SpA is highest stat; ThunderShock at Lv10 off STAB actually stings early-game.
-**Typing**: Weaknesses (4): Fire, Ice, Poison, Bug 2x. Resists: Water 0.5x, Grass 0.5x, Steel 0.5x, Electric 0.25x. **Ground neutral** (Electric weak x Grass resist = 1x) — an Electric-type that isn't scared of Ground.
-**Abilities**: Slot 0 **Lightning Rod** (draws single-target Electric moves in doubles — Gen 3, no SpA boost). Slot 1 **Rain Dish** (1/16 HP in rain — water heritage preserved).
-**Moves**: Lv1 Astonish, Lv3 Growl, Lv7 Absorb, Lv10 ThunderShock, Lv15 Charge, Lv21 Mega Drain, Lv25 Thunder Wave, Lv31 Shock Wave, Lv36 Giga Drain. 9 moves total.
-**Evolution**: -> Lombre_Hoenn (Water Stone) -> Ludicolo_Hoenn (Leaf Stone). **C256 registers base form only**.
-**Visual direction**: Yellow-green palette replacing blue. Lightning-bolt vein patterns on lily pad. Same silhouette — double-take from color, not shape.
+Add to Birch's existing migration dialogue:
+*"I've been hearing field reports... TREECKO that reflect light like mirrors, TORCHIC that shimmer instead of burn. Keep your eyes open out there, [PLAYER]."*
 
-#### Shroomish_Hoenn (Poison/Ice) — Petalburg Woods
+### D. Postgame Birch Dialogue (replacing Johto starter text)
 
-**Species ID**: 435. **Location**: Slot 8 (0-indexed), 4%, Lv6-7. Replaces second vanilla Shroomish (Lv7-8). Vanilla stays in slot 0 (20%, Lv5-7) — player finds normal Shroomish first, then the wrong one.
-**Narrative**: Mycorrhizal network carried migration influence underground. Cryogenic spores — toxic compounds crystallize at low temperatures. Frost patches on warm forest floor where Shroomish_Hoenn cluster. The wrongness is quiet: a cold spot in a warm forest.
-**Stats**: HP 65 / Atk 35 / Def 60 / **SpA 45** / SpD 60 / Spe 30 (BST 295). Bulk-oriented tank.
-**Typing**: Weaknesses (5): Fire, Ground, Psychic, Rock, Steel 2x. Resists (5): Grass, Poison, Bug, Ice, Fairy 0.5x.
-**Abilities**: Slot 0 **Poison Point** (30% poison on contact). Slot 1 **Effect Spore** (10% each poison/paralysis/sleep on contact).
-**Moves**: Lv1 Poison Sting, Lv4 Tackle, Lv7 Stun Spore, Lv10 Powder Snow, Lv16 Acid, Lv22 Icy Wind, Lv26 Acid Armor, Lv31 Toxic, Lv36 Aurora Beam, Lv40 Sludge, Lv45 Ice Beam. 11 moves total.
-**Evolution**: -> Breloom_Hoenn (Poison/Ice) at Lv23 (matching vanilla). **C257 registers base form only**.
-**Visual direction**: Frosted cap with purple-blue undertones replacing warm brown/green. Pale icy spots on body. Crystalline spore cloud.
+*"You've seen how the migration changed HOENN —\pthe coral, the foxes, the lily pads.\pBut I never showed you the most dramatic cases.\pThree species that were here all along —\pTREECKO, TORCHIC, MUDKIP —\pcompletely transformed.\pI think one of them should be with\pa trainer who understands\pwhat happened here.\pTake your pick!"*
 
-### Updated Multi-Cycle Roadmap
+## Implementation Roadmap
 
 | Cycle | Mode | Objective | Depends On |
 |-------|------|-----------|------------|
-| C254 | refactor | **DONE** — Species generator (18 files, Gligar_Hoenn validated) | — |
-| C255 | planning | **DONE** — Early-game form design + type diversity audit | C254 |
-| C256 | feature | **DONE** — Lotad_Hoenn: generator + Route 102 encounter + fisherman NPC | C255 |
-| C257 | feature | **DONE** — Shroomish_Hoenn(434) + Lotad_Hoenn(435) re-registered (C256 revert fix) + Petalburg Woods encounter + frost NPC | C255 |
-| C258 | patch | **DONE** — Sprite iterations (Growlithe v2, Lotad v2, Shroomish v2, Gliscor v3) + Route 102 fisherman NPC rewrite | — |
-| C259 | feature | **DONE** — Lombre_Hoenn(436) + Breloom_Hoenn(437): evo lines complete, pre-evos re-registered | C256-257 |
-| C260 | refactor | **DONE** — Generator extended to 26-file scope (8 graphics tables added) + C259 premature entry cleanup | — |
-| C261 | feature | **DONE** — 5 species registered (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), evo chains, Route 102 + Petalburg Woods encounters | C259 |
-| C262 | feature | **DONE** — Early-game trainer showcase: 3 trainers carry Hoenn forms (Rick, James, Haley). Species registration completed (5 species via generator). species_names.h gap filled for 13 species. | — |
-| C263 | feature | **DONE** — Ability identity pass (#150): 12 species reassigned in species_info.h. Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added. | C262 |
-| C264 | patch | v2.3 consistency pass + type diversity final audit | C260-263 |
-| C265 | feature | **DONE** — Re-registered 5 early-game species via generator, restored encounter/trainer integrations, build verified | C264 |
-| C266 | refactor | **DONE** — Shipped `generate_trainer.cjs`: JSON config → synchronized trainer data across 3 files. Create + modify modes, dry-run, auto party-type detection. 6 deferrals (C258-C265) resolved. | — |
+| C274 | planning | **THIS CYCLE** — Design document, species specs, presentation model | — |
+| C275 | refactor | NPC dialogue generator (proactive build, 8th deferral) | — |
+| C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | C274 design |
+| C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | — |
+| C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | — |
+| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue | C276-278 |
+| C280 | feature | Trainer integration — key NPCs carrying regional starters | C279 |
 
-### Issue Triage (v2.3)
+### Dependencies & Risks
 
-| Issue | Def | Decision | Rationale |
-|-------|-----|----------|-----------|
-| #131 Sprite refinement | 5 | **DONE C258** | Growlithe v2, Lotad v2, Shroomish v2 bulkified; Gliscor v3 aquatic tail. |
-| #148 Type diversity | 1->partial | **BLOCKED** | C261 species never registered (C264 audit). Encounter/trainer refs reverted to vanilla. Must re-register in C265+. |
-| #149 Gliscor sprite | 1 | **DONE C258** | v3: wider V-fork caudal fin, fin-ray striations, barnacle accents. |
-| #150 Ability swaps | 1 | **DONE C263** | 12 species reassigned: Inner Focus purge, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically. |
-| #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
-| #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
-| #153 Trainer teams | 1 | **PARTIAL C271** | 7/7 gym leader items done. Wattson completed C271 (Lotad_Hoenn line). Juan/Wallace overlap remains as separate issue. |
-| #154 Regional starters | 1 | DEFER v2.4+ | Serious design needed — not a quick swap. |
-| #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
+1. **All key moves confirmed available** in hack's move table (Iron Head, Meteor Mash, Moonblast, Play Rough, Dazzling Gleam, Mach Punch, Cross Chop, Superpower, Extrasensory). Only Disarming Voice and Draining Kiss are missing — learnsets adjusted with available alternatives.
+2. **Sprites**: 9 species need sprites. Sprite Designer batches 3/cycle, parallelizable with registration.
+3. **Species IDs**: 439-447. EGG→448, NUM_SPECIES→448. Unown range auto-adjusts (relative to NUM_SPECIES).
+4. **Postgame script**: Johto starter replacement = ~3 species constant swaps + dialogue rewrite. Low risk, uses existing infrastructure.
 
-## Engineering Prerequisites
-- Species generator (C254→C260) — `scripts/generate_species.cjs`, 26-file scope, configs in `species_configs/`.
-- Trainer generator (C258→C266) — `scripts/generate_trainer.cjs`, JSON config → synchronized trainer_parties.h/trainers.h/opponents.h. Create + modify modes, dry-run, auto party-type detection. Configs in `trainer_configs/`.
-- Trainer validator promoted to check_all (C254)
+### Issue Triage
 
-## v2.3 Audit Gaps (C264) — Priority Queue for C265+
-
-1. ~~**Re-register 5 early-game species**~~ **DONE C265** — All 5 registered (IDs 434-438), encounters + trainers restored, build verified.
-2. ~~**Add Froslass to Glacia teams**~~ **DONE C267** — Froslass replaces Jynx, Mamoswine replaces Piloswine across all 5 parties.
-3. ~~**Add Gligar_Hoenn to at least 1 trainer**~~ **DONE C267** — Added to Cristian (Dewford Gym).
-4. ~~**NPC dialogue for**: Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn~~ **DONE C267** — 5 NPCs added.
-5. ~~**Verify Garchomp encounter**~~ **DONE C267** — Garchomp is evolution only; Gabite placed in VR B2F 2% Lv44-46.
-6. ~~**Reconcile Weavile location**~~ **DONE C267** — Memory corrected to Mt Pyre Summit 4%, Lv32-33.
+| Issue | Deferrals | Decision | Rationale |
+|-------|-----------|----------|-----------|
+| #154 Regional starters | 2 → **ACCEPT** | Designed this cycle. Implementation C276-280. |
+| #151 Custom abilities | 3 | DEFER | Orthogonal to this arc |
+| #152 Custom moves | 3 | DEFER | Revisit if future moves need adding |
 
 ---
 
@@ -146,6 +111,6 @@ Four pillars:
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (27 registered)**: Last registered = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. C265 re-registered 5 early-game species (434-438) + restored encounter/trainer integrations. categoryName max 11 chars (u8[12] field).
+- **Custom species (27 registered)**: Last = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. After v2.5: 36 species, EGG=448.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
