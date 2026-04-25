@@ -37,5 +37,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v2.4 Direction — Ability Systems & Rival Design Landscape | 268 | [v24-direction-and-ability-systems.md](pokemon-knowledge/v24-direction-and-ability-systems.md) |
 | Juan/Wallace Differentiation — ROM Hack Approaches | 269 | [juan-wallace-differentiation.md](pokemon-knowledge/juan-wallace-differentiation.md) |
 | Wally Rival Arc — ROM Hack & Community Patterns | 270 | [wally-rival-arc-patterns.md](pokemon-knowledge/wally-rival-arc-patterns.md) |
+| ~~Wattson Gym Design — Dual-Type & Regional Form Patterns~~ | 271 | Consumed in C271 implementation — research applied, file deleted |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

@@ -4071,10 +4071,10 @@ static const struct TrainerMonItemCustomMoves sParty_Wattson1[] = {
     },
     {
     .iv = 220,
-    .lvl = 22,
-    .species = SPECIES_ELECTABUZZ,
+    .lvl = 21,
+    .species = SPECIES_LOTAD_HOENN,
     .heldItem = ITEM_ORAN_BERRY,
-    .moves = {MOVE_THUNDERBOLT, MOVE_ICE_PUNCH, MOVE_LIGHT_SCREEN, MOVE_QUICK_ATTACK}
+    .moves = {MOVE_SHOCK_WAVE, MOVE_MEGA_DRAIN, MOVE_CHARGE, MOVE_GROWL}
     },
     {
     .iv = 250,
@@ -13176,10 +13176,10 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly5[] = {
 static const struct TrainerMonItemCustomMoves sParty_Wattson2[] = {
     {
     .iv = 100,
-    .lvl = 38,
-    .species = SPECIES_ELECTRODE,
+    .lvl = 39,
+    .species = SPECIES_LOMBRE_HOENN,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_THUNDERBOLT, MOVE_THUNDER_WAVE, MOVE_LIGHT_SCREEN, MOVE_EXPLOSION}
+    .moves = {MOVE_THUNDERBOLT, MOVE_GIGA_DRAIN, MOVE_THUNDER_WAVE, MOVE_CHARGE}
     },
     {
     .iv = 100,
@@ -13236,9 +13236,9 @@ static const struct TrainerMonItemCustomMoves sParty_Wattson3[] = {
     {
     .iv = 100,
     .lvl = 52,
-    .species = SPECIES_ELECTABUZZ,
+    .species = SPECIES_LUDICOLO_HOENN,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_THUNDERBOLT, MOVE_ICE_PUNCH, MOVE_CROSS_CHOP, MOVE_FIRE_PUNCH}
+    .moves = {MOVE_THUNDERBOLT, MOVE_GIGA_DRAIN, MOVE_CHARGE, MOVE_THUNDER_WAVE}
     }
 };
 
@@ -13267,9 +13267,9 @@ static const struct TrainerMonItemCustomMoves sParty_Wattson4[] = {
     {
     .iv = 150,
     .lvl = 61,
-    .species = SPECIES_ELECTABUZZ,
+    .species = SPECIES_LUDICOLO_HOENN,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_THUNDERBOLT, MOVE_ICE_PUNCH, MOVE_CROSS_CHOP, MOVE_FIRE_PUNCH}
+    .moves = {MOVE_THUNDERBOLT, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 150,
@@ -13312,9 +13312,9 @@ static const struct TrainerMonItemCustomMoves sParty_Wattson5[] = {
     {
     .iv = 200,
     .lvl = 72,
-    .species = SPECIES_ELECTABUZZ,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_CROSS_CHOP, MOVE_ICE_PUNCH, MOVE_FIRE_PUNCH, MOVE_THUNDER_PUNCH}
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_PETAYA_BERRY,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_CHARGE}
     },
     {
     .iv = 200,

@@ -158,6 +158,14 @@ Brawly, Norman, and Drake intro+defeat rewritten to reference their C268 regiona
 | `data/maps/PetalburgCity_Gym/scripts.inc` | **269** | Norman intro+defeat rewritten: Farigiraf taught him NORMAL isn't simple, Psychic foresight — "both sensed your strength." Extends C245 father theme with migration species bond. |
 | `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | **269** | Drake intro+defeat rewritten: Bagon_Hoenn — young colony members changed by the migration, "harder scales, stone in their blood." Replaces C204 generic Bagon colony reference with specific Bagon_Hoenn transformation narrative. |
 
+## Wattson Gym Dialogue — Cycle 271
+
+Wattson's MauvilleCity_Gym dialogue rewritten: Electabuzz references → Lotad_Hoenn/Route 102 electric lily pads.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/MauvilleCity_Gym/scripts.inc` | **271** | WattsonIntro: "Electric lily pads! LOTAD that crackle like fresh batteries!" WattsonPostBattle: "That little LOTAD from ROUTE 102 has more spark than half the machines in NEW MAUVILLE!" WattsonPreRematch: "My LOTAD's been growing -- evolved, even!" WattsonPostRematch: "Electric lily pads from ROUTE 102 -- best thing that ever happened to MAUVILLE!" |
+
 ## Wally Victory Road Migration Dialogue — Cycle 270
 
 Wally's VR dialogue rewritten to reference finding Shroomish_Hoenn in Petalburg Woods — the first rival whose team narrative connects to a specific migration encounter location.

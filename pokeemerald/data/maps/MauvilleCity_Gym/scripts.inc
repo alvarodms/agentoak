@@ -333,12 +333,12 @@ MauvilleCity_Gym_Text_AngeloPostBattle:
 	.string "forehead. It makes me happy!$"
 
 MauvilleCity_Gym_Text_WattsonIntro:
-	.string "Wahaha! An ELECTABUZZ wandered\n"
-	.string "right into my POWER PLANT!\p"
-	.string "Not native to HOENN, but the\n"
-	.string "voltage it puts out? Magnificent!\l"
-	.string "My circuits have never been\l"
-	.string "this charged! Wahahahaha!$"
+	.string "Wahahahaha! The ponds on ROUTE 102 --\n"
+	.string "have you SEEN them lately?\p"
+	.string "Electric lily pads! LOTAD that crackle\n"
+	.string "like fresh batteries!\l"
+	.string "I brought one to my gym -- best day of\n"
+	.string "my life! WAHAHAHAHA!$"
 
 MauvilleCity_Gym_Text_WattsonDefeat:
 	.string "Wahahahah!\n"
@@ -369,8 +369,11 @@ MauvilleCity_Gym_Text_RegisteredWattson:
 	.string "in the POKéNAV.$"
 
 MauvilleCity_Gym_Text_WattsonPostBattle:
-	.string "I swell with optimism, seeing a promising\n"
-	.string "young TRAINER like you!$"
+	.string "That little LOTAD from ROUTE 102 has\n"
+	.string "more spark than half the machines\n"
+	.string "in NEW MAUVILLE!\p"
+	.string "The world's changing, and I say\n"
+	.string "WAHAHAHAHA to that!$"
 
 MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor:
 	.string "Wahahahah!\n"
@@ -386,22 +389,22 @@ MauvilleCity_Gym_Text_GymStatueCertified:
 
 MauvilleCity_Gym_Text_WattsonPreRematch:
 	.string "Wahahahah! {PLAYER}!\n"
-	.string "You've come back for more, have you?\p"
-	.string "An Electabuzz wandered into NEW\n"
-	.string "MAUVILLE the other day!\p"
-	.string "The old power plant is buzzing with\n"
-	.string "new energy -- and so am I!\n"
-	.string "Wahahahah!$"
+	.string "Back for another jolt?\p"
+	.string "My LOTAD's been growing -- evolved,\n"
+	.string "even!\l"
+	.string "ROUTE 102's ponds fizz like nobody's\n"
+	.string "business these days! WAHAHAHAHA!$"
 
 MauvilleCity_Gym_Text_WattsonRematchDefeat:
 	.string "Wahahahah!\n"
 	.string "You've short-circuited me again!$"
 
 MauvilleCity_Gym_Text_WattsonPostRematch:
-	.string "These migration POKéMON have\n"
-	.string "brought fresh electricity to MAUVILLE!\p"
-	.string "Wahahahah! An old man can still\n"
-	.string "learn new tricks!$"
+	.string "Electric lily pads from ROUTE 102 --\n"
+	.string "best thing that ever happened\n"
+	.string "to MAUVILLE!\p"
+	.string "An old man's gym can still learn\n"
+	.string "new tricks! Wahahahah!$"
 
 MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
 	.string "Wahahahah! Hold on there!\n"

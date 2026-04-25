@@ -41,7 +41,7 @@ The migration changed the wild. v2.3 proved the player notices. Now Hoenn's inst
 | C268 | feature | Gym leader migration pass (Brawly/Norman/Drake + Roxanne eval) | **DONE** |
 | C269 | feature | Gym leader dialogue referencing their regional form teammates | **DONE** |
 | C270 | feature | Wally VR_2-5 redesign + early-game species_info fix + VR dialogue | **DONE** |
-| C271+ | feature | Wattson integration (Lotad_Hoenn line now has species_info — unblocked) | Pending |
+| C271 | feature | Wattson integration: Lotad_Hoenn line on all 5 tiers + gym dialogue rewrite + learnset/TM tables | **DONE** |
 | C272+ | feature | Juan/Wallace team tuning | Pending |
 | C273+ | feature | Rival arc (#156) | Pending |
 
@@ -117,7 +117,7 @@ Four pillars:
 | #150 Ability swaps | 1 | **DONE C263** | 12 species reassigned: Inner Focus purge, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically. |
 | #151 Custom abilities | 1 | DEFER C265+ | Multi-cycle engineering needed. |
 | #152 Custom moves | 1 | DEFER C265+ | Multi-cycle engineering needed. |
-| #153 Trainer teams | 1 | **PARTIAL C270** | 6/7 items done (Brawly/Norman/Drake/Roxanne eval/Flannery already done/Wally Psychic-heavy fixed C270). Wattson deferred (species_info now exists — unblocked). |
+| #153 Trainer teams | 1 | **PARTIAL C271** | 7/7 gym leader items done. Wattson completed C271 (Lotad_Hoenn line). Juan/Wallace overlap remains as separate issue. |
 | #154 Regional starters | 1 | DEFER v2.4+ | Serious design needed — not a quick swap. |
 | #156 Rival fight | 1 | DEFER v2.4+ | Narrative layer cycle. |
 
