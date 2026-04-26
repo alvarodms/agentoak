@@ -27,6 +27,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **6 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass (via Dawn Stone), Piloswine into Mamoswine, Girafarig into Farigiraf, and Hoennian Gligar into Hoennian Gliscor. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine, and Archie leads with Hoennian Gliscor — making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), Hoennian Arcanine (Water/Fire), Hoennian Bagon (Dragon/Rock) — a fossil variant discovered in the depths of Meteor Falls — Hoennian Vulpix (Ice/Fairy) and Hoennian Ninetales (Ice/Fairy), ice foxes adapted to the volcanic ash of Route 113, Hoennian Pinsir (Bug/Fire), a volcanic beetle forged in Route 112's heat, Hoennian Stantler (Ghost/Grass), a forest spirit glimpsed in Route 119's perpetual rain, Hoennian Gligar (Water/Rock), a teal scorpion-bat whose pincers have calcified in Granite Cave's mineral-rich seawater, Hoennian Lotad (Electric/Grass), a lily pad that became a natural capacitor in Route 102's electrified ponds, and Hoennian Shroomish (Poison/Ice), a cold purple mushroom whose cryogenic spores frost the warm floor of Petalburg Woods. Both early-game forms evolve into fully realized final forms: Hoennian Lotad becomes Lombre then Ludicolo, a fast Electric/Grass special sweeper that dances through thunderstorms, while Hoennian Shroomish becomes Breloom, a cryogenic brawler with frost-hardened fists and dual priority attacks. Some forms are discovered through postgame quests; others wait in the wild for trainers sharp-eyed enough to find them
+- **The Changed Three** — even Hoenn's original starter trio was not immune to the migration. A crystal Treecko (Steel) lurks in Meteor Falls' mineral depths, a starlight Torchic (Fairy) perches on the sacred slopes of Mt. Pyre, and a titan Mudkip (Fighting) trains in Shoal Cave's tidal chambers — each at 4% encounter rate, rare enough to feel like a genuine discovery. All three evolve through full three-stage lines into Sceptile (Steel), Blaziken (Fairy/Flying), and Swampert (Fighting/Psychic). After completing the National Dex, Professor Birch offers one of these changed forms as a gift instead of the Johto starters, with migration-themed dialogue pointing you toward their wild habitats
 - **Environmental storytelling** — the world notices its own changes. Hikers, researchers, and scientists across the mid-game cross-reference each other's regional form sightings, building a connected ecological narrative. Return to the Meteor Falls researcher after encountering Hoennian Bagon and he'll acknowledge what you've seen: "DRAGON and ROCK, fused into something new. They dream of enduring." NPCs remember, react, and evolve alongside the player
 - **Mom's migration send-off** — your journey begins with purpose. Instead of Running Shoes, Mom hands you 5 Poke Balls and shares what she's heard about the migration. The world is changing before you even step onto Route 101
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, a Wailord pod shakes the ocean on Route 128 — culminating in a special encounter with a curious young Wailmer — and on Route 126, fog rolls in as layered Pokemon cries converge toward Sootopolis in a moment the player can only witness, not fight
@@ -149,6 +150,22 @@ Familiar species transformed by Hoenn's unique environment. Some are discovered 
 | Gliscor (Hoenn) | Water/Rock | — | Evolved from Gligar (Hoenn) |
 
 #### The Cosmic Form
+
+#### The Changed Three
+
+Hoenn's original starter trio, transformed by the migration. Discoverable as rare wild encounters or earned as a postgame gift from Professor Birch.
+
+| Species | Type | Where to Find | Evolution |
+|---------|------|---------------|-----------|
+| Treecko (Hoenn) | Steel | Meteor Falls B1F 2R (4%) | Lv16 → Grovyle (Hoenn) → Lv36 Sceptile (Hoenn) |
+| Torchic (Hoenn) | Fairy | Mt. Pyre Exterior (4%) | Lv16 → Combusken (Hoenn) → Lv36 Blaziken (Hoenn) |
+| Mudkip (Hoenn) | Fighting | Shoal Cave Low Tide (4%) | Lv16 → Marshtomp (Hoenn) → Lv36 Swampert (Hoenn) |
+| Grovyle (Hoenn) | Steel | — | Evolved from Treecko (Hoenn) at Lv16 |
+| Sceptile (Hoenn) | Steel | — | Evolved from Grovyle (Hoenn) at Lv36 |
+| Combusken (Hoenn) | Fairy/Flying | — | Evolved from Torchic (Hoenn) at Lv16 |
+| Blaziken (Hoenn) | Fairy/Flying | — | Evolved from Combusken (Hoenn) at Lv36 |
+| Marshtomp (Hoenn) | Fighting/Psychic | — | Evolved from Mudkip (Hoenn) at Lv16 |
+| Swampert (Hoenn) | Fighting/Psychic | — | Evolved from Marshtomp (Hoenn) at Lv36 |
 
 The migration's ultimate legacy — a being born from Hoenn's entanglement with cosmic forces.
 

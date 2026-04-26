@@ -9,7 +9,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 | File | Cycle | Notes |
 |------|-------|-------|
 | `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181** | Lab aide + Birch rescue; C180: migration hint; C181: difficulty selection multichoice |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181**, **279** | Lab aide + Birch rescue; C180: migration hint; C181: difficulty selection multichoice; C279: Postgame gift swapped Johto starters → Changed Three (Treecko/Torchic/Mudkip_Hoenn) + migration-themed Birch dialogue |
 | Oldale/Rustboro/Dewford/Mauville PokemonCenter scripts | 181, **183** | Difficulty-aware helper NPCs (4 maps) |
 
 ## Rival, Villains, Gym Leaders (C25-173)

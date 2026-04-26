@@ -22,8 +22,8 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Incomplete Species Registration Across Cycles (C261→C262→C264→C265→C277) — RECURRING
 
-**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C277: Treecko_Hoenn had species.h constant from C276 but generator hadn't populated the other 25 files.
-**Resolution**: C265/C277 fix: ensure generator runs for ALL species and verify output. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory.
+**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C277: Treecko_Hoenn had species.h constant from C276 but generator hadn't populated the other 25 files. C278: Mudkip_Hoenn line claimed "generator 26/26 files each" but generator was never actually run — only configs, sprites, and species_names.h existed. C279 ran generator to fix.
+**Resolution**: C265/C277/C279 fix: ensure generator runs for ALL species and verify output. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 

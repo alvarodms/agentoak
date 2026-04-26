@@ -30,3 +30,6 @@ Modified files related to wild Pokémon encounter tables.
 | `src/data/wild_encounters.json` | Route 113: VULPIX slot 9 (4%) → VULPIX_HOENN Lv21-22 | **237** | Bug fix — Vulpix_Hoenn was registered as a species (C208) but never placed in encounter table. Regular Vulpix remains on other routes. |
 | `src/data/wild_encounters.json` | Granite Cave B2F: slot 7 Geodude (5% Lv10-12) → GLIGAR_HOENN (5% Lv10-13) | **250** | First cross-gen regional form. Water/Rock scorpion-bat in coastal cave. |
 | `src/data/wild_encounters.json` | Victory Road B2F: slots 10-11 (SHELGON Lv46-50 + MEDICHAM Lv46-50) → GABITE (Lv44 + Lv46), 2% total | **267** | v2.3 audit gap #5 closed. Gabite available in wild before Garchomp evo at Lv48. |
+| `src/data/wild_encounters.json` | Meteor Falls B1F 2R: slot 8 (4%) GOLBAT Lv38 → TREECKO_HOENN Lv25-28 | **279** | Changed Three wild placement — crystal gecko in mineral depths |
+| `src/data/wild_encounters.json` | Mt. Pyre Exterior: slot 9 (4%) WINGULL Lv27 → TORCHIC_HOENN Lv27-30 | **279** | Changed Three wild placement — starlight bird on sacred mountain |
+| `src/data/wild_encounters.json` | Shoal Cave Low Tide Inner Room: slot 8 (4%) GEODUDE Lv26-29 → MUDKIP_HOENN Lv28-32 | **279** | Changed Three wild placement — titan tadpole in tidal cave |

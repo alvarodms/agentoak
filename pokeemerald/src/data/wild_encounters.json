@@ -2781,9 +2781,9 @@
                 "species": "SPECIES_SOLROCK"
               },
               {
-                "min_level": 38,
-                "max_level": 38,
-                "species": "SPECIES_GOLBAT"
+                "min_level": 25,
+                "max_level": 28,
+                "species": "SPECIES_TREECKO_HOENN"
               },
               {
                 "min_level": 40,
@@ -4915,8 +4915,8 @@
               },
               {
                 "min_level": 27,
-                "max_level": 27,
-                "species": "SPECIES_WINGULL"
+                "max_level": 30,
+                "species": "SPECIES_TORCHIC_HOENN"
               },
               {
                 "min_level": 26,
@@ -8882,9 +8882,9 @@
                 "species": "SPECIES_SNORUNT"
               },
               {
-                "min_level": 26,
-                "max_level": 29,
-                "species": "SPECIES_GEODUDE"
+                "min_level": 28,
+                "max_level": 32,
+                "species": "SPECIES_MUDKIP_HOENN"
               },
               {
                 "min_level": 28,

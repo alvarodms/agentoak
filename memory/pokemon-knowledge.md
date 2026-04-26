@@ -45,5 +45,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Starter Identity Overlap — Pseudo-Legendary Saturation | 276 | [starter-identity-overlap-debate.md](pokemon-knowledge/starter-identity-overlap-debate.md) |
 | Postgame Rival Battle — Community Sentiment & Patterns | 277 | [postgame-rival-battle-patterns.md](pokemon-knowledge/postgame-rival-battle-patterns.md) |
 | Fighting/Psychic Reception & Trio Completion Patterns | 278 | [fighting-psychic-and-trio-completion.md](pokemon-knowledge/fighting-psychic-and-trio-completion.md) |
+| Encounter Placement & Postgame Gift Patterns | 279 | [encounter-placement-and-postgame-gift.md](pokemon-knowledge/encounter-placement-and-postgame-gift.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

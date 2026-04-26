@@ -133,6 +133,7 @@ Generator: 26/26 files per species. Manual: species_names.h (3 entries), config 
 
 Sprite Designer v1 sprites: slate/indigo/lavender palette, psychic bioluminescent accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
+**C279 fix**: C278 only created configs, sprites, and species_names.h entries — generator was never actually run. C279 ran generator for all 3 species, completing registration.
 
 ---
 

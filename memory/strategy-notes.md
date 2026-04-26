@@ -67,7 +67,7 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 | C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | done |
 | C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | **DONE** — also repaired C276 Treecko_Hoenn generator output |
 | C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | **DONE** — 3 species (445-447), generator 26/26 files each, species_names.h manual |
-| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue | — |
+| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue + Mudkip_Hoenn line registration fix | **DONE** |
 | C280 | feature | Trainer integration — key NPCs carrying regional starters | — |
 
 ### Dependencies & Risks
