@@ -100,5 +100,18 @@ C261 attempted registration but species were never committed to species.h. C264 
 | ~~Encounter discrepancy~~ | Weavile | **DONE C267** — Memory corrected: Mt Pyre Summit 4%, Lv32-33 |
 | ~~Missing encounter~~ | Garchomp | **DONE C267** — Corrected: Garchomp is evolution only; Gabite now in VR B2F 2% Lv44-46 |
 
-### Type Distribution (27 species)
-Ice 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Fairy 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Steel 1, Flying 1, Normal 1, Psychic 1, Bug 1. Rock at 4/27 (15%).
+## C276: Treecko_Hoenn Line (Crystal Gecko) — Pure Steel
+
+| Species | ID | Type | BST | Abilities | Evo |
+|---------|-----|------|-----|-----------|-----|
+| Treecko_Hoenn | 439 | Steel | 310 | Clear Body / Shed Skin | → Grovyle_Hoenn (Lv16) |
+| Grovyle_Hoenn | 440 | Steel | 405 | Clear Body / Shed Skin | → Sceptile_Hoenn (Lv36) |
+| Sceptile_Hoenn | 441 | Steel | 530 | Clear Body / Shed Skin | — |
+
+Sprite Designer v1 sprites: crystal blue-gray palette, amber eyes, violet prismatic accents. All indexed, build-clean.
+Generator: 26/26 files per species. Manual: species_names.h (3 entries).
+
+---
+
+### Type Distribution (30 species)
+Ice 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, **Steel 4**, Fairy 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Flying 1, Normal 1, Psychic 1, Bug 1.

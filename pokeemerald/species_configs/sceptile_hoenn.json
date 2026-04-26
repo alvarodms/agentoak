@@ -1,0 +1,75 @@
+{
+  "name": "SCEPTILE_HOENN",
+  "pascalName": "SceptileHoenn",
+  "graphicsDir": "sceptile_hoenn",
+  "baseSpeciesCry": "SPECIES_SCEPTILE",
+
+  "stats": {
+    "hp": 70, "atk": 110, "def": 85, "spa": 60, "spd": 85, "spe": 120
+  },
+  "types": ["TYPE_STEEL", "TYPE_STEEL"],
+  "abilities": ["ABILITY_CLEAR_BODY", "ABILITY_SHED_SKIN"],
+  "catchRate": 45,
+  "expYield": 208,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_DRAGON"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GRAY",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 3
+  },
+
+  "pokedex": {
+    "categoryName": "CrstlForst",
+    "height": 17,
+    "weight": 672,
+    "description": [
+      "Its tail has become a massive crystal",
+      "blade that rings like a tuning fork",
+      "when swung. SCEPTILE transformed by",
+      "meteor energy move so fast they seem",
+      "to teleport. Their eleven type",
+      "resistances make them nearly immune."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_SCRATCH"], [1, "MOVE_METAL_CLAW"],
+    [1, "MOVE_QUICK_ATTACK"], [1, "MOVE_HARDEN"],
+    [16, "MOVE_FURY_CUTTER"], [17, "MOVE_SCREECH"],
+    [23, "MOVE_STEEL_WING"], [29, "MOVE_IRON_HEAD"],
+    [35, "MOVE_AGILITY"], [43, "MOVE_SWORDS_DANCE"],
+    [51, "MOVE_IRON_DEFENSE"], [59, "MOVE_METEOR_MASH"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION", "IRON_TAIL",
+    "EARTHQUAKE", "RETURN", "DIG", "BRICK_BREAK", "DOUBLE_TEAM",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT", "CUT", "ROCK_SMASH",
+    "AERIAL_ACE"
+  ],
+
+  "eggMoves": [],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(56, 64)",
+    "frontPicYOffset": 2,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 4,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_STRETCH"
+  }
+}

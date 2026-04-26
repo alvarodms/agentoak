@@ -18,3 +18,6 @@
 | Gliscor Hoenn | Water/Rock | v3 | 258 | #149 | iterated — wider V-fork caudal fin (±2px per lobe + row 59 tips), 12 fin-ray px on right wing (idx 10 aqua striation), 6 barnacle px (idx 3 dark) on body edges, fill 45.7%→47.0% |
 | Lotad Hoenn | Electric/Grass | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 19.7%→25.0% front, 37.2%→43.3% back |
 | Shroomish Hoenn | Poison/Ice | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 18.3%→23.1% front, 33.2%→39.1% back |
+| Treecko Hoenn | Steel | v1 | 276 | — | new — crystal gecko, cool blue-gray body, amber eyes, crystal gleam + emanation accents |
+| Grovyle Hoenn | Steel | v1 | 276 | — | new — crystal runner, steel-blue body, violet crystal accents, bright cyan blade edges |
+| Sceptile Hoenn | Steel | v1 | 276 | — | new — crystal guardian, deep steel-blue body, violet crystal orbs, amber eyes |

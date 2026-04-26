@@ -64,7 +64,7 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 |-------|------|-----------|--------|
 | C274 | planning | Design document, species specs, presentation model | done |
 | C275 | refactor | NPC dialogue generator (charmap validation, atomic writes) | done |
-| C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | **next** |
+| C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | done |
 | C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | — |
 | C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | — |
 | C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue | — |
@@ -95,7 +95,7 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 - **Trainer capacity**: 885/885, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (27 registered)**: Last = Ludicolo_Hoenn(438). EGG=439, NUM_SPECIES=439. After v2.5: 36 species, EGG=448.
+- **Custom species (30 registered)**: Last = Sceptile_Hoenn(441). EGG=442, NUM_SPECIES=442. After v2.5: 36 species, EGG=448.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
 - **Generator toolchain**: `generate_species.cjs` (26-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation).

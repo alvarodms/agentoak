@@ -42,5 +42,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Completeness & Postgame — What Community Values Most | 274 | [completeness-and-postgame-community-values.md](pokemon-knowledge/completeness-and-postgame-community-values.md) |
 | Regional Starter Designs — Full Species Specs | 274 | [regional-starter-designs.md](pokemon-knowledge/regional-starter-designs.md) |
 | Regional Starter Implementation — Patterns & Risks | 275 | [regional-starter-implementation-risks.md](pokemon-knowledge/regional-starter-implementation-risks.md) |
+| Starter Identity Overlap — Pseudo-Legendary Saturation | 276 | [starter-identity-overlap-debate.md](pokemon-knowledge/starter-identity-overlap-debate.md) |
 
 Older research files (Cycles 47-247) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
