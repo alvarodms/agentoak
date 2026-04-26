@@ -21,3 +21,6 @@
 | Treecko Hoenn | Steel | v1 | 276 | — | new — crystal gecko, cool blue-gray body, amber eyes, crystal gleam + emanation accents |
 | Grovyle Hoenn | Steel | v1 | 276 | — | new — crystal runner, steel-blue body, violet crystal accents, bright cyan blade edges |
 | Sceptile Hoenn | Steel | v1 | 276 | — | new — crystal guardian, deep steel-blue body, violet crystal orbs, amber eyes |
+| Torchic Hoenn | Fairy | v1 | 277 | — | new — starlit chick, pale violet-white body, luminous gold crest + halo emanation, warm golden-white eyes |
+| Combusken Hoenn | Fairy/Flying | v1 | 277 | — | new — starlit fowl, deep violet body, pale gold wing feathers + edge shimmer, lavender legs |
+| Blaziken Hoenn | Fairy/Flying | v1 | 277 | — | new — celestial angel-bird, pale gold body, deep violet wing-plumes, celestial blue eyes, aura emanation |

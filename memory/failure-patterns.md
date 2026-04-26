@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-276, 25 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-277, 26 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C272: first edit at action 20/56 (36%). C273: first edit at action 47/89 (53%). **C276: first edit at action 7/50 (14%) — RESOLVED for species work.**
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST.
+**Symptom**: 64-132 actions before first edit. C276: first edit at action 7/50 (14%). **C277: REGRESSED to 63% — first productive generator run at action 54/85.** Root cause: generator said "already exists" → agent spent 46 actions re-investigating instead of consulting this file.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -20,10 +20,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration Across Cycles (C261→C262→C264→C265 RESOLVED)
+## Incomplete Species Registration Across Cycles (C261→C262→C264→C265→C277) — RECURRING
 
-**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h.
-**Resolution**: C265 re-ran generate_species.cjs for all 5 species. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) run `make`, (3) only THEN update memory.
+**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C277: Treecko_Hoenn had species.h constant from C276 but generator hadn't populated the other 25 files.
+**Resolution**: C265/C277 fix: ensure generator runs for ALL species and verify output. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
@@ -46,11 +46,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
 **Resolution**: Keep all Pokédex category names to **11 characters max**.
 
-## Species Generator Idempotency Skips species_info (C265→C270 fix)
+## Species Generator Idempotency Skips species_info (C265→C270→C277) — RECURRING
 
-**Symptom**: Species have constants but ZERO species_info.h entries.
-**Cause**: Generator exits "nothing to do" if constant exists in species.h, even if other files are incomplete.
-**Resolution**: After running the generator, ALWAYS verify `species_info.h` with `grep -c "SPECIES_XXX" species_info.h`.
+**Symptom**: Species have constants but ZERO species_info.h entries. Generator says "already exists — nothing to do."
+**Cause**: Generator exits if constant exists in species.h, even if other files are incomplete.
+**Resolution**: (1) After running the generator, ALWAYS verify `species_info.h` with `grep -c "SPECIES_XXX" species_info.h`. (2) If hit: delete the species.h constant, re-run generator. (3) **C277 lesson**: Do NOT spend 46 actions investigating — just apply this fix immediately.
 
 ## Missing pngjs Dependency for Sprite Conversion (C276)
 

@@ -1,0 +1,76 @@
+{
+  "name": "BLAZIKEN_HOENN",
+  "pascalName": "BlazikenHoenn",
+  "graphicsDir": "blaziken_hoenn",
+  "baseSpeciesCry": "SPECIES_BLAZIKEN",
+
+  "stats": {
+    "hp": 80, "atk": 80, "def": 70, "spa": 120, "spd": 85, "spe": 95
+  },
+  "types": ["TYPE_FAIRY", "TYPE_FLYING"],
+  "abilities": ["ABILITY_CUTE_CHARM", "ABILITY_NATURAL_CURE"],
+  "catchRate": 45,
+  "expYield": 209,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_WHITE",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 3, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "Celestial",
+    "height": 19,
+    "weight": 480,
+    "description": [
+      "A being of pure celestial grace,",
+      "it descends from the peak of",
+      "MT. PYRE like a benediction.",
+      "Where ordinary BLAZIKEN burn,",
+      "this form radiates moonlight",
+      "that can humble even DRAGONS."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_POUND"], [1, "MOVE_GROWL"],
+    [1, "MOVE_SWEET_KISS"], [1, "MOVE_CHARM"],
+    [16, "MOVE_WING_ATTACK"], [17, "MOVE_DAZZLING_GLEAM"],
+    [21, "MOVE_QUICK_ATTACK"], [28, "MOVE_AERIAL_ACE"],
+    [32, "MOVE_MOONBLAST"], [36, "MOVE_CALM_MIND"],
+    [42, "MOVE_PLAY_ROUGH"], [49, "MOVE_FLY"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION",
+    "RETURN", "DOUBLE_TEAM", "FACADE",
+    "SECRET_POWER", "REST", "ATTRACT",
+    "FLY", "THUNDERBOLT", "FLAMETHROWER", "SHADOW_BALL",
+    "PSYCHIC", "CALM_MIND", "AERIAL_ACE"
+  ],
+
+  "eggMoves": [],
+
+  "evolution": [],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(56, 64)",
+    "frontPicYOffset": 2,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 4,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_GROW_VIBRATE"
+  }
+}

@@ -110,8 +110,20 @@ C261 attempted registration but species were never committed to species.h. C264 
 
 Sprite Designer v1 sprites: crystal blue-gray palette, amber eyes, violet prismatic accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries).
+**C277 repaired**: added species.h constants and ran generator (C276 had only created configs, sprites, and species_names.h entries).
+
+## C277: Torchic_Hoenn Line (Starlight Bird) — Fairy → Fairy/Flying
+
+| Species | ID | Type | BST | Abilities | Evo |
+|---------|-----|------|-----|-----------|-----|
+| Torchic_Hoenn | 442 | Fairy | 310 | Cute Charm / Natural Cure | → Combusken_Hoenn (Lv16) |
+| Combusken_Hoenn | 443 | Fairy/Flying | 405 | Cute Charm / Natural Cure | → Blaziken_Hoenn (Lv36) |
+| Blaziken_Hoenn | 444 | Fairy/Flying | 530 | Cute Charm / Natural Cure | — |
+
+Sprite Designer v1 sprites: violet-gold palette, celestial blue eyes (Blaziken), halo/aura emanation accents. All indexed, build-clean.
+Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
 
 ---
 
-### Type Distribution (30 species)
-Ice 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, **Steel 4**, Fairy 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Flying 1, Normal 1, Psychic 1, Bug 1.
+### Type Distribution (33 species)
+Ice 6, Fairy 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Normal 1, Psychic 1, Bug 1.

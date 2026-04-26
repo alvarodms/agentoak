@@ -1,0 +1,74 @@
+{
+  "name": "TORCHIC_HOENN",
+  "pascalName": "TorchicHoenn",
+  "graphicsDir": "torchic_hoenn",
+  "baseSpeciesCry": "SPECIES_TORCHIC",
+
+  "stats": {
+    "hp": 45, "atk": 45, "def": 40, "spa": 75, "spd": 55, "spe": 50
+  },
+  "types": ["TYPE_FAIRY", "TYPE_FAIRY"],
+  "abilities": ["ABILITY_CUTE_CHARM", "ABILITY_NATURAL_CURE"],
+  "catchRate": 45,
+  "expYield": 65,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_WHITE",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+
+  "evYield": {
+    "hp": 0, "atk": 0, "def": 0, "spa": 1, "spd": 0, "spe": 0
+  },
+
+  "pokedex": {
+    "categoryName": "StarlitChk",
+    "height": 4,
+    "weight": 22,
+    "description": [
+      "A TORCHIC transformed by the",
+      "sacred energy of MT. PYRE. Its",
+      "inner fire was replaced by soft",
+      "celestial light. It chirps in",
+      "tones that soothe restless",
+      "spirits."
+    ],
+    "pokemonScale": 560,
+    "pokemonOffset": 22,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+
+  "levelUpMoves": [
+    [1, "MOVE_POUND"], [1, "MOVE_GROWL"],
+    [7, "MOVE_SWEET_KISS"], [10, "MOVE_CHARM"],
+    [16, "MOVE_DAZZLING_GLEAM"], [19, "MOVE_QUICK_ATTACK"],
+    [25, "MOVE_MOONBLAST"], [34, "MOVE_PLAY_ROUGH"]
+  ],
+
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION",
+    "RETURN", "DOUBLE_TEAM", "FACADE",
+    "SECRET_POWER", "REST", "ATTRACT"
+  ],
+
+  "eggMoves": ["MOVE_COUNTER", "MOVE_ENDURE", "MOVE_HELPING_HAND"],
+
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "16", "target": "SPECIES_COMBUSKEN_HOENN" }
+  ],
+
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(32, 32)",
+    "frontPicYOffset": 16,
+    "backPicSize": "MON_COORDS_SIZE(40, 40)",
+    "backPicYOffset": 14,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_JUMPS_SMALL"
+  }
+}
