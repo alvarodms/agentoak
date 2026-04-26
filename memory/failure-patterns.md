@@ -20,10 +20,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration Across Cycles (C261→C262→C264→C265→C277) — RECURRING
+## Incomplete Species Registration Across Cycles (C261→C265→C277→C278→C280) — RECURRING
 
-**Symptom**: C261 claimed "all 5 species registered" but constants were never added to species.h. C277: Treecko_Hoenn had species.h constant from C276 but generator hadn't populated the other 25 files. C278: Mudkip_Hoenn line claimed "generator 26/26 files each" but generator was never actually run — only configs, sprites, and species_names.h existed. C279 ran generator to fix.
-**Resolution**: C265/C277/C279 fix: ensure generator runs for ALL species and verify output. **Rule**: After ANY species registration, (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory.
+**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277: Treecko_Hoenn had species.h constant but missing 25 other files. C278: Mudkip_Hoenn line — generator never actually run, only configs+sprites existed. C280: added Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn to encounter tables, trainer parties, and rival scripts WITHOUT running the generator; C281 discovered and fixed by running generator 27/27.
+**Resolution**: **Rule**: After ANY cycle that references a species constant in game data, verify registration: (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory. Never assume a previous cycle registered a species — always verify.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
@@ -68,4 +68,4 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts. New species using base-species cries need ONLY a cry_ids.h entry.
 - **TM/HM learnset fields**: Not all move constants are TM fields.
 - **check_species_registration.sh**: cry_tables.inc check is a known false positive for species reusing base cries.
-- **species_names.h**: NOT covered by `generate_species.cjs` — always add manually after running the generator.
+- **species_names.h**: Covered by `generate_species.cjs` since C281 (27/27 files). No manual steps needed.

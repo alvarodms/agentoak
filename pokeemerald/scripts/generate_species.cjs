@@ -572,6 +572,19 @@ function handleStillFrontPicTable(cfg, N) {
   return { relPath, content };
 }
 
+function handleSpeciesNames(cfg, N) {
+  const relPath = 'src/data/text/species_names.h';
+  let content = readFile(relPath);
+  let displayName = cfg.displayName;
+  if (!displayName) {
+    displayName = N.NAME.replace(/_HOENN$/, '');
+  }
+  const insertion = `    [SPECIES_${N.NAME}] = _("${displayName}"),\n`;
+  content = insertBefore(content, '};', insertion);
+  if (!content) throw new Error(`${relPath}: cannot find closing };`);
+  return { relPath, content };
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -634,6 +647,7 @@ function main() {
     handleShinyPaletteTable,
     handleFootprintTable,
     handleStillFrontPicTable,
+    handleSpeciesNames,
   ];
 
   const results = [];
@@ -655,7 +669,7 @@ function main() {
   }
 
   console.log(`\nSpecies: ${N.SPECIES} (${N.pascal})`);
-  console.log(`Files:   ${results.length}/26`);
+  console.log(`Files:   ${results.length}/27`);
   console.log(`Note:    cry_tables.inc skipped (cry_ids.h handles base cry mapping)\n`);
 
   if (dryRun) {

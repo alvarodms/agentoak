@@ -18,7 +18,7 @@
 
 ---
 
-# v2.5: "The Changed Three" (C274+)
+# v2.5: "The Changed Three" (C274-281)
 
 ## Creative Vision
 
@@ -44,31 +44,18 @@ The migration transformed Hoenn's wild Pokémon, its gym leaders' teams, its vil
 
 Full species specs: `pokemon-knowledge/regional-starter-designs.md`
 
-## Presentation Model
-
-### Wild Encounters (base forms, 4% rarity)
-
-| Species | Location | Level | Thematic Connection |
-|---------|----------|-------|---------------------|
-| Treecko_Hoenn | Meteor Falls B1F 2R | 25-28 | Cosmic mineral deposits crystallized its plant tissue |
-| Torchic_Hoenn | Mt. Pyre Exterior | 27-30 | Sacred mountain's spiritual energy replaced fire with celestial light |
-| Mudkip_Hoenn | Shoal Cave (low tide) | 28-32 | Tidal rhythms awakened primal martial discipline |
-
-### Postgame Gift: Replace Johto Starters
-
-VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn + migration-themed Birch dialogue. Uses existing infrastructure.
-
-## Implementation Roadmap
+## Implementation Roadmap — COMPLETE
 
 | Cycle | Mode | Objective | Status |
 |-------|------|-----------|--------|
 | C274 | planning | Design document, species specs, presentation model | done |
 | C275 | refactor | NPC dialogue generator (charmap validation, atomic writes) | done |
 | C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | done |
-| C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | **DONE** — also repaired C276 Treecko_Hoenn generator output |
-| C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | **DONE** — 3 species (445-447), generator 26/26 files each, species_names.h manual |
-| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue + Mudkip_Hoenn line registration fix | **DONE** |
-| C280 | feature | Trainer integration — postgame rival (6 teams) + Drake T3/T4 Sceptile_Hoenn | **DONE** |
+| C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | done |
+| C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | done |
+| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue | done |
+| C280 | feature | Trainer integration — postgame rival (6 teams) + Drake T3/T4 Sceptile_Hoenn | done |
+| C281 | refactor | species_names.h → generator (27/27 files) + Mudkip_Hoenn line registration fix | done |
 
 ### Dependencies & Risks
 
@@ -87,6 +74,17 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 
 ---
 
+## What Comes Next — v2.6 Planning
+
+v2.5 is complete. The Changed Three arc shipped: 9 species, 3 wild encounter locations, postgame gift, rival integration, Drake integration, full 27-file generator pipeline. The migration narrative is now total — starters, gym leaders, E4, villains, rival, wild encounters all transformed.
+
+**Open questions for v2.6:**
+- What's the next creative arc? Options: postgame content expansion, new region forms for underserved areas, story chapter completion, difficulty/balance pass, community-driven priorities
+- Review deferred issues (#151 custom abilities, #152 custom moves) — are they ready?
+- Review creative-backlog.md for ideas that have been waiting
+
+---
+
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
@@ -95,7 +93,7 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 - **Trainer capacity**: 891/891, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (39 registered)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448.
+- **Custom species (42 registered)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
-- **Generator toolchain**: `generate_species.cjs` (26-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation).
+- **Generator toolchain**: `generate_species.cjs` (27-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation).

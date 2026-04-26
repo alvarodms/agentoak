@@ -4,14 +4,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Species Registration System (C222, updated C262)
+## Species Registration System
 
-**19 files** per species. Check script: `scripts/check_species_registration.sh`. Gap-filler: `scripts/complete_species_registration.cjs`. Files use 3 naming conventions:
-- `SPECIES_X` (species.h, species_info.h, pokemon_icon.c, pokemon.c, cry_ids.h, evolution.h, front_pic_anims.h, level_up_learnset_pointers.h, tmhm_learnsets.h)
-- `NATIONAL_DEX_X` (pokedex.h, pokedex_entries.h, pokedex_orders.h)
-- PascalCase `gMon*_X` (pokemon.h, graphics.h, anim_mon_front_pics.c, level_up_learnsets.h, pokedex_text.h, cry_tables.inc)
+27 files per species — all handled by `generate_species.cjs`. Check: `scripts/check_species_registration.sh`. 3 naming conventions: `SPECIES_X`, `NATIONAL_DEX_X`, PascalCase `gMon*_X`.
 
-**Cry system**: `SpeciesToCryId()` in pokemon.c. Gen 1-2: cry ID = species - 1. Gen 3+: `gSpeciesIdToCryId[species - 276]`. Custom species MUST add cry_ids.h entries mapping `[SPECIES_X - 277] = <base_cry_id>`. Without entries, all custom species default to cry ID 0 (Growlithe). cry_tables.inc entries are for unique cries only; reuse species just need cry_ids.h.
+**Cry system**: Custom species MUST add cry_ids.h entry `[SPECIES_X - 277] = <base_cry_id>`. Without it, defaults to cry ID 0 (Growlithe).
 
 ---
 
@@ -19,11 +16,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Validator checks (C247)**: 6 checks total. Check 1-4: ID/entry/party cross-references, party count consistency. **Check 5**: Field-level validation per struct type (TrainerMonNoItemDefaultMoves needs .iv/.lvl/.species; ItemCustomMoves adds .heldItem/.moves). **Check 6**: Species/move/item constant existence validation against include/constants/. Pre-existing bugs found: sParty_Sawyer1 and sParty_GruntAquaHideout1 are empty arrays (0 members).
+**Capacity**: TRAINERS_COUNT = 891, 12 reclaimable IDs. Validation: `scripts/check_trainers.sh` (6 checks). Rematch table: 5 tiers, all filled.
 
-**Capacity**: TRAINERS_COUNT = 891. 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
-
-**Rival parties (C273, C280)**: Brendan and May have MIRRORED party arrays — identical species, moves, items, levels per encounter. Only the starter-dependent slot differs (3 variants each: Mudkip/Treecko/Torchic). 5 encounters: Route 103, Route 110, Route 119, Lilycove, Postgame Littleroot = 30 total party arrays. Postgame (C280): Lv70-73, 6 mons, IV 200, ace slot = Changed Three form of rival's own starter. Infinite rematch via `cleartrainerflag` before each re-battle.
+**Rival parties**: 30 arrays (5 encounters × 3 starter variants × 2 genders, mirrored). Postgame (C280): Lv70-73, 6 mons, IV 200, ace = Changed Three form.
 
 ---
 
@@ -34,8 +29,6 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 **Safety**: `MSGBOX_NPC` labels safe to rewrite. `MSGBOX_DEFAULT` may have story logic.
 
 **Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_TEMP_* reset on map transition — coord_events using them as guards fire once per visit.
-
-**Quest 7 flag space**: FLAG_QUEST_COSMIC_STARTED (0x2A3), FLAG_QUEST_COSMIC_COMPLETE (0x2A4), FLAG_QUEST_COSMIC_APPEARED (0x2A5). Next available: 0x2A6.
 
 ---
 
@@ -59,17 +52,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Player Sprite Palette System (C227, updated C228)
+## Player Sprite Palette System (C228)
 
-**Palette architecture**: All Brendan overworld sprites share `OBJ_EVENT_PAL_TAG_BRENDAN` (loaded from `graphics/object_events/palettes/brendan.pal`). Same for May. Palette slot: `PALSLOT_PLAYER` (enum in `include/event_object_movement.h`). Reflections loaded via `LoadPlayerObjectReflectionPalette()` from separate `_reflection.pal` files.
-
-**Full manifest**: 16 `.pal` files + 6 PNGs with embedded palettes = 22 files total. Complete list in `memory/pokemon-knowledge/player-sprite-manifest.md`. All recolored to sea-glass teal in C228.
-
-**Runtime palette sources**: Intro bicycle scene uses `player.pal` for BOTH genders (`gIntroPlayer_Pal`). Credits scene uses PNG-generated `.gbapal` per gender. Pokenav icons use PNG-embedded palette.
-
-**Battle transition mugshots**: `brendan_bg.pal`/`may_bg.pal` — gradient palettes (originally blue/pink, now teal). Not overworld palettes.
-
-**Underwater palette**: Separate tag `OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER` from `player_underwater.pal`.
+22 files (16 `.pal` + 6 PNG). Sea-glass teal recolor. Manifest: `memory/pokemon-knowledge/player-sprite-manifest.md`. Key: intro uses `player.pal` for both genders; underwater has separate palette tag.
 
 ---
 
@@ -79,23 +64,15 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Flag System Layout (Cycle 117-118, updated C248)
+## Flag System Layout
 
-**Layout**: Story (0x00-0x2FF) -> Trainer (0x500-0x873) -> System (0x874+) -> Daily (0x972+)
-
-**Custom flags**: 0x264-0x2A5 used (v6.0 through v2.2). 0x286 = `FLAG_DIFFICULTY_CHALLENGE` (C181). 0x298-0x29A = Deoxys quest. 0x29B = Bagon Colony. 0x29C-0x29F = Resonance quest. 0x2A0 = Changed Trainer Nurse. 0x2A1-0x2A2 = Resonance Residue. 0x2A3-0x2A5 = Quest III Cosmic. 0x2A6 = Lilycove postgame grunt (C249). Next available: 0x2A7.
-
-**Repurposed vanilla flags**: 0x2C = `FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT` (C248, was FLAG_UNUSED_0x02C).
-
-**Beast flags**: System flags 0x881-0x886.
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2A8. Next available: **0x2A9**. Beast: 0x881-0x886. Difficulty: 0x286.
 
 ---
 
 ## Multichoice System (Cycle 181)
 
-**Constants**: `include/constants/script_menu.h` — `MULTI_*` IDs (0-114). `MULTI_B_PRESSED` = 127.
-**Data**: `src/data/script_menu.h` — `sMultichoiceLists[]` array indexed by MULTI_* constants.
-**Last used ID**: 115 (`MULTI_DIFFICULTY_DOWNGRADE`). Next available: 116.
+`include/constants/script_menu.h` — `MULTI_*` IDs. Last used: 115. Next: 116.
 
 ---
 
@@ -119,10 +96,9 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Weather System (C149, C159-160)
+## Weather System (C149)
 
-**Weather Omens**: Badge-gated permanent weather on 4 routes (R111/119/120/125). Flags 0x282-0x285.
-**Permanent weather pattern**: Flag-gated `setweather` in `OnTransition` (without `doweather`).
+Weather Omens: badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x285). Pattern: flag-gated `setweather` in `OnTransition` without `doweather`.
 
 ---
 
@@ -140,53 +116,33 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ---
 
-## Species Generator (C254, updated C260, C262)
+## Species Generator (C254→C281)
 
-**Tool**: `scripts/generate_species.cjs` — JSON config → 26-file code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files + 8 graphics table files. Cry_tables.inc excluded (cry_ids.h handles base cry mapping). Idempotency: exits cleanly if species already exists in species.h — **WARNING (C270)**: this is an all-or-nothing check. If the constant exists but species_info.h entry is missing (e.g., generator failed partway), re-running won't fix it. Always verify `grep -c "SPECIES_X" species_info.h` after running. Auto-increments SPECIES_EGG and NATIONAL_DEX_COUNT. **Does NOT update** `src/data/text/species_names.h` — requires manual edits after running the generator. C276: 3 sequential runs (Treecko/Grovyle/Sceptile_Hoenn) — each increments EGG, so order matters.
-
-**Graphics table files (added C260)**: front_pic_table.h, back_pic_table.h, front_pic_coordinates.h, back_pic_coordinates.h, palette_table.h, shiny_palette_table.h, footprint_table.h, still_front_pic_table.h. All use EGG entries as anchor (insertBefore). Coordinate entries require `graphics.frontPicSize`, `graphics.frontPicYOffset`, `graphics.backPicSize`, `graphics.backPicYOffset` in species config JSON.
-
-**Legacy pipeline**: `scripts/add_regional_form.cjs` — 27-file scope but **WARNING (C215-216)**: catastrophically broken. Superseded by generate_species.cjs for the 19-file scope.
+**Tool**: `scripts/generate_species.cjs` — JSON config → **27-file** code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run]`. Config files in `species_configs/`. Handles all 19 check_species files + 8 graphics tables + species_names.h. Cry_tables.inc excluded (cry_ids.h handles mapping). Idempotency: exits if species exists in species.h — **WARNING (C270)**: all-or-nothing check. If constant exists but species_info.h is missing, re-running won't fix; delete species.h constant first. Auto-increments SPECIES_EGG. Sequential runs increment EGG, so order matters. species_names.h: auto-derives display name by stripping `_HOENN` suffix, or uses `cfg.displayName` override.
 
 ## Trainer Generator (C266)
 
-**Tool**: `scripts/generate_trainer.cjs` — JSON config → synchronized trainer_parties.h/trainers.h/opponents.h. Usage: `node scripts/generate_trainer.cjs <config.json> [--dry-run]`. Config files in `trainer_configs/`.
-
-**Two modes**: `create` (new trainer: inserts define before TRAINERS_COUNT, appends party, inserts gTrainers[] entry) and `modify` (existing trainer: replaces party block, updates .party macro if type changed).
-
-**Party type auto-detection**: Scans party members for `heldItem`/`moves` fields → selects correct struct/macro from 4 types (NoItemDefaultMoves, NoItemCustomMoves, ItemDefaultMoves, ItemCustomMoves). Missing fields auto-filled with ITEM_NONE/MOVE_NONE to prevent check_trainers.sh Check 5 failures.
-
-**Idempotency**: In create mode, exits cleanly if trainerId already exists in opponents.h. **Atomic writes**: all file manipulations computed first; only written if all succeed.
+`scripts/generate_trainer.cjs` — JSON config → trainer_parties.h/trainers.h/opponents.h. Two modes: `create` / `modify`. Auto-detects party struct type from fields. Idempotent (exits if trainer exists). Configs in `trainer_configs/`.
 
 ## NPC Dialogue Generator (C275)
 
-**Tool**: `scripts/generate_npc_dialogue.cjs` — JSON config → scripts.inc + map.json atomic writes. Usage: `node scripts/generate_npc_dialogue.cjs <config.json> [--dry-run] [--validate]`. Config files in `scripts/configs/`.
-
-**Config format**: `{"npcs": [{map, label, graphicsId, x, y, scriptType, dialogue, ...}]}`. Single-NPC shorthand: top-level object with `map` + `label` auto-wraps. `scriptType`: `MSGBOX_NPC` (simple) or `MSGBOX_DEFAULT` (lock/faceplayer/release). Optional: `elevation` (default 3), `movementType` (default FACE_DOWN), `movementRangeX/Y` (default 0), `flag` (default "0").
-
-**Charmap validation**: Rejects invalid escapes (only `\n`, `\l`, `\p` allowed), em-dash, en-dash, smart quotes, ASCII `"`. Warns on lines >35 chars. Checks `$` terminator.
-
-**Idempotency**: Skips NPC if `{MapName}_EventScript_{Label}::` already exists in scripts.inc or object_events.
-
-**Output**: Appends EventScript block + Text label to scripts.inc. Appends object_event to map.json.
+`scripts/generate_npc_dialogue.cjs` — JSON config → scripts.inc + map.json atomic writes. Charmap validation built-in. Idempotent (skips if label exists). Configs in `scripts/configs/`.
 
 ---
 
-**Species registration checklist (27 files)**: species.h, pokedex.h (national+hoenn+counts), species_info.h, graphics/pokemon.h (6 INCBINs), graphics.h (7 externs — MUST include gMonFrontPic_*), front/back_pic_coordinates.h, front/back_pic_table.h, palette/shiny_palette_table.h, still_front_pic_table.h, footprint_table.h, pokemon_icon.c (icon+palette), front_pic_anims.h (3 locations), pokedex_text.h, pokedex_entries.h, level_up_learnsets.h, level_up_learnset_pointers.h, pokemon.c (3 arrays), anim_mon_front_pics.c, tmhm_learnsets.h, egg_moves.h (insert BEFORE EGG_MOVES_TERMINATOR inside array, NOT the #define), pokedex_orders.h (3 arrays), cry_ids.h (map species to base cry ID), evolution.h, enemy_mon_elevation.h (if floating). **+1 manual file**: species_names.h (not covered by generator). **Pitfall**: When anchor text (e.g., "Cry_Arcanine") appears in both vanilla and custom sections, `string.replace()` matches the FIRST occurrence. Use targeted replacement or search from end.
+**Species registration**: All 27 files handled by `generate_species.cjs` since C281 — no manual steps. Only `enemy_mon_elevation.h` (floating species) needs manual addition. **Pitfall**: anchor text appearing in both vanilla and custom sections — `string.replace()` matches FIRST occurrence.
 
 ---
 
 ## Cross-Gen Evolution Pipeline (C212-218)
 
-Ad-hoc scripts per batch (C213, C218) cover ~22-27 files. Manual edits still needed: `pokemon.c` (3 mapping arrays), `anim_mon_front_pics.c`, `enemy_mon_elevation.h` (floating only), `evolution.h`. **Pitfall**: `egg_moves.h` MUST have `EGG_MOVES_TERMINATOR` between species blocks.
+Superseded by `generate_species.cjs` for individual species. **Pitfall**: `egg_moves.h` MUST have `EGG_MOVES_TERMINATOR` between species blocks.
 
 ---
 
-## Custom Ability Implementation Pattern (C241)
+## Custom Ability Implementation (C241)
 
-**4 files minimum**: (1) `include/constants/abilities.h` — constant + bump ABILITIES_COUNT. (2) `src/data/text/abilities.h` — 3 additions: description string, gAbilityNames entry, gAbilityDescriptionPointers entry. (3) `src/battle_util.c` — battle effect logic. (4) `src/data/pokemon/species_info.h` — assign to species.
-
-**Battle hook for attacker-triggered abilities**: Add logic AFTER the inner `switch (gLastUsedAbility)` in the `ABILITYEFFECT_ON_DAMAGE` case. Check `gBattleMons[gBattlerAttacker].ability` directly (not gLastUsedAbility, which is the target's ability). Set `gLastUsedAbility` to the custom ability for battle script display. Call `RecordAbilityBattle(gBattlerAttacker, ...)` explicitly since the default recording uses `battler` (= target). Use `BattleScript_ApplySecondaryEffect` with `MOVE_EFFECT_POISON` (no `MOVE_EFFECT_AFFECTS_USER` — that flag applies to the ATTACKER, not the target).
+4 files: abilities.h (constant + ABILITIES_COUNT), abilities data (src/data/text/abilities.h: string + name + pointer), battle_util.c (battle logic), species_info.h (assign). Attacker-triggered: check `gBattleMons[gBattlerAttacker].ability` in `ABILITYEFFECT_ON_DAMAGE` case, set `gLastUsedAbility` for display, `RecordAbilityBattle(gBattlerAttacker, ...)`.
 
 ---
 

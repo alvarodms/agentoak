@@ -65,7 +65,7 @@ const struct WildPokemon gRoute102_LandMons[] =
 {
     { 3, 4, SPECIES_ZIGZAGOON },
     { 3, 4, SPECIES_SEEDOT },
-    { 3, 4, SPECIES_LOTAD },
+    { 3, 4, SPECIES_LOTAD_HOENN },
     { 3, 4, SPECIES_POOCHYENA },
     { 3, 4, SPECIES_SURSKIT },
     { 4, 4, SPECIES_RALTS },
@@ -545,7 +545,7 @@ const struct WildPokemon gPetalburgWoods_LandMons[] =
     { 5, 6, SPECIES_TAILLOW },
     { 5, 6, SPECIES_SEEDOT },
     { 5, 7, SPECIES_SPINARAK },
-    { 7, 8, SPECIES_SHROOMISH },
+    { 6, 7, SPECIES_SHROOMISH_HOENN },
     { 6, 7, SPECIES_ODDISH },
     { 7, 8, SPECIES_HERACROSS },
     { 6, 7, SPECIES_PINECO },
@@ -760,7 +760,7 @@ const struct WildPokemon gMeteorFalls_B1F_2R_LandMons[] =
     { 37, 37, SPECIES_SOLROCK },
     { 28, 30, SPECIES_BAGON_HOENN },
     { 39, 39, SPECIES_SOLROCK },
-    { 38, 38, SPECIES_GOLBAT },
+    { 25, 28, SPECIES_TREECKO_HOENN },
     { 40, 40, SPECIES_GOLBAT },
     { 38, 38, SPECIES_GOLBAT },
     { 40, 40, SPECIES_GOLBAT },
@@ -1325,7 +1325,7 @@ const struct WildPokemon gMtPyre_Exterior_LandMons[] =
     { 29, 29, SPECIES_VULPIX },
     { 25, 25, SPECIES_VULPIX },
     { 26, 28, SPECIES_CORSOLA_HOENN },
-    { 27, 27, SPECIES_WINGULL },
+    { 27, 30, SPECIES_TORCHIC_HOENN },
     { 26, 26, SPECIES_WINGULL },
     { 28, 28, SPECIES_WINGULL },
 };
@@ -2181,8 +2181,8 @@ const struct WildPokemon gVictoryRoad_B2F_LandMons[] =
     { 44, 48, SPECIES_GOLBAT },
     { 44, 48, SPECIES_PUPITAR },
     { 46, 50, SPECIES_LAIRON },
-    { 46, 50, SPECIES_SHELGON },
-    { 46, 50, SPECIES_MEDICHAM },
+    { 44, 44, SPECIES_GABITE },
+    { 46, 46, SPECIES_GABITE },
 };
 
 const struct WildPokemonInfo gVictoryRoad_B2F_LandMonsInfo = { 10, gVictoryRoad_B2F_LandMons };
@@ -2381,7 +2381,7 @@ const struct WildPokemon gShoalCave_LowTideInnerRoom_LandMons[] =
     { 28, 30, SPECIES_SPHEAL },
     { 28, 31, SPECIES_SNEASEL },
     { 28, 31, SPECIES_SNORUNT },
-    { 26, 29, SPECIES_GEODUDE },
+    { 28, 32, SPECIES_MUDKIP_HOENN },
     { 28, 31, SPECIES_SABLEYE },
     { 30, 32, SPECIES_GLALIE },
     { 30, 32, SPECIES_SNEASEL },
