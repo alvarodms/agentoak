@@ -21,9 +21,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Validator checks (C247)**: 6 checks total. Check 1-4: ID/entry/party cross-references, party count consistency. **Check 5**: Field-level validation per struct type (TrainerMonNoItemDefaultMoves needs .iv/.lvl/.species; ItemCustomMoves adds .heldItem/.moves). **Check 6**: Species/move/item constant existence validation against include/constants/. Pre-existing bugs found: sParty_Sawyer1 and sParty_GruntAquaHideout1 are empty arrays (0 members).
 
-**Capacity**: TRAINERS_COUNT = 885 (at cap). 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
+**Capacity**: TRAINERS_COUNT = 891. 12 reclaimable IDs (C192 audit): #117, #173, #462, #485, #486, #568, #581, #633, #634, #851, #852, #853. Note: #854 is NOT reclaimable (in rematch table). Rematch table: 5 tiers, all filled.
 
-**Rival parties (C273)**: Brendan and May have MIRRORED party arrays — identical species, moves, items, levels per encounter. Only the starter-dependent slot differs (3 variants each: Mudkip/Treecko/Torchic). 4 encounters: Route 103, Route 110, Route 119, Lilycove = 24 total party arrays. Editing shared species slots matches 2 locations (Brendan+May); use `replace_all: true`.
+**Rival parties (C273, C280)**: Brendan and May have MIRRORED party arrays — identical species, moves, items, levels per encounter. Only the starter-dependent slot differs (3 variants each: Mudkip/Treecko/Torchic). 5 encounters: Route 103, Route 110, Route 119, Lilycove, Postgame Littleroot = 30 total party arrays. Postgame (C280): Lv70-73, 6 mons, IV 200, ace slot = Changed Three form of rival's own starter. Infinite rematch via `cleartrainerflag` before each re-battle.
 
 ---
 

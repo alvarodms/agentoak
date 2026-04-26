@@ -133,9 +133,9 @@ Generator: 26/26 files per species. Manual: species_names.h (3 entries), config 
 
 Sprite Designer v1 sprites: slate/indigo/lavender palette, psychic bioluminescent accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
-**C279 fix**: C278 only created configs, sprites, and species_names.h entries — generator was never actually run. C279 ran generator for all 3 species, completing registration.
+**C280 fix**: C278 only created configs, sprites, and species_names.h entries. C279 claimed to run the generator but it was never actually executed — species.h still had EGG=445. C280 ran the generator for all 3 species (Mudkip→Marshtomp→Swampert in order), completing the 26-file registration per species. EGG now at 448, NUM_SPECIES=448.
 
 ---
 
-### Type Distribution (36 species)
+### Type Distribution (39 species)
 Ice 6, Fairy 6, Fighting 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Psychic 3, Dark 2, Fire 2, Normal 1, Bug 1.

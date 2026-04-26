@@ -68,7 +68,7 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 | C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | **DONE** — also repaired C276 Treecko_Hoenn generator output |
 | C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | **DONE** — 3 species (445-447), generator 26/26 files each, species_names.h manual |
 | C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue + Mudkip_Hoenn line registration fix | **DONE** |
-| C280 | feature | Trainer integration — key NPCs carrying regional starters | — |
+| C280 | feature | Trainer integration — postgame rival (6 teams) + Drake T3/T4 Sceptile_Hoenn | **DONE** |
 
 ### Dependencies & Risks
 
@@ -90,12 +90,12 @@ VAR_DEX_UPGRADE_JOHTO_STARTER_STATE → Treecko_Hoenn/Torchic_Hoenn/Mudkip_Hoenn
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2A7.
+- **Flag space**: Custom 0x264+. Next available: 0x2A9.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
-- **Trainer capacity**: 885/885, 12 reclaimable IDs.
+- **Trainer capacity**: 891/891, 12 reclaimable IDs.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (36 registered)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448.
+- **Custom species (39 registered)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
 - **Generator toolchain**: `generate_species.cjs` (26-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation).

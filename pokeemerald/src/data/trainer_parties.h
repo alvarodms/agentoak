@@ -5755,10 +5755,10 @@ static const struct TrainerMonItemCustomMoves sParty_GlaciaRematch3[] = {
 static const struct TrainerMonItemCustomMoves sParty_DrakeRematch3[] = {
     {
     .iv = 255,
-    .lvl = 82,
-    .species = SPECIES_FLYGON,
+    .lvl = 85,
+    .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_TOXIC}
+    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     },
     {
     .iv = 255,
@@ -5989,10 +5989,10 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     },
     {
     .iv = 255,
-    .lvl = 91,
-    .species = SPECIES_FLYGON,
+    .lvl = 92,
+    .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_FIRE_BLAST}
+    .moves = {MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_IRON_HEAD, MOVE_ROCK_SLIDE}
     },
     {
     .iv = 255,
@@ -11242,6 +11242,279 @@ static const struct TrainerMonItemCustomMoves sParty_MayLilycoveTorchic[] = {
     .species = SPECIES_SWAMPERT,
     .heldItem = ITEM_MYSTIC_WATER,
     .moves = {MOVE_EARTHQUAKE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_ROCK_SLIDE}
+    }
+};
+
+/* Postgame Rival — Treecko variant (player chose Treecko/Larvitar, rival has Blaziken) */
+static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameTreecko[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_DRAGONITE,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_EXTREME_SPEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_BLAZIKEN,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_FLARE_BLITZ, MOVE_SKY_UPPERCUT, MOVE_ROCK_SLIDE, MOVE_THUNDER_PUNCH}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_BLAZIKEN_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MayPostgameTreecko[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_DRAGONITE,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_EXTREME_SPEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_BLAZIKEN,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_FLARE_BLITZ, MOVE_SKY_UPPERCUT, MOVE_ROCK_SLIDE, MOVE_THUNDER_PUNCH}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_BLAZIKEN_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
+    }
+};
+
+/* Postgame Rival — Torchic variant (player chose Torchic/Bagon, rival has Swampert) */
+static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameTorchic[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_SALAMENCE,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_SWAMPERT,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_EARTHQUAKE, MOVE_WATERFALL, MOVE_ICE_PUNCH, MOVE_ROCK_SLIDE}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_SWAMPERT_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_BULK_UP, MOVE_CROSS_CHOP, MOVE_PSYCHIC, MOVE_EARTHQUAKE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MayPostgameTorchic[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_SALAMENCE,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_SWAMPERT,
+    .heldItem = ITEM_CHOICE_BAND,
+    .moves = {MOVE_EARTHQUAKE, MOVE_WATERFALL, MOVE_ICE_PUNCH, MOVE_ROCK_SLIDE}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_SWAMPERT_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_BULK_UP, MOVE_CROSS_CHOP, MOVE_PSYCHIC, MOVE_EARTHQUAKE}
+    }
+};
+
+/* Postgame Rival — Mudkip variant (player chose Mudkip/Dratini, rival has Sceptile) */
+static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameMudkip[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_TYRANITAR,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_STONE_EDGE, MOVE_CRUNCH, MOVE_EARTHQUAKE}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_SCEPTILE,
+    .heldItem = ITEM_MIRACLE_SEED,
+    .moves = {MOVE_LEAF_BLADE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_SCEPTILE_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MayPostgameMudkip[] = {
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_TYRANITAR,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_STONE_EDGE, MOVE_CRUNCH, MOVE_EARTHQUAKE}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_STANTLER_HOENN,
+    .heldItem = ITEM_SPELL_TAG,
+    .moves = {MOVE_SHADOW_BALL, MOVE_GIGA_DRAIN, MOVE_HYPNOSIS, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 200,
+    .lvl = 70,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_RAIN_DANCE, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 200,
+    .lvl = 71,
+    .species = SPECIES_PINSIR_HOENN,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_X_SCISSOR, MOVE_FLARE_BLITZ, MOVE_CLOSE_COMBAT}
+    },
+    {
+    .iv = 200,
+    .lvl = 72,
+    .species = SPECIES_SCEPTILE,
+    .heldItem = ITEM_MIRACLE_SEED,
+    .moves = {MOVE_LEAF_BLADE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE}
+    },
+    {
+    .iv = 200,
+    .lvl = 73,
+    .species = SPECIES_SCEPTILE_HOENN,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     }
 };
 

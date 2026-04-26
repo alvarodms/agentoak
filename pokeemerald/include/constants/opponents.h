@@ -886,8 +886,14 @@
 #define TRAINER_DRACONID_KAELEN            882
 #define TRAINER_NATE_AND_EMMA_1            883
 #define TRAINER_MILES_AND_SIERRA           884
+#define TRAINER_BRENDAN_POSTGAME_TREECKO   885
+#define TRAINER_BRENDAN_POSTGAME_TORCHIC   886
+#define TRAINER_BRENDAN_POSTGAME_MUDKIP    887
+#define TRAINER_MAY_POSTGAME_TREECKO       888
+#define TRAINER_MAY_POSTGAME_TORCHIC       889
+#define TRAINER_MAY_POSTGAME_MUDKIP        890
 
-#define TRAINERS_COUNT                      885  // Count of trainer IDs (0-884)
-#define MAX_TRAINERS_COUNT                  885  // Trainer flag space (0x500-0x874 = 885 slots)
+#define TRAINERS_COUNT                      891  // Count of trainer IDs (0-890)
+#define MAX_TRAINERS_COUNT                  891  // Trainer flag space (0x500-0x874 = 891 slots)
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

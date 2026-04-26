@@ -726,8 +726,8 @@
 #define FLAG_QUEST_COSMIC_COMPLETE  0x2A4 /* Quest 7: The Answer - complete (C242) */
 #define FLAG_QUEST_COSMIC_APPEARED  0x2A5 /* Quest 7: Deoxys_Hoenn appeared at Sky Pillar (C242) */
 #define FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT 0x2A6
-#define FLAG_UNUSED_0x2A7  0x2A7 // Unused Flag
-#define FLAG_UNUSED_0x2A8  0x2A8 // Unused Flag
+#define FLAG_BATTLED_RIVAL_POSTGAME  0x2A7
+#define FLAG_HIDE_LITTLEROOT_POSTGAME_RIVAL  0x2A8
 #define FLAG_UNUSED_0x2A9  0x2A9 // Unused Flag
 #define FLAG_UNUSED_0x2AA  0x2AA // Unused Flag
 #define FLAG_UNUSED_0x2AB  0x2AB // Unused Flag

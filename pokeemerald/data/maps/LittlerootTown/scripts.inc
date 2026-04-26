@@ -46,6 +46,12 @@ LittlerootTown_OnTransition:
 	call_if_eq VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_EventScript_SetRivalLeftForRoute103
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_HideMapNamePopup
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_EventScript_LeftLabAfterDexUpgrade
+	goto_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_EventScript_ShowPostgameRival
+	setflag FLAG_HIDE_LITTLEROOT_POSTGAME_RIVAL
+	end
+
+LittlerootTown_EventScript_ShowPostgameRival:
+	clearflag FLAG_HIDE_LITTLEROOT_POSTGAME_RIVAL
 	end
 
 LittlerootTown_EventScript_LeftLabAfterDexUpgrade::
@@ -1017,4 +1023,188 @@ LittlerootTown_Text_BoyPostgame:
 	.string "migration patterns in his data.\p"
 	.string "You should go see him in his lab.\n"
 	.string "He seems really excited!$"
+
+@ Pokemon Rivals Postgame Battle — "Where It All Started"
+
+LittlerootTown_EventScript_PostgameRival::
+	lock
+	faceplayer
+	goto_if_set FLAG_BATTLED_RIVAL_POSTGAME, LittlerootTown_EventScript_PostgameRivalRematch
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_EventScript_PostgameMayFirst
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_EventScript_PostgameBrendanFirst
+	end
+
+LittlerootTown_EventScript_PostgameMayFirst::
+	playbgm MUS_ENCOUNTER_MAY, TRUE
+	msgbox LittlerootTown_Text_PostgameRivalIntro, MSGBOX_DEFAULT
+	switch VAR_STARTER_MON
+	case 0, LittlerootTown_EventScript_BattleMayPostgameTreecko
+	case 1, LittlerootTown_EventScript_BattleMayPostgameTorchic
+	case 2, LittlerootTown_EventScript_BattleMayPostgameMudkip
+	end
+
+LittlerootTown_EventScript_PostgameBrendanFirst::
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	msgbox LittlerootTown_Text_PostgameRivalIntro, MSGBOX_DEFAULT
+	switch VAR_STARTER_MON
+	case 0, LittlerootTown_EventScript_BattleBrendanPostgameTreecko
+	case 1, LittlerootTown_EventScript_BattleBrendanPostgameTorchic
+	case 2, LittlerootTown_EventScript_BattleBrendanPostgameMudkip
+	end
+
+LittlerootTown_EventScript_BattleMayPostgameTreecko::
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_TREECKO, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_BattleMayPostgameTorchic::
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_TORCHIC, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_BattleMayPostgameMudkip::
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_MUDKIP, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_BattleBrendanPostgameTreecko::
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_TREECKO, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_BattleBrendanPostgameTorchic::
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_TORCHIC, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_BattleBrendanPostgameMudkip::
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_MUDKIP, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalFirstWin
+	end
+
+LittlerootTown_EventScript_PostgameRivalFirstWin::
+	setflag FLAG_BATTLED_RIVAL_POSTGAME
+	msgbox LittlerootTown_Text_PostgameRivalPostBattle, MSGBOX_DEFAULT
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	release
+	end
+
+@ Rematch path
+
+LittlerootTown_EventScript_PostgameRivalRematch::
+	checkplayergender
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_EventScript_PostgameMayRematch
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_EventScript_PostgameBrendanRematch
+	end
+
+LittlerootTown_EventScript_PostgameMayRematch::
+	playbgm MUS_ENCOUNTER_MAY, TRUE
+	msgbox LittlerootTown_Text_PostgameRivalRematchAsk, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_EventScript_PostgameRivalDecline
+	switch VAR_STARTER_MON
+	case 0, LittlerootTown_EventScript_RematchMayTreecko
+	case 1, LittlerootTown_EventScript_RematchMayTorchic
+	case 2, LittlerootTown_EventScript_RematchMayMudkip
+	end
+
+LittlerootTown_EventScript_PostgameBrendanRematch::
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	msgbox LittlerootTown_Text_PostgameRivalRematchAsk, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_EventScript_PostgameRivalDecline
+	switch VAR_STARTER_MON
+	case 0, LittlerootTown_EventScript_RematchBrendanTreecko
+	case 1, LittlerootTown_EventScript_RematchBrendanTorchic
+	case 2, LittlerootTown_EventScript_RematchBrendanMudkip
+	end
+
+LittlerootTown_EventScript_RematchMayTreecko::
+	cleartrainerflag TRAINER_MAY_POSTGAME_TREECKO
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_TREECKO, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_RematchMayTorchic::
+	cleartrainerflag TRAINER_MAY_POSTGAME_TORCHIC
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_TORCHIC, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_RematchMayMudkip::
+	cleartrainerflag TRAINER_MAY_POSTGAME_MUDKIP
+	trainerbattle_no_intro TRAINER_MAY_POSTGAME_MUDKIP, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_RematchBrendanTreecko::
+	cleartrainerflag TRAINER_BRENDAN_POSTGAME_TREECKO
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_TREECKO, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_RematchBrendanTorchic::
+	cleartrainerflag TRAINER_BRENDAN_POSTGAME_TORCHIC
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_TORCHIC, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_RematchBrendanMudkip::
+	cleartrainerflag TRAINER_BRENDAN_POSTGAME_MUDKIP
+	trainerbattle_no_intro TRAINER_BRENDAN_POSTGAME_MUDKIP, LittlerootTown_Text_PostgameRivalDefeat
+	goto LittlerootTown_EventScript_PostgameRivalRematchWin
+	end
+
+LittlerootTown_EventScript_PostgameRivalRematchWin::
+	msgbox LittlerootTown_Text_PostgameRivalRematchPost, MSGBOX_DEFAULT
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	release
+	end
+
+LittlerootTown_EventScript_PostgameRivalDecline::
+	msgbox LittlerootTown_Text_PostgameRivalNoThanks, MSGBOX_DEFAULT
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	release
+	end
+
+LittlerootTown_Text_PostgameRivalIntro:
+	.string "{PLAYER}! I was hoping you'd\n"
+	.string "come back to LITTLEROOT.\p"
+	.string "I've been traveling to all the\n"
+	.string "places the migration touched.\p"
+	.string "And I found something incredible\n"
+	.string "in the wild… A starter POKéMON,\l"
+	.string "but completely changed.\n"
+	.string "Transformed by HOENN itself.\p"
+	.string "I raised it alongside my team.\p"
+	.string "One more battle, {PLAYER}.\n"
+	.string "Right here where it all started!$"
+
+LittlerootTown_Text_PostgameRivalDefeat:
+	.string "…Wow.\p"
+	.string "I knew you were strong, but\n"
+	.string "that was something else.\p"
+	.string "The migration changed HOENN.\n"
+	.string "And I think it changed us, too.$"
+
+LittlerootTown_Text_PostgameRivalPostBattle:
+	.string "I'll be right here if you ever\n"
+	.string "want a rematch.\p"
+	.string "The road doesn't end,\n"
+	.string "{PLAYER}. Not for us.$"
+
+LittlerootTown_Text_PostgameRivalRematchAsk:
+	.string "{PLAYER}! Ready to go again?\n"
+	.string "I've been training!$"
+
+LittlerootTown_Text_PostgameRivalNoThanks:
+	.string "No worries! I'll be here\n"
+	.string "whenever you're ready.$"
+
+LittlerootTown_Text_PostgameRivalRematchPost:
+	.string "Every time we battle, I learn\n"
+	.string "something new.\p"
+	.string "Come back anytime, {PLAYER}!$"
 
