@@ -123,7 +123,18 @@ Generator: 26/26 files per species. Manual: species_names.h (3 entries).
 Sprite Designer v1 sprites: violet-gold palette, celestial blue eyes (Blaziken), halo/aura emanation accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
 
+## C278: Mudkip_Hoenn Line (Tidal Monk) — Fighting → Fighting/Psychic
+
+| Species | ID | Type | BST | Abilities | Evo |
+|---------|-----|------|-----|-----------|-----|
+| Mudkip_Hoenn | 445 | Fighting | 310 | Guts / Synchronize | → Marshtomp_Hoenn (Lv16) |
+| Marshtomp_Hoenn | 446 | Fighting/Psychic | 405 | Guts / Synchronize | → Swampert_Hoenn (Lv36) |
+| Swampert_Hoenn | 447 | Fighting/Psychic | 535 | Guts / Synchronize | — |
+
+Sprite Designer v1 sprites: slate/indigo/lavender palette, psychic bioluminescent accents. All indexed, build-clean.
+Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
+
 ---
 
-### Type Distribution (33 species)
-Ice 6, Fairy 6, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Fighting 2, Dark 2, Fire 2, Normal 1, Psychic 1, Bug 1.
+### Type Distribution (36 species)
+Ice 6, Fairy 6, Fighting 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Psychic 3, Dark 2, Fire 2, Normal 1, Bug 1.

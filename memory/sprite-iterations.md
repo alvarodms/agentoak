@@ -24,3 +24,6 @@
 | Torchic Hoenn | Fairy | v1 | 277 | — | new — starlit chick, pale violet-white body, luminous gold crest + halo emanation, warm golden-white eyes |
 | Combusken Hoenn | Fairy/Flying | v1 | 277 | — | new — starlit fowl, deep violet body, pale gold wing feathers + edge shimmer, lavender legs |
 | Blaziken Hoenn | Fairy/Flying | v1 | 277 | — | new — celestial angel-bird, pale gold body, deep violet wing-plumes, celestial blue eyes, aura emanation |
+| Mudkip Hoenn | Fighting | v1 | 278 | — | new — tidal monk, slate-indigo body, lavender headfin tip + emanation, brine-stone gills |
+| Marshtomp Hoenn | Fighting/Psychic | v1 | 278 | — | new — tidal monk, dark slate body, lavender headfin + forearm bioluminescent marks |
+| Swampert Hoenn | Fighting/Psychic | v1 | 278 | — | new — tidal titan, deep slate-indigo body, violet headcrest emanation, vivid lavender psychic accents |

@@ -1,0 +1,65 @@
+{
+  "name": "MARSHTOMP_HOENN",
+  "pascalName": "MarshtompHoenn",
+  "graphicsDir": "marshtomp_hoenn",
+  "baseSpeciesCry": "SPECIES_MARSHTOMP",
+  "stats": { "hp": 70, "atk": 80, "def": 65, "spa": 70, "spd": 70, "spe": 50 },
+  "types": ["TYPE_FIGHTING", "TYPE_PSYCHIC"],
+  "abilities": ["ABILITY_GUTS", "ABILITY_SYNCHRONIZE"],
+  "catchRate": 45,
+  "expYield": 143,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GRAY",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "evYield": { "hp": 0, "atk": 1, "def": 0, "spa": 1, "spd": 0, "spe": 0 },
+  "pokedex": {
+    "categoryName": "TidalMonk",
+    "height": 7,
+    "weight": 256,
+    "description": [
+      "MARSHTOMP HOENN meditates in",
+      "the tidal caves where water",
+      "meets stone. Its fists strike",
+      "with focused psychic force,",
+      "guided by an inner calm that",
+      "the ocean taught it."
+    ],
+    "pokemonScale": 340,
+    "pokemonOffset": 12,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"], [1, "MOVE_LEER"],
+    [1, "MOVE_LOW_KICK"], [1, "MOVE_FOCUS_ENERGY"],
+    [15, "MOVE_MACH_PUNCH"], [16, "MOVE_CONFUSION"],
+    [20, "MOVE_BRICK_BREAK"], [25, "MOVE_PSYBEAM"],
+    [31, "MOVE_BULK_UP"], [39, "MOVE_EXTRASENSORY"],
+    [46, "MOVE_COUNTER"], [52, "MOVE_CROSS_CHOP"]
+  ],
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION",
+    "RETURN", "PSYCHIC", "BRICK_BREAK", "DOUBLE_TEAM",
+    "FACADE", "SECRET_POWER", "REST", "ATTRACT",
+    "FOCUS_PUNCH"
+  ],
+  "eggMoves": [],
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "36", "target": "SPECIES_SWAMPERT_HOENN" }
+  ],
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(48, 48)",
+    "frontPicYOffset": 10,
+    "backPicSize": "MON_COORDS_SIZE(56, 48)",
+    "backPicYOffset": 8,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}

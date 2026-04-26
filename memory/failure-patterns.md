@@ -4,9 +4,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-277, 26 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-278, 26 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C276: first edit at action 7/50 (14%). **C277: REGRESSED to 63% — first productive generator run at action 54/85.** Root cause: generator said "already exists" → agent spent 46 actions re-investigating instead of consulting this file.
+**Symptom**: 64-132 actions before first edit. C276: first edit at action 7/50 (14%). C277: REGRESSED to 63%. **C278: RECOVERED — first edit at action 7/30 (23%).** Root cause (when it recurs): generator said "already exists" → agent re-investigates instead of consulting this file.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
@@ -55,7 +55,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Missing pngjs Dependency for Sprite Conversion (C276)
 
 **Symptom**: `node convert_sprites_indexed.cjs` fails with `Error: Cannot find module 'pngjs'`.
-**Resolution**: `npm install pngjs` before running `convert_sprites_indexed.cjs`. Cost: ~5 actions. Verify pngjs is available before sprite conversion step in future batches.
+**Resolution**: `npm install pngjs` before running `convert_sprites_indexed.cjs`. Verify pngjs is available before sprite conversion step.
 
 ## Anticipated Pitfalls
 

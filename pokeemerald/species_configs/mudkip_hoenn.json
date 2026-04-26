@@ -1,0 +1,63 @@
+{
+  "name": "MUDKIP_HOENN",
+  "pascalName": "MudkipHoenn",
+  "graphicsDir": "mudkip_hoenn",
+  "baseSpeciesCry": "SPECIES_MUDKIP",
+  "stats": { "hp": 50, "atk": 65, "def": 45, "spa": 55, "spd": 55, "spe": 40 },
+  "types": ["TYPE_FIGHTING", "TYPE_FIGHTING"],
+  "abilities": ["ABILITY_GUTS", "ABILITY_SYNCHRONIZE"],
+  "catchRate": 45,
+  "expYield": 65,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GRAY",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "evYield": { "hp": 0, "atk": 1, "def": 0, "spa": 0, "spd": 0, "spe": 0 },
+  "pokedex": {
+    "categoryName": "TidalMonk",
+    "height": 4,
+    "weight": 77,
+    "description": [
+      "A MUDKIP transformed by the",
+      "tidal rhythms of SHOAL CAVE.",
+      "It trains in low-tide pools,",
+      "throwing rapid punches at the",
+      "retreating waves. Its focus",
+      "is absolute."
+    ],
+    "pokemonScale": 491,
+    "pokemonOffset": 20,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"], [1, "MOVE_LEER"],
+    [6, "MOVE_LOW_KICK"], [10, "MOVE_FOCUS_ENERGY"],
+    [15, "MOVE_MACH_PUNCH"], [19, "MOVE_BRICK_BREAK"],
+    [24, "MOVE_BULK_UP"], [28, "MOVE_COUNTER"],
+    [33, "MOVE_TAKE_DOWN"], [37, "MOVE_SKY_UPPERCUT"]
+  ],
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION",
+    "RETURN", "BRICK_BREAK", "DOUBLE_TEAM", "FACADE",
+    "SECRET_POWER", "REST", "ATTRACT", "FOCUS_PUNCH"
+  ],
+  "eggMoves": ["MOVE_COUNTER", "MOVE_STOMP", "MOVE_CURSE"],
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "16", "target": "SPECIES_MARSHTOMP_HOENN" }
+  ],
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(32, 32)",
+    "frontPicYOffset": 16,
+    "backPicSize": "MON_COORDS_SIZE(40, 40)",
+    "backPicYOffset": 14,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "SWAMPERT_HOENN",
+  "pascalName": "SwampertHoenn",
+  "graphicsDir": "swampert_hoenn",
+  "baseSpeciesCry": "SPECIES_SWAMPERT",
+  "stats": { "hp": 100, "atk": 100, "def": 85, "spa": 95, "spd": 95, "spe": 60 },
+  "types": ["TYPE_FIGHTING", "TYPE_PSYCHIC"],
+  "abilities": ["ABILITY_GUTS", "ABILITY_SYNCHRONIZE"],
+  "catchRate": 45,
+  "expYield": 210,
+  "genderRatio": "PERCENT_FEMALE(12.5)",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_GRAY",
+  "noFlip": false,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "evYield": { "hp": 0, "atk": 1, "def": 0, "spa": 1, "spd": 1, "spe": 0 },
+  "pokedex": {
+    "categoryName": "TidalTitan",
+    "height": 15,
+    "weight": 819,
+    "description": [
+      "A SWAMPERT that mastered the",
+      "discipline of SHOAL CAVE's",
+      "eternal tides. Its body holds",
+      "immense power in perfect",
+      "stillness -- a single strike",
+      "bends mind and matter alike."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"], [1, "MOVE_LEER"],
+    [1, "MOVE_LOW_KICK"], [1, "MOVE_FOCUS_ENERGY"],
+    [15, "MOVE_MACH_PUNCH"], [16, "MOVE_CONFUSION"],
+    [20, "MOVE_BRICK_BREAK"], [25, "MOVE_PSYBEAM"],
+    [31, "MOVE_BULK_UP"], [39, "MOVE_EXTRASENSORY"],
+    [46, "MOVE_CALM_MIND"], [52, "MOVE_CROSS_CHOP"],
+    [61, "MOVE_SUPERPOWER"]
+  ],
+  "tmhm": [
+    "TOXIC", "HIDDEN_POWER", "PROTECT", "FRUSTRATION",
+    "EARTHQUAKE", "RETURN", "PSYCHIC", "SHADOW_BALL",
+    "BRICK_BREAK", "DOUBLE_TEAM", "FACADE", "SECRET_POWER",
+    "REST", "ATTRACT", "FOCUS_PUNCH", "ROCK_SMASH",
+    "STRENGTH"
+  ],
+  "eggMoves": [],
+  "evolution": [],
+  "graphics": {
+    "frontPicSize": "MON_COORDS_SIZE(56, 56)",
+    "frontPicYOffset": 4,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 2,
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SHAKE"
+  }
+}
