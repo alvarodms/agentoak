@@ -35,7 +35,7 @@ C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering 
 | `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **212** | Sidney intro+defeat+rematch rewritten for Honchkrow theme |
 | `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | **212** | Phoebe intro+rematch rewritten for Dusknoir theme |
 | `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | **213** | Glacia intro+defeat+rematch rewritten for Froslass/Mamoswine |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | **214** | Tate & Liza intro+defeat+post-battle+pre-rematch+rematch-defeat+post-rematch rewritten for Farigiraf/duality theme. TATE:/LIZA: speaker tags throughout. |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | **214**, **283** | C214: Farigiraf/duality theme. C283: Farigiraf→ESPEON empathy rewrite (all 5 dialogue blocks). |
 
 ## Bagon Colony Researcher Update — Cycles 215, 225
 
@@ -172,6 +172,13 @@ Wattson's MauvilleCity_Gym dialogue rewritten: Electabuzz references → Lotad_H
 | File | Cycle | Notes |
 |------|-------|-------|
 | `data/maps/MauvilleCity_Gym/scripts.inc` | **271** | WattsonIntro: "Electric lily pads! LOTAD that crackle like fresh batteries!" WattsonPostBattle: "That little LOTAD from ROUTE 102 has more spark than half the machines in NEW MAUVILLE!" WattsonPreRematch: "My LOTAD's been growing -- evolved, even!" WattsonPostRematch: "Electric lily pads from ROUTE 102 -- best thing that ever happened to MAUVILLE!" |
+
+## C283 Boss Diversity Dialogue Pass
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/RustboroCity_Gym/scripts.inc` | **283** | Roxanne intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for fossil scholar identity. "Deep time" framing: ARON's iron body, AERODACTYL adapted 100M years ago, fossils prove HOENN always changed. Contrasts Drake's reverence for present change. |
+| `data/maps/MossdeepCity_Gym/scripts.inc` | **283** | T&L intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for ESPEON empathy theme. "Shared sight" / "senses emotions the way we sense each other." Uncanny twin finish-each-other's-thoughts style. |
 
 ## Wally Victory Road Migration Dialogue — Cycle 270
 

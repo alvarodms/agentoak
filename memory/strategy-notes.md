@@ -67,8 +67,7 @@ No action needed. Document as intentional dual-specialist design.
 
 **T&L** replacement: Farigiraf was one of several Psychic types on their roster. Replace with:
 - **T1-T3**: Espeon (Psychic, BST 525) — the empathic eeveelution. Fits twins' connection/empathy theme. Already in game (SPECIES_ESPEON = 196).
-- **T4**: Fix the Girafarig inconsistency (currently vanilla Girafarig on T4, which is a devolution). Replace with Espeon.
-- **T5**: Already has Gardevoir — no Farigiraf or Girafarig. No change needed.
+- **T4-T5**: Fixed Girafarig inconsistency on BOTH tiers (T4 AND T5 had vanilla Girafarig — strategy notes were wrong about T5 being clean). Both replaced with Espeon.
 - **Dialogue update**: Shift from Farigiraf references to Espeon — "shared minds, shared sight" twin resonance.
 
 ### Implementation Scope (C283)
@@ -108,7 +107,7 @@ All NPCs are dialogue-only (no battles). Gated behind Champion clear (FLAG_SYS_G
 | Cycle | Mode | Objective | Dependencies |
 |-------|------|-----------|-------------|
 | C282 | **planning** | This cycle — v2.6 design document | — |
-| C283 | feature | Boss trainer diversity pass — Roxanne Aron/Aerodactyl, T&L Espeon, dialogue updates | Design doc |
+| C283 | feature | ~~Boss trainer diversity pass — Roxanne Aron/Aerodactyl, T&L Espeon, dialogue updates~~ **DONE** | Design doc |
 | C284 | feature | Reckoning: Magma NPCs — Lavaridge + Meteor Falls new, Mt. Chimney update | — |
 | C285 | feature | Reckoning: Aqua NPCs — Slateport + R128 + Shoal Cave | — |
 | C286 | patch | Postgame polish pass — walk full postgame, verify arc coherence, fix gaps | C283-285 |

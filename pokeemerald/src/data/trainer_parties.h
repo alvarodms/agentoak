@@ -4024,9 +4024,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne1[] = {
     {
     .iv = 100,
     .lvl = 13,
-    .species = SPECIES_BAGON_HOENN,
+    .species = SPECIES_ARON,
     .heldItem = ITEM_ORAN_BERRY,
-    .moves = {MOVE_ROCK_TOMB, MOVE_HEADBUTT, MOVE_LEER, MOVE_HARDEN}
+    .moves = {MOVE_ROCK_TOMB, MOVE_METAL_CLAW, MOVE_HEADBUTT, MOVE_HARDEN}
     },
     {
     .iv = 200,
@@ -4203,9 +4203,9 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza1[] = {
     {
     .iv = 200,
     .lvl = 42,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_ESPEON,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_REFLECT}
     }
 };
 
@@ -13167,9 +13167,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne2[] = {
     {
     .iv = 100,
     .lvl = 40,
-    .species = SPECIES_BAGON_HOENN,
-    .heldItem = ITEM_DRAGON_FANG,
-    .moves = {MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_HEADBUTT}
+    .species = SPECIES_AERODACTYL,
+    .heldItem = ITEM_SHARP_BEAK,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_DRAGON_CLAW, MOVE_BITE}
     },
     {
     .iv = 100,
@@ -13198,9 +13198,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne3[] = {
     {
     .iv = 100,
     .lvl = 50,
-    .species = SPECIES_BAGON_HOENN,
+    .species = SPECIES_AERODACTYL,
     .heldItem = ITEM_HARD_STONE,
-    .moves = {MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_FIRE_PUNCH}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW}
     },
     {
     .iv = 100,
@@ -13250,9 +13250,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne4[] = {
     {
     .iv = 150,
     .lvl = 62,
-    .species = SPECIES_BAGON_HOENN,
+    .species = SPECIES_AERODACTYL,
     .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_DRAGON_CLAW, MOVE_STONE_EDGE, MOVE_EARTHQUAKE, MOVE_IRON_HEAD}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE}
     }
 };
 
@@ -13288,9 +13288,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne5[] = {
     {
     .iv = 200,
     .lvl = 72,
-    .species = SPECIES_BAGON_HOENN,
+    .species = SPECIES_AERODACTYL,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_DRAGON_CLAW, MOVE_STONE_EDGE, MOVE_EARTHQUAKE, MOVE_IRON_HEAD}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DOUBLE_EDGE, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     },
     {
     .iv = 200,
@@ -14126,9 +14126,9 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza2[] = {
     {
     .iv = 150,
     .lvl = 42,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_ESPEON,
     .heldItem = ITEM_TWISTED_SPOON,
-    .moves = {MOVE_PSYCHIC, MOVE_CRUNCH, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_REFLECT}
     }
 };
 
@@ -14164,9 +14164,9 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza3[] = {
     {
     .iv = 175,
     .lvl = 52,
-    .species = SPECIES_FARIGIRAF,
+    .species = SPECIES_ESPEON,
     .heldItem = ITEM_TWISTED_SPOON,
-    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_MORNING_SUN}
     }
 };
 
@@ -14209,9 +14209,9 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza4[] = {
     {
     .iv = 200,
     .lvl = 63,
-    .species = SPECIES_GIRAFARIG,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
+    .species = SPECIES_ESPEON,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_MORNING_SUN}
     }
 };
 
@@ -14254,9 +14254,9 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza5[] = {
     {
     .iv = 250,
     .lvl = 75,
-    .species = SPECIES_GIRAFARIG,
+    .species = SPECIES_ESPEON,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
+    .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_MORNING_SUN}
     }
 };
 
