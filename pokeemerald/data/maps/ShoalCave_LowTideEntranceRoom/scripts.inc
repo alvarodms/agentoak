@@ -4,8 +4,18 @@ ShoalCave_LowTideEntranceRoom_MapScripts::
 
 ShoalCave_LowTideEntranceRoom_OnTransition:
 	special UpdateShoalTideFlag
+	call ShoalCave_LowTideEntranceRoom_EventScript_PostgameAquaVisibility
 	goto_if_set FLAG_SYS_SHOAL_TIDE, ShoalCave_LowTideEntranceRoom_EventScript_SetHighTide
 	goto ShoalCave_LowTideEntranceRoom_EventScript_SetLowTide
+
+ShoalCave_LowTideEntranceRoom_EventScript_PostgameAquaVisibility::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShoalCave_LowTideEntranceRoom_EventScript_ShowPostgameAquaGrunt
+	setflag FLAG_HIDE_SHOAL_CAVE_POSTGAME_AQUA_GRUNT
+	return
+
+ShoalCave_LowTideEntranceRoom_EventScript_ShowPostgameAquaGrunt:
+	clearflag FLAG_HIDE_SHOAL_CAVE_POSTGAME_AQUA_GRUNT
+	return
 
 ShoalCave_LowTideEntranceRoom_EventScript_SetHighTide::
 	setmaplayoutindex LAYOUT_SHOAL_CAVE_HIGH_TIDE_ENTRANCE_ROOM
@@ -89,3 +99,38 @@ ShoalCave_LowTideEntranceRoom_EventScript_ResetShoalItems::
 	clearflag FLAG_RECEIVED_SHOAL_SHELL_4
 	clearflag FLAG_SYS_SHOAL_ITEM
 	return
+
+@ C285: Postgame ex-Aqua grunt -- quiet acceptance
+ShoalCave_LowTideEntranceRoom_EventScript_ExAquaGrunt::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECKONING_TALKED_SHOAL_CAVE, ShoalCave_LowTideEntranceRoom_EventScript_ExAquaGruntShort
+	msgbox ShoalCave_LowTideEntranceRoom_Text_ExAquaGrunt, MSGBOX_DEFAULT
+	giveitem ITEM_RARE_CANDY
+	setflag FLAG_RECKONING_TALKED_SHOAL_CAVE
+	release
+	end
+
+ShoalCave_LowTideEntranceRoom_EventScript_ExAquaGruntShort::
+	msgbox ShoalCave_LowTideEntranceRoom_Text_ExAquaGruntShort, MSGBOX_DEFAULT
+	release
+	end
+
+ShoalCave_LowTideEntranceRoom_Text_ExAquaGrunt:
+	.string "...\p"
+	.string "You can see them in here, if\n"
+	.string "you're patient.\l"
+	.string "The little fighters.\p"
+	.string "We wanted to expand the sea\n"
+	.string "for POKéMON like that.\l"
+	.string "Give them more room.\p"
+	.string "That little fighter didn't\n"
+	.string "need anyone to expand the\l"
+	.string "sea for it.\p"
+	.string "Here. I don't need this\n"
+	.string "anymore.$"
+
+ShoalCave_LowTideEntranceRoom_Text_ExAquaGruntShort:
+	.string "...\p"
+	.string "It's peaceful in here.\n"
+	.string "I can see why they chose it.$"

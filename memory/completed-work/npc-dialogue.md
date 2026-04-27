@@ -193,6 +193,20 @@ Mt. Chimney update + 2 new postgame ex-Magma NPCs with collection tracking flags
 | `data/maps/MeteorFalls_1F_1R/map.json` | **284** | OBJ_EVENT_GFX_MAGMA_MEMBER_M at (24,30) elev 3, FACE_UP (toward wall), deep inside near back chamber. |
 | `include/constants/flags.h` | **284** | FLAGS 0x2A9-0x2AD: HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT, HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT, RECKONING_TALKED_MT_CHIMNEY/LAVARIDGE/METEOR_FALLS. |
 
+## Aqua Reckoning — Cycle 285
+
+3 new postgame ex-Aqua NPCs completing the 6-NPC villain postgame arc. Mirrors Magma C284 pattern.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/SlateportCity/scripts.inc` | **285** | ExAquaGrunt — denial beat. Harbor dock-watcher. "We were going to change the world." First-visit / revisit text split via FLAG_RECKONING_TALKED_SLATEPORT. |
+| `data/maps/SlateportCity/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (38,9) elev 3, FACE_LEFT (toward sea/ships), near harbor dock. |
+| `data/maps/Route128/scripts.inc` | **285** | ExAquaGrunt — quiet horror. Shore-bound ex-diver. "The water was different. ...Aware." First-visit / revisit text split via FLAG_RECKONING_TALKED_ROUTE128. |
+| `data/maps/Route128/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_F at (56,21) elev 3, FACE_DOWN (toward water), on land patch. |
+| `data/maps/ShoalCave_LowTideEntranceRoom/scripts.inc` | **285** | ExAquaGrunt — quiet acceptance. Cave-sitter peacemaker. "That little fighter didn't need anyone to expand the sea for it." Gives RARE_CANDY (mirrors Meteor Falls C284). Postgame visibility via `call` subroutine (tide check preserved). |
+| `data/maps/ShoalCave_LowTideEntranceRoom/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (15,25) elev 3, FACE_UP (into cave). Both tides use same map (layout swap). |
+| `include/constants/flags.h` | **285** | FLAGS 0x2AE-0x2B3: HIDE_SLATEPORT/ROUTE128/SHOAL_CAVE_POSTGAME_AQUA_GRUNT, RECKONING_TALKED_SLATEPORT/ROUTE128/SHOAL_CAVE. |
+
 ## Wally Victory Road Migration Dialogue — Cycle 270
 
 Wally's VR dialogue rewritten to reference finding Shroomish_Hoenn in Petalburg Woods — the first rival whose team narrative connects to a specific migration encounter location.

@@ -133,7 +133,7 @@ Generator: 26/26 files per species. Manual: species_names.h (3 entries), config 
 
 Sprite Designer v1 sprites: slate/indigo/lavender palette, psychic bioluminescent accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
-**C280 fix**: C278 only created configs, sprites, and species_names.h entries. C279 claimed to run the generator but it was never actually executed — species.h still had EGG=445. C280 ran the generator for all 3 species (Mudkip→Marshtomp→Swampert in order), completing the 26-file registration per species. EGG now at 448, NUM_SPECIES=448.
+**C285 fix**: C278 only created configs, sprites, and species_names.h entries. C279-C281 each claimed to run the generator but species.h never had the constants (EGG remained at 445). C285 confirmed the gap, removed duplicate species_names.h entries from C278, and ran the generator for all 3 species in order. 27/27 files per species registered correctly. EGG=448, NUM_SPECIES=448.
 
 ---
 

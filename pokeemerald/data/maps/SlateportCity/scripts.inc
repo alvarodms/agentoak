@@ -8,6 +8,12 @@ SlateportCity_OnTransition:
 	call SlateportCity_EventScript_EnterSlateport
 	call_if_eq VAR_SLATEPORT_CITY_STATE, 1, SlateportCity_EventScript_MovePeopleForSternInterview
 	call_if_eq VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 1, SlateportCity_EventScript_SetReadyForScottScene
+	goto_if_set FLAG_SYS_GAME_CLEAR, SlateportCity_OnTransition_ShowPostgameAquaGrunt
+	setflag FLAG_HIDE_SLATEPORT_POSTGAME_AQUA_GRUNT
+	end
+
+SlateportCity_OnTransition_ShowPostgameAquaGrunt:
+	clearflag FLAG_HIDE_SLATEPORT_POSTGAME_AQUA_GRUNT
 	end
 
 SlateportCity_EventScript_EnterSlateport::
@@ -1400,3 +1406,34 @@ SlateportCity_Text_HarborWatcherResolved:
 	.string "The sailors are saying someone\n"
 	.string "calmed the sea itself. Was that\l"
 	.string "you, kid?$"
+
+@ C285: Postgame ex-Aqua grunt -- denial
+SlateportCity_EventScript_ExAquaGrunt::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECKONING_TALKED_SLATEPORT, SlateportCity_EventScript_ExAquaGruntShort
+	msgbox SlateportCity_Text_ExAquaGrunt, MSGBOX_DEFAULT
+	setflag FLAG_RECKONING_TALKED_SLATEPORT
+	release
+	end
+
+SlateportCity_EventScript_ExAquaGruntShort::
+	msgbox SlateportCity_Text_ExAquaGruntShort, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_Text_ExAquaGrunt:
+	.string "...Oh, me? I just like watching\n"
+	.string "the harbor.\p"
+	.string "We were going to change the\n"
+	.string "world, you know.\l"
+	.string "Expand the sea, give water\l"
+	.string "POKéMON room to thrive.\p"
+	.string "Now I watch boats.\p"
+	.string "...Don't read into it.$"
+
+SlateportCity_Text_ExAquaGruntShort:
+	.string "...The tide comes in.\n"
+	.string "The tide goes out.\l"
+	.string "The boats keep moving.\p"
+	.string "I keep watching.$"

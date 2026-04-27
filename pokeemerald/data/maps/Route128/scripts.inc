@@ -5,6 +5,12 @@ Route128_MapScripts::
 
 Route128_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
+	goto_if_set FLAG_SYS_GAME_CLEAR, Route128_OnTransition_ShowPostgameAquaGrunt
+	setflag FLAG_HIDE_ROUTE128_POSTGAME_AQUA_GRUNT
+	end
+
+Route128_OnTransition_ShowPostgameAquaGrunt:
+	clearflag FLAG_HIDE_ROUTE128_POSTGAME_AQUA_GRUNT
 	end
 
 Route128_OnFrame:
@@ -408,4 +414,36 @@ Route128_Text_DeepMigration3:
 	.string "But the current still hums with\n"
 	.string "their passing.\l"
 	.string "The world is moving.$"
+
+@ C285: Postgame ex-Aqua grunt -- quiet horror
+Route128_EventScript_ExAquaGrunt::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECKONING_TALKED_ROUTE128, Route128_EventScript_ExAquaGruntShort
+	msgbox Route128_Text_ExAquaGrunt, MSGBOX_DEFAULT
+	setflag FLAG_RECKONING_TALKED_ROUTE128
+	release
+	end
+
+Route128_EventScript_ExAquaGruntShort::
+	msgbox Route128_Text_ExAquaGruntShort, MSGBOX_DEFAULT
+	release
+	end
+
+Route128_Text_ExAquaGrunt:
+	.string "I used to dive. Every day,\n"
+	.string "out past the reef.\p"
+	.string "After everything happened...\n"
+	.string "I went down once more.\l"
+	.string "Near the rift.\p"
+	.string "The water was different.\n"
+	.string "Not warmer, not colder.\p"
+	.string "...Aware.\p"
+	.string "I haven't been back in the\n"
+	.string "water since.$"
+
+Route128_Text_ExAquaGruntShort:
+	.string "You ever look at the ocean\n"
+	.string "and feel like it's looking back?\p"
+	.string "...No? Good.$"
 

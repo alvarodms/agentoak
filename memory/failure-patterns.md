@@ -22,7 +22,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Incomplete Species Registration Across Cycles (C261→C265→C277→C278→C280) — RECURRING
 
-**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277: Treecko_Hoenn had species.h constant but missing 25 other files. C278: Mudkip_Hoenn line — generator never actually run, only configs+sprites existed. C280: added Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn to encounter tables, trainer parties, and rival scripts WITHOUT running the generator; C281 discovered and fixed by running generator 27/27.
+**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277: Treecko_Hoenn had species.h constant but missing 25 other files. C278: Mudkip_Hoenn line — generator never actually run, only configs+sprites existed. C280-C281: each claimed to fix registration but species.h still had EGG=445 where Mudkip should be. C285: confirmed the 5-cycle gap, removed C278's manual species_names.h duplicates, ran generator 27/27 for all 3 species.
 **Resolution**: **Rule**: After ANY cycle that references a species constant in game data, verify registration: (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory. Never assume a previous cycle registered a species — always verify.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL

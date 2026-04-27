@@ -66,7 +66,9 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Flag System Layout
 
-Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2AD. Next available: **0x2AE**. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning tracking: 0x2AB-0x2AD (MT_CHIMNEY/LAVARIDGE/METEOR_FALLS).
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B3. Next available: **0x2B4**. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning tracking: 0x2AB-0x2AD (MT_CHIMNEY/LAVARIDGE/METEOR_FALLS), 0x2B1-0x2B3 (SLATEPORT/ROUTE128/SHOAL_CAVE).
+
+**Shoal Cave tide architecture**: `ShoalCave_LowTideEntranceRoom` handles BOTH tides — `OnTransition` calls `UpdateShoalTideFlag` then swaps layout via `setmaplayoutindex`. `ShoalCave_HighTideEntranceRoom` is vestigial (no events/warps/scripts). Object events placed on `LowTideEntranceRoom` appear in both tides. Use `call` subroutine pattern (not `goto`) when adding OnTransition logic to preserve the tide layout swap chain.
 
 ---
 

@@ -10,5 +10,5 @@ The Producer should review this list when planning — bold ideas that have been
 | 226 | **Deoxys Quest II narrative design**: Expand the cosmic thread. | **done** — shipped C233 as "The Resonance". |
 | 234 | **Resonance Residue**: Post-Quest II environmental follow-through. | **done** — shipped C236. |
 | 253 | **"Ground level" early-game intimacy**: Pre-Badge 1 regional forms, ecological texture in Hours 0-3. Player should feel Hoenn is different from Route 101. | in progress (C255 design, C256-257 implementation) |
-| 253 | **Villain faction postgame resolution**: Ex-Magma/Aqua members appearing in postgame locations, reflecting on what the migration meant. 3 Magma done (Mt. Chimney/Lavaridge/Meteor Falls). 3 Aqua remain (Slateport/R128/Shoal Cave). | **in progress** — Magma done C284, Aqua → C285 |
+| 253 | **Villain faction postgame resolution**: Ex-Magma/Aqua members in postgame locations reflecting on migration. 6 NPCs total: 3 Magma (Mt. Chimney/Lavaridge/Meteor Falls, C248+C284), 3 Aqua (Slateport/Route 128/Shoal Cave, C285). Rare Candy rewards at Meteor Falls + Shoal Cave. | **done** — C284 Magma, C285 Aqua |
 | 282 | **Devon Corp regional Mewtwo** (#167): Mewtwo_Hoenn as a Devon Corp experiment gone wrong. Compelling narrative but massive scope — new species, quest chain, facility map. | pending |

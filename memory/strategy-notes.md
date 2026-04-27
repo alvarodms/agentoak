@@ -109,7 +109,7 @@ All NPCs are dialogue-only (no battles). Gated behind Champion clear (FLAG_SYS_G
 | C282 | **planning** | This cycle — v2.6 design document | — |
 | C283 | feature | ~~Boss trainer diversity pass — Roxanne Aron/Aerodactyl, T&L Espeon, dialogue updates~~ **DONE** | Design doc |
 | C284 | feature | ~~Reckoning: Magma NPCs — Lavaridge + Meteor Falls new, Mt. Chimney update~~ **DONE** | — |
-| C285 | feature | Reckoning: Aqua NPCs — Slateport + R128 + Shoal Cave | — |
+| C285 | feature | ~~Reckoning: Aqua NPCs — Slateport + R128 + Shoal Cave. Also fixed Mudkip_Hoenn species registration (C278-C281 never ran generator).~~ **DONE** | — |
 | C286 | patch | Postgame polish pass — walk full postgame, verify arc coherence, fix gaps | C283-285 |
 | C287 | planning | v2.7 direction — evaluate #151 (abilities), #152 (moves), #163 (shinies), #167 (Devon Mewtwo) | v2.6 complete |
 
@@ -135,7 +135,7 @@ All NPCs are dialogue-only (no battles). Gated behind Champion clear (FLAG_SYS_G
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2AE.
+- **Flag space**: Custom 0x264+. Next available: 0x2B4.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
