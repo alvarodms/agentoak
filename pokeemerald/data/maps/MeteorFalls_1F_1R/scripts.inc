@@ -1,6 +1,16 @@
 MeteorFalls_1F_1R_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MeteorFalls_1F_1R_OnTransition
 	map_script MAP_SCRIPT_ON_LOAD, MeteorFalls_1F_1R_OnLoad
 	.byte 0
+
+MeteorFalls_1F_1R_OnTransition:
+	goto_if_set FLAG_SYS_GAME_CLEAR, MeteorFalls_1F_1R_OnTransition_ShowPostgameGrunt
+	setflag FLAG_HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT
+	end
+
+MeteorFalls_1F_1R_OnTransition_ShowPostgameGrunt:
+	clearflag FLAG_HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT
+	end
 
 MeteorFalls_1F_1R_OnLoad:
 	call_if_set FLAG_SYS_GAME_CLEAR, MeteorFalls_1F_1R_EventScript_OpenStevensCave
@@ -531,3 +541,39 @@ MeteorFalls_1F_1R_Text_ColonyResearcherWitness:
 	.string "The DRACONID will want to know.\p"
 	.string "The mountain made them.\n"
 	.string "And they chose to stay.$"
+
+@ C284: Postgame ex-Magma grunt -- grudging acknowledgment
+MeteorFalls_1F_1R_EventScript_ExMagmaGrunt::
+	lock
+	faceplayer
+	goto_if_set FLAG_RECKONING_TALKED_METEOR_FALLS, MeteorFalls_1F_1R_EventScript_ExMagmaGruntShort
+	msgbox MeteorFalls_1F_1R_Text_ExMagmaGrunt, MSGBOX_DEFAULT
+	giveitem ITEM_RARE_CANDY
+	setflag FLAG_RECKONING_TALKED_METEOR_FALLS
+	release
+	end
+
+MeteorFalls_1F_1R_EventScript_ExMagmaGruntShort::
+	msgbox MeteorFalls_1F_1R_Text_ExMagmaGruntShort, MSGBOX_DEFAULT
+	release
+	end
+
+MeteorFalls_1F_1R_Text_ExMagmaGrunt:
+	.string "You've seen them, haven't you?\n"
+	.string "The young dragons with stone\l"
+	.string "in their scales.\p"
+	.string "MAXIE said the land needed to\n"
+	.string "be stronger.\p"
+	.string "These dragons figured that out\n"
+	.string "without any of us.\p"
+	.string "Here. Take this.\n"
+	.string "I've been carrying it since\l"
+	.string "the old days.\p"
+	.string "It's no use to someone who's\n"
+	.string "done fighting.$"
+
+MeteorFalls_1F_1R_Text_ExMagmaGruntShort:
+	.string "These dragons don't need\n"
+	.string "anyone's help.\p"
+	.string "Took me a long time to\n"
+	.string "understand that.$"

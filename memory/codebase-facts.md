@@ -66,7 +66,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Flag System Layout
 
-Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2A8. Next available: **0x2A9**. Beast: 0x881-0x886. Difficulty: 0x286.
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2AD. Next available: **0x2AE**. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning tracking: 0x2AB-0x2AD (MT_CHIMNEY/LAVARIDGE/METEOR_FALLS).
 
 ---
 
@@ -149,3 +149,7 @@ Superseded by `generate_species.cjs` for individual species. **Pitfall**: `egg_m
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
 `Cmd_getexp()` in battle_script_commands.c. `GetChallengeLevelCap()` returns per-badge cap (18/20/24/30/34/38/42/48/55); EXP /= 10 when over. `IsChallengeModeActive()` macro in flags.h. BATTLESTRINGS_COUNT = 382.
+
+## Postgame NPC Show/Hide Pattern (C248-284)
+
+**Pattern**: OnTransition script checks `FLAG_SYS_GAME_CLEAR`, then `clearflag FLAG_HIDE_<LOCATION>_POSTGAME_<NPC>` to make NPC visible. Object event references the HIDE flag. Collection tracking via separate `FLAG_RECKONING_TALKED_*` flags set in the NPC script. First-visit/revisit branching via `goto_if_set FLAG_RECKONING_TALKED_*`.

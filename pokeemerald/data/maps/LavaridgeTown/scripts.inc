@@ -11,6 +11,12 @@ LavaridgeTown_OnTransition:
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_CheckSetRivalPos
 	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_HideMapNamePopup
+	goto_if_set FLAG_SYS_GAME_CLEAR, LavaridgeTown_OnTransition_ShowPostgameGrunt
+	setflag FLAG_HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT
+	end
+
+LavaridgeTown_OnTransition_ShowPostgameGrunt:
+	clearflag FLAG_HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT
 	end
 
 LavaridgeTown_EventScript_ClearLavaridgeWhiteOut::
@@ -514,4 +520,26 @@ LavaridgeTown_Text_ArcanineBreeder:
 	.string "It still loves the hot springs.\n"
 	.string "But something in it remembers\l"
 	.string "water now.$"
+
+@ C284: Postgame ex-Magma grunt -- confusion
+LavaridgeTown_EventScript_ExMagmaGrunt::
+	lock
+	faceplayer
+	msgbox LavaridgeTown_Text_ExMagmaGrunt, MSGBOX_DEFAULT
+	setflag FLAG_RECKONING_TALKED_LAVARIDGE
+	release
+	end
+
+LavaridgeTown_Text_ExMagmaGrunt:
+	.string "I moved here after everything\n"
+	.string "fell apart.\p"
+	.string "The heat felt familiar.\n"
+	.string "Like nothing had to change.\p"
+	.string "But there's something in the\n"
+	.string "ash fields now.\l"
+	.string "Burns without flame.\p"
+	.string "I watch it from my window\n"
+	.string "some mornings.\p"
+	.string "We fought so hard for this land.\n"
+	.string "It didn't need us at all.$"
 

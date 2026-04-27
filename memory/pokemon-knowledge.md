@@ -24,5 +24,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Custom Shiny Palette Landscape | 281 | [custom-shiny-palette-landscape.md](pokemon-knowledge/custom-shiny-palette-landscape.md) |
 | v2.6 Direction — Polish Phase vs. Content Expansion | 282 | [v26-direction-polish-vs-content.md](pokemon-knowledge/v26-direction-polish-vs-content.md) |
 | Boss Diversity Swaps & Villain Postgame NPC Patterns | 283 | [boss-diversity-and-villain-postgame.md](pokemon-knowledge/boss-diversity-and-villain-postgame.md) |
+| Reckoning NPC Reward Patterns — Postgame Exploration Incentives | 284 | [reckoning-npc-reward-patterns.md](pokemon-knowledge/reckoning-npc-reward-patterns.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

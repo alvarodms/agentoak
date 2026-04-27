@@ -180,6 +180,19 @@ Wattson's MauvilleCity_Gym dialogue rewritten: Electabuzz references → Lotad_H
 | `data/maps/RustboroCity_Gym/scripts.inc` | **283** | Roxanne intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for fossil scholar identity. "Deep time" framing: ARON's iron body, AERODACTYL adapted 100M years ago, fossils prove HOENN always changed. Contrasts Drake's reverence for present change. |
 | `data/maps/MossdeepCity_Gym/scripts.inc` | **283** | T&L intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for ESPEON empathy theme. "Shared sight" / "senses emotions the way we sense each other." Uncanny twin finish-each-other's-thoughts style. |
 
+## Magma Reckoning Expansion — Cycle 284
+
+Mt. Chimney update + 2 new postgame ex-Magma NPCs with collection tracking flags for C286 meta-reward.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/MtChimney/scripts.inc` | **248**, **284** | C284: PostgameMagmaGrunt upgraded from MSGBOX_NPC to lock/faceplayer/release. Added Aerodactyl denial lines ("rocks that fly") + FLAG_RECKONING_TALKED_MT_CHIMNEY setflag. |
+| `data/maps/LavaridgeTown/scripts.inc` | **267**, **284** | C284: ExMagmaGrunt script + OnTransition postgame gating (FLAG_HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT). "I moved here after everything fell apart." Confusion beat. |
+| `data/maps/LavaridgeTown/map.json` | **267**, **284** | C284: OBJ_EVENT_GFX_MAGMA_MEMBER_F at (3,2) elev 3, FACE_DOWN, near hot springs. |
+| `data/maps/MeteorFalls_1F_1R/scripts.inc` | **215**, **225**, **284** | C284: ExMagmaGrunt script (first-visit gives RARE_CANDY, revisit short text). OnTransition added to MapScripts for FLAG_HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT. "MAXIE said the land needed to be stronger. These dragons figured that out without any of us." |
+| `data/maps/MeteorFalls_1F_1R/map.json` | **284** | OBJ_EVENT_GFX_MAGMA_MEMBER_M at (24,30) elev 3, FACE_UP (toward wall), deep inside near back chamber. |
+| `include/constants/flags.h` | **284** | FLAGS 0x2A9-0x2AD: HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT, HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT, RECKONING_TALKED_MT_CHIMNEY/LAVARIDGE/METEOR_FALLS. |
+
 ## Wally Victory Road Migration Dialogue — Cycle 270
 
 Wally's VR dialogue rewritten to reference finding Shroomish_Hoenn in Petalburg Woods — the first rival whose team narrative connects to a specific migration encounter location.
