@@ -16,7 +16,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Capacity**: TRAINERS_COUNT = 891, 12 reclaimable IDs. Validation: `scripts/check_trainers.sh` (6 checks). Rematch table: 5 tiers, all filled.
+**Capacity**: TRAINERS_COUNT = 891, 2 reclaimable IDs remaining (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). C192 audit found 12; most consumed since. Validation: `scripts/check_trainers.sh` (6 checks). Rematch table: 5 tiers, all filled.
 
 **Rival parties**: 30 arrays (5 encounters × 3 starter variants × 2 genders, mirrored). Postgame (C280): Lv70-73, 6 mons, IV 200, ace = Changed Three form.
 

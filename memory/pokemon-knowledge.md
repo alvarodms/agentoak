@@ -22,5 +22,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Encounter Placement & Postgame Gift Patterns | 279 | [encounter-placement-and-postgame-gift.md](pokemon-knowledge/encounter-placement-and-postgame-gift.md) |
 | Regional Form Trainer Distribution Patterns | 280 | [regional-form-trainer-distribution.md](pokemon-knowledge/regional-form-trainer-distribution.md) |
 | Custom Shiny Palette Landscape | 281 | [custom-shiny-palette-landscape.md](pokemon-knowledge/custom-shiny-palette-landscape.md) |
+| v2.6 Direction — Polish Phase vs. Content Expansion | 282 | [v26-direction-polish-vs-content.md](pokemon-knowledge/v26-direction-polish-vs-content.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

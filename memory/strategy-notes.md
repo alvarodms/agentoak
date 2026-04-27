@@ -18,70 +18,118 @@
 
 ---
 
-# v2.5: "The Changed Three" (C274-281)
+**v2.5** (C274-281): "The Changed Three" — 9 regional starter species (Treecko/Torchic/Mudkip_Hoenn lines, Steel→Fairy→Fighting triangle), wild encounters (Meteor Falls/Mt. Pyre/Shoal Cave 4%), postgame Birch gift, rival integration (6 teams), Drake T3-T4 Sceptile_Hoenn, 27/27 species generator pipeline.
+
+---
+
+# v2.6: "The Reckoning" (C283-C290)
 
 ## Creative Vision
 
-The migration transformed Hoenn's wild Pokémon, its gym leaders' teams, its villain factions, its rival's journey. But the three species most iconic to Hoenn — Treecko, Torchic, Mudkip — haven't appeared through the migration lens. v2.5 completes the circle: regional forms of Hoenn's original starter trio, discoverable in the wild and earnable postgame.
+The migration transformed everything — wild Pokémon, gym leaders, villains, the rival, the starters. But the postgame currently feels like "what cool stuff can you find" rather than "what did all of this mean?" v2.6 shifts the postgame from a checklist into a narrative arc about **consequences and reckoning**.
 
-**Key insight**: The hack's actual starters are **Larvitar/Bagon/Dratini** (pseudo-legendaries since C2). This is the hack's signature — no other Emerald hack gives you pseudo-legendaries from minute one. Replacing or complicating them dilutes that identity. Regional Hoenn starters work better as **rare wild discoveries**: the player finds them, not given them.
+**Theme**: The people who tried to reshape Hoenn (Teams Magma and Aqua) confront the fact that Hoenn reshaped itself. The gym leaders who adopted migration species each have their OWN unique relationship with that species — no two bosses share the same discovery.
 
-**Design hypothesis**: If the player discovers regional forms of Hoenn's original starter species — a crystal Treecko in Meteor Falls, a starlight Torchic on Mt. Pyre, a titan Mudkip in Shoal Cave — the migration feels total.
+**Emotional destination**: By the end of v2.6, the postgame player has encountered former villain faction members processing what they caused, boss trainers with fully unique migration species (reuse resolved), and a world that feels like it's moved on — even if the people in it haven't.
 
-## Type Triangle: Steel → Fairy → Fighting
+**Design hypothesis**: If the player walks through postgame Hoenn and finds ex-Magma members near Meteor Falls quietly watching the same Bagon_Hoenn that Drake reveres, and ex-Aqua members near Shoal Cave staring at the Mudkip_Hoenn they never imagined — the migration stops being a game mechanic and becomes a story.
 
-- **Sceptile_Hoenn** (Steel) → Blaziken_Hoenn (Fairy/Flying): Steel 2x on Fairy
-- **Blaziken_Hoenn** (Fairy/Flying) → Swampert_Hoenn (Fighting/Psychic): Fairy 2x on Fighting
-- **Swampert_Hoenn** (Fighting/Psychic) → Sceptile_Hoenn (Steel): Fighting 2x on Steel
+## Boss Trainer Diversity Pass (C283)
 
-### Species Summary
+### Audit Results — Species Reuse Matrix
 
-| Line | Final Type | BST | Stat Identity | Key Move | Playstyle |
-|------|-----------|-----|---------------|----------|-----------|
-| Treecko_Hoenn | Steel | 530 | 110 Atk / 120 Spe | Meteor Mash | Fast physical sweeper, 11 resistances |
-| Torchic_Hoenn | Fairy/Flying | 530 | 120 SpA / 95 Spe | Moonblast | Special sweeper, Dragon immune |
-| Mudkip_Hoenn | Fighting/Psychic | 535 | 100 Atk / 95 SpA | Cross Chop + Extrasensory | Mixed tank, Bulk Up OR Calm Mind |
+| Species | Boss 1 | Boss 2 | Verdict |
+|---------|--------|--------|---------|
+| Bagon_Hoenn (Dragon/Rock) | Drake (E4, all tiers) | Roxanne (Gym 1, all tiers) | **Resolve** — Drake keeps |
+| Corsola_Hoenn (Ghost/Rock) | Phoebe (E4, init+T3-T4) | Juan (Gym 8, all tiers) | **Accept reuse** |
+| Farigiraf (Normal/Psychic) | Norman (Gym 5, all tiers) | T&L (Gym 7, T1-T3) | **Resolve** — Norman keeps |
 
-Full species specs: `pokemon-knowledge/regional-starter-designs.md`
+Additional reuses (thematically acceptable — different trainer archetypes): Ninetales_Hoenn on Wallace/Wally/Courtney, Ludicolo_Hoenn on Wattson/Wallace, Gliscor_Hoenn on Brawly T4+/Archie.
 
-## Implementation Roadmap — COMPLETE
+### Bagon_Hoenn: Drake keeps, Roxanne gets Aron/Aerodactyl
 
-| Cycle | Mode | Objective | Status |
-|-------|------|-----------|--------|
-| C274 | planning | Design document, species specs, presentation model | done |
-| C275 | refactor | NPC dialogue generator (charmap validation, atomic writes) | done |
-| C276 | feature | Treecko_Hoenn line (3 species via generator + sprites) | done |
-| C277 | feature | Torchic_Hoenn line (3 species via generator + sprites) | done |
-| C278 | feature | Mudkip_Hoenn line (3 species via generator + sprites) | done |
-| C279 | feature | Wild encounters (3 locations) + postgame gift + Birch dialogue | done |
-| C280 | feature | Trainer integration — postgame rival (6 teams) + Drake T3/T4 Sceptile_Hoenn | done |
-| C281 | refactor | species_names.h → generator (27/27 files) + Mudkip_Hoenn line registration fix | done |
+**Drake** (Dragon specialist) has the definitive claim — his dialogue arc is reverence for "young ones changed, harder scales, stone in their blood." Bagon_Hoenn IS Drake's migration story.
 
-### Dependencies & Risks
+**Roxanne** replacement: She's the academic/fossil researcher. Replace Bagon_Hoenn with species that fit her scholarly identity:
+- **Initial fight (Lv13)**: Aron (Steel/Rock, BST 295) — the young mineral specimen. Fits her "studying stones" narrative. Already in game (SPECIES_ARON = 382).
+- **Rematch T2-T5**: Aerodactyl (Rock/Flying, BST 515) — the prehistoric fossil. Her academic pride. Already in game (SPECIES_AERODACTYL = 142).
+- **Dialogue update**: Shift from "living stone near Meteor Falls" to fossil research — "The ancients adapted too. AERODACTYL proves it." Roxanne becomes the voice for DEEP time, contrasting Drake's reverence for PRESENT change.
 
-1. **All key moves confirmed available** in hack's move table.
-2. **Sprites**: 9 species need sprites. Sprite Designer batches 3/cycle.
-3. **Species IDs**: 439-447. EGG→448, NUM_SPECIES→448.
-4. **Postgame script**: Johto starter replacement = ~3 constant swaps + dialogue rewrite. Low risk.
+### Corsola_Hoenn: Accept Reuse (Juan + Phoebe)
+
+Phoebe uses it as a Ghost type (Mt. Pyre connection). Juan uses it as his "one concession" — the fisherman who noticed the coral changing (C272 narrative). Different specialists, different game phases, different reasons. Juan's entire C272 redesign narrative depends on this species. Removing it would destroy a carefully crafted story for marginal diversity gain.
+
+No action needed. Document as intentional dual-specialist design.
+
+### Farigiraf: Norman keeps, T&L get Espeon
+
+**Norman** has the definitive claim — his C268 narrative is "Farigiraf taught me Normal isn't simple." It's his character growth species.
+
+**T&L** replacement: Farigiraf was one of several Psychic types on their roster. Replace with:
+- **T1-T3**: Espeon (Psychic, BST 525) — the empathic eeveelution. Fits twins' connection/empathy theme. Already in game (SPECIES_ESPEON = 196).
+- **T4**: Fix the Girafarig inconsistency (currently vanilla Girafarig on T4, which is a devolution). Replace with Espeon.
+- **T5**: Already has Gardevoir — no Farigiraf or Girafarig. No change needed.
+- **Dialogue update**: Shift from Farigiraf references to Espeon — "shared minds, shared sight" twin resonance.
+
+### Implementation Scope (C283)
+
+Files to modify: `trainer_parties.h` (Roxanne 5 parties + T&L 4 parties), `trainers.h` (if macro changes needed), 2 script files (Roxanne + T&L dialogue). No new species needed. Medium complexity, low risk.
+
+## Villain Faction Postgame — "The Reckoning" Arc (C284-285)
+
+### Design Philosophy
+
+NOT redemption. These are people who haven't fully processed what happened. The migration made their mission look small — Magma wanted to expand the land, Aqua wanted to expand the sea, and Hoenn just... changed on its own, in ways neither faction imagined. The emotional arc across NPCs: **denial → confusion → grudging acknowledgment → quiet acceptance.**
+
+All NPCs are dialogue-only (no battles). Gated behind Champion clear (FLAG_SYS_GAME_CLEAR). Each echoes a specific migration species from their location.
+
+### Magma NPCs (C284) — 3 total (1 existing + 2 new)
+
+| Location | Emotional Beat | Migration Echo | Notes |
+|----------|---------------|----------------|-------|
+| Mt. Chimney summit | Denial/deflection | General | **EXISTS** (C248): "The land's the same size, but there's more of everything anyway." |
+| Lavaridge Town | Confusion | Pinsir_Hoenn (Bug/Fire, Route 112) | NEW: Ex-grunt who settled near the volcano. Watches fire species from the migration living alongside the ones they tried to protect. |
+| Meteor Falls entrance | Grudging acknowledgment | Bagon_Hoenn (Dragon/Rock) | NEW: Near where the changed dragons roam. "MAXIE said the land needed to be stronger. These dragons figured that out without any of us." |
+
+### Aqua NPCs (C285) — 3 new
+
+| Location | Emotional Beat | Migration Echo | Notes |
+|----------|---------------|----------------|-------|
+| Slateport Harbor | Denial | Ocean/general | NEW: Staring at the water. Can't quite admit they were wrong. The sea was always moving — they just wanted to help it along. |
+| Route 128 dive approach | Quiet horror | Deep Migration | NEW: Near the original Deep Migration sighting (C188). "I thought I understood water. But what came through..." |
+| Shoal Cave entrance | Quiet acceptance | Mudkip_Hoenn (Fighting/Psychic) | NEW: Where the changed Mudkip lives. "That little fighter didn't need anyone to expand the sea for it." |
+
+### Implementation Scope (C284-285)
+
+5 new object events across 5 maps, 5 dialogue scripts, 0 trainer IDs, 0 new flags (Champion badge gate only). Low complexity per NPC, but requires careful dialogue writing (use /communicate skill). Split: C284 = Magma (2 new + 1 existing update), C285 = Aqua (3 new).
+
+## Multi-Cycle Roadmap
+
+| Cycle | Mode | Objective | Dependencies |
+|-------|------|-----------|-------------|
+| C282 | **planning** | This cycle — v2.6 design document | — |
+| C283 | feature | Boss trainer diversity pass — Roxanne Aron/Aerodactyl, T&L Espeon, dialogue updates | Design doc |
+| C284 | feature | Reckoning: Magma NPCs — Lavaridge + Meteor Falls new, Mt. Chimney update | — |
+| C285 | feature | Reckoning: Aqua NPCs — Slateport + R128 + Shoal Cave | — |
+| C286 | patch | Postgame polish pass — walk full postgame, verify arc coherence, fix gaps | C283-285 |
+| C287 | planning | v2.7 direction — evaluate #151 (abilities), #152 (moves), #163 (shinies), #167 (Devon Mewtwo) | v2.6 complete |
 
 ### Issue Triage
 
 | Issue | Decision | Rationale |
 |-------|----------|-----------|
-| #154 Regional starters | ACCEPT | Implementation C276-280 |
-| #151 Custom abilities | DEFER | Orthogonal to this arc |
-| #152 Custom moves | DEFER | Revisit if future moves need adding |
+| #165 Boss diversity | **ACCEPT** (partial) | Bagon/Farigiraf reuse resolved. Corsola reuse accepted. See evaluation below. |
+| #151 Custom abilities | **DEFER** (5th) | Revisit in C287 planning — will reach deferral limit |
+| #152 Custom moves | **DEFER** (5th) | Revisit in C287 planning — will reach deferral limit |
+| #163 Custom shinies | **DEFER** (2nd) | Massive scope, revisit after v2.6 |
+| #167 Devon Corp Mewtwo | **DEFER** (2nd) | Compelling but too large — captured in creative backlog |
 
----
+### Issue #165 Item-by-Item Evaluation
 
-## What Comes Next — v2.6 Planning
-
-v2.5 is complete. The Changed Three arc shipped: 9 species, 3 wild encounter locations, postgame gift, rival integration, Drake integration, full 27-file generator pipeline. The migration narrative is now total — starters, gym leaders, E4, villains, rival, wild encounters all transformed.
-
-**Open questions for v2.6:**
-- What's the next creative arc? Options: postgame content expansion, new region forms for underserved areas, story chapter completion, difficulty/balance pass, community-driven priorities
-- Review deferred issues (#151 custom abilities, #152 custom moves) — are they ready?
-- Review creative-backlog.md for ideas that have been waiting
+- **"Ambipom to replace Norman's Farigiraf"** → REJECT. Farigiraf IS Norman's migration narrative. Ambipom is generic Normal and adds nothing to his "Normal isn't simple" arc.
+- **"Gallade to replace Wally's Gardevoir"** → REJECT replacement. Gardevoir IS Wally's identity since Gen 3. Gallade could appear on a different trainer if registered in a future cycle, but not at Wally's expense.
+- **"Toxapex to replace Juan's Corsola-Hoenn"** → REJECT. Juan keeps Corsola_Hoenn (acceptable reuse with Phoebe). Toxapex is Gen 7, would need full 27-file pipeline, and Juan's narrative specifically revolves around noticing the coral changing — not a new species entirely.
+- **"Carbink to replace Roxanne's Bagon-Hoenn"** → REJECT the specific species (27-file cost), ACCEPT the underlying concern. Roxanne WILL lose Bagon_Hoenn, but replacement is Aron/Aerodactyl (existing species, fossil theme).
 
 ---
 
@@ -90,7 +138,7 @@ v2.5 is complete. The Changed Three arc shipped: 9 species, 3 wild encounter loc
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
 - **Flag space**: Custom 0x264+. Next available: 0x2A9.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
-- **Trainer capacity**: 891/891, 12 reclaimable IDs.
+- **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (42 registered)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448.

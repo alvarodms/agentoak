@@ -6,11 +6,10 @@ General project information — build system details, tool versions, configurati
 
 ## Trainer System Constraints
 
-- **Trainer Flag Allocation**: 0x500-0x873 = 884 flag slots
-- **Safe Trainer Limits**: MAX_TRAINERS_COUNT must not exceed 884
-- **Current Status (C148)**: 885 trainers (IDs 0-884), TRAINERS_COUNT = 885.
-- **Available Slots**: TRAINER_GRUNT_UNUSED (568), TRAINER_BRENDAN_PLACEHOLDER (853), TRAINER_MAY_PLACEHOLDER (854) — reusable IDs
-- **Future Capacity**: Must reuse existing unused IDs or expand flag range to add more trainers
+- **Trainer Flag Allocation**: 0x500-0x874 = 891 flag slots
+- **Current Status (C282 audit)**: TRAINERS_COUNT = 891, MAX_TRAINERS_COUNT = 891
+- **Available Slots**: TRAINER_GRUNT_UNUSED (568), TRAINER_MAY_PLACEHOLDER (853) — 2 reusable IDs
+- **Future Capacity**: Must reuse these 2 IDs or expand flag range past 0x874 to add more trainers
 
 ## Build System
 

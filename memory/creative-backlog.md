@@ -10,4 +10,5 @@ The Producer should review this list when planning — bold ideas that have been
 | 226 | **Deoxys Quest II narrative design**: Expand the cosmic thread. | **done** — shipped C233 as "The Resonance". |
 | 234 | **Resonance Residue**: Post-Quest II environmental follow-through. | **done** — shipped C236. |
 | 253 | **"Ground level" early-game intimacy**: Pre-Badge 1 regional forms, ecological texture in Hours 0-3. Player should feel Hoenn is different from Route 101. | in progress (C255 design, C256-257 implementation) |
-| 253 | **Villain faction postgame resolution**: Ex-Magma/Aqua members appearing in postgame locations, reflecting on what the migration meant. Currently 2 NPCs (Mt. Chimney + Lilycove). Could expand. | pending |
+| 253 | **Villain faction postgame resolution**: Ex-Magma/Aqua members appearing in postgame locations, reflecting on what the migration meant. Currently 1 NPC (Mt. Chimney). Expanding to 6 total (3 Magma, 3 Aqua). | **in progress** — v2.6 centerpiece (C284-285) |
+| 282 | **Devon Corp regional Mewtwo** (#167): Mewtwo_Hoenn as a Devon Corp experiment gone wrong. Compelling narrative but massive scope — new species, quest chain, facility map. | pending |
