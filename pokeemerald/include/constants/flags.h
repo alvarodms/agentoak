@@ -739,7 +739,7 @@
 #define FLAG_RECKONING_TALKED_SLATEPORT            0x2B1
 #define FLAG_RECKONING_TALKED_ROUTE128             0x2B2
 #define FLAG_RECKONING_TALKED_SHOAL_CAVE           0x2B3
-#define FLAG_UNUSED_0x2B4  0x2B4 // Unused Flag
+#define FLAG_RECKONING_COMPLETE  0x2B4
 #define FLAG_UNUSED_0x2B5  0x2B5 // Unused Flag
 #define FLAG_UNUSED_0x2B6  0x2B6 // Unused Flag
 #define FLAG_UNUSED_0x2B7  0x2B7 // Unused Flag

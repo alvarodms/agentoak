@@ -525,8 +525,14 @@ LavaridgeTown_Text_ArcanineBreeder:
 LavaridgeTown_EventScript_ExMagmaGrunt::
 	lock
 	faceplayer
-	msgbox LavaridgeTown_Text_ExMagmaGrunt, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECKONING_TALKED_LAVARIDGE, LavaridgeTown_EventScript_ExMagmaGruntShort
 	setflag FLAG_RECKONING_TALKED_LAVARIDGE
+	msgbox LavaridgeTown_Text_ExMagmaGrunt, MSGBOX_DEFAULT
+	release
+	end
+
+LavaridgeTown_EventScript_ExMagmaGruntShort::
+	msgbox LavaridgeTown_Text_ExMagmaGruntShort, MSGBOX_DEFAULT
 	release
 	end
 
@@ -541,5 +547,11 @@ LavaridgeTown_Text_ExMagmaGrunt:
 	.string "I watch it from my window\n"
 	.string "some mornings.\p"
 	.string "We fought so hard for this land.\n"
-	.string "It didn't need us at all.$"
+	.string "Turns out it was already changing.$"
+
+LavaridgeTown_Text_ExMagmaGruntShort:
+	.string "The thing in the ash fields\n"
+	.string "is still there.\p"
+	.string "I still watch it.\n"
+	.string "I still don't understand.$"
 

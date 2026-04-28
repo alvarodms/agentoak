@@ -14,16 +14,17 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256, C272) — 13 wasted actions total
+## "File Has Not Been Read Yet" on Edit Calls (C256, C272, C286) — 14 wasted actions total
 
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted actions. C272: 5 more wasted actions on script files (actions 30-34).
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted actions. C272: 5 more. C286: 1 more (flags.h at action 33).
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration Across Cycles (C261→C265→C277→C278→C280) — RECURRING
+## Incomplete Species Registration — Mudkip_Hoenn Line (C261→C286) — 9 CYCLES, STILL UNRESOLVED
 
-**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277: Treecko_Hoenn had species.h constant but missing 25 other files. C278: Mudkip_Hoenn line — generator never actually run, only configs+sprites existed. C280-C281: each claimed to fix registration but species.h still had EGG=445 where Mudkip should be. C285: confirmed the 5-cycle gap, removed C278's manual species_names.h duplicates, ran generator 27/27 for all 3 species.
-**Resolution**: **Rule**: After ANY cycle that references a species constant in game data, verify registration: (1) grep species.h for the constant, (2) grep species_info.h for the entry, (3) run `make`, (4) only THEN update memory. Never assume a previous cycle registered a species — always verify.
+**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277-C281: each claimed to fix Mudkip_Hoenn but species.h still has EGG=445 (immediately after BLAZIKEN_HOENN=444). C285: **claimed** generator 27/27 but species still absent. C286 **confirmed definitively**: SPECIES_MUDKIP_HOENN NOT in species.h, NOT in any file. Removed all orphaned references to fix build.
+**Current state**: Mudkip_Hoenn line (3 species) has ZERO registration. All references removed. Needs fresh generator runs from scratch.
+**Resolution**: **Rule**: After ANY cycle that claims species registration, verify IMMEDIATELY: (1) `grep SPECIES_X species.h` — must return a line, (2) `grep SPECIES_X species_info.h` — must return entries, (3) `make` — must succeed, (4) only THEN update memory. Never trust previous cycle claims without verification.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
@@ -57,13 +58,18 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `node convert_sprites_indexed.cjs` fails with `Error: Cannot find module 'pngjs'`.
 **Resolution**: `npm install pngjs` before running `convert_sprites_indexed.cjs`. Verify pngjs is available before sprite conversion step.
 
+## Wrong Path Prefix (C286) — 7 wasted actions
+
+**Symptom**: Actions 1-7 all used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File does not exist."
+**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.
 - **JSON errors**: `wild_encounters.json` — validate syntax after editing.
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
-- **Trainer capacity**: TRAINERS_COUNT = 885, AT CAPACITY. Must reuse unused IDs for new trainers.
+- **Trainer capacity**: TRAINERS_COUNT = 891, AT CAPACITY. Must reuse unused IDs for new trainers.
 - **egg_moves.h**: Regional forms still need an entry (even if empty).
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts. New species using base-species cries need ONLY a cry_ids.h entry.
 - **TM/HM learnset fields**: Not all move constants are TM fields.

@@ -42,7 +42,20 @@
 - Stage 3 uses VAR_0x8005/8006/8007 for habitat counters (VAR_0x800C/800D don't exist in pokeemerald)
 - ScriptCheckSpeciesCaught checks Pokedex caught flag via SpeciesToNationalPokedexNum + GetSetPokedexFlag
 
+## Cycle 286: Reckoning Collection Quest Payoff
+
+| File | What Changed |
+|------|-------------|
+| `include/constants/flags.h` | FLAG_RECKONING_COMPLETE at 0x2B4 |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | Reckoning check inserted at top of BirchQuestCheck — checks all 6 RECKONING_TALKED flags, fires BirchLab_EventScript_ReckoningAcknowledge (PP_MAX reward) |
+
+### Quest Flow
+- Trigger: Talk to all 6 ex-Team Magma/Aqua NPCs (FLAGS 0x2AB-0x2AD + 0x2B1-0x2B3)
+- Payoff: Birch acknowledges, gives PP_MAX, sets FLAG_RECKONING_COMPLETE (0x2B4)
+- Does NOT block other quest chains — falls through to normal BirchQuestCheck flow after completion
+
 ## Design Notes
 - Johto starter flow takes priority over quest in Birch's script
 - New NPCs (Hiker, Researcher) use flag "0" — always visible, dialogue gated in script
 - Stages 1-3 are non-linear; Stage 4 requires all three; Stage 5 requires Stage 4
+- Reckoning check is at the VERY TOP of BirchQuestCheck, before Johto starter and all other checks

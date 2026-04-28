@@ -2381,7 +2381,7 @@ const struct WildPokemon gShoalCave_LowTideInnerRoom_LandMons[] =
     { 28, 30, SPECIES_SPHEAL },
     { 28, 31, SPECIES_SNEASEL },
     { 28, 31, SPECIES_SNORUNT },
-    { 28, 32, SPECIES_MUDKIP_HOENN },
+    { 28, 32, SPECIES_MUDKIP },
     { 28, 31, SPECIES_SABLEYE },
     { 30, 32, SPECIES_GLALIE },
     { 30, 32, SPECIES_SNEASEL },

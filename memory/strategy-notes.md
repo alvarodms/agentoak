@@ -110,7 +110,7 @@ All NPCs are dialogue-only (no battles). Gated behind Champion clear (FLAG_SYS_G
 | C283 | feature | ~~Boss trainer diversity pass — Roxanne Aron/Aerodactyl, T&L Espeon, dialogue updates~~ **DONE** | Design doc |
 | C284 | feature | ~~Reckoning: Magma NPCs — Lavaridge + Meteor Falls new, Mt. Chimney update~~ **DONE** | — |
 | C285 | feature | ~~Reckoning: Aqua NPCs — Slateport + R128 + Shoal Cave. Also fixed Mudkip_Hoenn species registration (C278-C281 never ran generator).~~ **DONE** | — |
-| C286 | patch | Postgame polish pass — walk full postgame, verify arc coherence, fix gaps | C283-285 |
+| C286 | patch | ~~Postgame polish pass — Mt. Chimney + Lavaridge revisit branches, R128 sensory horror, Lavaridge ending differentiation, Birch Reckoning collection quest (PP_MAX). Also fixed pre-existing Mudkip/Swampert_Hoenn build failures.~~ **DONE** | C283-285 |
 | C287 | planning | v2.7 direction — evaluate #151 (abilities), #152 (moves), #163 (shinies), #167 (Devon Mewtwo) | v2.6 complete |
 
 ### Issue Triage

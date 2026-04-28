@@ -308,7 +308,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Totodile::
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter
 	applymovement LOCALID_BIRCHS_LAB_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	showmonpic SPECIES_MUDKIP_HOENN, 10, 3
+	showmonpic SPECIES_MUDKIP, 10, 3
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YoullTakeTotodile, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile
@@ -378,9 +378,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedCyndaquil::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile::
-	bufferspeciesname STR_VAR_1, SPECIES_MUDKIP_HOENN
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MUDKIP_HOENN
-	givemon SPECIES_MUDKIP_HOENN, 5
+	bufferspeciesname STR_VAR_1, SPECIES_MUDKIP
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MUDKIP
+	givemon SPECIES_MUDKIP, 5
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToPC
 	hidemonpic
@@ -1047,6 +1047,15 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 
 @ Pokemon Migration Research Quest - Postgame
 LittlerootTown_ProfessorBirchsLab_EventScript_BirchQuestCheck::
+	goto_if_set FLAG_RECKONING_COMPLETE, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_MT_CHIMNEY, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_LAVARIDGE, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_METEOR_FALLS, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_SLATEPORT, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_ROUTE128, BirchLab_ReckoningCheckDone
+	goto_if_unset FLAG_RECKONING_TALKED_SHOAL_CAVE, BirchLab_ReckoningCheckDone
+	goto BirchLab_EventScript_ReckoningAcknowledge
+BirchLab_ReckoningCheckDone:
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
 	goto_if_set FLAG_BIRCH_QUEST_COMPLETE, LittlerootTown_ProfessorBirchsLab_EventScript_BirchPostQuest
@@ -2101,3 +2110,33 @@ BirchLab_Text_NormalModeSelected:
 	.string "Savor the journey. HOENN's\n"
 	.string "beautiful when you're not\l"
 	.string "white-knuckling through it.$"
+
+@ =============================================================
+@ Reckoning Collection Quest — postgame payoff for talking to
+@ all 6 former Team Magma/Aqua grunts
+@ =============================================================
+
+BirchLab_EventScript_ReckoningAcknowledge::
+	setflag FLAG_RECKONING_COMPLETE
+	msgbox BirchLab_Text_ReckoningAcknowledge, MSGBOX_DEFAULT
+	giveitem ITEM_PP_MAX
+	msgbox BirchLab_Text_ReckoningGift, MSGBOX_DEFAULT
+	release
+	end
+
+BirchLab_Text_ReckoningAcknowledge:
+	.string "PROF. BIRCH: {PLAYER}!\p"
+	.string "You've spoken to them,\n"
+	.string "haven't you?\l"
+	.string "The former TEAM members.\p"
+	.string "MAGMA near the mountains.\n"
+	.string "AQUA near the sea.\p"
+	.string "I study how POKéMON adapt.\n"
+	.string "But people adapt too.\l"
+	.string "Sometimes more slowly.\p"
+	.string "Thank you for listening\n"
+	.string "to them.$"
+
+BirchLab_Text_ReckoningGift:
+	.string "PROF. BIRCH: Here -- take this.\n"
+	.string "For being thorough.$"

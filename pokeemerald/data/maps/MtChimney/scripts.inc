@@ -823,12 +823,18 @@ MtChimney_Text_SawyerPostRematch:
 	.string "Actually, it really is hot here.\n"
 	.string "I'm overdressed for these parts.$"
 
-@ C248/C284: Postgame Magma grunt — quiet reckoning
+@ C248/C284/C286: Postgame Magma grunt — quiet reckoning
 MtChimney_EventScript_PostgameMagmaGrunt::
 	lock
 	faceplayer
-	msgbox MtChimney_Text_PostgameMagmaGrunt, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECKONING_TALKED_MT_CHIMNEY, MtChimney_EventScript_PostgameMagmaGruntShort
 	setflag FLAG_RECKONING_TALKED_MT_CHIMNEY
+	msgbox MtChimney_Text_PostgameMagmaGrunt, MSGBOX_DEFAULT
+	release
+	end
+
+MtChimney_EventScript_PostgameMagmaGruntShort::
+	msgbox MtChimney_Text_PostgameMagmaGruntShort, MSGBOX_DEFAULT
 	release
 	end
 
@@ -842,4 +848,8 @@ MtChimney_Text_PostgameMagmaGrunt:
 	.string "And now there are rocks that fly.\n"
 	.string "Rocks. That fly.\p"
 	.string "I don't think about it.$"
+
+MtChimney_Text_PostgameMagmaGruntShort:
+	.string "...Still here.\p"
+	.string "Still not thinking about it.$"
 

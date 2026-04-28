@@ -201,11 +201,26 @@ Mt. Chimney update + 2 new postgame ex-Magma NPCs with collection tracking flags
 |------|-------|-------|
 | `data/maps/SlateportCity/scripts.inc` | **285** | ExAquaGrunt — denial beat. Harbor dock-watcher. "We were going to change the world." First-visit / revisit text split via FLAG_RECKONING_TALKED_SLATEPORT. |
 | `data/maps/SlateportCity/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (38,9) elev 3, FACE_LEFT (toward sea/ships), near harbor dock. |
-| `data/maps/Route128/scripts.inc` | **285** | ExAquaGrunt — quiet horror. Shore-bound ex-diver. "The water was different. ...Aware." First-visit / revisit text split via FLAG_RECKONING_TALKED_ROUTE128. |
+| `data/maps/Route128/scripts.inc` | **285**, **286** | ExAquaGrunt — quiet horror. Shore-bound ex-diver. C285: "The water was different. ...Aware." C286: Sharpened to sensory horror — "Something moved below me. Slow." + "The water went quiet. No current. No sound." + "Just... watching." First-visit / revisit text split via FLAG_RECKONING_TALKED_ROUTE128. |
 | `data/maps/Route128/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_F at (56,21) elev 3, FACE_DOWN (toward water), on land patch. |
 | `data/maps/ShoalCave_LowTideEntranceRoom/scripts.inc` | **285** | ExAquaGrunt — quiet acceptance. Cave-sitter peacemaker. "That little fighter didn't need anyone to expand the sea for it." Gives RARE_CANDY (mirrors Meteor Falls C284). Postgame visibility via `call` subroutine (tide check preserved). |
 | `data/maps/ShoalCave_LowTideEntranceRoom/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (15,25) elev 3, FACE_UP (into cave). Both tides use same map (layout swap). |
-| `include/constants/flags.h` | **285** | FLAGS 0x2AE-0x2B3: HIDE_SLATEPORT/ROUTE128/SHOAL_CAVE_POSTGAME_AQUA_GRUNT, RECKONING_TALKED_SLATEPORT/ROUTE128/SHOAL_CAVE. |
+| `include/constants/flags.h` | **285**, **286** | C285: FLAGS 0x2AE-0x2B3. C286: FLAG_RECKONING_COMPLETE at 0x2B4. |
+
+## Reckoning Arc Polish + Collection Quest — Cycle 286
+
+Non-linear arc coherence pass and Birch Lab collection payoff for talking to all 6 former Team NPCs.
+
+| File | Cycle | Notes |
+|------|-------|-------|
+| `data/maps/MtChimney/scripts.inc` | **286** | Added first-visit/revisit branching (was missing). Revisit: "...Still here. Still not thinking about it." |
+| `data/maps/LavaridgeTown/scripts.inc` | **286** | Added first-visit/revisit branching (was missing). Changed ending from "It didn't need us at all" → "Turns out it was already changing" (differentiates from Meteor Falls). Revisit: "The thing in the ash fields is still there. I still watch it. I still don't understand." |
+| `data/maps/Route128/scripts.inc` | **286** | Sharpened horror dialogue — abstract "...Aware" → sensory-grounded "Something moved below me. Slow." + "The water went quiet. No current. No sound." + "Just... watching." |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **286** | Reckoning collection quest payoff — Birch acknowledges player spoke to all 6 ex-Team NPCs (checks all 6 RECKONING_TALKED flags), rewards PP_MAX, sets FLAG_RECKONING_COMPLETE. Inserted at top of BirchQuestCheck router. |
+| `include/constants/flags.h` | **286** | FLAG_RECKONING_COMPLETE at 0x2B4. Next available: 0x2B5. |
+| `src/data/wild_encounters.h` | **286** | Fixed pre-existing build failure: SPECIES_MUDKIP_HOENN → SPECIES_MUDKIP (species never registered). |
+| `src/data/trainer_parties.h` | **286** | Fixed pre-existing build failure: SPECIES_SWAMPERT_HOENN → SPECIES_SWAMPERT (species never registered). |
+| `src/data/text/species_names.h` | **286** | Removed 3 orphan entries for unregistered Mudkip/Marshtomp/Swampert_Hoenn species. |
 
 ## Wally Victory Road Migration Dialogue — Cycle 270
 
