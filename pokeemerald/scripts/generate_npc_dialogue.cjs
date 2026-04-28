@@ -197,17 +197,96 @@ function handleScriptsInc(mapName, npcsForThisMap) {
 }
 
 // ---------------------------------------------------------------------------
+// Update mode — in-place dialogue replacement
+// ---------------------------------------------------------------------------
+
+function updateDialogue(args) {
+  let filePath = null;
+  let label = null;
+  let text = null;
+  const dryRun = args.includes('--dry-run');
+
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--file' && args[i + 1]) filePath = args[++i];
+    else if (args[i] === '--label' && args[i + 1]) label = args[++i];
+    else if (args[i] === '--text' && args[i + 1]) text = args[++i];
+  }
+
+  if (!filePath || !label || !text) {
+    console.error('Usage: node scripts/generate_npc_dialogue.cjs --update --file <path/to/scripts.inc> --label <SCRIPT_LABEL> --text "dialogue text$"');
+    process.exit(1);
+  }
+
+  const absPath = path.isAbsolute(filePath)
+    ? filePath
+    : path.join(process.cwd(), filePath);
+
+  if (!fs.existsSync(absPath)) {
+    console.error(`File not found: ${absPath}`);
+    process.exit(1);
+  }
+
+  const errors = validateDialogue(text, label);
+  if (errors.length > 0) {
+    console.error('Validation errors:');
+    errors.forEach(e => console.error(`  ${e}`));
+    process.exit(1);
+  }
+
+  let content = fs.readFileSync(absPath, 'utf8');
+
+  const textLabel = label.replace('EventScript_', 'Text_');
+  const textRe = new RegExp(
+    `(${textLabel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}:\\s*\\n\\t\\.string )"[^"]*"`,
+    'm'
+  );
+
+  const match = content.match(textRe);
+  if (!match) {
+    console.error(`Label ${textLabel} with .string directive not found in ${filePath}`);
+    process.exit(1);
+  }
+
+  const oldLine = match[0];
+  const newLine = `${match[1]}"${text}"`;
+
+  if (oldLine === newLine) {
+    console.log(`No change needed — dialogue already matches.`);
+    process.exit(0);
+  }
+
+  content = content.replace(oldLine, newLine);
+
+  if (dryRun) {
+    console.log(`[dry-run] Would replace in ${filePath}:`);
+    console.log(`  Old: ${oldLine.split('\n').pop().trim()}`);
+    console.log(`  New: ${newLine.split('\n').pop().trim()}`);
+  } else {
+    fs.writeFileSync(absPath, content, 'utf8');
+    console.log(`Updated ${textLabel} in ${filePath}`);
+    console.log(`  Old: ${match[0].split('\n').pop().trim()}`);
+    console.log(`  New: ${newLine.split('\n').pop().trim()}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
 function main() {
   const args = process.argv.slice(2);
+
+  if (args.includes('--update')) {
+    return updateDialogue(args);
+  }
+
   const dryRun = args.includes('--dry-run');
   const validateOnly = args.includes('--validate');
   const configPath = args.find(a => !a.startsWith('--'));
 
   if (!configPath) {
     console.error('Usage: node scripts/generate_npc_dialogue.cjs <config.json> [--dry-run] [--validate]');
+    console.error('       node scripts/generate_npc_dialogue.cjs --update --file <path> --label <LABEL> --text "dialogue$"');
     process.exit(1);
   }
 

@@ -21,7 +21,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229** | 27 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240**, **250**, **251**, **252**, **256**, **257**, **259**, **261**, **263**, **264**, **265**, **276**, **277**, **278**, **280** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
-| Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225**, **247**, **254**, **260**, **266**, **275**, **281** | Makefile + 10 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler + **species generator (27-file)** + **trainer generator** + **NPC dialogue generator** | [engineering-validation.md](completed-work/engineering-validation.md) |
+| Engineering Validation | 112, 118, 127, 141, 145, 170, 179, 185, 190, 192, 195, 202, **206**, **220**, **222**, **225**, **247**, **254**, **260**, **266**, **275**, **281**, **287** | Makefile + 10 scripts + event_macros.inc + legend_macros.inc + trainer audit + species pipeline + gap-filler + **species generator (27-file)** + **trainer generator** + **NPC dialogue generator** (+ --update C287) + **verify_species.sh** (C287) | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | **78**, 80, **85** | 3 | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | **84**, **96** | 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
@@ -38,9 +38,9 @@ Before modifying ANY file: check the system index below → open detail file →
 - **SootopolisCity/scripts.inc**: 5 cycles (last: C190) — Rayquaza reactions, badge-conditional atmosphere
 - **PacifidlogTown/scripts.inc**: 10 cycles (last: C195) — Draconid legend, breadcrumbs, badge-conditional atmosphere, Quest 1 encounter
 - **trainer_parties.h / trainers.h**: ~34 cycles each — all trainer data. Macro must match struct. C195 fixed 17 macro mismatches.
-- **wild_encounters.json**: 31 cycles (last: C265) — all encounter tables. C265: restored LOTAD_HOENN on Route 102, SHROOMISH_HOENN in Petalburg Woods (species now registered)
+- **wild_encounters.json**: 31 cycles (last: C287) — all encounter tables. C287: fixed orphaned SPECIES_MUDKIP_HOENN → SPECIES_MUDKIP in Shoal Cave (unregistered species broke build)
 - **include/constants/flags.h**: Many cycles — custom flags through 0x2B4 (FLAG_RECKONING_COMPLETE C286), next: 0x2B5
-- **include/constants/species.h**: Many cycles — 42 custom species through 447 (Swampert_Hoenn), EGG=448, NUM_SPECIES=448. C276 Treecko_Hoenn (439-441), C277 Torchic_Hoenn (442-444), C285 Mudkip_Hoenn (445-447) — C278-C281 claimed registration but never ran generator; C285 confirmed gap, ran generator 27/27 per species.
+- **include/constants/species.h**: Many cycles — **33 custom species** through 444 (Blaziken_Hoenn), EGG=445, NUM_SPECIES=445. C276 Treecko_Hoenn (439-441, 2/27 files), C277 Torchic_Hoenn (442-444, 2/27 files). Mudkip_Hoenn line: NOT registered (0/27). C287 verify_species.sh confirmed gaps.
 - **LittlerootTown/scripts.inc**: C280 — postgame rival battle script + dialogue (OnTransition show/hide + gender/starter branching + cleartrainerflag rematches)
 - **EverGrandeCity_GlaciasRoom/scripts.inc**: C213 — Glacia intro dialogue rewritten for cross-gen evo theming
 - **MossdeepCity_Gym/scripts.inc**: C214 — Tate & Liza intro+defeat+post-battle+rematch dialogue rewritten for Farigiraf

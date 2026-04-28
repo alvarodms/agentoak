@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-278, 26 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-287, 27 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C276: first edit at action 7/50 (14%). C277: REGRESSED to 63%. **C278: RECOVERED — first edit at action 7/30 (23%).** Root cause (when it recurs): generator said "already exists" → agent re-investigates instead of consulting this file.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) NEVER use Agent subagent. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
+**Symptom**: 64-132 actions before first edit. C278: RECOVERED at 23%. **C287**: first edit at action 17/120 (14%) — acceptable for a design cycle, but Agent subagent used twice (actions 37, 42) violating rule (2). Root cause (when it recurs): generator said "already exists" → agent re-investigates instead of consulting this file.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent** — violated again C287. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -20,11 +20,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration — Mudkip_Hoenn Line (C261→C286) — 9 CYCLES, STILL UNRESOLVED
+## Incomplete Species Registration — Changed Three (C261→C287) — EXPANDED, PARTIALLY UNRESOLVED
 
-**Symptom**: Species referenced in encounters/parties/scripts but never registered via generator. C261: constants never added to species.h. C277-C281: each claimed to fix Mudkip_Hoenn but species.h still has EGG=445 (immediately after BLAZIKEN_HOENN=444). C285: **claimed** generator 27/27 but species still absent. C286 **confirmed definitively**: SPECIES_MUDKIP_HOENN NOT in species.h, NOT in any file. Removed all orphaned references to fix build.
-**Current state**: Mudkip_Hoenn line (3 species) has ZERO registration. All references removed. Needs fresh generator runs from scratch.
-**Resolution**: **Rule**: After ANY cycle that claims species registration, verify IMMEDIATELY: (1) `grep SPECIES_X species.h` — must return a line, (2) `grep SPECIES_X species_info.h` — must return entries, (3) `make` — must succeed, (4) only THEN update memory. Never trust previous cycle claims without verification.
+**Symptom**: C287 verify_species.sh revealed the problem is WIDER than just Mudkip_Hoenn:
+- Mudkip_Hoenn line (3 species): **0/27 files**. Not in species.h at all. EGG=445 after BLAZIKEN_HOENN=444.
+- Treecko_Hoenn line (439-441): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
+- Torchic_Hoenn line (442-444): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
+**Current state**: 9 Changed Three species are non-functional. They have no stats, types, abilities, learnsets, graphics, or pokedex entries. Rival parties and encounter tables reference them but they resolve to blank/crash data.
+**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) C288-289 must complete all 9 registrations as v2.7 prerequisite.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
