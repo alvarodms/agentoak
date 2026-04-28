@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_species check_evolution check_all
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -220,6 +220,10 @@ check_evolution:
 check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers
 	@echo ""
 	@echo "=== All validation checks passed ==="
+
+check_all_quick: check_scripts check_species check_trainers
+	@echo ""
+	@echo "=== Quick validation checks passed ==="
 
 infoshell = $(foreach line, $(shell $1 | sed "s/ /__SPACE__/g"), $(info $(subst __SPACE__, ,$(line))))
 

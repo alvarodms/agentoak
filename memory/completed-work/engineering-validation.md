@@ -33,3 +33,4 @@
 | `pokeemerald/scripts/configs/test_npc_dialogue.json` | **C275** | Test config for NPC dialogue generator validation. Route103 hiker NPC. |
 | `pokeemerald/scripts/generate_npc_dialogue.cjs` (--update) | **C287** | Added --update mode: in-place dialogue replacement via `--update --file <path> --label <LABEL> --text "text$"`. Finds Text_ label, replaces .string content, validates charmap. `--dry-run` supported. |
 | `pokeemerald/scripts/verify_species.sh` | **C287** | Species registration verifier. Takes species name, checks all 27 target files from generate_species.cjs. Reports FOUND/MISSING per file + summary count. Searches both UPPER_CASE and PascalCase naming conventions. Exit 0 if 27/27, exit 1 otherwise. |
+| `pokeemerald/Makefile` | **C290** | Added `check_all_quick` phony target: runs check_scripts + check_species + check_trainers (fast validators only, skips encounter/evolution checks). |

@@ -42,7 +42,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ## Physical/Special Split & Move System (Cycle 43-44, 75, 128)
 
-**MOVES_COUNT** = 378 (IDs 0-377). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy moves: 355-357. Gen 4/5: 358-377.
+**MOVES_COUNT** = 380 (IDs 0-379). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy: 355-357. Gen 4/5: 358-377. Custom signatures: SPORE_FIST(378), TIDAL_FLARE(379).
 
 **TM/HM fields vs move constants**: The `tmhm_learnsets.h` struct fields correspond to TM/HM assignments, NOT to all moves. Custom Gen4/5 moves (ENERGY_BALL, NASTY_PLOT, etc.) are valid move constants but may NOT be TM fields unless assigned to a TM slot. Verify before using in TM learnsets.
 
@@ -104,15 +104,11 @@ Weather Omens: badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x
 
 ---
 
-## Build Validation Targets (C141, C170, C206, C220, C222, C225, C247)
+## Build Validation Targets
 
-`make check_scripts` — Lints .inc files for non-charmap characters.
-`make check_encounters` — Node.js validator for `wild_encounters.json`.
-`make check_e4_rematches` — Bash validator for E4 rematch parties (duplicates, level progression, regional form presence).
-`make check_species` — Runs `scripts/check_species_registration.sh` on all custom species. Checks 19 required files per species. Exit 0 only if ALL pass.
-`make check_evolution` — Bash validator for evolution.h: source/target species, method validity, duplicates, gender-gated evos, branching uniqueness.
-`make check_trainers` — Bash validator (6 checks): cross-references IDs/entries/parties, party count, field-level struct validation, constant existence.
-`make check_all` — Runs check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers.
+`make check_all` — Full: check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers.
+`make check_all_quick` — Fast: check_scripts + check_species + check_trainers (C290).
+Individual: check_scripts, check_encounters, check_e4_rematches, check_species, check_evolution, check_trainers.
 
 **ScriptCheckPokedexSeen** (C225): `setvar VAR_0x8004, SPECIES_X` → `specialvar VAR_RESULT, ScriptCheckPokedexSeen` → returns 1/0.
 
@@ -138,17 +134,7 @@ Weather Omens: badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x
 
 **Species registration**: All 27 files handled by `generate_species.cjs` since C281 — no manual steps. Only `enemy_mon_elevation.h` (floating species) needs manual addition. **Pitfall**: anchor text appearing in both vanilla and custom sections — `string.replace()` matches FIRST occurrence.
 
-**Changed Three species status (C288 verified via verify_species.sh)**:
-- Treecko_Hoenn line (439-441): species.h + species_names.h ONLY (2/27 files). NOT in species_info.h — no stats/types/abilities defined.
-- Torchic_Hoenn line (442-444): species.h + species_names.h ONLY (2/27 files). Same gap.
-- Mudkip_Hoenn line (445-447): **27/27 ✓C288**. Water/Fighting, Torrent/Guts. Fully registered.
-- Total custom species: **36** (11 cross-gen + 25 _HOENN). **19 fully registered** in species_info.h. EGG=448, NUM_SPECIES=448.
-
----
-
-## Cross-Gen Evolution Pipeline (C212-218)
-
-Superseded by `generate_species.cjs` for individual species. **Pitfall**: `egg_moves.h` MUST have `EGG_MOVES_TERMINATOR` between species blocks.
+**Changed Three status (C289)**: All 9 starters need full registration. Treecko/Torchic lines: 2/27 (species.h + species_names.h only). Mudkip line: 1/27 (species_info removed C289). Total: **36 custom** (16 fully registered). EGG=448, NUM_SPECIES=448.
 
 ---
 

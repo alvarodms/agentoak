@@ -1509,6 +1509,14 @@ static const u8 sZenHeadbuttDescription[] = _(
     "Focuses willpower and\n"
     "headbutts. May cause flinch.");
 
+static const u8 sSporeFistDescription[] = _(
+    "An icy punch packed\n"
+    "with spores. May freeze.");
+
+static const u8 sTidalFlareDescription[] = _(
+    "A scalding tidal blast\n"
+    "that may burn the foe.");
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1889,4 +1897,6 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_CROSS_POISON - 1] = sCrossPoisonDescription,
     [MOVE_IRON_HEAD - 1] = sIronHeadDescription,
     [MOVE_ZEN_HEADBUTT - 1] = sZenHeadbuttDescription,
+    [MOVE_SPORE_FIST - 1] = sSporeFistDescription,
+    [MOVE_TIDAL_FLARE - 1] = sTidalFlareDescription,
 };

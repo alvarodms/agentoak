@@ -30,5 +30,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | v2.7 Planning Landscape — Trends & Issue Triage | 287 | [v27-planning-landscape-2026.md](pokemon-knowledge/v27-planning-landscape-2026.md) |
 | Changed Three Type Archetypes — Competitive Precedents | 288 | [changed-three-type-archetypes.md](pokemon-knowledge/changed-three-type-archetypes.md) |
 | Starter Registration Precedents — Fairy/Flying & Grass/Steel | 289 | [starter-registration-precedents-c289.md](pokemon-knowledge/starter-registration-precedents-c289.md) |
+| Changed Three Registration — External Patterns & Type Resolution | 290 | [changed-three-registration-patterns-c290.md](pokemon-knowledge/changed-three-registration-patterns-c290.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

@@ -68,9 +68,9 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 
 6 files per move. Each reuses an existing animation.
 
-**1. "Spore Fist"** (Ice/Physical, 75bp, 100acc, 15pp, 10% freeze) — Breloom_Hoenn. Fills physical Ice STAB gap.
-**2. "Tidal Flare"** (Water/Special, 85bp, 100acc, 10pp, 30% burn) — Arcanine_Hoenn. Water move that burns.
-**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, high crit) — Sceptile_Hoenn. DEFERRED to C292.
+**1. "Spore Fist"** (Ice/Physical, 75bp, 100acc, 15pp, 10% freeze) — Breloom_Hoenn. **DONE C290**
+**2. "Tidal Flare"** (Water/Special, 85bp, 100acc, 10pp, 30% burn) — Arcanine_Hoenn. **DONE C290**
+**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, high crit) — Sceptile_Hoenn. DEFERRED to C293.
 
 ## Form-by-Form Summary Table
 
@@ -98,10 +98,10 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 |-------|------|-----------|-------------|
 | C288 | feature | **DONE**: Tier 2 ability pass (8/10). Mudkip_Hoenn registration attempted but incomplete. | — |
 | C289 | feature | **DONE**: Frozen Spore + Scalding Touch custom abilities. Tier 2 complete (10/10). Fixed Mudkip build break. | — |
-| C290 | feature | **Changed Three registration**: All 9 starter species (3 lines x 3 stages). Run verify_species.sh — must show 27/27 for each. | — |
-| C291 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Third custom ability. | C290 |
-| C292 | feature | **Signature moves**: Implement Spore Fist + Tidal Flare (+ Iron Leaf if starters ready). 6 files per move. | C290-291 |
-| C293 | feature | **Trainer showcase**: Update key trainer teams to use new abilities/moves in battle. Dialogue referencing abilities. | C292 |
+| C290 | feature | **DONE**: Spore Fist + Tidal Flare signature moves (MOVES_COUNT→380). Breloom_Hoenn custom learnset. make check_all_quick shipped. | — |
+| C291 | feature | **Changed Three registration**: All 9 starter species (3 lines x 3 stages). Run verify_species.sh — must show 27/27 for each. | — |
+| C292 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Third custom ability. | C291 |
+| C293 | feature | **Signature moves II**: Iron Leaf for Sceptile_Hoenn + trainer showcase pass. | C291-292 |
 | C294 | patch | **Balance + polish**: Difficulty mode tuning, encounter rate adjustment, trainer IV review. v2.7 complete. | C293 |
 
 ## Issue Integration
@@ -124,6 +124,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (16 fully registered, 9 partial — all Changed Three). Mudkip line species_info removed C289. Tier 2 ability pass: **10/10 complete** C289.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
+- **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379). MOVES_COUNT=380. Next: 380. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

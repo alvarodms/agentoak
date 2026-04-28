@@ -14,9 +14,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256, C272, C286) — 14 wasted actions total
+## "File Has Not Been Read Yet" on Edit Calls (C256, C272, C286, C290) — 16 wasted actions total
 
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted actions. C272: 5 more. C286: 1 more (flags.h at action 33).
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted actions. C272: 5 more. C286: 1 more (flags.h at action 33). C290: 2 more (move_descriptions.h + contest_moves.h).
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
@@ -66,6 +66,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: Actions 1-7 all used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File does not exist."
 **Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix.
+
+## check_all_quick Requires pkg-config (C290) — CI limitation
+
+**Symptom**: `make check_all_quick` fails with `pkg-config: No such file or directory` because `check_scripts` dependency invokes shell tools requiring pkg-config.
+**Resolution**: This is a CI environment issue, not a code issue. The Makefile target is correct. For CI-only validation, use `make check_species check_trainers` directly (skip check_scripts).
 
 ## Anticipated Pitfalls
 

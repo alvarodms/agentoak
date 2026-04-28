@@ -108,6 +108,33 @@ First custom ability in the hack. 30% chance to poison the target when the holde
 
 Removed orphaned Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn entries from species_info.h — these had data blocks but no corresponding SPECIES_ constants in species.h (C288 partial registration issue). Build was broken before C289 changes.
 
+## Signature Move: Spore Fist (C290)
+
+Ice/Physical, 75bp, 100acc, 15pp, 10% freeze. Contact move. Assigned to Breloom_Hoenn via custom learnset at level 36.
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/moves.h` | Added MOVE_SPORE_FIST = 378, MOVES_COUNT → 380 | **290** | |
+| `src/data/battle_moves.h` | Spore Fist battle data (EFFECT_FREEZE_HIT, FLAG_MAKES_CONTACT) | **290** | Physical, same effect as Ice Beam |
+| `src/data/text/move_names.h` | "SPORE FIST" | **290** | 10 chars (max 12) |
+| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **290** | "An icy punch packed with spores. May freeze." |
+| `src/data/contest_moves.h` | Contest entry (Beauty, HIGHLY_APPEALING) | **290** | |
+| `src/data/pokemon/level_up_learnsets.h` | Created sBreloomHoennLevelUpLearnset (L36 Spore Fist) | **290** | Based on vanilla Breloom, Sky Uppercut→Spore Fist, Dynamic Punch→Sludge Bomb |
+| `src/data/pokemon/level_up_learnset_pointers.h` | Added SPECIES_BRELOOM_HOENN pointer | **290** | |
+
+## Signature Move: Tidal Flare (C290)
+
+Water/Special, 85bp, 100acc, 10pp, 30% burn. Non-contact. Assigned to Arcanine_Hoenn at level 45.
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/moves.h` | Added MOVE_TIDAL_FLARE = 379 (same MOVES_COUNT update as Spore Fist) | **290** | |
+| `src/data/battle_moves.h` | Tidal Flare battle data (EFFECT_BURN_HIT, no FLAG_MAKES_CONTACT) | **290** | Special, same effect as Flamethrower |
+| `src/data/text/move_names.h` | "TIDAL FLARE" | **290** | 11 chars (max 12) |
+| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **290** | "A scalding tidal blast that may burn the foe." |
+| `src/data/contest_moves.h` | Contest entry (Beauty, HIGHLY_APPEALING) | **290** | |
+| `src/data/pokemon/level_up_learnsets.h` | Added MOVE_TIDAL_FLARE at L45 to sArcanineHoennLevelUpLearnset | **290** | Before Extreme Speed at L49 |
+
 ## Tier 2 Ability Reassignment Pass (C288)
 
 8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.

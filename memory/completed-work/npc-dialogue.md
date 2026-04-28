@@ -4,240 +4,31 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 ---
 
-## Professor Birch
+## Collapsed History (C15-267) — See git history for full details
 
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/text/birch_speech.inc` | 24 | Opening sequence → migration mystery |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | 15, 180, **181**, **279** | Lab aide + Birch rescue; C180: migration hint; C181: difficulty selection multichoice; C279: Postgame gift swapped Johto starters → Changed Three (Treecko/Torchic/Mudkip_Hoenn) + migration-themed Birch dialogue |
-| Oldale/Rustboro/Dewford/Mauville PokemonCenter scripts | 181, **183** | Difficulty-aware helper NPCs (4 maps) |
+- **Birch/Lab** (C15,24,180,181,279,286): Opening speech, difficulty selection, postgame Changed Three gift, Reckoning collection quest (PP_MAX)
+- **Rival** (C25-29,273): 4 encounters rewritten. C273: Route 119 + Lilycove → specific regional form references
+- **Villains** (C248,249,284,285,286): Magma (Mt.Chimney/Lavaridge/Meteor Falls) + Aqua (Slateport/R128/Shoal Cave) postgame arc. 6 ex-Team NPCs. Reckoning collection quest.
+- **Gym Leaders** (C25-29,244,245,269,271,283): All 8 rewritten. C269: Brawly/Norman/Drake regional form refs. C271: Wattson Lotad_Hoenn. C283: Roxanne fossil scholar + T&L Espeon empathy.
+- **E4 + Champion** (C33,42,203,204,212,213,214,283): Sidney/Phoebe/Glacia/Drake/Wallace rewritten for cross-gen evo + regional form themes
+- **Flavor NPCs** (~30 cycles): Early foreshadowing (sighting events), mid-game escalation (Bagon Colony, weather omens), The Gathering Storm (ocean witnesses), Echo Dialogue Layer (C232), Changed Trainer Witnesses (C235,238), Migration Acknowledgment NPCs (C267)
+- **Quests** (C116-243): Beast sightings, Primal network, Sky Guardian, 4 side quests, Resonance (C233), Cosmic (C242,243)
+- **Difficulty NPC** (C214): PetalburgCity PokemonCenter downgrade
 
-## Rival, Villains, Gym Leaders (C25-173)
+## Wally VR Migration Dialogue — C270
 
-Rival (4 encounters rewritten), Villains (Maxie/Archie), all 8 Gym Leaders (pre-battle + rematch). C173: Norman/Winona expanded.
+VictoryRoad_1F: Petalburg Woods frost narrative, Shroomish_Hoenn finding. Rewrites C246 generic text.
 
-## Elite Four & Champion — Cycles 33, 42, **203**, **204**
+## Rival Migration Arc — C273
 
-C203: Rewrote Sidney (Murkrow/Houndoom callbacks), Phoebe (Mt. Pyre grandmother + Corsola_Hoenn intro), Glacia (Route 125 cold + migration pilgrim). Each ends with a question. Phoebe team: Banette → Corsola_Hoenn.
-C204: Rewrote Drake (Bagon Colony + Draconid legend) and Wallace (The Gathering + Arcanine_Hoenn). Wallace team: Tentacruel → Arcanine_Hoenn. Drake→Wallace bridge + Hall of Fame setup.
+Route 119 + Lilycove: May/Brendan intro/defeat/post-battle referencing specific regional forms + routes.
 
-## Flavor NPCs (Collapsed by Era)
+## Reckoning Arc (C284-286)
 
-**Early-game foreshadowing** (C15, 28, 36, 140, 144, 145, 152, **180**, **224**, **258**, **262**): LittlerootTown→Route 116 migration sightings. 4 glimpse coord_events (R101/102/104/116, flags 0x278-0x27B). Petalburg Woods Pikachu OW sprint (flag 0x27E-0x27F). C180: Birch kids. C224: Mom migration send-off — Running Shoes → 5 Poké Balls + migration dialogue (#135). C258: Route 102 fisherman rewritten — Lotad_Hoenn electric discovery framing ("My line keeps getting shocked"). C262: 3 trainer dialogues rewritten — Rick (Route 102, sparky LOTAD), James (Petalburg Woods, ice-cold SHROOMISH), Haley (Route 104, POKéMON acting strange).
-**Mid-game escalation** (C29, 94, 95, 141, 149, 153, 154, 159, 160, 162): Weather Institute Dr. Hartley, Meteor Falls Bagon Colony (flag 0x280), Mt. Pyre Restless Dead (flag 0x281), weather omen NPCs (flags 0x282-0x285), route identity NPCs (R110/113/119/123). R119 thunderstorm event (flags 0x27C-0x27D).
-**Late-game + The Gathering Storm** (C33, 112, 113, 186, 187, 188, 189, 190, **205**): City atmosphere (Mossdeep/Sootopolis/Pacifidlog badge-gated), ocean route witnesses (R124/126/127/128/131), Deep Migration R128 (flag 0x287), The Gathering R126 (flags 0x288-0x289). C205 "The Exhale": 6 ocean NPCs gain post-Rayquaza resolved dialogue, R126 fog thins.
-**Postgame quests** (C116, 118, 120, 135-137, 139, 192, 193, 194, 200, **207**, **209**, **210**, **247**): Beast sightings, Primal network, Sky Guardian arc, 4 side quests (Elder's Current/Hartley's Report/Mossdeep Signal/Fog Beneath). C207: Mt. Pyre Coral Mourner NPC. C209: Bagon Colony researcher postgame callback. C210: Deoxys "Second Signal" quest. C247: Steven Meteor Falls dialogue — Sky Pillar coda ("Whatever stirred up there… it wasn't meant for me") inserted before battle invitation.
+- **Magma** (C284): Mt.Chimney upgrade + Lavaridge + Meteor Falls ex-grunt NPCs. FLAGS 0x2A9-0x2AD.
+- **Aqua** (C285): Slateport + R128 + Shoal Cave ex-grunt NPCs. FLAGS 0x2AE-0x2B3.
+- **Collection** (C286): Birch Lab payoff, R128 horror polish, FLAG_RECKONING_COMPLETE 0x2B4. Build fixes (MUDKIP_HOENN→MUDKIP).
 
-## Cross-Gen Evolution Dialogue — Cycles 212-214
+---
 
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **212** | Sidney intro+defeat+rematch rewritten for Honchkrow theme |
-| `data/maps/EverGrandeCity_PhoebesRoom/scripts.inc` | **212** | Phoebe intro+rematch rewritten for Dusknoir theme |
-| `data/maps/EverGrandeCity_GlaciasRoom/scripts.inc` | **213** | Glacia intro+defeat+rematch rewritten for Froslass/Mamoswine |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | **214**, **283** | C214: Farigiraf/duality theme. C283: Farigiraf→ESPEON empathy rewrite (all 5 dialogue blocks). |
-
-## Bagon Colony Researcher Update — Cycles 215, 225
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/MeteorFalls_1F_1R/scripts.inc` | **215**, **225** | PostChampion script: FLAG_BAGON_COLONY_CALLBACK (0x29B) gates first-visit vs. revisit. C215: revisit text hinting at B1F_2R encounter. C225: added 4th state — witness dialogue triggers when player has seen SPECIES_BAGON_HOENN in Pokédex. Uses `ScriptCheckPokedexSeen` special. "They dream of enduring." |
-| `include/constants/flags.h` | **215** | FLAG_BAGON_COLONY_CALLBACK at 0x29B |
-| `src/script_pokemon_util.c` | **225** | Added `ScriptCheckPokedexSeen()` special — checks if species in VAR_0x8004 has been seen in Pokédex |
-| `data/specials.inc` | **225** | Registered `ScriptCheckPokedexSeen` (line 541) |
-
-## Difficulty Downgrade NPC — C214
-
-PetalburgCity PokemonCenter: scripts.inc + map.json + script_menu.h (constants + data). Challenge→Normal downgrade, MULTI_DIFFICULTY_DOWNGRADE=115.
-
-## Echo Dialogue Layer — Cycle 232
-
-Cross-referencing NPC dialogue connecting all 4 regional forms (Vulpix_Hoenn, Pinsir_Hoenn, Stantler_Hoenn, Corsola_Hoenn) + "Changed Trainer" diegetic motif debut.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/Route112/scripts.inc` | **232** | NEW: MigrationHiker — references Pinsir_Hoenn (local) + Stantler_Hoenn (R119 ranger report) |
-| `data/maps/Route112/map.json` | **232** | Added OBJ_EVENT_GFX_HIKER at (9,34), MOVEMENT_TYPE_FACE_RIGHT |
-| `data/maps/Route113/scripts.inc` | **232** | MODIFIED: FrostTracker text extended — cross-references R112 fire-type Pinsir, fire-and-ice parallel |
-| `data/maps/Route119/scripts.inc` | **232** | NEW: Ecologist — references ALL 4 regional forms, sends findings to Dr. Hartley |
-| `data/maps/Route119/map.json` | **232** | Added OBJ_EVENT_GFX_SCIENTIST_1 at (7,100), MOVEMENT_TYPE_FACE_RIGHT |
-| `data/maps/Route119_WeatherInstitute_1F/scripts.inc` | **232** | MODIFIED: Dr. Hartley gains badge-gated (FLAG_BADGE05_GET) post-migration dialogue referencing 3 regional forms + "transformation" thesis |
-| `data/maps/FortreeCity/scripts.inc` | **232** | NEW: ChangedTrainer — notices player's cyan palette, "HOENN changes everyone who walks through it. Not just POKéMON." |
-| `data/maps/FortreeCity/map.json` | **232** | Added OBJ_EVENT_GFX_WOMAN_2 at (34,5) elev 4, MOVEMENT_TYPE_FACE_LEFT |
-
-## Changed Trainer Witnesses — Cycle 235
-
-Post-Champion dialogue: Mom, Rival, Norman, and Nurse Joy notice the player's transformation. Each reacts through their relationship lens (emotional/competitive/evaluative/clinical).
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/scripts/players_house.inc` | **235**, **238** | MODIFIED: `PlayersHouse_1F_EventScript_Mom` gains FLAG_SYS_GAME_CLEAR branch → `MomWitness`. C238: Fixed MomWitness to goto HealParty after witness text (was blocking heal). |
-| `data/maps/LittlerootTown_BrendansHouse_1F/scripts.inc` | **235** | MODIFIED: Added `PlayersHouse_1F_Text_MomChangedTrainer` text label. |
-| `data/maps/LittlerootTown_MaysHouse_2F/scripts.inc` | **235** | MODIFIED: `RivalsHouse_2F_EventScript_Rival` gains FLAG_SYS_GAME_CLEAR branch → `RivalWitness`. Added `RivalsHouse_2F_Text_RivalChangedTrainer`. Shared by both houses. |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | **235** | MODIFIED: `PetalburgCity_Gym_Text_DadNoAmountOfTrainingIsEnough` rewritten as witness dialogue. Same script flow, new text. |
-| `data/maps/OldaleTown_PokemonCenter_1F/scripts.inc` | **235**, **238** | MODIFIED: Nurse gains one-time witness message gated by FLAG_CHANGED_TRAINER_NURSE (0x2A0) + FLAG_SYS_GAME_CLEAR. C238: Removed stray `release` between witness and heal (lock gap fix). |
-| `include/constants/flags.h` | **235** | FLAG_CHANGED_TRAINER_NURSE at 0x2A0. |
-
-## Rival Migration Arc Dialogue — Cycle 273
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/Route119/scripts.inc` | **273** | Route 119 May+Brendan intro/defeat/post-battle rewritten: discovery moment. May: "LOTAD that spark, SHROOMISH that frost over... ghost STANTLER." Brendan: "ROUTE 102's LOTAD crackle with static... STANTLER phases through tall grass." Both name specific regional forms + routes. |
-| `data/maps/LilycoveCity/scripts.inc` | **273** | Lilycove May+Brendan intro/defeat/post-battle rewritten: full embrace. May lists 4 changed species, "half a notebook." Brendan: "My team's half regional forms now." Both reflect on personal growth through migration. May's coda: "We left LITTLEROOT with normal starters. Now look at us." |
-
-## Quest 6: The Resonance (C233) + Resonance Residue (C236)
-
-Deoxys Quest II — Three-location postgame investigation, then environmental follow-through.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `include/constants/flags.h` | **233**, **236** | C233: FLAGS 0x29C-0x29F (RESONANCE_STARTED/METEOR/OCEAN/COMPLETE). C236: FLAGS 0x2A1-0x2A2 (RESIDUE_MOSSDEEP/RESIDUE_OCEAN). |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **233**, **236**, **237** | C233: Resonance offer/progress/completion/post-complete + terminal readouts. C236: ResonancePostCheck branch (screen flash FADE_TO_WHITE/FADE_FROM_WHITE), residue discovery dialogue, TerminalResidueStable branch. C237: Rare Candy reward added to Residue first-visit branch (giveitem + ResidueGift text). |
-| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **233**, **236** | C233: Meteorite bg_event 3 states. C236: ResonanceMeteorResidue — steady glow + warmth text after Resonance completion. |
-| `data/maps/MeteorFalls_B1F_2R/map.json` | **233** | Added bg_event "sign" at (3,5), BG_EVENT_PLAYER_FACING_ANY |
-| `data/maps/Route131/scripts.inc` | **233**, **236** | C233: ShimmerSpotTrigger Resonance branches + Ocean vision. C236: NEW ResidueSwimmer NPC — 3 states (normal/first-time/revisit), casual blue-green lights dialogue. |
-| `data/maps/Route131/map.json` | **236** | Added OBJ_EVENT_GFX_SWIMMER_M at (25,15), MOVEMENT_TYPE_FACE_DOWN, non-trainer, script ResidueSwimmer. |
-
-## Gym Leader Narrative Pass — Cycles 244-245
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/RustboroCity_Gym/scripts.inc` | **244** | Roxanne intro rewritten: Bagon_Hoenn near Meteor Falls, living stone hide, academic curiosity |
-| `data/maps/DewfordTown_Gym/scripts.inc` | **244** | Brawly intro rewritten: Hitmonlee washed up on Dewford shore, sparring buddy, casual respect |
-| `data/maps/MauvilleCity_Gym/scripts.inc` | **244** | Wattson intro rewritten: Electabuzz wandered into Power Plant, magnificent voltage, jovial wonder |
-| `data/maps/LavaridgeTown_Gym_1F/scripts.inc` | **244** | Flannery intro rewritten: Pinsir on Route 112 breathe fire, grandpa legacy, eager passion |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | **245** | Norman intro rewritten: father-focused, no migration species. "The world changed while you were out there. But so did you." Shortest leader speech. |
-| `data/maps/FortreeCity_Gym/scripts.inc` | **245** | Winona intro rewritten: dark bird from migration, "I took it under my wing." Honchkrow foreshadowing. |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | **245** | Tate & Liza: SURGICAL INSERT of cosmic foreshadowing before existing C214 Farigiraf dialogue. "We've been feeling something -- from very far away. It hasn't arrived yet." |
-| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | **245** | Juan intro rewritten: quietest leader, fewest words. "The tides carry new things since the Stirring." Understated certainty. |
-
-## Late-Game Trainer Narrative Pass — Cycle 246
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/VictoryRoad_1F/scripts.inc` | **246** | Wally entrance pre-fight: Petalburg callback + "New POKéMON found me on the way here." Defeat: pride in growth. Post-entrance: migration Pokémon "showed me who I could be." Exit intro: post-Champion training. Exit defeat: "getting closer every time." PostBattle left unchanged. |
-
-## Team Magma Quiet Reckoning — Cycle 248
-
-Magma faction dialogue rewrite: admin defeat text cracks, Courtney Terra Cave full rewrite, postgame NPC.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/TerraCave_End/scripts.inc` | **248** | Courtney intro/defeat/post-battle rewritten: sparse, measured dialogue. 1-second delay before speaking. trainerbattle_single→trainerbattle_no_intro with lockall/releaseall. "It doesn't matter, does it." |
-| `data/maps/MtChimney/scripts.inc` | **248** | Tabitha defeat: "Hehehe… → Hehehe... heh." Forced, hollow. Postgame Magma grunt NPC added (FLAG_SYS_GAME_CLEAR gated via OnTransition + FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT 0x2C). "The land's the same size, but there's more of everything anyway." |
-| `data/maps/MtChimney/map.json` | **248** | Added postgame Magma grunt object event at (16,38), FACE_DOWN, non-trainer. |
-| `data/maps/MagmaHideout_4F/scripts.inc` | **248** | Tabitha defeat: "Taken down again…\nHehe…" → "Taken down again...\p............\pHehe." Extended pause, hollow laugh isolated. |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **248** | Tabitha defeat: "I'm with our leader…" → "I'm with our leader...\pAlways have been.\p...Right?" Self-doubt surfaces. |
-| `include/constants/flags.h` | **248** | FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT at 0x2C (repurposed FLAG_UNUSED_0x02C). |
-
-## Team Aqua Reckoning — Cycle 249
-
-Aqua faction dialogue rewrite: Shelly analytical acceptance, Matt deflection through loyalty, postgame NPC.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/SeafloorCavern_Room3/scripts.inc` | **249** | Shelly intro/defeat/post-battle rewritten: analytical, not aggressive. "After I've tested you." Post-battle plants core seed: "The ocean didn't need us for that." |
-| `data/maps/AquaHideout_B2F/scripts.inc` | **249** | Matt defeat/post-submarine/post-battle rewritten: shorter than vanilla, every line references "the BOSS." "Hehehe" laugh removed. Personal loyalty, not ideology. |
-| `data/maps/LilycoveCity/scripts.inc` | **249** | Postgame Aqua grunt NPC added (FLAG_SYS_GAME_CLEAR gated via OnTransition + FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT 0x2A6). "We were right… Weren't we? …Then why does it feel like the sea forgot we existed?" |
-| `data/maps/LilycoveCity/map.json` | **249** | Added postgame Aqua grunt object event at (37,37) elev 5, FACE_DOWN, non-trainer. |
-| `include/constants/flags.h` | **249** | FLAG_HIDE_LILYCOVE_POSTGAME_AQUA_GRUNT at 0x2A6. |
-
-## Quest 7: The Answer (C242)
-
-Deoxys_Hoenn encounter — Sky Pillar atmospheric buildup, Space Center trigger, 3-location aftermath.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `include/constants/flags.h` | **242** | FLAGS 0x2A3-0x2A5 (QUEST_COSMIC_STARTED/COMPLETE/APPEARED). |
-| `data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc` | **242**, **243** | Quest 7 branches added to Scientist NPC (CosmicOffer/Reminder/Done) and Terminal (CosmicPending/Active/Done). ~112 new lines of script + text. C243: CosmicReminder branches on FLAG_QUEST_COSMIC_APPEARED → CosmicReturnReminder (post-fight retry text). TerminalCosmicDone text refined: "Signal did not cease. Signal completed." |
-| `data/maps/SkyPillar_Top/scripts.inc` | **242** | CosmicArrival coord_event handler: 6-beat atmospheric sequence (silence→shimmer→double flash→cry→shake→presence), retry path, caught/not-caught outcomes. ~138 new lines. |
-| `data/maps/SkyPillar_Top/map.json` | **242** | Added coord_event at (14,9) with VAR_TEMP_1 guard for CosmicArrival script. |
-| `data/maps/MeteorFalls_B1F_2R/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Relief register — player touches cool stone, warmth "has gone somewhere." |
-| `data/maps/Route131/scripts.inc` | **242**, **243** | CosmicAftermath branch. C243: Unease register — dead still water, something moved underneath, "I didn't look down." |
-
-## Gym Leader Regional Form Dialogue — Cycle 269
-
-Brawly, Norman, and Drake intro+defeat rewritten to reference their C268 regional form teammates.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/DewfordTown_Gym/scripts.inc` | **269** | Brawly intro+defeat rewritten: Gligar_Hoenn from tidal pools in Granite Cave, "stone and sea" sparring partner. Fixes broken C244 Hitmonlee reference (C268 replaced Hitmonlee with Gligar_Hoenn). |
-| `data/maps/PetalburgCity_Gym/scripts.inc` | **269** | Norman intro+defeat rewritten: Farigiraf taught him NORMAL isn't simple, Psychic foresight — "both sensed your strength." Extends C245 father theme with migration species bond. |
-| `data/maps/EverGrandeCity_DrakesRoom/scripts.inc` | **269** | Drake intro+defeat rewritten: Bagon_Hoenn — young colony members changed by the migration, "harder scales, stone in their blood." Replaces C204 generic Bagon colony reference with specific Bagon_Hoenn transformation narrative. |
-
-## Wattson Gym Dialogue — Cycle 271
-
-Wattson's MauvilleCity_Gym dialogue rewritten: Electabuzz references → Lotad_Hoenn/Route 102 electric lily pads.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/MauvilleCity_Gym/scripts.inc` | **271** | WattsonIntro: "Electric lily pads! LOTAD that crackle like fresh batteries!" WattsonPostBattle: "That little LOTAD from ROUTE 102 has more spark than half the machines in NEW MAUVILLE!" WattsonPreRematch: "My LOTAD's been growing -- evolved, even!" WattsonPostRematch: "Electric lily pads from ROUTE 102 -- best thing that ever happened to MAUVILLE!" |
-
-## C283 Boss Diversity Dialogue Pass
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/RustboroCity_Gym/scripts.inc` | **283** | Roxanne intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for fossil scholar identity. "Deep time" framing: ARON's iron body, AERODACTYL adapted 100M years ago, fossils prove HOENN always changed. Contrasts Drake's reverence for present change. |
-| `data/maps/MossdeepCity_Gym/scripts.inc` | **283** | T&L intro+defeat+pre-rematch+rematch-defeat+post-rematch rewritten for ESPEON empathy theme. "Shared sight" / "senses emotions the way we sense each other." Uncanny twin finish-each-other's-thoughts style. |
-
-## Magma Reckoning Expansion — Cycle 284
-
-Mt. Chimney update + 2 new postgame ex-Magma NPCs with collection tracking flags for C286 meta-reward.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/MtChimney/scripts.inc` | **248**, **284** | C284: PostgameMagmaGrunt upgraded from MSGBOX_NPC to lock/faceplayer/release. Added Aerodactyl denial lines ("rocks that fly") + FLAG_RECKONING_TALKED_MT_CHIMNEY setflag. |
-| `data/maps/LavaridgeTown/scripts.inc` | **267**, **284** | C284: ExMagmaGrunt script + OnTransition postgame gating (FLAG_HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT). "I moved here after everything fell apart." Confusion beat. |
-| `data/maps/LavaridgeTown/map.json` | **267**, **284** | C284: OBJ_EVENT_GFX_MAGMA_MEMBER_F at (3,2) elev 3, FACE_DOWN, near hot springs. |
-| `data/maps/MeteorFalls_1F_1R/scripts.inc` | **215**, **225**, **284** | C284: ExMagmaGrunt script (first-visit gives RARE_CANDY, revisit short text). OnTransition added to MapScripts for FLAG_HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT. "MAXIE said the land needed to be stronger. These dragons figured that out without any of us." |
-| `data/maps/MeteorFalls_1F_1R/map.json` | **284** | OBJ_EVENT_GFX_MAGMA_MEMBER_M at (24,30) elev 3, FACE_UP (toward wall), deep inside near back chamber. |
-| `include/constants/flags.h` | **284** | FLAGS 0x2A9-0x2AD: HIDE_LAVARIDGE_POSTGAME_MAGMA_GRUNT, HIDE_METEOR_FALLS_POSTGAME_MAGMA_GRUNT, RECKONING_TALKED_MT_CHIMNEY/LAVARIDGE/METEOR_FALLS. |
-
-## Aqua Reckoning — Cycle 285
-
-3 new postgame ex-Aqua NPCs completing the 6-NPC villain postgame arc. Mirrors Magma C284 pattern.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/SlateportCity/scripts.inc` | **285** | ExAquaGrunt — denial beat. Harbor dock-watcher. "We were going to change the world." First-visit / revisit text split via FLAG_RECKONING_TALKED_SLATEPORT. |
-| `data/maps/SlateportCity/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (38,9) elev 3, FACE_LEFT (toward sea/ships), near harbor dock. |
-| `data/maps/Route128/scripts.inc` | **285**, **286** | ExAquaGrunt — quiet horror. Shore-bound ex-diver. C285: "The water was different. ...Aware." C286: Sharpened to sensory horror — "Something moved below me. Slow." + "The water went quiet. No current. No sound." + "Just... watching." First-visit / revisit text split via FLAG_RECKONING_TALKED_ROUTE128. |
-| `data/maps/Route128/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_F at (56,21) elev 3, FACE_DOWN (toward water), on land patch. |
-| `data/maps/ShoalCave_LowTideEntranceRoom/scripts.inc` | **285** | ExAquaGrunt — quiet acceptance. Cave-sitter peacemaker. "That little fighter didn't need anyone to expand the sea for it." Gives RARE_CANDY (mirrors Meteor Falls C284). Postgame visibility via `call` subroutine (tide check preserved). |
-| `data/maps/ShoalCave_LowTideEntranceRoom/map.json` | **285** | OBJ_EVENT_GFX_AQUA_MEMBER_M at (15,25) elev 3, FACE_UP (into cave). Both tides use same map (layout swap). |
-| `include/constants/flags.h` | **285**, **286** | C285: FLAGS 0x2AE-0x2B3. C286: FLAG_RECKONING_COMPLETE at 0x2B4. |
-
-## Reckoning Arc Polish + Collection Quest — Cycle 286
-
-Non-linear arc coherence pass and Birch Lab collection payoff for talking to all 6 former Team NPCs.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/MtChimney/scripts.inc` | **286** | Added first-visit/revisit branching (was missing). Revisit: "...Still here. Still not thinking about it." |
-| `data/maps/LavaridgeTown/scripts.inc` | **286** | Added first-visit/revisit branching (was missing). Changed ending from "It didn't need us at all" → "Turns out it was already changing" (differentiates from Meteor Falls). Revisit: "The thing in the ash fields is still there. I still watch it. I still don't understand." |
-| `data/maps/Route128/scripts.inc` | **286** | Sharpened horror dialogue — abstract "...Aware" → sensory-grounded "Something moved below me. Slow." + "The water went quiet. No current. No sound." + "Just... watching." |
-| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **286** | Reckoning collection quest payoff — Birch acknowledges player spoke to all 6 ex-Team NPCs (checks all 6 RECKONING_TALKED flags), rewards PP_MAX, sets FLAG_RECKONING_COMPLETE. Inserted at top of BirchQuestCheck router. |
-| `include/constants/flags.h` | **286** | FLAG_RECKONING_COMPLETE at 0x2B4. Next available: 0x2B5. |
-| `src/data/wild_encounters.h` | **286** | Fixed pre-existing build failure: SPECIES_MUDKIP_HOENN → SPECIES_MUDKIP (species never registered). |
-| `src/data/trainer_parties.h` | **286** | Fixed pre-existing build failure: SPECIES_SWAMPERT_HOENN → SPECIES_SWAMPERT (species never registered). |
-| `src/data/text/species_names.h` | **286** | Removed 3 orphan entries for unregistered Mudkip/Marshtomp/Swampert_Hoenn species. |
-
-## Wally Victory Road Migration Dialogue — Cycle 270
-
-Wally's VR dialogue rewritten to reference finding Shroomish_Hoenn in Petalburg Woods — the first rival whose team narrative connects to a specific migration encounter location.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/VictoryRoad_1F/scripts.inc` | **270** | VR_1 pre-battle: Petalburg Woods frost on warm ground, found Shroomish that didn't run. VR_1 defeat: "Every one of them found me." VR_1 post-battle: PETALBURG WOODS/frost/SHROOMISH "showed me who I could be." VR_2+ intro: shortened, confident. VR_2+ defeat: "BRELOOM and I aren't giving up." VR_2+ post: POKéMON LEAGUE ambition. Rewrites C246 generic migration text into specific Shroomish_Hoenn/Petalburg Woods narrative. |
-
-## Migration Acknowledgment NPCs — Cycle 267
-
-5 NPCs added to acknowledge previously unmentioned species. Closes v2.3 audit gap #4.
-
-| File | Cycle | Notes |
-|------|-------|-------|
-| `data/maps/DewfordTown/scripts.inc` + `map.json` | **267** | MigrationFisherman (fisherman, 16×13 elev3) — Gligar_Hoenn: bat-creature with stone hide in Granite Cave. Echo of Gliscor_Hoenn. |
-| `data/maps/LavaridgeTown/scripts.inc` + `map.json` | **267** | ArcanineBreeder (woman, 7×8 elev3) — Arcanine_Hoenn: breeder's Arcanine changed, fur smooth and cool, runs on water. |
-| `data/maps/FortreeCity/scripts.inc` + `map.json` | **267** | NinetalesElder (old man, 15×4 elev4) — Ninetales_Hoenn: grandmother's golden Ninetales vs. water-remembering one. |
-| `data/maps/VictoryRoad_1F/scripts.inc` + `map.json` | **267** | ClawMarkHiker (hiker, 20×35 elev3) — Gabite: fresh claw marks on cave walls, getting deeper further down. |
-| `data/maps/Route123/scripts.inc` + `map.json` | **267** | GliscorRumor (fisherman, 45×18 elev3) — Gliscor_Hoenn: distant echo, Dewford fisherman's report of creature gliding through water and stone. |
+Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).
