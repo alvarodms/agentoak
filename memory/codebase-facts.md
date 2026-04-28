@@ -152,9 +152,9 @@ Superseded by `generate_species.cjs` for individual species. **Pitfall**: `egg_m
 
 ---
 
-## Custom Ability Implementation (C241)
+## Custom Ability Implementation (C241, expanded C289)
 
-4 files: abilities.h (constant + ABILITIES_COUNT), abilities data (src/data/text/abilities.h: string + name + pointer), battle_util.c (battle logic), species_info.h (assign). Attacker-triggered: check `gBattleMons[gBattlerAttacker].ability` in `ABILITYEFFECT_ON_DAMAGE` case, set `gLastUsedAbility` for display, `RecordAbilityBattle(gBattlerAttacker, ...)`.
+4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH — expanded to 14 in C289), abilities data (src/data/text/abilities.h: string + name + pointer), battle_util.c (battle logic), species_info.h (assign). Attacker-triggered: check `gBattleMons[gBattlerAttacker].ability` in `ABILITYEFFECT_ON_DAMAGE` case, set `gLastUsedAbility` for display, `RecordAbilityBattle(gBattlerAttacker, ...)`. Contact-only abilities add `(gBattleMoves[move].flags & FLAG_MAKES_CONTACT)` guard. 3 custom abilities: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81.
 
 ---
 

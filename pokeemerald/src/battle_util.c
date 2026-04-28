@@ -2887,6 +2887,44 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
                 effect++;
             }
+            if (effect == 0
+             && gBattleMons[gBattlerAttacker].ability == ABILITY_FROZEN_SPORE
+             && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+             && gBattleMons[gBattlerTarget].hp != 0
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && TARGET_TURN_DAMAGED
+             && gBattleMoves[move].power != 0
+             && (gBattleMoves[move].flags & FLAG_MAKES_CONTACT)
+             && !(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
+             && (Random() % 5) == 0)
+            {
+                gLastUsedAbility = ABILITY_FROZEN_SPORE;
+                RecordAbilityBattle(gBattlerAttacker, ABILITY_FROZEN_SPORE);
+                gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_FREEZE;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_ApplySecondaryEffect;
+                gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
+                effect++;
+            }
+            if (effect == 0
+             && gBattleMons[gBattlerAttacker].ability == ABILITY_SCALDING_TOUCH
+             && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+             && gBattleMons[gBattlerTarget].hp != 0
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && TARGET_TURN_DAMAGED
+             && gBattleMoves[move].power != 0
+             && (gBattleMoves[move].flags & FLAG_MAKES_CONTACT)
+             && !(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
+             && (Random() % 3) == 0)
+            {
+                gLastUsedAbility = ABILITY_SCALDING_TOUCH;
+                RecordAbilityBattle(gBattlerAttacker, ABILITY_SCALDING_TOUCH);
+                gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_BURN;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_ApplySecondaryEffect;
+                gHitMarker |= HITMARKER_STATUS_ABILITY_EFFECT;
+                effect++;
+            }
             break;
         case ABILITYEFFECT_IMMUNITY: // 5
             for (battler = 0; battler < gBattlersCount; battler++)

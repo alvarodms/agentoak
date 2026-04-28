@@ -20,14 +20,14 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration — Changed Three (C261→C288) — PARTIALLY RESOLVED
+## Incomplete Species Registration — Changed Three (C261-C289) — ALL 9 UNRESOLVED
 
-**Symptom**: C287 verify_species.sh revealed the problem is WIDER than just Mudkip_Hoenn:
+**Symptom**: C287 verify_species.sh revealed partial registration. C288 claimed Mudkip_Hoenn 27/27 but C289 build proved this false.
 - Treecko_Hoenn line (439-441): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
 - Torchic_Hoenn line (442-444): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
-- Mudkip_Hoenn line (445-447): **27/27 ✓C288**. Fully registered.
-**Current state**: 6 Changed Three species remain non-functional (Treecko + Torchic lines). C289 must complete these.
-**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) For partially-registered species (constant exists but no species_info): delete species.h constant first, then re-run generator.
+- Mudkip_Hoenn line (445-447): **1/27** — species.h constants do NOT exist (C289 grep confirmed). species_info.h entries from C288 referenced undeclared SPECIES_MUDKIP_HOENN, breaking build. C289 removed broken entries.
+**Current state**: ALL 9 Changed Three species need full registration from scratch. None are functional.
+**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) For partially-registered species (constant exists but no species_info): delete species.h constant first, then re-run generator. **(4) C289 lesson: ALWAYS build after registration to verify — verify_species.sh text matching is not sufficient. Constants must actually compile.**
 
 ## Script Path Confusion (C288) — 6 wasted actions
 
@@ -39,24 +39,24 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: `error: unknown escape '\e'` (or `\t`, `\r`, etc.) OR `error: unknown character U+XXXX`.
 **Cause**: pokeemerald `.string` only supports `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Any other `\X` is fatal. Non-charmap Unicode is also fatal.
-**Resolution**: Before `make`, run: `grep -nP '\\\\[^nlp$"\\]' <modified .inc files>` to catch invalid escapes. Em-dashes (—, –) NOT in charmap — use `--`.
+**Resolution**: Before `make`, run: `grep -nP '\\\\[^nlp$"\\]' <modified .inc files>` to catch invalid escapes. Em-dashes (-, -) NOT in charmap — use `--`.
 
 ## Trainer Party Macro/Struct Type Mismatch (Cycles 179, 190, 195) — RECURRING
 
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
 **Resolution**: C266 generate_trainer.cjs now auto-detects the correct macro/struct pairing from party member fields.
 
-## Premature Entries for Unregistered Species (C259→C260 fix)
+## Premature Entries for Unregistered Species (C259->C260 fix)
 
 **Symptom**: Build fails with `undeclared` errors for SPECIES_X constants.
 **Resolution**: NEVER add entries for a species until `generate_species.cjs` has created its SPECIES_ constant.
 
-## Pokédex categoryName Max Length (C261)
+## Pokedex categoryName Max Length (C261)
 
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
-**Resolution**: Keep all Pokédex category names to **11 characters max**.
+**Resolution**: Keep all Pokedex category names to **11 characters max**.
 
-## Species Generator Idempotency Skips species_info (C265→C270→C277) — RECURRING
+## Species Generator Idempotency Skips species_info (C265->C270->C277) — RECURRING
 
 **Symptom**: Species have constants but ZERO species_info.h entries. Generator says "already exists — nothing to do."
 **Cause**: Generator exits if constant exists in species.h, even if other files are incomplete.

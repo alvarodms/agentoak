@@ -81,6 +81,33 @@ First custom ability in the hack. 30% chance to poison the target when the holde
 | `src/battle_util.c` | Toxic Touch logic in ABILITYEFFECT_ON_DAMAGE case, after inner switch | **241** | Checks attacker ability directly (not gLastUsedAbility). No FLAG_MAKES_CONTACT. Blocks: Substitute, status1, confusionSelfDmg, no-effect, power==0 |
 | `src/data/pokemon/species_info.h` | Deoxys_Hoenn ability1: ABILITY_PRESSURE → ABILITY_TOXIC_TOUCH | **241** | ability2 stays ABILITY_PRESSURE |
 
+## Custom Ability: Frozen Spore (C289)
+
+20% chance to freeze the target when the holder uses a contact-based damaging move. Assigned to Breloom_Hoenn (Poison/Ice), replacing Poison Point.
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/abilities.h` | Added ABILITY_FROZEN_SPORE = 79, ABILITIES_COUNT → 81 | **289** | |
+| `include/constants/global.h` | ABILITY_NAME_LENGTH 12 → 14 | **289** | Needed for "SCALDING TOUCH" (14 chars) |
+| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **289** | "FROZEN SPORE", "Icy spores may freeze on contact." |
+| `src/battle_util.c` | Frozen Spore logic in ABILITYEFFECT_ON_DAMAGE case, after Toxic Touch block | **289** | Contact-only (FLAG_MAKES_CONTACT), (Random() % 5) == 0 for 20%, MOVE_EFFECT_FREEZE |
+| `src/data/pokemon/species_info.h` | Breloom_Hoenn ability1: ABILITY_POISON_POINT → ABILITY_FROZEN_SPORE | **289** | ability2 stays ABILITY_THICK_FAT |
+
+## Custom Ability: Scalding Touch (C289)
+
+33% chance to burn the target when the holder uses a contact-based damaging move. Assigned to Arcanine_Hoenn (Water/Fire), replacing Flash Fire.
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/abilities.h` | Added ABILITY_SCALDING_TOUCH = 80 (same ABILITIES_COUNT update as Frozen Spore) | **289** | |
+| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **289** | "SCALDING TOUCH", "Scalding touch may burn the foe." |
+| `src/battle_util.c` | Scalding Touch logic in ABILITYEFFECT_ON_DAMAGE case, after Frozen Spore block | **289** | Contact-only (FLAG_MAKES_CONTACT), (Random() % 3) == 0 for 33%, MOVE_EFFECT_BURN |
+| `src/data/pokemon/species_info.h` | Arcanine_Hoenn ability2: ABILITY_FLASH_FIRE → ABILITY_SCALDING_TOUCH | **289** | ability1 stays ABILITY_INTIMIDATE |
+
+## Pre-existing Build Fix (C289)
+
+Removed orphaned Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn entries from species_info.h — these had data blocks but no corresponding SPECIES_ constants in species.h (C288 partial registration issue). Build was broken before C289 changes.
+
 ## Tier 2 Ability Reassignment Pass (C288)
 
 8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.

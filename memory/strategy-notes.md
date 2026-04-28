@@ -18,7 +18,7 @@
 
 ---
 
-**v2.5** (C274-281): "The Changed Three" — Treecko/Torchic lines registered (6 of 9 starters, Steel→Fairy→Fighting triangle), wild encounters, postgame Birch gift, rival integration, Drake T3-T4. Mudkip line still unregistered.
+**v2.5** (C274-281): "The Changed Three" — Treecko/Torchic lines registered (6 of 9 starters, Steel->Fairy->Fighting triangle), wild encounters, postgame Birch gift, rival integration, Drake T3-T4. Mudkip line still unregistered.
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass (Roxanne Aron/Aerodactyl, T&L Espeon), 6-NPC villain postgame arc (3 Magma + 3 Aqua), Birch collection quest (PP_MAX), dialogue polish.
 
 ---
@@ -33,132 +33,75 @@ The migration changed how Hoenn looks and sounds. v2.7 makes it change how Hoenn
 
 ## Critical Prerequisite: Changed Three Registration
 
-**C287 DISCOVERY**: The verify_species.sh script revealed that the Changed Three starters are far less registered than memory claimed:
+**C287 DISCOVERY (updated C289)**: All 9 Changed Three starters need full registration:
 
 | Line | species.h | species_info.h | species_names.h | Full 27-file |
 |------|-----------|---------------|-----------------|-------------|
-| Treecko_Hoenn (439-441) | ✓ | **MISSING** | ✓ | 2/27 |
-| Torchic_Hoenn (442-444) | ✓ | **MISSING** | ✓ | 2/27 |
-| Mudkip_Hoenn (445-447) | ✓ | ✓ | ✓ | **27/27 ✓C288** |
+| Treecko_Hoenn (439-441) | partial | **MISSING** | partial | 2/27 |
+| Torchic_Hoenn (442-444) | partial | **MISSING** | partial | 2/27 |
+| Mudkip_Hoenn (445-447) | **MISSING** | **REMOVED C289** | partial | 1/27 |
 
-**6 species still need full registration** (Treecko + Torchic lines). C289 must complete these.
+**C289 CORRECTION**: C288 claimed Mudkip_Hoenn was 27/27, but C289 build revealed SPECIES_MUDKIP_HOENN constants do NOT exist in species.h. The species_info.h entries referenced undeclared constants, causing build failure. C289 removed those broken entries. **All 9 Changed Three species must be registered from scratch.**
 
-**Actual species count**: 36 custom species (11 cross-gen evos + 25 _HOENN forms). 19 fully registered. EGG=448, NUM_SPECIES=448.
+**Actual species count**: 36 custom species (11 cross-gen + 25 _HOENN). **16 fully registered** (19 minus 3 Mudkip line). EGG=448, NUM_SPECIES=448.
 
 ## Three-Tier Mechanical Identity System
 
-### Tier 1 — Custom Abilities (2 immediate + 1 deferred)
+### Tier 1 — Custom Abilities (2 complete + 1 deferred)
 
 Follow the Toxic Touch pattern: 4 files per ability (abilities.h constant, text/abilities.h name+desc, battle_util.c effect, species_info.h assignment). ~15 lines new code per ability.
 
-**1. "Frozen Spore"** (ABILITY_FROZEN_SPORE = 79)
-- **Effect**: Contact moves made by this Pokémon have a 20% chance to freeze the target.
-- **Assigned to**: Breloom_Hoenn (Poison/Ice), replacing POISON_POINT.
-- **Narrative**: The migration froze this mushroom's spores. Each punch carries crystallized ice toxins that flash-freeze on impact.
-- **Gameplay**: Freeze is the rarest and most powerful status in Gen 3 (no thaw except specific moves). 20% on a fast physical attacker with Mach Punch is terrifying. This IS the "pause and screenshot" moment.
-- **Implementation**: Copy Toxic Touch block in battle_util.c. Change: ABILITY check, (Random() % 5) == 0 for 20%, MOVE_EFFECT_FREEZE. Freeze won't apply to Ice types (engine handles this).
-- **Balance**: 20% (not 30% like Toxic Touch) because freeze > poison. Breloom_Hoenn's low bulk (60/80/60) means it dies fast — the ability rewards aggression, not stalling.
+**1. "Frozen Spore"** (ABILITY_FROZEN_SPORE = 79) **DONE C289**
+- 20% freeze on contact. Assigned to Breloom_Hoenn (Poison/Ice). Contact-only via FLAG_MAKES_CONTACT.
 
-**2. "Scalding Touch"** (ABILITY_SCALDING_TOUCH = 80)
-- **Effect**: Contact moves made by this Pokémon have a 30% chance to burn the target.
-- **Assigned to**: Arcanine_Hoenn (Water/Fire), replacing FLASH_FIRE (currently redundant — Water/Fire already 4x resists Fire).
-- **Narrative**: The Water/Fire dual nature means every physical strike carries scalding heat. The tidal dog's touch blisters.
-- **Gameplay**: Burns halve Attack, punishing physical attackers who try to trade blows. Combined with Intimidate (slot 1), Arcanine_Hoenn becomes the ultimate physical wall pivot. Memorable: "the dog that Intimidates you AND burns you."
-- **Implementation**: Copy Toxic Touch block. Change: ABILITY check, MOVE_EFFECT_BURN. Same 30% rate.
-- **Balance**: 30% matches Toxic Touch. Burn is stronger than poison (Attack reduction) but Arcanine_Hoenn has 555 BST to justify it.
+**2. "Scalding Touch"** (ABILITY_SCALDING_TOUCH = 80) **DONE C289**
+- 33% burn on contact. Assigned to Arcanine_Hoenn (Water/Fire). Contact-only via FLAG_MAKES_CONTACT.
 
 **3. TBD for Changed Three** (ABILITY_ID = 81, deferred to C291)
-- Reserved for one starter line after full registration and playtesting confirms the other two abilities.
-- Candidate: Sceptile_Hoenn (Grass/Steel) — "Tempered Blade" or similar, based on the steel-plant ecology.
+- Candidate: Sceptile_Hoenn (Grass/Steel) — "Tempered Blade" or similar.
 
-### Tier 2 — Strategic Ability Reassignment (10 forms)
+### Tier 2 — Strategic Ability Reassignment (10/10 complete C288-C289)
 
-Implementation cost: species_info.h only (1 file, 1 line per form). Minimal risk.
-
-| Form | Types | Current A2 | Proposed A2 | Narrative Justification |
-|------|-------|-----------|-------------|------------------------|
-| **Corsola_Hoenn** | Ghost/Rock | PRESSURE | **LEVITATE** | Ghost coral floats — severed from the seabed, untethered. Ground immunity patches the 2x Ground weakness (critical for Ghost/Rock). |
-| **Arcanine_Hoenn** | Water/Fire | FLASH_FIRE | **SCALDING_TOUCH** (T1 custom) | Flash Fire is 100% redundant (Water/Fire 4x resists Fire). Custom ability replaces it. |
-| **Vulpix_Hoenn** | Ice/Fairy | CUTE_CHARM | **NATURAL_CURE** | Fairy magic heals status on switch. Cute Charm is mediocre on a special attacker (only triggers on physical contact). |
-| **Ninetales_Hoenn** | Ice/Fairy | CUTE_CHARM | **NATURAL_CURE** | Same ecological adaptation as Vulpix_Hoenn. The nine tails purify ailments. |
-| **Pinsir_Hoenn** | Bug/Fire | HYPER_CUTTER | **GUTS** | The fire bug fights harder when hurt. Guts (+50% Atk when statused) rewards aggressive play. Hyper Cutter (prevent -Atk) is boring and rarely relevant. |
-| **Bagon_Hoenn** | Dragon/Rock | SHED_SKIN | **STURDY** | The baby rock dragon is impossibly tough. Sturdy guarantees survival of one OHKO at full HP — the "little dragon that won't go down." Shed Skin is generic. |
-| **Gligar_Hoenn** | Water/Rock | BATTLE_ARMOR | **SWIFT_SWIM** | The water scorpion rides currents. Swift Swim doubles Speed in rain, creating rain-team synergy. Battle Armor (no crits) is passive and boring. |
-| **Gliscor_Hoenn** | Water/Rock | BATTLE_ARMOR | **SWIFT_SWIM** | Same aquatic adaptation as Gligar_Hoenn. The evolved form becomes a rain sweeper. |
-| **Breloom_Hoenn** | Poison/Ice | POISON_POINT | **FROZEN_SPORE** (T1 custom) | Custom ability replaces the redundant Poison Point. Keeps THICK_FAT as slot 2. |
-| **Stantler_Hoenn** | Ghost/Grass | NATURAL_CURE | **EFFECT_SPORE** | The haunted forest stag releases ghostly spores on contact. 30% chance to paralyze/sleep/poison attackers. More expressive than Natural Cure for a Ghost/Grass. |
-
-**Forms left unchanged (abilities already express identity):**
-- Lotad/Lombre/Ludicolo_Hoenn (Electric/Grass): LIGHTNING_ROD / RAIN_DISH — perfect for Electric type
-- Shroomish_Hoenn (Poison/Ice): EFFECT_SPORE / (inherit from pre-evo) — fine
-- Growlithe_Hoenn (Water/Water): SWIFT_SWIM / WATER_VEIL — coherent Water identity
-- Deoxys_Hoenn (Poison/Fairy): TOXIC_TOUCH / PRESSURE — already has custom ability
+All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bagon(Sturdy), Pinsir(Guts), Gligar/Gliscor(Swift Swim), Vulpix/Ninetales(Natural Cure), Stantler(Effect Spore), Breloom(Frozen Spore), Arcanine(Scalding Touch).
 
 ### Tier 3 — Signature Moves (2 immediate + 1 deferred)
 
-Follow the Fairy moves pattern (C46): 6 files per move (moves.h constant, battle_moves.h data, move_names.h, move_descriptions.h, contest_moves.h, level_up_learnsets.h). Each reuses an existing animation.
+6 files per move. Each reuses an existing animation.
 
-**1. "Spore Fist"** (Ice/Physical) — Breloom_Hoenn line
-- Power: 75, Accuracy: 100, PP: 15, Category: Physical
-- Effect: 10% freeze chance
-- Animation: Reuse MOVE_ICE_PUNCH animation effect
-- Rationale: Breloom_Hoenn (Poison/Ice) has 130 base Atk but no physical Ice STAB in Gen 3. This fills the critical movepool gap. Mach Punch + Spore Fist gives it a devastating two-punch combo with Frozen Spore's 20% freeze.
-- Learns: Breloom_Hoenn (Lv36), Shroomish_Hoenn (Lv43)
-
-**2. "Tidal Flare"** (Water/Special) — Arcanine_Hoenn
-- Power: 85, Accuracy: 100, PP: 10, Category: Special
-- Effect: 30% burn chance
-- Animation: Reuse MOVE_FLAMETHROWER animation effect
-- Rationale: Arcanine_Hoenn (Water/Fire, 100 SpA) needs a move that captures both types in one attack. A Water move that burns is thematically perfect — scalding geothermal water. Water Pulse is too weak (60 BP) and Surf is generic.
-- Learns: Arcanine_Hoenn (Lv49)
-
-**3. "Iron Leaf"** (Steel/Physical) — Sceptile_Hoenn line (DEFERRED to C292)
-- Power: 85, Accuracy: 100, PP: 15, Category: Physical
-- Effect: High critical hit ratio
-- Animation: Reuse MOVE_LEAF_BLADE animation effect
-- Rationale: Sceptile_Hoenn (Grass/Steel) needs reliable physical Steel STAB. Iron Tail has 75% accuracy. This gives Leaf Blade's crit identity in Steel typing.
-- Deferred: Requires Changed Three full registration first.
+**1. "Spore Fist"** (Ice/Physical, 75bp, 100acc, 15pp, 10% freeze) — Breloom_Hoenn. Fills physical Ice STAB gap.
+**2. "Tidal Flare"** (Water/Special, 85bp, 100acc, 10pp, 30% burn) — Arcanine_Hoenn. Water move that burns.
+**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, high crit) — Sceptile_Hoenn. DEFERRED to C292.
 
 ## Form-by-Form Summary Table
 
-| # | Species | Types | A1 | A2 (change) | Sig Move | Cycle | Reg Status |
-|---|---------|-------|----|-------------|----------|-------|------------|
-| 1 | Corsola_Hoenn | Ghost/Rock | Rock Head | **Levitate** ✓C288 | — | — | ✓ full |
-| 2 | Growlithe_Hoenn | Water/Water | Swift Swim | Water Veil (keep) | — | — | ✓ full |
-| 3 | Arcanine_Hoenn | Water/Fire | Intimidate | **Scalding Touch** ← Flash Fire | Tidal Flare | C290+C292 | ✓ full |
-| 4 | Bagon_Hoenn | Dragon/Rock | Rock Head | **Sturdy** ✓C288 | — | — | ✓ full |
-| 5 | Vulpix_Hoenn | Ice/Fairy | **Natural Cure** ✓C288 | Serene Grace | — | — | ✓ full |
-| 6 | Ninetales_Hoenn | Ice/Fairy | **Natural Cure** ✓C288 | Serene Grace | — | — | ✓ full |
-| 7 | Pinsir_Hoenn | Bug/Fire | **Guts** ✓C288 | Flame Body | — | — | ✓ full |
-| 8 | Stantler_Hoenn | Ghost/Grass | Intimidate | **Effect Spore** ✓C288 | — | — | ✓ full |
-| 9 | Gligar_Hoenn | Water/Rock | **Swift Swim** ✓C288 | Water Absorb | — | — | ✓ full |
-| 10 | Gliscor_Hoenn | Water/Rock | **Swift Swim** ✓C288 | Water Absorb | — | — | ✓ full |
-| 11 | Deoxys_Hoenn | Poison/Fairy | Toxic Touch | Pressure (keep) | — | — | ✓ full |
-| 12 | Lotad_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | — | ✓ full |
-| 13 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (pre-evo, keep) | — | — | ✓ full |
-| 14 | Lombre_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | — | ✓ full |
-| 15 | Breloom_Hoenn | Poison/Ice | **Frozen Spore** ← Poison Point | Thick Fat | Spore Fist | C290+C292 | ✓ full |
-| 16 | Ludicolo_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | — | ✓ full |
-| 17 | Treecko_Hoenn | Grass/Steel? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 18 | Grovyle_Hoenn | Grass/Steel? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 19 | Sceptile_Hoenn | Grass/Steel? | TBD | TBD | Iron Leaf | C291+C292 | ⚠ 2/27 |
-| 20 | Torchic_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 21 | Combusken_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 22 | Blaziken_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 23 | Mudkip_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
-| 24 | Marshtomp_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
-| 25 | Swampert_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
+| # | Species | Types | A1 | A2 (change) | Sig Move | Reg Status |
+|---|---------|-------|----|-------------|----------|------------|
+| 1 | Corsola_Hoenn | Ghost/Rock | Rock Head | **Levitate** C288 | — | full |
+| 2 | Growlithe_Hoenn | Water | Swift Swim | Water Veil (keep) | — | full |
+| 3 | Arcanine_Hoenn | Water/Fire | Intimidate | **Scalding Touch** C289 | Tidal Flare | full |
+| 4 | Bagon_Hoenn | Dragon/Rock | Rock Head | **Sturdy** C288 | — | full |
+| 5-6 | Vulpix/Ninetales_Hoenn | Ice/Fairy | **Natural Cure** C288 | Serene Grace | — | full |
+| 7 | Pinsir_Hoenn | Bug/Fire | **Guts** C288 | Flame Body | — | full |
+| 8 | Stantler_Hoenn | Ghost/Grass | Intimidate | **Effect Spore** C288 | — | full |
+| 9-10 | Gligar/Gliscor_Hoenn | Water/Rock | **Swift Swim** C288 | Water Absorb | — | full |
+| 11 | Deoxys_Hoenn | Poison/Fairy | Toxic Touch | Pressure (keep) | — | full |
+| 12-14 | Lotad/Lombre/Ludicolo_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | full |
+| 15 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (keep) | — | full |
+| 16 | Breloom_Hoenn | Poison/Ice | **Frozen Spore** C289 | Thick Fat | Spore Fist | full |
+| 17-19 | Treecko line | Grass/Steel? | TBD | TBD | Iron Leaf | 2/27 |
+| 20-22 | Torchic line | Fire/Fairy? | TBD | TBD | — | 2/27 |
+| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | 1/27 (broken, must re-register) |
 
 ## Multi-Cycle Roadmap
 
 | Cycle | Mode | Objective | Dependencies |
 |-------|------|-----------|-------------|
-| C288 | feature | **DONE**: Mudkip_Hoenn line registered (Water/Fighting, 27/27 × 3). Tier 2 ability pass (8/10). | — |
-| C289 | feature | **Changed Three registration P2**: Complete Torchic line registration (25 missing files). Run verify_species.sh on all 9 — must show 27/27 for each. | C288 |
-| C290 | feature | **Ability pass**: Implement Frozen Spore + Scalding Touch (2 custom abilities). Apply all 10 Tier 2 reassignments. Single cycle, ~5 files. | C288-289 (for starters), full reg for 16 existing forms |
-| C291 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Optionally: third custom ability. | C288-289 registration |
-| C292 | feature | **Signature moves**: Implement Spore Fist + Tidal Flare (+ Iron Leaf if starters ready). 6 files per move. | C290 abilities |
-| C293 | feature | **Trainer showcase**: Update key trainer teams to use new abilities/moves in battle. Dialogue referencing abilities. | C290-292 |
+| C288 | feature | **DONE**: Tier 2 ability pass (8/10). Mudkip_Hoenn registration attempted but incomplete. | — |
+| C289 | feature | **DONE**: Frozen Spore + Scalding Touch custom abilities. Tier 2 complete (10/10). Fixed Mudkip build break. | — |
+| C290 | feature | **Changed Three registration**: All 9 starter species (3 lines x 3 stages). Run verify_species.sh — must show 27/27 for each. | — |
+| C291 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Third custom ability. | C290 |
+| C292 | feature | **Signature moves**: Implement Spore Fist + Tidal Flare (+ Iron Leaf if starters ready). 6 files per move. | C290-291 |
+| C293 | feature | **Trainer showcase**: Update key trainer teams to use new abilities/moves in battle. Dialogue referencing abilities. | C292 |
 | C294 | patch | **Balance + polish**: Difficulty mode tuning, encounter rate adjustment, trainer IV review. v2.7 complete. | C293 |
 
 ## Issue Integration
@@ -179,9 +122,9 @@ Follow the Fairy moves pattern (C46): 6 files per move (moves.h constant, battle
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (36 actual)**: Last registered = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (19 fully registered, 6 partial). Tier 2 ability pass: 8/10 done (Arcanine + Breloom deferred to C290 — require custom abilities).
-- **Custom abilities**: TOXIC_TOUCH(78), next available: 79. ABILITIES_COUNT must update.
-- **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each.
+- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (16 fully registered, 9 partial — all Changed Three). Mudkip line species_info removed C289. Tier 2 ability pass: **10/10 complete** C289.
+- **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
+- **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
 - **Generator toolchain**: `generate_species.cjs` (27-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation + --update mode C287), `verify_species.sh` (27-file check, C287).

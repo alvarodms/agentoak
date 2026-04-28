@@ -77,6 +77,8 @@ static const u8 sShellArmorDescription[] = _("Blocks critical hits.");
 static const u8 sCacophonyDescription[] = _("Avoids sound-based moves.");
 static const u8 sAirLockDescription[] = _("Negates weather effects.");
 static const u8 sToxicTouchDescription[] = _("Its attacks leave a\ntoxic residue.");
+static const u8 sFrozenSporeDescription[] = _("Icy spores may freeze\non contact.");
+static const u8 sScaldingTouchDescription[] = _("Scalding touch may\nburn the foe.");
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
 {
@@ -159,6 +161,8 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_CACOPHONY] = _("CACOPHONY"),
     [ABILITY_AIR_LOCK] = _("AIR LOCK"),
     [ABILITY_TOXIC_TOUCH] = _("TOXIC TOUCH"),
+    [ABILITY_FROZEN_SPORE] = _("FROZEN SPORE"),
+    [ABILITY_SCALDING_TOUCH] = _("SCALDING TOUCH"),
 };
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
@@ -242,4 +246,6 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_CACOPHONY] = sCacophonyDescription,
     [ABILITY_AIR_LOCK] = sAirLockDescription,
     [ABILITY_TOXIC_TOUCH] = sToxicTouchDescription,
+    [ABILITY_FROZEN_SPORE] = sFrozenSporeDescription,
+    [ABILITY_SCALDING_TOUCH] = sScaldingTouchDescription,
 };
