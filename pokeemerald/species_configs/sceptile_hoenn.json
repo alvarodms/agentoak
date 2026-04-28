@@ -5,10 +5,10 @@
   "baseSpeciesCry": "SPECIES_SCEPTILE",
 
   "stats": {
-    "hp": 70, "atk": 110, "def": 85, "spa": 60, "spd": 85, "spe": 120
+    "hp": 70, "atk": 110, "def": 75, "spa": 75, "spd": 75, "spe": 120
   },
-  "types": ["TYPE_STEEL", "TYPE_STEEL"],
-  "abilities": ["ABILITY_CLEAR_BODY", "ABILITY_SHED_SKIN"],
+  "types": ["TYPE_GRASS", "TYPE_STEEL"],
+  "abilities": ["ABILITY_OVERGROW", "ABILITY_NONE"],
   "catchRate": 45,
   "expYield": 208,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -17,7 +17,7 @@
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_DRAGON"],
   "safariZoneFleeRate": 0,
-  "bodyColor": "BODY_COLOR_GRAY",
+  "bodyColor": "BODY_COLOR_GREEN",
   "noFlip": false,
   "itemCommon": "ITEM_NONE",
   "itemRare": "ITEM_NONE",
@@ -27,16 +27,13 @@
   },
 
   "pokedex": {
-    "categoryName": "CrstlForst",
+    "categoryName": "Forest",
     "height": 17,
     "weight": 672,
     "description": [
-      "Its tail has become a massive crystal",
-      "blade that rings like a tuning fork",
-      "when swung. SCEPTILE transformed by",
-      "meteor energy move so fast they seem",
-      "to teleport. Their eleven type",
-      "resistances make them nearly immune."
+      "Its tail blade can cut steel",
+      "beams. BIRCH believes volcanic",
+      "minerals fused with its cells."
     ],
     "pokemonScale": 256,
     "pokemonOffset": 0,

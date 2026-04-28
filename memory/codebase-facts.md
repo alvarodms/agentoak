@@ -134,7 +134,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 **Species registration**: All 27 files handled by `generate_species.cjs` since C281 — no manual steps. Only `enemy_mon_elevation.h` (floating species) needs manual addition. **Pitfall**: anchor text appearing in both vanilla and custom sections — `string.replace()` matches FIRST occurrence.
 
-**Changed Three status (C289)**: All 9 starters need full registration. Treecko/Torchic lines: 2/27 (species.h + species_names.h only). Mudkip line: 1/27 (species_info removed C289). Total: **36 custom** (16 fully registered). EGG=448, NUM_SPECIES=448.
+**Species count (C292)**: **36 custom species — ALL 36 fully registered 27/27.** 11 cross-gen evos + 25 _HOENN forms (including 9 Changed Three starters). EGG=448, NUM_SPECIES=448. No partial registrations remain.
 
 ---
 

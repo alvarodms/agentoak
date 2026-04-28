@@ -100,40 +100,35 @@ C261 attempted registration but species were never committed to species.h. C264 
 | ~~Encounter discrepancy~~ | Weavile | **DONE C267** — Memory corrected: Mt Pyre Summit 4%, Lv32-33 |
 | ~~Missing encounter~~ | Garchomp | **DONE C267** — Corrected: Garchomp is evolution only; Gabite now in VR B2F 2% Lv44-46 |
 
-## C276: Treecko_Hoenn Line (Crystal Gecko) — Pure Steel
+## C292: Changed Three — All 9 Fully Registered (27/27)
 
-| Species | ID | Type | BST | Abilities | Evo |
-|---------|-----|------|-----|-----------|-----|
-| Treecko_Hoenn | 439 | Steel | 310 | Clear Body / Shed Skin | → Grovyle_Hoenn (Lv16) |
-| Grovyle_Hoenn | 440 | Steel | 405 | Clear Body / Shed Skin | → Sceptile_Hoenn (Lv36) |
-| Sceptile_Hoenn | 441 | Steel | 530 | Clear Body / Shed Skin | — |
+**v2.7 milestone**: All 9 Changed Three starters fully registered from scratch via generate_species.cjs. Previous partial registrations (C276-C288) were cleaned up before re-running.
 
-Sprite Designer v1 sprites: crystal blue-gray palette, amber eyes, violet prismatic accents. All indexed, build-clean.
-Generator: 26/26 files per species. Manual: species_names.h (3 entries).
-**C277 repaired**: added species.h constants and ran generator (C276 had only created configs, sprites, and species_names.h entries).
-
-## C277: Torchic_Hoenn Line (Starlight Bird) — Fairy → Fairy/Flying
-
-| Species | ID | Type | BST | Abilities | Evo |
-|---------|-----|------|-----|-----------|-----|
-| Torchic_Hoenn | 442 | Fairy | 310 | Cute Charm / Natural Cure | → Combusken_Hoenn (Lv16) |
-| Combusken_Hoenn | 443 | Fairy/Flying | 405 | Cute Charm / Natural Cure | → Blaziken_Hoenn (Lv36) |
-| Blaziken_Hoenn | 444 | Fairy/Flying | 530 | Cute Charm / Natural Cure | — |
-
-Sprite Designer v1 sprites: violet-gold palette, celestial blue eyes (Blaziken), halo/aura emanation accents. All indexed, build-clean.
-Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
-
-## C288: Mudkip_Hoenn Line (River Brawler) — Water/Fighting
-
-**v2.7 redesign**: Changed from C278's Fighting/Psychic to Water/Fighting. Offensive physical sweeper with speed identity (55→70→100 Spe across stages). Guts slot 2 enables Facade/status combos. Fighting STAB "revealed" at Marshtomp Lv20 (Mach Punch).
+### Treecko_Hoenn Line — "The Blade" (Grass/Steel, fast physical attacker)
 
 | Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
 |---------|-----|------|-----|------------------------|-----------|-----|
-| Mudkip_Hoenn | 445 | Water/Fighting | 310 | 50/70/45/45/45/55 | Torrent / Guts | → Marshtomp_Hoenn (Lv16) |
-| Marshtomp_Hoenn | 446 | Water/Fighting | 405 | 70/95/60/55/55/70 | Torrent / Guts | → Swampert_Hoenn (Lv36) |
-| Swampert_Hoenn | 447 | Water/Fighting | 535 | 85/120/80/70/80/100 | Torrent / Guts | — |
+| Treecko_Hoenn | 439 | Grass/Steel | 305 | 40/55/45/45/50/70 | Overgrow / None | → Grovyle_Hoenn (Lv16) |
+| Grovyle_Hoenn | 440 | Grass/Steel | 395 | 50/75/55/65/55/95 | Overgrow / None | → Sceptile_Hoenn (Lv36) |
+| Sceptile_Hoenn | 441 | Grass/Steel | 525 | 70/110/75/75/75/120 | Overgrow / None | — |
 
-Sprites: vanilla Mudkip/Marshtomp/Swampert from expansion repo (placeholder until Sprite Designer creates regional variants).
+### Torchic_Hoenn Line — "The Dancer" (Fire/Fairy, special attacker)
+
+| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
+|---------|-----|------|-----|------------------------|-----------|-----|
+| Torchic_Hoenn | 442 | Fire/Fairy | 305 | 45/50/40/70/55/45 | Blaze / None | → Combusken_Hoenn (Lv16) |
+| Combusken_Hoenn | 443 | Fire/Fairy | 390 | 60/65/60/90/60/55 | Blaze / None | → Blaziken_Hoenn (Lv36) |
+| Blaziken_Hoenn | 444 | Fire/Fairy | 530 | 80/85/70/120/80/95 | Blaze / None | — |
+
+### Mudkip_Hoenn Line — "The Immovable Force" (Water/Fighting, bulky physical)
+
+| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
+|---------|-----|------|-----|------------------------|-----------|-----|
+| Mudkip_Hoenn | 445 | Water/Fighting | 295 | 55/55/50/45/50/40 | Torrent / Guts | → Marshtomp_Hoenn (Lv16) |
+| Marshtomp_Hoenn | 446 | Water/Fighting | 385 | 70/80/70/50/65/50 | Torrent / Guts | → Swampert_Hoenn (Lv36) |
+| Swampert_Hoenn | 447 | Water/Fighting | 530 | 105/115/100/65/90/55 | Torrent / Guts | — |
+
+Sprites: vanilla base species from expansion repo (placeholder until Sprite Designer creates regional variants).
 Generator: 27/27 files per species. EGG=448, NUM_SPECIES=448. Build-clean.
 
 ---

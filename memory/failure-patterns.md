@@ -20,14 +20,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration — Changed Three (C261-C289) — ALL 9 UNRESOLVED
+## Incomplete Species Registration — Changed Three (C261-C289) — RESOLVED C292
 
-**Symptom**: C287 verify_species.sh revealed partial registration. C288 claimed Mudkip_Hoenn 27/27 but C289 build proved this false.
-- Treecko_Hoenn line (439-441): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
-- Torchic_Hoenn line (442-444): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
-- Mudkip_Hoenn line (445-447): **1/27** — species.h constants do NOT exist (C289 grep confirmed). species_info.h entries from C288 referenced undeclared SPECIES_MUDKIP_HOENN, breaking build. C289 removed broken entries.
-**Current state**: ALL 9 Changed Three species need full registration from scratch. None are functional.
-**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) For partially-registered species (constant exists but no species_info): delete species.h constant first, then re-run generator. **(4) C289 lesson: ALWAYS build after registration to verify — verify_species.sh text matching is not sufficient. Constants must actually compile.**
+**Symptom**: Partial registration across multiple cycles due to generator idempotency and manual errors.
+**Resolution**: C292 cleaned up all partial constants/names, re-ran generator for all 9 species from updated configs, verified 27/27 each, build-clean. **Key lesson**: (1) Delete partial species.h constants BEFORE re-running generator. (2) Update config JSONs with correct data BEFORE generator runs — avoids needing Phase 3 stat edits. (3) verify_species.sh after each run + final `make` is the gold standard.
 
 ## Script Path Confusion (C288) — 6 wasted actions
 

@@ -5,10 +5,10 @@
   "baseSpeciesCry": "SPECIES_TREECKO",
 
   "stats": {
-    "hp": 40, "atk": 60, "def": 45, "spa": 35, "spd": 50, "spe": 80
+    "hp": 40, "atk": 55, "def": 45, "spa": 45, "spd": 50, "spe": 70
   },
-  "types": ["TYPE_STEEL", "TYPE_STEEL"],
-  "abilities": ["ABILITY_CLEAR_BODY", "ABILITY_SHED_SKIN"],
+  "types": ["TYPE_GRASS", "TYPE_STEEL"],
+  "abilities": ["ABILITY_OVERGROW", "ABILITY_NONE"],
   "catchRate": 45,
   "expYield": 65,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -17,7 +17,7 @@
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_DRAGON"],
   "safariZoneFleeRate": 0,
-  "bodyColor": "BODY_COLOR_GRAY",
+  "bodyColor": "BODY_COLOR_GREEN",
   "noFlip": false,
   "itemCommon": "ITEM_NONE",
   "itemRare": "ITEM_NONE",
@@ -27,16 +27,14 @@
   },
 
   "pokedex": {
-    "categoryName": "CrstlGecko",
+    "categoryName": "WoodGecko",
     "height": 5,
     "weight": 75,
     "description": [
-      "A TREECKO whose plant tissue was",
-      "crystallized by cosmic minerals in",
-      "METEOR FALLS. Its body gleams like",
-      "polished quartz. It moves with",
-      "startling speed despite its",
-      "metallic frame."
+      "Its claws hardened into iron",
+      "after generations scaling the",
+      "volcanic rock faces near MT.",
+      "CHIMNEY."
     ],
     "pokemonScale": 576,
     "pokemonOffset": 20,

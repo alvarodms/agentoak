@@ -31,19 +31,17 @@ The migration changed how Hoenn looks and sounds. v2.7 makes it change how Hoenn
 
 **Design Hypothesis**: If regional forms fight with abilities that express their ecological niche — not just reskinned stats — the player will treat each form as a genuine discovery rather than a palette swap. Mechanical identity must arrive early (pre-Badge 1 forms) so the "Hoenn is different" feeling hits in Hour 1.
 
-## Critical Prerequisite: Changed Three Registration
+## Changed Three Registration — COMPLETE (C292)
 
-**C287 DISCOVERY (updated C289)**: All 9 Changed Three starters need full registration:
+All 9 Changed Three starters fully registered 27/27 via generate_species.cjs. Build-clean.
 
-| Line | species.h | species_info.h | species_names.h | Full 27-file |
-|------|-----------|---------------|-----------------|-------------|
-| Treecko_Hoenn (439-441) | partial | **MISSING** | partial | 2/27 |
-| Torchic_Hoenn (442-444) | partial | **MISSING** | partial | 2/27 |
-| Mudkip_Hoenn (445-447) | **MISSING** | **REMOVED C289** | partial | 1/27 |
+| Line | Types | Archetype | Registration |
+|------|-------|-----------|-------------|
+| Treecko_Hoenn (439-441) | Grass/Steel | "The Blade" — fast physical | 27/27 |
+| Torchic_Hoenn (442-444) | Fire/Fairy | "The Dancer" — special attacker | 27/27 |
+| Mudkip_Hoenn (445-447) | Water/Fighting | "The Immovable Force" — bulky physical | 27/27 |
 
-**C289 CORRECTION**: C288 claimed Mudkip_Hoenn was 27/27, but C289 build revealed SPECIES_MUDKIP_HOENN constants do NOT exist in species.h. The species_info.h entries referenced undeclared constants, causing build failure. C289 removed those broken entries. **All 9 Changed Three species must be registered from scratch.**
-
-**Actual species count**: 36 custom species (11 cross-gen + 25 _HOENN). **16 fully registered** (19 minus 3 Mudkip line). EGG=448, NUM_SPECIES=448.
+**Species count**: 36 custom species (11 cross-gen + 25 _HOENN). **All 25 fully registered.** EGG=448, NUM_SPECIES=448.
 
 ## Three-Tier Mechanical Identity System
 
@@ -88,9 +86,9 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 | 12-14 | Lotad/Lombre/Ludicolo_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | full |
 | 15 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (keep) | — | full |
 | 16 | Breloom_Hoenn | Poison/Ice | **Frozen Spore** C289 | Thick Fat | Spore Fist | full |
-| 17-19 | Treecko line | Grass/Steel? | TBD | TBD | Iron Leaf | 2/27 |
-| 20-22 | Torchic line | Fire/Fairy? | TBD | TBD | — | 2/27 |
-| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | 1/27 (broken, must re-register) |
+| 17-19 | Treecko line | Grass/Steel | Overgrow | None (TBD C293) | Iron Leaf | **full C292** |
+| 20-22 | Torchic line | Fire/Fairy | Blaze | None (TBD C293) | — | **full C292** |
+| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | **full C292** |
 
 ## Multi-Cycle Roadmap
 
@@ -99,8 +97,8 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 | C288 | feature | **DONE**: Tier 2 ability pass (8/10). Mudkip_Hoenn registration attempted but incomplete. | — |
 | C289 | feature | **DONE**: Frozen Spore + Scalding Touch custom abilities. Tier 2 complete (10/10). Fixed Mudkip build break. | — |
 | C290 | feature | **DONE**: Spore Fist + Tidal Flare signature moves (MOVES_COUNT→380). Breloom_Hoenn custom learnset. make check_all_quick shipped. | — |
-| C291 | feature | **Changed Three registration**: All 9 starter species (3 lines x 3 stages). Run verify_species.sh — must show 27/27 for each. | — |
-| C292 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Third custom ability. | C291 |
+| C291 | feature | **Crashed** — no changes. | — |
+| C292 | feature | **DONE**: All 9 Changed Three fully registered 27/27, build-clean. Stats, types, abilities, evolutions, sprites. | — |
 | C293 | feature | **Signature moves II**: Iron Leaf for Sceptile_Hoenn + trainer showcase pass. | C291-292 |
 | C294 | patch | **Balance + polish**: Difficulty mode tuning, encounter rate adjustment, trainer IV review. v2.7 complete. | C293 |
 
@@ -122,7 +120,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (16 fully registered, 9 partial — all Changed Three). Mudkip line species_info removed C289. Tier 2 ability pass: **10/10 complete** C289.
+- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (**all 25 fully registered** C292). Tier 2 ability pass: **10/10 complete** C289.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379). MOVES_COUNT=380. Next: 380. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).

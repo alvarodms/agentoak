@@ -5,10 +5,10 @@
   "baseSpeciesCry": "SPECIES_COMBUSKEN",
 
   "stats": {
-    "hp": 60, "atk": 65, "def": 55, "spa": 90, "spd": 65, "spe": 70
+    "hp": 60, "atk": 65, "def": 60, "spa": 90, "spd": 60, "spe": 55
   },
-  "types": ["TYPE_FAIRY", "TYPE_FLYING"],
-  "abilities": ["ABILITY_CUTE_CHARM", "ABILITY_NATURAL_CURE"],
+  "types": ["TYPE_FIRE", "TYPE_FAIRY"],
+  "abilities": ["ABILITY_BLAZE", "ABILITY_NONE"],
   "catchRate": 45,
   "expYield": 142,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -17,7 +17,7 @@
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
   "safariZoneFleeRate": 0,
-  "bodyColor": "BODY_COLOR_WHITE",
+  "bodyColor": "BODY_COLOR_RED",
   "noFlip": false,
   "itemCommon": "ITEM_NONE",
   "itemRare": "ITEM_NONE",
@@ -27,16 +27,13 @@
   },
 
   "pokedex": {
-    "categoryName": "StarlitFwl",
+    "categoryName": "YoungFowl",
     "height": 9,
     "weight": 180,
     "description": [
-      "It dances through moonlit skies",
-      "on wings that shimmer with an",
-      "ethereal glow. COMBUSKEN touched",
-      "by MT. PYRE's light learn to",
-      "channel fairy energy into",
-      "devastating special attacks."
+      "Its kicks trail ribbons of",
+      "enchanted fire. Trainers say",
+      "it dances rather than fights."
     ],
     "pokemonScale": 360,
     "pokemonOffset": 6,

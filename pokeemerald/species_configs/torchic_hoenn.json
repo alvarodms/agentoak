@@ -5,10 +5,10 @@
   "baseSpeciesCry": "SPECIES_TORCHIC",
 
   "stats": {
-    "hp": 45, "atk": 45, "def": 40, "spa": 75, "spd": 55, "spe": 50
+    "hp": 45, "atk": 50, "def": 40, "spa": 70, "spd": 55, "spe": 45
   },
-  "types": ["TYPE_FAIRY", "TYPE_FAIRY"],
-  "abilities": ["ABILITY_CUTE_CHARM", "ABILITY_NATURAL_CURE"],
+  "types": ["TYPE_FIRE", "TYPE_FAIRY"],
+  "abilities": ["ABILITY_BLAZE", "ABILITY_NONE"],
   "catchRate": 45,
   "expYield": 65,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -17,7 +17,7 @@
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_FIELD", "EGG_GROUP_FIELD"],
   "safariZoneFleeRate": 0,
-  "bodyColor": "BODY_COLOR_WHITE",
+  "bodyColor": "BODY_COLOR_RED",
   "noFlip": false,
   "itemCommon": "ITEM_NONE",
   "itemRare": "ITEM_NONE",
@@ -27,16 +27,13 @@
   },
 
   "pokedex": {
-    "categoryName": "StarlitChk",
+    "categoryName": "Chick",
     "height": 4,
     "weight": 22,
     "description": [
-      "A TORCHIC transformed by the",
-      "sacred energy of MT. PYRE. Its",
-      "inner fire was replaced by soft",
-      "celestial light. It chirps in",
-      "tones that soothe restless",
-      "spirits."
+      "Its flame burns with a pink",
+      "luminescence found nowhere",
+      "else. It sings at dawn."
     ],
     "pokemonScale": 560,
     "pokemonOffset": 22,

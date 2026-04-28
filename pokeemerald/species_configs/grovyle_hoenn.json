@@ -5,10 +5,10 @@
   "baseSpeciesCry": "SPECIES_GROVYLE",
 
   "stats": {
-    "hp": 50, "atk": 85, "def": 60, "spa": 45, "spd": 65, "spe": 100
+    "hp": 50, "atk": 75, "def": 55, "spa": 65, "spd": 55, "spe": 95
   },
-  "types": ["TYPE_STEEL", "TYPE_STEEL"],
-  "abilities": ["ABILITY_CLEAR_BODY", "ABILITY_SHED_SKIN"],
+  "types": ["TYPE_GRASS", "TYPE_STEEL"],
+  "abilities": ["ABILITY_OVERGROW", "ABILITY_NONE"],
   "catchRate": 45,
   "expYield": 141,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -17,7 +17,7 @@
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_DRAGON"],
   "safariZoneFleeRate": 0,
-  "bodyColor": "BODY_COLOR_GRAY",
+  "bodyColor": "BODY_COLOR_GREEN",
   "noFlip": false,
   "itemCommon": "ITEM_NONE",
   "itemRare": "ITEM_NONE",
@@ -27,16 +27,13 @@
   },
 
   "pokedex": {
-    "categoryName": "CrstlGecko",
+    "categoryName": "WoodGecko",
     "height": 9,
     "weight": 280,
     "description": [
-      "Its crystalline blades can slice",
-      "through rock. GROVYLE that evolved",
-      "near meteorite deposits grow longer,",
-      "sharper arm-crystals. It sprints",
-      "through caves at blinding speed,",
-      "sparks trailing behind it."
+      "The leaf blades on its arms",
+      "have a metallic sheen, tempered",
+      "by mineral-rich soil."
     ],
     "pokemonScale": 360,
     "pokemonOffset": 6,
