@@ -39,11 +39,11 @@ The migration changed how Hoenn looks and sounds. v2.7 makes it change how Hoenn
 |------|-----------|---------------|-----------------|-------------|
 | Treecko_Hoenn (439-441) | ✓ | **MISSING** | ✓ | 2/27 |
 | Torchic_Hoenn (442-444) | ✓ | **MISSING** | ✓ | 2/27 |
-| Mudkip_Hoenn (planned 445-447) | **MISSING** | **MISSING** | **MISSING** | 0/27 |
+| Mudkip_Hoenn (445-447) | ✓ | ✓ | ✓ | **27/27 ✓C288** |
 
-**9 species need full registration before ANY v2.7 ability or move work can apply to them.** This is the #1 prerequisite — C288-C289 must complete this before the ability pass begins.
+**6 species still need full registration** (Treecko + Torchic lines). C289 must complete these.
 
-**Actual species count**: 33 custom species (11 cross-gen evos + 22 _HOENN forms). 16 fully registered in species_info.h. NOT 42 as previously claimed. EGG=445, NUM_SPECIES=445.
+**Actual species count**: 36 custom species (11 cross-gen evos + 25 _HOENN forms). 19 fully registered. EGG=448, NUM_SPECIES=448.
 
 ## Three-Tier Mechanical Identity System
 
@@ -123,16 +123,16 @@ Follow the Fairy moves pattern (C46): 6 files per move (moves.h constant, battle
 
 | # | Species | Types | A1 | A2 (change) | Sig Move | Cycle | Reg Status |
 |---|---------|-------|----|-------------|----------|-------|------------|
-| 1 | Corsola_Hoenn | Ghost/Rock | Rock Head | **Levitate** ← Pressure | — | C290 | ✓ full |
+| 1 | Corsola_Hoenn | Ghost/Rock | Rock Head | **Levitate** ✓C288 | — | — | ✓ full |
 | 2 | Growlithe_Hoenn | Water/Water | Swift Swim | Water Veil (keep) | — | — | ✓ full |
 | 3 | Arcanine_Hoenn | Water/Fire | Intimidate | **Scalding Touch** ← Flash Fire | Tidal Flare | C290+C292 | ✓ full |
-| 4 | Bagon_Hoenn | Dragon/Rock | Rock Head | **Sturdy** ← Shed Skin | — | C290 | ✓ full |
-| 5 | Vulpix_Hoenn | Ice/Fairy | **Natural Cure** ← Cute Charm | Serene Grace | — | C290 | ✓ full |
-| 6 | Ninetales_Hoenn | Ice/Fairy | **Natural Cure** ← Cute Charm | Serene Grace | — | C290 | ✓ full |
-| 7 | Pinsir_Hoenn | Bug/Fire | **Guts** ← Hyper Cutter | Flame Body | — | C290 | ✓ full |
-| 8 | Stantler_Hoenn | Ghost/Grass | Intimidate | **Effect Spore** ← Natural Cure | — | C290 | ✓ full |
-| 9 | Gligar_Hoenn | Water/Rock | **Swift Swim** ← Battle Armor | Water Absorb | — | C290 | ✓ full |
-| 10 | Gliscor_Hoenn | Water/Rock | **Swift Swim** ← Battle Armor | Water Absorb | — | C290 | ✓ full |
+| 4 | Bagon_Hoenn | Dragon/Rock | Rock Head | **Sturdy** ✓C288 | — | — | ✓ full |
+| 5 | Vulpix_Hoenn | Ice/Fairy | **Natural Cure** ✓C288 | Serene Grace | — | — | ✓ full |
+| 6 | Ninetales_Hoenn | Ice/Fairy | **Natural Cure** ✓C288 | Serene Grace | — | — | ✓ full |
+| 7 | Pinsir_Hoenn | Bug/Fire | **Guts** ✓C288 | Flame Body | — | — | ✓ full |
+| 8 | Stantler_Hoenn | Ghost/Grass | Intimidate | **Effect Spore** ✓C288 | — | — | ✓ full |
+| 9 | Gligar_Hoenn | Water/Rock | **Swift Swim** ✓C288 | Water Absorb | — | — | ✓ full |
+| 10 | Gliscor_Hoenn | Water/Rock | **Swift Swim** ✓C288 | Water Absorb | — | — | ✓ full |
 | 11 | Deoxys_Hoenn | Poison/Fairy | Toxic Touch | Pressure (keep) | — | — | ✓ full |
 | 12 | Lotad_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | — | ✓ full |
 | 13 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (pre-evo, keep) | — | — | ✓ full |
@@ -145,15 +145,15 @@ Follow the Fairy moves pattern (C46): 6 files per move (moves.h constant, battle
 | 20 | Torchic_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
 | 21 | Combusken_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
 | 22 | Blaziken_Hoenn | Fire/Fairy? | TBD | TBD | — | C291 | ⚠ 2/27 |
-| 23 | Mudkip_Hoenn | Water/Fight? | TBD | TBD | — | C288-289 | ✗ 0/27 |
-| 24 | Marshtomp_Hoenn | Water/Fight? | TBD | TBD | — | C288-289 | ✗ 0/27 |
-| 25 | Swampert_Hoenn | Water/Fight? | TBD | TBD | — | C288-289 | ✗ 0/27 |
+| 23 | Mudkip_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
+| 24 | Marshtomp_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
+| 25 | Swampert_Hoenn | Water/Fighting | Torrent | **Guts** | — | C288 | ✓ full |
 
 ## Multi-Cycle Roadmap
 
 | Cycle | Mode | Objective | Dependencies |
 |-------|------|-----------|-------------|
-| C288 | feature | **Changed Three registration P1**: Mudkip_Hoenn line (3 species × 27 files) — full pipeline run. Design stats/types/abilities/moves for all 3. Also complete Treecko line registration (fill 25 missing files). | verify_species.sh |
+| C288 | feature | **DONE**: Mudkip_Hoenn line registered (Water/Fighting, 27/27 × 3). Tier 2 ability pass (8/10). | — |
 | C289 | feature | **Changed Three registration P2**: Complete Torchic line registration (25 missing files). Run verify_species.sh on all 9 — must show 27/27 for each. | C288 |
 | C290 | feature | **Ability pass**: Implement Frozen Spore + Scalding Touch (2 custom abilities). Apply all 10 Tier 2 reassignments. Single cycle, ~5 files. | C288-289 (for starters), full reg for 16 existing forms |
 | C291 | feature | **Changed Three abilities**: Design and assign abilities for all 9 starter forms. Optionally: third custom ability. | C288-289 registration |
@@ -179,7 +179,7 @@ Follow the Fairy moves pattern (C46): 6 files per move (moves.h constant, battle
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (33 actual)**: Last registered = Blaziken_Hoenn(444). EGG=445, NUM_SPECIES=445. 22 _HOENN forms (16 fully registered, 6 partial, 3 unregistered).
+- **Custom species (36 actual)**: Last registered = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (19 fully registered, 6 partial). Tier 2 ability pass: 8/10 done (Arcanine + Breloom deferred to C290 — require custom abilities).
 - **Custom abilities**: TOXIC_TOUCH(78), next available: 79. ABILITIES_COUNT must update.
 - **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

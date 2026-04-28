@@ -28,5 +28,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Pipeline Verification Patterns & Boss Diversity Revisit Evidence | 285 | [pipeline-verification-and-boss-revisit.md](pokemon-knowledge/pipeline-verification-and-boss-revisit.md) |
 | Custom Abilities & Moves Landscape — ROM Hack Scene 2026 | 286 | [custom-abilities-moves-landscape-2026.md](pokemon-knowledge/custom-abilities-moves-landscape-2026.md) |
 | v2.7 Planning Landscape — Trends & Issue Triage | 287 | [v27-planning-landscape-2026.md](pokemon-knowledge/v27-planning-landscape-2026.md) |
+| Changed Three Type Archetypes — Competitive Precedents | 288 | [changed-three-type-archetypes.md](pokemon-knowledge/changed-three-type-archetypes.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

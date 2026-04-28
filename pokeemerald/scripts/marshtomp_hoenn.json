@@ -1,0 +1,74 @@
+{
+  "name": "MARSHTOMP_HOENN",
+  "pascalName": "MarshtompHoenn",
+  "graphicsDir": "marshtomp_hoenn",
+  "displayName": "MARSHTOMP",
+  "stats": { "hp": 70, "atk": 95, "def": 60, "spa": 55, "spd": 55, "spe": 70 },
+  "evYield": { "hp": 0, "atk": 1, "def": 0, "spa": 0, "spd": 0, "spe": 1 },
+  "types": ["TYPE_WATER", "TYPE_FIGHTING"],
+  "catchRate": 45,
+  "expYield": 142,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "genderRatio": "MON_MALE",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "abilities": ["ABILITY_TORRENT", "ABILITY_GUTS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"],
+    [1, "MOVE_GROWL"],
+    [1, "MOVE_LEER"],
+    [1, "MOVE_WATER_GUN"],
+    [15, "MOVE_FOCUS_ENERGY"],
+    [16, "MOVE_MUD_SLAP"],
+    [20, "MOVE_MACH_PUNCH"],
+    [24, "MOVE_WATER_PULSE"],
+    [28, "MOVE_BULK_UP"],
+    [31, "MOVE_BRICK_BREAK"],
+    [35, "MOVE_SCARY_FACE"],
+    [39, "MOVE_MUDDY_WATER"],
+    [46, "MOVE_CROSS_CHOP"],
+    [53, "MOVE_HYDRO_PUMP"]
+  ],
+  "tmhm": [
+    "TOXIC", "BULK_UP", "HIDDEN_POWER", "ICE_BEAM",
+    "BLIZZARD", "PROTECT", "RAIN_DANCE", "FRUSTRATION",
+    "IRON_TAIL", "EARTHQUAKE", "RETURN", "DIG",
+    "BRICK_BREAK", "DOUBLE_TEAM", "ROCK_TOMB", "FACADE",
+    "SECRET_POWER", "REST", "ATTRACT", "WATER_PULSE",
+    "SURF", "STRENGTH", "ROCK_SMASH", "WATERFALL", "DIVE"
+  ],
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "RIVER BRAWL",
+    "height": 8,
+    "weight": 265,
+    "description": [
+      "Its arms thickened from fighting the",
+      "force of Hoenn's mighty currents.",
+      "It wrestles boulders in rivers,",
+      "building raw striking power."
+    ],
+    "pokemonScale": 340,
+    "pokemonOffset": 7,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "36", "target": "SPECIES_SWAMPERT_HOENN" }
+  ],
+  "baseSpeciesCry": "SPECIES_MARSHTOMP",
+  "graphics": {
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "frontPicSize": "MON_COORDS_SIZE(48, 56)",
+    "frontPicYOffset": 6,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 4
+  }
+}

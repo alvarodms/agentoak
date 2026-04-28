@@ -80,3 +80,15 @@ First custom ability in the hack. 30% chance to poison the target when the holde
 | `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **241** | "TOXIC TOUCH", "Its attacks leave a toxic residue." |
 | `src/battle_util.c` | Toxic Touch logic in ABILITYEFFECT_ON_DAMAGE case, after inner switch | **241** | Checks attacker ability directly (not gLastUsedAbility). No FLAG_MAKES_CONTACT. Blocks: Substitute, status1, confusionSelfDmg, no-effect, power==0 |
 | `src/data/pokemon/species_info.h` | Deoxys_Hoenn ability1: ABILITY_PRESSURE → ABILITY_TOXIC_TOUCH | **241** | ability2 stays ABILITY_PRESSURE |
+
+## Tier 2 Ability Reassignment Pass (C288)
+
+8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.
+
+Key gameplay impacts:
+- Corsola_Hoenn gains Ground immunity via Levitate (patches Ghost/Rock's Ground weakness)
+- Bagon_Hoenn survives one OHKO via Sturdy (early-game durability)
+- Pinsir_Hoenn rewards status with 50% Atk boost via Guts
+- Gligar/Gliscor_Hoenn become rain sweepers via Swift Swim
+- Stantler_Hoenn punishes contact via Effect Spore (30% para/sleep/poison)
+- Vulpix/Ninetales_Hoenn heal status on switch via Natural Cure

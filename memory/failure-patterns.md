@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-287, 27 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-288, 27 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C278: RECOVERED at 23%. **C287**: first edit at action 17/120 (14%) — acceptable for a design cycle, but Agent subagent used twice (actions 37, 42) violating rule (2). Root cause (when it recurs): generator said "already exists" → agent re-investigates instead of consulting this file.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent** — violated again C287. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
+**Symptom**: 64-132 actions before first edit. C278: RECOVERED at 23%. C287: first edit at action 17/120 (14%). **C288: first edit at action 8/80 (10%) — RESOLVED for this cycle.**
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem (generator idempotency, build error), CONSULT failure-patterns.md FIRST — do NOT re-investigate from scratch.**
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 
@@ -20,14 +20,20 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration — Changed Three (C261→C287) — EXPANDED, PARTIALLY UNRESOLVED
+## Incomplete Species Registration — Changed Three (C261→C288) — PARTIALLY RESOLVED
 
 **Symptom**: C287 verify_species.sh revealed the problem is WIDER than just Mudkip_Hoenn:
-- Mudkip_Hoenn line (3 species): **0/27 files**. Not in species.h at all. EGG=445 after BLAZIKEN_HOENN=444.
 - Treecko_Hoenn line (439-441): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
 - Torchic_Hoenn line (442-444): **2/27 files** (species.h + species_names.h only). NOT in species_info.h.
-**Current state**: 9 Changed Three species are non-functional. They have no stats, types, abilities, learnsets, graphics, or pokedex entries. Rival parties and encounter tables reference them but they resolve to blank/crash data.
-**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) C288-289 must complete all 9 registrations as v2.7 prerequisite.
+- Mudkip_Hoenn line (445-447): **27/27 ✓C288**. Fully registered.
+**Current state**: 6 Changed Three species remain non-functional (Treecko + Torchic lines). C289 must complete these.
+**Resolution**: (1) Use `verify_species.sh` after EVERY generator run. (2) Must show 27/27 before claiming registration complete. (3) For partially-registered species (constant exists but no species_info): delete species.h constant first, then re-run generator.
+
+## Script Path Confusion (C288) — 6 wasted actions
+
+**Symptom**: Actions 57-62 searched for verify_species.sh in wrong locations (project root `scripts/`, then Glob returned ambiguous result).
+**Cause**: All pokeemerald helper scripts are at `pokeemerald/scripts/`, NOT the project root `scripts/` dir.
+**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/scripts/` for verify_species.sh, generate_species.cjs, generate_trainer.cjs, and generate_npc_dialogue.cjs. The project root `scripts/` is for agent runner scripts only.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26, 64, 65, 94, 119-122, 125, 197) — CRITICAL
 
@@ -55,11 +61,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Species have constants but ZERO species_info.h entries. Generator says "already exists — nothing to do."
 **Cause**: Generator exits if constant exists in species.h, even if other files are incomplete.
 **Resolution**: (1) After running the generator, ALWAYS verify `species_info.h` with `grep -c "SPECIES_XXX" species_info.h`. (2) If hit: delete the species.h constant, re-run generator. (3) **C277 lesson**: Do NOT spend 46 actions investigating — just apply this fix immediately.
-
-## Missing pngjs Dependency for Sprite Conversion (C276)
-
-**Symptom**: `node convert_sprites_indexed.cjs` fails with `Error: Cannot find module 'pngjs'`.
-**Resolution**: `npm install pngjs` before running `convert_sprites_indexed.cjs`. Verify pngjs is available before sprite conversion step.
 
 ## Wrong Path Prefix (C286) — 7 wasted actions
 

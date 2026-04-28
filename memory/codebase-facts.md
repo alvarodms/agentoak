@@ -132,17 +132,17 @@ Weather Omens: badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x
 
 ## Species Verification (C287)
 
-`scripts/verify_species.sh <SPECIES_NAME>` — checks all 27 generate_species.cjs target files for both UPPER_CASE and PascalCase references. Reports FOUND/MISSING per file. Exit 0 if 27/27, exit 1 otherwise. Use after every generator run.
+`scripts/verify_species.sh <SPECIES_NAME>` — checks all 27 generate_species.cjs target files for both UPPER_CASE and PascalCase references. Reports FOUND/MISSING per file. Exit 0 if 27/27, exit 1 otherwise. Use after every generator run. **Path**: `pokeemerald/scripts/verify_species.sh` (NOT project root).
 
 ---
 
 **Species registration**: All 27 files handled by `generate_species.cjs` since C281 — no manual steps. Only `enemy_mon_elevation.h` (floating species) needs manual addition. **Pitfall**: anchor text appearing in both vanilla and custom sections — `string.replace()` matches FIRST occurrence.
 
-**Changed Three species status (C287 verified via verify_species.sh)**:
+**Changed Three species status (C288 verified via verify_species.sh)**:
 - Treecko_Hoenn line (439-441): species.h + species_names.h ONLY (2/27 files). NOT in species_info.h — no stats/types/abilities defined.
 - Torchic_Hoenn line (442-444): species.h + species_names.h ONLY (2/27 files). Same gap.
-- Mudkip_Hoenn line: **NOT registered anywhere** — SPECIES_EGG=445 immediately after BLAZIKEN_HOENN=444. 0/27 files.
-- Total custom species: **33** (11 cross-gen + 22 _HOENN). **16 fully registered** in species_info.h. EGG=445, NUM_SPECIES=445.
+- Mudkip_Hoenn line (445-447): **27/27 ✓C288**. Water/Fighting, Torrent/Guts. Fully registered.
+- Total custom species: **36** (11 cross-gen + 25 _HOENN). **19 fully registered** in species_info.h. EGG=448, NUM_SPECIES=448.
 
 ---
 

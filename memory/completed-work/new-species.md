@@ -123,19 +123,35 @@ Generator: 26/26 files per species. Manual: species_names.h (3 entries).
 Sprite Designer v1 sprites: violet-gold palette, celestial blue eyes (Blaziken), halo/aura emanation accents. All indexed, build-clean.
 Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
 
-## C278: Mudkip_Hoenn Line (Tidal Monk) — Fighting → Fighting/Psychic
+## C288: Mudkip_Hoenn Line (River Brawler) — Water/Fighting
 
-| Species | ID | Type | BST | Abilities | Evo |
-|---------|-----|------|-----|-----------|-----|
-| Mudkip_Hoenn | 445 | Fighting | 310 | Guts / Synchronize | → Marshtomp_Hoenn (Lv16) |
-| Marshtomp_Hoenn | 446 | Fighting/Psychic | 405 | Guts / Synchronize | → Swampert_Hoenn (Lv36) |
-| Swampert_Hoenn | 447 | Fighting/Psychic | 535 | Guts / Synchronize | — |
+**v2.7 redesign**: Changed from C278's Fighting/Psychic to Water/Fighting. Offensive physical sweeper with speed identity (55→70→100 Spe across stages). Guts slot 2 enables Facade/status combos. Fighting STAB "revealed" at Marshtomp Lv20 (Mach Punch).
 
-Sprite Designer v1 sprites: slate/indigo/lavender palette, psychic bioluminescent accents. All indexed, build-clean.
-Generator: 26/26 files per species. Manual: species_names.h (3 entries), config JSONs (3 files).
-**C285 fix**: C278 only created configs, sprites, and species_names.h entries. C279-C281 each claimed to run the generator but species.h never had the constants (EGG remained at 445). C285 confirmed the gap, removed duplicate species_names.h entries from C278, and ran the generator for all 3 species in order. 27/27 files per species registered correctly. EGG=448, NUM_SPECIES=448.
+| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
+|---------|-----|------|-----|------------------------|-----------|-----|
+| Mudkip_Hoenn | 445 | Water/Fighting | 310 | 50/70/45/45/45/55 | Torrent / Guts | → Marshtomp_Hoenn (Lv16) |
+| Marshtomp_Hoenn | 446 | Water/Fighting | 405 | 70/95/60/55/55/70 | Torrent / Guts | → Swampert_Hoenn (Lv36) |
+| Swampert_Hoenn | 447 | Water/Fighting | 535 | 85/120/80/70/80/100 | Torrent / Guts | — |
+
+Sprites: vanilla Mudkip/Marshtomp/Swampert from expansion repo (placeholder until Sprite Designer creates regional variants).
+Generator: 27/27 files per species. EGG=448, NUM_SPECIES=448. Build-clean.
 
 ---
 
+## C288: Tier 2 Ability Reassignments — 8 Species
+
+Single-line `.abilities` edits in `species_info.h`:
+
+| Species | Old A1/A2 | New A1/A2 |
+|---------|-----------|-----------|
+| Corsola_Hoenn | Rock Head / Pressure | Rock Head / **Levitate** |
+| Vulpix_Hoenn | Cute Charm / Serene Grace | **Natural Cure** / Serene Grace |
+| Ninetales_Hoenn | Cute Charm / Serene Grace | **Natural Cure** / Serene Grace |
+| Pinsir_Hoenn | Hyper Cutter / Flame Body | **Guts** / Flame Body |
+| Bagon_Hoenn | Rock Head / Shed Skin | Rock Head / **Sturdy** |
+| Gligar_Hoenn | Battle Armor / Water Absorb | **Swift Swim** / Water Absorb |
+| Gliscor_Hoenn | Battle Armor / Water Absorb | **Swift Swim** / Water Absorb |
+| Stantler_Hoenn | Intimidate / Natural Cure | Intimidate / **Effect Spore** |
+
 ### Type Distribution (39 species)
-Ice 6, Fairy 6, Fighting 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Water 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Psychic 3, Dark 2, Fire 2, Normal 1, Bug 1.
+Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Dark 2, Fire 2, Normal 1, Bug 1, Psychic 1.

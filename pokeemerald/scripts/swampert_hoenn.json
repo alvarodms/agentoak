@@ -1,0 +1,73 @@
+{
+  "name": "SWAMPERT_HOENN",
+  "pascalName": "SwampertHoenn",
+  "graphicsDir": "swampert_hoenn",
+  "displayName": "SWAMPERT",
+  "stats": { "hp": 85, "atk": 120, "def": 80, "spa": 70, "spd": 80, "spe": 100 },
+  "evYield": { "hp": 0, "atk": 2, "def": 0, "spa": 0, "spd": 0, "spe": 1 },
+  "types": ["TYPE_WATER", "TYPE_FIGHTING"],
+  "catchRate": 45,
+  "expYield": 210,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "genderRatio": "MON_MALE",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "abilities": ["ABILITY_TORRENT", "ABILITY_GUTS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"],
+    [1, "MOVE_GROWL"],
+    [1, "MOVE_LEER"],
+    [1, "MOVE_WATER_GUN"],
+    [15, "MOVE_FOCUS_ENERGY"],
+    [16, "MOVE_MUD_SLAP"],
+    [20, "MOVE_MACH_PUNCH"],
+    [24, "MOVE_WATER_PULSE"],
+    [28, "MOVE_BULK_UP"],
+    [31, "MOVE_BRICK_BREAK"],
+    [39, "MOVE_SKY_UPPERCUT"],
+    [46, "MOVE_HYDRO_PUMP"],
+    [52, "MOVE_CROSS_CHOP"],
+    [61, "MOVE_SUPERPOWER"]
+  ],
+  "tmhm": [
+    "FOCUS_PUNCH", "WATER_PULSE", "TOXIC", "BULK_UP",
+    "HIDDEN_POWER", "ICE_BEAM", "BLIZZARD", "HYPER_BEAM",
+    "PROTECT", "RAIN_DANCE", "FRUSTRATION", "IRON_TAIL",
+    "EARTHQUAKE", "RETURN", "DIG", "BRICK_BREAK",
+    "DOUBLE_TEAM", "ROCK_TOMB", "FACADE", "SECRET_POWER",
+    "REST", "ATTRACT", "ROAR",
+    "SURF", "STRENGTH", "ROCK_SMASH", "WATERFALL", "DIVE"
+  ],
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "TIDAL FORCE",
+    "height": 16,
+    "weight": 768,
+    "description": [
+      "It channels water pressure through",
+      "its fists. A single punch carries",
+      "the force of a crashing wave,",
+      "enough to shatter solid stone."
+    ],
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [],
+  "baseSpeciesCry": "SPECIES_SWAMPERT",
+  "graphics": {
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "frontPicSize": "MON_COORDS_SIZE(64, 64)",
+    "frontPicYOffset": 0,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 5
+  }
+}

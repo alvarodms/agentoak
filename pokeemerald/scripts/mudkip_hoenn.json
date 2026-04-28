@@ -1,0 +1,72 @@
+{
+  "name": "MUDKIP_HOENN",
+  "pascalName": "MudkipHoenn",
+  "graphicsDir": "mudkip_hoenn",
+  "displayName": "MUDKIP",
+  "stats": { "hp": 50, "atk": 70, "def": 45, "spa": 45, "spd": 45, "spe": 55 },
+  "evYield": { "hp": 0, "atk": 1, "def": 0, "spa": 0, "spd": 0, "spe": 0 },
+  "types": ["TYPE_WATER", "TYPE_FIGHTING"],
+  "catchRate": 45,
+  "expYield": 64,
+  "itemCommon": "ITEM_NONE",
+  "itemRare": "ITEM_NONE",
+  "genderRatio": "MON_MALE",
+  "eggCycles": 20,
+  "friendship": 70,
+  "growthRate": "GROWTH_MEDIUM_SLOW",
+  "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
+  "abilities": ["ABILITY_TORRENT", "ABILITY_GUTS"],
+  "safariZoneFleeRate": 0,
+  "bodyColor": "BODY_COLOR_BLUE",
+  "noFlip": false,
+  "levelUpMoves": [
+    [1, "MOVE_TACKLE"],
+    [1, "MOVE_GROWL"],
+    [6, "MOVE_LEER"],
+    [10, "MOVE_WATER_GUN"],
+    [15, "MOVE_FOCUS_ENERGY"],
+    [19, "MOVE_MUD_SLAP"],
+    [24, "MOVE_TAKE_DOWN"],
+    [28, "MOVE_WATER_PULSE"],
+    [33, "MOVE_SCARY_FACE"],
+    [37, "MOVE_PROTECT"],
+    [42, "MOVE_HYDRO_PUMP"],
+    [46, "MOVE_ENDEAVOR"]
+  ],
+  "tmhm": [
+    "TOXIC", "BULK_UP", "HIDDEN_POWER", "ICE_BEAM",
+    "BLIZZARD", "PROTECT", "RAIN_DANCE", "FRUSTRATION",
+    "IRON_TAIL", "RETURN", "DIG", "BRICK_BREAK",
+    "DOUBLE_TEAM", "ROCK_TOMB", "FACADE", "SECRET_POWER",
+    "REST", "ATTRACT", "WATER_PULSE",
+    "SURF", "STRENGTH", "ROCK_SMASH", "WATERFALL", "DIVE"
+  ],
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "RIVER BRAWL",
+    "height": 4,
+    "weight": 76,
+    "description": [
+      "The fin on its head has hardened from",
+      "battering river rocks. It charges",
+      "headfirst into rapids, growing",
+      "stronger with each impact."
+    ],
+    "pokemonScale": 535,
+    "pokemonOffset": 20,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    { "method": "EVO_LEVEL", "param": "16", "target": "SPECIES_MARSHTOMP_HOENN" }
+  ],
+  "baseSpeciesCry": "SPECIES_MUDKIP",
+  "graphics": {
+    "iconPaletteIndex": 0,
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "frontPicSize": "MON_COORDS_SIZE(40, 48)",
+    "frontPicYOffset": 12,
+    "backPicSize": "MON_COORDS_SIZE(56, 56)",
+    "backPicYOffset": 5
+  }
+}
