@@ -49,6 +49,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
   - *Spore Fist* (Breloom Hoenn) — Ice/Physical, 75 power, 10% freeze chance — a cryogenic punch that encases the target in frost
   - *Tidal Flare* (Arcanine Hoenn) — Water/Special, 85 power, 30% burn chance — a geyser of superheated brine
   - *Iron Leaf* (Sceptile Hoenn) — Steel/Physical, 85 power, 20% Defense drop — a blade that weakens armor instead of seeking critical hits
+- **Custom battle animations** — each signature move has a unique visual: Iron Leaf opens with a metallic gleam before a steel-edged slash, Spore Fist spirals ice crystals inward before a frost-coated punch, and Tidal Flare sends water pulse rings that erupt into fire
 - **25 regional forms with mechanical identity** — every Hoennian form has abilities that express its ecological niche, not just reskinned stats. Corsola levitates (Ghost/Rock), Bagon braces with Sturdy (Dragon/Rock), Gligar and Gliscor swim with Swift Swim (Water/Rock), Vulpix and Ninetales cure with Natural Cure (Ice/Fairy), Pinsir endures with Guts (Bug/Fire), and Stantler scatters Effect Spore (Ghost/Grass)
 
 ### Trainer Overhaul
@@ -93,6 +94,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 - **Auto-run** from step one
 - **Battle speed toggle** — instant, fast, or normal
 - **Move category icons** in the battle UI
+- **Repel continuation prompt** — when a Repel wears off, you're asked if you want to use another one from your bag, just like in Black & White. The best available Repel is offered first
 
 ### Difficulty Modes
 

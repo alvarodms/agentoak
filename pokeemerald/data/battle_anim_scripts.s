@@ -371,7 +371,32 @@ gBattleAnims_Moves::
 	.4byte Move_WATER_PULSE
 	.4byte Move_DOOM_DESIRE
 	.4byte Move_PSYCHO_BOOST
-	.4byte Move_COUNT @ cannot be reached, because last move is Psycho Boost
+	.4byte Move_COUNT @ 355
+	.4byte Move_COUNT @ 356
+	.4byte Move_COUNT @ 357
+	.4byte Move_COUNT @ 358
+	.4byte Move_COUNT @ 359
+	.4byte Move_COUNT @ 360
+	.4byte Move_COUNT @ 361
+	.4byte Move_COUNT @ 362
+	.4byte Move_COUNT @ 363
+	.4byte Move_COUNT @ 364
+	.4byte Move_COUNT @ 365
+	.4byte Move_COUNT @ 366
+	.4byte Move_COUNT @ 367
+	.4byte Move_COUNT @ 368
+	.4byte Move_COUNT @ 369
+	.4byte Move_COUNT @ 370
+	.4byte Move_COUNT @ 371
+	.4byte Move_COUNT @ 372
+	.4byte Move_COUNT @ 373
+	.4byte Move_COUNT @ 374
+	.4byte Move_COUNT @ 375
+	.4byte Move_COUNT @ 376
+	.4byte Move_COUNT @ 377
+	.4byte Move_SPORE_FIST  @ 378 MOVE_SPORE_FIST
+	.4byte Move_TIDAL_FLARE @ 379 MOVE_TIDAL_FLARE
+	.4byte Move_IRON_LEAF   @ 380 MOVE_IRON_LEAF
 
 	.align 2
 gBattleAnims_StatusConditions::
@@ -10754,4 +10779,97 @@ Special_SubstituteToMon:
 
 Special_MonToSubstitute:
 	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
+	end
+
+Move_IRON_LEAF:
+	loadspritegfx ANIM_TAG_LEAF
+	loadspritegfx ANIM_TAG_CROSS_IMPACT
+	loadspritegfx ANIM_TAG_IMPACT
+	loopsewithpan SE_M_HARDEN, SOUND_PAN_ATTACKER, 28, 2
+	metallic_shine permanent=FALSE
+	waitforvisualfinish
+	monbg ANIM_TARGET
+	setalpha 12, 8
+	create_leaf_blade_task
+	delay 2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	delay 50
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 8, 1
+	playsewithpan SE_M_CUT, SOUND_PAN_TARGET
+	waitforvisualfinish
+	delay 12
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 8, 0, 18, 1
+	create_cross_impact_sprite ANIM_TARGET, 2, x=0, y=0, relative_to=ANIM_TARGET, duration=36
+	playsewithpan SE_M_LEER, SOUND_PAN_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	blendoff
+	end
+
+Move_SPORE_FIST:
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=7, color=RGB_BLACK
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, RGB(12, 26, 31)
+	delay 20
+	playsewithpan SE_M_STRING_SHOT, SOUND_PAN_TARGET
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 0
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 64
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 128
+	createsprite gIceCrystalSpiralInwardSmall, ANIM_ATTACKER, 2, 192
+	delay 10
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	createsprite gFistFootSpriteTemplate, ANIM_ATTACKER, 4, 0, -10, 8, 1, 0
+	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=-10, relative_to=ANIM_TARGET, animation=1
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	delay 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 8, 1
+	waitforvisualfinish
+	delay 10
+	call IceCrystalEffectShort
+	delay 5
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 9, 0, RGB(12, 26, 31)
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=7, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+Move_TIDAL_FLARE:
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_BLUE_RING_2
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=7, color=RGB(0, 25, 28)
+	delay 5
+	playsewithpan SE_M_BUBBLE3, SOUND_PAN_ATTACKER
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 100, 100, 8, 1, 20, 40, 0
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 20, 100, 16, 2, 10, 35, 1
+	createsprite gWaterPulseBubbleSpriteTemplate, ANIM_ATTACKER, 66, 200, 80, 8, 1, 40, 20, 0
+	waitforvisualfinish
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_ATTACKER
+	createsprite gWaterPulseRingSpriteTemplate, ANIM_TARGET, 2, 0, 0, 40, 15
+	delay 8
+	loopsewithpan SE_M_EMBER, SOUND_PAN_TARGET, 5, 2
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, -16, 24, 20, 1
+	delay 4
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 24, 20, 1
+	delay 4
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, 16, 24, 20, 1
+	delay 8
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	createsprite gEmberFlareSpriteTemplate, ANIM_TARGET, 2, -24, 24, 24, 24, 20, ANIM_TARGET, 1
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 3, 0, 8, 1
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=RGB(0, 25, 28)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
 	end

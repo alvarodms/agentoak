@@ -539,3 +539,5 @@ gSpecials::
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
 	def_special ScriptCheckPokedexSeen
+	def_special Special_FindBestRepelInBag
+	def_special Special_UseRepelFromBag

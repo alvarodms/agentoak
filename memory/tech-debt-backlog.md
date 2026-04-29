@@ -11,6 +11,7 @@ Review when planning — items deferred 5+ cycles signal recurring friction.
 | 283-287 | **NPC dialogue --update mode**: In-place dialogue replacement for existing scripts. Deferred C283-C286, **SHIPPED C287**. | done |
 | 285-287 | **Species verification script** (`verify_species.sh`): Post-generation check across all 27 target files. Deferred C285-C286, **SHIPPED C287**. Immediately revealed Changed Three registration gaps. | done |
 | 287-290 | `make check_all_quick` — a parallel Makefile target running only cheap validators (check_scripts, check_species, check_trainers). **SHIPPED C290.** | done |
-| 290-294 | **Battle animation templates**: Moves 378-380 (Iron Leaf, Spore Fist, Tidal Flare) use generic Move_COUNT fallback. 3 reusable templates needed (~30 lines each). **Scheduled: C297 (v2.8 Pillar 2).** | **scheduled** |
+| 290-297 | **Battle animation templates**: Moves 378-380 (Iron Leaf, Spore Fist, Tidal Flare). Custom animations recomposing existing sprite/task references. **SHIPPED C297.** | done |
 | 292 | Generator --force flag: Patch generate_species.cjs to accept --force that deletes partial entries before regenerating. ~20-line change. Only needed if registration work recurs. | pending |
 | 295 | JSON trainer configs: Extract trainer_parties.h into JSON consumed by generate_trainer.cjs. Reduces recurring macro/struct mismatch failures. ~1 refactor cycle. | pending |
+| 297 | JSON trainer config extraction: Move trainer_parties.h data into JSON consumed by generate_trainer.cjs. Eliminates the recurring macro/struct mismatch pattern that caused build failures in C179, C190, C195. Not urgent for v2.8 (no new trainers), but highest-value refactor for future content arcs. ~1 dedicated refactor cycle. | pending |

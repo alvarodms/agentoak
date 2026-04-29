@@ -62,18 +62,8 @@ Categorized every migration-related NPC as **Tell** (explicit dialogue explainin
 - **Files**: `data/scripts/repel.inc` (~40 lines of script), `src/item_use.c` or new special (~20 lines of C helper to find best repel).
 - **Risk**: Low. Self-contained. The script hooks already exist.
 
-### 2. Encounter Rate Rebalancing
-Three regional forms are at 1% (slot 11-12), making them effectively unfindable:
-
-| Species | Current | Target | Notes |
-|---------|---------|--------|-------|
-| Pinsir_Hoenn | 1% (slot 11) | 5% (slot 7-8) | NPCs + Flannery reference it; players can't find it |
-| Vulpix_Hoenn | 1% (slot 11) | 5% (slot 7-8) | FrostTracker NPC teases it; 1% breaks the promise |
-| Mudkip_Hoenn | 1% (slot 11) | 4% (slot 9-10) | Changed Three gift is backup, but wild should be findable |
-
-- **Files**: `src/data/wild_encounters.json` only. Swap slots — displaced vanilla species takes the 1% slot.
-- **Risk**: Very low. Pure data swap.
-- **Note**: Journey map claimed 4-5% for these species but JSON shows 1%. Likely a documentation error or overwrite.
+### 2. Encounter Rate Rebalancing — ALREADY CORRECT
+C295 audit claimed Pinsir_Hoenn/Vulpix_Hoenn/Mudkip_Hoenn were at 1%. **Verified C297: Pinsir_Hoenn is 5% (slot 7), Vulpix_Hoenn is 4% (slot 9), Mudkip_Hoenn is 4% (slot 8).** The 1% claim was incorrect — rates were already at reasonable levels. No changes needed.
 
 ### 3. Battle Animation Templates
 Custom moves 378-380 (Spore Fist, Tidal Flare, Iron Leaf) all use the generic `Move_COUNT` fallback (basic hit + shake, 12 lines). Signature moves deserve signature animations.
@@ -96,13 +86,13 @@ Custom moves 378-380 (Spore Fist, Tidal Flare, Iron Leaf) all use the generic `M
 
 ## Multi-Cycle Roadmap
 
-| Cycle | Mode | Pillar | Objective |
-|-------|------|--------|-----------|
-| C296 | feature | QoL | Repel continuation prompt + encounter rate rebalancing (3 species slot swaps) |
-| C297 | feature | Visual | Battle animation templates for Iron Leaf, Spore Fist, Tidal Flare |
-| C298 | feature | Dialogue | Hour 3-6 subtraction pass: trim 3 Echo "tell" NPCs to "show" NPCs |
-| C299 | feature | Dialogue | Gym leader showcase dialogue: Brawly/Wattson/Flannery post-battle text rewrite |
-| C300 | feature | Capstone | TBD: Field Notes key item OR Tempered Blade (ABILITY_81) for Sceptile_Hoenn |
+| Cycle | Mode | Pillar | Objective | Status |
+|-------|------|--------|-----------|--------|
+| C296 | — | — | Crashed (zero output). v2.8 deferred to C297. | crashed |
+| C297 | feature | QoL + Visual | BW-style repel prompt + battle animation templates (Iron Leaf, Spore Fist, Tidal Flare). Encounter rates verified already correct. | **shipped** |
+| C298 | feature | Dialogue | Hour 3-6 subtraction pass: trim 3 Echo "tell" NPCs to "show" NPCs | next |
+| C299 | feature | Dialogue | Gym leader showcase dialogue: Brawly/Wattson/Flannery post-battle text rewrite | |
+| C300 | feature | Capstone | TBD: Field Notes key item OR Tempered Blade (ABILITY_81) for Sceptile_Hoenn | |
 
 **Pillar design intent**:
 - **QoL (C296)**: Table-stakes polish. Player can find forms and navigate comfortably. Signals quality.

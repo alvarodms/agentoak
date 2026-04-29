@@ -74,19 +74,19 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 ---
 
-## Repel System Architecture (C295)
+## Repel System Architecture (C295, shipped C297)
 
-**Script**: `data/scripts/repel.inc` — EventScript_RepelWoreOff shows "REPEL's effect wore off" and ends. No continuation prompt.
-**C code**: `wild_encounter.c:883` calls `ScriptContext_SetupScript(EventScript_RepelWoreOff)`. `UpdateRepelCounter()` in `field_control_avatar.c` decrements `VAR_REPEL_STEP_COUNT` each step. `item_use.c:843` sets the var via `VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(...))`.
-**BW-style prompt**: Modify `repel.inc` to check bag for Repel items → yes/no multichoice → use strongest. Self-contained change (~40 lines script + ~20 lines C helper).
+**Script**: `data/scripts/repel.inc` — BW-style continuation prompt. Shows "REPEL's effect wore off", calls `Special_FindBestRepelInBag` to find best available (Max > Super > Repel), prompts "Would you like to use another {item}?", calls `Special_UseRepelFromBag` on yes.
+**C helpers**: `src/field_specials.c` — `Special_FindBestRepelInBag()` sets `gSpecialVar_Result` to best item ID (or 0). `Special_UseRepelFromBag()` reads `gSpecialVar_0x8004`, calls `RemoveBagItem` + `VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(...))`.
+**Infrastructure**: `wild_encounter.c:883` calls `ScriptContext_SetupScript(EventScript_RepelWoreOff)`. `item_use.c:843` sets the var for manual use.
 
-## Battle Animation System (C295)
+## Battle Animation System (C295, shipped C297)
 
-**Main file**: `data/battle_anim_scripts.s` — 10,757 lines. `gBattleAnims_Moves` pointer table at top. Each entry: `.4byte Move_LABEL`. 374 entries (0-373), then `Move_COUNT` as final fallback.
-**Custom moves 378-380** (Spore Fist, Tidal Flare, Iron Leaf): Currently use `Move_COUNT` fallback (generic hit + shake, ~12 lines at line 9924). Need: pad entries 374-377 with `Move_COUNT`, add custom labels for 378-380.
+**Main file**: `data/battle_anim_scripts.s` — `gBattleAnims_Moves` pointer table at top. 381 entries (0-380). `Move_COUNT` = generic fallback (basic hit + shake).
+**Custom move animations (C297)**: Move_IRON_LEAF (Steel Wing metallic_shine + Leaf Blade slash), Move_SPORE_FIST (Ice Punch crystals + fist strike + IceCrystalEffectShort), Move_TIDAL_FLARE (Water Pulse bubbles + Ember fire particles). All use recomposed existing sprite templates — no new assets.
 **Launcher**: `DoMoveAnim()` in `battle_anim.c:201` indexes into `gBattleAnims_Moves[move]`.
-**Template sizes**: Ice Punch (base for Spore Fist) = 37 lines. Crunch = 28 lines. Steel Wing (base for Iron Leaf) = 27 lines.
-**Macros**: `asm/macros/battle_anim_script.inc` — loadspritegfx, createsprite, delay, waitforvisualfinish, monbg, setalpha, etc.
+**Key macros**: `metallic_shine`, `create_leaf_blade_task`, `create_cross_impact_sprite`, `create_basic_hitsplat_sprite`, `simple_palette_blend`. All in `asm/macros/battle_anim_script.inc`.
+**Shared subroutines**: `IceCrystalEffectShort` (ice hit particles), `FlamethrowerCreateFlames` (fire stream), `EmberFireHit` (fire flare).
 
 ---
 

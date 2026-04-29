@@ -104,6 +104,17 @@ First custom ability in the hack. 30% chance to poison the target when the holde
 | `src/battle_util.c` | Scalding Touch logic in ABILITYEFFECT_ON_DAMAGE case, after Frozen Spore block | **289** | Contact-only (FLAG_MAKES_CONTACT), (Random() % 3) == 0 for 33%, MOVE_EFFECT_BURN |
 | `src/data/pokemon/species_info.h` | Arcanine_Hoenn ability2: ABILITY_FLASH_FIRE → ABILITY_SCALDING_TOUCH | **289** | ability1 stays ABILITY_INTIMIDATE |
 
+## Battle Animation Templates (C297)
+
+Custom animations for signature moves 378-380, replacing generic Move_COUNT fallback.
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `data/battle_anim_scripts.s` | Added Move_IRON_LEAF animation (Steel Wing metallic_shine + Leaf Blade slash) | **297** | ~25 lines, recomposes existing sprite/task references |
+| `data/battle_anim_scripts.s` | Added Move_SPORE_FIST animation (Ice Punch crystals + fist strike + IceCrystalEffectShort) | **297** | ~30 lines, ice-blue palette blend + frost burst |
+| `data/battle_anim_scripts.s` | Added Move_TIDAL_FLARE animation (Water Pulse bubbles + Ember/Flamethrower fire particles) | **297** | ~30 lines, water-then-fire layering for steam explosion feel |
+| `data/battle_anim_scripts.s` | Extended gBattleAnims_Moves table from 356 to 381 entries | **297** | Indices 355-377 padded with Move_COUNT, 378-380 wired to custom labels |
+
 ## Pre-existing Build Fix (C289)
 
 Removed orphaned Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn entries from species_info.h — these had data blocks but no corresponding SPECIES_ constants in species.h (C288 partial registration issue). Build was broken before C289 changes.

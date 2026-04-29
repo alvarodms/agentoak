@@ -39,6 +39,10 @@ Quality-of-life improvements and release artifacts.
 | `data/scripts/item_ball_scripts.inc` | ShoalCave_LowTideIceRoom_EventScript_ItemDawnStone | 229 | finditem ITEM_DAWN_STONE |
 | `scripts/check_evolution_consistency.sh` | Check 5b: EVO_ITEM_FEMALE validation | 229 | Validates target species + item constants |
 
+| `data/scripts/repel.inc` | BW-style repel continuation prompt: "Would you like to use another?" | 297 | Checks bag for Max Repel > Super Repel > Repel, yes/no, auto-uses strongest |
+| `src/field_specials.c` | Added Special_FindBestRepelInBag + Special_UseRepelFromBag | 297 | C helpers for repel prompt |
+| `data/specials.inc` | Registered 2 new repel specials | 297 | |
+
 ## Release
 
 | File | What Changed | Cycle | Notes |

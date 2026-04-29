@@ -18,6 +18,7 @@
 #include "field_weather.h"
 #include "graphics.h"
 #include "international_string_util.h"
+#include "item.h"
 #include "item_icon.h"
 #include "link.h"
 #include "list_menu.h"
@@ -4267,4 +4268,23 @@ void SetPlayerGotFirstFans(void)
 u8 Script_TryGainNewFanFromCounter(void)
 {
     return TryGainNewFanFromCounter(gSpecialVar_0x8004);
+}
+
+void Special_FindBestRepelInBag(void)
+{
+    if (CheckBagHasItem(ITEM_MAX_REPEL, 1))
+        gSpecialVar_Result = ITEM_MAX_REPEL;
+    else if (CheckBagHasItem(ITEM_SUPER_REPEL, 1))
+        gSpecialVar_Result = ITEM_SUPER_REPEL;
+    else if (CheckBagHasItem(ITEM_REPEL, 1))
+        gSpecialVar_Result = ITEM_REPEL;
+    else
+        gSpecialVar_Result = 0;
+}
+
+void Special_UseRepelFromBag(void)
+{
+    u16 itemId = gSpecialVar_0x8004;
+    RemoveBagItem(itemId, 1);
+    VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(itemId));
 }
