@@ -40,6 +40,14 @@ Route 119 + Lilycove: May/Brendan intro/defeat/post-battle referencing specific 
 
 Tell:Show ratio Hours 3-6: 7:2 → 4:5.
 
+## v2.8 Gym Leader Showcase Dialogue — C299
+
+Brawly + Wattson defeat and re-talk text rewritten from Tell (migration exposition) to Show (battle-experience reference):
+- **DewfordTown_Gym/scripts.inc**: `BrawlyDefeat` — "GLIGAR hit you like a riptide" (visceral battle moment). `BrawlyPostBattle` — "I feel the ocean in it" (sensation through battle, no origin story).
+- **MauvilleCity_Gym/scripts.inc**: `WattsonDefeat` — "LOTAD's leaves were crackling like a live wire" (specific battle moment). `WattsonPostBattle` — "I keep notes, but honestly -- I just love the surprise!" (engineering curiosity, no Route 102 exposition).
+
+Flannery descoped — Hour 6-10 already healthy at 3:4:3.
+
 ---
 
 Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).

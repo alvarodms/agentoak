@@ -392,10 +392,10 @@ DewfordTown_Gym_Text_BrawlyIntro:
 
 DewfordTown_Gym_Text_BrawlyDefeat:
 	.string "…Whoa.\p"
-	.string "You and your POKéMON fight like\n"
-	.string "the tide -- relentless.\p"
-	.string "GLIGAR and I have more training\n"
-	.string "to do in that cave.$"
+	.string "GLIGAR hit you like a riptide\n"
+	.string "and you still stood.\p"
+	.string "My fists are shaking.\n"
+	.string "I needed that.$"
 
 DewfordTown_Gym_Text_ReceivedKnuckleBadge:
 	.string "{PLAYER} received the KNUCKLE BADGE\n"
@@ -421,9 +421,9 @@ DewfordTown_Gym_Text_RegisteredBrawly:
 	.string "in the POKéNAV.$"
 
 DewfordTown_Gym_Text_BrawlyPostBattle:
-	.string "I can see your talent becoming a giant\n"
-	.string "wave to cause a storm of astonishment\l"
-	.string "among TRAINERS one day!$"
+	.string "Every time GLIGAR lands a hit,\n"
+	.string "I feel the ocean in it.\p"
+	.string "Train hard. Stay loose.$"
 
 DewfordTown_Gym_Text_GymStatue:
 	.string "DEWFORD TOWN POKéMON GYM$"

@@ -343,8 +343,9 @@ MauvilleCity_Gym_Text_WattsonIntro:
 MauvilleCity_Gym_Text_WattsonDefeat:
 	.string "Wahahahah!\n"
 	.string "Fine, I lost!\p"
-	.string "You ended up giving me a thrill!\n"
-	.string "Take this BADGE!$"
+	.string "LOTAD's leaves were crackling\n"
+	.string "like a live wire out there!\n"
+	.string "What a show!$"
 
 MauvilleCity_Gym_Text_ReceivedDynamoBadge:
 	.string "{PLAYER} received the DYNAMO BADGE\n"
@@ -369,11 +370,11 @@ MauvilleCity_Gym_Text_RegisteredWattson:
 	.string "in the POKéNAV.$"
 
 MauvilleCity_Gym_Text_WattsonPostBattle:
-	.string "That little LOTAD from ROUTE 102 has\n"
-	.string "more spark than half the machines\n"
-	.string "in NEW MAUVILLE!\p"
-	.string "The world's changing, and I say\n"
-	.string "WAHAHAHAHA to that!$"
+	.string "LOTAD crackles differently\n"
+	.string "every battle.\p"
+	.string "I keep notes, but honestly --\n"
+	.string "I just love the surprise!\n"
+	.string "Wahahahah!$"
 
 MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor:
 	.string "Wahahahah!\n"
