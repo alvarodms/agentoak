@@ -34,5 +34,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Signature Move Design Patterns — ROM Hack Landscape | 293 | [signature-move-design-patterns-c293.md](pokemon-knowledge/signature-move-design-patterns-c293.md) |
 | Balance & Polish Pass Patterns — What Players Notice | 294 | [balance-polish-pass-patterns.md](pokemon-knowledge/balance-polish-pass-patterns.md) |
 | v2.8 Direction — Post-Foundation Polish & Playability Patterns | 295 | [v28-direction-post-foundation-polish.md](pokemon-knowledge/v28-direction-post-foundation-polish.md) |
+| Repel QoL & Encounter Findability — Implementation Landscape | 296 | [repel-qol-and-encounter-findability-c296.md](pokemon-knowledge/repel-qol-and-encounter-findability-c296.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
