@@ -4,9 +4,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-295, 30 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-298, 31 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. C294: 63%. **C295: first memory edit at action 124/136 (91%)** — planning cycle but still 3 Agent subagent calls (actions 7, 11, 16) + ~15 scattered wild_encounters.json offset reads.
+**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. C294: 63%. C295: 91%. **C298: first edit at action 58/86 (67%)** — 7 Agent subagent calls + 7 wrong-path errors = 14 wasted actions. Cycle succeeded but could have been done in ~40 actions.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
@@ -25,10 +25,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Partial registration across multiple cycles. C292 had constants+names+sprites only. **C293 claimed 27/27 via --fill-missing but data files were actually empty.** Build succeeded because C arrays zero-initialize — species appeared blank in-game but compiled.
 **Resolution**: C294 re-ran `generate_species.cjs --fill-missing` for all 9 Changed Three. All 25/27 files per species now populated. **Key lesson**: Always GREP the target data file after running --fill-missing to confirm entries were actually written. Build success does NOT mean data is present.
 
-## Wrong Path Prefix (C286, C294) — 23 wasted actions total
+## Wrong Path Prefix (C286-C298) — 30+ wasted actions total
 
-**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File/path does not exist."
-**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix. **This has recurred 3 cycles in a row (C286, C293, C294).** Treat as a hardcoded prefix — never type the path from memory.
+**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File/path does not exist." **C298: 7 instances** (actions 3, 5, 10, 14, 19, 25, 42).
+**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix. This has recurred in C286, C293, C294, C298. Treat as a hardcoded prefix — never type the path from memory.
 
 ## Script Path Confusion (C288) — 6 wasted actions
 

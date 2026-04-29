@@ -90,7 +90,7 @@ Custom moves 378-380 (Spore Fist, Tidal Flare, Iron Leaf) all use the generic `M
 |-------|------|--------|-----------|--------|
 | C296 | — | — | Crashed (zero output). v2.8 deferred to C297. | crashed |
 | C297 | feature | QoL + Visual | BW-style repel prompt + battle animation templates (Iron Leaf, Spore Fist, Tidal Flare). Encounter rates verified already correct. | **shipped** |
-| C298 | feature | Dialogue | Hour 3-6 subtraction pass: trim 3 Echo "tell" NPCs to "show" NPCs | next |
+| C298 | feature | Dialogue + Encounters + Trainers | Dialogue subtraction (3 NPCs Tell→Show), Growlithe_Hoenn on R118 (5%), Crobat on Maxie/Archie (4 encounters). Tell:Show 7:2→4:5. | **shipped** |
 | C299 | feature | Dialogue | Gym leader showcase dialogue: Brawly/Wattson/Flannery post-battle text rewrite | |
 | C300 | feature | Capstone | TBD: Field Notes key item OR Tempered Blade (ABILITY_81) for Sceptile_Hoenn | |
 

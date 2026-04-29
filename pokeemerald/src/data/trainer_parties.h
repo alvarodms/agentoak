@@ -542,8 +542,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_Archie[] = {
     {
     .iv = 150,
     .lvl = 43,
-    .species = SPECIES_LAPRAS,
-    .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_THUNDER, MOVE_CONFUSE_RAY}
+    .species = SPECIES_CROBAT,
+    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_BITE, MOVE_TAUNT}
     },
     {
     .iv = 150,
@@ -10046,8 +10046,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_MaxieMagmaHideout[] = {
     {
     .iv = 150,
     .lvl = 39,
-    .species = SPECIES_MAGMAR,
-    .moves = {MOVE_FIRE_BLAST, MOVE_CONFUSE_RAY, MOVE_SUNNY_DAY, MOVE_THUNDER_PUNCH}
+    .species = SPECIES_CROBAT,
+    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_BITE, MOVE_CONFUSE_RAY}
     },
     {
     .iv = 200,
@@ -10058,6 +10058,12 @@ static const struct TrainerMonNoItemCustomMoves sParty_MaxieMagmaHideout[] = {
 };
 
 static const struct TrainerMonNoItemCustomMoves sParty_MaxieMtChimney[] = {
+    {
+    .iv = 150,
+    .lvl = 23,
+    .species = SPECIES_GOLBAT,
+    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_BITE, MOVE_CONFUSE_RAY}
+    },
     {
     .iv = 150,
     .lvl = 23,
@@ -12548,8 +12554,8 @@ static const struct TrainerMonNoItemCustomMoves sParty_MaxieMossdeep[] = {
     {
     .iv = 150,
     .lvl = 44,
-    .species = SPECIES_MAGMAR,
-    .moves = {MOVE_FIRE_BLAST, MOVE_THUNDERBOLT, MOVE_SUNNY_DAY, MOVE_THUNDER_PUNCH}
+    .species = SPECIES_CROBAT,
+    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_BITE, MOVE_TOXIC}
     },
     {
     .iv = 200,

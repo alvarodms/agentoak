@@ -31,4 +31,15 @@ Route 119 + Lilycove: May/Brendan intro/defeat/post-battle referencing specific 
 
 ---
 
+## v2.8 Dialogue Subtraction — C298
+
+3 Echo NPCs converted from Tell to Show (Hours 3-6 fatigue fix):
+- **R112 Hiker** (Route112/scripts.inc): 5-paragraph migration lecture → "…" + 2-line personal anecdote ("That PINSIR burned my hand")
+- **R113 FrostTracker** (Route113/scripts.inc): Cut last 2 paragraphs (R112 cross-reference + meta-commentary). Kept personal Vulpix observation.
+- **R119 Ecologist** (Route119/scripts.inc): 7 paragraphs → 2. Cut greeting, 4-form catalogue, "regional shift" explanation. Kept Stantler observation + Hartley redirect.
+
+Tell:Show ratio Hours 3-6: 7:2 → 4:5.
+
+---
+
 Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).

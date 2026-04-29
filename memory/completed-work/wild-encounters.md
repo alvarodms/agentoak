@@ -33,3 +33,4 @@ Modified files related to wild Pokémon encounter tables.
 | `src/data/wild_encounters.json` | Meteor Falls B1F 2R: slot 8 (4%) GOLBAT Lv38 → TREECKO_HOENN Lv25-28 | **279** | Changed Three wild placement — crystal gecko in mineral depths |
 | `src/data/wild_encounters.json` | Mt. Pyre Exterior: slot 9 (4%) WINGULL Lv27 → TORCHIC_HOENN Lv27-30 | **279** | Changed Three wild placement — starlight bird on sacred mountain |
 | `src/data/wild_encounters.json` | Shoal Cave Low Tide Inner Room: slot 8 (4%) GEODUDE Lv26-29 → MUDKIP_HOENN Lv28-32 | **279** | Changed Three wild placement — titan tadpole in tidal cave |
+| `src/data/wild_encounters.json` | Route 118 land_mons slot 8 (5%): MIGHTYENA Lv26-28 → GROWLITHE_HOENN Lv26-28 | **298** | Mid-game regional form gap fill — Water-type Growlithe near river crossing. First form since Pinsir_Hoenn (R112). #181 partial. |
