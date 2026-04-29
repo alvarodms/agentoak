@@ -74,6 +74,22 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 ---
 
+## Repel System Architecture (C295)
+
+**Script**: `data/scripts/repel.inc` — EventScript_RepelWoreOff shows "REPEL's effect wore off" and ends. No continuation prompt.
+**C code**: `wild_encounter.c:883` calls `ScriptContext_SetupScript(EventScript_RepelWoreOff)`. `UpdateRepelCounter()` in `field_control_avatar.c` decrements `VAR_REPEL_STEP_COUNT` each step. `item_use.c:843` sets the var via `VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(...))`.
+**BW-style prompt**: Modify `repel.inc` to check bag for Repel items → yes/no multichoice → use strongest. Self-contained change (~40 lines script + ~20 lines C helper).
+
+## Battle Animation System (C295)
+
+**Main file**: `data/battle_anim_scripts.s` — 10,757 lines. `gBattleAnims_Moves` pointer table at top. Each entry: `.4byte Move_LABEL`. 374 entries (0-373), then `Move_COUNT` as final fallback.
+**Custom moves 378-380** (Spore Fist, Tidal Flare, Iron Leaf): Currently use `Move_COUNT` fallback (generic hit + shake, ~12 lines at line 9924). Need: pad entries 374-377 with `Move_COUNT`, add custom labels for 378-380.
+**Launcher**: `DoMoveAnim()` in `battle_anim.c:201` indexes into `gBattleAnims_Moves[move]`.
+**Template sizes**: Ice Punch (base for Spore Fist) = 37 lines. Crunch = 28 lines. Steel Wing (base for Iron Leaf) = 27 lines.
+**Macros**: `asm/macros/battle_anim_script.inc` — loadspritegfx, createsprite, delay, waitforvisualfinish, monbg, setalpha, etc.
+
+---
+
 ## Multichoice System (Cycle 181)
 
 `include/constants/script_menu.h` — `MULTI_*` IDs. Last used: 115. Next: 116.

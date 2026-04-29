@@ -4,10 +4,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-294, 29 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-295, 30 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. **C294: first edit at action 76/120 (63%)** — 16 wrong-path Greps (actions 29-44) + 1 Agent subagent call.
-**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`.
+**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. C294: 63%. **C295: first memory edit at action 124/136 (91%)** — planning cycle but still 3 Agent subagent calls (actions 7, 11, 16) + ~15 scattered wild_encounters.json offset reads.
+**Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
 

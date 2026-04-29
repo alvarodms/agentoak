@@ -15,100 +15,104 @@
 **v2.2** (C239-253): "The Cosmic Form" — Deoxys_Hoenn (Poison/Fairy) + Toxic Touch, Quest III, trainer narrative pass, Magma/Aqua reckoning, Gligar_Hoenn + Gliscor_Hoenn.
 **v2.3** (C254-267): "Roots" — Species generator (26-file), trainer generator, 5 early-game regional forms (Lotad/Shroomish/Lombre/Breloom/Ludicolo_Hoenn), ability identity pass, Glacia redesign.
 **v2.4** (C268-273): "The Proving Ground" — Gym leader migration pass complete (Brawly/Norman/Drake/Wattson/Juan/Wallace), Wally VR redesign, rival arc (Brendan/May Route 110 + Lilycove teams + dialogue).
+**v2.5** (C274-281): "The Changed Three" — Treecko/Torchic/Mudkip Hoenn lines (9 species, Steel/Fairy/Fighting triangle), wild encounters, postgame Birch gift, rival integration.
+**v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
+**v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 
 ---
 
-**v2.5** (C274-281): "The Changed Three" — Treecko/Torchic lines registered (6 of 9 starters, Steel->Fairy->Fighting triangle), wild encounters, postgame Birch gift, rival integration, Drake T3-T4. Mudkip line still unregistered.
-**v2.6** (C282-286): "The Reckoning" — Boss diversity pass (Roxanne Aron/Aerodactyl, T&L Espeon), 6-NPC villain postgame arc (3 Magma + 3 Aqua), Birch collection quest (PP_MAX), dialogue polish.
-
----
-
-# v2.7: "The Living Difference" (C288-C294)
+# v2.8: "The Player's Hoenn" (C296-C300)
 
 ## Creative Vision
 
-The migration changed how Hoenn looks and sounds. v2.7 makes it change how Hoenn **fights**. Every regional form should have at least one ability that expresses its changed ecology. The player encounters a regional form in battle and its ability does something they've never seen that species do. They pause. They remember.
+The foundation is rich: 25 regional forms, 3 custom abilities, 3 signature moves, dozens of NPC dialogues, a villain reckoning arc. But a first-time player doesn't see the foundation — they see the experience. v2.8 makes that experience smooth, discoverable, and worth recommending.
 
-**Design Hypothesis**: If regional forms fight with abilities that express their ecological niche — not just reskinned stats — the player will treat each form as a genuine discovery rather than a palette swap. Mechanical identity must arrive early (pre-Badge 1 forms) so the "Hoenn is different" feeling hits in Hour 1.
+**Design Hypothesis**: If the player can find regional forms reliably (encounter rates), see them fight distinctively (battle animations), and experience the world's reaction without being lectured (dialogue polish), then the hack crosses from "interesting project" to "recommended hack."
 
-## Changed Three Registration — TRULY COMPLETE (C293)
+**Guiding principle**: Polish over volume. No new species, no new quests. Make what exists feel complete.
 
-C292 registered species.h constants, species_names.h, and graphics (3/27 files). C293 completed the remaining 25 files per species (species_info, learnsets, evolution, pokedex, graphics declarations, cry IDs, etc.) via `generate_species.cjs --fill-missing`.
+## Player Experience Audit (C295)
 
-| Line | Types | Archetype | Registration |
-|------|-------|-----------|-------------|
-| Treecko_Hoenn (439-441) | Grass/Steel | "The Blade" — fast physical | 27/27 |
-| Torchic_Hoenn (442-444) | Fire/Fairy | "The Dancer" — special attacker | 27/27 |
-| Mudkip_Hoenn (445-447) | Water/Fighting | "The Immovable Force" — bulky physical | 27/27 |
+Categorized every migration-related NPC as **Tell** (explicit dialogue explaining migration), **Show** (environment/encounters — player discovers meaning), or **Showcase** (trainer battle demonstrates a form).
 
-**Species count**: 36 custom species (11 cross-gen + 25 _HOENN). **All 25 fully registered.** EGG=448, NUM_SPECIES=448.
+| Hour Block | Tell | Show | Showcase | Assessment |
+|------------|------|------|----------|------------|
+| 0-3 (pre-Badge 1) | 3 | 4 | 3 | Healthy. Birch/Mom/Roxanne = 3 voices, distinct tones, well-spaced. |
+| 3-6 (Badges 1-3) | **7** | 2 | 4 | **FATIGUE.** Echo layer stacked 3 "tell" NPCs on routes with existing gym leaders + Hartley. |
+| 6-10 (Badges 4-7) | 3 | 4 | 3 | Strongest. Weather events carry the theme without dialogue. |
+| 10-15 (E4+) | 4 | 5 | 4 | Climactic. Tell moments earned by boss battles. Villain behavior = powerful Show. |
 
-## Three-Tier Mechanical Identity System
+**Key finding**: Hours 3-6 have a 7:2 Tell-to-Show ratio — the player hears "migration changed things" from Brawly, Wattson, Hartley, FrostTracker, R112 Hiker, R113 FrostTracker, and R119 Ecologist in rapid succession. Three of these are Echo dialogue NPCs (C232) that should be converted from Tell to Show.
 
-### Tier 1 — Custom Abilities (2 complete + 1 deferred)
+### Subtraction Candidates (Hour 3-6)
 
-Follow the Toxic Touch pattern: 4 files per ability (abilities.h constant, text/abilities.h name+desc, battle_util.c effect, species_info.h assignment). ~15 lines new code per ability.
+1. **R112 Hiker Echo** (C232): Redundant with Flannery (encountered Hours 6-10). Trim to silent reaction or one-line observation.
+2. **R113 FrostTracker extended** (C232): Base FrostTracker already covers Vulpix_Hoenn. Remove the extension.
+3. **R119 Ecologist** (C232): "All 4 forms -> Hartley" redirect is wordy. Shorten to a brief observation.
 
-**1. "Frozen Spore"** (ABILITY_FROZEN_SPORE = 79) **DONE C289**
-- 20% freeze on contact. Assigned to Breloom_Hoenn (Poison/Ice). Contact-only via FLAG_MAKES_CONTACT.
+### Enhancement Candidates
 
-**2. "Scalding Touch"** (ABILITY_SCALDING_TOUCH = 80) **DONE C289**
-- 33% burn on contact. Assigned to Arcanine_Hoenn (Water/Fire). Contact-only via FLAG_MAKES_CONTACT.
+- Gym leader showcase dialogue: Brawly and Wattson's post-battle text should demonstrate their form's mechanics ("GLIGAR rode the tide into my fist" > "the migration brought GLIGAR"). Show through battle experience, don't explain.
 
-**3. TBD for Changed Three** (ABILITY_ID = 81, deferred to C291)
-- Candidate: Sceptile_Hoenn (Grass/Steel) — "Tempered Blade" or similar.
+## QoL Gap Analysis
 
-### Tier 2 — Strategic Ability Reassignment (10/10 complete C288-C289)
+### 1. Repel Continuation Prompt (BW-style)
+- **Current**: `data/scripts/repel.inc` shows "REPEL's effect wore off" and ends. Code: `wild_encounter.c:883` calls `ScriptContext_SetupScript(EventScript_RepelWoreOff)`.
+- **Change**: Modify the script to check bag for Repel items, show yes/no prompt, use strongest available.
+- **Files**: `data/scripts/repel.inc` (~40 lines of script), `src/item_use.c` or new special (~20 lines of C helper to find best repel).
+- **Risk**: Low. Self-contained. The script hooks already exist.
 
-All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bagon(Sturdy), Pinsir(Guts), Gligar/Gliscor(Swift Swim), Vulpix/Ninetales(Natural Cure), Stantler(Effect Spore), Breloom(Frozen Spore), Arcanine(Scalding Touch).
+### 2. Encounter Rate Rebalancing
+Three regional forms are at 1% (slot 11-12), making them effectively unfindable:
 
-### Tier 3 — Signature Moves (2 immediate + 1 deferred)
+| Species | Current | Target | Notes |
+|---------|---------|--------|-------|
+| Pinsir_Hoenn | 1% (slot 11) | 5% (slot 7-8) | NPCs + Flannery reference it; players can't find it |
+| Vulpix_Hoenn | 1% (slot 11) | 5% (slot 7-8) | FrostTracker NPC teases it; 1% breaks the promise |
+| Mudkip_Hoenn | 1% (slot 11) | 4% (slot 9-10) | Changed Three gift is backup, but wild should be findable |
 
-6 files per move. Each reuses an existing animation.
+- **Files**: `src/data/wild_encounters.json` only. Swap slots — displaced vanilla species takes the 1% slot.
+- **Risk**: Very low. Pure data swap.
+- **Note**: Journey map claimed 4-5% for these species but JSON shows 1%. Likely a documentation error or overwrite.
 
-**1. "Spore Fist"** (Ice/Physical, 75bp, 100acc, 15pp, 10% freeze) — Breloom_Hoenn. **DONE C290**
-**2. "Tidal Flare"** (Water/Special, 85bp, 100acc, 10pp, 30% burn) — Arcanine_Hoenn. **DONE C290**
-**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, 20% Def drop) — Sceptile_Hoenn. **DONE C293**. Uses EFFECT_DEFENSE_DOWN_HIT (like Iron Tail), not high crit. MOVE_IRON_LEAF=380, MOVES_COUNT=381.
+### 3. Battle Animation Templates
+Custom moves 378-380 (Spore Fist, Tidal Flare, Iron Leaf) all use the generic `Move_COUNT` fallback (basic hit + shake, 12 lines). Signature moves deserve signature animations.
 
-## Form-by-Form Summary Table
+- **Files**: `data/battle_anim_scripts.s` (~90 lines total: 3 animations + table extension)
+- **Templates**: Iron Leaf (Steel Wing base: metallic_shine + slash, ~25 lines), Spore Fist (Ice Punch base: ice crystals + fist, ~35 lines), Tidal Flare (Scald/Flamethrower hybrid: water+fire particles, ~30 lines)
+- **Table**: Extend `gBattleAnims_Moves` past entry 373. Pad 374-377 with `Move_COUNT`, assign 378-380 to custom labels.
+- **Risk**: Low-medium. Animation scripts are well-structured bytecode.
 
-| # | Species | Types | A1 | A2 (change) | Sig Move | Reg Status |
-|---|---------|-------|----|-------------|----------|------------|
-| 1 | Corsola_Hoenn | Ghost/Rock | Rock Head | **Levitate** C288 | — | full |
-| 2 | Growlithe_Hoenn | Water | Swift Swim | Water Veil (keep) | — | full |
-| 3 | Arcanine_Hoenn | Water/Fire | Intimidate | **Scalding Touch** C289 | Tidal Flare | full |
-| 4 | Bagon_Hoenn | Dragon/Rock | Rock Head | **Sturdy** C288 | — | full |
-| 5-6 | Vulpix/Ninetales_Hoenn | Ice/Fairy | **Natural Cure** C288 | Serene Grace | — | full |
-| 7 | Pinsir_Hoenn | Bug/Fire | **Guts** C288 | Flame Body | — | full |
-| 8 | Stantler_Hoenn | Ghost/Grass | Intimidate | **Effect Spore** C288 | — | full |
-| 9-10 | Gligar/Gliscor_Hoenn | Water/Rock | **Swift Swim** C288 | Water Absorb | — | full |
-| 11 | Deoxys_Hoenn | Poison/Fairy | Toxic Touch | Pressure (keep) | — | full |
-| 12-14 | Lotad/Lombre/Ludicolo_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | full |
-| 15 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (keep) | — | full |
-| 16 | Breloom_Hoenn | Poison/Ice | **Frozen Spore** C289 | Thick Fat | Spore Fist | full |
-| 17-19 | Treecko line | Grass/Steel | Overgrow | **Battle Armor** C293 | Iron Leaf | **full C293** |
-| 20-22 | Torchic line | Fire/Fairy | Blaze | **Cute Charm** C293 | — | **full C293** |
-| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | **full C293** |
+## Issue #178 Re-evaluation
+
+**Critique**: C283 rejected species proposals with "needs pipeline" — not a design argument. **Verdict**: Valid. The pipeline is proven (25 forms registered). Pipeline complexity will never be used as a rejection reason again.
+
+**C283 decisions re-evaluated on design merits only**:
+- Bagon_Hoenn: Drake keeps it (dragon specialist reverence > Roxanne's academic curiosity). **Still valid.**
+- Farigiraf: Norman keeps it ("Normal isn't simple" arc is richer than T&L adding another Psychic). **Still valid.**
+- Carbink for Roxanne: **No longer pipeline-blocked.** Could be added in v2.9+ if a regional form is designed. Not needed — Roxanne's Aron/Aerodactyl identity is strong.
+
+**Outcome**: Accept #178, close it. Acknowledge the critique publicly. Specific C283 roster decisions were correct on design grounds but the reasoning was inadequate.
 
 ## Multi-Cycle Roadmap
 
-| Cycle | Mode | Objective | Dependencies |
-|-------|------|-----------|-------------|
-| C288 | feature | **DONE**: Tier 2 ability pass (8/10). Mudkip_Hoenn registration attempted but incomplete. | — |
-| C289 | feature | **DONE**: Frozen Spore + Scalding Touch custom abilities. Tier 2 complete (10/10). Fixed Mudkip build break. | — |
-| C290 | feature | **DONE**: Spore Fist + Tidal Flare signature moves (MOVES_COUNT→380). Breloom_Hoenn custom learnset. make check_all_quick shipped. | — |
-| C291 | feature | **Crashed** — no changes. | — |
-| C292 | feature | **DONE**: All 9 Changed Three fully registered 27/27, build-clean. Stats, types, abilities, evolutions, sprites. | — |
-| C293 | feature | **DONE**: Iron Leaf (MOVE_380), full 25-file registration for all 9 Changed Three, Tier 2 abilities (Battle Armor/Cute Charm), trainer Iron Leaf pass. | C291-292 |
-| C294 | patch | **DONE**: v2.7 capstone. Changed Three registration gap fixed (9 species had empty data files). Shroomish_Hoenn ability fix. Swampert_Hoenn rival showcase. Mudkip_Hoenn Shoal Cave restored. All 25 abilities verified. | C293 |
+| Cycle | Mode | Pillar | Objective |
+|-------|------|--------|-----------|
+| C296 | feature | QoL | Repel continuation prompt + encounter rate rebalancing (3 species slot swaps) |
+| C297 | feature | Visual | Battle animation templates for Iron Leaf, Spore Fist, Tidal Flare |
+| C298 | feature | Dialogue | Hour 3-6 subtraction pass: trim 3 Echo "tell" NPCs to "show" NPCs |
+| C299 | feature | Dialogue | Gym leader showcase dialogue: Brawly/Wattson/Flannery post-battle text rewrite |
+| C300 | feature | Capstone | TBD: Field Notes key item OR Tempered Blade (ABILITY_81) for Sceptile_Hoenn |
 
-## Issue Integration
+**Pillar design intent**:
+- **QoL (C296)**: Table-stakes polish. Player can find forms and navigate comfortably. Signals quality.
+- **Visual (C297)**: Signature moves look distinct. Player sees Iron Leaf's metallic slash and knows this isn't a reskin.
+- **Dialogue (C298-299)**: Hour 3-6 fatigue fixed. Gym leaders show through battle, not explanation. 7:2 Tell:Show ratio becomes 4:5.
+- **Capstone (C300)**: Highest-impact remaining item. Field Notes (key item showing form flavor text when used near a regional form) makes the research theme playable. Tempered Blade gives Sceptile_Hoenn a unique ability identity. Community feedback from C296-299 will inform the choice.
 
-- **#151** (Custom abilities): v2.7 core objective. Tiers 1+2 deliver the ask. ACCEPTED (final — was at 5 deferrals).
-- **#152** (Custom moves): Scoped to Tier 3 (2-3 signature moves). Full move catalog out of scope. ACCEPTED (final — was at 5 deferrals).
-- **#163** (Custom shinies): DEFERRED (3rd). Not evaluated in this session per design guidance.
-- **#167** (Devon Corp Mewtwo): DEFERRED (3rd). Cannot add form #43 until the existing 25 have mechanical identity.
-- **#178** (C283 rejection reasoning): Carries forward. Addressed via holistic roster evaluation in C293.
+## Trainer Capacity
+
+891/891 IDs, 2 reclaimable (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). v2.8 rewrites existing NPCs — no new trainer IDs needed for Pillars 1-3. Capstone may need 0-1. **Sufficient. No expansion planned.**
 
 ---
 
@@ -120,10 +124,10 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (**all 25 fully registered + data-verified** C294). Tier 2 ability pass: **10/10 complete** C289.
+- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms, all fully registered + verified C294.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
-- **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
-- **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).
+- **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move. MOVE_NAME_LENGTH=12.
+- **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
-- **Generator toolchain**: `generate_species.cjs` (27-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + charmap validation + --update mode C287), `verify_species.sh` (27-file check, C287).
+- **Generator toolchain**: `generate_species.cjs` (27-file), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + --update mode C287), `verify_species.sh` (27-file check, C287).

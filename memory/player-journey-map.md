@@ -67,13 +67,21 @@ Brawly/Wattson redesigned. **Brawly's team now includes Gligar_Hoenn (Water/Rock
 
 **Changed Three Gift (C279)**: Birch offers the Changed Three starters postgame. Mentions the three discovery locations (Meteor Falls, Mt. Pyre, Shoal Cave).
 
-### v2.6 Planned: "The Reckoning" (C284-285)
-
-6 ex-villain NPCs across postgame Hoenn. Champion-gated, dialogue-only. Emotional arc: denial → confusion → acknowledgment → acceptance. Magma: Mt. Chimney (exists), Lavaridge (Pinsir_Hoenn echo), Meteor Falls (Bagon_Hoenn echo). Aqua: Slateport (ocean denial), Route 128 (Deep Migration horror), Shoal Cave (Mudkip_Hoenn acceptance). Designed to transform "postgame checklist" into "postgame narrative."
+**v2.6 Shipped** (C284-286): 6 ex-villain NPCs (3 Magma + 3 Aqua), champion-gated. Emotional arc: denial → acceptance.
 
 ---
 
-## Known Gaps
+## v2.8 Player Experience Audit (C295)
 
-- **Hours 3-6 (Badge 2-3)**: Thinner migration presence than Badge 4-7 stretch. Partially filled by Gligar_Hoenn (C250) and R113 Vulpix_Hoenn.
-- **Boss diversity (v2.6 C283)**: Roxanne/Drake share Bagon_Hoenn, Norman/T&L share Farigiraf. Resolution designed — see strategy-notes.md.
+**Tell/Show/Showcase ratio per hour block** (see strategy-notes.md for full analysis):
+
+| Hours | Tell | Show | Showcase | Status |
+|-------|------|------|----------|--------|
+| 0-3 | 3 | 4 | 3 | Healthy |
+| 3-6 | **7** | 2 | 4 | **FATIGUE — v2.8 target** |
+| 6-10 | 3 | 4 | 3 | Strongest |
+| 10-15 | 4 | 5 | 4 | Climactic |
+
+**Hour 3-6 subtraction targets** (C298): R112 Hiker Echo, R113 FrostTracker extended, R119 Ecologist — all C232 additions that stack "tell" on routes already covered by gym leaders + Hartley.
+
+**Encounter rate fixes** (C296): Pinsir_Hoenn and Vulpix_Hoenn at 1% (slot 11) — effectively unfindable despite NPC references. Target 5%. Mudkip_Hoenn also 1% — target 4%.
