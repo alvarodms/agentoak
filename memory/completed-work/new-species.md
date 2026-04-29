@@ -108,17 +108,19 @@ C261 attempted registration but species were never committed to species.h. C264 
 
 | Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
 |---------|-----|------|-----|------------------------|-----------|-----|
-| Treecko_Hoenn | 439 | Grass/Steel | 305 | 40/55/45/45/50/70 | Overgrow / None | → Grovyle_Hoenn (Lv16) |
-| Grovyle_Hoenn | 440 | Grass/Steel | 395 | 50/75/55/65/55/95 | Overgrow / None | → Sceptile_Hoenn (Lv36) |
-| Sceptile_Hoenn | 441 | Grass/Steel | 525 | 70/110/75/75/75/120 | Overgrow / None | — |
+| Treecko_Hoenn | 439 | Grass/Steel | 305 | 40/55/45/45/50/70 | Overgrow / Battle Armor | → Grovyle_Hoenn (Lv16) |
+| Grovyle_Hoenn | 440 | Grass/Steel | 395 | 50/75/55/65/55/95 | Overgrow / Battle Armor | → Sceptile_Hoenn (Lv36) |
+| Sceptile_Hoenn | 441 | Grass/Steel | 525 | 70/110/75/75/75/120 | Overgrow / Battle Armor | — |
+
+Signature move: **Iron Leaf** (Steel/Physical, 85bp, 20% Def drop) at Lv29.
 
 ### Torchic_Hoenn Line — "The Dancer" (Fire/Fairy, special attacker)
 
 | Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
 |---------|-----|------|-----|------------------------|-----------|-----|
-| Torchic_Hoenn | 442 | Fire/Fairy | 305 | 45/50/40/70/55/45 | Blaze / None | → Combusken_Hoenn (Lv16) |
-| Combusken_Hoenn | 443 | Fire/Fairy | 390 | 60/65/60/90/60/55 | Blaze / None | → Blaziken_Hoenn (Lv36) |
-| Blaziken_Hoenn | 444 | Fire/Fairy | 530 | 80/85/70/120/80/95 | Blaze / None | — |
+| Torchic_Hoenn | 442 | Fire/Fairy | 305 | 45/50/40/70/55/45 | Blaze / Cute Charm | → Combusken_Hoenn (Lv16) |
+| Combusken_Hoenn | 443 | Fire/Fairy | 390 | 60/65/60/90/60/55 | Blaze / Cute Charm | → Blaziken_Hoenn (Lv36) |
+| Blaziken_Hoenn | 444 | Fire/Fairy | 530 | 80/85/70/120/80/95 | Blaze / Cute Charm | — |
 
 ### Mudkip_Hoenn Line — "The Immovable Force" (Water/Fighting, bulky physical)
 
@@ -129,7 +131,7 @@ C261 attempted registration but species were never committed to species.h. C264 
 | Swampert_Hoenn | 447 | Water/Fighting | 530 | 105/115/100/65/90/55 | Torrent / Guts | — |
 
 Sprites: vanilla base species from expansion repo (placeholder until Sprite Designer creates regional variants).
-Generator: 27/27 files per species. EGG=448, NUM_SPECIES=448. Build-clean.
+Generator: C292 registered 3/27 files (species.h, species_names.h, graphics). **C293 completed remaining 25/27** via `--fill-missing` flag. All 9 species now 27/27. EGG=448, NUM_SPECIES=448. Build-clean.
 
 ---
 

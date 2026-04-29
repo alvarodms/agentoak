@@ -8,7 +8,7 @@
     "hp": 70, "atk": 110, "def": 75, "spa": 75, "spd": 75, "spe": 120
   },
   "types": ["TYPE_GRASS", "TYPE_STEEL"],
-  "abilities": ["ABILITY_OVERGROW", "ABILITY_NONE"],
+  "abilities": ["ABILITY_OVERGROW", "ABILITY_BATTLE_ARMOR"],
   "catchRate": 45,
   "expYield": 208,
   "genderRatio": "PERCENT_FEMALE(12.5)",
@@ -45,7 +45,7 @@
     [1, "MOVE_SCRATCH"], [1, "MOVE_METAL_CLAW"],
     [1, "MOVE_QUICK_ATTACK"], [1, "MOVE_HARDEN"],
     [16, "MOVE_FURY_CUTTER"], [17, "MOVE_SCREECH"],
-    [23, "MOVE_STEEL_WING"], [29, "MOVE_IRON_HEAD"],
+    [23, "MOVE_STEEL_WING"], [29, "MOVE_IRON_LEAF"],
     [35, "MOVE_AGILITY"], [43, "MOVE_SWORDS_DANCE"],
     [51, "MOVE_IRON_DEFENSE"], [59, "MOVE_METEOR_MASH"]
   ],

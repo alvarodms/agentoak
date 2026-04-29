@@ -5758,7 +5758,7 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch3[] = {
     .lvl = 85,
     .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
+    .moves = {MOVE_SWORDS_DANCE, MOVE_IRON_LEAF, MOVE_EARTHQUAKE, MOVE_METEOR_MASH}
     },
     {
     .iv = 255,
@@ -5992,7 +5992,7 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     .lvl = 92,
     .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_IRON_HEAD, MOVE_ROCK_SLIDE}
+    .moves = {MOVE_IRON_LEAF, MOVE_EARTHQUAKE, MOVE_IRON_HEAD, MOVE_ROCK_SLIDE}
     },
     {
     .iv = 255,
@@ -11469,7 +11469,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameMudkip[] = {
     .lvl = 73,
     .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
+    .moves = {MOVE_SWORDS_DANCE, MOVE_IRON_LEAF, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     }
 };
 
@@ -11514,7 +11514,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayPostgameMudkip[] = {
     .lvl = 73,
     .species = SPECIES_SCEPTILE_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
+    .moves = {MOVE_SWORDS_DANCE, MOVE_IRON_LEAF, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     }
 };
 

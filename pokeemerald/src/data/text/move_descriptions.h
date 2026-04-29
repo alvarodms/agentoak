@@ -1517,6 +1517,11 @@ static const u8 sTidalFlareDescription[] = _(
     "A scalding tidal blast\n"
     "that may burn the foe.");
 
+static const u8 sIronLeafDescription[] = _(
+    "Slashes with bladed\n"
+    "steel leaves. May\n"
+    "lower DEFENSE.");
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1899,4 +1904,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_ZEN_HEADBUTT - 1] = sZenHeadbuttDescription,
     [MOVE_SPORE_FIST - 1] = sSporeFistDescription,
     [MOVE_TIDAL_FLARE - 1] = sTidalFlareDescription,
+    [MOVE_IRON_LEAF - 1] = sIronLeafDescription,
 };

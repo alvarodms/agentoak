@@ -8,7 +8,7 @@
     "hp": 45, "atk": 50, "def": 40, "spa": 70, "spd": 55, "spe": 45
   },
   "types": ["TYPE_FIRE", "TYPE_FAIRY"],
-  "abilities": ["ABILITY_BLAZE", "ABILITY_NONE"],
+  "abilities": ["ABILITY_BLAZE", "ABILITY_CUTE_CHARM"],
   "catchRate": 45,
   "expYield": 65,
   "genderRatio": "PERCENT_FEMALE(12.5)",

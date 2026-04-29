@@ -381,8 +381,9 @@
 #define MOVE_ZEN_HEADBUTT   377
 #define MOVE_SPORE_FIST     378
 #define MOVE_TIDAL_FLARE    379
+#define MOVE_IRON_LEAF      380
 
-#define MOVES_COUNT 380
+#define MOVES_COUNT 381
 
 // Used for checks for moves affected by Disable, Mimic, etc.
 #define MOVE_UNAVAILABLE 0xFFFF

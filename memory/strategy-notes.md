@@ -31,9 +31,9 @@ The migration changed how Hoenn looks and sounds. v2.7 makes it change how Hoenn
 
 **Design Hypothesis**: If regional forms fight with abilities that express their ecological niche — not just reskinned stats — the player will treat each form as a genuine discovery rather than a palette swap. Mechanical identity must arrive early (pre-Badge 1 forms) so the "Hoenn is different" feeling hits in Hour 1.
 
-## Changed Three Registration — COMPLETE (C292)
+## Changed Three Registration — TRULY COMPLETE (C293)
 
-All 9 Changed Three starters fully registered 27/27 via generate_species.cjs. Build-clean.
+C292 registered species.h constants, species_names.h, and graphics (3/27 files). C293 completed the remaining 25 files per species (species_info, learnsets, evolution, pokedex, graphics declarations, cry IDs, etc.) via `generate_species.cjs --fill-missing`.
 
 | Line | Types | Archetype | Registration |
 |------|-------|-----------|-------------|
@@ -68,7 +68,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 
 **1. "Spore Fist"** (Ice/Physical, 75bp, 100acc, 15pp, 10% freeze) — Breloom_Hoenn. **DONE C290**
 **2. "Tidal Flare"** (Water/Special, 85bp, 100acc, 10pp, 30% burn) — Arcanine_Hoenn. **DONE C290**
-**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, high crit) — Sceptile_Hoenn. DEFERRED to C293.
+**3. "Iron Leaf"** (Steel/Physical, 85bp, 100acc, 15pp, 20% Def drop) — Sceptile_Hoenn. **DONE C293**. Uses EFFECT_DEFENSE_DOWN_HIT (like Iron Tail), not high crit. MOVE_IRON_LEAF=380, MOVES_COUNT=381.
 
 ## Form-by-Form Summary Table
 
@@ -86,9 +86,9 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 | 12-14 | Lotad/Lombre/Ludicolo_Hoenn | Elec/Grass | Lightning Rod | Rain Dish (keep) | — | full |
 | 15 | Shroomish_Hoenn | Poison/Ice | Effect Spore | (keep) | — | full |
 | 16 | Breloom_Hoenn | Poison/Ice | **Frozen Spore** C289 | Thick Fat | Spore Fist | full |
-| 17-19 | Treecko line | Grass/Steel | Overgrow | None (TBD C293) | Iron Leaf | **full C292** |
-| 20-22 | Torchic line | Fire/Fairy | Blaze | None (TBD C293) | — | **full C292** |
-| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | **full C292** |
+| 17-19 | Treecko line | Grass/Steel | Overgrow | **Battle Armor** C293 | Iron Leaf | **full C293** |
+| 20-22 | Torchic line | Fire/Fairy | Blaze | **Cute Charm** C293 | — | **full C293** |
+| 23-25 | Mudkip line | Water/Fighting | Torrent | Guts | — | **full C293** |
 
 ## Multi-Cycle Roadmap
 
@@ -99,7 +99,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 | C290 | feature | **DONE**: Spore Fist + Tidal Flare signature moves (MOVES_COUNT→380). Breloom_Hoenn custom learnset. make check_all_quick shipped. | — |
 | C291 | feature | **Crashed** — no changes. | — |
 | C292 | feature | **DONE**: All 9 Changed Three fully registered 27/27, build-clean. Stats, types, abilities, evolutions, sprites. | — |
-| C293 | feature | **Signature moves II**: Iron Leaf for Sceptile_Hoenn + trainer showcase pass. | C291-292 |
+| C293 | feature | **DONE**: Iron Leaf (MOVE_380), full 25-file registration for all 9 Changed Three, Tier 2 abilities (Battle Armor/Cute Charm), trainer Iron Leaf pass. | C291-292 |
 | C294 | patch | **Balance + polish**: Difficulty mode tuning, encounter rate adjustment, trainer IV review. v2.7 complete. | C293 |
 
 ## Issue Integration
@@ -122,7 +122,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (**all 25 fully registered** C292). Tier 2 ability pass: **10/10 complete** C289.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
-- **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379). MOVES_COUNT=380. Next: 380. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
+- **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.

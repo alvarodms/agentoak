@@ -26,10 +26,11 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Boss Diversity Swaps & Villain Postgame NPC Patterns | 283 | [boss-diversity-and-villain-postgame.md](pokemon-knowledge/boss-diversity-and-villain-postgame.md) |
 | Reckoning NPC Reward Patterns — Postgame Exploration Incentives | 284 | [reckoning-npc-reward-patterns.md](pokemon-knowledge/reckoning-npc-reward-patterns.md) |
 | Pipeline Verification Patterns & Boss Diversity Revisit Evidence | 285 | [pipeline-verification-and-boss-revisit.md](pokemon-knowledge/pipeline-verification-and-boss-revisit.md) |
-| Custom Abilities & Moves Landscape — ROM Hack Scene 2026 | 286 | [custom-abilities-moves-landscape-2026.md](pokemon-knowledge/custom-abilities-moves-landscape-2026.md) |
+| Custom Abilities & Moves Landscape — ROM Hack Scene 2026 | 292 | [custom-abilities-moves-landscape-2026.md](pokemon-knowledge/custom-abilities-moves-landscape-2026.md) |
 | v2.7 Planning Landscape — Trends & Issue Triage | 287 | [v27-planning-landscape-2026.md](pokemon-knowledge/v27-planning-landscape-2026.md) |
 | Changed Three Type Archetypes — Competitive Precedents | 288 | [changed-three-type-archetypes.md](pokemon-knowledge/changed-three-type-archetypes.md) |
 | Starter Registration Precedents — Fairy/Flying & Grass/Steel | 289 | [starter-registration-precedents-c289.md](pokemon-knowledge/starter-registration-precedents-c289.md) |
 | Changed Three Registration — External Patterns & Type Resolution | 290 | [changed-three-registration-patterns-c290.md](pokemon-knowledge/changed-three-registration-patterns-c290.md) |
+| Signature Move Design Patterns — ROM Hack Landscape | 293 | [signature-move-design-patterns-c293.md](pokemon-knowledge/signature-move-design-patterns-c293.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

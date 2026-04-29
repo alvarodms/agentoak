@@ -135,6 +135,19 @@ Water/Special, 85bp, 100acc, 10pp, 30% burn. Non-contact. Assigned to Arcanine_H
 | `src/data/contest_moves.h` | Contest entry (Beauty, HIGHLY_APPEALING) | **290** | |
 | `src/data/pokemon/level_up_learnsets.h` | Added MOVE_TIDAL_FLARE at L45 to sArcanineHoennLevelUpLearnset | **290** | Before Extreme Speed at L49 |
 
+## Signature Move: Iron Leaf (C293)
+
+Steel/Physical, 85bp, 100acc, 15pp, 20% Defense drop. Contact move. Assigned to Sceptile_Hoenn at level 29 (same level vanilla Sceptile learns Leaf Blade). Uses EFFECT_DEFENSE_DOWN_HIT (like Iron Tail).
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/moves.h` | Added MOVE_IRON_LEAF = 380, MOVES_COUNT → 381 | **293** | |
+| `src/data/battle_moves.h` | Iron Leaf battle data (EFFECT_DEFENSE_DOWN_HIT, FLAG_MAKES_CONTACT) | **293** | Physical, 20% secondaryEffectChance |
+| `src/data/text/move_names.h` | "IRON LEAF" | **293** | 9 chars (max 12) |
+| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **293** | "Slashes with bladed steel leaves. May lower DEFENSE." |
+| `src/data/contest_moves.h` | Contest entry (Cool, HIGHLY_APPEALING) | **293** | |
+| `src/data/pokemon/level_up_learnsets.h` | MOVE_IRON_LEAF at Lv29 in sSceptileHoennLevelUpLearnset | **293** | Via generator from JSON config |
+
 ## Tier 2 Ability Reassignment Pass (C288)
 
 8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.

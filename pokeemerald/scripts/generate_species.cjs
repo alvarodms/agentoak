@@ -592,10 +592,11 @@ function handleSpeciesNames(cfg, N) {
 function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const fillMissing = args.includes('--fill-missing');
   const configPath = args.find(a => !a.startsWith('--'));
 
   if (!configPath) {
-    console.error('Usage: node scripts/generate_species.cjs <config.json> [--dry-run]');
+    console.error('Usage: node scripts/generate_species.cjs <config.json> [--dry-run] [--fill-missing]');
     process.exit(1);
   }
 
@@ -615,12 +616,19 @@ function main() {
 
   // Idempotency check
   const speciesH = readFile('include/constants/species.h');
-  if (speciesH.includes(`#define ${N.SPECIES} `)) {
-    console.log(`⚠ ${N.SPECIES} already exists in species.h — nothing to do.`);
+  const speciesExists = speciesH.includes(`#define ${N.SPECIES} `);
+  if (speciesExists && !fillMissing) {
+    console.log(`⚠ ${N.SPECIES} already exists in species.h — nothing to do. Use --fill-missing to populate remaining files.`);
     process.exit(0);
   }
 
-  const handlers = [
+  // In fill-missing mode, skip handlers for files already populated
+  const skipInFillMissing = new Set([
+    'handleSpeciesH',
+    'handleSpeciesNames',
+  ]);
+
+  const allHandlers = [
     handleSpeciesH,
     handlePokedexH,
     handleSpeciesInfo,
@@ -649,6 +657,10 @@ function main() {
     handleStillFrontPicTable,
     handleSpeciesNames,
   ];
+
+  const handlers = (speciesExists && fillMissing)
+    ? allHandlers.filter(h => !skipInFillMissing.has(h.name))
+    : allHandlers;
 
   const results = [];
   let failed = 0;

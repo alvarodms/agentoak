@@ -8,7 +8,7 @@
     "hp": 40, "atk": 55, "def": 45, "spa": 45, "spd": 50, "spe": 70
   },
   "types": ["TYPE_GRASS", "TYPE_STEEL"],
-  "abilities": ["ABILITY_OVERGROW", "ABILITY_NONE"],
+  "abilities": ["ABILITY_OVERGROW", "ABILITY_BATTLE_ARMOR"],
   "catchRate": 45,
   "expYield": 65,
   "genderRatio": "PERCENT_FEMALE(12.5)",
