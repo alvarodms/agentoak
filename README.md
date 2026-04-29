@@ -41,7 +41,15 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
-- **Custom ability: Toxic Touch** — the hack's first original game mechanic. Deoxys (Hoenn) carries this signature ability, which gives any damaging move a 30% chance to poison the target. Offensive and aggressive, rewarding the glass cannon playstyle
+- **3 custom abilities** — each expresses how a regional form's ecology changed its biology:
+  - *Toxic Touch* (Deoxys Hoenn) — 30% chance to poison on any damaging move, rewarding the glass cannon playstyle
+  - *Frozen Spore* (Breloom Hoenn) — 20% chance to freeze on contact moves, turning the cryogenic brawler's fists into weapons of winter
+  - *Scalding Touch* (Arcanine Hoenn) — 33% chance to burn on contact moves, channeling the undersea fire that forged a Water/Fire predator
+- **3 signature moves** — unique attacks designed for specific regional forms:
+  - *Spore Fist* (Breloom Hoenn) — Ice/Physical, 75 power, 10% freeze chance — a cryogenic punch that encases the target in frost
+  - *Tidal Flare* (Arcanine Hoenn) — Water/Special, 85 power, 30% burn chance — a geyser of superheated brine
+  - *Iron Leaf* (Sceptile Hoenn) — Steel/Physical, 85 power, 20% Defense drop — a blade that weakens armor instead of seeking critical hits
+- **25 regional forms with mechanical identity** — every Hoennian form has abilities that express its ecological niche, not just reskinned stats. Corsola levitates (Ghost/Rock), Bagon braces with Sturdy (Dragon/Rock), Gligar and Gliscor swim with Swift Swim (Water/Rock), Vulpix and Ninetales cure with Natural Cure (Ice/Fairy), Pinsir endures with Guts (Bug/Fire), and Stantler scatters Effect Spore (Ghost/Grass)
 
 ### Trainer Overhaul
 
@@ -49,7 +57,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Elite Four and Champion** rebuilt with competitive teams and narrative depth — each E4 member's dialogue reflects their personal connection to the migration: Sidney names the dark predators that crept in behind the noble arrivals, Phoebe's grandmother on Mt. Pyre confirms the spirits settled, Glacia followed the cold south from a distant land, Drake confesses what the Bagon Colony in Meteor Falls taught him about perseverance, and Champion Wallace leads with Hoennian Arcanine — a fire that burns underwater, the migration's thesis statement made flesh. Phoebe fields Hoennian Corsola, Wallace fields Hoennian Arcanine — regional forms bookend the gauntlet. Zero duplicate species across the entire run
 - **Tuned level curve** from Roxanne (Lv15) through Wallace (Lv58) with smooth progression
 - **4-tier rematch progression** for all gym leaders and Elite Four with escalating teams — E4 rematches feature migration-themed rosters, regional forms from Tier 2 onward, and strategic evolution arcs (Drake's Gabite grows into Garchomp, Phoebe's Corsola_Hoenn strengthens, Wallace's Arcanine_Hoenn anchors his team)
-- **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1->2->3->4->5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum
+- **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1->2->3->4->5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum. In the postgame, the rival's ace is a Changed Three form matching the starter triangle — face Sceptile (Steel), Blaziken (Fairy), or Swampert (Water/Fighting) at Lv70+
 - **Villain bosses** (Maxie, Archie, admins) carry held items and coverage moves
 - **Quiet reckoning** — Team Magma and Team Aqua didn't just lose; the migration outgrew them. Tabitha's bravado cracks across three encounters until nothing's left but silence and doubt. Courtney adopted a Hoennian Ninetales without a word — her answer was always action, not ideology. Shelly dissects the migration with clinical precision, recognizing what Archie cannot. Three Magma grunts carry Hoennian Pinsir without understanding what it means. In the postgame, six former grunts — three Magma, three Aqua — are scattered across the region processing what they caused. An ex-Magma member stares south from Mt. Chimney in denial, another in Lavaridge watches fire species that thrived without Maxie's help, and a third near Meteor Falls grudgingly admits the dragons "figured it out without any of us." On the Aqua side, a former grunt at Slateport Harbor can't stop watching the water, another on Route 128 whispers about what came up from the deep, and the last stands in Shoal Cave where a changed Mudkip fights the tide: "That little fighter didn't need anyone to expand the sea for it"
 - **200+ route trainers** across every land route, ocean route, cave, and dungeon redesigned with migration species, held items, themed movesets, and new double battles — ocean swimmers carry route-coherent species matching their waters, Route 119 exploits rain, Victory Road veterans field evolved teams with competitive AI, Mt. Pyre ghosts haunt with Misdreavus and Houndour, and Meteor Falls dragon tamers raise Bagon and Shelgon from the caves they call home
@@ -100,7 +108,7 @@ Choose your challenge in Professor Birch's lab:
 
 ### Custom Species Guide
 
-*Twenty-seven new species call Hoenn home. Here's where to find them and how they evolve.*
+*Thirty-six new species call Hoenn home. Here's where to find them and how they evolve.*
 
 #### Migration Arrivals
 
@@ -131,41 +139,41 @@ The migration unlocked latent evolutionary potential in species already living i
 
 Familiar species transformed by Hoenn's unique environment. Some are discovered through postgame quests; others wait in the wild.
 
-| Species | Type | Where to Find | Evolution |
-|---------|------|---------------|-----------|
-| Lotad (Hoenn) | Electric/Grass | Route 102 (10%) | Lv14 → Lombre (Hoenn) |
-| Lombre (Hoenn) | Electric/Grass | — | Evolved from Lotad (Hoenn); Leaf Stone → Ludicolo (Hoenn) |
-| Ludicolo (Hoenn) | Electric/Grass | — | Evolved from Lombre (Hoenn) via Leaf Stone |
-| Shroomish (Hoenn) | Poison/Ice | Petalburg Woods (4%) | Lv23 → Breloom (Hoenn) |
-| Breloom (Hoenn) | Poison/Ice | — | Evolved from Shroomish (Hoenn) at Lv23 |
-| Corsola (Hoenn) | Ghost/Rock | Postgame quest: The Elder's Current | — |
-| Growlithe (Hoenn) | Water | Postgame quest: Hartley's Field Report | Water Stone → Arcanine (Hoenn) |
-| Arcanine (Hoenn) | Water/Fire | — | Evolved from Growlithe (Hoenn) |
-| Bagon (Hoenn) | Dragon/Rock | Meteor Falls deep (5%) | — (standalone form) |
-| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Moon Stone → Ninetales (Hoenn) |
-| Ninetales (Hoenn) | Ice/Fairy | — | Evolved from Vulpix (Hoenn) |
-| Pinsir (Hoenn) | Bug/Fire | Route 112 (5%) | — (standalone form) |
-| Stantler (Hoenn) | Ghost/Grass | Route 119 (4%) | — (standalone form) |
-| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (5%) | Lv35 → Gliscor (Hoenn) |
-| Gliscor (Hoenn) | Water/Rock | — | Evolved from Gligar (Hoenn) |
-
-#### The Cosmic Form
+| Species | Type | Where to Find | Signature Ability | Evolution |
+|---------|------|---------------|-------------------|-----------|
+| Lotad (Hoenn) | Electric/Grass | Route 102 (10%) | Lightning Rod | Lv14 → Lombre (Hoenn) |
+| Lombre (Hoenn) | Electric/Grass | — | Lightning Rod | Leaf Stone → Ludicolo (Hoenn) |
+| Ludicolo (Hoenn) | Electric/Grass | — | Lightning Rod | Evolved from Lombre (Hoenn) |
+| Shroomish (Hoenn) | Poison/Ice | Petalburg Woods (4%) | Effect Spore | Lv23 → Breloom (Hoenn) |
+| Breloom (Hoenn) | Poison/Ice | — | **Frozen Spore** | Evolved from Shroomish (Hoenn) |
+| Corsola (Hoenn) | Ghost/Rock | Postgame quest | Levitate | — |
+| Growlithe (Hoenn) | Water | Postgame quest | Swift Swim | Water Stone → Arcanine (Hoenn) |
+| Arcanine (Hoenn) | Water/Fire | — | **Scalding Touch** | Evolved from Growlithe (Hoenn) |
+| Bagon (Hoenn) | Dragon/Rock | Meteor Falls deep (5%) | Sturdy | — (standalone form) |
+| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Natural Cure | Moon Stone → Ninetales (Hoenn) |
+| Ninetales (Hoenn) | Ice/Fairy | — | Natural Cure | Evolved from Vulpix (Hoenn) |
+| Pinsir (Hoenn) | Bug/Fire | Route 112 (5%) | Guts | — (standalone form) |
+| Stantler (Hoenn) | Ghost/Grass | Route 119 (4%) | Effect Spore | — (standalone form) |
+| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (5%) | Swift Swim | Lv35 → Gliscor (Hoenn) |
+| Gliscor (Hoenn) | Water/Rock | — | Swift Swim | Evolved from Gligar (Hoenn) |
 
 #### The Changed Three
 
 Hoenn's original starter trio, transformed by the migration. Discoverable as rare wild encounters or earned as a postgame gift from Professor Birch.
 
-| Species | Type | Where to Find | Evolution |
-|---------|------|---------------|-----------|
-| Treecko (Hoenn) | Steel | Meteor Falls B1F 2R (4%) | Lv16 → Grovyle (Hoenn) → Lv36 Sceptile (Hoenn) |
-| Torchic (Hoenn) | Fairy | Mt. Pyre Exterior (4%) | Lv16 → Combusken (Hoenn) → Lv36 Blaziken (Hoenn) |
-| Mudkip (Hoenn) | Water/Fighting | Shoal Cave Low Tide (4%) | Lv16 → Marshtomp (Hoenn) → Lv36 Swampert (Hoenn) |
-| Grovyle (Hoenn) | Steel | — | Evolved from Treecko (Hoenn) at Lv16 |
-| Sceptile (Hoenn) | Steel | — | Evolved from Grovyle (Hoenn) at Lv36 |
-| Combusken (Hoenn) | Fairy/Flying | — | Evolved from Torchic (Hoenn) at Lv16 |
-| Blaziken (Hoenn) | Fairy/Flying | — | Evolved from Combusken (Hoenn) at Lv36 |
-| Marshtomp (Hoenn) | Water/Fighting | — | Evolved from Mudkip (Hoenn) at Lv16 |
-| Swampert (Hoenn) | Water/Fighting | — | Evolved from Marshtomp (Hoenn) at Lv36 |
+| Species | Type | Where to Find | Signature | Evolution |
+|---------|------|---------------|-----------|-----------|
+| Treecko (Hoenn) | Steel | Meteor Falls B1F 2R (4%) | Battle Armor | Lv16 → Grovyle (Hoenn) |
+| Grovyle (Hoenn) | Steel | — | Battle Armor | Lv36 → Sceptile (Hoenn) |
+| Sceptile (Hoenn) | Steel | — | Battle Armor / **Iron Leaf** | Evolved from Grovyle (Hoenn) |
+| Torchic (Hoenn) | Fairy | Mt. Pyre Exterior (4%) | Cute Charm | Lv16 → Combusken (Hoenn) |
+| Combusken (Hoenn) | Fairy/Flying | — | Cute Charm | Lv36 → Blaziken (Hoenn) |
+| Blaziken (Hoenn) | Fairy/Flying | — | Cute Charm | Evolved from Combusken (Hoenn) |
+| Mudkip (Hoenn) | Water/Fighting | Shoal Cave Low Tide (4%) | Guts | Lv16 → Marshtomp (Hoenn) |
+| Marshtomp (Hoenn) | Water/Fighting | — | Guts | Lv36 → Swampert (Hoenn) |
+| Swampert (Hoenn) | Water/Fighting | — | Guts | Evolved from Marshtomp (Hoenn) |
+
+#### The Cosmic Form
 
 The migration's ultimate legacy — a being born from Hoenn's entanglement with cosmic forces.
 

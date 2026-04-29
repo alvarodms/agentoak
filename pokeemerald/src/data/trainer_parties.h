@@ -11376,9 +11376,9 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameTorchic[] = 
     {
     .iv = 200,
     .lvl = 73,
-    .species = SPECIES_SWAMPERT,
+    .species = SPECIES_SWAMPERT_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_BULK_UP, MOVE_CROSS_CHOP, MOVE_PSYCHIC, MOVE_EARTHQUAKE}
+    .moves = {MOVE_BULK_UP, MOVE_BRICK_BREAK, MOVE_EARTHQUAKE, MOVE_WATERFALL}
     }
 };
 
@@ -11421,9 +11421,9 @@ static const struct TrainerMonItemCustomMoves sParty_MayPostgameTorchic[] = {
     {
     .iv = 200,
     .lvl = 73,
-    .species = SPECIES_SWAMPERT,
+    .species = SPECIES_SWAMPERT_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_BULK_UP, MOVE_CROSS_CHOP, MOVE_PSYCHIC, MOVE_EARTHQUAKE}
+    .moves = {MOVE_BULK_UP, MOVE_BRICK_BREAK, MOVE_EARTHQUAKE, MOVE_WATERFALL}
     }
 };
 

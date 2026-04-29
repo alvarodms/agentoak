@@ -100,7 +100,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 | C291 | feature | **Crashed** — no changes. | — |
 | C292 | feature | **DONE**: All 9 Changed Three fully registered 27/27, build-clean. Stats, types, abilities, evolutions, sprites. | — |
 | C293 | feature | **DONE**: Iron Leaf (MOVE_380), full 25-file registration for all 9 Changed Three, Tier 2 abilities (Battle Armor/Cute Charm), trainer Iron Leaf pass. | C291-292 |
-| C294 | patch | **Balance + polish**: Difficulty mode tuning, encounter rate adjustment, trainer IV review. v2.7 complete. | C293 |
+| C294 | patch | **DONE**: v2.7 capstone. Changed Three registration gap fixed (9 species had empty data files). Shroomish_Hoenn ability fix. Swampert_Hoenn rival showcase. Mudkip_Hoenn Shoal Cave restored. All 25 abilities verified. | C293 |
 
 ## Issue Integration
 
@@ -120,7 +120,7 @@ All 10 forms received thematic ability replacements. Key: Corsola(Levitate), Bag
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (**all 25 fully registered** C292). Tier 2 ability pass: **10/10 complete** C289.
+- **Custom species (36 actual)**: Last = Swampert_Hoenn(447). EGG=448, NUM_SPECIES=448. 25 _HOENN forms (**all 25 fully registered + data-verified** C294). Tier 2 ability pass: **10/10 complete** C289.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move (moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, learnsets). MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). ~15 lines each. ABILITY_NAME_LENGTH=14 (was 12, expanded C289).
