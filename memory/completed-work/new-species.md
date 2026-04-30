@@ -160,5 +160,16 @@ Added 10 complete learnset arrays and pointer entries:
 - **Mudkip_Hoenn line** (Water/Fighting): Low Kick→Revenge→Double Kick→Bulk Up→Waterfall→Cross Chop. Physical tank with Guts synergy.
 - **Shroomish_Hoenn** (Poison/Ice): Gap discovered during spot-check — also missing from both files. Acid→Icy Wind→Sludge→Toxic. Compatible with existing Breloom_Hoenn Lv1 carryovers.
 
-### Type Distribution (39 species)
-Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Dark 2, Fire 2, Normal 1, Bug 1, Psychic 1.
+## C304: Ambipom (Normal Cross-Gen Evo)
+
+| Species | ID | Type | BST | Pre-evo | Trainer Usage |
+|---------|-----|------|-----|---------|---------------|
+| Ambipom | 448 | Normal | 482 | Aipom (Lv32) | Norman T3 (lead, +1 to 6-mon), T4 (replaces Exploud), T5 (replaces Exploud) |
+
+Stats: 75/100/66/60/66/115. Abilities: Vital Spirit / Pickup.
+Learnset: 14 moves (Scratch→Return). Key: Fake Out (Lv1), Nasty Plot (Lv44), Baton Pass (Lv38).
+TM/HM: 27 TMs + 3 HMs. Notable: Brick Break, Shadow Ball, Aerial Ace, Taunt, Thunderbolt.
+Sprites: fetched from expansion repo. Cry: maps to Aipom.
+
+### Type Distribution (40 species)
+Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Normal 2, Dark 2, Fire 2, Bug 1, Psychic 1.

@@ -4,9 +4,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-298, 31 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-304, 32 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. C294: 63%. C295: 91%. **C298: first edit at action 58/86 (67%)** — 7 Agent subagent calls + 7 wrong-path errors = 14 wasted actions. Cycle succeeded but could have been done in ~40 actions.
+**Symptom**: 64-132 actions before first edit. C288: first edit at action 8/80 (10%). C293: 58%. C294: 63%. C298: 67%. **C304: first edit at action 37/93 (40%)** — Agent subagent call (action 7), wrong path (action 9), cd usage (action 16) each wasted actions.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
@@ -14,9 +14,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256-C300) — 25+ wasted actions total
+## "File Has Not Been Read Yet" on Edit Calls (C256-C304) — 30+ wasted actions total
 
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted. C272: 5. C286: 1. C290: 2. C293: 4. **C300: 3 wasted** (actions 21, 25, 26 — abilities.h, battle_script_commands.c, battle_moves.h).
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted. C272: 5. C286: 1. C290: 2. C293: 4. C300: 3. **C304: 1 wasted** (action 66 — tmhm_learnsets.h after grep).
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
@@ -25,10 +25,10 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Partial registration across multiple cycles. C292 had constants+names+sprites only. **C293 claimed 27/27 via --fill-missing but data files were actually empty.** Build succeeded because C arrays zero-initialize — species appeared blank in-game but compiled.
 **Resolution**: C294 re-ran `generate_species.cjs --fill-missing` for all 9 Changed Three. All 25/27 files per species now populated. **Key lesson**: Always GREP the target data file after running --fill-missing to confirm entries were actually written. Build success does NOT mean data is present.
 
-## Wrong Path Prefix (C286-C298) — 30+ wasted actions total
+## Wrong Path Prefix (C286-C304) — 35+ wasted actions total
 
-**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File/path does not exist." **C298: 7 instances** (actions 3, 5, 10, 14, 19, 25, 42).
-**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix. This has recurred in C286, C293, C294, C298. Treat as a hardcoded prefix — never type the path from memory.
+**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. All file reads returned "File/path does not exist." **C304: 2 instances** (actions 9-10).
+**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix. This has recurred in C286, C293, C294, C298, C304. Treat as a hardcoded prefix — never type the path from memory.
 
 ## Script Path Confusion (C288) — 6 wasted actions
 
@@ -65,5 +65,5 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **Trainer capacity**: TRAINERS_COUNT = 891, AT CAPACITY. Must reuse unused IDs for new trainers.
 - **egg_moves.h**: Regional forms still need an entry (even if empty).
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts.
-- **TM/HM learnset fields**: Not all move constants are TM fields.
+- **TM/HM learnset fields**: Not all move constants are TM fields. Field names use underscores matching the struct definition (e.g., `.SOLAR_BEAM` not `.SOLARBEAM`). Always check existing entries in `tmhm_learnsets.h` for exact field names before adding new species.
 - **species_names.h**: Covered by `generate_species.cjs` since C281 (27/27 files). No manual steps needed.

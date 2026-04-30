@@ -8,6 +8,8 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 27 files per species — all handled by `generate_species.cjs`. Check: `scripts/check_species_registration.sh`. 3 naming conventions: `SPECIES_X`, `NATIONAL_DEX_X`, PascalCase `gMon*_X`.
 
+**Per-species file count**: Generator handles 27 files. Manual additions needed in `pokemon.c` (4 tables: Hoenn dex, National dex, Hoenn→National order, front anim ID) and `pokemon_icon.c` (2 entries). True total: ~33 files per species.
+
 **Cry system**: Custom species MUST add cry_ids.h entry `[SPECIES_X - 277] = <base_cry_id>`. Without it, defaults to cry ID 0 (Growlithe).
 
 ---
@@ -136,7 +138,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 **--fill-missing mode (C293)**: Populates only the files where the species is absent. Safe to re-run on partially-registered species without deleting constants first. Resolves the longstanding idempotency trap (C265-C292).
 
-**KNOWN GAP (C301)**: Generator does NOT write `level_up_learnsets.h` or `level_up_learnset_pointers.h`. These two files require manual creation. All 9 Changed Three species are missing from both files — players get zero level-up moves. C302 must hand-write 9 arrays + 9 pointer entries from JSON configs.
+**KNOWN GAP**: Generator does NOT write `pokemon.c` (4 tables) or `pokemon_icon.c` (2 entries). These 6 entries must be added manually per species.
 
 **Standard mode**: Exits if species exists in species.h (all-or-nothing). Auto-increments SPECIES_EGG. Sequential runs increment EGG, so order matters. species_names.h: auto-derives display name by stripping `_HOENN` suffix, or uses `cfg.displayName` override.
 
@@ -154,7 +156,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-**Species count (C293)**: **36 custom species — ALL 36 fully registered 27/27.** 11 cross-gen evos + 25 _HOENN forms (including 9 Changed Three starters). EGG=448, NUM_SPECIES=448. No partial registrations remain. **BUT**: 9 Changed Three species missing from learnset files (see generator gap above).
+**Species count (C304)**: **37 custom species — ALL 37 fully registered 27/27.** 12 cross-gen evos (incl. Ambipom C304) + 25 _HOENN forms (including 9 Changed Three starters). EGG=449, NUM_SPECIES=449. No partial registrations remain. Changed Three learnsets fixed C302.
 
 ---
 

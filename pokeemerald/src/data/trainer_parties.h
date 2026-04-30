@@ -13803,6 +13803,13 @@ static const struct TrainerMonItemCustomMoves sParty_Norman2[] = {
 static const struct TrainerMonItemCustomMoves sParty_Norman3[] = {
     {
     .iv = 100,
+    .lvl = 47,
+    .species = SPECIES_AMBIPOM,
+    .heldItem = ITEM_KINGS_ROCK,
+    .moves = {MOVE_FAKE_OUT, MOVE_RETURN, MOVE_BRICK_BREAK, MOVE_SHADOW_CLAW}
+    },
+    {
+    .iv = 100,
     .lvl = 48,
     .species = SPECIES_FARIGIRAF,
     .heldItem = ITEM_LUM_BERRY,
@@ -13841,6 +13848,13 @@ static const struct TrainerMonItemCustomMoves sParty_Norman3[] = {
 static const struct TrainerMonItemCustomMoves sParty_Norman4[] = {
     {
     .iv = 150,
+    .lvl = 57,
+    .species = SPECIES_AMBIPOM,
+    .heldItem = ITEM_SILK_SCARF,
+    .moves = {MOVE_FAKE_OUT, MOVE_RETURN, MOVE_AERIAL_ACE, MOVE_SHADOW_CLAW}
+    },
+    {
+    .iv = 150,
     .lvl = 58,
     .species = SPECIES_TAUROS,
     .heldItem = ITEM_CHOICE_BAND,
@@ -13869,13 +13883,6 @@ static const struct TrainerMonItemCustomMoves sParty_Norman4[] = {
     },
     {
     .iv = 150,
-    .lvl = 62,
-    .species = SPECIES_EXPLOUD,
-    .heldItem = ITEM_SHELL_BELL,
-    .moves = {MOVE_RETURN, MOVE_EARTHQUAKE, MOVE_SHADOW_BALL, MOVE_FLAMETHROWER}
-    },
-    {
-    .iv = 150,
     .lvl = 63,
     .species = SPECIES_SLAKING,
     .heldItem = ITEM_CHOICE_BAND,
@@ -13884,6 +13891,13 @@ static const struct TrainerMonItemCustomMoves sParty_Norman4[] = {
 };
 
 static const struct TrainerMonItemCustomMoves sParty_Norman5[] = {
+    {
+    .iv = 200,
+    .lvl = 67,
+    .species = SPECIES_AMBIPOM,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_FAKE_OUT, MOVE_RETURN, MOVE_SHADOW_CLAW, MOVE_TAUNT}
+    },
     {
     .iv = 200,
     .lvl = 68,
@@ -13911,13 +13925,6 @@ static const struct TrainerMonItemCustomMoves sParty_Norman5[] = {
     .species = SPECIES_URSARING,
     .heldItem = ITEM_SILK_SCARF,
     .moves = {MOVE_FACADE, MOVE_EARTHQUAKE, MOVE_SWORDS_DANCE, MOVE_FIRE_PUNCH}
-    },
-    {
-    .iv = 200,
-    .lvl = 72,
-    .species = SPECIES_EXPLOUD,
-    .heldItem = ITEM_SHELL_BELL,
-    .moves = {MOVE_RETURN, MOVE_EARTHQUAKE, MOVE_SHADOW_BALL, MOVE_FLAMETHROWER}
     },
     {
     .iv = 200,

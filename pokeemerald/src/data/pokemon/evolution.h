@@ -201,5 +201,6 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     // SPECIES_STANTLER_HOENN — standalone form, no evolution chain
     [SPECIES_GLIGAR_HOENN] = {{EVO_LEVEL, 35, SPECIES_GLISCOR_HOENN}},
     // SPECIES_DEOXYS_HOENN — custom cosmic form, no evolution chain
+    [SPECIES_AIPOM]      = {{EVO_LEVEL, 32, SPECIES_AMBIPOM}},
 
 };
