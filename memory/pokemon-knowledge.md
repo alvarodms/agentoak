@@ -39,5 +39,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Champion Design & Mid-Game Encounter Pacing Patterns | 298 | [champion-design-and-midgame-pacing-c298.md](pokemon-knowledge/champion-design-and-midgame-pacing-c298.md) |
 | Gym Leader Dialogue & Capstone Feature Patterns | 299 | [gym-dialogue-and-capstone-patterns-c299.md](pokemon-knowledge/gym-dialogue-and-capstone-patterns-c299.md) |
 | Tempered Blade — Crit Ability Design Patterns | 300 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
+| v2.9 Planning — JSON Tooling & Maturity Landscape | 301 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

@@ -136,6 +136,8 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 **--fill-missing mode (C293)**: Populates only the files where the species is absent. Safe to re-run on partially-registered species without deleting constants first. Resolves the longstanding idempotency trap (C265-C292).
 
+**KNOWN GAP (C301)**: Generator does NOT write `level_up_learnsets.h` or `level_up_learnset_pointers.h`. These two files require manual creation. All 9 Changed Three species are missing from both files — players get zero level-up moves. C302 must hand-write 9 arrays + 9 pointer entries from JSON configs.
+
 **Standard mode**: Exits if species exists in species.h (all-or-nothing). Auto-increments SPECIES_EGG. Sequential runs increment EGG, so order matters. species_names.h: auto-derives display name by stripping `_HOENN` suffix, or uses `cfg.displayName` override.
 
 ## Trainer Generator (C266)
@@ -152,7 +154,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-**Species count (C293)**: **36 custom species — ALL 36 fully registered 27/27.** 11 cross-gen evos + 25 _HOENN forms (including 9 Changed Three starters). EGG=448, NUM_SPECIES=448. No partial registrations remain.
+**Species count (C293)**: **36 custom species — ALL 36 fully registered 27/27.** 11 cross-gen evos + 25 _HOENN forms (including 9 Changed Three starters). EGG=448, NUM_SPECIES=448. No partial registrations remain. **BUT**: 9 Changed Three species missing from learnset files (see generator gap above).
 
 ---
 

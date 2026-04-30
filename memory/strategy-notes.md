@@ -22,15 +22,69 @@
 
 ---
 
-# v2.9: Planning Required
+# v2.9: "The Last Witness"
 
-v2.8 closed the polish pass. The hack has 36 custom species, 4 custom abilities, 3 signature moves, custom battle animations, and a complete dialogue/narrative arc. What's next?
+**Theme**: The migration narrative's climax. For 15 hours, the player has witnessed Hoenn transform — new forms appearing, gym leaders adapting, villains reckoning with consequences. The Champion fight should be where that story converges. When the credits roll, the player should feel: "Hoenn's transformation was real, and I was its witness."
 
-**Open questions for v2.9 planning:**
-1. **Changed Three ability parity** — Sceptile_Hoenn has Tempered Blade, but Blaziken_Hoenn (Cute Charm) and Swampert_Hoenn (Guts) still use vanilla abilities. Should they get custom abilities too?
-2. **Battle Frontier integration** — Do regional forms appear in the Battle Factory/Tower? Are they in the rental pool?
-3. **Playtesting polish** — What rough edges remain from a full playthrough perspective?
-4. **Community direction** — Check open issues and creative backlog for accumulated player requests.
+**Design hypothesis**: If Wallace's dialogue frames the battle as the migration's final exam — testing whether the player *understood* the transformation, not just survived it — the pre-credits emotion shifts from "I beat the hard fight" to "Hoenn's story ends here too."
+
+## Roadmap (~10 cycles)
+
+| Cycle | Mode | Objective | Issues |
+|-------|------|-----------|--------|
+| 301 | planning | Design v2.9 arc | — |
+| 302 | refactor | Changed Three learnset fix (CRITICAL) + JSON trainer config extraction | — |
+| 303 | feature | Champion dialogue rewrite — Wallace as migration's final witness | #182 |
+| 304 | feature | Ambipom species (Normal) + Norman roster fix | #180 partial |
+| 305 | feature | Carbink species (Rock/Fairy) + Roxanne roster fix | #180 partial |
+| 306 | feature | Toxapex species (Poison/Water) + Juan roster fix | #180 partial |
+| 307 | feature | Blaziken_Hoenn custom ability (ABILITY_82) | — |
+| 308 | feature | Swampert_Hoenn custom ability (ABILITY_83) | — |
+| 309 | feature | Field Notes key item (stretch goal) | — |
+| 310 | patch | v2.9 polish pass | — |
+
+## Changed Three Learnset Gap (CRITICAL BUG — C302 P0)
+
+ALL 9 Changed Three species (Treecko/Grovyle/Sceptile/Torchic/Combusken/Blaziken/Mudkip/Marshtomp/Swampert _Hoenn) are **completely missing** from both `level_up_learnsets.h` and `level_up_learnset_pointers.h`. The JSON configs have full movesets but the generator never compiled them into these two files.
+
+**Impact**: Player-raised Changed Three starters learn ZERO moves by level up. They're stuck with whatever moves they had when obtained. The entire v2.5 "The Changed Three" and v2.8 Tempered Blade + Iron Leaf design only works on trainer-owned Pokémon. This is the worst bug in the hack's history — the signature feature is broken for players.
+
+**Fix scope**: 9 learnset arrays + 9 pointer entries. Either fix the generator or hand-write entries from the JSON configs. Must ship in C302 before any other v2.9 work.
+
+## Champion Dialogue Direction (#182)
+
+Wallace already has 3 migration species: Ludicolo_Hoenn (Electric/Grass), Arcanine_Hoenn (Water/Fire), Ninetales_Hoenn (Ice/Fairy). The team composition is correct — the dialogue needs reframing.
+
+**Current problem**: Wallace's dialogue is self-centered. "I called it the most beautiful thing I'd ever witnessed." "My team is a gallery of what HOENN has become." "Can you appreciate art that fights back?" This frames the Champion battle as Wallace's aesthetic exhibition. The player is an audience member, not a participant in the migration's story.
+
+**Target**: Reframe the battle around the PLAYER's journey. Wallace should recognize the player as a fellow witness — someone who walked every route, saw every form, and understood what happened. The battle is the final exam: not "can you beat my art gallery?" but "did you understand what Hoenn became?"
+
+**Pre-battle direction**: Wallace acknowledges the player has seen what he's seen. Two witnesses meeting. "You walked those routes. You saw them change. So did I. My team is my answer to what Hoenn became — show me yours."
+
+**Post-battle direction**: Emotional closure. Wallace realizes the difference — he collected migration species because they were beautiful; the player raised them because they were *theirs*. "I traveled every route looking for beauty. You traveled every route and it found *you*." The parallel: Hoenn changed, the player changed with it.
+
+**Re-talk**: Lighter. Fellow travelers. Wallace is glad someone else finally understands.
+
+## Roster Fixes (#180) — Status & Sequencing
+
+**Corsola_Hoenn on Phoebe**: ALREADY DONE. Present on base team + rematch tiers 2, 3, 4. No work needed.
+
+Remaining 3 items each require a new species (27-file pipeline) + trainer party integration:
+
+- **Ambipom** (Normal, Gen 4) → Norman T3+. Cross-gen evo of Aipom. Fast Technician attacker with Fake Out/Double Hit. Add without Aipom (precedent: Farigiraf exists without wild Girafarig). Norman's dialogue already references Normal-types learning new tricks — Ambipom embodies this.
+- **Carbink** (Rock/Fairy, Gen 6) → Roxanne T2+. Defensive pivot with Clear Body. A crystalline migration species for the academic Rock specialist. Roxanne already references Bagon_Hoenn near Meteor Falls — Carbink adds a second migration discovery to her worldview.
+- **Toxapex** (Poison/Water, Gen 7) → Juan T2+. Defensive wall with Regenerator/Merciless. Add without Mareanie. Juan's quiet recognition that even the coral's predators have changed. Juan already has Corsola_Hoenn — Toxapex is its natural counterpart.
+
+JSON trainer config refactor (C302) must ship BEFORE these edits. The macro format caused build failures in C179, C190, C195.
+
+## Changed Three Ability Parity
+
+Sceptile_Hoenn has Tempered Blade (+1 crit stage on Steel contact → 25% crit with high-crit Iron Leaf). Blaziken_Hoenn and Swampert_Hoenn need equivalent treatment:
+
+- **Blaziken_Hoenn** (Fire/Fairy): Currently Cute Charm. Needs ability reflecting Fairy/Fire warrior identity. Must be felt in battle, not an invisible stat nudge. Design with Gameplay Designer in C307.
+- **Swampert_Hoenn** (Water/Fighting): Currently Guts. Needs ability reflecting Water/Fighting brawler identity. Same perception threshold requirement. Design with Gameplay Designer in C308.
+
+Both abilities should follow the pattern: ability + STAB synergy → coherent combat identity the player can name and describe.
 
 ---
 
