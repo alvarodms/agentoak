@@ -273,9 +273,12 @@ RustboroCity_Gym_Text_RoxanneRematchDefeat:
 RustboroCity_Gym_Text_RoxannePostRematch:
 	.string "The ancients adapted too.\n"
 	.string "AERODACTYL proves it.\p"
-	.string "Everyone sees the migration as\n"
-	.string "something new. But the rocks\l"
-	.string "tell a much older story of change.$"
+	.string "But lately, I've found crystals in\n"
+	.string "RUSTURF TUNNEL that defy HOENN's\l"
+	.string "natural strata.\p"
+	.string "The migration isn't just changing\n"
+	.string "POKéMON. It's rewriting our\l"
+	.string "geology.$"
 
 RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
 	.string "Oh, {PLAYER}! I'd love to battle,\n"

@@ -13221,6 +13221,13 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne3[] = {
     .species = SPECIES_CRADILY,
     .heldItem = ITEM_MIRACLE_SEED,
     .moves = {MOVE_GIGA_DRAIN, MOVE_ANCIENT_POWER, MOVE_TOXIC, MOVE_CONFUSE_RAY}
+    },
+    {
+    .iv = 100,
+    .lvl = 50,
+    .species = SPECIES_CARBINK,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_MOONBLAST, MOVE_ANCIENT_POWER}
     }
 };
 
@@ -13259,6 +13266,13 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne4[] = {
     .species = SPECIES_AERODACTYL,
     .heldItem = ITEM_SCOPE_LENS,
     .moves = {MOVE_ROCK_SLIDE, MOVE_AERIAL_ACE, MOVE_EARTHQUAKE, MOVE_DOUBLE_EDGE}
+    },
+    {
+    .iv = 150,
+    .lvl = 60,
+    .species = SPECIES_CARBINK,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_MOONBLAST, MOVE_CALM_MIND}
     }
 };
 
@@ -13287,9 +13301,9 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne5[] = {
     {
     .iv = 200,
     .lvl = 71,
-    .species = SPECIES_LUNATONE,
+    .species = SPECIES_CARBINK,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_CALM_MIND, MOVE_SHADOW_BALL}
+    .moves = {MOVE_REFLECT, MOVE_LIGHT_SCREEN, MOVE_MOONBLAST, MOVE_CALM_MIND}
     },
     {
     .iv = 200,

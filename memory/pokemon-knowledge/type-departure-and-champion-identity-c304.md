@@ -1,33 +1,51 @@
 # Type Departure & Champion Identity — Community Evidence
 
-**Cycle**: 304 | **Date**: April 2026
+**Cycle**: 305 | **Date**: April 2026 | Updated with #185/#186 corrections
 
 ---
 
-## Regional Form Type Departure — "Keep One Type" Debate
+## C304 Research Corrections (Issues #185 and #186)
 
-TheGamer's "Pokemon, Stop Letting Regional Variants Keep Their Original Typing" article reflects a real community current: regional forms that keep one original type feel like "the same Pokémon in a new hat." The most beloved official regional forms (Alolan Ninetales Fire→Ice/Fairy, Alolan Marowak Ground→Fire/Ghost, Hisuian Typhlosion Fire→Fire/Ghost) either fully changed or kept the type only when design-justified.
+### Champion Replacement — Corrected Analysis
 
-**However**, the counter-evidence from ROM hacks is important:
-- **Ephemerald** (382 forms, fully changed types): Community praised coherence when types matched learnsets/abilities. Criticized forms where new types felt arbitrary.
-- **Radical Red**: Changed Mega typings work when the ENTIRE identity (stats, ability, movepool) shifts together. Half-measures are the real problem — not keeping vs. dropping a type.
+C304 only addressed 4 of 11 examples from #183. The conclusion ("Emerald-region hacks keep Wallace; original-region hacks create new champions") was **largely correct** but the research was incomplete. Here's the full picture:
 
-**Key insight**: The question isn't "keep vs. drop original type" — it's "does the typing match the mechanical identity?" A form keeping its original type but gaining a coherent new one (Alolan Vulpix: Ice/Fairy with Aurora Veil) is better received than a form with two new types but no mechanical coherence.
+**Issue #186's 11 examples, all verified:**
 
-## Champion Replacement — Industry Reality
+| Hack | Champion | Region | Type | Verdict |
+|------|----------|--------|------|---------|
+| Unbound (Jax) | Rival, not bespoke | Original (Borrius) | GBA hack | Original region → original chars |
+| Inclement Emerald | Vanilla Wallace | Hoenn | GBA hack | Keeps Wallace |
+| Radical Red | Vanilla Lance | Kanto | GBA hack | Keeps Lance |
+| Gaia (Herschel) | Original | Original (Orbtus) | GBA hack | Original region |
+| Glazed (Blake) | E4 member, not champion | Original (Tunod) | GBA hack | Original region |
+| Vega (Ginno) | Original | **Tohoak** (NOT Hoenn) | GBA hack | Original region |
+| Sors | Original cast | Original | GBA hack | Original region |
+| Light Platinum | Original league | Original (Zhery) | GBA hack | Original region |
+| Reborn (Ame) | Original | Original | **RPG Maker fan game** | Different category |
+| Rejuvenation | Original cast | Original | **RPG Maker fan game** | Different category |
+| Insurgence (Reukra) | Original | Original (Torren) | **RPG Maker fan game** | Different category |
 
-Issue #183 claims "every serious ROM hack creates an original champion." Evidence:
-- **Unbound**: Champion is rival Jax (NOT a bespoke original character — he's the rival you've battled all game). Emotional weight from personal arc, not original design.
-- **Inclement Emerald**: Keeps vanilla Wallace. No custom champion.
-- **Radical Red**: Keeps vanilla Lance. Pure difficulty focus.
-- **Gaia**: Original champion Herschel — but Gaia is an original-region hack, NOT a Hoenn hack. New region = new characters is standard.
-- **Glazed**: Mix of original and canon characters in champion role.
+**#186 claimed Vega/Altair are "set in Hoenn (expanded)" — this is false.** Vega is set in Tohoak, a completely new region with 181 new Pokémon. It has Hoenn backstory (the "Hoenn Catastrophe") but is an original-region hack.
 
-**Pattern**: Hacks in EXISTING regions (like Emerald hacks) almost always keep the vanilla champion. Hacks with ORIGINAL regions create original champions. This is a resource allocation pattern — new sprites, new animations, new story arcs are justified when everything else is already new.
+**Reborn, Rejuvenation, and Insurgence are RPG Maker fan games**, not GBA ROM hacks. They have vastly more creative freedom (no memory limits, no tileset constraints, custom engines). Comparing them to a pokeemerald decompilation hack is a category error.
 
-Creating an original Emerald champion requires: custom overworld sprite, custom trainer sprite, new trainer class, story integration throughout the game, dialogue in multiple locations. This is 50-100 hours of work for a ROM hack that has already invested deeply in reframing Wallace.
+**Conclusion holds but was poorly argued in C304**: Every one of the 11 examples either (a) is set in an original region, (b) keeps the vanilla champion, or (c) isn't a GBA ROM hack at all. No Hoenn-set GBA hack with the vanilla map has replaced Wallace with a bespoke original champion.
+
+### Changed Three Triangle — Corrected Analysis
+
+Issue #185 is **partially correct**: the Changed Three (Treecko/Torchic/Mudkip_Hoenn) ARE postgame Birch gifts. The actual starters are Larvitar/Dratini/Bagon. The type triangle (Steel→Fairy→Fighting) has **no mechanical gameplay function** — no rival uses the counter-type, no trainer tests the triangle against the player.
+
+**However**, the dual typing serves other valid purposes:
+- Narrative identity ("changed but recognizable")
+- Drives ability + signature move design (Iron Leaf = Steel, Tidal Flare = Fire, Spore Fist = Fighting)
+- Referenced in 15+ hours of dialogue
+
+The C304 "breaking the strategic triangle" argument was weak. Better arguments exist for keeping the types.
 
 ## Sources
-- [TheGamer — Stop Letting Regional Variants Keep Their Original Typing](https://www.thegamer.com/pokemon-regional-variants-keep-original-typing-legends-arceus-leak-avalugg-goodra/)
-- [Unbound Jax Wiki](https://www.unbound.wiki/wiki/Jax)
-- [Unbound Pokémon League Walkthrough](https://unboundwiki.com/walkthrough/part-39/)
+- [Pokémon Vega — Tohoak region](https://www.gamebrew.org/wiki/Pokemon_Vega_GBA)
+- [Pokémon Glazed — Tunod region](https://fanmadepokemonglazed.fandom.com/wiki/Pok%C3%A9mon_Glazed_Version)
+- [Pokémon Reborn — RPG Maker XP](https://www.pokemoncoders.com/pokemon-reborn/)
+- [Pokémon Insurgence — RPG Maker](https://www.pokemoncoders.com/pokemon-insurgence/)
+- [Light Platinum — Zhery region](https://www.pokemoncoders.com/pokemon-light-platinum-rom-hack/)

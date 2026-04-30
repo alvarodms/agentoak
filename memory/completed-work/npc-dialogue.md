@@ -9,7 +9,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 - **Birch/Lab** (C15,24,180,181,279,286): Opening speech, difficulty selection, postgame Changed Three gift, Reckoning collection quest (PP_MAX)
 - **Rival** (C25-29,273): 4 encounters rewritten. C273: Route 119 + Lilycove → specific regional form references
 - **Villains** (C248,249,284,285,286): Magma (Mt.Chimney/Lavaridge/Meteor Falls) + Aqua (Slateport/R128/Shoal Cave) postgame arc. 6 ex-Team NPCs. Reckoning collection quest.
-- **Gym Leaders** (C25-29,244,245,269,271,283): All 8 rewritten. C269: Brawly/Norman/Drake regional form refs. C271: Wattson Lotad_Hoenn. C283: Roxanne fossil scholar + T&L Espeon empathy.
+- **Gym Leaders** (C25-29,244,245,269,271,283,305): All 8 rewritten. C269: Brawly/Norman/Drake regional form refs. C271: Wattson Lotad_Hoenn. C283: Roxanne fossil scholar + T&L Espeon empathy. C305: Roxanne post-rematch → RUSTURF TUNNEL crystals + geology rewriting (Carbink foreshadow).
 - **E4 + Champion** (C33,42,203,204,212,213,214,283): Sidney/Phoebe/Glacia/Drake/Wallace rewritten for cross-gen evo + regional form themes
 - **Flavor NPCs** (~30 cycles): Early foreshadowing (sighting events), mid-game escalation (Bagon Colony, weather omens), The Gathering Storm (ocean witnesses), Echo Dialogue Layer (C232), Changed Trainer Witnesses (C235,238), Migration Acknowledgment NPCs (C267)
 - **Quests** (C116-243): Beast sightings, Primal network, Sky Guardian, 4 side quests, Resonance (C233), Cosmic (C242,243)

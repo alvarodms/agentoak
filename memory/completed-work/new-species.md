@@ -173,3 +173,15 @@ Sprites: fetched from expansion repo. Cry: maps to Aipom.
 
 ### Type Distribution (40 species)
 Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Normal 2, Dark 2, Fire 2, Bug 1, Psychic 1.
+
+## C305: Carbink (Rock/Fairy, Standalone)
+
+| Species | ID | Type | BST | Trainer Usage |
+|---------|-----|------|-----|---------------|
+| Carbink | 449 | Rock/Fairy | 500 | Roxanne T2 (6th slot), T3 (6th slot), T4 (replaces Lunatone) |
+
+Stats: 50/50/150/50/150/50. Abilities: Clear Body / Sturdy. Genderless.
+Learnset: 13 moves (Tackle→Explosion). Key: Reflect (Lv12), Light Screen (Lv18), Moonblast (Lv36), Calm Mind (Lv40), Stone Edge (Lv46).
+TM/HM: 21 TMs/HMs. Notable: Toxic, Psychic, Sandstorm, Skill Swap.
+Sprites: fetched from expansion repo. Cry: maps to Nosepass.
+Note: Also completed Ambipom's partial registration (2/27→27/27) from C304.

@@ -156,7 +156,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-**Species count (C304)**: **37 custom species — ALL 37 fully registered 27/27.** 12 cross-gen evos (incl. Ambipom C304) + 25 _HOENN forms (including 9 Changed Three starters). EGG=449, NUM_SPECIES=449. No partial registrations remain. Changed Three learnsets fixed C302.
+**Species count (C305)**: **39 custom species — ALL 39 fully registered 27/27.** 12 cross-gen evos (Weavile, Honchkrow, Mismagius, Froslass, Togekiss, Mamoswine, Gliscor, Yanmega, Roserade, Tangrowth, Rhyperior, Ambipom) + 25 _HOENN forms (including 9 Changed Three starters) + 2 standalone imports (Riolu→Lucario line counted as 1 cross-gen conceptually, but Carbink has no pre-evo). EGG=450, NUM_SPECIES=450, SPECIES_AMBIPOM=448, SPECIES_CARBINK=449. No partial registrations remain.
 
 ---
 
