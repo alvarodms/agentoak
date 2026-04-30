@@ -39,7 +39,14 @@ EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace:
 
 EverGrandeCity_ChampionsRoom_EventScript_Wallace::
 	playbgm MUS_ENCOUNTER_CHAMPION, FALSE
+	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch
 	msgbox EverGrandeCity_ChampionsRoom_Text_IntroSpeech, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
+	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
+	end
+
+EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch::
+	msgbox EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	end
@@ -49,7 +56,17 @@ EverGrandeCity_ChampionsRoom_EventScript_Defeated::
 	setmetatile 6, 1, METATILE_EliteFour_OpenDoorChampion_Frame, FALSE
 	setmetatile 6, 2, METATILE_EliteFour_OpenDoorChampion_Opening, FALSE
 	special DrawWholeMapView
+	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	goto EverGrandeCity_ChampionsRoom_EventScript_PostBattleContinue
+	end
+
+EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch::
+	msgbox EverGrandeCity_ChampionsRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
+	goto EverGrandeCity_ChampionsRoom_EventScript_PostBattleContinue
+	end
+
+EverGrandeCity_ChampionsRoom_EventScript_PostBattleContinue::
 	closemessage
 	playse SE_DOOR
 	checkplayergender
@@ -220,37 +237,45 @@ EverGrandeCity_ChampionsRoom_Movement_BirchArrives:
 	step_end
 
 EverGrandeCity_ChampionsRoom_Text_IntroSpeech:
-	.string "When the migration began, every\n"
-	.string "trainer I knew called it a crisis.\p"
-	.string "I called it the most beautiful\n"
-	.string "thing I'd ever witnessed.\p"
-	.string "New forms, new colors -- species\n"
-	.string "reborn in ways no CONTEST judge\l"
-	.string "could imagine.\p"
-	.string "I traveled every route.\n"
-	.string "I caught what moved me.\p"
-	.string "My team is no longer just WATER.\n"
-	.string "It is a gallery of what HOENN\l"
-	.string "has become.\p"
-	.string "Can you appreciate art that\n"
-	.string "fights back?$"
+	.string "I found a LUDICOLO on Route 119\n"
+	.string "whose leaves sparked with\l"
+	.string "lightning, not rain.\p"
+	.string "An ARCANINE on Route 118 whose\n"
+	.string "breath was steam, not fire.\p"
+	.string "I thought I was the only one\n"
+	.string "who noticed HOENN changing.\p"
+	.string "Then you walked in here.\p"
+	.string "Show me what you found.$"
 
 EverGrandeCity_ChampionsRoom_Text_Defeat:
-	.string "…Breathtaking.\p"
-	.string "You didn't just overpower my\n"
-	.string "team. You adapted to each\l"
-	.string "surprise.\p"
-	.string "That is the highest beauty\n"
-	.string "in battle.$"
+	.string "…\p"
+	.string "You didn't collect them because\n"
+	.string "they were beautiful.\p"
+	.string "You raised them because they\n"
+	.string "were yours.$"
 
 EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
-	.string "JUAN thinks I left the gym\n"
-	.string "chasing novelty.\p"
-	.string "But the ocean had outgrown me.\p"
-	.string "The migration changed what it\n"
-	.string "means to be a master.\p"
+	.string "I traveled every route searching\n"
+	.string "for something beautiful.\p"
+	.string "You traveled every route and\n"
+	.string "something beautiful found you.\p"
 	.string "CHAMPION… that word belongs\n"
 	.string "to you now.$"
+
+EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech:
+	.string "You know, I thought being\n"
+	.string "CHAMPION meant having the\l"
+	.string "best answer.\p"
+	.string "Turns out it just means you\n"
+	.string "asked the right questions.\p"
+	.string "Ready for another round?$"
+
+EverGrandeCity_ChampionsRoom_Text_RematchPostBattleSpeech:
+	.string "Every time we battle, I see\n"
+	.string "something new in them.\p"
+	.string "Or maybe in you.\p"
+	.string "Go on, CHAMPION. HOENN's\n"
+	.string "still changing out there.$"
 
 EverGrandeCity_ChampionsRoom_Text_MayAdvice:
 	.string "MAY: {PLAYER}{KUN}!\p"

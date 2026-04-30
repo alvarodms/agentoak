@@ -41,5 +41,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Tempered Blade — Crit Ability Design Patterns | 300 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
 | v2.9 Planning — JSON Tooling & Maturity Landscape | 301 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |
 | Learnset & Trainer Tooling — C302 Refactor Context | 302 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
+| Champion Dialogue — "Shared Witness" Framing | 303 | [champion-dialogue-witness-framing-c303.md](pokemon-knowledge/champion-dialogue-witness-framing-c303.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

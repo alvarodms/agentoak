@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix (10 species, critical P0 bug).
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix (10 species). C303: Wallace dialogue rewritten as migration witness — 3 text blocks replaced, 2 rematch added, FLAG_SYS_GAME_CLEAR branching.
 
 ---
 
@@ -35,7 +35,7 @@
 |-------|------|-----------|--------|
 | 301 | planning | Design v2.9 arc | — |
 | 302 | feature | Changed Three learnset fix (10 species) — **DONE** | — |
-| 303 | feature | Champion dialogue rewrite — Wallace as migration's final witness | #182 |
+| 303 | feature | Champion dialogue rewrite — Wallace as migration's final witness — **DONE** | #182 |
 | 304 | feature | Ambipom species (Normal) + Norman roster fix | #180 partial |
 | 305 | feature | Carbink species (Rock/Fairy) + Roxanne roster fix | #180 partial |
 | 306 | feature | Toxapex species (Poison/Water) + Juan roster fix | #180 partial |

@@ -50,4 +50,10 @@ Flannery descoped — Hour 6-10 already healthy at 3:4:3.
 
 ---
 
+## Champion Witness Dialogue — C303
+
+EverGrandeCity_ChampionsRoom/scripts.inc: Wallace IntroSpeech, Defeat, PostBattleSpeech rewritten (migration witness framing — Wallace references his own Ludicolo/Arcanine encounters, player recognizes parallel). Added RematchIntroSpeech + RematchPostBattleSpeech with FLAG_SYS_GAME_CLEAR conditional branching. 5 text blocks total (3 replaced, 2 new). Script logic: WallaceRematch + DefeatedRematch + PostBattleContinue labels added.
+
+---
+
 Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).
