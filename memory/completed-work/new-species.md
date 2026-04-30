@@ -150,5 +150,15 @@ Single-line `.abilities` edits in `species_info.h`:
 | Gliscor_Hoenn | Battle Armor / Water Absorb | **Swift Swim** / Water Absorb |
 | Stantler_Hoenn | Intimidate / Natural Cure | Intimidate / **Effect Spore** |
 
+## C302: Changed Three Level-Up Learnsets (9 species) + Shroomish_Hoenn Fix
+
+**Files modified**: `level_up_learnsets.h`, `level_up_learnset_pointers.h`
+
+Added 10 complete learnset arrays and pointer entries:
+- **Treecko_Hoenn line** (Grass/Steel): Metal Claw→Razor Leaf→Iron Leaf→Leaf Blade→Swords Dance. Physical crit-stacking identity via Tempered Blade + Iron Leaf.
+- **Torchic_Hoenn line** (Fire/Fairy): Sweet Kiss→Charm→Dazzling Gleam→Calm Mind→Moonblast→Fire Blast. Special Fairy mage with Fire nukes.
+- **Mudkip_Hoenn line** (Water/Fighting): Low Kick→Revenge→Double Kick→Bulk Up→Waterfall→Cross Chop. Physical tank with Guts synergy.
+- **Shroomish_Hoenn** (Poison/Ice): Gap discovered during spot-check — also missing from both files. Acid→Icy Wind→Sludge→Toxic. Compatible with existing Breloom_Hoenn Lv1 carryovers.
+
 ### Type Distribution (39 species)
 Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Dark 2, Fire 2, Normal 1, Bug 1, Psychic 1.

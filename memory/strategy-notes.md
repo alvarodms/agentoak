@@ -19,6 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix (10 species, critical P0 bug).
 
 ---
 
@@ -33,7 +34,7 @@
 | Cycle | Mode | Objective | Issues |
 |-------|------|-----------|--------|
 | 301 | planning | Design v2.9 arc | — |
-| 302 | refactor | Changed Three learnset fix (CRITICAL) + JSON trainer config extraction | — |
+| 302 | feature | Changed Three learnset fix (10 species) — **DONE** | — |
 | 303 | feature | Champion dialogue rewrite — Wallace as migration's final witness | #182 |
 | 304 | feature | Ambipom species (Normal) + Norman roster fix | #180 partial |
 | 305 | feature | Carbink species (Rock/Fairy) + Roxanne roster fix | #180 partial |
@@ -43,13 +44,9 @@
 | 309 | feature | Field Notes key item (stretch goal) | — |
 | 310 | patch | v2.9 polish pass | — |
 
-## Changed Three Learnset Gap (CRITICAL BUG — C302 P0)
+## Changed Three Learnset Gap — FIXED (C302)
 
-ALL 9 Changed Three species (Treecko/Grovyle/Sceptile/Torchic/Combusken/Blaziken/Mudkip/Marshtomp/Swampert _Hoenn) are **completely missing** from both `level_up_learnsets.h` and `level_up_learnset_pointers.h`. The JSON configs have full movesets but the generator never compiled them into these two files.
-
-**Impact**: Player-raised Changed Three starters learn ZERO moves by level up. They're stuck with whatever moves they had when obtained. The entire v2.5 "The Changed Three" and v2.8 Tempered Blade + Iron Leaf design only works on trainer-owned Pokémon. This is the worst bug in the hack's history — the signature feature is broken for players.
-
-**Fix scope**: 9 learnset arrays + 9 pointer entries. Either fix the generator or hand-write entries from the JSON configs. Must ship in C302 before any other v2.9 work.
+10 complete learnsets hand-designed and added (9 Changed Three + Shroomish_Hoenn gap found during spot-check). All 36 custom species now verified with learnset pointer entries. Generator still needs patching (files 26-27) to prevent recurrence — tracked in tech-debt-backlog.
 
 ## Champion Dialogue Direction (#182)
 
