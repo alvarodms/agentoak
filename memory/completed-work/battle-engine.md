@@ -159,6 +159,18 @@ Steel/Physical, 85bp, 100acc, 15pp, 20% Defense drop. Contact move. Assigned to 
 | `src/data/contest_moves.h` | Contest entry (Cool, HIGHLY_APPEALING) | **293** | |
 | `src/data/pokemon/level_up_learnsets.h` | MOVE_IRON_LEAF at Lv29 in sSceptileHoennLevelUpLearnset | **293** | Via generator from JSON config |
 
+## Custom Ability: Tempered Blade (C300)
+
++1 crit stage on Steel-type contact moves. Sceptile_Hoenn line's custom ability — completes the Changed Three ability triangle (Toxic Touch / Frozen Spore / Scalding Touch / Tempered Blade). Iron Leaf upgraded from EFFECT_DEFENSE_DOWN_HIT to EFFECT_HIGH_CRITICAL, paralleling Leaf Blade's high-crit identity. Combined: Iron Leaf crits at stage 2 (25%).
+
+| File | What Changed | Cycle | Notes |
+|------|-------------|-------|-------|
+| `include/constants/abilities.h` | Added ABILITY_TEMPERED_BLADE = 81, ABILITIES_COUNT → 82 | **300** | 4th custom ability |
+| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **300** | "TEMPERED BLADE", "Honed blades find the gap." |
+| `src/battle_script_commands.c` | Added Tempered Blade to critChance accumulation in Cmd_critcalc | **300** | +1 if attacker has ABILITY_TEMPERED_BLADE && move is TYPE_STEEL && FLAG_MAKES_CONTACT |
+| `src/data/pokemon/species_info.h` | Treecko_Hoenn, Grovyle_Hoenn, Sceptile_Hoenn: abilities → {ABILITY_TEMPERED_BLADE, ABILITY_OVERGROW} | **300** | Replaces {ABILITY_OVERGROW, ABILITY_BATTLE_ARMOR} |
+| `src/data/battle_moves.h` | Iron Leaf: EFFECT_DEFENSE_DOWN_HIT → EFFECT_HIGH_CRITICAL, secondaryEffectChance 20 → 0 | **300** | High-crit move paralleling Leaf Blade |
+
 ## Tier 2 Ability Reassignment Pass (C288)
 
 8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.

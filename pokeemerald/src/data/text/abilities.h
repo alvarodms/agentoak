@@ -79,6 +79,7 @@ static const u8 sAirLockDescription[] = _("Negates weather effects.");
 static const u8 sToxicTouchDescription[] = _("Its attacks leave a\ntoxic residue.");
 static const u8 sFrozenSporeDescription[] = _("Icy spores may freeze\non contact.");
 static const u8 sScaldingTouchDescription[] = _("Scalding touch may\nburn the foe.");
+static const u8 sTemperedBladeDescription[] = _("Honed blades find\nthe gap.");
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
 {
@@ -163,6 +164,7 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_TOXIC_TOUCH] = _("TOXIC TOUCH"),
     [ABILITY_FROZEN_SPORE] = _("FROZEN SPORE"),
     [ABILITY_SCALDING_TOUCH] = _("SCALDING TOUCH"),
+    [ABILITY_TEMPERED_BLADE] = _("TEMPERED BLADE"),
 };
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
@@ -248,4 +250,5 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_TOXIC_TOUCH] = sToxicTouchDescription,
     [ABILITY_FROZEN_SPORE] = sFrozenSporeDescription,
     [ABILITY_SCALDING_TOUCH] = sScaldingTouchDescription,
+    [ABILITY_TEMPERED_BLADE] = sTemperedBladeDescription,
 };

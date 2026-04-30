@@ -14,9 +14,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256-C293) — 20+ wasted actions total
+## "File Has Not Been Read Yet" on Edit Calls (C256-C300) — 25+ wasted actions total
 
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted. C272: 5. C286: 1. C290: 2. C293: 4.
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C256: 8 wasted. C272: 5. C286: 1. C290: 2. C293: 4. **C300: 3 wasted** (actions 21, 25, 26 — abilities.h, battle_script_commands.c, battle_moves.h).
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
@@ -55,16 +55,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
 **Resolution**: Keep all Pokedex category names to **11 characters max**.
-
-## Species Generator Idempotency Skips species_info (C265-C277) — RESOLVED C293
-
-**Symptom**: Species have constants but ZERO species_info.h entries. Generator says "already exists — nothing to do."
-**Resolution**: C293 added `--fill-missing` mode. No longer need to delete species.h constants before re-running.
-
-## check_all_quick Requires pkg-config (C290) — CI limitation
-
-**Symptom**: `make check_all_quick` fails with `pkg-config: No such file or directory`.
-**Resolution**: For CI-only validation, use `make check_species check_trainers` directly (skip check_scripts).
 
 ## Anticipated Pitfalls
 

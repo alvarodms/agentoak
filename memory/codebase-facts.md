@@ -40,11 +40,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 ---
 
-## Physical/Special Split & Move System (Cycle 43-44, 75, 128, 293)
+## Physical/Special Split & Move System (Cycle 43-44, 75, 128, 293, 300)
 
 **MOVES_COUNT** = 381 (IDs 0-380). Last vanilla = MOVE_PSYCHO_BOOST (354). Fairy: 355-357. Gen 4/5: 358-377. Custom signatures: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). Next move ID: 381.
 
-**Iron Leaf** (C293): Steel/Physical, 85bp, 100acc, 15pp, EFFECT_DEFENSE_DOWN_HIT (20% Def drop). Sceptile_Hoenn signature. Distinct from high-crit moves — weakens armor instead.
+**Iron Leaf** (C293, redesigned C300): Steel/Physical, 85bp, 100acc, 15pp, EFFECT_HIGH_CRITICAL. Sceptile_Hoenn signature. C300 changed from EFFECT_DEFENSE_DOWN_HIT to high-crit to synergize with Tempered Blade (stacks to crit stage 2 = 25%).
 
 **TM/HM fields vs move constants**: The `tmhm_learnsets.h` struct fields correspond to TM/HM assignments, NOT to all moves. Custom Gen4/5 moves (ENERGY_BALL, NASTY_PLOT, etc.) are valid move constants but may NOT be TM fields unless assigned to a TM slot.
 
@@ -130,9 +130,9 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-## Species Generator (C254→C293)
+## Species Generator (C254->C293)
 
-**Tool**: `scripts/generate_species.cjs` — JSON config → **27-file** code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run] [--fill-missing]`. Config files in `species_configs/`.
+**Tool**: `scripts/generate_species.cjs` — JSON config -> **27-file** code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run] [--fill-missing]`. Config files in `species_configs/`.
 
 **--fill-missing mode (C293)**: Populates only the files where the species is absent. Safe to re-run on partially-registered species without deleting constants first. Resolves the longstanding idempotency trap (C265-C292).
 
@@ -140,11 +140,11 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ## Trainer Generator (C266)
 
-`scripts/generate_trainer.cjs` — JSON config → trainer_parties.h/trainers.h/opponents.h. Two modes: `create` / `modify`. Auto-detects party struct type. Configs in `trainer_configs/`.
+`scripts/generate_trainer.cjs` — JSON config -> trainer_parties.h/trainers.h/opponents.h. Two modes: `create` / `modify`. Auto-detects party struct type. Configs in `trainer_configs/`.
 
 ## NPC Dialogue Generator (C275, C287)
 
-`scripts/generate_npc_dialogue.cjs` — Create mode: JSON config → scripts.inc + map.json. Update mode: `--update --file <path> --label <LABEL> --text "text$"`. Charmap validation built-in.
+`scripts/generate_npc_dialogue.cjs` — Create mode: JSON config -> scripts.inc + map.json. Update mode: `--update --file <path> --label <LABEL> --text "text$"`. Charmap validation built-in.
 
 ## Species Verification (C287)
 
@@ -156,9 +156,11 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-## Custom Ability Implementation (C241, expanded C289)
+## Custom Ability Implementation (C241, expanded C289, C300)
 
-4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH=14), text/abilities.h (string+name+pointer), battle_util.c (effect), species_info.h (assign). 3 custom: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80). ABILITIES_COUNT=81. Next: 81.
+4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH=14), text/abilities.h (string+name+pointer), battle_util.c OR battle_script_commands.c (effect), species_info.h (assign). 4 custom: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81). ABILITIES_COUNT=82. Next: 82.
+
+**Two implementation patterns**: Status-inflicting abilities (Toxic Touch, Frozen Spore, Scalding Touch) go in `battle_util.c` ABILITYEFFECT_ON_DAMAGE case. Crit-boosting abilities (Tempered Blade) go in `battle_script_commands.c` Cmd_critcalc.
 
 ---
 
@@ -168,4 +170,4 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ## Postgame NPC Show/Hide Pattern (C248-286)
 
-**Pattern**: OnTransition checks `FLAG_SYS_GAME_CLEAR`, then `clearflag FLAG_HIDE_<NPC>`. Collection tracking via `FLAG_RECKONING_TALKED_*`. **Birch Lab payoff (C286)**: 6 flags → ReckoningAcknowledge → PP_MAX reward → FLAG_RECKONING_COMPLETE.
+**Pattern**: OnTransition checks `FLAG_SYS_GAME_CLEAR`, then `clearflag FLAG_HIDE_<NPC>`. Collection tracking via `FLAG_RECKONING_TALKED_*`. **Birch Lab payoff (C286)**: 6 flags -> ReckoningAcknowledge -> PP_MAX reward -> FLAG_RECKONING_COMPLETE.
