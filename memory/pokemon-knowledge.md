@@ -43,5 +43,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Learnset & Trainer Tooling — C302 Refactor Context | 302 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
 | Champion Dialogue — "Shared Witness" Framing | 303 | [champion-dialogue-witness-framing-c303.md](pokemon-knowledge/champion-dialogue-witness-framing-c303.md) |
 | Type Departure & Champion Identity — Community Evidence | 304 | [type-departure-and-champion-identity-c304.md](pokemon-knowledge/type-departure-and-champion-identity-c304.md) |
+| Champion Replacement Correction — Verified Evidence | 306 | [champion-replacement-correction-c306.md](pokemon-knowledge/champion-replacement-correction-c306.md) |
+| Difficulty Mechanics Landscape — Item Bans, Stat Boosts, Type Changes | 306 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

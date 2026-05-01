@@ -42,6 +42,7 @@ Before modifying ANY file: check the system index below → open detail file →
 - **include/constants/flags.h**: Many cycles — custom flags through 0x2B4 (FLAG_RECKONING_COMPLETE C286), next: 0x2B5
 - **include/constants/species.h**: Many cycles — **37 custom species** through 448 (Ambipom), EGG=449, NUM_SPECIES=449. C304: Added Ambipom (Normal cross-gen evo). MOVES_COUNT=381 (Iron Leaf=380).
 - **LittlerootTown/scripts.inc**: C280 — postgame rival battle script + dialogue (OnTransition show/hide + gender/starter branching + cleartrainerflag rematches)
+- **EverGrandeCity_ChampionsRoom/scripts.inc**: C303 (Wallace witness dialogue), **C308 planned** (Steven champion swap — full dialogue + script rewrite)
 - **EverGrandeCity_GlaciasRoom/scripts.inc**: C213 — Glacia intro dialogue rewritten for cross-gen evo theming
 - **MossdeepCity_Gym/scripts.inc**: C214 — Tate & Liza intro+defeat+post-battle+rematch dialogue rewritten for Farigiraf
 - **PetalburgCity_PokemonCenter_1F/scripts.inc**: C214 — Difficulty downgrade NPC added
