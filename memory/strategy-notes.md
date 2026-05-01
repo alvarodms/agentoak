@@ -98,7 +98,7 @@ Steven's new team: **ZERO overlap** with overused species. Primary #193 target: 
 
 ## Roster Fixes (#180) — Status
 
-**Ambipom on Norman T3+**: DONE (C304). **Carbink on Roxanne T3+**: DONE (C305). **Toxapex on Juan T2+**: C307.
+**Ambipom on Norman T3+**: DONE (C304). **Carbink on Roxanne T3+**: DONE (C305). **Toxapex on Juan T2+**: DONE (C307).
 
 ## Changed Three Ability Parity
 
@@ -112,7 +112,7 @@ Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Cute Charm) and Swampert_Hoen
 |-------|-----------|--------|
 | 302-305 | Learnsets, dialogue, Ambipom+Norman, Carbink+Roxanne — **ALL DONE** | #180, #182 |
 | 306 | Champion redesign planning — **THIS CYCLE** | #192 |
-| 307 | Toxapex + Juan roster fix | #180 |
+| 307 | Toxapex + Juan roster fix — **DONE** | #180 |
 | 308 | Steven champion implementation | #192 |
 | 309 | Wallace cascade (Wallace → Gym 8, Juan → postgame) | — |
 | 310 | Blaziken_Hoenn custom ability (ABILITY_82) | — |
@@ -130,7 +130,7 @@ Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Cute Charm) and Swampert_Hoen
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
-- **Custom species (39)**: Last = Carbink(449). EGG=450, NUM_SPECIES=450. 12 cross-gen evos + 25 _HOENN forms + 2 standalone imports (Carbink, etc.), all fully registered + verified.
+- **Custom species (40)**: Last = Toxapex(450). EGG=451, NUM_SPECIES=451. 12 cross-gen evos + 25 _HOENN forms + 3 standalone imports (Carbink, Toxapex, etc.), all fully registered + verified.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81). ABILITIES_COUNT=82. Next: 82.
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move. MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). ABILITY_NAME_LENGTH=14.

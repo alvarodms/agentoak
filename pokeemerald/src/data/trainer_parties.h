@@ -14343,7 +14343,7 @@ static const struct TrainerMonItemCustomMoves sParty_Juan3[] = {
     .iv = 175,
     .lvl = 56,
     .species = SPECIES_CORSOLA_HOENN,
-    .heldItem = ITEM_LEFTOVERS,
+    .heldItem = ITEM_SITRUS_BERRY,
     .moves = {MOVE_SHADOW_CLAW, MOVE_ROCK_SLIDE, MOVE_CURSE, MOVE_DOUBLE_EDGE}
     },
     {
@@ -14355,10 +14355,10 @@ static const struct TrainerMonItemCustomMoves sParty_Juan3[] = {
     },
     {
     .iv = 175,
-    .lvl = 58,
-    .species = SPECIES_WALREIN,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_ICE_BEAM, MOVE_SURF, MOVE_TOXIC, MOVE_REST}
+    .lvl = 57,
+    .species = SPECIES_TOXAPEX,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_POISON_JAB, MOVE_SURF}
     },
     {
     .iv = 255,
@@ -14388,7 +14388,7 @@ static const struct TrainerMonItemCustomMoves sParty_Juan4[] = {
     .iv = 200,
     .lvl = 64,
     .species = SPECIES_WHISCASH,
-    .heldItem = ITEM_LEFTOVERS,
+    .heldItem = ITEM_SHELL_BELL,
     .moves = {MOVE_EARTHQUAKE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_REST}
     },
     {
@@ -14397,6 +14397,13 @@ static const struct TrainerMonItemCustomMoves sParty_Juan4[] = {
     .species = SPECIES_CRAWDAUNT,
     .heldItem = ITEM_SCOPE_LENS,
     .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_CRUNCH, MOVE_BRICK_BREAK}
+    },
+    {
+    .iv = 200,
+    .lvl = 65,
+    .species = SPECIES_TOXAPEX,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_POISON_JAB, MOVE_HAZE}
     },
     {
     .iv = 255,
@@ -14426,7 +14433,7 @@ static const struct TrainerMonItemCustomMoves sParty_Juan5[] = {
     .iv = 255,
     .lvl = 72,
     .species = SPECIES_WHISCASH,
-    .heldItem = ITEM_LEFTOVERS,
+    .heldItem = ITEM_SHELL_BELL,
     .moves = {MOVE_EARTHQUAKE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_REST}
     },
     {
@@ -14435,6 +14442,13 @@ static const struct TrainerMonItemCustomMoves sParty_Juan5[] = {
     .species = SPECIES_CRAWDAUNT,
     .heldItem = ITEM_SCOPE_LENS,
     .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_CRUNCH, MOVE_BRICK_BREAK}
+    },
+    {
+    .iv = 255,
+    .lvl = 73,
+    .species = SPECIES_TOXAPEX,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_POISON_JAB, MOVE_NIGHT_SLASH}
     },
     {
     .iv = 255,

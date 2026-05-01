@@ -110,7 +110,7 @@ Choose your challenge in Professor Birch's lab:
 
 ### Custom Species Guide
 
-*Thirty-six new species call Hoenn home. Here's where to find them and how they evolve.*
+*Forty new species call Hoenn home. Here's where to find them and how they evolve.*
 
 #### Migration Arrivals
 
@@ -136,6 +136,7 @@ The migration unlocked latent evolutionary potential in species already living i
 | Froslass | Ice/Ghost | Snorunt (Shoal Cave) | Dawn Stone on female Snorunt | Glacia |
 | Mamoswine | Ice/Ground | Piloswine (from Swinub, Shoal Cave Ice Room 10%) | Level 45 | Glacia |
 | Farigiraf | Normal/Psychic | Girafarig (Route 118, Safari Zone) | Level 32 | Tate & Liza |
+| Ambipom | Normal | Aipom (Safari Zone) | Level 33 | Norman |
 
 #### Hoennian Regional Forms
 

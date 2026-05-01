@@ -268,8 +268,10 @@ SootopolisCity_Gym_1F_Text_GymStatueCertified:
 SootopolisCity_Gym_1F_Text_JuanPreRematch:
 	.string "JUAN: Ah, {PLAYER}!\n"
 	.string "The reef keeps changing.\p"
-	.string "Every season my team learns\n"
-	.string "something new from these waters.\p"
+	.string "This one drifted here from waters\n"
+	.string "I've never charted.\p"
+	.string "Even I don't fully understand it.\n"
+	.string "But the sea gives, and I learn.\p"
 	.string "Let me show you what the tides\n"
 	.string "brought in.$"
 

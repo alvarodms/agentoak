@@ -171,8 +171,21 @@ Learnset: 14 moves (Scratch→Return). Key: Fake Out (Lv1), Nasty Plot (Lv44), B
 TM/HM: 27 TMs + 3 HMs. Notable: Brick Break, Shadow Ball, Aerial Ace, Taunt, Thunderbolt.
 Sprites: fetched from expansion repo. Cry: maps to Aipom.
 
-### Type Distribution (40 species)
-Ice 6, Fairy 6, Fighting 5, Water 5, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Poison 3, Grass 3, Electric 3, Normal 2, Dark 2, Fire 2, Bug 1, Psychic 1.
+## C307: Toxapex (Poison/Water, Standalone)
+
+| Species | ID | Type | BST | Trainer Usage |
+|---------|-----|------|-----|---------------|
+| Toxapex | 450 | Poison/Water | 495 | Juan T2 (replaces Walrein), T3 (6th slot), T4 (6th slot) |
+
+Stats: 50/63/152/53/142/35. Abilities: Poison Point / Natural Cure.
+Learnset: 13 moves (Poison Sting→Cross Poison). Key: Toxic (Lv13), Recover (Lv33), Haze (Lv29), Poison Jab (Lv37).
+TM/HM: 20 TMs/HMs. Notable: Ice Beam, Sludge Bomb, Surf, Light Screen.
+Sprites: back/icon/footprint/palettes from expansion; front from Tentacruel placeholder.
+Cry: maps to Tentacruel.
+Moveset progression on Juan: T2 Surf (dual STAB), T3 Haze (anti-setup), T4 Night Slash (counter-counterplay). No Recover on any boss set.
+
+### Type Distribution (41 species)
+Ice 6, Fairy 6, Water 6, Fighting 5, Poison 4, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Grass 3, Electric 3, Normal 2, Dark 2, Fire 2, Bug 1, Psychic 1.
 
 ## C305: Carbink (Rock/Fairy, Standalone)
 

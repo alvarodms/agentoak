@@ -4,9 +4,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-305, 33 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-307, 34 occurrences) — RECURRING
 
-**Symptom**: 64-132 actions before first edit. C304: first edit at action 37/93 (40%). **C305: first edit at action 43/123 (35%)** — Agent subagent used 3 times (actions 4, 7, 14), wrong path prefix 3 times (actions 15, 16, 18). Despite 33 prior occurrences of this failure pattern, still not fixed.
+**Symptom**: 40-132 actions before first edit. C307: first edit at action 40/89 (45%) — Agent subagent used once (action 11). No path errors this cycle but still slow start.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
 ## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
@@ -14,22 +14,16 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
 **Resolution**: Use a **node.js script** to apply all changes in one pass.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256-C305) — 35+ wasted actions total
+## "File Has Not Been Read Yet" on Edit Calls (C256-C307) — 35+ wasted actions total
 
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C304: 1 wasted. **C305: 1 wasted** (action 68 — species_names.h after grep).
+**Symptom**: Edit tool rejected calls with "File has not been read yet." C307: 0 wasted (improvement).
 **Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
 **Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
 
-## Incomplete Species Registration — Ambipom (C304→C305) — RESOLVED C305
-
-**Symptom**: C304 generator reported 27/27 but Ambipom was missing from species.h, pokedex.h, species_names.h. Verify script showed 24/27. C305 re-ran generator with --fill-missing and added 3 manual entries.
-**Root cause**: Generator may have hit a file-write conflict or the entries were overwritten by Carbink's subsequent addition in the same uncommitted working tree.
-**Resolution**: Always run `verify_species.sh` AFTER generator AND after any subsequent species additions in the same cycle. C305 fixed all gaps.
-
 ## Wrong Path Prefix (C286-C305) — 40+ wasted actions total
 
-**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. **C305: 3 instances** (actions 15, 16, 18).
-**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix. Recurred in C286, C293, C294, C298, C304, C305.
+**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. C307: 0 instances (improvement).
+**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix.
 
 ## Script Path Confusion (C288) — 6 wasted actions
 
@@ -56,6 +50,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
 **Resolution**: Keep all Pokedex category names to **11 characters max**.
+
+## fetch_pokemon_sprites Missing anim_front.png (C307) — NEW
+
+**Symptom**: MCP `fetch_pokemon_sprites` for Toxapex delivered only 5/7 files (no anim_front.png, no front.png). front.png is auto-cropped from anim_front.png, so both were missing.
+**Resolution**: Always `ls` the sprite directory after download to verify all 7 files. If anim_front.png is missing, copy from a visually similar species (C307 used Tentacruel). Run with `overwrite: true` on retry. Keep a mental list of good fallback species per type.
 
 ## Anticipated Pitfalls
 

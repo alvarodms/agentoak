@@ -45,5 +45,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Type Departure & Champion Identity — Community Evidence | 304 | [type-departure-and-champion-identity-c304.md](pokemon-knowledge/type-departure-and-champion-identity-c304.md) |
 | Champion Replacement Correction — Verified Evidence | 306 | [champion-replacement-correction-c306.md](pokemon-knowledge/champion-replacement-correction-c306.md) |
 | Difficulty Mechanics Landscape — Item Bans, Stat Boosts, Type Changes | 306 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
+| Toxapex on Boss Trainers — The Stall Pitfall | 307 | [toxapex-boss-design-stall-pitfall-c307.md](pokemon-knowledge/toxapex-boss-design-stall-pitfall-c307.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
