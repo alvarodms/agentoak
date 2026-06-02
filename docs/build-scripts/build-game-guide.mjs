@@ -6,7 +6,8 @@
  * Run: node docs/build-game-guide.mjs
  */
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -331,22 +332,22 @@ async function parseTrainers() {
 
 // ── Assemble Key Trainers ──
 
-function assembleGymLeaders(trainers, parties) {
-  // Gym leaders use TRAINER_CLASS_LEADER and have _1 suffix for main battle
-  const gymOrder = [
-    { pattern: /^TRAINER_ROXANNE_1$/, name: 'Roxanne', gym: 1, type: 'Rock', location: 'Rustboro City' },
-    { pattern: /^TRAINER_BRAWLY_1$/, name: 'Brawly', gym: 2, type: 'Fighting', location: 'Dewford Town' },
-    { pattern: /^TRAINER_WATTSON_1$/, name: 'Wattson', gym: 3, type: 'Electric', location: 'Mauville City' },
-    { pattern: /^TRAINER_FLANNERY_1$/, name: 'Flannery', gym: 4, type: 'Fire', location: 'Lavaridge Town' },
-    { pattern: /^TRAINER_NORMAN_1$/, name: 'Norman', gym: 5, type: 'Normal', location: 'Petalburg City' },
-    { pattern: /^TRAINER_WINONA_1$/, name: 'Winona', gym: 6, type: 'Flying', location: 'Fortree City' },
-    { pattern: /^TRAINER_TATE_AND_LIZA_1$/, name: 'Tate & Liza', gym: 7, type: 'Psychic', location: 'Mossdeep City' },
-    { pattern: /^TRAINER_JUAN_1$/, name: 'Juan', gym: 8, type: 'Water', location: 'Sootopolis City' },
-  ];
+const GYM_DEFS = [
+  { key: 'ROXANNE', name: 'Roxanne', gym: 1, type: 'Rock', location: 'Rustboro City' },
+  { key: 'BRAWLY', name: 'Brawly', gym: 2, type: 'Fighting', location: 'Dewford Town' },
+  { key: 'WATTSON', name: 'Wattson', gym: 3, type: 'Electric', location: 'Mauville City' },
+  { key: 'FLANNERY', name: 'Flannery', gym: 4, type: 'Fire', location: 'Lavaridge Town' },
+  { key: 'NORMAN', name: 'Norman', gym: 5, type: 'Normal', location: 'Petalburg City' },
+  { key: 'WINONA', name: 'Winona', gym: 6, type: 'Flying', location: 'Fortree City' },
+  { key: 'TATE_AND_LIZA', name: 'Tate & Liza', gym: 7, type: 'Psychic', location: 'Mossdeep City' },
+  { key: 'JUAN', name: 'Juan', gym: 8, type: 'Water', location: 'Sootopolis City' },
+];
 
-  return gymOrder.map(def => {
-    const trainer = trainers.find(t => def.pattern.test(t.id));
-    if (!trainer) return { ...def, party: [], pattern: undefined };
+function assembleGymLeaders(trainers, parties) {
+  return GYM_DEFS.map(def => {
+    const pattern = new RegExp(`^TRAINER_${def.key}_1$`);
+    const trainer = trainers.find(t => pattern.test(t.id));
+    if (!trainer) return { ...def, party: [], key: undefined };
     const party = parties.get(trainer.partyRef) || [];
     return {
       name: def.name,
@@ -357,6 +358,63 @@ function assembleGymLeaders(trainers, parties) {
       party,
     };
   });
+}
+
+function assembleGymRematches(trainers, parties) {
+  const rematches = [];
+  for (const def of GYM_DEFS) {
+    for (let raw = 2; raw <= 5; raw++) {
+      const pattern = new RegExp(`^TRAINER_${def.key}_${raw}$`);
+      const trainer = trainers.find(t => pattern.test(t.id));
+      if (!trainer) continue;
+      const party = parties.get(trainer.partyRef) || [];
+      if (party.length === 0) continue;
+      rematches.push({
+        name: def.name,
+        gym: def.gym,
+        type: def.type,
+        location: def.location,
+        tier: raw - 1, // _2 = Rematch 1, _3 = Rematch 2, etc.
+        doubleBattle: trainer.doubleBattle,
+        party,
+      });
+    }
+  }
+  return rematches;
+}
+
+function assembleE4Rematches(trainers, parties) {
+  const E4_DEFS = [
+    { key: 'SIDNEY', name: 'Sidney', type: 'Dark' },
+    { key: 'PHOEBE', name: 'Phoebe', type: 'Ghost' },
+    { key: 'GLACIA', name: 'Glacia', type: 'Ice' },
+    { key: 'DRAKE', name: 'Drake', type: 'Dragon' },
+  ];
+  const rematches = [];
+  for (const def of E4_DEFS) {
+    for (let tier = 1; tier <= 4; tier++) {
+      const pattern = new RegExp(`^TRAINER_${def.key}_REMATCH_${tier}$`);
+      const trainer = trainers.find(t => pattern.test(t.id));
+      if (!trainer) continue;
+      const party = parties.get(trainer.partyRef) || [];
+      if (party.length === 0) continue;
+      rematches.push({ name: def.name, type: def.type, tier, party });
+    }
+  }
+  return rematches;
+}
+
+function assembleChampionRematches(trainers, parties) {
+  const rematches = [];
+  for (let tier = 1; tier <= 4; tier++) {
+    const pattern = new RegExp(`^TRAINER_WALLACE_REMATCH_${tier}$`);
+    const trainer = trainers.find(t => pattern.test(t.id));
+    if (!trainer) continue;
+    const party = parties.get(trainer.partyRef) || [];
+    if (party.length === 0) continue;
+    rematches.push({ name: trainer.name, tier, party });
+  }
+  return rematches;
 }
 
 function assembleEliteFour(trainers, parties) {
@@ -407,7 +465,7 @@ const BOSS_DEFINITIONS = [
   { key: 'archie',                  trainerId: 'TRAINER_ARCHIE',                  name: 'Archie',  faction: 'Aqua',     location: 'Seafloor Cavern' },
   { key: 'tabitha_mossdeep',        trainerId: 'TRAINER_TABITHA_MOSSDEEP',        name: 'Tabitha', faction: 'Magma',    location: 'Mossdeep City' },
   { key: 'maxie_mossdeep',          trainerId: 'TRAINER_MAXIE_MOSSDEEP',          name: 'Maxie',   faction: 'Magma',    location: 'Mossdeep City' },
-  { key: 'steven_multi',            trainerId: 'TRAINER_STEVEN',                  name: 'Steven',  faction: 'Champion', location: 'Mossdeep City' },
+  { key: 'steven_postgame',         trainerId: 'TRAINER_STEVEN',                  name: 'Steven',  faction: 'Champion', location: 'Meteor Falls (Postgame)' },
   { key: 'wally_vr_1',              trainerId: 'TRAINER_WALLY_VR_1',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 1)' },
   { key: 'wally_vr_2',              trainerId: 'TRAINER_WALLY_VR_2',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 2)' },
   { key: 'wally_vr_3',              trainerId: 'TRAINER_WALLY_VR_3',              name: 'Wally',   faction: 'Wally',    location: 'Victory Road (Tier 3)' },
@@ -495,6 +553,92 @@ function assembleRivals(trainers, parties, starters) {
   });
 }
 
+// ── Route Trainers (parsed from map scripts) ──
+
+/** TRAINER_CLASS_COOLTRAINER → Cooltrainer */
+function formatTrainerClass(raw) {
+  if (!raw) return 'Trainer';
+  return raw
+    .replace(/^TRAINER_CLASS_/, '')
+    .split('_')
+    .map(w => w.charAt(0) + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
+/**
+ * Parse all map script files to build a mapping of map → trainer IDs.
+ * Then cross-reference with parsed trainer/party data to produce full team info.
+ * Returns Record<mapName, TrainerEntry[]>
+ */
+async function assembleRouteTrainers(trainers, parties) {
+  const mapsDir = join(POKE, 'data', 'maps');
+  const byId = new Map(trainers.map(t => [t.id, t]));
+  const routeTrainers = {};
+
+  let dirs;
+  try {
+    dirs = await readdir(mapsDir);
+  } catch {
+    return routeTrainers;
+  }
+
+  // Trainer IDs that are already shown as gym leaders, E4, champion, bosses, or rivals
+  const knownIds = new Set(trainers
+    .filter(t =>
+      /^TRAINER_(ROXANNE|BRAWLY|WATTSON|FLANNERY|NORMAN|WINONA|TATE_AND_LIZA|JUAN|SIDNEY|PHOEBE|GLACIA|DRAKE|WALLACE|STEVEN|BRENDAN|MAY)/.test(t.id) ||
+      BOSS_DEFINITIONS.some(b => b.trainerId === t.id)
+    )
+    .map(t => t.id)
+  );
+
+  for (const dir of dirs) {
+    const scriptPath = join(mapsDir, dir, 'scripts.inc');
+    if (!existsSync(scriptPath)) continue;
+
+    const src = await readFile(scriptPath, 'utf-8');
+    // Match trainerbattle_single, trainerbattle_double, skip rematch variants
+    const trainerRefs = [...src.matchAll(/trainerbattle_(?:single|double)\s+(TRAINER_\w+)/g)]
+      .map(m => m[1]);
+
+    if (trainerRefs.length === 0) continue;
+
+    // Deduplicate (same trainer can appear in multiple script branches)
+    const uniqueIds = [...new Set(trainerRefs)];
+
+    // Filter out known boss/gym/rival trainers and grunts with _1 rematch suffixes
+    const routeIds = uniqueIds.filter(id => !knownIds.has(id));
+    if (routeIds.length === 0) continue;
+
+    // Format map name from directory: Route102 → Route 102, PetalburgWoods → Petalburg Woods
+    const mapName = dir
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/([A-Za-z])(\d)/g, '$1 $2')
+      .replace(/(\d)([A-Z])/g, '$1 $2');
+
+    const entries = [];
+    for (const id of routeIds) {
+      const trainer = byId.get(id);
+      if (!trainer) continue;
+      const party = parties.get(trainer.partyRef) || [];
+      if (party.length === 0) continue;
+
+      entries.push({
+        trainerId: id,
+        name: trainer.name,
+        trainerClass: formatTrainerClass(trainer.trainerClass),
+        doubleBattle: trainer.doubleBattle,
+        party,
+      });
+    }
+
+    if (entries.length > 0) {
+      routeTrainers[mapName] = entries;
+    }
+  }
+
+  return routeTrainers;
+}
+
 // ── Main ──
 
 async function main() {
@@ -514,30 +658,39 @@ async function main() {
   console.log(`  Trainers: ${trainers.length}`);
 
   const gymLeaders = assembleGymLeaders(trainers, parties);
+  const gymRematches = assembleGymRematches(trainers, parties);
   const eliteFour = assembleEliteFour(trainers, parties);
+  const e4Rematches = assembleE4Rematches(trainers, parties);
   const champion = assembleChampion(trainers, parties);
+  const championRematches = assembleChampionRematches(trainers, parties);
   const rivals = assembleRivals(trainers, parties, starters);
   const bossFights = assembleBossFights(trainers, parties);
+  const routeTrainers = await assembleRouteTrainers(trainers, parties);
 
   const guide = {
     generatedAt: new Date().toISOString(),
     starters,
     routes,
     gymLeaders,
+    gymRematches,
     eliteFour,
+    e4Rematches,
     champion,
+    championRematches,
     rivals,
     bossFights,
+    routeTrainers,
   };
 
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeFile(OUTPUT_FILE, JSON.stringify(guide, null, 2) + '\n');
   console.log(`✔ Generated ${OUTPUT_FILE}`);
-  console.log(`  Gym leaders: ${gymLeaders.length}`);
-  console.log(`  Elite Four: ${eliteFour.length}`);
-  console.log(`  Champion: ${champion ? champion.name : 'not found'}`);
+  console.log(`  Gym leaders: ${gymLeaders.length} (+ ${gymRematches.length} rematches)`);
+  console.log(`  Elite Four: ${eliteFour.length} (+ ${e4Rematches.length} rematches)`);
+  console.log(`  Champion: ${champion ? champion.name : 'not found'} (+ ${championRematches.length} rematches)`);
   console.log(`  Rival battles: ${rivals.length}`);
   console.log(`  Boss fights: ${bossFights.length}`);
+  console.log(`  Route trainers: ${Object.values(routeTrainers).reduce((s, t) => s + t.length, 0)} across ${Object.keys(routeTrainers).length} maps`);
 }
 
 main().catch(err => {
