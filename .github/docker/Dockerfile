@@ -40,13 +40,7 @@ RUN git clone https://github.com/Alcaro/Flips.git /tmp/flips \
     && cp flips /usr/local/bin/flips \
     && rm -rf /tmp/flips
 
-# Install RTK (Rust Token Killer) for Claude Code cost tracking
-RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh \
-    && cp /root/.local/bin/rtk /usr/local/bin/rtk \
-    && rm -rf /root/.local/bin/rtk
-
 # Sanity-check all required tools are present and executable
 RUN arm-none-eabi-gcc --version \
     && /opt/agbcc/bin/agbcc --version 2>&1 | head -1 \
-    && flips --version 2>&1 | head -1 || true \
-    && rtk --version 2>&1 | head -1 || true
+    && flips --version 2>&1 | head -1 || true

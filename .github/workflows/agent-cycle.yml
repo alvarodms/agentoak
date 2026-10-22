@@ -104,12 +104,6 @@ jobs:
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
 
-      # Cost tracking only — must never block a cycle. This step failing is
-      # what stalled every scheduled run from May to June 2026.
-      - name: Register RTK hook with Claude Code
-        continue-on-error: true
-        run: rtk init -g --auto-patch
-
       - name: Run agent cycle (attempt 1)
         id: attempt1
         continue-on-error: true
@@ -139,10 +133,6 @@ jobs:
           else
             git push origin main
           fi
-
-      - name: Log RTK stats
-        continue-on-error: true
-        run: rtk gain || echo "Failed to get RTK stats"
 
   deploy-docs:
     needs: run-cycle
