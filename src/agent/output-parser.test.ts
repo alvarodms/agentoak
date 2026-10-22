@@ -252,6 +252,15 @@ describe("parseClaudeOutput", () => {
     expect(result.filesModified).toContain("pokeemerald/graphics/pokemon/lucario/shiny.pal");
   });
 
+  it("tracks fetch_pokemon_sprites when called by its MCP-prefixed name", () => {
+    const input = msg("assistant", [
+      toolUse("mcp__pokedex__fetch_pokemon_sprites", { name: "toxapex" }),
+    ]);
+    const result = parseClaudeOutput(input);
+    expect(result.filesModified).toHaveLength(7);
+    expect(result.filesModified).toContain("pokeemerald/graphics/pokemon/toxapex/front.png");
+  });
+
   it("tracks fetch_pokemon_sprites paths under custom output_dir", () => {
     const input = msg("assistant", [
       toolUse("fetch_pokemon_sprites", {
@@ -341,6 +350,36 @@ describe("parseClaudeOutput", () => {
     const result = parseClaudeOutput(input);
     expect(result.tokenUsage.inputTokens).toBe(500);
     expect(result.tokenUsage.outputTokens).toBe(200);
+  });
+
+  it("prefers cumulative result usage over per-message usage", () => {
+    const input = [
+      msg("assistant", [textBlock("hello")], {
+        usage: { input_tokens: 2, output_tokens: 24 },
+      }),
+      msg("result", [], {
+        result: "done",
+        usage: { input_tokens: 2, output_tokens: 99 },
+      }),
+    ].join("\n");
+    const result = parseClaudeOutput(input);
+    expect(result.tokenUsage.inputTokens).toBe(2);
+    expect(result.tokenUsage.outputTokens).toBe(99);
+  });
+
+  it("counts prompt-cache tokens as input tokens", () => {
+    const input = msg("result", [], {
+      result: "done",
+      usage: {
+        input_tokens: 2,
+        cache_creation_input_tokens: 4110,
+        cache_read_input_tokens: 900,
+        output_tokens: 99,
+      },
+    });
+    const result = parseClaudeOutput(input);
+    expect(result.tokenUsage.inputTokens).toBe(5012);
+    expect(result.tokenUsage.totalTokens).toBe(5111);
   });
 
   // --- Narrative text ---

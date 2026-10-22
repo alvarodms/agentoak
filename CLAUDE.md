@@ -321,7 +321,7 @@ Each outcome object has these fields:
 - `"partial"` — only part of the ask was implemented. You MUST also set `decision` and `reason`.
   - `"defer"` — keep the issue open and return it to the backlog for a future cycle.
   - `"reject"` — decline the remaining work; the issue will be closed without full delivery.
-- **Never omit `issue_outcomes` when you accepted issues.** Omitting it causes the runner to close issues as if they were complete, even if they weren't.
+- **Never omit `issue_outcomes` when you accepted issues.** Omitting it leaves the issues open and re-deferred with a "delivery not confirmed" comment — finished work goes unrecognised and costs the issue a deferral.
 - **Never mark an issue `"complete"` unless its full ask was implemented.** If you only partially addressed it, use `"partial"`.
 
 **Example — issue fully delivered:**

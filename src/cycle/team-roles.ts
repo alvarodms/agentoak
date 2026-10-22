@@ -183,7 +183,7 @@ ${buildAdvisorContextBlock(ctx)}
 1. Read \`memory/pokemon-knowledge.md\` (the index) to review what topics you've already researched. Open individual topic files as needed.
 2. Read \`memory/strategy-notes.md\` to understand the project's current direction.
 3. Identify what research would be most useful for the next cycle's decision.
-4. Use 1-3 subagents to perform WebSearch for 1-3 targeted searches. Don't over-search — be focused.
+4. Run 1-3 targeted WebSearch queries. Don't over-search — be focused.
 5. Save new findings as a new file in \`memory/pokemon-knowledge/\` (with the cycle/date header) and add a row to the index. If updating existing research, edit the topic file in place.
 6. Write a plain-text memo addressed to "Producer" with your recommendation, grounded in real-world knowledge of what works in ROM hacks.
 7. **Every memo must include at least one concrete insight from external research that the team didn't already know.** Cite a specific hack, community thread, or design pattern.

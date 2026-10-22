@@ -136,7 +136,7 @@ Your full memory is in the \`memory/\` directory. Read these files if you need m
 
 ${bullets}
 
-You can also read specific cycle journals in \`memory/cycles/cycle-<n>.md\` for more details on past cycles if needed.`;
+You can also read specific cycle journals in \`journal/cycle-<NNNN>.md\` (zero-padded, e.g. \`journal/cycle-0307.md\`) for more details on past cycles if needed.`;
 }
 
 /** The mode history heading + "don't feel constrained" preamble. */

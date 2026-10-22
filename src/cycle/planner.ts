@@ -150,6 +150,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     implementationPlan?: string;
     gameplayDesignBrief?: string;
     engineeringInvestment?: string;
+    creativeInvestment?: string;
     spriteDesignBrief?: string;
     isSpriteIteration?: boolean;
     issueActions?: IssueAction[];
@@ -228,6 +229,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       implementationPlan: parsed.implementationPlan ?? "",
       gameplayDesignBrief: parsed.gameplayDesignBrief || undefined,
       engineeringInvestment: parsed.engineeringInvestment || undefined,
+      creativeInvestment: parsed.creativeInvestment || undefined,
       spriteDesignBrief: parsed.spriteDesignBrief || undefined,
       isSpriteIteration: parsed.isSpriteIteration ?? false,
       issueActions,
@@ -249,9 +251,11 @@ export async function planCycle(
   issueContext: string = "",
   issueBacklog: string = "",
   staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number }>,
+  options: { allowTeam?: boolean } = {},
 ): Promise<CyclePlan> {
-  // Dispatch to team planner if conditions are met
-  if (shouldUseTeamPlanning(cycleNumber, undefined, issueContext.length > 0)) {
+  // Dispatch to team planner if conditions are met. The team planner falls back
+  // here with allowTeam=false — without it the two would recurse forever.
+  if (options.allowTeam !== false && shouldUseTeamPlanning(cycleNumber, undefined, issueContext.length > 0)) {
     logger.info("[Planning] Using team planning (multi-perspective advisory)");
     return planCycleWithTeam(recentJournalSummaries, cycleNumber, issueContext, issueBacklog, staleIssues);
   }

@@ -124,7 +124,7 @@ export async function planCycleWithTeam(
     logger.warn("[Team Planning] All advisors failed — falling back to single planner");
     // Dynamic import to avoid circular dependency with planner.ts
     const { planCycle } = await import("./planner.js");
-    return planCycle(recentJournalSummaries, cycleNumber, issueContext, issueBacklog, staleIssues);
+    return planCycle(recentJournalSummaries, cycleNumber, issueContext, issueBacklog, staleIssues, { allowTeam: false });
   }
 
   // Phase B: Build Producer prompt (shared planner context + memos)

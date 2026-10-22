@@ -7,7 +7,7 @@ on:
       model:
         description: "Claude model to use"
         required: false
-        default: "claude-opus-4-6"
+        default: "claude-opus-5-5"
       max_tool_calls:
         description: "Max tool calls per cycle"
         required: false
@@ -48,7 +48,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     env:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      ANTHROPIC_MODEL: ${{ inputs.model || 'claude-opus-4-6' }}
+      ANTHROPIC_MODEL: ${{ inputs.model || 'claude-opus-5-5' }}
       MAX_TOOL_CALLS_PER_CYCLE: ${{ inputs.max_tool_calls || '100' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_REPO: ${{ github.repository }}
@@ -79,9 +79,10 @@ jobs:
       - name: Install Node dependencies
         run: npm i
 
+      # Pinned: the runner parses the CLI's stream-json output and relies on its
+      # flags, so upgrades should be deliberate. Verified against 2.1.308.
       - name: Install Claude Code CLI
-        run: |
-          npm install -g @anthropic-ai/claude-code
+        run: npm install -g @anthropic-ai/claude-code@2.1.308
 
       - name: Copy agbcc into workspace
         run: |
@@ -102,9 +103,6 @@ jobs:
           git config --global --add safe.directory $GITHUB_WORKSPACE
           git config user.name "Agent Oak [bot]"
           git config user.email "agent-oak[bot]@users.noreply.github.com"
-
-      - name: Register RTK hook with Claude Code
-        run: rtk init -g --auto-patch
 
       - name: Run agent cycle (attempt 1)
         id: attempt1
@@ -135,9 +133,6 @@ jobs:
           else
             git push origin main
           fi
-
-      - name: Log RTK stats
-        run: rtk gain || echo "Failed to get RTK stats"
 
   deploy-docs:
     needs: run-cycle

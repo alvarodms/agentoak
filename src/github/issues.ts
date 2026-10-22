@@ -127,18 +127,25 @@ export function isMaxDeferralsReached(issueNumber: number): boolean {
  * Always writes the file so the change is not lost due to the "nothing changed"
  * early-return guard inside updateIssueBacklog.
  */
-export function addIssueToBacklog(issueNumber: number, title: string, cycleNumber: number): void {
+export function addIssueToBacklog(
+  issueNumber: number,
+  title: string,
+  cycleNumber: number,
+  pendingItems?: string[],
+): void {
   const existing = new Map<number, BacklogEntry>();
   for (const entry of parseBacklogEntries()) {
     existing.set(entry.issueNumber, entry);
   }
 
+  // `title` is a fallback — keep the real title if the issue is already tracked
   const prev = existing.get(issueNumber);
   existing.set(issueNumber, {
     issueNumber,
-    title,
+    title: prev?.title ?? title,
     deferredAtCycle: cycleNumber,
     deferralCount: prev ? prev.deferralCount + 1 : 1,
+    pendingItems: pendingItems ?? prev?.pendingItems,
   });
 
   writeBacklogEntries([...existing.values()]);
