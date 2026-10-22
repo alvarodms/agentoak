@@ -1,6 +1,6 @@
 # Third-party skills: mattpocock/skills
 
-The engineering skills in this directory (all except `communicate/`) are copied from
+The engineering skills in this directory are copied from
 https://github.com/mattpocock/skills at commit `5beb35b040e3de97e54fa9e386d7e42d15c295c2` (`skills/engineering/`, v1.3.1).
 Codex-only `agents/openai.yaml` files were omitted. To update, re-copy from upstream.
 
