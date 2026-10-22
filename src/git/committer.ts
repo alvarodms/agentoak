@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import { simpleGit } from "simple-git";
 import { PROJECT_ROOT } from "../utils/paths.js";
@@ -271,6 +273,50 @@ export function buildDiffStats(rawDiffStat: string, untrackedFiles: string[]): D
 }
 
 /** Get structured diff statistics for pokeemerald/ changes (staged + unstaged + untracked) */
+/**
+ * List every pokeemerald/ file that differs from HEAD — tracked changes
+ * (including deletions) plus untracked files — as repo-relative paths.
+ *
+ * The output parser only sees Write/Edit tool calls, so edits made through
+ * Bash (sed, python scripts) or by the build-fix agent are invisible to it.
+ * Git is the source of truth for what actually changed.
+ */
+export async function getChangedPokeemeraldFiles(): Promise<string[]> {
+  try {
+    const tracked = await git.diff(["--name-only", "HEAD", "--", "pokeemerald/"]);
+    const trackedFiles = tracked
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+    return [...new Set([...trackedFiles, ...(await listUntrackedPokeemeraldFiles())])];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Content fingerprint of the pokeemerald/ working tree relative to HEAD.
+ * Two equal fingerprints mean no game file changed in between — used to
+ * decide whether an agent run needs a fresh build.
+ */
+export async function getPokeemeraldFingerprint(): Promise<string> {
+  const hash = createHash("sha1");
+  try {
+    hash.update(await git.diff(["HEAD", "--binary", "--", "pokeemerald/"]));
+    for (const file of (await listUntrackedPokeemeraldFiles()).sort()) {
+      hash.update(file);
+      try {
+        hash.update(fs.readFileSync(path.join(PROJECT_ROOT, file)));
+      } catch {
+        // Removed between listing and reading — the name alone is enough
+      }
+    }
+  } catch {
+    // Fall through with whatever was hashed
+  }
+  return hash.digest("hex");
+}
+
 export async function getDiffStats(): Promise<DiffStats> {
   try {
     // Tracked changes: staged + unstaged vs HEAD.

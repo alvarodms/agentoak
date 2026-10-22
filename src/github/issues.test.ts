@@ -198,3 +198,33 @@ describe("formatIssuesForPrompt", () => {
     expect(result).not.toContain("Upvotes");
   });
 });
+
+describe("addIssueToBacklog", () => {
+  it("persists pending items and keeps the existing title", async () => {
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(
+      "# Issue Backlog\n\n- #180: Roster fixes remaining (deferred: cycle 300)\n",
+    );
+    const { addIssueToBacklog } = await importIssuesModule();
+
+    addIssueToBacklog(180, "Issue #180", 307, ["Corsola_Hoenn on PhoebeRematch1"]);
+
+    const written = mockFs.writeFileSync.mock.calls[0][1] as string;
+    expect(written).toContain(
+      "- #180: Roster fixes remaining (deferred: cycle 307) | deferrals: 2 | pending: Corsola_Hoenn on PhoebeRematch1",
+    );
+  });
+
+  it("keeps previously pending items when none are passed", async () => {
+    mockFs.existsSync.mockReturnValue(true);
+    mockFs.readFileSync.mockReturnValue(
+      "# Issue Backlog\n\n- #193: Boss audit (deferred: cycle 306) | pending: Juan redundancy\n",
+    );
+    const { addIssueToBacklog } = await importIssuesModule();
+
+    addIssueToBacklog(193, "Issue #193", 308);
+
+    const written = mockFs.writeFileSync.mock.calls[0][1] as string;
+    expect(written).toContain("- #193: Boss audit (deferred: cycle 308) | deferrals: 2 | pending: Juan redundancy");
+  });
+});

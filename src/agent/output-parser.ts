@@ -95,6 +95,8 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   const postMarkerTexts: string[] = [];
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
+  let resultInputTokens: number | null = null;
+  let resultOutputTokens = 0;
   let resultText = "";
 
   for (const msg of messages) {
@@ -113,22 +115,19 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
         resultText = r;
       }
     }
-    // Accumulate token usage from usage fields
+    // Token usage: the result message carries the cumulative total for the run,
+    // so it wins over per-message usage (summing both double-counts). Per-message
+    // usage is only a fallback for runs that die before emitting a result.
     if (msg.usage && typeof msg.usage === "object") {
       const usage = msg.usage as Record<string, number>;
-      totalInputTokens += usage.input_tokens ?? 0;
-      totalOutputTokens += usage.output_tokens ?? 0;
-    }
-
-    // Also capture total usage from result messages (stream-json puts cumulative usage here)
-    if (msg.type === "result") {
-      const resultUsage = msg.usage as Record<string, number> | undefined;
-      if (resultUsage?.input_tokens || resultUsage?.output_tokens) {
-        // Result usage is cumulative — use it if we haven't accumulated anything yet
-        if (totalInputTokens === 0 && totalOutputTokens === 0) {
-          totalInputTokens = resultUsage.input_tokens ?? 0;
-          totalOutputTokens = resultUsage.output_tokens ?? 0;
+      if (msg.type === "result") {
+        if (inputTokensOf(usage) || usage.output_tokens) {
+          resultInputTokens = inputTokensOf(usage);
+          resultOutputTokens = usage.output_tokens ?? 0;
         }
+      } else {
+        totalInputTokens += inputTokensOf(usage);
+        totalOutputTokens += usage.output_tokens ?? 0;
       }
     }
 
@@ -224,7 +223,7 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
         }
 
         // Track files created by fetch_pokemon_sprites MCP tool
-        if (toolName === "fetch_pokemon_sprites" && typeof input.name === "string") {
+        if (isMcpTool(toolName, "fetch_pokemon_sprites") && typeof input.name === "string") {
           const outDir =
             typeof input.output_dir === "string" ? input.output_dir : undefined;
           const subpath = getSpriteGraphicsSubpath(input.name, outDir);
@@ -305,6 +304,9 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   const allNarrativeTexts = preMarkerTexts.length > 0 ? preMarkerTexts : postMarkerTexts;
   const narrativeText = allNarrativeTexts.join("\n\n");
 
+  const inputTokens = resultInputTokens ?? totalInputTokens;
+  const outputTokens = resultInputTokens !== null ? resultOutputTokens : totalOutputTokens;
+
   return {
     actions,
     filesModified: [...filesModified],
@@ -316,14 +318,26 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     versionBump,
     releaseStage,
     tokenUsage: {
-      inputTokens: totalInputTokens,
-      outputTokens: totalOutputTokens,
-      totalTokens: totalInputTokens + totalOutputTokens,
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
     },
     toolCallCount,
     resultText,
     narrativeText,
   };
+}
+
+/** Input tokens for one usage record, including prompt-cache reads and writes */
+function inputTokensOf(usage: Record<string, number>): number {
+  return (usage.input_tokens ?? 0)
+    + (usage.cache_read_input_tokens ?? 0)
+    + (usage.cache_creation_input_tokens ?? 0);
+}
+
+/** Match an MCP tool by its bare name, with or without the `mcp__<server>__` prefix */
+export function isMcpTool(toolName: string, bareName: string): boolean {
+  return toolName === bareName || (toolName.startsWith("mcp__") && toolName.endsWith(`__${bareName}`));
 }
 
 /** Parse NDJSON lines or a JSON array from raw output */

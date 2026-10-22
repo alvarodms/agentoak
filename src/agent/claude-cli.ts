@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import { logger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
-import { parseClaudeOutput } from "./output-parser.js";
+import { parseClaudeOutput, isMcpTool } from "./output-parser.js";
 import type { ClaudeCodeResult } from "./output-parser.js";
 
 /** Prefix used by Claude Code for MCP tool names: mcp__<server>__<tool> */
@@ -443,7 +443,10 @@ class StreamState {
   private describeToolCall(name: string, input?: Record<string, unknown>): string {
     if (!input) return name;
 
-    switch (name) {
+    // MCP tools arrive as mcp__<server>__<tool>
+    const toolName = isMcpTool(name, "fetch_pokemon_sprites") ? "fetch_pokemon_sprites" : name;
+
+    switch (toolName) {
       case "Read": {
         const filePath = (input.file_path as string) ?? "";
         return `Read ${this.shortenPath(filePath)}`;

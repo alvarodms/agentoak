@@ -26,6 +26,8 @@ import {
   getHeadSha,
   revertPokeemerald,
   getDiffStats,
+  getChangedPokeemeraldFiles,
+  getPokeemeraldFingerprint,
   getStrategyNotesDiff,
   getGitStatusText,
   getRecentGitLogText,
@@ -144,6 +146,28 @@ function buildDeepSeekOverrides(): Record<string, string | undefined> | undefine
     API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(),
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: process.env.DEEPSEEK_DISABLE_NONESSENTIAL_TRAFFIC ?? "1",
   };
+}
+
+/** Repo-relative form of a path reported by a tool call */
+function toRepoRelative(filePath: string): string {
+  return path.isAbsolute(filePath) ? path.relative(PROJECT_ROOT, filePath) : filePath;
+}
+
+/**
+ * Fold pokeemerald/ changes that git sees into the result's file list.
+ * Catches edits the output parser cannot attribute — Bash-driven edits
+ * (sed, python) and changes made by the build-fix agent — so they are
+ * build-verified and staged instead of silently left out of the commit.
+ */
+async function withGitDetectedChanges(
+  result: ClaudeCodeResult,
+  log: ReturnType<typeof cycleLogger>,
+): Promise<ClaudeCodeResult> {
+  const known = new Set(result.filesModified.map(toRepoRelative));
+  const extra = (await getChangedPokeemeraldFiles()).filter((f) => !known.has(f));
+  if (extra.length === 0) return result;
+  log.info(`  Git detected ${extra.length} pokeemerald/ change(s) not reported by tool calls`);
+  return { ...result, filesModified: [...result.filesModified, ...extra] };
 }
 
 /** Aggregate token usage from multiple phases */
@@ -463,6 +487,8 @@ async function runValidationFixPhase(
       + `(attempt ${attempt}/${MAX_VALIDATION_FIX_ATTEMPTS})...`,
     );
 
+    const fingerprintBefore = await getPokeemeraldFingerprint();
+
     const fixPrompt = buildValidationFixPrompt(
       cycleNumber,
       plan.mode,
@@ -496,15 +522,13 @@ async function runValidationFixPhase(
 
     // Merge files modified (deduplicated)
     const mergedFiles = [...new Set([...currentImplResult.filesModified, ...fixResult.filesModified])];
-    currentImplResult = { ...currentImplResult, filesModified: mergedFiles };
+    currentImplResult = await withGitDetectedChanges(
+      { ...currentImplResult, filesModified: mergedFiles },
+      log,
+    );
 
-    // If fix agent modified pokeemerald files, re-run build verification
-    const hasPokeemeraldChanges = fixResult.filesModified.some((filePath) => {
-      const rel = path.isAbsolute(filePath)
-        ? path.relative(PROJECT_ROOT, filePath)
-        : filePath;
-      return rel.startsWith("pokeemerald/") || rel.startsWith("pokeemerald\\");
-    });
+    // If fix agent changed any pokeemerald file (by any means), re-run build verification
+    const hasPokeemeraldChanges = (await getPokeemeraldFingerprint()) !== fingerprintBefore;
 
     if (hasPokeemeraldChanges) {
       log.info("  Validation fix modified pokeemerald/ files — running build verification...");
@@ -778,6 +802,8 @@ export async function runCycle(): Promise<void> {
       }
     }
 
+    implResult = await withGitDetectedChanges(implResult, log);
+
     // ── Phase 3: Build verification + auto-fix loop ──
     let {
       finalBuildResult,
@@ -839,6 +865,12 @@ export async function runCycle(): Promise<void> {
           reverted = true;
         }
       }
+
+      // Pick up edits from the build-fix and validation-fix agents so the
+      // commit matches the tree that was just verified. Done here, not at
+      // commit time, so stray edits made later (e.g. during reflection)
+      // are never committed unbuilt.
+      implResult = await withGitDetectedChanges(implResult, log);
     }
 
     // ── Phase 4: Reflection (separate agent context) ──
@@ -1048,7 +1080,12 @@ export async function runCycle(): Promise<void> {
           continue;
         }
         const outcome = outcomeMap.get(issueNumber);
-        if (outcome?.status === "partial") {
+        if (!outcome) {
+          // No outcome reported — never assume delivery. Closing here is how
+          // #178 was closed with nothing shipped.
+          log.warn(`  ⚠ No outcome reported for accepted issue #${issueNumber} — keeping it open`);
+          deferNumbers.push(issueNumber);
+        } else if (outcome.status === "partial") {
           // For multi-item issues, check if there are remaining items
           const resolution = resolveMultiItemOutcome(outcome);
           if (resolution.canClose) {
@@ -1063,7 +1100,7 @@ export async function runCycle(): Promise<void> {
             deferNumbers.push(issueNumber);
           }
         } else {
-          // No outcome entry or status="complete" — treat as fully delivered.
+          // status="complete" — fully delivered.
           closingNumbers.push(issueNumber);
         }
       }
@@ -1084,25 +1121,21 @@ export async function runCycle(): Promise<void> {
       if (deferNumbers.length > 0) {
         log.info(`  Deferring ${deferNumbers.length} partially-delivered issue(s) back to backlog...`);
         for (const issueNumber of deferNumbers) {
-          const outcome = outcomeMap.get(issueNumber)!;
-          const reason = outcome.reason ?? "This cycle's work partially addressed this issue.";
-          const resolution = resolveMultiItemOutcome(outcome);
-          const partialComment = formatPartialCommentWithItems(reason, outcome);
+          const outcome = outcomeMap.get(issueNumber);
+          const reason = outcome
+            ? outcome.reason ?? "This cycle's work partially addressed this issue."
+            : "This cycle's report didn't confirm that this issue was delivered, so I'm keeping it open rather than closing it prematurely.";
+          const partialComment = outcome ? formatPartialCommentWithItems(reason, outcome) : reason;
           await postIssuePartialDeliveryComment(issueNumber, partialComment, "defer");
           await setDecisionLabel(issueNumber, AGENT_LABELS.deferred);
           // Re-add to backlog with remaining items tracked
-          addIssueToBacklog(issueNumber, `Issue #${issueNumber}`, cycleNumber);
-          // If there are remaining items, update the backlog entry with pending items
-          if (resolution.remainingItems.length > 0) {
-            const { parseBacklogEntries } = await import("../github/issues.js");
-            const entries = parseBacklogEntries();
-            const entry = entries.find((e) => e.issueNumber === issueNumber);
-            if (entry) {
-              entry.pendingItems = resolution.remainingItems;
-              // Re-write backlog with updated pending items
-              addIssueToBacklog(issueNumber, entry.title, cycleNumber);
-            }
-          }
+          const remainingItems = outcome ? resolveMultiItemOutcome(outcome).remainingItems : [];
+          addIssueToBacklog(
+            issueNumber,
+            `Issue #${issueNumber}`,
+            cycleNumber,
+            remainingItems.length > 0 ? remainingItems : undefined,
+          );
         }
       }
 
