@@ -26,6 +26,8 @@ export interface JournalData {
   validationStatus?: string;
   /** For planning cycles: the content added to strategy-notes.md (the plan output) */
   planOutput?: string;
+  /** Game-tree edits made after verification, restored instead of committed */
+  discardedChanges?: string[];
 }
 
 /** Write a journal entry for a completed cycle */
@@ -52,6 +54,9 @@ export function writeJournalEntry(data: JournalData): string {
 
   const issueSection = formatIssueSection(data.issueActions, data.helpRequests);
   const validationSection = formatValidationSection(data.validationWarnings, data.validationStatus);
+  const discardedSection = data.discardedChanges?.length
+    ? `\n## Discarded Changes\n\nChanged after the build was verified, so not committed:\n\n${data.discardedChanges.map((f) => `- ${f}`).join("\n")}\n`
+    : "";
   const planOutputSection = data.planOutput
     ? `\n## Plan Output\n\n${data.planOutput}\n`
     : "";
@@ -73,7 +78,7 @@ ${fileList}
 ## Build Result
 
 ${buildSection}
-
+${discardedSection}
 ## Summary
 
 ${data.cycleSummary || "No summary provided."}
