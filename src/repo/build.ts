@@ -14,10 +14,8 @@ export interface BuildResult {
   errors: string[];
 }
 
-/** Run `make` in the pokeemerald directory, streaming output in real-time */
-export async function runBuild(): Promise<BuildResult> {
-  fs.mkdirSync(BUILD_LOGS_DIR, { recursive: true });
-
+/** Run `make` in the game tree (pokeemerald by default), streaming output in real-time */
+export async function runBuild(cwd: string = POKEEMERALD_DIR): Promise<BuildResult> {
   const timestamp = new Date().toISOString();
   const start = Date.now();
   const stdoutChunks: string[] = [];
@@ -27,7 +25,7 @@ export async function runBuild(): Promise<BuildResult> {
 
   const exitCode = await new Promise<number>((resolve) => {
     const proc = spawn("make", [], {
-      cwd: POKEEMERALD_DIR,
+      cwd,
       stdio: ["ignore", "pipe", "pipe"],
     });
 
