@@ -110,17 +110,67 @@ export function appendToMemory(name: MemoryFileName, heading: string, content: s
   logger.info(`Appended to memory: ${name}.md → "${heading}"`);
 }
 
-/** Get a summary of all memory for inclusion in prompts */
-export function getMemorySummary(memory: Memory): string {
-  const sections = [memory.codebaseFacts, memory.failurePatterns, memory.strategyNotes, memory.projectFacts, memory.pokemonKnowledge];
+/** Line budgets for memory files, from the memory maintenance rules */
+const MEMORY_LINE_BUDGETS: Record<string, number> = {
+  "completed-work.md": 50,
+  "strategy-notes.md": 200,
+  "codebase-facts.md": 150,
+  "failure-patterns.md": 100,
+  "project-facts.md": 80,
+  "pokemon-knowledge.md": 30,
+  "tech-debt-backlog.md": 50,
+  "creative-backlog.md": 50,
+  "player-journey-map.md": 100,
+  "sprite-knowledge.md": 60,
+  "sprite-iterations.md": 50,
+};
+/** Budgets for each file inside a memory subdirectory */
+const MEMORY_DIR_LINE_BUDGETS: Record<string, number> = {
+  "completed-work": 80,
+  "pokemon-knowledge": 60,
+};
 
-  return sections
-    .map((file) => {
-      const entryCount = file.entries.length;
-      const preview = file.raw.length > 2000 ? file.raw.slice(0, 2000) + "\n\n...(truncated)" : file.raw;
-      return `### ${file.title} (${entryCount} entries)\n\n${preview}`;
-    })
-    .join("\n\n---\n\n");
+function lineCount(filePath: string): number {
+  return fs.readFileSync(filePath, "utf-8").split("\n").length;
+}
+
+/** Memory files and directories with their line counts, flagging what is over budget. */
+export function getMemoryBudgetReport(): string {
+  if (!fs.existsSync(MEMORY_DIR)) return "No memory files yet.";
+  const rows: string[] = [];
+  for (const entry of fs.readdirSync(MEMORY_DIR).sort()) {
+    const full = path.join(MEMORY_DIR, entry);
+    if (fs.statSync(full).isDirectory()) {
+      const budget = MEMORY_DIR_LINE_BUDGETS[entry];
+      const files = fs.readdirSync(full).filter((f) => f.endsWith(".md"));
+      const over = budget ? files.filter((f) => lineCount(path.join(full, f)) > budget) : [];
+      const note = over.length > 0 ? ` — **over budget (${budget})**: ${over.join(", ")}` : "";
+      rows.push(`- \`${entry}/\` — ${files.length} files${note}`);
+    } else if (entry.endsWith(".md")) {
+      const lines = lineCount(full);
+      const budget = MEMORY_LINE_BUDGETS[entry];
+      const status = budget ? (lines > budget ? ` / ${budget} — **over budget**` : ` / ${budget}`) : "";
+      rows.push(`- \`${entry}\` — ${lines} lines${status}`);
+    }
+  }
+  return rows.join("\n");
+}
+
+/**
+ * Memory overview for prompts: the strategy notes in full (the current vision
+ * and roadmap) plus every memory file's size against its budget. Other files
+ * are read on demand — a fixed-length head of each was mostly noise.
+ */
+export function getMemorySummary(memory: Memory): string {
+  return `### Strategy Notes (\`memory/strategy-notes.md\`)
+
+${memory.strategyNotes.raw.trim()}
+
+### Memory Files (line counts vs. budget)
+
+Read any of these on demand from \`memory/\`.
+
+${getMemoryBudgetReport()}`;
 }
 
 // ── Cycle Mode History ──────────────────────────────────────────────────────
@@ -134,6 +184,10 @@ interface CycleModeHistoryData {
 }
 
 const MODE_HISTORY_PATH = path.join(MEMORY_DIR, "cycle-mode-history.md");
+/** Recent modes kept in the history file (totals are kept separately) */
+const MODE_HISTORY_FILE_LIMIT = 50;
+/** Recent modes shown to the planner */
+const MODE_HISTORY_PROMPT_LIMIT = 15;
 
 function parseCycleModeHistory(): CycleModeHistoryData {
   const zeroCounts = Object.fromEntries(ALL_MODES.map((m) => [m, 0])) as Record<ModeType, number>;
@@ -184,6 +238,7 @@ export function updateCycleModeHistory(mode: string): void {
     return;
   }
   data.recentModes.unshift(typedMode);
+  data.recentModes = data.recentModes.slice(0, MODE_HISTORY_FILE_LIMIT);
   data.counts[typedMode] = (data.counts[typedMode] ?? 0) + 1;
   writeCycleModeHistory(data);
   logger.info(`Updated cycle mode history: added "${typedMode}"`);
@@ -196,10 +251,10 @@ export function getCycleModeHistorySummary(): string {
     return "No cycle history yet.";
   }
 
-  const recentLine = data.recentModes.join(", ");
+  const recentLine = data.recentModes.slice(0, MODE_HISTORY_PROMPT_LIMIT).join(", ");
   const countsLines = ALL_MODES.filter((m) => data.counts[m] > 0)
     .map((m) => `  - ${m}: ${data.counts[m]}`)
     .join("\n");
 
-  return `Recent cycle modes (most recent first): ${recentLine}\n\nMode totals across all cycles:\n${countsLines}`;
+  return `Last ${Math.min(data.recentModes.length, MODE_HISTORY_PROMPT_LIMIT)} cycle modes (most recent first): ${recentLine}\n\nMode totals across all cycles:\n${countsLines}`;
 }

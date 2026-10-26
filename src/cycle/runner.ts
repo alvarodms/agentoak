@@ -1,11 +1,12 @@
 import fs from "fs";
 import path from "path";
 import { loadMemory, updateCycleModeHistory } from "../memory/store.js";
+import { upsertBacklogItem } from "../memory/backlog.js";
 import { planCycle } from "./planner.js";
 import type { CyclePlan } from "./planner.js";
-import { runGameplayDesigner } from "./gameplay-designer.js";
-import { runSpriteDesigner, type SpriteDesignResult } from "./sprite-designer.js";
-import { getModeDescription, isCodingMode } from "./modes.js";
+import { runGameplayDesigner, GAMEPLAY_DESIGNER_TIMEOUT_MS } from "./gameplay-designer.js";
+import { runSpriteDesigner, SPRITE_DESIGNER_TIMEOUT_MS, type SpriteDesignResult } from "./sprite-designer.js";
+import { CYCLE_MODES, isCodingMode } from "./modes.js";
 import {
   buildDynamicContext,
   buildTaskPrompt,
@@ -19,12 +20,13 @@ import { runReflection } from "../reflection/reflect.js";
 import { saveBuildLog } from "../repo/build.js";
 import { beginGameTree, type BuildFixer, type GameTree } from "../repo/game-tree.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
-import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
+import { writeJournalEntry, getNextCycleNumber, getRecentJournalDigests } from "../journal/writer.js";
 import { commitCycle, commitJournalOnly, getStrategyNotesDiff } from "../git/committer.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, setDecisionLabel, commentOnIssue, AGENT_LABELS, getRepoInfo } from "../github/client.js";
+import type { IssueAction } from "../github/client.js";
 import { cycleLogger, logger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
@@ -34,47 +36,8 @@ const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
 const CREATIVE_BACKLOG_PATH = path.join(MEMORY_DIR, "creative-backlog.md");
 const SPRITE_ITERATIONS_PATH = path.join(MEMORY_DIR, "sprite-iterations.md");
 
-/** Append an engineering investment to the persistent tech debt backlog. */
-function persistEngineeringInvestment(
-  cycleNumber: number,
-  investment: string,
-): void {
-  const header = "# Tech Debt Backlog\n\nEngineering investment opportunities identified by the Tech Lead across cycles.\nThe Producer should review this list when planning — picking up even one item per few cycles compounds over time.\n\n| Cycle | Investment | Status |\n|-------|-----------|--------|\n";
-
-  let content: string;
-  if (fs.existsSync(TECH_DEBT_BACKLOG_PATH)) {
-    content = fs.readFileSync(TECH_DEBT_BACKLOG_PATH, "utf-8");
-  } else {
-    fs.mkdirSync(MEMORY_DIR, { recursive: true });
-    content = header;
-  }
-
-  // Append the new investment as a table row
-  const sanitized = investment.replace(/\|/g, "—").replace(/\n/g, " ").trim();
-  content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
-  fs.writeFileSync(TECH_DEBT_BACKLOG_PATH, content, "utf-8");
-}
-
-/** Append a creative investment to the persistent creative backlog. */
-function persistCreativeInvestment(
-  cycleNumber: number,
-  idea: string,
-): void {
-  const header = "# Creative Backlog\n\nCreative investment opportunities identified by the Creative Visionary across cycles.\nThe Producer should review this list when planning — bold ideas that have been deferred multiple times may be ready when prerequisites are met.\n\n| Cycle | Idea | Status |\n|-------|------|--------|\n";
-
-  let content: string;
-  if (fs.existsSync(CREATIVE_BACKLOG_PATH)) {
-    content = fs.readFileSync(CREATIVE_BACKLOG_PATH, "utf-8");
-  } else {
-    fs.mkdirSync(MEMORY_DIR, { recursive: true });
-    content = header;
-  }
-
-  // Append the new idea as a table row
-  const sanitized = idea.replace(/\|/g, "—").replace(/\n/g, " ").trim();
-  content += `| ${cycleNumber} | ${sanitized} | pending |\n`;
-  fs.writeFileSync(CREATIVE_BACKLOG_PATH, content, "utf-8");
-}
+const TECH_DEBT_HEADER = "# Tech Debt Backlog\n\nEngineering investment opportunities identified by the Tech Lead across cycles.\nThe Producer should review this list when planning — picking up even one item per few cycles compounds over time.\n\n| Cycle | Investment | Status |\n|-------|-----------|--------|\n";
+const CREATIVE_BACKLOG_HEADER = "# Creative Backlog\n\nCreative investment opportunities identified by the Creative Visionary across cycles.\nThe Producer should review this list when planning — bold ideas that have been deferred multiple times may be ready when prerequisites are met.\n\n| Cycle | Idea | Status |\n|-------|------|--------|\n";
 
 /**
  * Fill in the Issue column of the matching row in `memory/sprite-iterations.md`
@@ -116,6 +79,27 @@ function updateSpriteIterationsIssueNumber(
 
 const MAX_VALIDATION_FIX_ATTEMPTS = 1;
 const CODING_PHASE_DEFAULT_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
+const AGENT_PHASE_DEFAULT_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+
+/**
+ * Wall-clock budget for one cycle. The GitHub job (60 minutes) also covers
+ * setup and pushing, and the phase timeouts alone add up to well over an hour,
+ * so phases after planning are clamped to what is left of this budget —
+ * otherwise a slow cycle is killed before it writes a journal.
+ */
+const CYCLE_BUDGET_MS = parseInt(process.env.OAK_CYCLE_BUDGET_MINUTES ?? "45", 10) * 60 * 1000;
+/** Time held back for reflection, which runs last */
+const REFLECTION_RESERVE_MS = 8 * 60 * 1000;
+const MIN_PHASE_TIMEOUT_MS = 3 * 60 * 1000;
+
+/** Deadline for the current cycle; set when the cycle starts */
+let cycleDeadline = Date.now() + CYCLE_BUDGET_MS;
+
+/** A phase's timeout, clamped to the cycle budget minus `reserveMs` (never below the minimum). */
+function phaseTimeout(desiredMs: number, reserveMs: number = REFLECTION_RESERVE_MS): number {
+  const remaining = cycleDeadline - Date.now() - reserveMs;
+  return Math.max(MIN_PHASE_TIMEOUT_MS, Math.min(desiredMs, remaining));
+}
 
 /**
  * Build env overrides to route the Claude CLI subprocess to DeepSeek.
@@ -155,11 +139,11 @@ async function runPlanningPhase(
   log.info("Phase 1: Planning...");
 
   const memory = loadMemory();
-  const recentJournals = getRecentJournalSummaries(3); // used by implementation, build-fix, and commit phases
+  const recentJournals = getRecentJournalDigests(3); // used by the implementation phase
 
   // Only pass the single most-recent journal to the planner to keep its prompt lean.
   // The planner can read memory files on demand via its tools if it needs more context.
-  const lastJournal = getRecentJournalSummaries(1);
+  const lastJournal = getRecentJournalDigests(1);
 
   // Fetch new community issues (silently skipped if GitHub is not configured)
   log.info("  Checking for community issues...");
@@ -247,17 +231,22 @@ async function runPlanningPhase(
  */
 async function runImplementationPhase(
   cycleNumber: number,
-  plan: { mode: string; objective: string; reasoning: string; implementationPlan?: string },
+  plan: CyclePlan,
   memory: ReturnType<typeof loadMemory>,
   recentJournals: string[],
   log: ReturnType<typeof cycleLogger>,
 ) {
   log.info("Phase 2: Implementation...");
 
-  const modeDescription = getModeDescription(plan.mode as Parameters<typeof getModeDescription>[0]);
-  const isCoding = isCodingMode(plan.mode as Parameters<typeof isCodingMode>[0]);
-  const dynamicContext = isCoding ? "" : buildDynamicContext(memory, recentJournals, cycleNumber, modeDescription);
-  const taskPrompt = buildTaskPrompt(cycleNumber, plan.objective, plan.reasoning, plan.mode, plan.implementationPlan);
+  const isCoding = isCodingMode(plan.mode);
+  const dynamicContext = isCoding ? "" : buildDynamicContext(memory, recentJournals, cycleNumber, CYCLE_MODES[plan.mode].label);
+  const taskPrompt = buildTaskPrompt(
+    cycleNumber,
+    plan.objective,
+    plan.mode,
+    plan.implementationPlan,
+    acceptedIssueActions(plan),
+  );
 
   // Only route to DeepSeek for coding-focused modes; research and planning
   // require richer reasoning and stay on the Anthropic model.
@@ -268,9 +257,9 @@ async function runImplementationPhase(
   const model = usingDeepSeek
     ? process.env.DEEPSEEK_MODEL
     : process.env.ANTHROPIC_MODEL;
-  const timeout = usingDeepSeek
+  const timeout = phaseTimeout(usingDeepSeek
     ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
-    : 30 * 60 * 1000;
+    : AGENT_PHASE_DEFAULT_TIMEOUT_MS);
   const maxTurns = parseInt(process.env.MAX_TOOL_CALLS_PER_CYCLE ?? "100", 10);
 
   log.info(`  → Model profile: ${usingDeepSeek ? `DeepSeek (${model ?? "deepseek-chat"})` : `Anthropic (${model ?? "default"})`} [mode: ${plan.mode}]`);
@@ -278,7 +267,8 @@ async function runImplementationPhase(
   log.info(`  → Prompt: ${taskPrompt}`);
   log.info(`  → Dynamic context: ${dynamicContext}`);
   const result = await runClaudeCode(taskPrompt, {
-    appendSystemPrompt: dynamicContext,
+    phase: "implementation",
+    appendSystemPrompt: dynamicContext || undefined,
     maxTurns,
     model,
     timeout,
@@ -289,7 +279,8 @@ async function runImplementationPhase(
     `  Implementation complete: ${result.toolCallCount} tool calls, ${result.filesModified.length} files modified`,
   );
 
-  return result;
+  // The implementer ends with a plain summary rather than a CYCLE_COMPLETE marker
+  return result.cycleSummary ? result : { ...result, cycleSummary: result.resultText.trim() };
 }
 
 /**
@@ -320,10 +311,11 @@ async function runBuildVerifyPhase(
     const model = usingDeepSeek
       ? process.env.DEEPSEEK_MODEL
       : process.env.ANTHROPIC_MODEL;
-    const timeout = usingDeepSeek
+    const timeout = phaseTimeout(usingDeepSeek
       ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
-      : 30 * 60 * 1000;
+      : AGENT_PHASE_DEFAULT_TIMEOUT_MS);
     const fixResult = await runClaudeCode(buildBuildFixPrompt(cycleNumber, errors, stderr), {
+      phase: "build-fix",
       maxTurns: 15,
       tools: "Bash,Read,Edit,Write,Grep",
       model,
@@ -418,11 +410,12 @@ async function runValidationFixPhase(
     const model = usingDeepSeek
       ? process.env.DEEPSEEK_MODEL
       : process.env.ANTHROPIC_MODEL;
-    const timeout = usingDeepSeek
+    const timeout = phaseTimeout(usingDeepSeek
       ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
-      : 30 * 60 * 1000;
+      : AGENT_PHASE_DEFAULT_TIMEOUT_MS);
 
     const fixResult = await runClaudeCode(fixPrompt, {
+      phase: "validation-fix",
       maxTurns: 30,
       model,
       timeout,
@@ -483,7 +476,7 @@ async function runValidationFixPhase(
  */
 async function runReflectionPhase(
   cycleNumber: number,
-  plan: { mode: string; objective: string },
+  plan: CyclePlan,
   implResult: ClaudeCodeResult,
   buildResult: { success: boolean; errors: string[] } | null,
   validationResult: ValidationResult | null,
@@ -499,7 +492,14 @@ async function runReflectionPhase(
     cycleSummary: implResult.cycleSummary,
     cycleChanges: implResult.cycleChanges,
     validationResult,
+    acceptedIssues: acceptedIssueActions(plan),
+    timeout: phaseTimeout(AGENT_PHASE_DEFAULT_TIMEOUT_MS, 0),
   });
+}
+
+/** The planner's accept actions — the issues this cycle's reflection reports outcomes for */
+function acceptedIssueActions(plan: CyclePlan): IssueAction[] {
+  return plan.issueActions.filter((a) => a.action === "accept");
 }
 
 /**
@@ -538,6 +538,7 @@ async function runCommitPhase(params: {
 export async function runCycle(): Promise<void> {
   const cycleNumber = getNextCycleNumber();
   const log = cycleLogger(cycleNumber);
+  cycleDeadline = Date.now() + CYCLE_BUDGET_MS;
 
   log.info("═══════════════════════════════════════════════════");
   log.info(`  Agent Oak — Cycle ${String(cycleNumber).padStart(4, "0")} starting`);
@@ -566,13 +567,13 @@ export async function runCycle(): Promise<void> {
 
     // Persist any engineering investment to the tech debt backlog
     if (plan.engineeringInvestment) {
-      persistEngineeringInvestment(cycleNumber, plan.engineeringInvestment);
+      upsertBacklogItem(TECH_DEBT_BACKLOG_PATH, TECH_DEBT_HEADER, cycleNumber, plan.engineeringInvestment);
       log.info(`  Engineering investment captured: ${plan.engineeringInvestment.slice(0, 100)}...`);
     }
 
     // Persist any creative investment to the creative backlog
     if (plan.creativeInvestment) {
-      persistCreativeInvestment(cycleNumber, plan.creativeInvestment);
+      upsertBacklogItem(CREATIVE_BACKLOG_PATH, CREATIVE_BACKLOG_HEADER, cycleNumber, plan.creativeInvestment);
       log.info(`  Creative investment captured: ${plan.creativeInvestment.slice(0, 100)}...`);
     }
 
@@ -587,6 +588,7 @@ export async function runCycle(): Promise<void> {
           plan.objective,
           plan.gameplayDesignBrief,
           plan.implementationPlan,
+          { timeout: phaseTimeout(GAMEPLAY_DESIGNER_TIMEOUT_MS) },
         );
         activePlan = {
           ...plan,
@@ -614,6 +616,7 @@ export async function runCycle(): Promise<void> {
           activePlan.objective,
           activePlan.spriteDesignBrief,
           activePlan.implementationPlan,
+          { timeout: phaseTimeout(SPRITE_DESIGNER_TIMEOUT_MS) },
         );
         // Don't await — continues to Phase 2 immediately
       } else {
@@ -624,6 +627,7 @@ export async function runCycle(): Promise<void> {
             activePlan.objective,
             activePlan.spriteDesignBrief,
             activePlan.implementationPlan,
+            { timeout: phaseTimeout(SPRITE_DESIGNER_TIMEOUT_MS) },
           );
           activePlan = {
             ...activePlan,
@@ -729,6 +733,7 @@ export async function runCycle(): Promise<void> {
     // ── Phase 5: Journal + Commit ──
     const allActions = [...implResult.actions, ...fixActions, ...validationFixActions, ...reflection.actions];
     const totalTokenUsage = mergeTokenUsage(
+      plan.tokenUsage ?? { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
       gameplayDesignTokenUsage,
       spriteDesignTokenUsage,
       implResult.tokenUsage,
@@ -793,13 +798,17 @@ export async function runCycle(): Promise<void> {
     // Apply agent-declared version bump / release stage before committing
     // so that the updated version.json is included in the commit and persists
     // across cycles (fixes minor version being lost after a bump).
+    // Reflection owns the CYCLE_COMPLETE marker; an implementer that still
+    // emits one is honoured only when reflection leaves the field out.
+    const versionBump = reflection.versionBump ?? implResult.versionBump;
+    const releaseStage = reflection.releaseStage ?? implResult.releaseStage;
     if (gameVersion && !reverted) {
-      if (implResult.versionBump) {
-        log.info(`Phase 5: Applying version bump (${implResult.versionBump}) declared by agent...`);
-        applyVersionBump(implResult.versionBump, implResult.releaseStage);
-      } else if (implResult.releaseStage) {
-        log.info(`Phase 5: Setting release stage to "${implResult.releaseStage}" declared by agent...`);
-        setReleaseStage(implResult.releaseStage);
+      if (versionBump) {
+        log.info(`Phase 5: Applying version bump (${versionBump}) declared by agent...`);
+        applyVersionBump(versionBump, releaseStage);
+      } else if (releaseStage) {
+        log.info(`Phase 5: Setting release stage to "${releaseStage}" declared by agent...`);
+        setReleaseStage(releaseStage);
       }
     }
 
@@ -892,11 +901,15 @@ export async function runCycle(): Promise<void> {
     //    or reject (close as not_planned) based on the agent's decision field.
     // 3. Everything else — fully implemented; post closing comment and close as "completed".
     if (acceptedIssueNumbers.length > 0 && commitHash && !reverted) {
+      const issueOutcomes = reflection.issueOutcomes.length > 0
+        ? reflection.issueOutcomes
+        : implResult.issueOutcomes;
+
       // Guard: if validation found the cycle unsubstantiated, do NOT close any
       // issues the agent claims are "complete" — the work likely wasn't done.
       const unsubstantiatedIssues = new Set(
         validationResult
-          ? getUnsubstantiatedIssueCompletions(validationResult, implResult.issueOutcomes)
+          ? getUnsubstantiatedIssueCompletions(validationResult, issueOutcomes)
           : [],
       );
       if (unsubstantiatedIssues.size > 0) {
@@ -915,7 +928,7 @@ export async function runCycle(): Promise<void> {
 
       // Post-implementation outcomes reported in the CYCLE_COMPLETE marker
       const outcomeMap = new Map(
-        implResult.issueOutcomes.map((o) => [o.number, o]),
+        issueOutcomes.map((o) => [o.number, o]),
       );
 
       const closingNumbers: number[] = [];

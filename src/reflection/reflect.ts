@@ -1,6 +1,6 @@
 import { runClaudeCode } from "../agent/claude-cli.js";
-import type { ClaudeCodeResult } from "../agent/output-parser.js";
-import type { ActionRecord } from "../agent/output-parser.js";
+import type { ActionRecord, IssueOutcome } from "../agent/output-parser.js";
+import type { IssueAction } from "../github/client.js";
 import { buildReflectionPrompt } from "../agent/prompts.js";
 import { buildDynamicContext } from "../agent/prompts.js";
 import { loadMemory } from "../memory/store.js";
@@ -13,9 +13,15 @@ export interface ReflectionResult {
   /** Structured changelog entries from CYCLE_COMPLETE changes[] field */
   cycleChanges: string[];
   nextSteps: string;
+  /** Delivery outcomes for the cycle's accepted issues, from the CYCLE_COMPLETE marker */
+  issueOutcomes: IssueOutcome[];
+  versionBump?: "major" | "minor";
+  releaseStage?: string;
   actions: ActionRecord[];
   tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
 }
+
+const REFLECTION_MAX_TURNS = 25;
 
 /** Run the reflection phase after the main agent loop */
 export async function runReflection(context: {
@@ -27,6 +33,9 @@ export async function runReflection(context: {
   cycleSummary: string;
   cycleChanges: string[];
   validationResult?: ValidationResult | null;
+  acceptedIssues: IssueAction[];
+  /** Timeout for the reflection call in milliseconds */
+  timeout?: number;
 }): Promise<ReflectionResult> {
   logger.info("Starting reflection phase...");
 
@@ -36,10 +45,12 @@ export async function runReflection(context: {
 
   const model = process.env.ANTHROPIC_MODEL;
   const result = await runClaudeCode(reflectionPrompt, {
+    phase: "reflection",
     appendSystemPrompt: dynamicContext,
-    maxTurns: 10,
-    tools: "Read,Write,Bash",
+    maxTurns: REFLECTION_MAX_TURNS,
+    tools: "Read,Write,Edit,Bash,Grep,Glob,Skill",
     model,
+    timeout: context.timeout,
   });
 
   // Use the narrative text the reflection agent actually wrote (before its CYCLE_COMPLETE marker).
@@ -57,6 +68,9 @@ export async function runReflection(context: {
     cycleSummary: result.cycleSummary || context.cycleSummary,
     cycleChanges: result.cycleChanges.length > 0 ? result.cycleChanges : context.cycleChanges,
     nextSteps: result.nextSteps,
+    issueOutcomes: result.issueOutcomes,
+    versionBump: result.versionBump,
+    releaseStage: result.releaseStage,
     actions: result.actions,
     tokenUsage: result.tokenUsage,
   };

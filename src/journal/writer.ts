@@ -109,8 +109,24 @@ export function getNextCycleNumber(): number {
   return files.length + 1;
 }
 
-/** Read recent journal entries as text summaries */
-export function getRecentJournalSummaries(count: number): string[] {
+/** Journal sections a later cycle needs, in digest order */
+const DIGEST_SECTIONS = [
+  "Summary",
+  "Build Result",
+  "Validation Warnings",
+  "Discarded Changes",
+  "Community Issues",
+  "Next Steps",
+];
+const DIGEST_SECTION_MAX_CHARS = 1500;
+
+/**
+ * Read recent journal entries as digests: header, outcome, and next steps.
+ *
+ * The head of a journal is reasoning and file lists, so truncating the raw
+ * file drops the summary (where "[REVERTED" lands) and the next steps.
+ */
+export function getRecentJournalDigests(count: number): string[] {
   if (!fs.existsSync(JOURNAL_DIR)) return [];
 
   const files = fs
@@ -119,14 +135,36 @@ export function getRecentJournalSummaries(count: number): string[] {
     .sort()
     .slice(-count);
 
-  return files.map((f) => {
-    const content = fs.readFileSync(path.join(JOURNAL_DIR, f), "utf-8");
-    // Return a truncated version for context
-    if (content.length > 3000) {
-      return content.slice(0, 3000) + "\n\n...(truncated)";
+  return files.map((f) => digestJournal(fs.readFileSync(path.join(JOURNAL_DIR, f), "utf-8")));
+}
+
+/** Reduce a journal entry to its title, mode, objective, and DIGEST_SECTIONS */
+export function digestJournal(content: string): string {
+  const title = `**${content.match(/^# (.+)$/m)?.[1] ?? "Cycle"}**`;
+  const header = ["Mode", "Objective"]
+    .map((field) => content.match(new RegExp(`^\\*\\*${field}\\*\\*: (.+?)\\s*$`, "m"))?.[0].trim())
+    .filter(Boolean);
+
+  const sections = new Map<string, string>();
+  for (const chunk of content.split(/^## /m).slice(1)) {
+    const newline = chunk.indexOf("\n");
+    const heading = (newline === -1 ? chunk : chunk.slice(0, newline)).trim();
+    const body = newline === -1 ? "" : chunk.slice(newline + 1).trim();
+    if (DIGEST_SECTIONS.includes(heading) && !sections.has(heading)) {
+      sections.set(heading, body);
     }
-    return content;
-  });
+  }
+
+  const parts = [title, header.join("\n")];
+  for (const heading of DIGEST_SECTIONS) {
+    const body = sections.get(heading);
+    if (!body) continue;
+    const trimmed = body.length > DIGEST_SECTION_MAX_CHARS
+      ? body.slice(0, DIGEST_SECTION_MAX_CHARS) + "\n...(truncated)"
+      : body;
+    parts.push(`**${heading}**\n\n${trimmed}`);
+  }
+  return parts.filter(Boolean).join("\n\n");
 }
 
 /** Format the Community Issues section for the journal entry */

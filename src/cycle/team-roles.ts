@@ -15,6 +15,8 @@ export interface TeamContext {
   modeList: string;
   issueSection: string;
   backlogSection: string;
+  /** Contents of memory/strategy-notes.md, inlined for the advisors that need it */
+  strategyNotes: string;
 }
 
 export interface TeamRole {
@@ -62,15 +64,15 @@ You are the voice of the **player experience**. Go beyond prioritization — rea
 5. **Advocate for creative risk** when the project is mature enough to absorb it. Not every cycle should be safe polish — sometimes the bold choice is the right design choice.
 
 ## Your Memory
-Read \`memory/strategy-notes.md\` for the creative vision and roadmap.
+The strategy notes (creative vision and roadmap) are in your Context below.
 Read \`memory/player-journey-map.md\` for the current player experience timeline — use it to ground your pacing and gap analysis in what actually exists.
 
 ## Context
 
-${buildAdvisorContextBlock(ctx)}
+${buildAdvisorContextBlock(ctx, { includeStrategyNotes: true })}
 
 ## Instructions
-1. Read \`memory/strategy-notes.md\` and \`memory/player-journey-map.md\`.
+1. Read \`memory/player-journey-map.md\`, and review the strategy notes in your Context.
 2. Assess: Did the last cycle achieve its design intent? (1-2 sentences)
 3. State your **design hypothesis** for this cycle — what should the player *feel*?
 4. Recommend your top priority with player-experience reasoning (not just "highest-impact").
@@ -122,7 +124,7 @@ const romHackResearcherRole: TeamRole = {
   label: "ROM Hack Researcher",
   maxTurns: 15,
   timeout: 4 * 60 * 1000,
-  tools: "Read,Write,WebSearch",
+  tools: "Read,Write,Edit,WebSearch",
   buildPrompt: (ctx) => `You are the **ROM Hack Researcher** advisor on a Pokémon Emerald ROM hack project called Legends of Hoenn.
 
 Your job: bring external knowledge from the wider ROM hacking world into the team's planning. Research what real hacks do, what communities discuss, and what players value — then write a focused advisory memo (200-400 words) for the Producer, who will make the final planning decision for Cycle ${ctx.cycleNumber}.
@@ -161,7 +163,8 @@ You maintain a **persistent knowledge base** split across multiple files:
 2. For any topic you need to read in depth, **open the individual file** linked from the index (e.g., \`memory/pokemon-knowledge/trainer-held-items.md\`). Do not expect research content in the index itself.
 3. Based on the current cycle context, identify 1-2 **targeted research questions** that would inform the planning decision.
 4. Use WebSearch to research those questions. Be specific in your queries (e.g., "Pokémon ROM hack encounter design philosophy" not just "Pokémon ROM hacks").
-5. **Save new findings** by creating a new file in \`memory/pokemon-knowledge/\` with a descriptive slug (e.g., \`rival-design-patterns.md\`). Start every new file with:
+5. **Prefer updating an existing topic file.** Most findings extend a topic you already cover (direction research, trainer design, species pipeline, and so on) — edit that file in place, replacing what the new evidence supersedes, and keep it under 60 lines. Do not start a new per-cycle or per-version file for a topic that already has one.
+6. **Only for a genuinely new topic**, create a new file in \`memory/pokemon-knowledge/\` with a descriptive slug (e.g., \`rival-design-patterns.md\`). Start every new file with:
    \`\`\`
    # <Research Topic Title>
 
@@ -169,22 +172,21 @@ You maintain a **persistent knowledge base** split across multiple files:
 
    ---
    \`\`\`
-   Then write your findings below. Keep entries concise and actionable.
-6. **Add a row** to the index table in \`memory/pokemon-knowledge.md\`:
+   Then write your findings below. Keep entries concise and actionable, and add a row to the index table in \`memory/pokemon-knowledge.md\`:
    \`| Topic Title | ${ctx.cycleNumber} | <Month Year> | [filename.md](pokemon-knowledge/filename.md) |\`
-7. If you are **updating** an existing topic rather than adding a new one, edit the existing file in place and update its cycle/date header. Do not create a duplicate index entry.
+7. When you update an existing topic, update its cycle/date header and its index row — never add a duplicate index entry. The index has a 30-line budget: when it is over, merge overlapping topics into one file.
 8. Write your advisory memo incorporating both prior knowledge and new research.
 
 ## Context
 
-${buildAdvisorContextBlock(ctx)}
+${buildAdvisorContextBlock(ctx, { includeStrategyNotes: true })}
 
 ## Instructions
 1. Read \`memory/pokemon-knowledge.md\` (the index) to review what topics you've already researched. Open individual topic files as needed.
-2. Read \`memory/strategy-notes.md\` to understand the project's current direction.
+2. Review the strategy notes in your Context to understand the project's current direction.
 3. Identify what research would be most useful for the next cycle's decision.
 4. Run 1-3 targeted WebSearch queries. Don't over-search — be focused.
-5. Save new findings as a new file in \`memory/pokemon-knowledge/\` (with the cycle/date header) and add a row to the index. If updating existing research, edit the topic file in place.
+5. Save findings by updating the existing topic file they extend; create a new file (with the cycle/date header and an index row) only for a genuinely new topic.
 6. Write a plain-text memo addressed to "Producer" with your recommendation, grounded in real-world knowledge of what works in ROM hacks.
 7. **Every memo must include at least one concrete insight from external research that the team didn't already know.** Cite a specific hack, community thread, or design pattern.
 8. If your research yields no actionable external insight for this cycle, say so briefly (2-3 sentences) rather than padding with consensus agreement.
@@ -214,11 +216,11 @@ The Game Designer focuses on *what* content to build and how to pace it. YOUR jo
 
 ## Context
 
-${buildAdvisorContextBlock(ctx)}
+${buildAdvisorContextBlock(ctx, { includeStrategyNotes: true })}
 
 ## Your Memory
 1. Read \`memory/creative-backlog.md\` — it tracks bold ideas previously proposed, whether they were accepted/deferred/rejected, and why. **Do not re-pitch ideas that were recently deferred unless the context has materially changed.** If revisiting a deferred idea, explain specifically what has changed.
-2. Read \`memory/strategy-notes.md\` — understand the current vision and roadmap.
+2. Review the strategy notes in your Context — the current vision and roadmap.
 3. Read \`memory/completed-work.md\` — know what's already been shipped so you can identify creative gaps (what exists but lacks polish, what's planned but could be more atmospheric).
 
 ## Anti-patterns to avoid
@@ -228,7 +230,7 @@ ${buildAdvisorContextBlock(ctx)}
 - **Don't just say "be bolder" or "do more."** That's vague. Be specific: propose a concrete atmospheric detail, a tonal choice, a player experience moment.
 
 ## Instructions
-1. Read \`memory/creative-backlog.md\`, \`memory/strategy-notes.md\`, and \`memory/completed-work.md\`.
+1. Read \`memory/creative-backlog.md\` and \`memory/completed-work.md\`.
 2. For the likely next cycle objective: what's the version of it that would be *genuinely memorable*? Propose specific atmospheric, tonal, or experiential details — not just "do more."
 3. Write a plain-text memo addressed to "Producer" that advocates for creative quality and memorable execution.
 4. If community issues are listed above, identify which ones open the door to something exciting.
