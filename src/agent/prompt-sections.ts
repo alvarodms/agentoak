@@ -104,6 +104,8 @@ const POKEDEX_TOOL_DOCS: Record<string, string> = {
     "`smogon_format_pokemon(format, limit?)` — list all Pokémon with competitive sets in a Smogon tier (ou, uu, ubers, etc.)",
   "mcp__pokedex__team_type_coverage":
     "`team_type_coverage(team[], gen?)` — analyse a team's defensive weaknesses, resistances, immunities, and offensive coverage",
+  "mcp__pokedex__rom_species":
+    "`rom_species(name, sections?)` — one species as it stands in THIS ROM (custom species included): stats, Pokédex entry, learnsets, evolutions, wild slots, trainers. Use it instead of reading or grepping the large species data files",
 };
 
 /** All Pokédex MCP tool names — use to grant an agent access to the full set. */
