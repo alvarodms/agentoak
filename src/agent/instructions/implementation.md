@@ -33,3 +33,5 @@ Expansion sprites can use more than 16 colours. If the build fails on palettes, 
 ## Pokémon Data Tools
 
 The Pokédex MCP tools (`pokemon_stats`, `search_pokemon`, `move_data`, `type_matchup`, `pokemon_learnset`, `smogon_sets`, `smogon_format_pokemon`, `team_type_coverage`) default to Gen 3 data. Use them to check a fact the plan leaves open, such as whether a species learns a move. Don't use them to redesign what the plan specifies.
+
+To see what the ROM itself currently has for a species, call `rom_species(name, sections?)` rather than reading or grepping `species_info.h`, `pokedex_entries.h`, the learnset files, `wild_encounters.json` or `trainer_parties.h`. Those files run to thousands of lines, and whatever you read stays in context for the rest of the cycle. When you need to edit an entry, use `grep -n` to find its line and `Read` with `offset`/`limit` around it.
