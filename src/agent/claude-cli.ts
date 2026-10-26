@@ -3,6 +3,8 @@ import { logger } from "../utils/logger.js";
 import { PROJECT_ROOT } from "../utils/paths.js";
 import { parseClaudeOutput, isMcpTool } from "./output-parser.js";
 import type { ClaudeCodeResult } from "./output-parser.js";
+import { PHASE_PROFILES, buildMcpConfig, effortFor, loadInstructions } from "./phases.js";
+import type { AgentPhase, EffortLevel } from "./phases.js";
 
 /** Prefix used by Claude Code for MCP tool names: mcp__<server>__<tool> */
 const MCP_TOOL_PREFIX = "mcp__";
@@ -19,6 +21,14 @@ export function extractMcpTools(tools: string): string[] {
 }
 
 export interface ClaudeCodeOptions {
+  /**
+   * The cycle phase this call serves. Sets reasoning effort, restricts MCP
+   * servers to the ones the phase needs, and prepends the phase's instruction
+   * fragments to the appended system prompt (see phases.ts).
+   */
+  phase?: AgentPhase;
+  /** Reasoning effort; defaults to the phase's effort. Not sent to third-party endpoints. */
+  effort?: EffortLevel;
   /** Replace the entire system prompt (mutually exclusive with appendSystemPrompt) */
   systemPrompt?: string;
   /** Append to the default system prompt (preserves CLAUDE.md behavior) */
@@ -34,7 +44,7 @@ export interface ClaudeCodeOptions {
    * MCP tool names (e.g. "mcp__pokedex__smogon_sets") are included for
    * declaration purposes — they control which tools appear in the agent's
    * prompt documentation. The --tools CLI flag only filters built-in tools;
-   * MCP tools cannot be restricted via CLI flags.
+   * MCP access is restricted per server through `phase`.
    */
   tools?: string;
   /** Timeout in milliseconds (default: 10 minutes) */
@@ -59,8 +69,8 @@ export async function runClaudeCode(
   options: ClaudeCodeOptions = {},
 ): Promise<ClaudeCodeResult> {
   const {
+    phase,
     systemPrompt,
-    appendSystemPrompt,
     maxTurns,
     maxBudgetUsd,
     tools,
@@ -71,6 +81,15 @@ export async function runClaudeCode(
     envOverrides,
   } = options;
 
+  const profile = phase ? PHASE_PROFILES[phase] : undefined;
+  const instructions = profile ? loadInstructions(profile.instructions) : "";
+  const appendSystemPrompt = [instructions, options.appendSystemPrompt]
+    .filter(Boolean)
+    .join("\n\n") || undefined;
+  // A third-party endpoint (e.g. DeepSeek) may reject the effort parameter
+  const thirdParty = !!envOverrides?.ANTHROPIC_BASE_URL;
+  const effort = thirdParty ? undefined : options.effort ?? (phase ? effortFor(phase) : undefined);
+
   const args = buildArgs({
     systemPrompt,
     appendSystemPrompt,
@@ -79,10 +98,14 @@ export async function runClaudeCode(
     tools,
     model,
     jsonSchema,
+    effort,
+    mcpConfig: profile ? buildMcpConfig(profile.mcpServers) : undefined,
   });
 
   logger.info(
-    `Running claude CLI (maxTurns: ${maxTurns ?? "unlimited"}, tools: ${tools ?? "all"})`,
+    `Running claude CLI (${phase ?? "no phase"}, effort: ${effort ?? "default"}, ` +
+    `maxTurns: ${maxTurns ?? "unlimited"}, tools: ${tools ?? "all"}, ` +
+    `mcp: ${profile ? profile.mcpServers.join(",") || "none" : "all"})`,
   );
   logger.debug(`claude CLI args: ${JSON.stringify(args)}`);
   logger.debug(`claude CLI prompt (${prompt.length} chars): ${prompt.slice(0, 300)}${prompt.length > 300 ? "..." : ""}`);
@@ -96,7 +119,7 @@ export async function runClaudeCode(
   return parseClaudeOutput(stdout);
 }
 
-function buildArgs(opts: {
+export function buildArgs(opts: {
   systemPrompt?: string;
   appendSystemPrompt?: string;
   maxTurns?: number;
@@ -104,13 +127,33 @@ function buildArgs(opts: {
   tools?: string;
   model?: string;
   jsonSchema?: Record<string, unknown>;
+  effort?: EffortLevel;
+  mcpConfig?: string;
 }): string[] {
-  const args: string[] = [
+  const args: string[] = [];
+
+  // --tools and --mcp-config take several values, so they go first: a
+  // variadic flag right before the prompt would swallow the prompt.
+  if (opts.tools != null) {
+    // --tools only accepts built-in tool names; filter out MCP entries
+    const builtinTools = opts.tools
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t && !t.startsWith(MCP_TOOL_PREFIX))
+      .join(",");
+    args.push("--tools", builtinTools);
+  }
+
+  if (opts.mcpConfig != null) {
+    args.push("--mcp-config", opts.mcpConfig, "--strict-mcp-config");
+  }
+
+  args.push(
     "--print",
     "--output-format", "stream-json",
     "--verbose",
     "--dangerously-skip-permissions",
-  ];
+  );
 
   if (opts.systemPrompt != null) {
     args.push("--system-prompt", opts.systemPrompt);
@@ -126,22 +169,16 @@ function buildArgs(opts: {
     args.push("--max-budget-usd", String(opts.maxBudgetUsd));
   }
 
-  if (opts.tools != null) {
-    // --tools only accepts built-in tool names; filter out MCP entries
-    const builtinTools = opts.tools
-      .split(",")
-      .map((t) => t.trim())
-      .filter((t) => t && !t.startsWith(MCP_TOOL_PREFIX))
-      .join(",");
-    args.push("--tools", builtinTools);
-  }
-
   if (opts.model != null) {
     args.push("--model", opts.model);
   }
 
   if (opts.jsonSchema != null) {
     args.push("--json-schema", JSON.stringify(opts.jsonSchema));
+  }
+
+  if (opts.effort != null) {
+    args.push("--effort", opts.effort);
   }
 
   return args;

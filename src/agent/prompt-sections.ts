@@ -8,6 +8,7 @@
 
 import { CYCLE_MODES } from "../cycle/modes.js";
 import type { TeamContext } from "../cycle/team-roles.js";
+import type { IssueAction } from "../github/client.js";
 import { PromptBuilder } from "./prompt-builder.js";
 import { getPersonalityGuidance, getIssueEvaluationGuidance } from "../config/personality.js";
 
@@ -20,6 +21,19 @@ export function formatJournalContext(summaries: string[]): string {
   return summaries.length > 0
     ? summaries.join("\n\n---\n\n")
     : "No previous cycles. This is the very first cycle.";
+}
+
+/** List the issues the planner accepted, with its per-item decisions. */
+export function formatAcceptedIssues(actions: IssueAction[]): string {
+  return actions
+    .map((a) => {
+      const scope = a.partial ? " (multi-cycle — only part is due this cycle)" : "";
+      const items = (a.items ?? [])
+        .map((item) => `\n  - ${item.label} — ${item.action}${item.partial ? " (multi-cycle)" : ""}: ${item.response}`)
+        .join("");
+      return `- #${a.issueNumber}${scope}: ${a.response}${items}`;
+    })
+    .join("\n");
 }
 
 /** Build the bullet list of available cycle modes. */
@@ -46,7 +60,7 @@ export function formatBacklogSection(
   let section = "\n\n## Deferred Issue Backlog\n\n";
 
   if (hasBacklog) {
-    section += `The following issues were deferred from earlier cycles. They will be carried forward automatically — you do **NOT** need to include them in \`issueActions\`. Only include a backlog issue in \`issueActions\` if you want to **accept** it this cycle.\n\n${issueBacklog}\n`;
+    section += `Deferred from earlier cycles and carried forward automatically:\n\n${issueBacklog}\n`;
   }
 
   if (hasStale) {
@@ -116,27 +130,11 @@ ${entries.map((e) => `- ${e}`).join("\n")}
 Use these tools to ground your advice in hard numbers: "Blaziken has 120 Atk / 80 Spe" is more useful than vague claims.`;
 }
 
-/** The "Memory Files (on demand)" reference block. Extra entries are appended to the standard list. */
-export function formatMemoryFilesSection(extraFiles?: string[]): string {
-  const base = [
-    "`memory/strategy-notes.md` — game design direction, multi-cycle roadmap, and goals",
-    "`memory/codebase-facts.md` — discovered facts about the pokeemerald codebase",
-    "`memory/failure-patterns.md` — build failures encountered and their solutions",
-    "`memory/project-facts.md` — build system details and configuration notes",
-    "`memory/tech-debt-backlog.md` — accumulated engineering investment opportunities proposed by the Tech Lead across cycles (tooling, abstractions, config-driven patterns that would accelerate future content work)",
-    "`memory/creative-backlog.md` — deferred creative ideas proposed by the Creative Visionary across cycles (atmospheric details, narrative moments, bold features waiting for prerequisites)",
-  ];
-  if (extraFiles) {
-    base.push(...extraFiles);
-  }
-  const bullets = base.map((f) => `- ${f}`).join("\n");
+/** The "Memory Files (on demand)" pointer; the files themselves are listed in CLAUDE.md. */
+export function formatMemoryFilesSection(): string {
   return `## Memory Files (on demand)
 
-Your full memory is in the \`memory/\` directory. Read these files if you need more context before deciding — don't pre-emptively read them all, only fetch what is relevant:
-
-${bullets}
-
-You can also read specific cycle journals in \`journal/cycle-<NNNN>.md\` (zero-padded, e.g. \`journal/cycle-0307.md\`) for more details on past cycles if needed.`;
+Your memory files are listed in CLAUDE.md. Read the ones relevant to this decision — don't pre-emptively read them all. \`memory/tech-debt-backlog.md\` and \`memory/creative-backlog.md\` hold deferred engineering and creative investments worth reviewing when planning. Past cycles are in \`journal/cycle-<NNNN>.md\` (zero-padded, e.g. \`journal/cycle-0307.md\`).`;
 }
 
 /** The mode history heading + "don't feel constrained" preamble. */
@@ -147,6 +145,11 @@ If the previous few cycles were all "research", maybe it's time for a "feature".
 Use your judgment to choose the best mode for the current situation and objective — the goal is to build a great ROM hack, not to follow a rigid pattern.
 
 ${summary}`;
+}
+
+/** The rule against choosing "repair" after a revert, shared by both planner variants. */
+export function formatRevertRule(): string {
+  return `If a previous cycle had build failures and the changes were REVERTED (look for "[REVERTED" in the journal), do NOT choose "repair" — the broken code no longer exists. Instead, choose a productive mode (feature, patch, planning, etc.) and either retry the same objective with a different approach or move on to something else. Only choose "repair" if the build is currently broken with un-reverted changes still in place.`;
 }
 
 /** The ~20-line implementation plan guidance block shared by both planner variants. */
@@ -177,7 +180,7 @@ The implementation agent's job is to locate the right files and make the necessa
 export function formatGameplayDesignBriefGuidance(): string {
   return `## Gameplay Designer (optional Phase 1.5)
 
-You have access to a **Gameplay Designer** agent that can produce detailed, data-driven gameplay specifications. It has access to Pokédex MCP tools (stats, learnsets, type matchups, Smogon sets) and can reason deeply about difficulty, balance, and progression. For large tasks, the designer can internally parallelize by spawning a team of agents — you do not need to manage this.
+You have access to a **Gameplay Designer** agent that can produce detailed, data-driven gameplay specifications. It has access to Pokédex MCP tools (stats, learnsets, type matchups, Smogon sets) and can reason deeply about difficulty, balance, and progression.
 
 **When to use it**: Set the \`gameplayDesignBrief\` field when this cycle involves gameplay changes — trainer teams, wild encounters, difficulty tuning, rival battles, gym leader redesigns, Elite Four, etc.
 
@@ -233,14 +236,13 @@ export function formatPersonalityGuidance(): string {
 export function formatPlannerClosingInstructions(): string {
   const issuePersonality = getIssueEvaluationGuidance();
   return `**Issue handling rules:**
-- **New community issues**: Review each one and include your decisions in the \`issueActions\` array. You have full freedom to accept, defer, reject, or ask for more info.
-- **Multi-item issues**: If an issue contains multiple distinct asks (bugs + features, etc.), use the \`items\` array within your issueAction to give each item its own action and response. Set the top-level \`action\` to the dominant one (accept if any is accepted, defer if all deferred, reject if all rejected). For single-ask issues, omit \`items\`.
-- **Regular backlog issues**: Do NOT include them in \`issueActions\` — they are carried forward automatically. Only include a backlog issue if you want to **accept** it this cycle.
-- **Stale backlog issues** (marked in the "Stale Issues" section): You MUST re-evaluate each one and include it in \`issueActions\` with accept, reject, or defer.
+- **New community issues**: include a decision for each in \`issueActions\`. You have full freedom to accept, defer, reject, or ask for more info.
+- **Multi-item issues**: if an issue contains several distinct asks, give each its own entry in \`items\` and set the top-level \`action\` to the dominant one (accept if any item is accepted, defer if all deferred, reject if all rejected). Omit \`items\` for single-ask issues.
+- **Regular backlog issues**: leave them out of \`issueActions\` — they carry forward automatically — unless you **accept** one this cycle.
+- **Stale backlog issues**: you MUST include each one in \`issueActions\` with accept, reject, or defer.
+- If an accepted issue should shape this cycle's objective, incorporate it.
 
-If an accepted issue should shape this cycle's objective, incorporate it.
-
-**Important**: Issue responses MUST be 1-3 sentences, under 40 words. Keep Professor Oak's warm voice but be direct. No opening preamble ("Well now..."), no restating the suggestion, no long technical justifications. Just: acknowledge, state your decision, and if deferring say when. One Pokémon metaphor max.
+**Responses** are 1-3 sentences, under 40 words: acknowledge, state your decision, and if deferring say when. No opening preamble ("Well now..."), no restating the suggestion, no long technical justification, one Pokémon metaphor at most.
 
 You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
 
@@ -258,7 +260,6 @@ export interface PlannerContextParams {
   issueContext: string;
   issueBacklog: string;
   staleIssues?: Array<{ issueNumber: number; title: string; deferredAtCycle: number; deferralCount?: number; pendingItems?: string[] }>;
-  extraMemoryFiles?: string[];
 }
 
 /**
@@ -271,7 +272,7 @@ export function buildPlannerContextSections(params: PlannerContextParams): strin
   const b = new PromptBuilder();
   b.heading("Last Cycle's Journal", params.journalContext);
   b.raw(formatModeHistorySection(params.modeHistorySummary));
-  b.raw("\n" + formatMemoryFilesSection(params.extraMemoryFiles));
+  b.raw("\n" + formatMemoryFilesSection());
   b.raw("\n" + formatPokedexToolsSection());
   b.heading("Available Modes", formatModeList());
   b.raw(formatIssueSection(params.issueContext));
@@ -282,10 +283,18 @@ export function buildPlannerContextSections(params: PlannerContextParams): strin
 /**
  * Build the shared Context block used by all advisory team roles.
  *
- * Contains: journal, mode history, available modes, issues, backlog — all at ### level.
+ * Contains: strategy notes (optional), journal, mode history, available modes,
+ * issues, backlog — all at ### level. Inlining the strategy notes saves each
+ * advisor that needs them a Read turn.
  */
-export function buildAdvisorContextBlock(ctx: TeamContext): string {
+export function buildAdvisorContextBlock(
+  ctx: TeamContext,
+  options: { includeStrategyNotes?: boolean } = {},
+): string {
   const b = new PromptBuilder();
+  if (options.includeStrategyNotes) {
+    b.heading("Strategy Notes (`memory/strategy-notes.md`)", ctx.strategyNotes || "(no strategy notes yet)", 3);
+  }
   b.heading("Last Cycle Journal", ctx.journalContext, 3);
   b.heading("Cycle Mode History", ctx.modeHistorySummary, 3);
   b.heading("Available Modes", ctx.modeList, 3);

@@ -5,8 +5,9 @@
 
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { CyclePlan } from "./planner.js";
-import { CYCLE_PLAN_SCHEMA, parsePlanResult } from "./planner.js";
-import { getCycleModeHistorySummary } from "../memory/store.js";
+import { CYCLE_PLAN_SCHEMA, PLANNER_TOOLS, parsePlanResult } from "./planner.js";
+import type { TokenUsage } from "../memory/types.js";
+import { getCycleModeHistorySummary, loadMemory } from "../memory/store.js";
 import { TEAM_ROLES } from "./team-roles.js";
 import type { TeamRole, TeamContext } from "./team-roles.js";
 import { logger } from "../utils/logger.js";
@@ -21,17 +22,19 @@ import {
   formatSpriteDesignBriefGuidance,
   formatPlannerClosingInstructions,
   formatPersonalityGuidance,
+  formatRevertRule,
 } from "../agent/prompt-sections.js";
 
 /** Run a single advisory agent and return its memo text */
 async function runAdvisoryRole(
   role: TeamRole,
   ctx: TeamContext,
-): Promise<{ name: string; label: string; memo: string }> {
+): Promise<{ name: string; label: string; memo: string; tokenUsage?: TokenUsage }> {
   try {
     const prompt = role.buildPrompt(ctx);
     logger.info(`  [Team] Running ${role.label} advisor...`);
     const result = await runClaudeCode(prompt, {
+      phase: "advisor",
       maxTurns: role.maxTurns,
       timeout: role.timeout,
       tools: role.tools,
@@ -39,7 +42,7 @@ async function runAdvisoryRole(
     });
     const memo = result.narrativeText || result.resultText || "(no memo produced)";
     logger.info(`  [Team] ${role.label} memo: ${memo.length} chars`);
-    return { name: role.name, label: role.label, memo };
+    return { name: role.name, label: role.label, memo, tokenUsage: result.tokenUsage };
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : String(err);
     logger.warn(`  [Team] ${role.label} advisor failed: ${errMsg}`);
@@ -108,6 +111,7 @@ export async function planCycleWithTeam(
     modeList,
     issueSection,
     backlogSection,
+    strategyNotes: loadMemory().strategyNotes.raw.trim(),
   };
 
   // Phase A: Run advisory roles in parallel
@@ -137,9 +141,6 @@ export async function planCycleWithTeam(
     issueContext,
     issueBacklog,
     staleIssues,
-    extraMemoryFiles: [
-      "`memory/pokemon-knowledge.md` — ROM hack community research findings (maintained by the ROM Hack Researcher advisor)",
-    ],
   });
 
   const prompt = `You are Agent Oak's planning module (the **Producer**). Decide what the next autonomous cycle should focus on.
@@ -154,15 +155,7 @@ ${formatPersonalityGuidance()}
 
 Decide: What mode should this cycle use, and what should the objective be?
 
-If previous cycles had build failures, consider "repair".
-
-## Engineering Investment (optional field)
-
-Even when the main objective is content work, capture any valuable engineering improvement opportunity in the \`engineeringInvestment\` field. This is persisted in a tech debt backlog across cycles, building a visible record of deferred infrastructure work. Engineering investments that reduce file-touch counts or automate repetitive operations accelerate all future content cycles — they are not in opposition to the creative vision, they are force multipliers for it.
-
-## Creative Investment (optional field)
-
-When deferring a bold creative idea from the Creative Visionary, capture it in the \`creativeInvestment\` field. This is persisted in a creative backlog across cycles, preventing good ideas from being acknowledged but never tracked. Only capture ideas worth revisiting — not ones you're rejecting outright.
+${formatRevertRule()}
 
 ${formatImplementationPlanGuidance()}
 
@@ -176,13 +169,25 @@ ${formatPlannerClosingInstructions()}`;
   logger.info(`-> Producer prompt:\n\n\n${prompt}\n\n\n`);
 
   const result = await runClaudeCode(prompt, {
+    phase: "planner",
+    tools: PLANNER_TOOLS,
     maxTurns: 50,
     timeout: 15 * 60 * 1000,
     model,
     jsonSchema: CYCLE_PLAN_SCHEMA,
   });
 
-  return parsePlanResult(result);
+  const plan = parsePlanResult(result);
+  const usages = [...memos.map((m) => m.tokenUsage), plan.tokenUsage].filter((u): u is TokenUsage => !!u);
+  plan.tokenUsage = usages.reduce(
+    (acc, u) => ({
+      inputTokens: acc.inputTokens + u.inputTokens,
+      outputTokens: acc.outputTokens + u.outputTokens,
+      totalTokens: acc.totalTokens + u.totalTokens,
+    }),
+    { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+  );
+  return plan;
 }
 
 /**

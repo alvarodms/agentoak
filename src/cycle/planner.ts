@@ -5,6 +5,7 @@ import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
 import { getCycleModeHistorySummary } from "../memory/store.js";
 import type { IssueAction, HelpRequest } from "../github/client.js";
+import type { TokenUsage } from "../memory/types.js";
 import { shouldUseTeamPlanning, planCycleWithTeam } from "./team-planner.js";
 import {
   formatJournalContext,
@@ -14,6 +15,7 @@ import {
   formatSpriteDesignBriefGuidance,
   formatPlannerClosingInstructions,
   formatPersonalityGuidance,
+  formatRevertRule,
 } from "../agent/prompt-sections.js";
 
 export interface CyclePlan {
@@ -21,7 +23,7 @@ export interface CyclePlan {
   objective: string;
   reasoning: string;
   implementationPlan: string;
-  /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. For large tasks, the designer can internally parallelize using Agent Teams. */
+  /** Optional brief for the Gameplay Designer agent. When set, Phase 1.5 spawns a specialist to produce detailed gameplay specs. */
   gameplayDesignBrief?: string;
   /** Optional engineering investment recommended by the Tech Lead. Captured even when the cycle's main objective is content work, so it can be persisted in the tech debt backlog for future cycles. */
   engineeringInvestment?: string;
@@ -33,7 +35,12 @@ export interface CyclePlan {
   isSpriteIteration?: boolean;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
+  /** Tokens spent planning (the planner, or the advisors plus the Producer) */
+  tokenUsage?: TokenUsage;
 }
+
+/** Built-in tools the planner and Producer may use: reading only */
+export const PLANNER_TOOLS = "Read,Grep,Glob";
 
 /** JSON schema for validated structured output from the planning phase */
 export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
@@ -54,7 +61,7 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     },
     implementationPlan: {
       type: "string",
-      description: "Step-by-step implementation plan for the implementation agent. Be clear and actionable so the agent can execute without ambiguity. Describe: (1) logical actions to take in order, (2) what to read or understand first, (3) what kind of changes to make and where (describe patterns/conventions — no need to hard-code exact file paths), (4) how to verify the work is correct (e.g. run make, check a value in a specific system). Be concise but actionable — numbered steps work well.",
+      description: "Step-by-step plan for the implementation agent, in numbered steps: what to read first, the changes to make in order, conventions to follow, and how to verify. Specify all creative content verbatim (dialogue, rosters, encounter tables, values) unless a design brief hands it to a specialist — the implementer should not make design decisions.",
     },
     gameplayDesignBrief: {
       type: "string",
@@ -62,11 +69,11 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
     },
     engineeringInvestment: {
       type: "string",
-      description: "Optional engineering investment opportunity identified by the Tech Lead or your own analysis. Capture it here even if this cycle focuses on content — it will be persisted in the tech debt backlog so future cycles can act on it. Examples: 'Extract wild encounter tables into a JSON config so adding species to a route is a 1-file edit instead of 3', 'Create a helper script that auto-generates species constant boilerplate'.",
+      description: "Optional engineering investment opportunity identified by the Tech Lead or your own analysis. Capture it here even if this cycle focuses on content — it is persisted in memory/tech-debt-backlog.md so future cycles can act on it. Start with a short title and a colon, e.g. 'Wild encounter JSON config: extract encounter tables so adding species to a route is a 1-file edit instead of 3'. To re-defer an item already in the backlog, reuse its exact title — that updates the existing row instead of adding a duplicate.",
     },
     creativeInvestment: {
       type: "string",
-      description: "Optional creative investment opportunity identified by the Creative Visionary or your own analysis. Capture a deferred bold creative idea here — it will be persisted in the creative backlog so future cycles can act on it when prerequisites are met. Examples: 'Regional Forms for Hoenn migration species — needs sprite pipeline first', 'Route 119 thunderstorm should darken screen and play rain ambiance — needs scripted event macros'.",
+      description: "Optional creative investment opportunity identified by the Creative Visionary or your own analysis. Capture a deferred bold creative idea here — it is persisted in memory/creative-backlog.md so future cycles can act on it when prerequisites are met. Start with a short title and a colon, e.g. 'Route 119 thunderstorm: darken the screen and play rain ambiance — needs scripted event macros'. To re-defer an idea already in the backlog, reuse its exact title — that updates the existing row instead of adding a duplicate.",
     },
     spriteDesignBrief: {
       type: "string",
@@ -212,7 +219,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
     if (!CYCLE_MODES[mode]) {
       logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
-      return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests };
+      return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests, tokenUsage: result.tokenUsage };
     }
     logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
     if (issueActions.length > 0) {
@@ -234,6 +241,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       isSpriteIteration: parsed.isSpriteIteration ?? false,
       issueActions,
       helpRequests,
+      tokenUsage: result.tokenUsage,
     };
 
     logger.info(`[DONE] Final cycle plan: ${JSON.stringify(planResult, null, 2)}`);
@@ -284,7 +292,7 @@ ${formatPersonalityGuidance()}
 
 Decide: What mode should this cycle use, and what should the objective be?
 
-If a previous cycle had build failures and the changes were REVERTED (look for "[REVERTED" in the journal), do NOT choose "repair" — the broken code no longer exists. Instead, choose a productive mode (feature, patch, planning, etc.) and either retry the same objective with a different approach or move on to something else. Only choose "repair" if the build is currently broken with un-reverted changes still in place.
+${formatRevertRule()}
 
 
 ${formatImplementationPlanGuidance()}
@@ -299,6 +307,8 @@ ${formatPlannerClosingInstructions()}`;
     logger.info(`-> Planner prompt:\n\n\n${prompt}\n\n\n`);
 
     const result = await runClaudeCode(prompt, {
+      phase: "planner",
+      tools: PLANNER_TOOLS,
       maxTurns: 50,
       timeout: 5 * 60 * 1000,
       model,

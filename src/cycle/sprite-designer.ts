@@ -50,7 +50,7 @@ export interface SpriteDesignResult {
 }
 
 const SPRITE_DESIGNER_MAX_TURNS = 80;
-const SPRITE_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
+export const SPRITE_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
 
 /** MCP tool for fetching base sprites from the expansion repo. */
 const SPRITE_MCP_TOOL = "mcp__pokedex__fetch_pokemon_sprites";
@@ -80,6 +80,7 @@ export async function runSpriteDesigner(
   objective: string,
   brief: string,
   implementationPlan: string,
+  options: { timeout?: number } = {},
 ): Promise<SpriteDesignResult> {
   const prompt = buildSpriteDesignerPrompt(objective, brief, implementationPlan);
 
@@ -87,8 +88,9 @@ export async function runSpriteDesigner(
   logger.info(`[Sprite Designer] Brief: ${brief.slice(0, 200)}${brief.length > 200 ? "..." : ""}`);
 
   const result = await runClaudeCode(prompt, {
+    phase: "sprite-designer",
     maxTurns: SPRITE_DESIGNER_MAX_TURNS,
-    timeout: SPRITE_DESIGNER_TIMEOUT_MS,
+    timeout: options.timeout ?? SPRITE_DESIGNER_TIMEOUT_MS,
     tools: SPRITE_DESIGNER_TOOLS,
     model: process.env.ANTHROPIC_MODEL,
   });
