@@ -16,7 +16,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { findNearDuplicates, gateAgainstBase, lintSprite, type LintResult, type Point } from "./lint.js";
+import { findNearDuplicates, gateAgainstBase, lintSprite, shinyContrast, type LintResult, type Point } from "./lint.js";
 import { decodePng, encodeRgbPng, parseJascPal, type IndexedImage, type Rgb } from "./png.js";
 import { hueShiftedRamp, parseColor } from "./ramp.js";
 
@@ -25,6 +25,12 @@ const GRAPHICS_DIR = path.join(PROJECT_ROOT, "pokeemerald", "graphics", "pokemon
 const FRAME = 64;
 /** Battle sprites the critic checks; icons use the shared icon palettes and are skipped. */
 const SPRITE_FILES = ["front.png", "back.png", "anim_front.png"];
+/**
+ * Minimum share of a sprite (outline excluded) whose shiny color must visibly
+ * differ from normal. Vanilla Emerald's median is ~55%; a recolor that only
+ * darkens the same hues (Ludicolo Hoenn v1: 12%) reads as the same Pokémon.
+ */
+export const MIN_SHINY_CHANGED = 0.4;
 
 /** Resolve a sprite folder given as a path or a bare graphics/pokemon name. */
 export function resolveSpriteDir(arg: string): string {
@@ -123,6 +129,19 @@ export function lintVariant(variantDir: string, baseDir?: string): LintReport {
     failures += dups.length;
     for (const d of dups)
       lines.push(`  FAIL ${palName}: indices ${d.a} (${d.colorA.join(",")}) and ${d.b} (${d.colorB.join(",")}) read as one color on the GBA. Push them apart or merge them and free a slot.`);
+  }
+
+  const front = variant.images.get("front.png");
+  if (front && variant.normal && variant.shiny) {
+    const { changedShare, unchanged } = shinyContrast(front, variant.normal, variant.shiny, Math.min(FRAME, front.height));
+    const pct = `${Math.round(changedShare * 100)}%`;
+    if (changedShare < MIN_SHINY_CHANGED) {
+      failures++;
+      const top = unchanged.slice(0, 4).map(({ index, pixels }) => `${index} (${variant.normal![index].join(",")} -> ${variant.shiny![index].join(",")}, ${pixels}px)`);
+      lines.push(`  FAIL shiny.pal: only ${pct} of front.png visibly changes from normal (need ${Math.round(MIN_SHINY_CHANGED * 100)}%+). A darker or duller version of the same hue reads as the normal form. Turn the hue 30°+ or change lightness/saturation clearly for the biggest unchanged indices: ${top.join("; ")}`);
+    } else {
+      lines.push(`  ok   shiny.pal: ${pct} of front.png visibly changes from normal`);
+    }
   }
 
   lines.push(failures ? `RESULT: FAIL (${failures} issue${failures > 1 ? "s" : ""})` : "RESULT: PASS");

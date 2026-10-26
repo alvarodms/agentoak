@@ -4,7 +4,7 @@ import path from "node:path";
 import zlib from "node:zlib";
 import { describe, it, expect } from "vitest";
 import { decodePng, encodeIndexedPng, parseJascPal, type IndexedImage, type Rgb } from "./png.js";
-import { findNearDuplicates, gateAgainstBase, lintSprite, rgbToHsl, type LintResult } from "./lint.js";
+import { findNearDuplicates, gateAgainstBase, lintSprite, rgbToHsl, shinyContrast, visiblyDifferent, type LintResult } from "./lint.js";
 import { hueShiftedRamp, parseColor } from "./ramp.js";
 import { asciiDump, lintVariant } from "./spritekit.js";
 
@@ -128,6 +128,26 @@ describe("gateAgainstBase", () => {
   });
 });
 
+describe("shiny contrast", () => {
+  it("treats a darker version of the same hue as the same color", () => {
+    // Ludicolo Hoenn v1's body yellow-green and its shiny
+    expect(visiblyDifferent([168, 188, 45], [128, 138, 35])).toBe(false);
+    expect(visiblyDifferent([168, 188, 45], [60, 120, 200])).toBe(true); // hue turn
+    expect(visiblyDifferent([200, 60, 60], [60, 20, 20])).toBe(true); // much darker
+    expect(visiblyDifferent([200, 60, 60], [150, 140, 140])).toBe(true); // desaturated
+  });
+
+  it("measures the changed share without the outline and lists the biggest unchanged indices", () => {
+    // index 1 = outline (dark in both), 2 = body (30 px, unchanged), 3 = accent (10 px, changed)
+    const normal: Rgb[] = [[0, 0, 0], [16, 16, 16], [168, 188, 45], [200, 60, 60]];
+    const shiny: Rgb[] = [[0, 0, 0], [24, 24, 24], [128, 138, 35], [60, 120, 200]];
+    const img = image(10, 5, (x, y) => (y === 0 ? 1 : y < 4 ? 2 : 3));
+    const result = shinyContrast(img, normal, shiny);
+    expect(result.changedShare).toBeCloseTo(10 / 40);
+    expect(result.unchanged).toEqual([{ index: 2, pixels: 30 }]);
+  });
+});
+
 describe("hueShiftedRamp", () => {
   it("goes dark to light, keeps the base in the middle, cools shadows and warms lights", () => {
     const base: Rgb = [200, 50, 60];
@@ -187,6 +207,14 @@ describe("lintVariant", () => {
     expect(report.passed).toBe(false);
     expect(report.text).toContain("indices 1 (200,40,40) and 2 (203,42,41)");
     expect(report.text).toContain("embedded PNG palette differs from normal.pal");
+  });
+
+  it("fails a shiny that only darkens the normal colors", () => {
+    const root = tmp();
+    writeSet(path.join(root, "mon_hoenn"), { normal: colors, shiny: colors.map((c) => c.map((v) => Math.round(v * 0.8)) as Rgb) });
+    const report = lintVariant(path.join(root, "mon_hoenn"));
+    expect(report.passed).toBe(false);
+    expect(report.text).toContain("of front.png visibly changes from normal (need 40%+)");
   });
 
   it("allows identical entries that the other palette splits apart", () => {

@@ -15,6 +15,7 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Pixel map analysis is essential** before placing glyphs — use run-length analysis to find safe canvas areas
 - **Apply edits to ALL sprite files consistently** — front.png, back.png, both frames of anim_front.png
 - **spritekit lint audit (all 25 variants, pre-gate)**: 8 had back.png embedded palette ≠ normal.pal (vanilla: 14/398); ~10 had near-duplicate used colors (e.g. Vulpix idx 2/12, Ninetales 6/11 + 7/12) — wasted slots and flat shading; accent/emanation passes tripled stray pixels on Ludicolo (15→49), Pinsir (12→36), Lotad (9→22). Vulpix's 16 colors all sat at hue 205–230°, which is why it reads washed out.
+- **Shinies must change hue, not just darken**: lint requires 40%+ of front.png (outline aside) to visibly change (vanilla median ~55%). Pre-gate, 7 variants were below it — Lotad 6%, Ludicolo 12% (body yellow-green -> darker olive), Corsola 15%, Lombre 15%, Blaziken 22%, Arcanine 23%, Combusken 29%.
 
 ## Community Feedback Patterns
 

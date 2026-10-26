@@ -316,7 +316,7 @@ def apply_pal_to_png(png_path, pal_colors):
 | Command | What it gives you |
 |---------|-------------------|
 | \`${SPRITEKIT} preview <variant>\` | Writes a PNG to \`Read\`: rows = front, back, each anim_front frame; columns = base, variant (normal.pal), variant (shiny.pal); 5× zoom, pixel grid (stronger every 8 px), checkerboard transparency, stray pixels boxed magenta, jaggies cyan |
-| \`${SPRITEKIT} lint <variant>\` | The critic: stray-pixel noise and doubled corners in 1-px lines compared with the base, pillow shading, used colors the GBA's 15-bit color can't tell apart, PNG palettes that disagree with normal.pal. Prints coordinates; exits 1 on FAIL |
+| \`${SPRITEKIT} lint <variant>\` | The critic: stray-pixel noise and doubled corners in 1-px lines compared with the base, pillow shading, used colors the GBA's 15-bit color can't tell apart, PNG palettes that disagree with normal.pal, shinies too close to the normal colors. Prints coordinates; exits 1 on FAIL |
 | \`${SPRITEKIT} ascii <png> [--frame 2] [--region x,y,w,h]\` | Palette indices as hex digits (\`.\` = transparent) with x/y rulers. Use it to find exact coordinates before a pixel edit and to verify the edit after — cheaper and more precise than an image |
 | \`${SPRITEKIT} ramp <#rrggbb or r,g,b> [--n 5] [--shift 24] [--spread 0.56]\` | A hue-shifted dark→light ramp as JASC-PAL lines: shadows rotate toward blue-violet and get more saturated, lights rotate toward warm yellow and paler. Lower \`--shift\` for subtle materials (stone, steel), lower \`--spread\` for low-contrast ones |
 
@@ -328,6 +328,7 @@ Before writing the report:
    - **stray pixels / jaggies**: \`ascii\` the region, then merge each flagged pixel into a neighboring color, group it into a shape, or remove the doubled corner. Accent glyphs and emanations are the usual source.
    - **near-duplicate colors**: they waste one of 15 usable slots and flatten the shading. Re-derive that material's ramp or merge the indices and free a slot for an accent. (Identical entries that the other palette splits apart are allowed: that is a deliberate normal/shiny split.)
    - **embedded palette differs from normal.pal**: apply the .pal to that PNG (back.png is the one usually missed).
+   - **shiny too close to normal**: at least 40% of the sprite (outline aside) must visibly change. A darker or duller version of the same hues reads as the normal form; turn the main body colors' hue 30°+ (or clearly change lightness/saturation) and build the shiny ramps with \`ramp\` too. Lint lists the biggest unchanged indices to start with.
 3. Repeat until \`lint\` prints \`RESULT: PASS\`. If a FAIL is intentional (e.g. a deliberate sparkle texture), say which one and why in the report.
 
 ## Pixel Accent Techniques

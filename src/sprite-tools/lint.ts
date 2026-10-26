@@ -207,3 +207,54 @@ export function gateAgainstBase(variant: LintResult, base: LintResult): GateIssu
     });
   return issues;
 }
+
+/** sRGB -> OKLCh (lightness 0..1, chroma, hue in degrees), so differences match what eyes see. */
+export function oklch([r, g, b]: Rgb): [number, number, number] {
+  const lin = (v: number) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const [R, G, B] = [lin(r), lin(g), lin(b)];
+  const l = Math.cbrt(0.4122214708 * R + 0.5363325363 * G + 0.0514459929 * B);
+  const m = Math.cbrt(0.2119034982 * R + 0.6806995451 * G + 0.1073969566 * B);
+  const s = Math.cbrt(0.0883024619 * R + 0.2817188376 * G + 0.6299787005 * B);
+  const L = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
+  const a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+  const bb = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  return [L, Math.hypot(a, bb), ((Math.atan2(bb, a) * 180) / Math.PI + 360) % 360];
+}
+
+/**
+ * Whether a shiny color reads as a different color from the normal one: a hue
+ * turn of 30°+ (when both are colorful), a clear lightness change, or a clear
+ * saturation change (colorful <-> gray). A slightly darker or duller version
+ * of the same hue does not count.
+ */
+export function visiblyDifferent(normal: Rgb, shiny: Rgb): boolean {
+  const [L1, C1, h1] = oklch(normal), [L2, C2, h2] = oklch(shiny);
+  const dh = Math.min(Math.abs(h1 - h2), 360 - Math.abs(h1 - h2));
+  return (Math.min(C1, C2) >= 0.03 && dh >= 30) || Math.abs(L1 - L2) >= 0.15 || Math.abs(C1 - C2) >= 0.08;
+}
+
+export interface ShinyContrast {
+  /** Share of the sprite's (non-outline) pixels whose shiny color visibly differs. */
+  changedShare: number;
+  /** Indices that look the same in both palettes, most-used first, with pixel counts. */
+  unchanged: { index: number; pixels: number }[];
+}
+
+/**
+ * How much of a sprite changes between normal and shiny. Outline-dark pixels
+ * (dark in both palettes) are left out: every shiny keeps its outline.
+ */
+export function shinyContrast(img: IndexedImage, normal: Rgb[], shiny: Rgb[], height = img.height): ShinyContrast {
+  const counts = new Map<number, number>();
+  for (const i of img.pixels.subarray(0, img.width * height)) if (i > 0 && normal[i] && shiny[i]) counts.set(i, (counts.get(i) ?? 0) + 1);
+  let total = 0, changed = 0;
+  const unchanged: { index: number; pixels: number }[] = [];
+  for (const [index, pixels] of counts) {
+    if (oklch(normal[index])[0] < 0.3 && oklch(shiny[index])[0] < 0.3) continue;
+    total += pixels;
+    if (visiblyDifferent(normal[index], shiny[index])) changed += pixels;
+    else unchanged.push({ index, pixels });
+  }
+  unchanged.sort((a, b) => b.pixels - a.pixels);
+  return { changedShare: total ? changed / total : 1, unchanged };
+}
