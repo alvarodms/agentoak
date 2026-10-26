@@ -14,6 +14,7 @@
  *   smogon_sets            — competitive sets from Smogon (moves, items, EVs, nature)
  *   smogon_format_pokemon  — list Pokémon with competitive sets in a tier/format
  *   team_type_coverage     — analyse a team's defensive/offensive type coverage
+ *   rom_species            — one species' data as it stands in this ROM's source tree
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -28,6 +29,7 @@ import {
   listAvailableFormats,
 } from "./smogon-cache.js";
 import { fetchPokemonSprites, formatSpriteResult } from "./sprite-fetcher.js";
+import { SPECIES_SECTIONS, speciesReport } from "./rom/species.js";
 
 const DEFAULT_GEN = 3;
 
@@ -802,6 +804,33 @@ server.registerTool(
       content: [{ type: "text", text: formatSpriteResult(result) }],
     };
   },
+);
+
+// ─── Tool: rom_species ───────────────────────────────────────────────────────
+
+server.registerTool(
+  "rom_species",
+  {
+    title: "Read a Species from the ROM Source",
+    description:
+      "Everything this ROM's pokeemerald source says about one species, in a compact report: " +
+      "stats, types, abilities, Pokédex entry and text, level-up/TM/tutor/egg moves, evolutions, " +
+      "wild encounter slots, and trainers that use it. Use it instead of reading or grepping " +
+      "species_info.h, pokedex_entries.h, the learnset files, wild_encounters.json or trainer_parties.h. " +
+      "Unlike pokemon_stats (canonical Gen 3 data), this reflects the hack's own edits and custom species.",
+    inputSchema: z.object({
+      name: z
+        .string()
+        .describe("Species constant or name, e.g. 'SPECIES_LUDICOLO_HOENN', 'ludicolo_hoenn' or 'Lotad'"),
+      sections: z
+        .array(z.enum(SPECIES_SECTIONS))
+        .optional()
+        .describe("Only these parts of the report (default: all)"),
+    }),
+  },
+  async ({ name, sections }) => ({
+    content: [{ type: "text", text: speciesReport(POKEEMERALD_ROOT, name, sections) }],
+  }),
 );
 
 // ─── Start server ─────────────────────────────────────────────────────────────
