@@ -30,7 +30,7 @@ import type { IssueAction } from "../github/client.js";
 import { cycleLogger, logger } from "../utils/logger.js";
 import { PROJECT_ROOT, ARTIFACTS_DIR, MEMORY_DIR } from "../utils/paths.js";
 import { createCycleRelease } from "../release/release.js";
-import type { TokenUsage } from "../memory/types.js";
+import { EMPTY_TOKEN_USAGE, mergeTokenUsage, type TokenUsage } from "../memory/types.js";
 
 const TECH_DEBT_BACKLOG_PATH = path.join(MEMORY_DIR, "tech-debt-backlog.md");
 const CREATIVE_BACKLOG_PATH = path.join(MEMORY_DIR, "creative-backlog.md");
@@ -117,18 +117,6 @@ function buildDeepSeekOverrides(): Record<string, string | undefined> | undefine
     API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(),
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: process.env.DEEPSEEK_DISABLE_NONESSENTIAL_TRAFFIC ?? "1",
   };
-}
-
-/** Aggregate token usage from multiple phases */
-function mergeTokenUsage(...usages: TokenUsage[]): TokenUsage {
-  return usages.reduce(
-    (acc, u) => ({
-      inputTokens: acc.inputTokens + u.inputTokens,
-      outputTokens: acc.outputTokens + u.outputTokens,
-      totalTokens: acc.totalTokens + u.totalTokens,
-    }),
-    { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
-  );
 }
 
 /** Phase 1: Planning — ask Claude to decide mode, objective, and task list */
@@ -302,7 +290,7 @@ async function runBuildVerifyPhase(
   reverted: boolean;
 }> {
   const fixActions: ActionRecord[] = [];
-  let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+  let fixTokenUsage: TokenUsage = EMPTY_TOKEN_USAGE;
 
   const fixer: BuildFixer = async ({ errors, stderr, attempt }) => {
     log.info(`  Build: FAIL — running fix agent (attempt ${attempt})...`);
@@ -380,7 +368,7 @@ async function runValidationFixPhase(
   reverted: boolean;
 }> {
   const fixActions: ActionRecord[] = [];
-  let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+  let fixTokenUsage: TokenUsage = EMPTY_TOKEN_USAGE;
   let currentImplResult = implResult;
   let currentValidation = validationResult;
   let buildResult: { success: boolean; errors: string[] } | null = null;
@@ -579,7 +567,7 @@ export async function runCycle(): Promise<void> {
 
     // ── Phase 1.5: Gameplay Design (conditional — only when Producer sets a brief) ──
     let activePlan: CyclePlan = plan;
-    let gameplayDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+    let gameplayDesignTokenUsage: TokenUsage = EMPTY_TOKEN_USAGE;
 
     if (plan.gameplayDesignBrief) {
       log.info("Phase 1.5: Gameplay Design...");
@@ -605,7 +593,7 @@ export async function runCycle(): Promise<void> {
 
     // ── Phase 1.75: Sprite Design (conditional — only when Producer sets a sprite brief) ──
     let spriteResult: SpriteDesignResult | null = null;
-    let spriteDesignTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+    let spriteDesignTokenUsage: TokenUsage = EMPTY_TOKEN_USAGE;
 
     if (activePlan.spriteDesignBrief) {
       if (activePlan.isSpriteIteration) {
@@ -678,7 +666,7 @@ export async function runCycle(): Promise<void> {
     // ── Phase 3.5: Validation — programmatic claim cross-check ──
     let validationResult: ValidationResult | null = null;
     let validationFixActions: ActionRecord[] = [];
-    let validationFixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
+    let validationFixTokenUsage: TokenUsage = EMPTY_TOKEN_USAGE;
 
     if (!reverted) {
       log.info("Phase 3.5: Validating implementation claims...");
@@ -733,7 +721,7 @@ export async function runCycle(): Promise<void> {
     // ── Phase 5: Journal + Commit ──
     const allActions = [...implResult.actions, ...fixActions, ...validationFixActions, ...reflection.actions];
     const totalTokenUsage = mergeTokenUsage(
-      plan.tokenUsage ?? { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+      plan.tokenUsage ?? EMPTY_TOKEN_USAGE,
       gameplayDesignTokenUsage,
       spriteDesignTokenUsage,
       implResult.tokenUsage,
@@ -1087,7 +1075,7 @@ export async function runCycle(): Promise<void> {
         cycleSummary: `Cycle crashed: ${err instanceof Error ? err.message : String(err)}`,
         nextSteps: "Investigate the crash and retry",
         reflectionText: `The cycle crashed with error: ${err instanceof Error ? err.message : String(err)}`,
-        tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+        tokenUsage: EMPTY_TOKEN_USAGE,
         toolCallCount: 0,
       });
       const crashCommit = await commitCycle(cycleNumber, "cycle crashed");

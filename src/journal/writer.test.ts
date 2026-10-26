@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { digestJournal } from "./writer.js";
+import { digestJournal, formatTokenUsage } from "./writer.js";
 
 const JOURNAL = `# Cycle 0307
 
@@ -77,5 +77,17 @@ describe("digestJournal", () => {
 
   it("orders the summary before the next steps", () => {
     expect(digest.indexOf("**Summary**")).toBeLessThan(digest.indexOf("**Next Steps**"));
+  });
+});
+
+describe("formatTokenUsage", () => {
+  it("breaks the total down by billing category", () => {
+    expect(formatTokenUsage({
+      inputTokens: 1_204,
+      cacheWriteTokens: 412_000,
+      cacheReadTokens: 14_491_394,
+      outputTokens: 116_971,
+      totalTokens: 15_021_569,
+    })).toBe("15,021,569 (input: 1,204, cache write: 412,000, cache read: 14,491,394, output: 116,971)");
   });
 });

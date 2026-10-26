@@ -6,6 +6,7 @@
  */
 
 import { getSpriteGraphicsSubpath } from "../mcp/sprite-fetcher.js";
+import { EMPTY_TOKEN_USAGE, mergeTokenUsage, type TokenUsage } from "../memory/types.js";
 
 /**
  * Per-issue delivery outcome reported by the implementation agent in CYCLE_COMPLETE.
@@ -61,7 +62,7 @@ export interface ClaudeCodeResult {
    * Examples: "Alpha", "Beta", "Demo", "Stable", "Chapter 1"
    */
   releaseStage?: string;
-  tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
+  tokenUsage: TokenUsage;
   toolCallCount: number;
   /** The text from the final "result" message (e.g. structured JSON from --json-schema) */
   resultText: string;
@@ -93,10 +94,8 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   let cycleMarkerFound = false;
   const preMarkerTexts: string[] = [];
   const postMarkerTexts: string[] = [];
-  let totalInputTokens = 0;
-  let totalOutputTokens = 0;
-  let resultInputTokens: number | null = null;
-  let resultOutputTokens = 0;
+  let messageTokenUsage = EMPTY_TOKEN_USAGE;
+  let resultTokenUsage: TokenUsage | null = null;
   let resultText = "";
 
   for (const msg of messages) {
@@ -120,14 +119,11 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     // usage is only a fallback for runs that die before emitting a result.
     if (msg.usage && typeof msg.usage === "object") {
       const usage = msg.usage as Record<string, number>;
+      const parsed = tokenUsageOf(usage);
       if (msg.type === "result") {
-        if (inputTokensOf(usage) || usage.output_tokens) {
-          resultInputTokens = inputTokensOf(usage);
-          resultOutputTokens = usage.output_tokens ?? 0;
-        }
+        if (parsed.totalTokens) resultTokenUsage = parsed;
       } else {
-        totalInputTokens += inputTokensOf(usage);
-        totalOutputTokens += usage.output_tokens ?? 0;
+        messageTokenUsage = mergeTokenUsage(messageTokenUsage, parsed);
       }
     }
 
@@ -304,9 +300,6 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
   const allNarrativeTexts = preMarkerTexts.length > 0 ? preMarkerTexts : postMarkerTexts;
   const narrativeText = allNarrativeTexts.join("\n\n");
 
-  const inputTokens = resultInputTokens ?? totalInputTokens;
-  const outputTokens = resultInputTokens !== null ? resultOutputTokens : totalOutputTokens;
-
   return {
     actions,
     filesModified: [...filesModified],
@@ -317,22 +310,26 @@ export function parseClaudeOutput(rawOutput: string): ClaudeCodeResult {
     issueOutcomes,
     versionBump,
     releaseStage,
-    tokenUsage: {
-      inputTokens,
-      outputTokens,
-      totalTokens: inputTokens + outputTokens,
-    },
+    tokenUsage: resultTokenUsage ?? messageTokenUsage,
     toolCallCount,
     resultText,
     narrativeText,
   };
 }
 
-/** Input tokens for one usage record, including prompt-cache reads and writes */
-function inputTokensOf(usage: Record<string, number>): number {
-  return (usage.input_tokens ?? 0)
-    + (usage.cache_read_input_tokens ?? 0)
-    + (usage.cache_creation_input_tokens ?? 0);
+/** Token usage for one API usage record, with prompt-cache reads and writes kept apart */
+function tokenUsageOf(usage: Record<string, number>): TokenUsage {
+  const inputTokens = usage.input_tokens ?? 0;
+  const cacheWriteTokens = usage.cache_creation_input_tokens ?? 0;
+  const cacheReadTokens = usage.cache_read_input_tokens ?? 0;
+  const outputTokens = usage.output_tokens ?? 0;
+  return {
+    inputTokens,
+    cacheWriteTokens,
+    cacheReadTokens,
+    outputTokens,
+    totalTokens: inputTokens + cacheWriteTokens + cacheReadTokens + outputTokens,
+  };
 }
 
 /** Match an MCP tool by its bare name, with or without the `mcp__<server>__` prefix */

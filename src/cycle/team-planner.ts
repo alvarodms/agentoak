@@ -6,7 +6,7 @@
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { CyclePlan } from "./planner.js";
 import { CYCLE_PLAN_SCHEMA, PLANNER_TOOLS, parsePlanResult } from "./planner.js";
-import type { TokenUsage } from "../memory/types.js";
+import { mergeTokenUsage, type TokenUsage } from "../memory/types.js";
 import { getCycleModeHistorySummary, loadMemory } from "../memory/store.js";
 import { TEAM_ROLES } from "./team-roles.js";
 import type { TeamRole, TeamContext } from "./team-roles.js";
@@ -179,14 +179,7 @@ ${formatPlannerClosingInstructions()}`;
 
   const plan = parsePlanResult(result);
   const usages = [...memos.map((m) => m.tokenUsage), plan.tokenUsage].filter((u): u is TokenUsage => !!u);
-  plan.tokenUsage = usages.reduce(
-    (acc, u) => ({
-      inputTokens: acc.inputTokens + u.inputTokens,
-      outputTokens: acc.outputTokens + u.outputTokens,
-      totalTokens: acc.totalTokens + u.totalTokens,
-    }),
-    { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
-  );
+  plan.tokenUsage = mergeTokenUsage(...usages);
   return plan;
 }
 

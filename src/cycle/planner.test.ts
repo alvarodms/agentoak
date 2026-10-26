@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import { EMPTY_TOKEN_USAGE } from "../memory/types.js";
 
 function cliResult(resultText: string): ClaudeCodeResult {
   return {
@@ -10,7 +11,7 @@ function cliResult(resultText: string): ClaudeCodeResult {
     cycleChanges: [],
     nextSteps: "",
     issueOutcomes: [],
-    tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+    tokenUsage: EMPTY_TOKEN_USAGE,
     toolCallCount: 0,
     resultText,
     narrativeText: "",

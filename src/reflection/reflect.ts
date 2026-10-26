@@ -4,6 +4,7 @@ import type { IssueAction } from "../github/client.js";
 import { buildReflectionPrompt } from "../agent/prompts.js";
 import { buildDynamicContext } from "../agent/prompts.js";
 import { loadMemory } from "../memory/store.js";
+import type { TokenUsage } from "../memory/types.js";
 import { logger } from "../utils/logger.js";
 import type { ValidationResult } from "./validator.js";
 
@@ -18,7 +19,7 @@ export interface ReflectionResult {
   versionBump?: "major" | "minor";
   releaseStage?: string;
   actions: ActionRecord[];
-  tokenUsage: { inputTokens: number; outputTokens: number; totalTokens: number };
+  tokenUsage: TokenUsage;
 }
 
 const REFLECTION_MAX_TURNS = 25;
