@@ -80,6 +80,7 @@ static const u8 sToxicTouchDescription[] = _("Its attacks leave a\ntoxic residue
 static const u8 sFrozenSporeDescription[] = _("Icy spores may freeze\non contact.");
 static const u8 sScaldingTouchDescription[] = _("Scalding touch may\nburn the foe.");
 static const u8 sTemperedBladeDescription[] = _("Honed blades find\nthe gap.");
+static const u8 sFeyFlameDescription[] = _("Burned foes take\nmore damage.");
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
 {
@@ -165,6 +166,7 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_FROZEN_SPORE] = _("FROZEN SPORE"),
     [ABILITY_SCALDING_TOUCH] = _("SCALDING TOUCH"),
     [ABILITY_TEMPERED_BLADE] = _("TEMPERED BLADE"),
+    [ABILITY_FEY_FLAME] = _("FEY FLAME"),
 };
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
@@ -251,4 +253,5 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_FROZEN_SPORE] = sFrozenSporeDescription,
     [ABILITY_SCALDING_TOUCH] = sScaldingTouchDescription,
     [ABILITY_TEMPERED_BLADE] = sTemperedBladeDescription,
+    [ABILITY_FEY_FLAME] = sFeyFlameDescription,
 };

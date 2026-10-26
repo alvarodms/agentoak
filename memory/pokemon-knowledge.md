@@ -13,7 +13,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Battle Animation Patterns — Custom Signature Moves | 297 | [battle-animation-patterns-c297.md](pokemon-knowledge/battle-animation-patterns-c297.md) |
 | Champion Design & Mid-Game Encounter Pacing Patterns | 298 | [champion-design-and-midgame-pacing-c298.md](pokemon-knowledge/champion-design-and-midgame-pacing-c298.md) |
 | Gym Leader Dialogue & Capstone Feature Patterns | 299 | [gym-dialogue-and-capstone-patterns-c299.md](pokemon-knowledge/gym-dialogue-and-capstone-patterns-c299.md) |
-| Tempered Blade — Crit Ability Design Patterns | 300 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
+| Custom Ability Design — Crit + Changed Three Parity (Blaziken_H) | 310 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
 | v2.9 Planning — JSON Tooling & Maturity Landscape | 301 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |
 | Learnset & Trainer Tooling — C302 Refactor Context | 302 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
 | Champion Dialogue — "Shared Witness" Framing | 303 | [champion-dialogue-witness-framing-c303.md](pokemon-knowledge/champion-dialogue-witness-framing-c303.md) |

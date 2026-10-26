@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo.
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement).
 
 ---
 
@@ -68,7 +68,7 @@ Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/
 | Honchkrow | Sidney (all tiers), Wally — 2 bosses | No |
 | Corsola_Hoenn | Phoebe, Aqua grunts (Juan slots are now Wallace, no Corsola_H) | No |
 
-Steven's new team: **ZERO overlap** with overused species. Primary #193 target: Sidney's Tyranitar/Houndoom/Honchkrow saturation (C312).
+Steven's new team: **ZERO overlap** with overused species. Primary #193 target: Sidney's Tyranitar/Houndoom/Honchkrow saturation (C313).
 
 ### Remaining Wallace/Juan threads
 - Juan postgame Double Battle (slot 568) — not built yet. SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
@@ -82,23 +82,19 @@ Steven's new team: **ZERO overlap** with overused species. Primary #193 target: 
 
 ## Changed Three Ability Parity
 
-Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Blaze/Cute Charm) and Swampert_Hoenn (Torrent/Guts) need custom abilities:
-- **Blaziken_Hoenn**: Design in C310. Fairy/Fire warrior identity.
-- **Swampert_Hoenn**: Design in C311. Water/Fighting brawler identity.
+Sceptile_Hoenn has Tempered Blade. Swampert_Hoenn (Torrent/Guts) still needs a custom ability:
+- **Blaziken_Hoenn**: DONE (C310) — FEY FLAME (82), slot 0 {FEY_FLAME, BLAZE}: 1.5x damage vs burned targets + switch-in announcement. Steven and postgame rivals carry Will-O-Wisp to show it.
+  - **Player gap (found C310 reflection)**: the player's Torchic_H/Combusken_H never learn Will-O-Wisp (only Ember L10 / Fire Spin); Blaziken_H has it only at Lv1 (move relearner). Fey Flame is nearly dead in player hands. **C311 rider**: add MOVE_WILL_O_WISP to Combusken_Hoenn ~L24 (and Blaziken_H same level) via the learnset generator config.
+- **Swampert_Hoenn**: C311. Water/Fighting brawler identity. Slot 0 (trainer mons always use slot 0, so Steven's Swampert_H gets it automatically — design to fit his Waterfall/Cross Chop/Bulk Up/EQ @Sitrus set, and Brendan/May's postgame Swampert_H). Reuse the switch-in announcement template (codebase-facts.md → Custom Ability Implementation). Last hand-built ability; build generate_ability.cjs (tech-debt) before a 7th.
 
 ## Roadmap
 
 | Cycle | Objective | Issues |
 |-------|-----------|--------|
-| 302-305 | Learnsets, dialogue, Ambipom+Norman, Carbink+Roxanne — **ALL DONE** | #180, #182 |
-| 306 | Champion redesign planning — **DONE** | #192 |
-| 307 | Toxapex + Juan roster fix — **DONE** | #180 |
-| 308 | Steven champion implementation — **DONE** (+ species pipeline repair) | #192, #194 partial, #180 |
-| 309 | Wallace cascade (Wallace → Gym 8, Juan cameo) — **DONE** | #193 partial, #180 |
-| 310 | Blaziken_Hoenn custom ability (ABILITY_82) | — |
-| 311 | Swampert_Hoenn custom ability (ABILITY_83) | — |
-| 312 | Species reuse fixes (#193 — Sidney saturation) | #193 |
-| 313 | Discovery beat (Field Notes key item / encounter moment) | — |
+| 302-310 | Learnsets, Ambipom/Carbink/Toxapex rosters, Steven champion, Wallace cascade, Fey Flame — **ALL DONE** | #180, #182, #192, #194 partial, #193 partial |
+| 311 | Swampert_Hoenn custom ability (ABILITY 83, slot 0, switch-in template) + Will-O-Wisp for player Combusken/Blaziken_H | — |
+| 312 | Discovery/exploration beat (Field Notes key item / encounter moment) — moved ahead of rosters | — |
+| 313 | Sidney/boss species-reuse audit | #193 |
 | 314+ | v2.9 polish | — |
 
 ---
@@ -112,9 +108,9 @@ Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Blaze/Cute Charm) and Swamper
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (40)**: Last = Toxapex(450). EGG=451, NUM_SPECIES=451. 12 cross-gen evos + 25 _HOENN forms + 3 standalone imports (Carbink, Toxapex, etc.), all fully registered + verified.
-- **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81). ABILITIES_COUNT=82. Next: 82.
+- **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82). ABILITIES_COUNT=83. Next: 83. BATTLESTRINGS_COUNT=383 (next STRINGID 383).
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move. MOVE_NAME_LENGTH=12.
-- **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). ABILITY_NAME_LENGTH=14.
+- **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). Damage-multiplier + switch-in message: 9 files (see battle-engine.md Fey Flame). ABILITY_NAME_LENGTH=14.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
 - **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
 - **Generator toolchain**: `generate_species.cjs` (27-file + ~6 manual in pokemon.c/pokemon_icon.c), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + --update mode C287), `verify_species.sh` (27-file check, C287).

@@ -2556,6 +2556,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     effect++;
                 }
                 break;
+            case ABILITY_FEY_FLAME:
+                BattleScriptPushCursorAndCallback(BattleScript_FeyFlameActivates);
+                gBattleScripting.battler = battler;
+                effect++;
+                break;
             case ABILITY_INTIMIDATE:
                 if (!(gSpecialStatuses[battler].intimidatedMon))
                 {

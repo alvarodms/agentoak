@@ -3990,6 +3990,12 @@ BattleScript_SandstreamActivates::
 	call BattleScript_WeatherFormChanges
 	end3
 
+BattleScript_FeyFlameActivates::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_FEYFLAMEACTIVATES
+	waitmessage B_WAIT_TIME_LONG
+	end3
+
 BattleScript_ShedSkinActivates::
 	printstring STRINGID_PKMNSXCUREDYPROBLEM
 	waitmessage B_WAIT_TIME_LONG

@@ -27,7 +27,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **6 cross-generation evolutions** — the migration unlocked latent potential in species already living in Hoenn. Dusclops evolves into Dusknoir, Murkrow into Honchkrow, Snorunt into Froslass (via Dawn Stone), Piloswine into Mamoswine, Girafarig into Farigiraf, and Hoennian Gligar into Hoennian Gliscor. Elite Four members and gym leaders field these evolved forms — Tate & Liza share a Farigiraf, Glacia commands Froslass and Mamoswine, and Archie leads with Hoennian Gliscor — making their teams feel modern and complete
 - **19 migration species** carry thematic wild held items
 - **Hoennian regional forms** — the migration did not just bring new species; it changed species already here. Hoennian Corsola (Ghost/Rock), Hoennian Growlithe (Water), Hoennian Arcanine (Water/Fire), Hoennian Bagon (Dragon/Rock) — a fossil variant discovered in the depths of Meteor Falls — Hoennian Vulpix (Ice/Fairy) and Hoennian Ninetales (Ice/Fairy), ice foxes adapted to the volcanic ash of Route 113, Hoennian Pinsir (Bug/Fire), a volcanic beetle forged in Route 112's heat, Hoennian Stantler (Ghost/Grass), a forest spirit glimpsed in Route 119's perpetual rain, Hoennian Gligar (Water/Rock), a teal scorpion-bat whose pincers have calcified in Granite Cave's mineral-rich seawater, Hoennian Lotad (Electric/Grass), a lily pad that became a natural capacitor in Route 102's electrified ponds, and Hoennian Shroomish (Poison/Ice), a cold purple mushroom whose cryogenic spores frost the warm floor of Petalburg Woods. Both early-game forms evolve into fully realized final forms: Hoennian Lotad becomes Lombre then Ludicolo, a fast Electric/Grass special sweeper that dances through thunderstorms, while Hoennian Shroomish becomes Breloom, a cryogenic brawler with frost-hardened fists and dual priority attacks. Some forms are discovered through postgame quests; others wait in the wild for trainers sharp-eyed enough to find them
-- **The Changed Three** — even Hoenn's original starter trio was not immune to the migration. A crystal Treecko (Steel) lurks in Meteor Falls' mineral depths, a starlight Torchic (Fairy) perches on the sacred slopes of Mt. Pyre, and a titan Mudkip (Water/Fighting) trains in Shoal Cave's tidal chambers — each at 4% encounter rate, rare enough to feel like a genuine discovery. All three evolve through full three-stage lines into Sceptile (Grass/Steel), Blaziken (Fire/Fairy), and Swampert (Water/Fighting), and can learn TMs and HMs like their originals. After completing the National Dex, Professor Birch offers one of these changed forms as a gift instead of the Johto starters, with migration-themed dialogue pointing you toward their wild habitats
+- **The Changed Three** — even Hoenn's original starter trio was not immune to the migration. A steel-bladed Treecko (Grass/Steel) lurks in Meteor Falls' mineral depths, a fey-fire Torchic (Fire/Fairy) perches on the sacred slopes of Mt. Pyre, and a titan Mudkip (Water/Fighting) trains in Shoal Cave's tidal chambers — each at 4% encounter rate, rare enough to feel like a genuine discovery. All three evolve through full three-stage lines into Sceptile (Grass/Steel), Blaziken (Fire/Fairy), and Swampert (Water/Fighting), and can learn TMs and HMs like their originals. After completing the National Dex, Professor Birch offers one of these changed forms as a gift instead of the Johto starters, with migration-themed dialogue pointing you toward their wild habitats
 - **Environmental storytelling** — the world notices its own changes. Hikers, researchers, and scientists across the mid-game cross-reference each other's regional form sightings, building a connected ecological narrative. Return to the Meteor Falls researcher after encountering Hoennian Bagon and he'll acknowledge what you've seen: "DRAGON and ROCK, fused into something new. They dream of enduring." NPCs remember, react, and evolve alongside the player
 - **Mom's migration send-off** — your journey begins with purpose. Instead of Running Shoes, Mom hands you 5 Poke Balls and shares what she's heard about the migration. The world is changing before you even step onto Route 101
 - **Scripted migration events** — witness the migration firsthand: a Pikachu dashes across your path in Petalburg Woods before Badge 1, a Bagon colony echoes through Meteor Falls after Badge 4, restless Misdreavus haunt Mt. Pyre's summit after Badge 6, a thunderstorm rages on Route 119 with weather-displaced Pokemon, a Wailord pod shakes the ocean on Route 128 — culminating in a special encounter with a curious young Wailmer — and on Route 126, fog rolls in as layered Pokemon cries converge toward Sootopolis in a moment the player can only witness, not fight
@@ -41,14 +41,16 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
-- **3 custom abilities** — each expresses how a regional form's ecology changed its biology:
+- **5 custom abilities** — each expresses how a regional form's ecology changed its biology:
   - *Toxic Touch* (Deoxys Hoenn) — 30% chance to poison on any damaging move, rewarding the glass cannon playstyle
   - *Frozen Spore* (Breloom Hoenn) — 20% chance to freeze on contact moves, turning the cryogenic brawler's fists into weapons of winter
   - *Scalding Touch* (Arcanine Hoenn) — 33% chance to burn on contact moves, channeling the undersea fire that forged a Water/Fire predator
+  - *Tempered Blade* (Hoennian Treecko line) — Steel-type contact moves are more likely to land critical hits
+  - *Fey Flame* (Hoennian Torchic line) — every attack hits burned foes 1.5x harder, and it announces itself the moment the Pokemon enters battle, so you see a Will-O-Wisp → Moonblast combo coming
 - **3 signature moves** — unique attacks designed for specific regional forms:
   - *Spore Fist* (Breloom Hoenn) — Ice/Physical, 75 power, 10% freeze chance — a cryogenic punch that encases the target in frost
   - *Tidal Flare* (Arcanine Hoenn) — Water/Special, 85 power, 30% burn chance — a geyser of superheated brine
-  - *Iron Leaf* (Sceptile Hoenn) — Steel/Physical, 85 power, 20% Defense drop — a blade that weakens armor instead of seeking critical hits
+  - *Iron Leaf* (Sceptile Hoenn) — Steel/Physical, 85 power, high critical-hit ratio — paired with Tempered Blade, it finds the gap in any armor
 - **Custom battle animations** — each signature move has a unique visual: Iron Leaf opens with a metallic gleam before a steel-edged slash, Spore Fist spirals ice crystals inward before a frost-coated punch, and Tidal Flare sends water pulse rings that erupt into fire
 - **25 regional forms with mechanical identity** — every Hoennian form has abilities that express its ecological niche, not just reskinned stats. Corsola levitates (Ghost/Rock), Bagon braces with Sturdy (Dragon/Rock), Gligar and Gliscor swim with Swift Swim (Water/Rock), Vulpix and Ninetales cure with Natural Cure (Ice/Fairy), Pinsir endures with Guts (Bug/Fire), and Stantler scatters Effect Spore (Ghost/Grass)
 
@@ -168,12 +170,12 @@ Hoenn's original starter trio, transformed by the migration. Discoverable as rar
 
 | Species | Type | Where to Find | Signature | Evolution |
 |---------|------|---------------|-----------|-----------|
-| Treecko (Hoenn) | Steel | Meteor Falls B1F 2R (4%) | Battle Armor | Lv16 → Grovyle (Hoenn) |
-| Grovyle (Hoenn) | Steel | — | Battle Armor | Lv36 → Sceptile (Hoenn) |
-| Sceptile (Hoenn) | Steel | — | Battle Armor / **Iron Leaf** | Evolved from Grovyle (Hoenn) |
-| Torchic (Hoenn) | Fairy | Mt. Pyre Exterior (4%) | Cute Charm | Lv16 → Combusken (Hoenn) |
-| Combusken (Hoenn) | Fairy/Flying | — | Cute Charm | Lv36 → Blaziken (Hoenn) |
-| Blaziken (Hoenn) | Fairy/Flying | — | Cute Charm | Evolved from Combusken (Hoenn) |
+| Treecko (Hoenn) | Grass/Steel | Meteor Falls B1F 2R (4%) | Tempered Blade | Lv16 → Grovyle (Hoenn) |
+| Grovyle (Hoenn) | Grass/Steel | — | Tempered Blade | Lv36 → Sceptile (Hoenn) |
+| Sceptile (Hoenn) | Grass/Steel | — | Tempered Blade / **Iron Leaf** | Evolved from Grovyle (Hoenn) |
+| Torchic (Hoenn) | Fire/Fairy | Mt. Pyre Exterior (4%) | Fey Flame | Lv16 → Combusken (Hoenn) |
+| Combusken (Hoenn) | Fire/Fairy | — | Fey Flame | Lv36 → Blaziken (Hoenn) |
+| Blaziken (Hoenn) | Fire/Fairy | — | Fey Flame | Evolved from Combusken (Hoenn) |
 | Mudkip (Hoenn) | Water/Fighting | Shoal Cave Low Tide (4%) | Guts | Lv16 → Marshtomp (Hoenn) |
 | Marshtomp (Hoenn) | Water/Fighting | — | Guts | Lv36 → Swampert (Hoenn) |
 | Swampert (Hoenn) | Water/Fighting | — | Guts | Evolved from Marshtomp (Hoenn) |

@@ -104,7 +104,7 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 ## Build Validation & Generators
 
-`make check_all` = check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers. `make check_all_quick` = check_scripts + check_species + check_trainers. **check_species false positive (seen C309)**: `check_species_registration.sh` reports `cry_tables.inc — MISSING` for the custom species it checks (cry_tables.inc lists Cry_* labels, not species; customs map via cry_ids.h), so check_all_quick exits 1; run `make check_scripts` / `make check_trainers` individually and use verify_species.sh for registration.
+`make check_all` = check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers. `make check_all_quick` = check_scripts + check_species + check_trainers. **check_species**: the old cry_tables.inc false positive was removed C310 — `make check_all_quick` now passes cleanly (18/18). Running check targets regenerates `src/data/wild_encounters.h` from `wild_encounters.json`; the committed .h had drifted (R118 Growlithe_H, Shoal Cave Mudkip_H) — JSON is the source of truth, always commit the regenerated .h.
 
 - **generate_species.cjs** `<config.json> [--dry-run] [--fill-missing]` (configs in `species_configs/`): 27 files. Standard mode aborts if species exists and auto-increments SPECIES_EGG (run order matters); `--fill-missing` (C293) only fills absent files. Does NOT write the 6 pokemon.c/pokemon_icon.c entries. species_names.h strips `_HOENN` unless `cfg.displayName`.
 - **verify_species.sh** `<NAME>` — pass the name WITHOUT the `SPECIES_` prefix (`ARCANINE_HOENN`; passing `SPECIES_X` reports a bogus 14/27). Exit 0 iff 27/27.
@@ -117,11 +117,15 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 ---
 
-## Custom Ability Implementation (C241, expanded C289, C300)
+## Custom Ability Implementation (C241, expanded C289, C300, C310)
 
-4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH=14), text/abilities.h (string+name+pointer), battle_util.c OR battle_script_commands.c (effect), species_info.h (assign). 4 custom: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81). ABILITIES_COUNT=82. Next: 82.
+4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH=14), text/abilities.h (string+name+pointer), battle_util.c OR battle_script_commands.c (effect), species_info.h (assign). 5 custom: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82). ABILITIES_COUNT=83. Next: 83.
 
-**Two implementation patterns**: Status-inflicting abilities (Toxic Touch, Frozen Spore, Scalding Touch) go in `battle_util.c` ABILITYEFFECT_ON_DAMAGE case. Crit-boosting abilities (Tempered Blade) go in `battle_script_commands.c` Cmd_critcalc.
+**Three implementation patterns**: Status-inflicting abilities (Toxic Touch, Frozen Spore, Scalding Touch) go in `battle_util.c` ABILITYEFFECT_ON_DAMAGE case. Crit-boosting abilities (Tempered Blade) go in `battle_script_commands.c` Cmd_critcalc. Damage multipliers (Fey Flame) go in `pokemon.c` CalculateBaseDamage "apply abilities" block (scale gBattleMovePower; `attacker`/`defender` are struct BattlePokemon*, so `defender->status1` is readable).
+
+**Switch-in ability announcement pattern (C310)**: add a case in `AbilityBattleEffects` → `ABILITYEFFECT_ON_SWITCHIN` → `switch (gLastUsedAbility)`: `BattleScriptPushCursorAndCallback(script); gBattleScripting.battler = battler; effect++; break;`. Script in battle_scripts_1.s = `pause B_WAIT_TIME_SHORT / printstring STRINGID_X / waitmessage B_WAIT_TIME_LONG / end3` (+ extern in battle_scripts.h). String uses `{B_SCR_ACTIVE_NAME_WITH_PREFIX}` (resolves from gBattleScripting.battler). New string IDs: append after the last ID in battle_string_ids.h, bump BATTLESTRINGS_COUNT, add to gBattleStringsTable (indexed `ID - BATTLESTRINGS_TABLE_START`). ON_SWITCHIN fires at battle start (battle_main.c counter loop) and on every Cmd_switchineffects, so no guard is needed unless you want once-per-battle. Next free STRINGID: 383.
+
+**Unproven**: custom stat-drop abilities via SetMoveEffect + HITMARKER_STATUS_ABILITY_EFFECT — the stat-change paths do not clear that flag, so they may leak; test before relying on it.
 
 ---
 

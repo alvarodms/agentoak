@@ -1,184 +1,52 @@
 # Battle Engine
 
-Physical/Special Split and Fairy Type implementations (v2.0).
+> Collapsed C310 maintenance. Older per-file tables live in git history.
 
----
+## Foundations (summary)
 
-## Physical/Special Split
+- **P/S split (C43)**: `include/pokemon.h` (MOVE_CATEGORY_*, `.category`), `include/battle.h` (IS_MOVE_PHYSICAL/SPECIAL/STATUS), `src/pokemon.c` damage calc by category, `battle_script_commands.c` (Hustle/Counter/Mirror Coat), `battle_tv.c`, `.category` on every move in `battle_moves.h`.
+- **Fairy type (C44/46/52)**: TYPE_FAIRY=18 in `constants/pokemon.h`; type chart in `battle_main.c` (gTypeEffectiveness[372]); `battle_message.c`, `pokemon_summary_screen.c`, `pokedex.c`, `menu.c`, `union_room.h`, `graphics_file_rules.mk`; `graphics/types/fairy.png` is a placeholder copy (has gone missing twice — check if build complains). 14 species retyped (Clefairy line, Snubbull line, Jigglypuff line, Azurill, Marill line, Mawile, Ralts line, Togetic). Moonblast/Play Rough/Dazzling Gleam = moves 355-357.
+- **Gen 4/5 moves (C129)**: IDs 358-377 across moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h.
+- **Challenge Mode (C181/182/207)**: `battle_main.c` SET-style override; FLAG_DIFFICULTY_CHALLENGE 0x286 + IsChallengeModeActive() in flags.h; MULTI_DIFFICULTY_SELECT=114; `GetChallengeLevelCap()` + soft cap in Cmd_getexp; STRINGID_PKMNGAINEDEXPCAPPED=381.
+- **Battle animations (C297)**: `data/battle_anim_scripts.s` Move_IRON_LEAF / Move_SPORE_FIST / Move_TIDAL_FLARE; gBattleAnims_Moves extended to 381 entries (355-377 padded Move_COUNT).
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/pokemon.h` | Added MOVE_CATEGORY_* defines + `u8 category` to BattleMove struct | 43 | Foundation for P/S split |
-| `include/battle.h` | Added IS_MOVE_PHYSICAL/SPECIAL/STATUS macros | 43 | Move-based category checks |
-| `src/pokemon.c` | Rewrote damage calc to use move category instead of type | 43 | Weather/Flash Fire moved outside special branch; Thick Fat halves power |
-| `src/battle_script_commands.c` | Hustle + Counter/Mirror Coat use move category | 43 | 3 instances updated |
-| `src/battle_tv.c` | Reflect/Light Screen checks use move category | 43 | 2 instances updated |
-| `src/data/battle_moves.h` | Added .category to all 355 moves | 43 | Gen IV categories from Kateulator's pokeemerald-physpe |
+## Custom Abilities
 
-## Fairy Type
+| Ability | ID | Cycle | Holder (slot) | Hook | Effect |
+|---|---|---|---|---|---|
+| TOXIC TOUCH | 78 | 241 | Deoxys_Hoenn (0) | `battle_util.c` ABILITYEFFECT_ON_DAMAGE | 30% poison on any damaging move |
+| FROZEN SPORE | 79 | 289 | Breloom_Hoenn (0) | same, after Toxic Touch | 20% freeze, contact only |
+| SCALDING TOUCH | 80 | 289 | Arcanine_Hoenn (1) | same, after Frozen Spore | 33% burn, contact only |
+| TEMPERED BLADE | 81 | 300 | Treecko/Grovyle/Sceptile_Hoenn (0) | `battle_script_commands.c` Cmd_critcalc | +1 crit on Steel contact moves |
+| FEY FLAME | 82 | 310 | Torchic/Combusken/Blaziken_Hoenn (0), Blaze slot 1 | `pokemon.c` CalculateBaseDamage + switch-in msg | 1.5x power vs burned target, any move |
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/pokemon.h` | Added TYPE_FAIRY = 18, NUMBER_OF_MON_TYPES = 19 | 44 | Foundation constant |
-| `include/battle_main.h` | Updated gTypeEffectiveness extern to [372] | 44 | Matches new array size |
-| `src/battle_main.c` | Added Fairy to gTypeNames, 12 type effectiveness entries, array size 336→372 | 44 | Full type chart: SE vs Fight/Dragon/Dark, NVE vs Fire/Poison/Steel, immune from Dragon |
-| `src/battle_message.c` | Added "a FAIRY move" to sATypeMove_Table | 44 | Battle message support |
-| `src/pokemon_summary_screen.c` | Added Fairy sprite anim, anim table entry, palette mapping (14) | 44 | Uses Psychic icon as placeholder |
-| `src/pokedex.c` | Added Fairy to sDexSearchTypeOptions and sDexSearchTypeIds | 44 | Searchable in Pokedex |
-| `src/menu.c` | Added TYPE_FAIRY + 1 entry to sMenuInfoIcons | 44 | Uses Psychic offset as placeholder |
-| `src/data/union_room.h` | Added Fairy to sTradingBoardTypes | 44 | Union Room trade board |
-| `graphics_file_rules.mk` | Added "fairy" to types list | 44 | Builds fairy.4bpp into spritesheet |
-| `graphics/types/fairy.png` | Created (copy of psychic.png as placeholder) | 44 | Custom icon is future work |
-| `src/data/pokemon/species_info.h` | Retyped 14 species to Fairy | 31, 32, **44** | See retypes list below |
-| `include/constants/moves.h` | Added 3 Fairy move constants (355-357), MOVES_COUNT = 358 | **46** | MOVE_MOONBLAST, MOVE_PLAY_ROUGH, MOVE_DAZZLING_GLEAM (Cycle 45 was reverted) |
-| `src/data/battle_moves.h` | Added 3 Fairy move definitions | **46** | Moonblast (95bp Sp, 30% SpA drop), Play Rough (90bp Ph, 10% Atk drop), Dazzling Gleam (80bp Sp, hits both) |
-| `src/data/contest_moves.h` | Added 3 Fairy contest move entries | **46** | Beauty/Cute categories |
-| `src/data/text/move_descriptions.h` | Added 3 move descriptions + pointer table entries | **46** | String defs + gMoveDescriptionPointers entries |
-| `src/data/text/move_names.h` | Added 3 move names to gMoveNames | **46** | MOONBLAST, PLAY ROUGH, DAZZLNGLEAM |
-| `src/data/pokemon/level_up_learnsets.h` | Added Fairy moves to 13 species learnsets | **46** | Ralts/Kirlia/Gardevoir, Clefairy/Clefable, Jigglypuff/Wigglytuff, Togetic, Marill/Azumarill, Snubbull/Granbull, Mawile |
-| `graphics/types/fairy.png` | Recreated placeholder (copy of psychic.png) | **46** | Lost between cycles, needed for build |
-| `graphics/types/fairy.png` | Restored placeholder (copy of normal.png) | **52** | Missing again, copied from normal.png to fix build |
+Every ability touches `include/constants/abilities.h` (ID + ABILITIES_COUNT), `src/data/text/abilities.h` (description string, gAbilityNames, gAbilityDescriptionPointers), `species_info.h`. C289 raised ABILITY_NAME_LENGTH 12→14 in `include/constants/global.h`.
 
-### Species Retypes (Cycle 44)
+### Fey Flame (C310) — template for damage-multiplier + switch-in announcement
 
-- Pure Fairy: Clefairy, Clefable, Snubbull, Granbull
-- Normal/Fairy: Jigglypuff, Wigglytuff, Azurill
-- Water/Fairy: Marill, Azumarill
-- Steel/Fairy: Mawile
-- Psychic/Fairy: Ralts, Kirlia, Gardevoir
-- Fairy/Flying: Togetic
+| File | What Changed |
+|---|---|
+| `src/pokemon.c` | CalculateBaseDamage: `if (attacker->ability == ABILITY_FEY_FLAME && (defender->status1 & STATUS1_BURN))` 1.5x gBattleMovePower, right after the Blaze pinch line |
+| `include/constants/battle_string_ids.h` | STRINGID_FEYFLAMEACTIVATES=382, BATTLESTRINGS_COUNT→383 |
+| `src/battle_message.c` | sText_FeyFlameActivates ({B_SCR_ACTIVE_NAME_WITH_PREFIX}) + gBattleStringsTable entry |
+| `data/battle_scripts_1.s` + `include/battle_scripts.h` | BattleScript_FeyFlameActivates (pause/printstring/waitmessage/end3) after SandstreamActivates + extern |
+| `src/battle_util.c` | AbilityBattleEffects ON_SWITCHIN case after DROUGHT: push script, set gBattleScripting.battler, effect++ (no guard — re-announces each switch-in) |
+| `src/data/trainer_parties.h` | Brendan/May PostgameTreecko Blaziken_Hoenn: Shadow Ball → Will-O-Wisp |
+| `scripts/check_species_registration.sh` | Removed false-positive `sound/cry_tables.inc` check (uses Cry_ labels); validator 18/18 |
 
-### Fairy Moves (Cycle 46 — Cycle 45 was reverted)
+Built and VERIFIED C310. Not playtested in-emulator yet.
 
-- **Moonblast**: 95 power, Special, 30% chance to lower Special Attack
-- **Play Rough**: 90 power, Physical, 10% chance to lower Attack (FLAG_MAKES_CONTACT)
-- **Dazzling Gleam**: 80 power, Special, hits both opponents (MOVE_TARGET_BOTH)
+## Signature Moves
 
-## Gen 4/5 Move Additions (Cycle 129)
+| Move | ID | Cycle | Stats | Learner |
+|---|---|---|---|---|
+| SPORE FIST | 378 | 290 | Ice/Phys 75bp 100acc, 10% freeze (EFFECT_FREEZE_HIT), contact | Breloom_Hoenn L36 |
+| TIDAL FLARE | 379 | 290 | Water/Spec 85bp 100acc, 30% burn (EFFECT_BURN_HIT) | Arcanine_Hoenn L45 |
+| IRON LEAF | 380 | 293/300 | Steel/Phys 85bp, EFFECT_HIGH_CRITICAL (C300), contact | Sceptile_Hoenn L29 |
 
-Added 20 moves (IDs 358-377, MOVES_COUNT = 378) across 5 files: `moves.h`, `battle_moves.h`, `move_names.h`, `move_descriptions.h`, `contest_moves.h`. Includes Night Slash, Brave Bird, Flare Blitz, Stone Edge, Dragon Pulse, Close Combat, Aqua Tail, Aura Sphere, Sucker Punch, Wild Charge, X-Scissor, Poison Jab, Ice Shard, Energy Ball, Shadow Claw, Flash Cannon, Nasty Plot, Cross Poison, Iron Head, Zen Headbutt. See git history (C129) for full stats table.
+Each move = 6 files: moves.h, battle_moves.h, move_names.h, move_descriptions.h, contest_moves.h, level_up_learnsets.h (+ battle_anim_scripts.s for animation).
 
-## Challenge Mode — Set Battle Override (C181) + Level Caps (C182)
+## Ability Reassignments (summary)
 
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `src/battle_main.c` | After `gBattleScripting.battleStyle` assignment, override to SET if Challenge Mode | **181**, **182** | C182: refactored to use IsChallengeModeActive() macro |
-| `include/constants/flags.h` | `FLAG_DIFFICULTY_CHALLENGE` = 0x286 + `IsChallengeModeActive()` macro | **181**, **182** | C182: added shared helper macro |
-| `include/constants/script_menu.h` | `MULTI_DIFFICULTY_SELECT` = 114 | **181** | New multichoice constant |
-| `src/data/script_menu.h` | `MultichoiceList_DifficultySelect` (Normal/Challenge) + array entry | **181** | 2 text strings + list + 1 array entry |
-| `src/battle_script_commands.c` | `GetChallengeLevelCap()` function + soft cap check in `Cmd_getexp()` | **182**, **207** | Badge-based caps (18/20/24/30/34/38/42/48/55), 10% EXP above cap. C207: added in-battle feedback message when cap reduces EXP. |
-| `include/constants/battle_string_ids.h` | `STRINGID_PKMNGAINEDEXPCAPPED` (381), BATTLESTRINGS_COUNT → 382 | **207** | Level cap feedback string ID |
-| `src/battle_message.c` | `sText_PkmnGainedEXPCapped` string + table entry | **207** | Two-page message: EXP gained + "EXP reduced by the level cap." |
-
-## Custom Ability: Toxic Touch (C241)
-
-First custom ability in the hack. 30% chance to poison the target when the holder uses ANY damaging move (no contact required).
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/abilities.h` | Added ABILITY_TOXIC_TOUCH = 78, ABILITIES_COUNT → 79 | **241** | First custom ability constant |
-| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **241** | "TOXIC TOUCH", "Its attacks leave a toxic residue." |
-| `src/battle_util.c` | Toxic Touch logic in ABILITYEFFECT_ON_DAMAGE case, after inner switch | **241** | Checks attacker ability directly (not gLastUsedAbility). No FLAG_MAKES_CONTACT. Blocks: Substitute, status1, confusionSelfDmg, no-effect, power==0 |
-| `src/data/pokemon/species_info.h` | Deoxys_Hoenn ability1: ABILITY_PRESSURE → ABILITY_TOXIC_TOUCH | **241** | ability2 stays ABILITY_PRESSURE |
-
-## Custom Ability: Frozen Spore (C289)
-
-20% chance to freeze the target when the holder uses a contact-based damaging move. Assigned to Breloom_Hoenn (Poison/Ice), replacing Poison Point.
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/abilities.h` | Added ABILITY_FROZEN_SPORE = 79, ABILITIES_COUNT → 81 | **289** | |
-| `include/constants/global.h` | ABILITY_NAME_LENGTH 12 → 14 | **289** | Needed for "SCALDING TOUCH" (14 chars) |
-| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **289** | "FROZEN SPORE", "Icy spores may freeze on contact." |
-| `src/battle_util.c` | Frozen Spore logic in ABILITYEFFECT_ON_DAMAGE case, after Toxic Touch block | **289** | Contact-only (FLAG_MAKES_CONTACT), (Random() % 5) == 0 for 20%, MOVE_EFFECT_FREEZE |
-| `src/data/pokemon/species_info.h` | Breloom_Hoenn ability1: ABILITY_POISON_POINT → ABILITY_FROZEN_SPORE | **289** | ability2 stays ABILITY_THICK_FAT |
-
-## Custom Ability: Scalding Touch (C289)
-
-33% chance to burn the target when the holder uses a contact-based damaging move. Assigned to Arcanine_Hoenn (Water/Fire), replacing Flash Fire.
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/abilities.h` | Added ABILITY_SCALDING_TOUCH = 80 (same ABILITIES_COUNT update as Frozen Spore) | **289** | |
-| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **289** | "SCALDING TOUCH", "Scalding touch may burn the foe." |
-| `src/battle_util.c` | Scalding Touch logic in ABILITYEFFECT_ON_DAMAGE case, after Frozen Spore block | **289** | Contact-only (FLAG_MAKES_CONTACT), (Random() % 3) == 0 for 33%, MOVE_EFFECT_BURN |
-| `src/data/pokemon/species_info.h` | Arcanine_Hoenn ability2: ABILITY_FLASH_FIRE → ABILITY_SCALDING_TOUCH | **289** | ability1 stays ABILITY_INTIMIDATE |
-
-## Battle Animation Templates (C297)
-
-Custom animations for signature moves 378-380, replacing generic Move_COUNT fallback.
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `data/battle_anim_scripts.s` | Added Move_IRON_LEAF animation (Steel Wing metallic_shine + Leaf Blade slash) | **297** | ~25 lines, recomposes existing sprite/task references |
-| `data/battle_anim_scripts.s` | Added Move_SPORE_FIST animation (Ice Punch crystals + fist strike + IceCrystalEffectShort) | **297** | ~30 lines, ice-blue palette blend + frost burst |
-| `data/battle_anim_scripts.s` | Added Move_TIDAL_FLARE animation (Water Pulse bubbles + Ember/Flamethrower fire particles) | **297** | ~30 lines, water-then-fire layering for steam explosion feel |
-| `data/battle_anim_scripts.s` | Extended gBattleAnims_Moves table from 356 to 381 entries | **297** | Indices 355-377 padded with Move_COUNT, 378-380 wired to custom labels |
-
-## Pre-existing Build Fix (C289)
-
-Removed orphaned Mudkip_Hoenn/Marshtomp_Hoenn/Swampert_Hoenn entries from species_info.h — these had data blocks but no corresponding SPECIES_ constants in species.h (C288 partial registration issue). Build was broken before C289 changes.
-
-## Signature Move: Spore Fist (C290)
-
-Ice/Physical, 75bp, 100acc, 15pp, 10% freeze. Contact move. Assigned to Breloom_Hoenn via custom learnset at level 36.
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/moves.h` | Added MOVE_SPORE_FIST = 378, MOVES_COUNT → 380 | **290** | |
-| `src/data/battle_moves.h` | Spore Fist battle data (EFFECT_FREEZE_HIT, FLAG_MAKES_CONTACT) | **290** | Physical, same effect as Ice Beam |
-| `src/data/text/move_names.h` | "SPORE FIST" | **290** | 10 chars (max 12) |
-| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **290** | "An icy punch packed with spores. May freeze." |
-| `src/data/contest_moves.h` | Contest entry (Beauty, HIGHLY_APPEALING) | **290** | |
-| `src/data/pokemon/level_up_learnsets.h` | Created sBreloomHoennLevelUpLearnset (L36 Spore Fist) | **290** | Based on vanilla Breloom, Sky Uppercut→Spore Fist, Dynamic Punch→Sludge Bomb |
-| `src/data/pokemon/level_up_learnset_pointers.h` | Added SPECIES_BRELOOM_HOENN pointer | **290** | |
-
-## Signature Move: Tidal Flare (C290)
-
-Water/Special, 85bp, 100acc, 10pp, 30% burn. Non-contact. Assigned to Arcanine_Hoenn at level 45.
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/moves.h` | Added MOVE_TIDAL_FLARE = 379 (same MOVES_COUNT update as Spore Fist) | **290** | |
-| `src/data/battle_moves.h` | Tidal Flare battle data (EFFECT_BURN_HIT, no FLAG_MAKES_CONTACT) | **290** | Special, same effect as Flamethrower |
-| `src/data/text/move_names.h` | "TIDAL FLARE" | **290** | 11 chars (max 12) |
-| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **290** | "A scalding tidal blast that may burn the foe." |
-| `src/data/contest_moves.h` | Contest entry (Beauty, HIGHLY_APPEALING) | **290** | |
-| `src/data/pokemon/level_up_learnsets.h` | Added MOVE_TIDAL_FLARE at L45 to sArcanineHoennLevelUpLearnset | **290** | Before Extreme Speed at L49 |
-
-## Signature Move: Iron Leaf (C293)
-
-Steel/Physical, 85bp, 100acc, 15pp, 20% Defense drop. Contact move. Assigned to Sceptile_Hoenn at level 29 (same level vanilla Sceptile learns Leaf Blade). Uses EFFECT_DEFENSE_DOWN_HIT (like Iron Tail).
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/moves.h` | Added MOVE_IRON_LEAF = 380, MOVES_COUNT → 381 | **293** | |
-| `src/data/battle_moves.h` | Iron Leaf battle data (EFFECT_DEFENSE_DOWN_HIT, FLAG_MAKES_CONTACT) | **293** | Physical, 20% secondaryEffectChance |
-| `src/data/text/move_names.h` | "IRON LEAF" | **293** | 9 chars (max 12) |
-| `src/data/text/move_descriptions.h` | Description string + pointer table entry | **293** | "Slashes with bladed steel leaves. May lower DEFENSE." |
-| `src/data/contest_moves.h` | Contest entry (Cool, HIGHLY_APPEALING) | **293** | |
-| `src/data/pokemon/level_up_learnsets.h` | MOVE_IRON_LEAF at Lv29 in sSceptileHoennLevelUpLearnset | **293** | Via generator from JSON config |
-
-## Custom Ability: Tempered Blade (C300)
-
-+1 crit stage on Steel-type contact moves. Sceptile_Hoenn line's custom ability — completes the Changed Three ability triangle (Toxic Touch / Frozen Spore / Scalding Touch / Tempered Blade). Iron Leaf upgraded from EFFECT_DEFENSE_DOWN_HIT to EFFECT_HIGH_CRITICAL, paralleling Leaf Blade's high-crit identity. Combined: Iron Leaf crits at stage 2 (25%).
-
-| File | What Changed | Cycle | Notes |
-|------|-------------|-------|-------|
-| `include/constants/abilities.h` | Added ABILITY_TEMPERED_BLADE = 81, ABILITIES_COUNT → 82 | **300** | 4th custom ability |
-| `src/data/text/abilities.h` | Description string, gAbilityNames entry, gAbilityDescriptionPointers entry | **300** | "TEMPERED BLADE", "Honed blades find the gap." |
-| `src/battle_script_commands.c` | Added Tempered Blade to critChance accumulation in Cmd_critcalc | **300** | +1 if attacker has ABILITY_TEMPERED_BLADE && move is TYPE_STEEL && FLAG_MAKES_CONTACT |
-| `src/data/pokemon/species_info.h` | Treecko_Hoenn, Grovyle_Hoenn, Sceptile_Hoenn: abilities → {ABILITY_TEMPERED_BLADE, ABILITY_OVERGROW} | **300** | Replaces {ABILITY_OVERGROW, ABILITY_BATTLE_ARMOR} |
-| `src/data/battle_moves.h` | Iron Leaf: EFFECT_DEFENSE_DOWN_HIT → EFFECT_HIGH_CRITICAL, secondaryEffectChance 20 → 0 | **300** | High-crit move paralleling Leaf Blade |
-
-## Tier 2 Ability Reassignment Pass (C288)
-
-8 regional forms received thematic ability replacements in `species_info.h`. One-line edits per species — no new abilities created (all existing engine constants). Replaced generic/redundant abilities with ones expressing each form's ecological niche.
-
-Key gameplay impacts:
-- Corsola_Hoenn gains Ground immunity via Levitate (patches Ghost/Rock's Ground weakness)
-- Bagon_Hoenn survives one OHKO via Sturdy (early-game durability)
-- Pinsir_Hoenn rewards status with 50% Atk boost via Guts
-- Gligar/Gliscor_Hoenn become rain sweepers via Swift Swim
-- Stantler_Hoenn punishes contact via Effect Spore (30% para/sleep/poison)
-- Vulpix/Ninetales_Hoenn heal status on switch via Natural Cure
+- **C288 Tier 2 pass** (`species_info.h` only): Corsola_H Levitate, Bagon_H Sturdy, Pinsir_H Guts, Gligar/Gliscor_H Swift Swim, Stantler_H Effect Spore, Vulpix/Ninetales_H Natural Cure.
+- **C289 build fix**: removed orphan Mudkip_Hoenn line species_info entries lacking SPECIES_ constants (later properly registered C292).

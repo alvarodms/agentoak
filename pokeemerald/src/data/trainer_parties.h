@@ -11293,7 +11293,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanPostgameTreecko[] = 
     .lvl = 73,
     .species = SPECIES_BLAZIKEN_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
+    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_WILL_O_WISP, MOVE_THUNDERBOLT}
     }
 };
 
@@ -11338,7 +11338,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayPostgameTreecko[] = {
     .lvl = 73,
     .species = SPECIES_BLAZIKEN_HOENN,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_SHADOW_BALL, MOVE_THUNDERBOLT}
+    .moves = {MOVE_CALM_MIND, MOVE_MOONBLAST, MOVE_WILL_O_WISP, MOVE_THUNDERBOLT}
     }
 };
 

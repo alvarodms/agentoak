@@ -1,203 +1,37 @@
 # New Species — Completed Work
 
-## Riolu, Lucario, Weavile, Gible, Gabite, Garchomp (Cycles 60-70)
+> Collapsed C310 maintenance. 40 custom species, all verified 27/27 (C308). Per-cycle detail in git history.
 
-Six species across ~29 source files each. Collapsed — see git history for details.
+## Roster (ID · type · source)
 
-| Species | ID | Type | BST | Encounter | Evolution |
-|---------|-----|------|-----|-----------|-----------|
-| Riolu | 412 | Fighting | 285 | Route 116 8%, Lv8-10 | → Lucario (Friendship) |
-| Lucario | 413 | Fight/Steel | 525 | Evolution | — |
-| Weavile | 414 | Dark/Ice | 510 | Mt Pyre Summit 4%, Lv32-33 | Sneasel → (Lv40) |
-| Gible | 415 | Dragon/Ground | 300 | Meteor Falls B1F_1R 2%, Lv25-30 | → Gabite (Lv24) |
-| Gabite | 416 | Dragon/Ground | 410 | Victory Road B2F 2%, Lv44-46 | → Garchomp (Lv48) |
-| Garchomp | 417 | Dragon/Ground | 600 | Evolution only | — |
+| ID | Species | Type | Source / Notes |
+|---|---|---|---|
+| 412-413 | Riolu → Lucario | Fight → Fight/Steel | R116 8% Lv8-10, friendship evo (C60-70) |
+| 414 | Weavile | Dark/Ice | Mt Pyre Summit 4% Lv32-33; Sneasel Lv40 |
+| 415-417 | Gible → Gabite → Garchomp | Dragon/Ground | Meteor Falls B1F_1R 2%; Gabite VR B2F 2% Lv44-46; Garchomp evo only |
+| 418 | Corsola_Hoenn | Ghost/Rock | Pacifidlog Quest 1 Lv45; Phoebe R1. Rock Head/Levitate |
+| 419-420 | Growlithe_H → Arcanine_H | Water → Water/Fire | Weather Inst. Quest 2 Lv40 + R118 wild; Water Stone. Arcanine_H: Intimidate/Scalding Touch, Tidal Flare L45. Wallace Gym |
+| 421-424, 428 | Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf | cross-gen evos | E4 usage (Phoebe/Sidney/Glacia/Tate&Liza) |
+| 425 | Bagon_Hoenn | Dragon/Rock | Meteor Falls B1F_2R 5%. Rock Head/Sturdy |
+| 426-427 | Vulpix_H → Ninetales_H | Ice/Fairy | R113 4%; Moon Stone. Natural Cure/Serene Grace |
+| 429 | Pinsir_Hoenn | Bug/Fire | R112 5%. Guts/Flame Body |
+| 430 | Stantler_Hoenn | Ghost/Grass | R119 4%. Intimidate/Effect Spore |
+| 431 | Deoxys_Hoenn | Poison/Fairy | Quest III Lv70. Toxic Touch/Pressure |
+| 432-433 | Gligar_H → Gliscor_H | Water/Rock | Granite Cave B2F 5%; Lv35. Swift Swim/Water Absorb |
+| 434/436/438 | Lotad_H → Lombre_H → Ludicolo_H | Electric/Grass | R102 10% Lv3-4; Leaf Stone final |
+| 435/437 | Shroomish_H → Breloom_H | Poison/Ice | Petalburg Woods 4%; Lv23. Breloom_H: Frozen Spore/Thick Fat, Spore Fist L36 |
+| 439-441 | Treecko/Grovyle/Sceptile_H | Grass/Steel | "The Blade". Tempered Blade/Overgrow. Iron Leaf L29 |
+| 442-444 | Torchic/Combusken/Blaziken_H | Fire/Fairy | "The Dancer" (Blaziken 80/85/70/120/80/95). **Fey Flame/Blaze (C310)** |
+| 445-447 | Mudkip/Marshtomp/Swampert_H | Water/Fighting | "Immovable Force" (Swampert 105/115/100/65/90/55). Torrent/Guts — custom ability C311. Shoal Cave low tide wild |
+| 448 | Ambipom | Normal | Aipom Lv32; Norman T3+ |
+| 449 | Carbink | Rock/Fairy | Roxanne T2+; Steven T4 |
+| 450 | Toxapex | Poison/Water | Sootopolis Gym T2+ (Wallace) |
 
----
+EGG=451, NUM_SPECIES=451.
 
-## Regional Forms (C195-C219)
+## Lessons (keep)
 
-| Species | ID | Type | BST | Source |
-|---------|-----|------|-----|--------|
-| Corsola_Hoenn | 418 | Ghost/Rock | 400 | Scripted: Pacifidlog Quest 1 reward Lv45 |
-| Growlithe_Hoenn | 419 | Water | 350 | Scripted: Weather Institute Quest 2 Lv40 |
-| Arcanine_Hoenn | 420 | Water/Fire | 555 | Growlithe_Hoenn + Water Stone |
-| Vulpix_Hoenn | 426 | Ice/Fairy | 299 | Route 113 4% Lv21-22 |
-| Ninetales_Hoenn | 427 | Ice/Fairy | 505 | Vulpix_Hoenn + Moon Stone |
-| Bagon_Hoenn | 425 | Dragon/Rock | 450 | Meteor Falls B1F_2R 5% Lv28-30, standalone |
-
-## Cross-Gen Evolutions (C212-C218)
-
-| Species | ID | Type | BST | Pre-evo | E4 Usage |
-|---------|-----|------|-----|---------|----------|
-| Dusknoir | 421 | Ghost | 525 | Dusclops (Lv45) | Phoebe + Sidney |
-| Honchkrow | 422 | Dark/Flying | 505 | Murkrow (Lv37) | Sidney |
-| Froslass | 423 | Ice/Ghost | 480 | Snorunt (Lv42, female) | Glacia all tiers |
-| Mamoswine | 424 | Ice/Ground | 530 | Piloswine (Lv44) | Glacia all tiers |
-| Farigiraf | 428 | Normal/Psychic | — | Girafarig (Lv32) | Tate & Liza all tiers |
-
-## C240: Deoxys_Hoenn (Poison/Fairy)
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Deoxys_Hoenn | 431 | Poison/Fairy | 600 | Quest III reward, Lv 70 (quest C242) |
-
-Stats: 60/80/70/150/80/160. Abilities: Toxic Touch/Pressure.
-Growth: Slow. Catch Rate: 3. Genderless. Undiscovered egg group.
-
-## C230-231: Mid-Game Regional Forms
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Pinsir_Hoenn | 429 | Bug/Fire | 500 | Route 112 5% Lv21-22 |
-| Stantler_Hoenn | 430 | Ghost/Grass | 465 | Route 119 4% Lv26-28 |
-
-## C250-251: Gligar_Hoenn Line
-
-| Species | ID | Type | BST | Encounter |
-|---------|-----|------|-----|-----------|
-| Gligar_Hoenn | 432 | Water/Rock | 430 | Granite Cave B2F 5% Lv10-13 |
-| Gliscor_Hoenn | 433 | Water/Rock | 510 | Evolution only (Gligar_Hoenn Lv35) |
-
----
-
-## C261→C265: Early-Game Hoenn Forms — 5 Species Bulk Registration
-
-C261 attempted registration but species were never committed to species.h. C264 cleaned dangling references. **C265 re-registered all 5 successfully** via generate_species.cjs, restored encounter swaps and trainer integrations, verified build.
-
-| Species | ID | Type | BST | Encounter | Evolution |
-|---------|-----|------|-----|-----------|-----------|
-| Lotad_Hoenn | 434 | Electric/Grass | 220 | Route 102 slot 2, 10% Lv3-4 | → Lombre_Hoenn (Lv14) |
-| Shroomish_Hoenn | 435 | Poison/Ice | 295 | Petalburg Woods slot 8, 4% Lv6-7 | → Breloom_Hoenn (Lv23) |
-| Lombre_Hoenn | 436 | Electric/Grass | 340 | Evolution only | → Ludicolo_Hoenn (Leaf Stone) |
-| Breloom_Hoenn | 437 | Poison/Ice | 460 | Evolution only | Final form |
-| Ludicolo_Hoenn | 438 | Electric/Grass | 480 | Evolution only | Final form |
-
-**Encounter integrations** (C265): Route 102 SPECIES_LOTAD → SPECIES_LOTAD_HOENN (slot 2). Petalburg Woods SPECIES_SHROOMISH → SPECIES_SHROOMISH_HOENN (slot 8).
-**Trainer integrations** (C265): sParty_Rick (Lotad_Hoenn), sParty_James1 (Shroomish_Hoenn), sParty_Haley1 (Lotad_Hoenn + Shroomish_Hoenn).
-
-**Early-Game Hypothesis: PASSES (C265)** — Before Badge 1, player encounters Lotad_Hoenn (Route 102, 10%) and Shroomish_Hoenn (Petalburg Woods, 4%). 3 trainers also carry Hoenn forms pre-Roxanne.
-
-**C270: species_info gap fix** — C265 registered constants, names, encounters, and trainer references but the species generator's idempotency check (skips if constant exists in species.h) meant species_info.h entries were never created. All 5 species had broken data at runtime. C270 manually added all 5 species_info entries. Wattson integration now unblocked.
-
----
-
-## C263: Ability Identity Pass (#150) — 12 Species Reassigned
-
-12 species received new abilities. Key changes: Inner Focus purged from 4, Growlithe_Hoenn duplicate fixed, Serene Grace/Levitate/Water Absorb/Rough Skin added thematically.
-
----
-
-## C264: v2.3 Consistency Pass — Three-Layer Audit
-
-### Remaining Gaps (post-C265)
-
-| Gap | Species | Detail |
-|-----|---------|--------|
-| ~~No trainer~~ | Froslass | **DONE C267** — Added to all 5 Glacia parties (base + R1-R4) |
-| ~~No trainer~~ | Gligar_Hoenn | **DONE C267** — Added to Cristian (Dewford Gym) |
-| ~~No NPC~~ | Gabite, Arcanine_Hoenn, Ninetales_Hoenn, Gligar_Hoenn, Gliscor_Hoenn | **DONE C267** — 5 NPCs across Dewford, Lavaridge, Fortree, VR 1F, Route 123 |
-| ~~Encounter discrepancy~~ | Weavile | **DONE C267** — Memory corrected: Mt Pyre Summit 4%, Lv32-33 |
-| ~~Missing encounter~~ | Garchomp | **DONE C267** — Corrected: Garchomp is evolution only; Gabite now in VR B2F 2% Lv44-46 |
-
-## C292: Changed Three — All 9 Fully Registered (27/27)
-
-**v2.7 milestone**: All 9 Changed Three starters fully registered from scratch via generate_species.cjs. Previous partial registrations (C276-C288) were cleaned up before re-running.
-
-### Treecko_Hoenn Line — "The Blade" (Grass/Steel, fast physical attacker)
-
-| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
-|---------|-----|------|-----|------------------------|-----------|-----|
-| Treecko_Hoenn | 439 | Grass/Steel | 305 | 40/55/45/45/50/70 | Overgrow / Battle Armor | → Grovyle_Hoenn (Lv16) |
-| Grovyle_Hoenn | 440 | Grass/Steel | 395 | 50/75/55/65/55/95 | Overgrow / Battle Armor | → Sceptile_Hoenn (Lv36) |
-| Sceptile_Hoenn | 441 | Grass/Steel | 525 | 70/110/75/75/75/120 | Overgrow / Battle Armor | — |
-
-Signature move: **Iron Leaf** (Steel/Physical, 85bp, 20% Def drop) at Lv29.
-
-### Torchic_Hoenn Line — "The Dancer" (Fire/Fairy, special attacker)
-
-| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
-|---------|-----|------|-----|------------------------|-----------|-----|
-| Torchic_Hoenn | 442 | Fire/Fairy | 305 | 45/50/40/70/55/45 | Blaze / Cute Charm | → Combusken_Hoenn (Lv16) |
-| Combusken_Hoenn | 443 | Fire/Fairy | 390 | 60/65/60/90/60/55 | Blaze / Cute Charm | → Blaziken_Hoenn (Lv36) |
-| Blaziken_Hoenn | 444 | Fire/Fairy | 530 | 80/85/70/120/80/95 | Blaze / Cute Charm | — |
-
-### Mudkip_Hoenn Line — "The Immovable Force" (Water/Fighting, bulky physical)
-
-| Species | ID | Type | BST | Stats (H/A/D/SA/SD/S) | Abilities | Evo |
-|---------|-----|------|-----|------------------------|-----------|-----|
-| Mudkip_Hoenn | 445 | Water/Fighting | 295 | 55/55/50/45/50/40 | Torrent / Guts | → Marshtomp_Hoenn (Lv16) |
-| Marshtomp_Hoenn | 446 | Water/Fighting | 385 | 70/80/70/50/65/50 | Torrent / Guts | → Swampert_Hoenn (Lv36) |
-| Swampert_Hoenn | 447 | Water/Fighting | 530 | 105/115/100/65/90/55 | Torrent / Guts | — |
-
-Sprites: vanilla base species from expansion repo (placeholder until Sprite Designer creates regional variants).
-Generator: C292 registered 3/27 files (species.h, species_names.h, graphics). **C293 completed remaining 25/27** via `--fill-missing` flag. All 9 species now 27/27. EGG=448, NUM_SPECIES=448. Build-clean.
-
----
-
-## C288: Tier 2 Ability Reassignments — 8 Species
-
-Single-line `.abilities` edits in `species_info.h`:
-
-| Species | Old A1/A2 | New A1/A2 |
-|---------|-----------|-----------|
-| Corsola_Hoenn | Rock Head / Pressure | Rock Head / **Levitate** |
-| Vulpix_Hoenn | Cute Charm / Serene Grace | **Natural Cure** / Serene Grace |
-| Ninetales_Hoenn | Cute Charm / Serene Grace | **Natural Cure** / Serene Grace |
-| Pinsir_Hoenn | Hyper Cutter / Flame Body | **Guts** / Flame Body |
-| Bagon_Hoenn | Rock Head / Shed Skin | Rock Head / **Sturdy** |
-| Gligar_Hoenn | Battle Armor / Water Absorb | **Swift Swim** / Water Absorb |
-| Gliscor_Hoenn | Battle Armor / Water Absorb | **Swift Swim** / Water Absorb |
-| Stantler_Hoenn | Intimidate / Natural Cure | Intimidate / **Effect Spore** |
-
-## C302: Changed Three Level-Up Learnsets (9 species) + Shroomish_Hoenn Fix
-
-**Files modified**: `level_up_learnsets.h`, `level_up_learnset_pointers.h`
-
-Added 10 complete learnset arrays and pointer entries:
-- **Treecko_Hoenn line** (Grass/Steel): Metal Claw→Razor Leaf→Iron Leaf→Leaf Blade→Swords Dance. Physical crit-stacking identity via Tempered Blade + Iron Leaf.
-- **Torchic_Hoenn line** (Fire/Fairy): Sweet Kiss→Charm→Dazzling Gleam→Calm Mind→Moonblast→Fire Blast. Special Fairy mage with Fire nukes.
-- **Mudkip_Hoenn line** (Water/Fighting): Low Kick→Revenge→Double Kick→Bulk Up→Waterfall→Cross Chop. Physical tank with Guts synergy.
-- **Shroomish_Hoenn** (Poison/Ice): Gap discovered during spot-check — also missing from both files. Acid→Icy Wind→Sludge→Toxic. Compatible with existing Breloom_Hoenn Lv1 carryovers.
-
-## C304: Ambipom (Normal Cross-Gen Evo)
-
-| Species | ID | Type | BST | Pre-evo | Trainer Usage |
-|---------|-----|------|-----|---------|---------------|
-| Ambipom | 448 | Normal | 482 | Aipom (Lv32) | Norman T3 (lead, +1 to 6-mon), T4 (replaces Exploud), T5 (replaces Exploud) |
-
-Stats: 75/100/66/60/66/115. Abilities: Vital Spirit / Pickup.
-Learnset: 14 moves (Scratch→Return). Key: Fake Out (Lv1), Nasty Plot (Lv44), Baton Pass (Lv38).
-TM/HM: 27 TMs + 3 HMs. Notable: Brick Break, Shadow Ball, Aerial Ace, Taunt, Thunderbolt.
-Sprites: fetched from expansion repo. Cry: maps to Aipom.
-
-## C307: Toxapex (Poison/Water, Standalone)
-
-| Species | ID | Type | BST | Trainer Usage |
-|---------|-----|------|-----|---------------|
-| Toxapex | 450 | Poison/Water | 495 | Juan T2 (replaces Walrein), T3 (6th slot), T4 (6th slot) |
-
-Stats: 50/63/152/53/142/35. Abilities: Poison Point / Natural Cure.
-Learnset: 13 moves (Poison Sting→Cross Poison). Key: Toxic (Lv13), Recover (Lv33), Haze (Lv29), Poison Jab (Lv37).
-TM/HM: 20 TMs/HMs. Notable: Ice Beam, Sludge Bomb, Surf, Light Screen.
-Sprites: back/icon/footprint/palettes from expansion; front from Tentacruel placeholder.
-Cry: maps to Tentacruel.
-Moveset progression on Juan: T2 Surf (dual STAB), T3 Haze (anti-setup), T4 Night Slash (counter-counterplay). No Recover on any boss set.
-
-### Type Distribution (41 species)
-Ice 6, Fairy 6, Water 6, Fighting 5, Poison 4, Dragon 4, Ground 4, Ghost 4, Rock 4, Steel 4, Flying 3, Grass 3, Electric 3, Normal 2, Dark 2, Fire 2, Bug 1, Psychic 1.
-
-## C305: Carbink (Rock/Fairy, Standalone)
-
-| Species | ID | Type | BST | Trainer Usage |
-|---------|-----|------|-----|---------------|
-| Carbink | 449 | Rock/Fairy | 500 | Roxanne T2 (6th slot), T3 (6th slot), T4 (replaces Lunatone) |
-
-Stats: 50/50/150/50/150/50. Abilities: Clear Body / Sturdy. Genderless.
-Learnset: 13 moves (Tackle→Explosion). Key: Reflect (Lv12), Light Screen (Lv18), Moonblast (Lv36), Calm Mind (Lv40), Stone Edge (Lv46).
-TM/HM: 21 TMs/HMs. Notable: Toxic, Psychic, Sandstorm, Skill Swap.
-Sprites: fetched from expansion repo. Cry: maps to Nosepass.
-Note: Also completed Ambipom's partial registration (2/27→27/27) from C304.
-
-## C308: Registration Repair (17 species)
-Tree had lost data: Toxapex 0/27 (re-run toxapex.json; ID 450, EGG 451; sprites re-fetched), and Lotad/Lombre/Ludicolo/Shroomish/Breloom_Hoenn, 9 Changed Three, Ambipom, Carbink at 4-6/27 (no graphics tables, icons, dex, cries, evolutions; Carbink lacked species_info + learnset). Fixed with idempotent --fill-missing + new configs. Changed Three + Shroomish/Breloom_Hoenn + Carbink got tmhm rows. New dex entries written (categories: STORM LEAF, SPARK, THUNDERDANCE, FROSTCAP, STEELWOOD, BLADE, EMBERLIGHT, DANCER, JEWEL). All 17 verify 27/27.
+- Generator idempotency skips species whose constant already exists → use `--fill-missing` (C270, C293, C308 repairs all came from partial registrations).
+- Run `scripts/verify_species.sh` / `make check_all_quick` after any species work; C310 fixed its cry_tables false positive so it's now trustworthy (18/18).
+- Changed Three learnsets (C302): Treecko_H Metal Claw→Iron Leaf→Leaf Blade→SD; Torchic_H Charm→Dazzling Gleam→CM→Moonblast→Fire Blast; Mudkip_H Low Kick→Bulk Up→Waterfall→Cross Chop.
+- Sprites for Changed Three, Toxapex front are placeholders (vanilla base / Tentacruel).
