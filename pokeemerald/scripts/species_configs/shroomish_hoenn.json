@@ -1,0 +1,60 @@
+{
+  "name": "SHROOMISH_HOENN",
+  "pascalName": "ShroomishHoenn",
+  "graphicsDir": "shroomish_hoenn",
+  "displayName": "SHROOMISH",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "FROSTCAP",
+    "description": [
+      "It lives where cold air pools on the",
+      "forest floor. The spores on its cap",
+      "are toxic and freezing. Frost forms",
+      "on leaves wherever it rests."
+    ],
+    "height": 4,
+    "weight": 45,
+    "pokemonScale": 513,
+    "pokemonOffset": 22,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "23",
+      "target": "SPECIES_BRELOOM_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_SHROOMISH",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(40, 32)",
+    "frontPicYOffset": 16,
+    "backPicSize": "MON_COORDS_SIZE(64, 40)",
+    "backPicYOffset": 13
+  },
+  "tmhm": [
+    "TOXIC",
+    "BULLET_SEED",
+    "HIDDEN_POWER",
+    "SUNNY_DAY",
+    "PROTECT",
+    "GIGA_DRAIN",
+    "SAFEGUARD",
+    "FRUSTRATION",
+    "SOLAR_BEAM",
+    "RETURN",
+    "DOUBLE_TEAM",
+    "SLUDGE_BOMB",
+    "FACADE",
+    "SECRET_POWER",
+    "REST",
+    "ATTRACT",
+    "SNATCH",
+    "FLASH",
+    "HAIL"
+  ]
+}

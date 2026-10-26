@@ -1,0 +1,39 @@
+{
+  "name": "COMBUSKEN_HOENN",
+  "pascalName": "CombuskenHoenn",
+  "graphicsDir": "combusken_hoenn",
+  "displayName": "COMBUSKEN",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "EMBERLIGHT",
+    "description": [
+      "Instead of kicking, it twirls. Its",
+      "graceful steps leave rings of pink",
+      "fire on the ground. Its cry is said",
+      "to soothe frightened POKéMON."
+    ],
+    "height": 9,
+    "weight": 195,
+    "pokemonScale": 343,
+    "pokemonOffset": 5,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "36",
+      "target": "SPECIES_BLAZIKEN_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_COMBUSKEN",
+  "graphics": {
+    "frontAnimId": "ANIM_V_JUMPS_H_JUMPS",
+    "iconPaletteIndex": 0,
+    "frontPicSize": "MON_COORDS_SIZE(64, 64)",
+    "frontPicYOffset": 1,
+    "backPicSize": "MON_COORDS_SIZE(64, 64)",
+    "backPicYOffset": 0
+  }
+}

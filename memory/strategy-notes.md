@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns.
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species).
 
 ---
 
@@ -31,34 +31,23 @@
 
 **Decision**: Steven replaces Wallace as Champion. 5 community requests (#120, #182, #183, #186, #192). Corrected evidence: Altair (Wally), Extended Cut, Energized Emerald (Steven), Kaizo (Drake) all changed Hoenn champions. Steven's collector identity maps to migration mastery.
 
-### Steven's Team (IVs 255, AI: CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY)
+### Steven's Team — SHIPPED C308 (source of truth: `pokeemerald/scripts/trainer_configs/steven_*.json`)
 
-| # | Species | Lv | Type | Nature | Ability | Item | Moves |
-|---|---------|----|----- |--------|---------|------|-------|
-| 1 | Cradily | 53 | Rock/Grass | Careful | Suction Cups | Leftovers | Rock Slide / Giga Drain / Toxic / Amnesia |
-| 2 | Flygon | 54 | Ground/Dragon | Jolly | Levitate | Choice Band | Earthquake / Dragon Claw / Rock Slide / Crunch |
-| 3 | Sceptile_Hoenn | 55 | Grass/Steel | Jolly | Tempered Blade | Scope Lens | Iron Leaf / Leaf Blade / Swords Dance / Earthquake |
-| 4 | Swampert_Hoenn | 55 | Water/Fighting | Brave | Guts | Sitrus Berry | Waterfall / Cross Chop / Bulk Up / Tidal Flare |
-| 5 | Blaziken_Hoenn | 56 | Fire/Fairy | Modest | Blaze | Petaya Berry | Flamethrower / Moonblast / Calm Mind / Spore Fist |
-| 6 | Metagross | 57 | Steel/Psychic | Adamant | Clear Body | Lum Berry | Meteor Mash / Earthquake / Ice Punch / Thunder Punch |
+TRAINER_WALLACE + _REMATCH_1-4 slots now = STEVEN (pic TRAINER_PIC_STEVEN, class CHAMPION). Arrays sParty_StevenChampion / sParty_StevenRematch1-4. IV 255. Old Wallace teams archived verbatim in `memory/wallace-team-archive.md` for C309.
 
-**EVs**: Cradily 252HP/4Def/252SpD · Flygon 4HP/252Atk/252Spe · Sceptile 252Atk/4Def/252Spe · Swampert 252HP/252Atk/4Def · Blaziken 4HP/252SpA/252Spe · Metagross 252HP/252Atk/4SpD.
+| Slot | Base | T1 | T2 | T3 | T4 |
+|---|---|---|---|---|---|
+| 1 | Cradily 53 | Cradily 64 | Skarmory 73 | Skarmory 82 | Carbink 90 |
+| 2 | Flygon 54 (CB) | Flygon 65 | Flygon 75 (Fire Punch) | Aggron 84 (CB) | Registeel 91 |
+| 3-5 | Sceptile_H 55 / Swampert_H 55 / Blaziken_H 56 | 66/67/68 | 76/78/80 | 85/86/88 (Blaz: Fire Blast) | 92/93/94 |
+| 6 | Metagross 57 | 71 | 82 | 90 | 95 (Agility over Ice Punch) |
 
-**Tactical flow**: (1) Cradily stalls with Toxic+Amnesia+Leftovers, forcing early resource commitment. (2) Flygon CB wallbreaks with raw Earthquake. (3) Changed Three gauntlet — Sceptile guaranteed-crit sweep (Tempered Blade + Scope Lens + Iron Leaf = +3 crit stages), Swampert Guts punishes status, Blaziken Petaya+Blaze comeback nuke. (4) Metagross ace — BoltBeam punches + Meteor Mash + EQ, Lum Berry + Clear Body = undebuffable. No duplicate items.
-
-**Mirror matchup**: Player's Sceptile_Hoenn → Steven's Blaziken (4x Fire). Player's Blaziken_Hoenn → Steven's Swampert (Water STAB). Player's Swampert_Hoenn → Steven's Sceptile (+65 Speed, Leaf Blade). Steven mastered all three; the player mastered one.
-
-### Dialogue
-
-**Intro**: "I came to HOENN seeking rare stones. What I found was a region in transformation. The migration brought species that shouldn't exist here -- and yet they thrive. I studied them. Trained alongside them. Now let me show you what I've learned."
-
-**Defeat**: "…Magnificent. You didn't just collect them -- you understood what they mean for HOENN. Its future is in good hands."
-
-**Post-battle**: "I came seeking rare stones and found a region rewriting itself. You didn't come seeking anything. You just walked forward. CHAMPION… that word belongs to you now."
-
-**Rematch intro**: "You know, I thought being CHAMPION meant having the best collection. Turns out it means understanding why things changed. Ready for another lesson?"
-
-**Rematch defeat**: "Every time we battle, the Changed Three teach me something new. Or maybe you do. Go on, CHAMPION. HOENN's still changing out there."
+Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/Cross Chop/Bulk Up/EQ @Sitrus · Blaziken_H Flamethrower/Moonblast/CM/Will-O-Wisp @Petaya. (C306's Tidal Flare + Spore Fist were illegal + wrong category — swapped.)
+**Engine facts (verified C308)**: trainer mons ALWAYS get ability slot 0 (Swampert_H = Torrent, never Guts; Aggron Sturdy; Corsola_H Rock Head). Crit: Iron Leaf w/ Scope Lens + Tempered Blade = stage 3 (1/3); Leaf Blade = stage 2 (1/4). Nature = trainer-name + species-name hash (renaming/reordering changes it). Challenge mode = +5 lv for CLASS_CHAMPION (capped 100).
+**Not possible yet**: natures/EVs/abilities per mon — needs TrainerMon struct expansion (tech debt).
+**#194 (Regis)**: Skarmory T2-T3, Registeel T4 (attack-only, no Rest/Curse) ADOPTED. Regirock/Regice → deferred to Meteor Falls Steven postgame.
+**Dialogue**: Intro/Defeat/Post/Rematch rewritten in ChampionsRoom; starter-aware beat after first-clear post-battle uses VAR_STARTER_MON (0 Larvitar / 1 Bagon / 2 Dratini — the REAL starters; the Changed Three are wild/postgame-gift only, so the C306 "Your SCEPTILE…" lines were factually wrong for a first clear). Hall of Fame + Drake post-battle + E4 mugshot updated.
+**Design caveat**: the "mirror" premise assumed the player raises a Changed starter. In reality only players who caught Treecko/Torchic/Mudkip_Hoenn in the wild do. Steven's team still reads as "master of the migration" — revisit if playtesters miss the mirror.
 
 ### Wallace Cascade — Recommended: Option A
 
@@ -81,28 +70,18 @@
 
 Steven's new team: **ZERO overlap** with overused species. Primary #193 target: Sidney's Tyranitar/Houndoom/Honchkrow saturation (C312).
 
-### C308 Implementation Scope
-
-**Files** (5 + rematch arrays):
-1. `EverGrandeCity_ChampionsRoom/map.json` — OBJ_EVENT_GFX_WALLACE → OBJ_EVENT_GFX_STEVEN
-2. `EverGrandeCity_ChampionsRoom/scripts.inc` — All dialogue, post-battle Steven text (WallaceComeWithMe → StevenComeWithMe etc.)
-3. `src/data/trainers.h` — TRAINER_WALLACE: name→"STEVEN", pic→TRAINER_PIC_STEVEN, party→sParty_StevenChampion
-4. `src/data/trainer_parties.h` — sParty_Wallace[] → sParty_StevenChampion[]. All 4 WallaceRematch → StevenRematch.
-5. `src/battle_setup.c` — No functional changes needed (REMATCH_WALLACE slot reused, same trainer IDs)
-
-**Trainer ID strategy**: Reuse TRAINER_WALLACE slots for Steven champion. TRAINER_STEVEN stays for Meteor Falls. C309 claims TRAINER_GRUNT_UNUSED (568) for Wallace Gym 8.
-
-**Rematch teams**: 4 tiers of escalating Steven teams. All must feature the Changed Three with increasing levels. C308 designs these.
-
-**Meteor Falls**: Steven's postgame encounter stays (TRAINER_STEVEN, Lv77-82 collector team). Dialogue update optional — could acknowledge his champion role.
+### C309 Handoff (Wallace cascade)
+- Wallace teams: `memory/wallace-team-archive.md` (231 lines, TEMPORARY — delete once Wallace Gym 8 parties ship in C309). Claim TRAINER_GRUNT_UNUSED (568) for Wallace Gym 8.
+- Untouched Wallace-as-figure text (C309 territory): SootopolisCity, SootopolisCity_PokemonCenter_1F ("toughest TRAINER" rumor), SootopolisCity_House3, SootopolisCity_Gym_1F, CaveOfOrigin_B1F, SkyPillar_Outside, PacifidlogTown, MossdeepCity, BirchLab revelation, data/text/match_call.inc (pokenav).
+- Meteor Falls Steven: could acknowledge champion role + Regirock/Regice team (#194 remainder).
 
 ## Roster Fixes (#180) — Status
 
-**Ambipom on Norman T3+**: DONE (C304). **Carbink on Roxanne T3+**: DONE (C305). **Toxapex on Juan T2+**: DONE (C307).
+**Ambipom on Norman T3+**: DONE (C304). **Carbink on Roxanne T3+**: DONE (C305). **Toxapex on Juan T2+**: DONE (C307; registration re-applied C308). **Corsola_Hoenn on Phoebe R1**: DONE (C308). #180 complete.
 
 ## Changed Three Ability Parity
 
-Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Cute Charm) and Swampert_Hoenn (Guts) need custom abilities:
+Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Blaze/Cute Charm) and Swampert_Hoenn (Torrent/Guts) need custom abilities:
 - **Blaziken_Hoenn**: Design in C310. Fairy/Fire warrior identity.
 - **Swampert_Hoenn**: Design in C311. Water/Fighting brawler identity.
 
@@ -111,9 +90,9 @@ Sceptile_Hoenn has Tempered Blade. Blaziken_Hoenn (Cute Charm) and Swampert_Hoen
 | Cycle | Objective | Issues |
 |-------|-----------|--------|
 | 302-305 | Learnsets, dialogue, Ambipom+Norman, Carbink+Roxanne — **ALL DONE** | #180, #182 |
-| 306 | Champion redesign planning — **THIS CYCLE** | #192 |
+| 306 | Champion redesign planning — **DONE** | #192 |
 | 307 | Toxapex + Juan roster fix — **DONE** | #180 |
-| 308 | Steven champion implementation | #192 |
+| 308 | Steven champion implementation — **DONE** (+ species pipeline repair) | #192, #194 partial, #180 |
 | 309 | Wallace cascade (Wallace → Gym 8, Juan → postgame) | — |
 | 310 | Blaziken_Hoenn custom ability (ABILITY_82) | — |
 | 311 | Swampert_Hoenn custom ability (ABILITY_83) | — |

@@ -198,3 +198,6 @@ Learnset: 13 moves (Tackle→Explosion). Key: Reflect (Lv12), Light Screen (Lv18
 TM/HM: 21 TMs/HMs. Notable: Toxic, Psychic, Sandstorm, Skill Swap.
 Sprites: fetched from expansion repo. Cry: maps to Nosepass.
 Note: Also completed Ambipom's partial registration (2/27→27/27) from C304.
+
+## C308: Registration Repair (17 species)
+Tree had lost data: Toxapex 0/27 (re-run toxapex.json; ID 450, EGG 451; sprites re-fetched), and Lotad/Lombre/Ludicolo/Shroomish/Breloom_Hoenn, 9 Changed Three, Ambipom, Carbink at 4-6/27 (no graphics tables, icons, dex, cries, evolutions; Carbink lacked species_info + learnset). Fixed with idempotent --fill-missing + new configs. Changed Three + Shroomish/Breloom_Hoenn + Carbink got tmhm rows. New dex entries written (categories: STORM LEAF, SPARK, THUNDERDANCE, FROSTCAP, STEELWOOD, BLADE, EMBERLIGHT, DANCER, JEWEL). All 17 verify 27/27.

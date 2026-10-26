@@ -658,8 +658,50 @@ function main() {
     handleSpeciesNames,
   ];
 
+  // Target file for each handler — used by --fill-missing to skip files that
+  // already reference the species (same check as verify_species.sh), so the
+  // mode is idempotent and safe to re-run on partially registered species.
+  const handlerFiles = {
+    handlePokedexH: 'include/constants/pokedex.h',
+    handleSpeciesInfo: 'src/data/pokemon/species_info.h',
+    handleLevelUpLearnsets: 'src/data/pokemon/level_up_learnsets.h',
+    handleLearnsetPointers: 'src/data/pokemon/level_up_learnset_pointers.h',
+    handleTmhmLearnsets: 'src/data/pokemon/tmhm_learnsets.h',
+    handleEggMoves: 'src/data/pokemon/egg_moves.h',
+    handlePokedexText: 'src/data/pokemon/pokedex_text.h',
+    handlePokedexEntries: 'src/data/pokemon/pokedex_entries.h',
+    handlePokedexOrders: 'src/data/pokemon/pokedex_orders.h',
+    handleGraphicsPokemonH: 'src/data/graphics/pokemon.h',
+    handleGraphicsH: 'include/graphics.h',
+    handleFrontPicAnims: 'src/data/pokemon_graphics/front_pic_anims.h',
+    handlePokemonIcon: 'src/pokemon_icon.c',
+    handlePokemonC: 'src/pokemon.c',
+    handleCryIds: 'src/data/pokemon/cry_ids.h',
+    handleEvolution: 'src/data/pokemon/evolution.h',
+    handleAnimMonFrontPics: 'src/anim_mon_front_pics.c',
+    handleFrontPicTable: 'src/data/pokemon_graphics/front_pic_table.h',
+    handleBackPicTable: 'src/data/pokemon_graphics/back_pic_table.h',
+    handleFrontPicCoordinates: 'src/data/pokemon_graphics/front_pic_coordinates.h',
+    handleBackPicCoordinates: 'src/data/pokemon_graphics/back_pic_coordinates.h',
+    handlePaletteTable: 'src/data/pokemon_graphics/palette_table.h',
+    handleShinyPaletteTable: 'src/data/pokemon_graphics/shiny_palette_table.h',
+    handleFootprintTable: 'src/data/pokemon_graphics/footprint_table.h',
+    handleStillFrontPicTable: 'src/data/pokemon_graphics/still_front_pic_table.h',
+  };
+  const alreadyPresent = (h) => {
+    const rel = handlerFiles[h.name];
+    if (!rel) return false;
+    const text = readFile(rel);
+    // evolution.h names species as evolution *targets* too, so only count the
+    // species' own row (or its "no evolution chain" comment) as present.
+    if (h.name === 'handleEvolution') {
+      return text.includes(`[${N.SPECIES}]`) || text.includes(`// ${N.SPECIES} `);
+    }
+    return text.includes(N.NAME) || text.includes(N.pascal);
+  };
+
   const handlers = (speciesExists && fillMissing)
-    ? allHandlers.filter(h => !skipInFillMissing.has(h.name))
+    ? allHandlers.filter(h => !skipInFillMissing.has(h.name) && !alreadyPresent(h))
     : allHandlers;
 
   const results = [];
@@ -681,7 +723,7 @@ function main() {
   }
 
   console.log(`\nSpecies: ${N.SPECIES} (${N.pascal})`);
-  console.log(`Files:   ${results.length}/27`);
+  console.log(`Files:   ${results.length}/27${fillMissing ? ' (fill-missing: already-present files skipped)' : ''}`);
   console.log(`Note:    cry_tables.inc skipped (cry_ids.h handles base cry mapping)\n`);
 
   if (dryRun) {
@@ -694,7 +736,7 @@ function main() {
       fs.writeFileSync(path.join(ROOT, r.relPath), r.content, 'utf8');
       console.log(`  ✓ ${r.relPath}`);
     }
-    if (results[0].newId) {
+    if (results.length && results[0].newId) {
       console.log(`\nNew species ID: ${results[0].newId}`);
       console.log(`Updated SPECIES_EGG: ${results[0].newEggId}`);
     }

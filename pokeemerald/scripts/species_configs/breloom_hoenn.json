@@ -1,0 +1,63 @@
+{
+  "name": "BRELOOM_HOENN",
+  "pascalName": "BreloomHoenn",
+  "graphicsDir": "breloom_hoenn",
+  "displayName": "BRELOOM",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "FROSTCAP",
+    "description": [
+      "Its arms are tipped with frozen",
+      "spores that burst on impact. Foes",
+      "struck by its punches are left both",
+      "poisoned and numb with cold."
+    ],
+    "height": 12,
+    "weight": 392,
+    "pokemonScale": 324,
+    "pokemonOffset": 6,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [],
+  "baseSpeciesCry": "SPECIES_BRELOOM",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(56, 56)",
+    "frontPicYOffset": 4,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 4
+  },
+  "tmhm": [
+    "FOCUS_PUNCH",
+    "TOXIC",
+    "BULK_UP",
+    "BULLET_SEED",
+    "HIDDEN_POWER",
+    "SUNNY_DAY",
+    "HYPER_BEAM",
+    "PROTECT",
+    "GIGA_DRAIN",
+    "SAFEGUARD",
+    "FRUSTRATION",
+    "SOLAR_BEAM",
+    "IRON_TAIL",
+    "RETURN",
+    "BRICK_BREAK",
+    "DOUBLE_TEAM",
+    "SLUDGE_BOMB",
+    "FACADE",
+    "SECRET_POWER",
+    "REST",
+    "ATTRACT",
+    "SNATCH",
+    "CUT",
+    "STRENGTH",
+    "FLASH",
+    "ROCK_SMASH",
+    "HAIL",
+    "ICE_BEAM"
+  ]
+}

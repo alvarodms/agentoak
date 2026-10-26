@@ -1,0 +1,39 @@
+{
+  "name": "LOMBRE_HOENN",
+  "pascalName": "LombreHoenn",
+  "graphicsDir": "lombre_hoenn",
+  "displayName": "LOMBRE",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "SPARK",
+    "description": [
+      "It hides in rain-soaked reeds and",
+      "shocks passing fishermen for fun.",
+      "The sparks leap from the leaf on its",
+      "head whenever it laughs."
+    ],
+    "height": 12,
+    "weight": 325,
+    "pokemonScale": 277,
+    "pokemonOffset": 9,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_ITEM",
+      "param": "ITEM_LEAF_STONE",
+      "target": "SPECIES_LUDICOLO_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_LOMBRE",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(48, 48)",
+    "frontPicYOffset": 9,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 8
+  }
+}

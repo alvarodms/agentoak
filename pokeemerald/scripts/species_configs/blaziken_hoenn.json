@@ -1,0 +1,33 @@
+{
+  "name": "BLAZIKEN_HOENN",
+  "pascalName": "BlazikenHoenn",
+  "graphicsDir": "blaziken_hoenn",
+  "displayName": "BLAZIKEN",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "DANCER",
+    "description": [
+      "It battles with a dancer's grace,",
+      "weaving fire and fairy-light into",
+      "spirals. Those who watch it fight",
+      "often forget they are in danger."
+    ],
+    "height": 19,
+    "weight": 520,
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 301,
+    "trainerOffset": 4
+  },
+  "evolution": [],
+  "baseSpeciesCry": "SPECIES_BLAZIKEN",
+  "graphics": {
+    "frontAnimId": "ANIM_H_SHAKE",
+    "iconPaletteIndex": 0,
+    "frontPicSize": "MON_COORDS_SIZE(64, 64)",
+    "frontPicYOffset": 0,
+    "backPicSize": "MON_COORDS_SIZE(64, 64)",
+    "backPicYOffset": 0
+  }
+}

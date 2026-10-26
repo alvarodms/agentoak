@@ -449,4 +449,5 @@ const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1] = {
     [SPECIES_SWAMPERT_HOENN] = _("SWAMPERT"),
     [SPECIES_AMBIPOM] = _("AMBIPOM"),
     [SPECIES_CARBINK] = _("CARBINK"),
+    [SPECIES_TOXAPEX] = _("Toxapex"),
 };

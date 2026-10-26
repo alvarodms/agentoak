@@ -5419,6 +5419,159 @@ SINGLE_ANIMATION(GliscorHoenn);
 SINGLE_ANIMATION(DeoxysHoenn);
 SINGLE_ANIMATION(Froslass);
 SINGLE_ANIMATION(Mamoswine);
+
+static const union AnimCmd sAnim_Toxapex_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(Toxapex);
+
+static const union AnimCmd sAnim_LotadHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(LotadHoenn);
+
+static const union AnimCmd sAnim_LombreHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(LombreHoenn);
+
+static const union AnimCmd sAnim_LudicoloHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(LudicoloHoenn);
+
+static const union AnimCmd sAnim_ShroomishHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(ShroomishHoenn);
+
+static const union AnimCmd sAnim_BreloomHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(BreloomHoenn);
+
+static const union AnimCmd sAnim_TreeckoHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(TreeckoHoenn);
+
+static const union AnimCmd sAnim_GrovyleHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(GrovyleHoenn);
+
+static const union AnimCmd sAnim_SceptileHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(SceptileHoenn);
+
+static const union AnimCmd sAnim_TorchicHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(TorchicHoenn);
+
+static const union AnimCmd sAnim_CombuskenHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(CombuskenHoenn);
+
+static const union AnimCmd sAnim_BlazikenHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(BlazikenHoenn);
+
+static const union AnimCmd sAnim_MudkipHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(MudkipHoenn);
+
+static const union AnimCmd sAnim_MarshtompHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(MarshtompHoenn);
+
+static const union AnimCmd sAnim_SwampertHoenn_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(SwampertHoenn);
+
+static const union AnimCmd sAnim_Ambipom_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(Ambipom);
+
+static const union AnimCmd sAnim_Carbink_1[] =
+{
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_FRAME(1, 15),
+    ANIMCMD_FRAME(0, 15),
+    ANIMCMD_END,
+};
+SINGLE_ANIMATION(Carbink);
 SINGLE_ANIMATION(Egg);
 SINGLE_ANIMATION(UnownB);
 SINGLE_ANIMATION(UnownC);
@@ -5886,6 +6039,23 @@ const union AnimCmd *const *const gMonFrontAnimsPtrTable[] =
     [SPECIES_DEOXYS_HOENN] = sAnims_DeoxysHoenn,
     [SPECIES_FROSLASS] = sAnims_Froslass,
     [SPECIES_MAMOSWINE] = sAnims_Mamoswine,
+    [SPECIES_TOXAPEX] = sAnims_Toxapex,
+    [SPECIES_LOTAD_HOENN] = sAnims_LotadHoenn,
+    [SPECIES_LOMBRE_HOENN] = sAnims_LombreHoenn,
+    [SPECIES_LUDICOLO_HOENN] = sAnims_LudicoloHoenn,
+    [SPECIES_SHROOMISH_HOENN] = sAnims_ShroomishHoenn,
+    [SPECIES_BRELOOM_HOENN] = sAnims_BreloomHoenn,
+    [SPECIES_TREECKO_HOENN] = sAnims_TreeckoHoenn,
+    [SPECIES_GROVYLE_HOENN] = sAnims_GrovyleHoenn,
+    [SPECIES_SCEPTILE_HOENN] = sAnims_SceptileHoenn,
+    [SPECIES_TORCHIC_HOENN] = sAnims_TorchicHoenn,
+    [SPECIES_COMBUSKEN_HOENN] = sAnims_CombuskenHoenn,
+    [SPECIES_BLAZIKEN_HOENN] = sAnims_BlazikenHoenn,
+    [SPECIES_MUDKIP_HOENN] = sAnims_MudkipHoenn,
+    [SPECIES_MARSHTOMP_HOENN] = sAnims_MarshtompHoenn,
+    [SPECIES_SWAMPERT_HOENN] = sAnims_SwampertHoenn,
+    [SPECIES_AMBIPOM] = sAnims_Ambipom,
+    [SPECIES_CARBINK] = sAnims_Carbink,
     [SPECIES_EGG]         = sAnims_Egg,
     [SPECIES_UNOWN_B]     = sAnims_UnownB,
     [SPECIES_UNOWN_C]     = sAnims_UnownC,

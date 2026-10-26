@@ -156,7 +156,7 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 
 ---
 
-**Species count (C305)**: **39 custom species — ALL 39 fully registered 27/27.** 12 cross-gen evos (Weavile, Honchkrow, Mismagius, Froslass, Togekiss, Mamoswine, Gliscor, Yanmega, Roserade, Tangrowth, Rhyperior, Ambipom) + 25 _HOENN forms (including 9 Changed Three starters) + 2 standalone imports (Riolu→Lucario line counted as 1 cross-gen conceptually, but Carbink has no pre-evo). EGG=450, NUM_SPECIES=450, SPECIES_AMBIPOM=448, SPECIES_CARBINK=449. No partial registrations remain.
+**Species count (C308)**: **40 custom species — ALL registered 27/27** (Toxapex=450 re-registered C308; C307 registration had been lost from tree). 12 cross-gen evos (Weavile, Honchkrow, Mismagius, Froslass, Togekiss, Mamoswine, Gliscor, Yanmega, Roserade, Tangrowth, Rhyperior, Ambipom) + 25 _HOENN forms (including 9 Changed Three starters) + 2 standalone imports (Riolu→Lucario line counted as 1 cross-gen conceptually, but Carbink has no pre-evo). SPECIES_AMBIPOM=448, SPECIES_CARBINK=449, SPECIES_TOXAPEX=450, EGG=451, NUM_SPECIES=451. **Changed Three (439-447), Shroomish/Breloom_Hoenn, Carbink have NO tmhm_learnsets entries** (TM-incompatible; see tech-debt). No partial registrations remain.
 
 ---
 
@@ -175,3 +175,4 @@ Individual: check_scripts, check_encounters, check_e4_rematches, check_species, 
 ## Postgame NPC Show/Hide Pattern (C248-286)
 
 **Pattern**: OnTransition checks `FLAG_SYS_GAME_CLEAR`, then `clearflag FLAG_HIDE_<NPC>`. Collection tracking via `FLAG_RECKONING_TALKED_*`. **Birch Lab payoff (C286)**: 6 flags -> ReckoningAcknowledge -> PP_MAX reward -> FLAG_RECKONING_COMPLETE.
+**Trainer mon internals (C308)**: ability = slot 0 always (personality bit0 = 0); nature from trainer-name + species-name hash; Challenge mode adds per-class levels (include/challenge_mode_scaling.h, CHAMPION +5). Crit stages: battle_script_commands.c Cmd_critcalc (high-crit move, Scope Lens, Tempered Blade on Steel contact each +1). **VAR_STARTER_MON**: 0 Larvitar, 1 Bagon, 2 Dratini (src/starter_choose.c) — Changed Three are NOT starters (wild + Birch postgame gift).

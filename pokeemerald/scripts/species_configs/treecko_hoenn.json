@@ -1,0 +1,39 @@
+{
+  "name": "TREECKO_HOENN",
+  "pascalName": "TreeckoHoenn",
+  "graphicsDir": "treecko_hoenn",
+  "displayName": "TREECKO",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "STEELWOOD",
+    "description": [
+      "Since the migration, the leaves on",
+      "its tail have hardened like metal.",
+      "It sharpens them on tree bark,",
+      "leaving gouges in the forest."
+    ],
+    "height": 5,
+    "weight": 50,
+    "pokemonScale": 541,
+    "pokemonOffset": 19,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "16",
+      "target": "SPECIES_GROVYLE_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_TREECKO",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(48, 48)",
+    "frontPicYOffset": 8,
+    "backPicSize": "MON_COORDS_SIZE(64, 56)",
+    "backPicYOffset": 6
+  }
+}

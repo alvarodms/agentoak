@@ -1,0 +1,39 @@
+{
+  "name": "TORCHIC_HOENN",
+  "pascalName": "TorchicHoenn",
+  "graphicsDir": "torchic_hoenn",
+  "displayName": "TORCHIC",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "EMBERLIGHT",
+    "description": [
+      "The flame inside it glows a soft",
+      "pink. It dances in circles when",
+      "happy, scattering harmless sparks",
+      "that sparkle like starlight."
+    ],
+    "height": 4,
+    "weight": 25,
+    "pokemonScale": 566,
+    "pokemonOffset": 19,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "16",
+      "target": "SPECIES_COMBUSKEN_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_TORCHIC",
+  "graphics": {
+    "frontAnimId": "ANIM_H_STRETCH",
+    "iconPaletteIndex": 0,
+    "frontPicSize": "MON_COORDS_SIZE(40, 48)",
+    "frontPicYOffset": 8,
+    "backPicSize": "MON_COORDS_SIZE(48, 56)",
+    "backPicYOffset": 5
+  }
+}

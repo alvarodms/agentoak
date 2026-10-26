@@ -4,7 +4,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ---
 
-## Research Phase Consuming Implementation Budget (C110-307, 34 occurrences) — RECURRING
+## Research Phase Consuming Implementation Budget (C110-308, 35 occurrences) — RECURRING
 
 **Symptom**: 40-132 actions before first edit. C307: first edit at action 40/89 (45%) — Agent subagent used once (action 11). No path errors this cycle but still slow start.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
@@ -55,6 +55,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: MCP `fetch_pokemon_sprites` for Toxapex delivered only 5/7 files (no anim_front.png, no front.png). front.png is auto-cropped from anim_front.png, so both were missing.
 **Resolution**: Always `ls` the sprite directory after download to verify all 7 files. If anim_front.png is missing, copy from a visually similar species (C307 used Tentacruel). Run with `overwrite: true` on retry. Keep a mental list of good fallback species per type.
+
+## Memory State Drifted From Tree (C308) — NEW, HIGH IMPACT
+
+**Symptom**: codebase-facts claimed "39 species ALL registered 27/27"; actual tree had Toxapex 0/27 and 16 others at ~4-6/27 (null sprites/icons, no dex, no evos, no TM rows for Changed Three). Validators (make check_species) passed because they check fewer files than verify_species.sh.
+**Resolution**: At cycle start for any species/trainer work, run `bash /__w/agentoak/agentoak/pokeemerald/scripts/verify_species.sh <NAME>` across all custom species (see [[species-registration]]). Trust the tree, not memory. Repair via `generate_species.cjs <cfg> --fill-missing` (idempotent since C308).
 
 ## Anticipated Pitfalls
 

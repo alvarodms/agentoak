@@ -4907,4 +4907,208 @@ const struct PokedexEntry gPokedexEntries[] =
         .trainerOffset = 0,
     },
 
+    [NATIONAL_DEX_TOXAPEX] =
+    {
+        .categoryName = _("Brutal Star"),
+        .height = 7,
+        .weight = 145,
+        .description = gToxapexPokedexText,
+        .pokemonScale = 356,
+        .pokemonOffset = 17,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_LOTAD_HOENN] =
+    {
+        .categoryName = _("STORM LEAF"),
+        .height = 5,
+        .weight = 26,
+        .description = gLotadHoennPokedexText,
+        .pokemonScale = 406,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_LOMBRE_HOENN] =
+    {
+        .categoryName = _("SPARK"),
+        .height = 12,
+        .weight = 325,
+        .description = gLombreHoennPokedexText,
+        .pokemonScale = 277,
+        .pokemonOffset = 9,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_LUDICOLO_HOENN] =
+    {
+        .categoryName = _("STORMDANCE"),
+        .height = 15,
+        .weight = 550,
+        .description = gLudicoloHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 268,
+        .trainerOffset = -1,
+    },
+
+    [NATIONAL_DEX_SHROOMISH_HOENN] =
+    {
+        .categoryName = _("FROSTCAP"),
+        .height = 4,
+        .weight = 45,
+        .description = gShroomishHoennPokedexText,
+        .pokemonScale = 513,
+        .pokemonOffset = 22,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_BRELOOM_HOENN] =
+    {
+        .categoryName = _("FROSTCAP"),
+        .height = 12,
+        .weight = 392,
+        .description = gBreloomHoennPokedexText,
+        .pokemonScale = 324,
+        .pokemonOffset = 6,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_TREECKO_HOENN] =
+    {
+        .categoryName = _("STEELWOOD"),
+        .height = 5,
+        .weight = 50,
+        .description = gTreeckoHoennPokedexText,
+        .pokemonScale = 541,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_GROVYLE_HOENN] =
+    {
+        .categoryName = _("STEELWOOD"),
+        .height = 9,
+        .weight = 216,
+        .description = gGrovyleHoennPokedexText,
+        .pokemonScale = 360,
+        .pokemonOffset = 5,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_SCEPTILE_HOENN] =
+    {
+        .categoryName = _("BLADE"),
+        .height = 17,
+        .weight = 522,
+        .description = gSceptileHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = -1,
+        .trainerScale = 275,
+        .trainerOffset = 2,
+    },
+
+    [NATIONAL_DEX_TORCHIC_HOENN] =
+    {
+        .categoryName = _("EMBERLIGHT"),
+        .height = 4,
+        .weight = 25,
+        .description = gTorchicHoennPokedexText,
+        .pokemonScale = 566,
+        .pokemonOffset = 19,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_COMBUSKEN_HOENN] =
+    {
+        .categoryName = _("EMBERLIGHT"),
+        .height = 9,
+        .weight = 195,
+        .description = gCombuskenHoennPokedexText,
+        .pokemonScale = 343,
+        .pokemonOffset = 5,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_BLAZIKEN_HOENN] =
+    {
+        .categoryName = _("DANCER"),
+        .height = 19,
+        .weight = 520,
+        .description = gBlazikenHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 301,
+        .trainerOffset = 4,
+    },
+
+    [NATIONAL_DEX_MUDKIP_HOENN] =
+    {
+        .categoryName = _("RIVER BRAWL"),
+        .height = 4,
+        .weight = 76,
+        .description = gMudkipHoennPokedexText,
+        .pokemonScale = 535,
+        .pokemonOffset = 20,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_MARSHTOMP_HOENN] =
+    {
+        .categoryName = _("RIVER BRAWL"),
+        .height = 8,
+        .weight = 265,
+        .description = gMarshtompHoennPokedexText,
+        .pokemonScale = 340,
+        .pokemonOffset = 7,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_SWAMPERT_HOENN] =
+    {
+        .categoryName = _("TIDAL FORCE"),
+        .height = 16,
+        .weight = 768,
+        .description = gSwampertHoennPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_AMBIPOM] =
+    {
+        .categoryName = _("Long Tail"),
+        .height = 12,
+        .weight = 203,
+        .description = gAmbipomPokedexText,
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
+    [NATIONAL_DEX_CARBINK] =
+    {
+        .categoryName = _("JEWEL"),
+        .height = 3,
+        .weight = 57,
+        .description = gCarbinkPokedexText,
+        .pokemonScale = 512,
+        .pokemonOffset = 18,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+    },
+
 };

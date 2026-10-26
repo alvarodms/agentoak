@@ -2464,3 +2464,105 @@ const u8 gMamoswinePokedexText[] = _(
     "great migration, PILOSWINE in the deepest\n"
     "ice caves evolved into this massive,\n"
     "twin-tusked beast.");
+
+const u8 gToxapexPokedexText[] = _(
+    "It crawls along the ocean floor on\n"
+    "its 12 legs. It leaves a trail of\n"
+    "Corsola bits scattered in its wake.");
+
+const u8 gLotadHoennPokedexText[] = _(
+    "Its leaf collects static from storm\n"
+    "clouds over the sea. Swimmers who\n"
+    "touch it feel a sharp tingle that\n"
+    "lingers for hours.");
+
+const u8 gLombreHoennPokedexText[] = _(
+    "It hides in rain-soaked reeds and\n"
+    "shocks passing fishermen for fun.\n"
+    "The sparks leap from the leaf on its\n"
+    "head whenever it laughs.");
+
+const u8 gLudicoloHoennPokedexText[] = _(
+    "When it dances in a downpour, its\n"
+    "body crackles with electricity.\n"
+    "Since the migration, these dances\n"
+    "draw lightning to HOENN's coasts.");
+
+const u8 gShroomishHoennPokedexText[] = _(
+    "It lives where cold air pools on the\n"
+    "forest floor. The spores on its cap\n"
+    "are toxic and freezing. Frost forms\n"
+    "on leaves wherever it rests.");
+
+const u8 gBreloomHoennPokedexText[] = _(
+    "Its arms are tipped with frozen\n"
+    "spores that burst on impact. Foes\n"
+    "struck by its punches are left both\n"
+    "poisoned and numb with cold.");
+
+const u8 gTreeckoHoennPokedexText[] = _(
+    "Since the migration, the leaves on\n"
+    "its tail have hardened like metal.\n"
+    "It sharpens them on tree bark,\n"
+    "leaving gouges in the forest.");
+
+const u8 gGrovyleHoennPokedexText[] = _(
+    "The leaves on its arms have grown\n"
+    "into steel-edged blades. It moves\n"
+    "between branches so fast that the\n"
+    "air rings as it passes.");
+
+const u8 gSceptileHoennPokedexText[] = _(
+    "The leaves on its arms are tempered\n"
+    "steel, sharp enough to split boulders.\n"
+    "It strikes once, precisely, and is\n"
+    "gone before the foe can respond.");
+
+const u8 gTorchicHoennPokedexText[] = _(
+    "The flame inside it glows a soft\n"
+    "pink. It dances in circles when\n"
+    "happy, scattering harmless sparks\n"
+    "that sparkle like starlight.");
+
+const u8 gCombuskenHoennPokedexText[] = _(
+    "Instead of kicking, it twirls. Its\n"
+    "graceful steps leave rings of pink\n"
+    "fire on the ground. Its cry is said\n"
+    "to soothe frightened POKéMON.");
+
+const u8 gBlazikenHoennPokedexText[] = _(
+    "It battles with a dancer's grace,\n"
+    "weaving fire and fairy-light into\n"
+    "spirals. Those who watch it fight\n"
+    "often forget they are in danger.");
+
+const u8 gMudkipHoennPokedexText[] = _(
+    "The fin on its head has hardened from\n"
+    "battering river rocks. It charges\n"
+    "headfirst into rapids, growing\n"
+    "stronger with each impact.");
+
+const u8 gMarshtompHoennPokedexText[] = _(
+    "Its arms thickened from fighting the\n"
+    "force of Hoenn's mighty currents.\n"
+    "It wrestles boulders in rivers,\n"
+    "building raw striking power.");
+
+const u8 gSwampertHoennPokedexText[] = _(
+    "It channels water pressure through\n"
+    "its fists. A single punch carries\n"
+    "the force of a crashing wave,\n"
+    "enough to shatter solid stone.");
+
+const u8 gAmbipomPokedexText[] = _(
+    "Its twin tails move with such dexterity\n"
+    "that AMBIPOM rarely uses its hands.\n"
+    "Researchers believe a sudden environmental\n"
+    "shift triggered this evolution in AIPOM\n"
+    "populations.");
+
+const u8 gCarbinkPokedexText[] = _(
+    "Born from high pressure deep in the\n"
+    "earth, it was never seen in HOENN\n"
+    "before the migration. Collectors say\n"
+    "its gem body outshines any stone.");

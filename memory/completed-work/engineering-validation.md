@@ -34,3 +34,7 @@
 | `pokeemerald/scripts/generate_npc_dialogue.cjs` (--update) | **C287** | Added --update mode: in-place dialogue replacement via `--update --file <path> --label <LABEL> --text "text$"`. Finds Text_ label, replaces .string content, validates charmap. `--dry-run` supported. |
 | `pokeemerald/scripts/verify_species.sh` | **C287** | Species registration verifier. Takes species name, checks all 27 target files from generate_species.cjs. Reports FOUND/MISSING per file + summary count. Searches both UPPER_CASE and PascalCase naming conventions. Exit 0 if 27/27, exit 1 otherwise. |
 | `pokeemerald/Makefile` | **C290** | Added `check_all_quick` phony target: runs check_scripts + check_species + check_trainers (fast validators only, skips encounter/evolution checks). |
+| `pokeemerald/scripts/generate_species.cjs` | **C308** | `--fill-missing` now idempotent: skips any handler whose target file already references the species (evolution.h: own row only). Safe to re-run on partial registrations. |
+| `pokeemerald/scripts/species_configs/*.json` | **C308** | +12 repair configs (Lotad/Lombre/Ludicolo/Shroomish/Breloom_Hoenn, Treecko/Grovyle/Sceptile/Torchic/Combusken/Blaziken_Hoenn, Carbink). |
+| `pokeemerald/scripts/trainer_configs/steven_*.json` | **C308** | Source of truth for Steven's 5 Champion parties (modify mode). |
+| `pokeemerald/scripts/check_e4_rematches.sh` | **C308** | Members Wallace→Steven; Check 3 Phoebe Corsola_Hoenn R1-R4; Check 4 now = Changed Three on every Steven tier. |

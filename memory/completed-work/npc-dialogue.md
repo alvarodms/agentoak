@@ -50,9 +50,9 @@ Flannery descoped — Hour 6-10 already healthy at 3:4:3.
 
 ---
 
-## Champion Witness Dialogue — C303
+## Champion Dialogue — C308 (supersedes C303 Wallace witness text)
 
-EverGrandeCity_ChampionsRoom/scripts.inc: Wallace IntroSpeech, Defeat, PostBattleSpeech rewritten (migration witness framing — Wallace references his own Ludicolo/Arcanine encounters, player recognizes parallel). Added RematchIntroSpeech + RematchPostBattleSpeech with FLAG_SYS_GAME_CLEAR conditional branching. 5 text blocks total (3 replaced, 2 new). Script logic: WallaceRematch + DefeatedRematch + PostBattleContinue labels added.
+EverGrandeCity_ChampionsRoom/{scripts.inc,map.json}: STEVEN object gfx, LOCALID_CHAMPIONS_ROOM_STEVEN, all Wallace labels → Steven. Intro/Defeat/PostBattle/Rematch texts rewritten; VAR_STARTER_MON beat (Larvitar/Bagon/Dratini) after first-clear post-battle; StevenComeWithMe/StevenWaitOutside. EverGrandeCity_HallOfFame: STEVEN gfx + LOCALID_HALL_OF_FAME_STEVEN + 2 texts. EverGrandeCity_DrakesRoom: post-battle "STEVEN is through that door". src/battle_transition.c: MUGSHOT_CHAMPION → TRAINER_PIC_STEVEN. Wallace-as-figure text elsewhere left for C309 (list in strategy-notes).
 
 ---
 

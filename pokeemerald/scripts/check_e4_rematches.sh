@@ -18,7 +18,7 @@ fi
 echo "=== E4 Rematch Validation ==="
 echo ""
 
-MEMBERS="Sidney Phoebe Glacia Drake Wallace"
+MEMBERS="Sidney Phoebe Glacia Drake Steven"
 
 check_pass() {
     echo "  PASS: $1"
@@ -85,9 +85,9 @@ for member in $MEMBERS; do
 done
 echo ""
 
-# --- Check 3: Corsola_Hoenn on Phoebe Rematch 2+ ---
-echo "--- Check 3: Corsola_Hoenn on Phoebe R2+ ---"
-for tier in 2 3 4; do
+# --- Check 3: Corsola_Hoenn on every Phoebe Rematch (R1 added C308, #180) ---
+echo "--- Check 3: Corsola_Hoenn on Phoebe R1-R4 ---"
+for tier in 1 2 3 4; do
     block="sParty_PhoebeRematch${tier}"
     block_data=$(extract_block "$block")
     if echo "$block_data" | grep -q 'SPECIES_CORSOLA_HOENN'; then
@@ -98,15 +98,19 @@ for tier in 2 3 4; do
 done
 echo ""
 
-# --- Check 4: Arcanine_Hoenn on Wallace Rematch 2+ ---
-echo "--- Check 4: Arcanine_Hoenn on Wallace R2+ ---"
-for tier in 2 3 4; do
-    block="sParty_WallaceRematch${tier}"
+# --- Check 4: Changed Three on every Steven (Champion) Rematch (C308) ---
+echo "--- Check 4: Changed Three on Steven R1-R4 ---"
+for tier in 1 2 3 4; do
+    block="sParty_StevenRematch${tier}"
     block_data=$(extract_block "$block")
-    if echo "$block_data" | grep -q 'SPECIES_ARCANINE_HOENN'; then
-        check_pass "Wallace R${tier} has Arcanine_Hoenn"
+    missing=""
+    for sp in SCEPTILE_HOENN BLAZIKEN_HOENN SWAMPERT_HOENN; do
+        echo "$block_data" | grep -q "SPECIES_${sp}\b" || missing="$missing $sp"
+    done
+    if [ -z "$missing" ]; then
+        check_pass "Steven R${tier} has the Changed Three"
     else
-        check_fail "Wallace R${tier} missing Arcanine_Hoenn"
+        check_fail "Steven R${tier} missing:${missing}"
     fi
 done
 echo ""

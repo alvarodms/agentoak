@@ -1,0 +1,39 @@
+{
+  "name": "GROVYLE_HOENN",
+  "pascalName": "GrovyleHoenn",
+  "graphicsDir": "grovyle_hoenn",
+  "displayName": "GROVYLE",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "STEELWOOD",
+    "description": [
+      "The leaves on its arms have grown",
+      "into steel-edged blades. It moves",
+      "between branches so fast that the",
+      "air rings as it passes."
+    ],
+    "height": 9,
+    "weight": 216,
+    "pokemonScale": 360,
+    "pokemonOffset": 5,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "36",
+      "target": "SPECIES_SCEPTILE_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_GROVYLE",
+  "graphics": {
+    "frontAnimId": "ANIM_V_STRETCH",
+    "iconPaletteIndex": 0,
+    "frontPicSize": "MON_COORDS_SIZE(64, 56)",
+    "frontPicYOffset": 4,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 8
+  }
+}

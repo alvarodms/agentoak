@@ -1,0 +1,33 @@
+{
+  "name": "LUDICOLO_HOENN",
+  "pascalName": "LudicoloHoenn",
+  "graphicsDir": "ludicolo_hoenn",
+  "displayName": "LUDICOLO",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "STORMDANCE",
+    "description": [
+      "When it dances in a downpour, its",
+      "body crackles with electricity.",
+      "Since the migration, these dances",
+      "draw lightning to HOENN's coasts."
+    ],
+    "height": 15,
+    "weight": 550,
+    "pokemonScale": 256,
+    "pokemonOffset": 0,
+    "trainerScale": 268,
+    "trainerOffset": -1
+  },
+  "evolution": [],
+  "baseSpeciesCry": "SPECIES_LUDICOLO",
+  "graphics": {
+    "frontAnimId": "ANIM_BOUNCE_ROTATE_TO_SIDES_SLOW",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(64, 64)",
+    "frontPicYOffset": 0,
+    "backPicSize": "MON_COORDS_SIZE(64, 48)",
+    "backPicYOffset": 10
+  }
+}

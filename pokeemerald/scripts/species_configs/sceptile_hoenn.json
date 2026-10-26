@@ -1,0 +1,33 @@
+{
+  "name": "SCEPTILE_HOENN",
+  "pascalName": "SceptileHoenn",
+  "graphicsDir": "sceptile_hoenn",
+  "displayName": "SCEPTILE",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "BLADE",
+    "description": [
+      "The leaves on its arms are tempered",
+      "steel, sharp enough to split boulders.",
+      "It strikes once, precisely, and is",
+      "gone before the foe can respond."
+    ],
+    "height": 17,
+    "weight": 522,
+    "pokemonScale": 256,
+    "pokemonOffset": -1,
+    "trainerScale": 275,
+    "trainerOffset": 2
+  },
+  "evolution": [],
+  "baseSpeciesCry": "SPECIES_SCEPTILE",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SHAKE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(64, 64)",
+    "frontPicYOffset": 0,
+    "backPicSize": "MON_COORDS_SIZE(64, 64)",
+    "backPicYOffset": 1
+  }
+}

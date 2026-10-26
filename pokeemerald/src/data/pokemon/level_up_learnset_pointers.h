@@ -447,5 +447,8 @@ const u16 *const gLevelUpLearnsets[NUM_SPECIES] =
     [SPECIES_BLAZIKEN_HOENN] = sBlazikenHoennLevelUpLearnset,
     [SPECIES_MUDKIP_HOENN] = sMudkipHoennLevelUpLearnset,
     [SPECIES_MARSHTOMP_HOENN] = sMarshtompHoennLevelUpLearnset,
-    [SPECIES_SWAMPERT_HOENN] = sSwampertHoennLevelUpLearnset,
+    [SPECIES_SWAMPERT_HOENN] = sSwampertHoennLevelUpLearnset,    [SPECIES_TOXAPEX] = sToxapexLevelUpLearnset,
+    [SPECIES_AMBIPOM] = sAmbipomLevelUpLearnset,
+    [SPECIES_CARBINK] = sCarbinkLevelUpLearnset,
+
 };

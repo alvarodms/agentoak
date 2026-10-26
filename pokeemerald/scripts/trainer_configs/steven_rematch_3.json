@@ -1,0 +1,80 @@
+{
+  "_note": "C308: source of truth for Steven (Champion) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/steven_rematch_3.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_WALLACE_REMATCH_3",
+  "partyName": "sParty_StevenRematch3",
+  "party": [
+    {
+      "iv": 255,
+      "lvl": 82,
+      "species": "SPECIES_SKARMORY",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SPIKES",
+        "MOVE_DRILL_PECK",
+        "MOVE_STEEL_WING",
+        "MOVE_ROAR"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 84,
+      "species": "SPECIES_AGGRON",
+      "heldItem": "ITEM_CHOICE_BAND",
+      "moves": [
+        "MOVE_ROCK_SLIDE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_IRON_TAIL",
+        "MOVE_FIRE_PUNCH"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 85,
+      "species": "SPECIES_SCEPTILE_HOENN",
+      "heldItem": "ITEM_SCOPE_LENS",
+      "moves": [
+        "MOVE_IRON_LEAF",
+        "MOVE_LEAF_BLADE",
+        "MOVE_SWORDS_DANCE",
+        "MOVE_EARTHQUAKE"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 86,
+      "species": "SPECIES_SWAMPERT_HOENN",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_WATERFALL",
+        "MOVE_CROSS_CHOP",
+        "MOVE_BULK_UP",
+        "MOVE_EARTHQUAKE"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 88,
+      "species": "SPECIES_BLAZIKEN_HOENN",
+      "heldItem": "ITEM_PETAYA_BERRY",
+      "moves": [
+        "MOVE_FIRE_BLAST",
+        "MOVE_MOONBLAST",
+        "MOVE_CALM_MIND",
+        "MOVE_WILL_O_WISP"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 90,
+      "species": "SPECIES_METAGROSS",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_METEOR_MASH",
+        "MOVE_EARTHQUAKE",
+        "MOVE_ICE_PUNCH",
+        "MOVE_THUNDER_PUNCH"
+      ]
+    }
+  ]
+}

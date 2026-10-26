@@ -86,9 +86,9 @@ EverGrandeCity_DrakesRoom_Text_Defeat:
 	.string "stand against you.$"
 
 EverGrandeCity_DrakesRoom_Text_PostBattleSpeech:
-	.string "WALLACE is through that door.\p"
-	.string "He was CHAMPION when THE GATHERING\n"
-	.string "shook the ocean.\p"
+	.string "STEVEN is through that door.\p"
+	.string "He walked every route after THE\n"
+	.string "GATHERING, studying what it left.\p"
 	.string "He's not the same man he was\n"
 	.string "before. But then--\l"
 	.string "neither are you.$"

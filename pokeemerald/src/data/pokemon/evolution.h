@@ -202,5 +202,22 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     [SPECIES_GLIGAR_HOENN] = {{EVO_LEVEL, 35, SPECIES_GLISCOR_HOENN}},
     // SPECIES_DEOXYS_HOENN — custom cosmic form, no evolution chain
     [SPECIES_AIPOM]      = {{EVO_LEVEL, 32, SPECIES_AMBIPOM}},
+    // SPECIES_TOXAPEX — standalone form, no evolution chain
+    [SPECIES_LOTAD_HOENN] = {{EVO_LEVEL, 14, SPECIES_LOMBRE_HOENN}},
+    // SPECIES_LUDICOLO_HOENN — standalone form, no evolution chain
+    [SPECIES_SHROOMISH_HOENN] = {{EVO_LEVEL, 23, SPECIES_BRELOOM_HOENN}},
+    [SPECIES_TREECKO_HOENN] = {{EVO_LEVEL, 16, SPECIES_GROVYLE_HOENN}},
+    // SPECIES_SCEPTILE_HOENN — standalone form, no evolution chain
+    [SPECIES_TORCHIC_HOENN] = {{EVO_LEVEL, 16, SPECIES_COMBUSKEN_HOENN}},
+    // SPECIES_BLAZIKEN_HOENN — standalone form, no evolution chain
+    [SPECIES_MUDKIP_HOENN] = {{EVO_LEVEL, 16, SPECIES_MARSHTOMP_HOENN}},
+    // SPECIES_SWAMPERT_HOENN — standalone form, no evolution chain
+    // SPECIES_CARBINK — standalone form, no evolution chain
+    [SPECIES_LOMBRE_HOENN] = {{EVO_ITEM, ITEM_LEAF_STONE, SPECIES_LUDICOLO_HOENN}},
+    // SPECIES_BRELOOM_HOENN — standalone form, no evolution chain
+    [SPECIES_GROVYLE_HOENN] = {{EVO_LEVEL, 36, SPECIES_SCEPTILE_HOENN}},
+    [SPECIES_COMBUSKEN_HOENN] = {{EVO_LEVEL, 36, SPECIES_BLAZIKEN_HOENN}},
+    [SPECIES_MARSHTOMP_HOENN] = {{EVO_LEVEL, 36, SPECIES_SWAMPERT_HOENN}},
+    // SPECIES_AMBIPOM — standalone form, no evolution chain
 
 };

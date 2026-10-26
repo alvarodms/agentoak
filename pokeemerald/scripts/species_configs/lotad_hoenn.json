@@ -1,0 +1,39 @@
+{
+  "name": "LOTAD_HOENN",
+  "pascalName": "LotadHoenn",
+  "graphicsDir": "lotad_hoenn",
+  "displayName": "LOTAD",
+  "_note": "C308 repair config: species_info/learnsets already registered; used with --fill-missing for dex, graphics, evolution.",
+  "eggMoves": [],
+  "pokedex": {
+    "categoryName": "STORM LEAF",
+    "description": [
+      "Its leaf collects static from storm",
+      "clouds over the sea. Swimmers who",
+      "touch it feel a sharp tingle that",
+      "lingers for hours."
+    ],
+    "height": 5,
+    "weight": 26,
+    "pokemonScale": 406,
+    "pokemonOffset": 19,
+    "trainerScale": 256,
+    "trainerOffset": 0
+  },
+  "evolution": [
+    {
+      "method": "EVO_LEVEL",
+      "param": "14",
+      "target": "SPECIES_LOMBRE_HOENN"
+    }
+  ],
+  "baseSpeciesCry": "SPECIES_LOTAD",
+  "graphics": {
+    "frontAnimId": "ANIM_V_SQUISH_AND_BOUNCE",
+    "iconPaletteIndex": 1,
+    "frontPicSize": "MON_COORDS_SIZE(48, 40)",
+    "frontPicYOffset": 14,
+    "backPicSize": "MON_COORDS_SIZE(56, 40)",
+    "backPicYOffset": 15
+  }
+}

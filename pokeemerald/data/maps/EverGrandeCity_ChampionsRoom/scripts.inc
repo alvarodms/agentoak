@@ -25,27 +25,27 @@ EverGrandeCity_ChampionsRoom_EventScript_EnterRoom::
 	applymovement LOCALID_PLAYER, Common_Movement_WalkUp4
 	waitmovement 0
 	delay 40
-	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace
+	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerApproachSteven
 	waitmovement 0
 	setvar VAR_TEMP_1, 1
-	goto EverGrandeCity_ChampionsRoom_EventScript_Wallace
+	goto EverGrandeCity_ChampionsRoom_EventScript_Steven
 	releaseall
 	end
 
-EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace:
+EverGrandeCity_ChampionsRoom_Movement_PlayerApproachSteven:
 	walk_up
 	walk_up
 	step_end
 
-EverGrandeCity_ChampionsRoom_EventScript_Wallace::
+EverGrandeCity_ChampionsRoom_EventScript_Steven::
 	playbgm MUS_ENCOUNTER_CHAMPION, FALSE
-	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch
+	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_ChampionsRoom_EventScript_StevenRematch
 	msgbox EverGrandeCity_ChampionsRoom_Text_IntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
 	end
 
-EverGrandeCity_ChampionsRoom_EventScript_WallaceRematch::
+EverGrandeCity_ChampionsRoom_EventScript_StevenRematch::
 	msgbox EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_WALLACE, EverGrandeCity_ChampionsRoom_Text_Defeat
 	goto EverGrandeCity_ChampionsRoom_EventScript_Defeated
@@ -58,8 +58,24 @@ EverGrandeCity_ChampionsRoom_EventScript_Defeated::
 	special DrawWholeMapView
 	goto_if_set FLAG_SYS_GAME_CLEAR, EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch
 	msgbox EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech, MSGBOX_DEFAULT
+	call_if_eq VAR_STARTER_MON, 0, EverGrandeCity_ChampionsRoom_EventScript_StarterLineLarvitar
+	call_if_eq VAR_STARTER_MON, 1, EverGrandeCity_ChampionsRoom_EventScript_StarterLineBagon
+	call_if_eq VAR_STARTER_MON, 2, EverGrandeCity_ChampionsRoom_EventScript_StarterLineDratini
 	goto EverGrandeCity_ChampionsRoom_EventScript_PostBattleContinue
 	end
+
+@ C308: Steven reacts to the partner the player chose on Route 101 (0 = Larvitar, 1 = Bagon, 2 = Dratini)
+EverGrandeCity_ChampionsRoom_EventScript_StarterLineLarvitar::
+	msgbox EverGrandeCity_ChampionsRoom_Text_StarterLineLarvitar, MSGBOX_DEFAULT
+	return
+
+EverGrandeCity_ChampionsRoom_EventScript_StarterLineBagon::
+	msgbox EverGrandeCity_ChampionsRoom_Text_StarterLineBagon, MSGBOX_DEFAULT
+	return
+
+EverGrandeCity_ChampionsRoom_EventScript_StarterLineDratini::
+	msgbox EverGrandeCity_ChampionsRoom_Text_StarterLineDratini, MSGBOX_DEFAULT
+	return
 
 EverGrandeCity_ChampionsRoom_EventScript_DefeatedRematch::
 	msgbox EverGrandeCity_ChampionsRoom_Text_RematchPostBattleSpeech, MSGBOX_DEFAULT
@@ -123,15 +139,15 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF::
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchArriveRatePokedex, MSGBOX_DEFAULT
 	call ProfBirch_EventScript_RatePokedex
 	msgbox EverGrandeCity_ChampionsRoom_Text_BirchCongratulations, MSGBOX_DEFAULT
-	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, Common_Movement_WalkInPlaceFasterUp
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	delay 20
-	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe, MSGBOX_DEFAULT
+	msgbox EverGrandeCity_ChampionsRoom_Text_StevenComeWithMe, MSGBOX_DEFAULT
 	closemessage
 	delay 30
-	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExitStart
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart
 	applymovement LOCALID_CHAMPIONS_ROOM_BIRCH, Common_Movement_WalkInPlaceFasterUp
 	applymovement LOCALID_CHAMPIONS_ROOM_RIVAL, EverGrandeCity_ChampionsRoom_Movement_RivalFollows
@@ -139,12 +155,12 @@ EverGrandeCity_ChampionsRoom_EventScript_BirchArrivesExitForHoF::
 	delay 20
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0
-	msgbox EverGrandeCity_ChampionsRoom_Text_WallaceWaitOutside, MSGBOX_DEFAULT
+	msgbox EverGrandeCity_ChampionsRoom_Text_StevenWaitOutside, MSGBOX_DEFAULT
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, EverGrandeCity_ChampionsRoom_EventScript_MayCongratulations
 	call_if_eq VAR_RESULT, FEMALE, EverGrandeCity_ChampionsRoom_EventScript_BrendanCongratulations
 	closemessage
-	applymovement LOCALID_CHAMPIONS_ROOM_WALLACE, EverGrandeCity_ChampionsRoom_Movement_WallaceExit
+	applymovement LOCALID_CHAMPIONS_ROOM_STEVEN, EverGrandeCity_ChampionsRoom_Movement_StevenExit
 	applymovement LOCALID_PLAYER, EverGrandeCity_ChampionsRoom_Movement_PlayerExit
 	waitmovement 0
 	setflag FLAG_HIDE_PETALBURG_GYM_GREETER
@@ -213,13 +229,13 @@ EverGrandeCity_ChampionsRoom_Movement_RivalFollows:
 	walk_up
 	step_end
 
-EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart:
+EverGrandeCity_ChampionsRoom_Movement_StevenExitStart:
 	walk_up
 	walk_up
 	walk_in_place_faster_down
 	step_end
 
-EverGrandeCity_ChampionsRoom_Movement_WallaceExit:
+EverGrandeCity_ChampionsRoom_Movement_StevenExit:
 	walk_up
 	delay_8
 	set_invisible
@@ -237,43 +253,74 @@ EverGrandeCity_ChampionsRoom_Movement_BirchArrives:
 	step_end
 
 EverGrandeCity_ChampionsRoom_Text_IntroSpeech:
-	.string "I found a LUDICOLO on Route 119\n"
-	.string "whose leaves sparked with\l"
-	.string "lightning, not rain.\p"
-	.string "An ARCANINE on Route 118 whose\n"
-	.string "breath was steam, not fire.\p"
-	.string "I thought I was the only one\n"
-	.string "who noticed HOENN changing.\p"
-	.string "Then you walked in here.\p"
-	.string "Show me what you found.$"
+	.string "Welcome, {PLAYER}.\p"
+	.string "I came to HOENN seeking rare\n"
+	.string "stones. What I found was a region\l"
+	.string "in transformation.\p"
+	.string "The migration brought species\n"
+	.string "that shouldn't exist here…\l"
+	.string "and yet they thrive.\p"
+	.string "I studied them. Trained\n"
+	.string "alongside them.\p"
+	.string "My first partner is older than\n"
+	.string "HOENN's mountains.\p"
+	.string "My last… is what comes next.\p"
+	.string "Now let me show you what\n"
+	.string "I've learned!$"
 
 EverGrandeCity_ChampionsRoom_Text_Defeat:
-	.string "…\p"
-	.string "You didn't collect them because\n"
-	.string "they were beautiful.\p"
-	.string "You raised them because they\n"
-	.string "were yours.$"
+	.string "…Magnificent.\p"
+	.string "You didn't just collect them.\n"
+	.string "You understood what they\l"
+	.string "mean for HOENN.$"
 
 EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
-	.string "I traveled every route searching\n"
-	.string "for something beautiful.\p"
-	.string "You traveled every route and\n"
-	.string "something beautiful found you.\p"
+	.string "I came seeking rare stones and\n"
+	.string "found a region rewriting itself.\p"
+	.string "You didn't come seeking\n"
+	.string "anything. You just walked\l"
+	.string "forward.\p"
 	.string "CHAMPION… that word belongs\n"
 	.string "to you now.$"
+
+EverGrandeCity_ChampionsRoom_Text_StarterLineLarvitar:
+	.string "That LARVITAR you chose on\n"
+	.string "ROUTE 101…\p"
+	.string "A POKéMON born from the heart of\n"
+	.string "a mountain. I've studied stone\l"
+	.string "my whole life.\p"
+	.string "You learned it by raising one.$"
+
+EverGrandeCity_ChampionsRoom_Text_StarterLineBagon:
+	.string "That BAGON you chose on\n"
+	.string "ROUTE 101…\p"
+	.string "It spends its whole life\n"
+	.string "dreaming of the sky.\p"
+	.string "You were the one who gave\n"
+	.string "it wings.$"
+
+EverGrandeCity_ChampionsRoom_Text_StarterLineDratini:
+	.string "That DRATINI you chose on\n"
+	.string "ROUTE 101…\p"
+	.string "A rare dragon, hidden in\n"
+	.string "quiet water.\p"
+	.string "I searched all of HOENN for rare\n"
+	.string "things. You found yours on the\l"
+	.string "very first day.$"
 
 EverGrandeCity_ChampionsRoom_Text_RematchIntroSpeech:
 	.string "You know, I thought being\n"
 	.string "CHAMPION meant having the\l"
-	.string "best answer.\p"
-	.string "Turns out it just means you\n"
-	.string "asked the right questions.\p"
-	.string "Ready for another round?$"
+	.string "best collection.\p"
+	.string "Turns out it means understanding\n"
+	.string "why things changed.\p"
+	.string "Ready for another lesson?$"
 
 EverGrandeCity_ChampionsRoom_Text_RematchPostBattleSpeech:
-	.string "Every time we battle, I see\n"
-	.string "something new in them.\p"
-	.string "Or maybe in you.\p"
+	.string "Every time we battle, the\n"
+	.string "Changed Three teach me\l"
+	.string "something new.\p"
+	.string "Or maybe you do.\p"
 	.string "Go on, CHAMPION. HOENN's\n"
 	.string "still changing out there.$"
 
@@ -320,14 +367,13 @@ EverGrandeCity_ChampionsRoom_Text_BirchCongratulations:
 	.string "congratulations!\p"
 	.string "Now, go proudly into the final room!$"
 
-EverGrandeCity_ChampionsRoom_Text_WallaceComeWithMe:
-	.string "WALLACE: {PLAYER}{KUN}…\p"
-	.string "No, let me rephrase that properly.\p"
-	.string "The new CHAMPION!\p"
-	.string "Come with me.$"
+EverGrandeCity_ChampionsRoom_Text_StevenComeWithMe:
+	.string "STEVEN: {PLAYER}, come with me.\p"
+	.string "There's a place every CHAMPION\n"
+	.string "must see.$"
 
-EverGrandeCity_ChampionsRoom_Text_WallaceWaitOutside:
-	.string "WALLACE: I'm sorry, but…\p"
+EverGrandeCity_ChampionsRoom_Text_StevenWaitOutside:
+	.string "STEVEN: I'm sorry, but…\p"
 	.string "From here on, only those TRAINERS who\n"
 	.string "have become CHAMPIONS may enter.\p"
 	.string "You'll have to wait outside with\n"
