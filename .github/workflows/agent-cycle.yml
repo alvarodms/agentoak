@@ -34,6 +34,7 @@ concurrency:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
   pages: write
   id-token: write
   packages: read
@@ -125,14 +126,65 @@ jobs:
           sleep 60
           npm run cycle
 
+      # main can move while a cycle runs (merged PRs, manual pushes), so a
+      # plain push gets rejected as non-fast-forward. Merge the new main in
+      # and retry. Merge rather than rebase: the cycle has already published
+      # its commit SHA (sprite feedback image URLs, release notes), and a
+      # rebase would orphan it.
       - name: Push changes
         run: |
-          # Push only if there are new commits
-          if git diff --quiet origin/main..HEAD; then
+          if [ "$(git rev-list --count origin/main..HEAD)" -eq 0 ]; then
             echo "No new commits to push"
-          else
-            git push origin main
+            exit 0
           fi
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); merging latest origin/main..."
+            git fetch origin main
+            if ! git merge --no-edit origin/main -m "Merge origin/main into agent cycle"; then
+              git merge --abort || true
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+
+          # Could not land on main: park the cycle's commits on a branch and
+          # open a PR for it so the work survives for a manual merge, then
+          # fail the run.
+          rescue="cycle-rescue/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git push origin "HEAD:refs/heads/$rescue"
+
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          payload=$(RESCUE="$rescue" RUN_URL="$run_url" SUBJECT="$(git log -1 --format=%s HEAD)" node -e '
+            const { RESCUE, RUN_URL, SUBJECT } = process.env;
+            process.stdout.write(JSON.stringify({
+              title: `Rescue: ${SUBJECT}`,
+              head: RESCUE,
+              base: "main",
+              body: `The [agent cycle run](${RUN_URL}) could not push to main: merging the latest main conflicted with the cycle commits, or the push kept being rejected.\n\nResolve the conflicts on this branch and merge to keep the cycle work.`,
+            }));
+          ')
+          pr_url=""
+          if response=$(curl -sS --fail-with-body -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls" \
+            -d "$payload"); then
+            pr_url=$(RESPONSE="$response" node -e 'console.log(JSON.parse(process.env.RESPONSE).html_url ?? "")')
+          else
+            echo "Opening the rescue PR failed: $response"
+          fi
+
+          if [ -n "$pr_url" ]; then
+            echo "::error::Could not push to main. Cycle commits saved to branch $rescue and opened as $pr_url — resolve and merge it."
+          else
+            echo "::error::Could not push to main, and opening a PR failed. Cycle commits saved to branch $rescue — merge it manually."
+          fi
+          exit 1
 
   deploy-docs:
     needs: run-cycle
