@@ -163,32 +163,6 @@ export function buildBuildFixPrompt(
     .build();
 }
 
-/** Build a prompt for the git-commit-fix agent (Phase 5 repair loop) */
-export function buildCommitFixPrompt(
-  cycleNumber: number,
-  commitFailure: string,
-  gitStatus: string,
-  recentGitLog: string,
-): string {
-  const failurePreview = commitFailure
-    ? commitFailure.split("\n").slice(0, 20).join("\n")
-    : "(no failure message provided)";
-
-  return new PromptBuilder()
-    .heading(`Cycle ${cycleNumber} — Commit Fix Required`,
-      "The git commit step has FAILED. Your only job is to diagnose and fix why the cycle commit cannot be created.\nDo NOT add gameplay features or unrelated refactors.")
-    .heading("Commit Failure", failurePreview, 3)
-    .heading("Git Status", gitStatus || "(no git status output)", 3)
-    .heading("Recent Git Log", recentGitLog || "(no git log output)", 3)
-    .numberedList("Instructions", [
-      "Diagnose the root cause of the failed commit (identity config, lock file, staging state, merge state, hooks, etc.).",
-      "Apply targeted fixes only for git/commit reliability.",
-      "Keep changes minimal and focused on making the commit succeed.",
-    ], 3)
-    .raw("Do NOT run full project tasks unrelated to commit recovery.\nFocus only on making the commit step succeed.")
-    .build();
-}
-
 /** Build a prompt for the validation-fix agent (Phase 3.5b retry loop) */
 export function buildValidationFixPrompt(
   cycleNumber: number,

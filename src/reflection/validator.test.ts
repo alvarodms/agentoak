@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { validateCycle, type DiffStats } from "./validator.js";
+import { validateCycle } from "./validator.js";
+import type { ChangeSet } from "../repo/game-tree.js";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
 
 /** Build a minimal ClaudeCodeResult with overrides */
@@ -20,13 +21,11 @@ function makeResult(overrides: Partial<ClaudeCodeResult> = {}): ClaudeCodeResult
   };
 }
 
-function makeDiff(overrides: Partial<DiffStats> = {}): DiffStats {
+/** A change set touching the given game-tree files */
+function changeSetOf(...files: string[]): ChangeSet {
   return {
-    filesChanged: 0,
-    insertions: 0,
-    deletions: 0,
-    summary: "",
-    ...overrides,
+    files,
+    stats: { filesChanged: files.length, insertions: files.length, deletions: 0, summary: "" },
   };
 }
 
@@ -41,7 +40,7 @@ describe("validateCycle", () => {
           { tool: "Edit", input: { file_path: "pokeemerald/src/data/wild_encounters.json" }, result: "", timestamp: "" },
         ],
       }),
-      diffStats: makeDiff({ filesChanged: 1, insertions: 10 }),
+      changeSet: changeSetOf("pokeemerald/src/data/wild_encounters.json"),
     });
     expect(result.status).toBe("verified");
     expect(result.warnings).toHaveLength(0);
@@ -55,26 +54,26 @@ describe("validateCycle", () => {
         cycleSummary: "I completely redesigned all wild encounters across every route in the game.",
         actions: [{ tool: "Read", input: {}, result: "", timestamp: "" }],
       }),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     expect(result.status).toBe("unsubstantiated");
     expect(result.warnings.length).toBeGreaterThan(0);
   });
 
-  it("returns incomplete when feature mode has changes but no write actions", () => {
+  it("returns verified when the game tree changed through Bash rather than Write/Edit", () => {
     const result = validateCycle({
       mode: "patch",
       objective: "Fix trainer levels",
       implResult: makeResult({
         actions: [
           { tool: "Read", input: {}, result: "", timestamp: "" },
-          { tool: "Bash", input: { command: "ls" }, result: "", timestamp: "" },
+          { tool: "Bash", input: { command: "sed -i s/5/7/ pokeemerald/src/data/trainers.h" }, result: "", timestamp: "" },
         ],
       }),
-      diffStats: makeDiff({ filesChanged: 1, insertions: 5 }),
+      changeSet: changeSetOf("pokeemerald/src/data/trainers.h"),
     });
-    expect(result.status).toBe("incomplete");
-    expect(result.warnings.some((w) => w.includes("write/edit operations"))).toBe(true);
+    expect(result.status).toBe("verified");
+    expect(result.warnings).toHaveLength(0);
   });
 
   it("returns verified for research mode regardless of diff", () => {
@@ -82,7 +81,7 @@ describe("validateCycle", () => {
       mode: "research",
       objective: "Study battle system",
       implResult: makeResult(),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     expect(result.status).toBe("verified");
     expect(result.warnings).toHaveLength(0);
@@ -93,13 +92,13 @@ describe("validateCycle", () => {
       mode: "planning",
       objective: "Plan new features",
       implResult: makeResult(),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     expect(result.status).toBe("verified");
     expect(result.warnings).toHaveLength(0);
   });
 
-  it("warns when feature mode modifies only non-pokeemerald files", () => {
+  it("warns when feature mode changes only files outside the game tree", () => {
     const result = validateCycle({
       mode: "feature",
       objective: "Add encounters",
@@ -109,27 +108,9 @@ describe("validateCycle", () => {
           { tool: "Write", input: { file_path: "memory/strategy-notes.md" }, result: "", timestamp: "" },
         ],
       }),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     expect(result.warnings.some((w) => w.includes("no pokeemerald/ files"))).toBe(true);
-  });
-
-  it("handles absolute paths when checking for pokeemerald files", () => {
-    const result = validateCycle({
-      mode: "patch",
-      objective: "Fix bug",
-      implResult: makeResult({
-        filesModified: ["/home/user/agentoak/pokeemerald/src/main.c"],
-        actions: [
-          { tool: "Edit", input: { file_path: "/home/user/agentoak/pokeemerald/src/main.c" }, result: "", timestamp: "" },
-        ],
-      }),
-      diffStats: makeDiff({ filesChanged: 1, insertions: 2 }),
-    });
-    // This should work as long as PROJECT_ROOT resolves and the relative path starts with pokeemerald/
-    // The actual behavior depends on PROJECT_ROOT at test time
-    // At minimum, no crash
-    expect(["verified", "incomplete"]).toContain(result.status);
   });
 
   it("detects repair mode as expecting code changes", () => {
@@ -137,7 +118,7 @@ describe("validateCycle", () => {
       mode: "repair",
       objective: "Fix build",
       implResult: makeResult(),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     // repair mode expects changes but got none
     expect(result.warnings.length).toBeGreaterThan(0);
@@ -148,7 +129,7 @@ describe("validateCycle", () => {
       mode: "refactor",
       objective: "Clean up code",
       implResult: makeResult(),
-      diffStats: makeDiff({ filesChanged: 0 }),
+      changeSet: changeSetOf(),
     });
     expect(result.warnings.length).toBeGreaterThan(0);
   });

@@ -10,28 +10,17 @@ import {
   buildDynamicContext,
   buildTaskPrompt,
   buildBuildFixPrompt,
-  buildCommitFixPrompt,
   buildValidationFixPrompt,
 } from "../agent/prompts.js";
 import { runClaudeCode } from "../agent/claude-cli.js";
 import type { ClaudeCodeResult, IssueOutcome } from "../agent/output-parser.js";
 import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
-import { runBuild, saveBuildLog } from "../repo/build.js";
+import { saveBuildLog } from "../repo/build.js";
+import { beginGameTree, type BuildFixer, type GameTree } from "../repo/game-tree.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalSummaries } from "../journal/writer.js";
-import {
-  commitCycle,
-  commitJournalOnly,
-  getHeadSha,
-  revertPokeemerald,
-  getDiffStats,
-  getChangedPokeemeraldFiles,
-  getPokeemeraldFingerprint,
-  getStrategyNotesDiff,
-  getGitStatusText,
-  getRecentGitLogText,
-} from "../git/committer.js";
+import { commitCycle, commitJournalOnly, getStrategyNotesDiff } from "../git/committer.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
@@ -125,8 +114,6 @@ function updateSpriteIterationsIssueNumber(
   fs.writeFileSync(SPRITE_ITERATIONS_PATH, updated, "utf-8");
 }
 
-const MAX_BUILD_FIX_ATTEMPTS = 3;
-const MAX_COMMIT_FIX_ATTEMPTS = 3;
 const MAX_VALIDATION_FIX_ATTEMPTS = 1;
 const CODING_PHASE_DEFAULT_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
@@ -146,28 +133,6 @@ function buildDeepSeekOverrides(): Record<string, string | undefined> | undefine
     API_TIMEOUT_MS: process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(),
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: process.env.DEEPSEEK_DISABLE_NONESSENTIAL_TRAFFIC ?? "1",
   };
-}
-
-/** Repo-relative form of a path reported by a tool call */
-function toRepoRelative(filePath: string): string {
-  return path.isAbsolute(filePath) ? path.relative(PROJECT_ROOT, filePath) : filePath;
-}
-
-/**
- * Fold pokeemerald/ changes that git sees into the result's file list.
- * Catches edits the output parser cannot attribute — Bash-driven edits
- * (sed, python) and changes made by the build-fix agent — so they are
- * build-verified and staged instead of silently left out of the commit.
- */
-async function withGitDetectedChanges(
-  result: ClaudeCodeResult,
-  log: ReturnType<typeof cycleLogger>,
-): Promise<ClaudeCodeResult> {
-  const known = new Set(result.filesModified.map(toRepoRelative));
-  const extra = (await getChangedPokeemeraldFiles()).filter((f) => !known.has(f));
-  if (extra.length === 0) return result;
-  log.info(`  Git detected ${extra.length} pokeemerald/ change(s) not reported by tool calls`);
-  return { ...result, filesModified: [...result.filesModified, ...extra] };
 }
 
 /** Aggregate token usage from multiple phases */
@@ -330,71 +295,26 @@ async function runImplementationPhase(
 /**
  * Phase 3: Build verification with auto-fix loop.
  *
- * If the agent modified files, run the build. If it fails, spawn a focused
- * "fix build" agent up to MAX_BUILD_FIX_ATTEMPTS times. If all attempts fail,
- * revert pokeemerald changes to the pre-cycle state.
+ * The game tree builds itself, hands failures to a "fix build" agent, and
+ * rolls back on its own when the build can't be fixed. A rollback to the
+ * baseline reverts the cycle; a rollback to an earlier verified change set
+ * keeps that work.
  */
 async function runBuildVerifyPhase(
   cycleNumber: number,
-  implResult: ClaudeCodeResult,
-  sessionStartSha: string,
+  gameTree: GameTree,
   log: ReturnType<typeof cycleLogger>,
 ): Promise<{
   finalBuildResult: { success: boolean; errors: string[] } | null;
   fixActions: ActionRecord[];
   fixTokenUsage: TokenUsage;
   reverted: boolean;
-  gameVersion: string | null;
 }> {
   const fixActions: ActionRecord[] = [];
   let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
 
-  // Check if any modified files are within pokeemerald/
-  const hasPokeemeraldChanges = implResult.filesModified.some((filePath) => {
-    const rel = path.isAbsolute(filePath)
-      ? path.relative(PROJECT_ROOT, filePath)
-      : filePath;
-    return rel.startsWith("pokeemerald/") || rel.startsWith("pokeemerald\\");
-  });
-
-  // No pokeemerald files modified — skip build verification
-  if (implResult.filesModified.length === 0 || !hasPokeemeraldChanges) {
-    if (implResult.filesModified.length > 0) {
-      log.info("Phase 3: No pokeemerald/ files modified — skipping build verification.");
-    } else {
-      log.info("Phase 3: No files modified — skipping build verification.");
-    }
-    return {
-      finalBuildResult: null, // No build verification = no build result
-      fixActions,
-      fixTokenUsage,
-      reverted: false,
-      gameVersion: null,
-    };
-  }
-
-  log.info("Phase 3: Build verification...");
-  let buildResult = await runBuild();
-  saveBuildLog(cycleNumber, buildResult);
-
-  if (buildResult.success) {
-    const version = recordSuccessfulBuild(cycleNumber);
-    log.info(`  Build: PASS — ${formatVersion(version)}`);
-    return {
-      finalBuildResult: { success: true, errors: [] },
-      fixActions,
-      fixTokenUsage,
-      reverted: false,
-      gameVersion: formatVersion(version),
-    };
-  }
-
-  // Build failed — enter fix loop
-  for (let attempt = 1; attempt <= MAX_BUILD_FIX_ATTEMPTS; attempt++) {
-    log.info(`  Build: FAIL — running fix agent (attempt ${attempt}/${MAX_BUILD_FIX_ATTEMPTS})...`);
-
-    const fixPrompt = buildBuildFixPrompt(cycleNumber, buildResult.errors, buildResult.stderr);
-
+  const fixer: BuildFixer = async ({ errors, stderr, attempt }) => {
+    log.info(`  Build: FAIL — running fix agent (attempt ${attempt})...`);
     const deepSeekOverrides = buildDeepSeekOverrides();
     const usingDeepSeek = deepSeekOverrides != null;
     const model = usingDeepSeek
@@ -403,7 +323,7 @@ async function runBuildVerifyPhase(
     const timeout = usingDeepSeek
       ? parseInt(process.env.DEEPSEEK_API_TIMEOUT_MS ?? CODING_PHASE_DEFAULT_TIMEOUT_MS.toString(), 10)
       : 30 * 60 * 1000;
-    const fixResult = await runClaudeCode(fixPrompt, {
+    const fixResult = await runClaudeCode(buildBuildFixPrompt(cycleNumber, errors, stderr), {
       maxTurns: 15,
       tools: "Bash,Read,Edit,Write,Grep",
       model,
@@ -412,41 +332,36 @@ async function runBuildVerifyPhase(
     });
     fixActions.push(...fixResult.actions);
     fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
+  };
 
-    // Re-run build to check if fix worked
-    buildResult = await runBuild();
-    saveBuildLog(cycleNumber, buildResult);
+  log.info("Phase 3: Build verification...");
+  const outcome = await gameTree.verify(fixer);
 
-    if (buildResult.success) {
-      const version = recordSuccessfulBuild(cycleNumber);
-      log.info(`  Build: PASS (fixed on attempt ${attempt}) — ${formatVersion(version)}`);
-      return {
-        finalBuildResult: { success: true, errors: [] },
-        fixActions,
-        fixTokenUsage,
-        reverted: false,
-        gameVersion: formatVersion(version),
-      };
-    }
+  if (outcome.status === "unchanged") {
+    log.info("  No game-tree changes since the last verification — skipping build.");
+    return { finalBuildResult: null, fixActions, fixTokenUsage, reverted: false };
   }
 
-  // All fix attempts exhausted — revert pokeemerald changes
-  log.warn(
-    `  Build: FAIL after ${MAX_BUILD_FIX_ATTEMPTS} fix attempts — reverting pokeemerald to pre-cycle state.`,
-  );
-  const reverted = await revertPokeemerald(sessionStartSha);
-  if (reverted) {
-    log.info("  Reverted pokeemerald/ to pre-cycle state.");
-  } else {
-    log.warn("  Revert failed or no changes to revert.");
+  saveBuildLog(cycleNumber, outcome.build);
+
+  if (outcome.status === "verified") {
+    log.info(`  Build: PASS${outcome.fixAttempts > 0 ? ` (fixed on attempt ${outcome.fixAttempts})` : ""}`);
+    return { finalBuildResult: { success: true, errors: [] }, fixActions, fixTokenUsage, reverted: false };
   }
 
+  if (outcome.rolledBackTo === "verified") {
+    log.warn(
+      `  Build: FAIL after ${outcome.fixAttempts} fix attempts — rolled back to the last verified change set.`,
+    );
+    return { finalBuildResult: { success: true, errors: [] }, fixActions, fixTokenUsage, reverted: false };
+  }
+
+  log.warn(`  Build: FAIL after ${outcome.fixAttempts} fix attempts — rolled back to the baseline.`);
   return {
-    finalBuildResult: { success: false, errors: buildResult.errors },
+    finalBuildResult: { success: false, errors: outcome.build.errors },
     fixActions,
     fixTokenUsage,
     reverted: true,
-    gameVersion: null,
   };
 }
 
@@ -462,7 +377,7 @@ async function runValidationFixPhase(
   plan: { mode: string; objective: string; reasoning: string; implementationPlan?: string },
   implResult: ClaudeCodeResult,
   validationResult: ValidationResult,
-  sessionStartSha: string,
+  gameTree: GameTree,
   log: ReturnType<typeof cycleLogger>,
 ): Promise<{
   updatedImplResult: ClaudeCodeResult;
@@ -471,14 +386,12 @@ async function runValidationFixPhase(
   fixActions: ActionRecord[];
   fixTokenUsage: TokenUsage;
   reverted: boolean;
-  gameVersion: string | null;
 }> {
   const fixActions: ActionRecord[] = [];
   let fixTokenUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0 };
   let currentImplResult = implResult;
   let currentValidation = validationResult;
   let buildResult: { success: boolean; errors: string[] } | null = null;
-  let gameVersion: string | null = null;
   let reverted = false;
 
   for (let attempt = 1; attempt <= MAX_VALIDATION_FIX_ATTEMPTS; attempt++) {
@@ -486,8 +399,6 @@ async function runValidationFixPhase(
       `  Validation: ${currentValidation.status.toUpperCase()} — running fix agent `
       + `(attempt ${attempt}/${MAX_VALIDATION_FIX_ATTEMPTS})...`,
     );
-
-    const fingerprintBefore = await getPokeemeraldFingerprint();
 
     const fixPrompt = buildValidationFixPrompt(
       cycleNumber,
@@ -520,44 +431,31 @@ async function runValidationFixPhase(
     fixActions.push(...fixResult.actions);
     fixTokenUsage = mergeTokenUsage(fixTokenUsage, fixResult.tokenUsage);
 
-    // Merge files modified (deduplicated)
+    // Merge files the agents reported (deduplicated) — for prompts and the journal
     const mergedFiles = [...new Set([...currentImplResult.filesModified, ...fixResult.filesModified])];
-    currentImplResult = await withGitDetectedChanges(
-      { ...currentImplResult, filesModified: mergedFiles },
-      log,
-    );
+    currentImplResult = { ...currentImplResult, filesModified: mergedFiles };
 
-    // If fix agent changed any pokeemerald file (by any means), re-run build verification
-    const hasPokeemeraldChanges = (await getPokeemeraldFingerprint()) !== fingerprintBefore;
-
-    if (hasPokeemeraldChanges) {
-      log.info("  Validation fix modified pokeemerald/ files — running build verification...");
-      const buildVerify = await runBuildVerifyPhase(
-        cycleNumber,
-        currentImplResult,
-        sessionStartSha,
-        log,
-      );
-      fixActions.push(...buildVerify.fixActions);
-      fixTokenUsage = mergeTokenUsage(fixTokenUsage, buildVerify.fixTokenUsage);
+    // Re-verify the game tree; skipped if the fix agent didn't change it
+    const buildVerify = await runBuildVerifyPhase(cycleNumber, gameTree, log);
+    fixActions.push(...buildVerify.fixActions);
+    fixTokenUsage = mergeTokenUsage(fixTokenUsage, buildVerify.fixTokenUsage);
+    if (buildVerify.finalBuildResult) {
       buildResult = buildVerify.finalBuildResult;
-      gameVersion = buildVerify.gameVersion;
+    }
 
-      if (buildVerify.reverted) {
-        reverted = true;
-        // Build fix exhausted and reverted — no point re-validating
-        break;
-      }
+    if (buildVerify.reverted) {
+      reverted = true;
+      // Build fix exhausted and rolled back to the baseline — no point re-validating
+      break;
     }
 
     // Re-validate
     if (!reverted) {
-      const diffStats = await getDiffStats();
       currentValidation = validateCycle({
         mode: plan.mode as Parameters<typeof validateCycle>[0]["mode"],
         objective: plan.objective,
         implResult: currentImplResult,
-        diffStats,
+        changeSet: await gameTree.changeSet(),
       });
 
       if (currentValidation.status === "verified") {
@@ -576,7 +474,6 @@ async function runValidationFixPhase(
     fixActions,
     fixTokenUsage,
     reverted,
-    gameVersion,
   };
 }
 
@@ -606,70 +503,27 @@ async function runReflectionPhase(
 }
 
 /**
- * Phase 5 helper: commit with auto-fix loop and fallback commit guarantee.
+ * Phase 5 helper: commit with a fallback commit guarantee.
+ *
+ * The game tree has already staged its verified change set. If the commit
+ * still fails, fall back to a journal-only commit so the cycle is recorded.
  */
 async function runCommitPhase(params: {
   cycleNumber: number;
   summary: string;
-  filesModified: string[];
   acceptedIssueNumbers: number[];
-  memory: ReturnType<typeof loadMemory>;
-  recentJournals: string[];
   log: ReturnType<typeof cycleLogger>;
 }): Promise<{ commitHash: string | null; commitFailed: boolean }> {
-  const {
-    cycleNumber,
-    summary,
-    filesModified,
-    acceptedIssueNumbers,
-    log,
-  } = params;
+  const { cycleNumber, summary, acceptedIssueNumbers, log } = params;
 
-  let commitResult = await commitCycle(
-    cycleNumber,
-    summary,
-    filesModified,
-    acceptedIssueNumbers,
-  );
-
+  const commitResult = await commitCycle(cycleNumber, summary, acceptedIssueNumbers);
   if (commitResult.success) {
     return { commitHash: commitResult.hash, commitFailed: false };
   }
 
-  let lastFailure = `${commitResult.reason}: ${commitResult.message}`;
-
-  for (let attempt = 1; attempt <= MAX_COMMIT_FIX_ATTEMPTS; attempt++) {
-    log.warn(
-      `  Commit: FAIL (${lastFailure}) — running commit-fix agent `
-      + `(attempt ${attempt}/${MAX_COMMIT_FIX_ATTEMPTS})...`,
-    );
-
-    const gitStatus = await getGitStatusText();
-    const recentGitLog = await getRecentGitLogText(5);
-    const fixPrompt = buildCommitFixPrompt(cycleNumber, lastFailure, gitStatus, recentGitLog);
-
-    const model = process.env.ANTHROPIC_MODEL;
-    await runClaudeCode(fixPrompt, {
-      maxTurns: 10,
-      tools: "Bash,Read,Write",
-      model,
-    });
-
-    commitResult = await commitCycle(
-      cycleNumber,
-      summary,
-      filesModified,
-      acceptedIssueNumbers,
-    );
-    if (commitResult.success) {
-      log.info(`  Commit: PASS (fixed on attempt ${attempt})`);
-      return { commitHash: commitResult.hash, commitFailed: false };
-    }
-
-    lastFailure = `${commitResult.reason}: ${commitResult.message}`;
-  }
-
-  log.error("  Commit: FAIL after fix attempts — trying fallback journal commit...");
+  log.error(
+    `  Commit: FAIL (${commitResult.reason}: ${commitResult.message}) — trying fallback journal commit...`,
+  );
   const fallbackResult = await commitJournalOnly(cycleNumber, "commit recovery fallback");
   if (fallbackResult.success) {
     log.warn("  Fallback journal commit succeeded after commit failure.");
@@ -689,14 +543,21 @@ export async function runCycle(): Promise<void> {
   log.info(`  Agent Oak — Cycle ${String(cycleNumber).padStart(4, "0")} starting`);
   log.info("═══════════════════════════════════════════════════");
 
-  // Snapshot current HEAD so we can revert on build failure
-  const sessionStartSha = await getHeadSha();
-  log.info(`Session start SHA: ${sessionStartSha}`);
-
   // Hoisted so the catch block can suppress unhandled rejections on crash
   let spriteIterationPromise: Promise<SpriteDesignResult> | null = null;
+  // Hoisted so the catch block can roll the game tree back on crash
+  let gameTree: GameTree | null = null;
 
   try {
+    // Start the game tree from its baseline; leftovers from a crashed attempt are stashed
+    gameTree = await beginGameTree({
+      repoRoot: PROJECT_ROOT,
+      label: `cycle ${String(cycleNumber).padStart(4, "0")}`,
+    });
+    if (gameTree.setAside.length > 0) {
+      log.warn(`Set aside ${gameTree.setAside.length} leftover game-tree change(s) in a git stash before starting.`);
+    }
+
     // ── Phase 1: Planning (separate agent context) ──
     const { memory, recentJournals, plan } = await runPlanningPhase(cycleNumber, log);
 
@@ -802,21 +663,13 @@ export async function runCycle(): Promise<void> {
       }
     }
 
-    implResult = await withGitDetectedChanges(implResult, log);
-
     // ── Phase 3: Build verification + auto-fix loop ──
     let {
       finalBuildResult,
       fixActions,
       fixTokenUsage,
       reverted,
-      gameVersion,
-    } = await runBuildVerifyPhase(
-      cycleNumber,
-      implResult,
-      sessionStartSha,
-      log,
-    );
+    } = await runBuildVerifyPhase(cycleNumber, gameTree, log);
 
     // ── Phase 3.5: Validation — programmatic claim cross-check ──
     let validationResult: ValidationResult | null = null;
@@ -825,12 +678,11 @@ export async function runCycle(): Promise<void> {
 
     if (!reverted) {
       log.info("Phase 3.5: Validating implementation claims...");
-      const diffStats = await getDiffStats();
       validationResult = validateCycle({
         mode: plan.mode,
         objective: plan.objective,
         implResult,
-        diffStats,
+        changeSet: await gameTree.changeSet(),
       });
 
       if (validationResult.status !== "verified") {
@@ -845,7 +697,7 @@ export async function runCycle(): Promise<void> {
           activePlan,
           implResult,
           validationResult,
-          sessionStartSha,
+          gameTree,
           log,
         );
 
@@ -858,19 +710,10 @@ export async function runCycle(): Promise<void> {
         if (valFix.buildResult) {
           finalBuildResult = valFix.buildResult;
         }
-        if (valFix.gameVersion) {
-          gameVersion = valFix.gameVersion;
-        }
         if (valFix.reverted) {
           reverted = true;
         }
       }
-
-      // Pick up edits from the build-fix and validation-fix agents so the
-      // commit matches the tree that was just verified. Done here, not at
-      // commit time, so stray edits made later (e.g. during reflection)
-      // are never committed unbuilt.
-      implResult = await withGitDetectedChanges(implResult, log);
     }
 
     // ── Phase 4: Reflection (separate agent context) ──
@@ -895,6 +738,18 @@ export async function runCycle(): Promise<void> {
     );
 
     const filesModified = reverted ? [] : implResult.filesModified;
+
+    // Stage exactly the verified change set; edits made after verification
+    // (e.g. during reflection) are restored and listed in the journal.
+    const { staged: stagedGameFiles, discarded: discardedChanges } = await gameTree.stage();
+    if (discardedChanges.length > 0) {
+      log.warn(`  Discarded ${discardedChanges.length} game-tree change(s) made after verification.`);
+    }
+
+    // Stamp the build number once, on the cycle's final verdict
+    const gameVersion = stagedGameFiles.length > 0
+      ? formatVersion(recordSuccessfulBuild(cycleNumber))
+      : null;
 
     // Write cycle.json so the README dynamic badge can read the latest cycle number
     const cycleJsonPath = path.join(ARTIFACTS_DIR, "cycle.json");
@@ -932,6 +787,7 @@ export async function runCycle(): Promise<void> {
       issueActions: plan.issueActions.length > 0 ? plan.issueActions : undefined,
       helpRequests: plan.helpRequests.length > 0 ? plan.helpRequests : undefined,
       planOutput,
+      discardedChanges,
     });
 
     // Apply agent-declared version bump / release stage before committing
@@ -954,10 +810,7 @@ export async function runCycle(): Promise<void> {
     const { commitHash, commitFailed } = await runCommitPhase({
       cycleNumber,
       summary: reflection.cycleSummary || plan.objective,
-      filesModified,
       acceptedIssueNumbers,
-      memory,
-      recentJournals,
       log,
     });
 
@@ -1201,6 +1054,13 @@ export async function runCycle(): Promise<void> {
       log.error(err.stack);
     }
 
+    // A crash reverts the cycle, even if a verified change set existed (ADR 0001)
+    try {
+      await gameTree?.discard();
+    } catch (discardErr) {
+      log.error(`Failed to roll back the game tree: ${discardErr instanceof Error ? discardErr.message : String(discardErr)}`);
+    }
+
     // Write a crash journal entry so the failure is recorded
     try {
       writeJournalEntry({
@@ -1217,7 +1077,7 @@ export async function runCycle(): Promise<void> {
         tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
         toolCallCount: 0,
       });
-      const crashCommit = await commitCycle(cycleNumber, "cycle crashed", []);
+      const crashCommit = await commitCycle(cycleNumber, "cycle crashed");
       if (!crashCommit.success) {
         await commitJournalOnly(cycleNumber, "crash fallback commit");
       }
