@@ -5,18 +5,7 @@
 
 ## Palette Design Reference
 
-| Type | Dominant Color | RGB Range | Key Principle |
-|------|---------------|-----------|---------------|
-| Electric | Saturated yellow/gold | R:190-255, G:155-236, B:0-10 | Push blue to near-zero |
-| Fire | Orange/red | R:200-255, G:60-140, B:0-50 | High red, low blue |
-| Ice | Light blue/white | R:150-220, G:200-240, B:230-255 | High blue, moderate R+G |
-| Water | Deep blue | R:40-100, G:100-180, B:180-255 | Low red, high blue |
-| Grass | Green | R:60-150, G:180-230, B:50-120 | Green dominant |
-| Poison | Purple | R:140-200, G:50-120, B:160-220 | High R+B, low G |
-| Ghost | Dark purple | R:80-140, G:50-100, B:120-180 | Muted, desaturated |
-| Steel | Silver/chrome | R:170-210, G:170-210, B:180-220 | Nearly equal channels |
-| Dragon | Deep indigo | R:80-130, G:60-110, B:160-220 | Blue-shifted purple |
-| Dark | Near-black/maroon | R:40-90, G:20-50, B:20-50 | Very low values |
+Type anchor colors live in the Sprite Designer prompt. Build each material's shades with `npx tsx src/sprite-tools/spritekit.ts ramp <anchor> --n <shades>` (hue-shifted: cool shadows, warm lights), not by scaling one hue's brightness.
 
 ## Lessons Learned
 
@@ -25,6 +14,7 @@
 - **Low-usage indices are free accent slots** — repurpose low-pixel-count indices for accent colors
 - **Pixel map analysis is essential** before placing glyphs — use run-length analysis to find safe canvas areas
 - **Apply edits to ALL sprite files consistently** — front.png, back.png, both frames of anim_front.png
+- **spritekit lint audit (all 25 variants, pre-gate)**: 8 had back.png embedded palette ≠ normal.pal (vanilla: 14/398); ~10 had near-duplicate used colors (e.g. Vulpix idx 2/12, Ninetales 6/11 + 7/12) — wasted slots and flat shading; accent/emanation passes tripled stray pixels on Ludicolo (15→49), Pinsir (12→36), Lotad (9→22). Vulpix's 16 colors all sat at hue 205–230°, which is why it reads washed out.
 
 ## Community Feedback Patterns
 

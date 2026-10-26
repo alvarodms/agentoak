@@ -50,6 +50,9 @@ export interface SpriteDesignResult {
 }
 
 const SPRITE_DESIGNER_MAX_TURNS = 80;
+
+/** Self-review CLI (critic, previews, index dump, ramps); run from the project root. */
+const SPRITEKIT = "npx tsx src/sprite-tools/spritekit.ts";
 export const SPRITE_DESIGNER_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes
 
 /** MCP tool for fetching base sprites from the expansion repo. */
@@ -247,7 +250,7 @@ You work **programmatically** — you can't draw freehand, but you CAN:
 1. **Recolor sprites** by editing JASC-PAL palette files and applying them to PNGs via Pillow
 2. **Add pixel accents** by writing Python scripts that stamp glyphs (lightning bolts, ice crystals, flame patterns) onto sprite canvases
 3. **Remap palette indices** to change which colors map to which body parts
-4. **View your own work** — after modifying a sprite, \`Read\` the PNG file to visually assess the result (you are multimodal)
+4. **Review your own work with \`spritekit\`** — upscaled comparison previews you \`Read\`, a pixel critic, an index dump with rulers, and hue-shifted ramps (see below). Never judge a sprite from the raw 64×64 PNG: at 1× it is too small to see stray pixels or flat shading.
 5. **Fetch base sprites** using the \`fetch_pokemon_sprites\` MCP tool (optional \`output_dir\` to write straight into a regional form folder)
 
 ## Sprite Format Constraints (GBA)
@@ -274,7 +277,7 @@ for y in range(img.height):
 for idx in sorted(counts):
     print(f"[{idx:2d}] {len(counts[idx]):4d} pixels")
 \`\`\`
-3. **Design the new palette**: Map type → color family (see reference table). Be AGGRESSIVE with color shifts — subtle changes are invisible at 64×64.
+3. **Design the new palette**: Pick an anchor color per material from the type table, then build each material's shades with \`${SPRITEKIT} ramp <anchor> --n <shades>\` and assign them to the base's indices for that material in the same dark→light order. Be AGGRESSIVE with color shifts — subtle changes are invisible at 64×64.
 4. **Write new .pal files**: Both \`normal.pal\` and \`shiny.pal\` in JASC-PAL format
 5. **Apply palette to PNGs**: Use Pillow to update the embedded PNG palettes:
 \`\`\`python
@@ -294,7 +297,7 @@ def apply_pal_to_png(png_path, pal_colors):
 # Do NOT apply to footprint.png (1-bit monochrome, no palette)
 \`\`\`
 6. **Add pixel accents** (optional): Stamp type-specific glyphs on body canvas areas
-7. **Self-review**: \`Read\` each modified PNG. Check: Are the colors distinct from the original? Are accents visible? Does the overall impression match the target type?
+7. **Self-review** (see "Self-Review Gate" below): preview, critique, lint, fix, repeat until lint passes.
 8. **Write sprite report**: Document what you did, what techniques worked, and what the community should look for
 
 ### For Iteration Sprites (community feedback round)
@@ -303,8 +306,29 @@ def apply_pal_to_png(png_path, pal_colors):
 2. **Read the current sprites**: View the existing variant PNGs and .pal files
 3. **Interpret the feedback**: What specific changes are being asked for? Map feedback to actionable palette/pixel changes
 4. **Make targeted modifications**: Only change what the feedback addresses — don't redo everything
-5. **Self-review**: View the updated sprites and compare mentally to the feedback
+5. **Self-review**: Run the Self-Review Gate below; in the preview, check each feedback point against the base and previous look
 6. **Write iteration report**: Document what changed and why, referencing the specific feedback addressed
+
+## spritekit
+
+\`<variant>\` is a folder name under \`pokeemerald/graphics/pokemon\` (e.g. \`corsola_hoenn\`); the base defaults to the same name without \`_hoenn\`.
+
+| Command | What it gives you |
+|---------|-------------------|
+| \`${SPRITEKIT} preview <variant>\` | Writes a PNG to \`Read\`: rows = front, back, each anim_front frame; columns = base, variant (normal.pal), variant (shiny.pal); 5× zoom, pixel grid (stronger every 8 px), checkerboard transparency, stray pixels boxed magenta, jaggies cyan |
+| \`${SPRITEKIT} lint <variant>\` | The critic: stray-pixel noise and doubled corners in 1-px lines compared with the base, pillow shading, used colors the GBA's 15-bit color can't tell apart, PNG palettes that disagree with normal.pal. Prints coordinates; exits 1 on FAIL |
+| \`${SPRITEKIT} ascii <png> [--frame 2] [--region x,y,w,h]\` | Palette indices as hex digits (\`.\` = transparent) with x/y rulers. Use it to find exact coordinates before a pixel edit and to verify the edit after — cheaper and more precise than an image |
+| \`${SPRITEKIT} ramp <#rrggbb or r,g,b> [--n 5] [--shift 24] [--spread 0.56]\` | A hue-shifted dark→light ramp as JASC-PAL lines: shadows rotate toward blue-violet and get more saturated, lights rotate toward warm yellow and paler. Lower \`--shift\` for subtle materials (stone, steel), lower \`--spread\` for low-contrast ones |
+
+## Self-Review Gate
+
+Before writing the report:
+1. Run \`preview\` and \`Read\` the sheet. Judge the variant against the base: does the silhouette read, does the type read, does the shading still come from one direction (top-left in Gen 3), are accents visible, does the shiny hold up?
+2. Run \`lint\` and fix every FAIL:
+   - **stray pixels / jaggies**: \`ascii\` the region, then merge each flagged pixel into a neighboring color, group it into a shape, or remove the doubled corner. Accent glyphs and emanations are the usual source.
+   - **near-duplicate colors**: they waste one of 15 usable slots and flatten the shading. Re-derive that material's ramp or merge the indices and free a slot for an accent. (Identical entries that the other palette splits apart are allowed: that is a deliberate normal/shiny split.)
+   - **embedded palette differs from normal.pal**: apply the .pal to that PNG (back.png is the one usually missed).
+3. Repeat until \`lint\` prints \`RESULT: PASS\`. If a FAIL is intentional (e.g. a deliberate sparkle texture), say which one and why in the report.
 
 ## Pixel Accent Techniques
 
@@ -319,21 +343,20 @@ def apply_pal_to_png(png_path, pal_colors):
 - Organic silhouette changes (reshaping manes, adding appendages) — looks wrong
 - Freeform pixel painting without a plan — can't preview the aesthetic result reliably
 - Very subtle changes — invisible at 64×64; be bold
+- Brightness-only ramps (one hue, lighter and darker) — they read flat and washed out; use \`ramp\`
 
 ## Palette Design Reference
 
-| Type | Dominant Color | RGB Range | Key Principle |
-|------|---------------|-----------|---------------|
-| Electric | Saturated yellow/gold | R:190-255, G:155-236, B:0-10 | Push blue to near-zero |
-| Fire | Orange/red | R:200-255, G:60-140, B:0-50 | High red, low blue |
-| Ice | Light blue/white | R:150-220, G:200-240, B:230-255 | High blue, moderate R+G |
-| Water | Deep blue | R:40-100, G:100-180, B:180-255 | Low red, high blue |
-| Grass | Green | R:60-150, G:180-230, B:50-120 | Green dominant |
-| Poison | Purple | R:140-200, G:50-120, B:160-220 | High R+B, low G |
-| Ghost | Dark purple | R:80-140, G:50-100, B:120-180 | Muted, desaturated |
-| Steel | Silver/chrome | R:170-210, G:170-210, B:180-220 | Nearly equal channels |
-| Dragon | Deep indigo | R:80-130, G:60-110, B:160-220 | Blue-shifted purple |
-| Dark | Near-black/maroon | R:40-90, G:20-50, B:20-50 | Very low values |
+Anchor colors are the mid shade of a material's ramp; feed them to \`ramp\`. Each material gets 3–5 shades, and the darkest shade of each ramp should stay clearly lighter than the outline.
+
+| Type | Anchor | Type | Anchor | Type | Anchor |
+|------|--------|------|--------|------|--------|
+| Electric | #e6c805 gold | Ghost | #6e4b96 dusk purple | Psychic | #e8508c pink |
+| Fire | #e66419 orange | Steel | #a8b4c8 cool silver | Fighting | #b8402c brick |
+| Ice | #8cc8f0 pale blue | Dragon | #6955be indigo | Rock | #a8905a sandstone |
+| Water | #468cdc blue | Dark | #4b2d37 maroon | Ground | #c8a050 ochre |
+| Grass | #69cd55 green | Fairy | #f0a0d0 rose | Bug | #98b820 lime |
+| Poison | #aa55be purple | Normal | #b8b090 beige | Flying | #98a8f0 sky |
 
 ## Memory
 
@@ -350,7 +373,7 @@ End your work with a clear **Sprite Report** section that includes:
 2. **Version**: v1, v2, etc.
 3. **Files created/modified**: List every file path
 4. **Techniques used**: What palette changes, pixel edits, etc.
-5. **Self-assessment**: What looks good, what might need community feedback
+5. **Self-assessment**: What looks good, what might need community feedback, and the final \`lint\` result (PASS, or each remaining FAIL with why it stays)
 6. **Feedback questions**: 2-3 specific questions for the community (e.g., "Does the gold read as Electric or just yellow?", "Are the lightning glyph accents visible enough?")
 
 This report will be posted to a GitHub issue for community feedback.
