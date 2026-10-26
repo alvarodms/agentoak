@@ -34,6 +34,7 @@ concurrency:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
   pages: write
   id-token: write
   packages: read
@@ -151,11 +152,38 @@ jobs:
             sleep $((attempt * 5))
           done
 
-          # Could not land on main: park the cycle's commits on a branch so
-          # the work survives for a manual merge, then fail the run.
+          # Could not land on main: park the cycle's commits on a branch and
+          # open a PR for it so the work survives for a manual merge, then
+          # fail the run.
           rescue="cycle-rescue/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           git push origin "HEAD:refs/heads/$rescue"
-          echo "::error::Could not push to main (conflict or repeated rejection). Cycle commits saved to branch $rescue — merge it manually."
+
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          payload=$(RESCUE="$rescue" RUN_URL="$run_url" SUBJECT="$(git log -1 --format=%s HEAD)" node -e '
+            const { RESCUE, RUN_URL, SUBJECT } = process.env;
+            process.stdout.write(JSON.stringify({
+              title: `Rescue: ${SUBJECT}`,
+              head: RESCUE,
+              base: "main",
+              body: `The [agent cycle run](${RUN_URL}) could not push to main: merging the latest main conflicted with the cycle commits, or the push kept being rejected.\n\nResolve the conflicts on this branch and merge to keep the cycle work.`,
+            }));
+          ')
+          pr_url=""
+          if response=$(curl -sS --fail-with-body -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls" \
+            -d "$payload"); then
+            pr_url=$(RESPONSE="$response" node -e 'console.log(JSON.parse(process.env.RESPONSE).html_url ?? "")')
+          else
+            echo "Opening the rescue PR failed: $response"
+          fi
+
+          if [ -n "$pr_url" ]; then
+            echo "::error::Could not push to main. Cycle commits saved to branch $rescue and opened as $pr_url — resolve and merge it."
+          else
+            echo "::error::Could not push to main, and opening a PR failed. Cycle commits saved to branch $rescue — merge it manually."
+          fi
           exit 1
 
   deploy-docs:
