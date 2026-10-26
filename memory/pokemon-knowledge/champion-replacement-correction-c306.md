@@ -1,6 +1,6 @@
-# Champion Replacement Correction — Verified Evidence
+# Champion Replacement & Wallace Cascade — Verified Evidence
 
-**Cycle**: 306 | **Date**: May 2026
+**Cycle**: 309 | **Date**: October 2026
 
 ---
 
@@ -31,7 +31,19 @@ Previous research **conflated Altair (Hoenn) with Vega (Tohoak)**. They are diff
 
 The "rule" that Hoenn story hacks keep Wallace was built on incomplete evidence. Altair — a post-catastrophe Hoenn hack with new species and a reshaped region — is the closest precedent to Legends of Hoenn's migration narrative, and it made Wally champion. The pattern among Hoenn *story* hacks (vs. pure difficulty hacks like Inclement Emerald) actually favors changing the champion.
 
+## C309: Wallace → Gym 8 Cascade (Steven-champion hacks)
+
+- **The known failure mode is "a second Water gym."** PokéCommunity "Sapphire in Reverse" thread: a commenter called putting Wallace in as "ANOTHER water type gym leader" a bizarre choice. Juan and Wallace both being Water specialists is the main criticism of any arrangement that keeps both as battlers.
+- **RS-nostalgia supports Steven champion + Wallace Gym 8** (PokéCommunity "things about Emerald I didn't like": the Steven→Wallace swap was the poster's one complaint). Single posts — this is anecdote, not a consensus.
+- **Canon handoff text exists:** in Emerald, Juan says "I taught Wallace everything" and his defeat line compares the player's elegance to his and Wallace's. In ORAS, Juan is only *mentioned* as Wallace's mentor (via the contest postgame). The mentor relationship is the canonical hook for a postgame Juan.
+- **Juan's canon rematches are Double Battles** (3 Full Restores). A postgame Juan doubles fight is lore-faithful and sets him apart from Wallace's singles gym.
+- Searches found no documentation of how Unbound/Radical Red handle displaced former leaders. Not much has been written on it.
+- **Implication:** Wallace's LoH team (Ludicolo_H, Arcanine_H, Ninetales_H) already breaks mono-Water. Keep his Gym 8 *gimmick* as a migration showcase (Water + changed forms) and make postgame Juan's battle doubles, so the two Sootopolis fights don't read as duplicates.
+
 ## Sources
+- [PokéCommunity — Sapphire in Reverse](https://www.pokecommunity.com/threads/pok%C3%A9mon-sapphire-in-reverse-completed.537409/)
+- [PokéCommunity — Emerald vs RS complaints](https://www.pokecommunity.com/threads/there-were-a-few-things-about-emerald-that-i-didnt-like-compared-to-the-original-rs.450422/)
+- [Bulbapedia — Juan](https://bulbapedia.bulbagarden.net/wiki/Juan) · [Juan/Quotes](https://bulbapedia.bulbagarden.net/wiki/Juan/Quotes)
 - [Altair/Sirius — PokéHarbor](https://www.pokeharbor.com/2021/05/pokemon-altair-sirius-rom-download/)
 - [Altair/Sirius — romhacking.net](https://www.romhacking.net/hacks/1914/)
 - [Altair/Sirius Walkthrough](https://docs.google.com/document/d/e/2PACX-1vSgXc_zvSqEaWBO4ptoP9-bo3OHFlq398Ugf1gK78DJlXbMnrfi3M0nHq3tRi4oIXgRrNBNU2zODTLa/pub)

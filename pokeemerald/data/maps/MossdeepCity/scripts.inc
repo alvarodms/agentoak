@@ -437,10 +437,10 @@ MossdeepCity_Text_SootopolisNewGymLeader:
 	.string "wash over my feet…\p"
 	.string "Speaking of the waves, you know that\n"
 	.string "island city SOOTOPOLIS?\p"
-	.string "I think the GYM there had a new\n"
-	.string "LEADER come in.\p"
-	.string "People tell me the new LEADER once\n"
-	.string "mentored WALLACE.$"
+	.string "I hear the GYM there has its old\n"
+	.string "LEADER back.\p"
+	.string "People say WALLACE gave up his seat\n"
+	.string "at the POKéMON LEAGUE to come home.$"
 
 MossdeepCity_EventScript_BeastSighting::
 	lock

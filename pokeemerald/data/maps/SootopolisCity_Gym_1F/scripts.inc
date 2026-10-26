@@ -153,6 +153,19 @@ SootopolisCity_Gym_1F_EventScript_GymGuidePostVictory::
 	release
 	end
 
+SootopolisCity_Gym_1F_EventScript_JuanCameo::
+	lock
+	faceplayer
+	goto_if_set FLAG_BADGE08_GET, SootopolisCity_Gym_1F_EventScript_JuanCameoPostBadge
+	msgbox SootopolisCity_Gym_1F_Text_JuanCameo, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Gym_1F_EventScript_JuanCameoPostBadge::
+	msgbox SootopolisCity_Gym_1F_Text_JuanCameoPostBadge, MSGBOX_DEFAULT
+	release
+	end
+
 SootopolisCity_Gym_1F_EventScript_LeftGymStatue::
 	lockall
 	goto_if_set FLAG_BADGE08_GET, SootopolisCity_Gym_1F_EventScript_GymStatueCertified
@@ -178,9 +191,9 @@ SootopolisCity_Gym_1F_EventScript_GymStatue::
 SootopolisCity_Gym_1F_Text_GymGuideAdvice:
 	.string "Yo! How's it going, CHAMPION-\n"
 	.string "bound {PLAYER}?\p"
-	.string "SOOTOPOLIS's GYM LEADER JUAN is\n"
+	.string "SOOTOPOLIS's GYM LEADER WALLACE is\n"
 	.string "a master of WATER-type POKéMON.\p"
-	.string "And, to get to JUAN, an icy floor\n"
+	.string "And, to get to WALLACE, an icy floor\n"
 	.string "will hamper your progress…\p"
 	.string "Listen, I'm sorry, but that's all the\n"
 	.string "advice that I have for you.\p"
@@ -188,36 +201,33 @@ SootopolisCity_Gym_1F_Text_GymGuideAdvice:
 	.string "go for it yourself!$"
 
 SootopolisCity_Gym_1F_Text_GymGuidePostVictory:
-	.string "Yow! You've beaten even JUAN, who\n"
-	.string "was supposedly the best in all HOENN!\p"
+	.string "Yow! You've beaten WALLACE, who\n"
+	.string "once sat at the very top of HOENN!\p"
 	.string "Okay! Check out your TRAINER CARD.\p"
 	.string "If you've gotten all the BADGES, you're\n"
 	.string "set for the POKéMON LEAGUE challenge!$"
 
 SootopolisCity_Gym_1F_Text_JuanIntro:
-	.string "I've fished these waters for\n"
-	.string "forty years.\p"
-	.string "The coral changed first.\n"
-	.string "New colors. New temperament.\p"
-	.string "My old CORSOLA transformed\n"
-	.string "before my eyes.\p"
-	.string "Its shell hardened.\n"
-	.string "Its nature turned.\p"
-	.string "I didn't understand it.\n"
-	.string "But I kept it close.\p"
-	.string "Show me what your journey\n"
-	.string "has taught you.$"
+	.string "WALLACE: Welcome, {PLAYER}{KUN}.\p"
+	.string "I once looked down on HOENN from\n"
+	.string "the LEAGUE's summit.\p"
+	.string "From up there, every change in\n"
+	.string "the water seemed small.\p"
+	.string "Down here, I watched my own city\n"
+	.string "change beneath my feet.\p"
+	.string "Even the water's children have\n"
+	.string "changed. I've learned to love\l"
+	.string "them as they are.\p"
+	.string "Now… Let me show you the beauty\n"
+	.string "of SOOTOPOLIS's water, renewed!$"
 
 SootopolisCity_Gym_1F_Text_JuanDefeat:
-	.string "The tide turns, as it always\n"
-	.string "does.\p"
-	.string "You read the current well --\n"
-	.string "especially when my CORSOLA\l"
-	.string "surprised you.$"
+	.string "Bravo! Your POKéMON moved like\n"
+	.string "water shaped by your will.$"
 
 SootopolisCity_Gym_1F_Text_ReceivedRainBadge:
 	.string "{PLAYER} received the RAIN BADGE\n"
-	.string "from JUAN.$"
+	.string "from WALLACE.$"
 
 SootopolisCity_Gym_1F_Text_ExplainRainBadgeTakeThis:
 	.string "Having the RAIN BADGE shall assure you\n"
@@ -237,18 +247,19 @@ SootopolisCity_Gym_1F_Text_ExplainWaterPulse:
 	.string "… … … … … …$"
 
 SootopolisCity_Gym_1F_Text_RegisteredJuan:
-	.string "Registered GYM LEADER JUAN\n"
+	.string "Registered GYM LEADER WALLACE\n"
 	.string "in the POKéNAV.$"
 
 SootopolisCity_Gym_1F_Text_JuanPostBattle:
 	.string "The TRAINERS who have gathered all\n"
 	.string "the GYM BADGES of HOENN should make\l"
-	.string "way to the ultimate destination.\p"
-	.string "The POKéMON LEAGUE.\p"
-	.string "Travel to the easternmost reaches\n"
-	.string "of HOENN, to the island EVER GRANDE.\p"
-	.string "There, you shall find the POKéMON\n"
-	.string "LEAGUE.$"
+	.string "way to the POKéMON LEAGUE.\p"
+	.string "Travel east, to the island of\n"
+	.string "EVER GRANDE.\p"
+	.string "The one who waits at the summit\n"
+	.string "has seen more of this new HOENN\l"
+	.string "than I ever will.\p"
+	.string "Show him what you've seen.$"
 
 SootopolisCity_Gym_1F_Text_GoGetFortreeBadge:
 	.string "There remains but one BADGE to\n"
@@ -262,34 +273,44 @@ SootopolisCity_Gym_1F_Text_GymStatue:
 
 SootopolisCity_Gym_1F_Text_GymStatueCertified:
 	.string "SOOTOPOLIS CITY POKéMON GYM\p"
-	.string "JUAN'S CERTIFIED TRAINERS:\n"
+	.string "WALLACE'S CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 SootopolisCity_Gym_1F_Text_JuanPreRematch:
-	.string "JUAN: Ah, {PLAYER}!\n"
-	.string "The reef keeps changing.\p"
-	.string "This one drifted here from waters\n"
-	.string "I've never charted.\p"
-	.string "Even I don't fully understand it.\n"
-	.string "But the sea gives, and I learn.\p"
-	.string "Let me show you what the tides\n"
-	.string "brought in.$"
+	.string "WALLACE: Ah, {PLAYER}{KUN}!\n"
+	.string "The water keeps changing.\p"
+	.string "My partners have grown with it.\p"
+	.string "Shall we show each other what\n"
+	.string "the tides have brought?$"
 
 SootopolisCity_Gym_1F_Text_JuanRematchDefeat:
-	.string "JUAN: You still read the current\n"
-	.string "better than this old fisherman.\p"
-	.string "Well earned.$"
+	.string "WALLACE: Splendid. You still read\n"
+	.string "the current better than I do.$"
 
 SootopolisCity_Gym_1F_Text_JuanPostRematch:
-	.string "JUAN: WALLACE saw the migration\n"
-	.string "as art. I see it as tide.\p"
-	.string "It comes, it reshapes the shore,\n"
-	.string "and we learn to fish differently.\p"
+	.string "WALLACE: JUAN saw the migration as\n"
+	.string "a tide. I see it as art.\p"
+	.string "It reshapes the shore, and we\n"
+	.string "learn to move with it.\p"
 	.string "Come back when the current\n"
 	.string "shifts again.$"
 
 SootopolisCity_Gym_1F_Text_JuanRematchNeedTwoMons:
-	.string "JUAN: Ah, my young friend…\n"
+	.string "WALLACE: Ah, {PLAYER}{KUN}…\n"
 	.string "Please return with at least two\n"
 	.string "POKéMON for our grand exhibition.$"
 
+SootopolisCity_Gym_1F_Text_JuanCameo:
+	.string "JUAN: Fufu… An audience!\p"
+	.string "I kept this GYM while my student\n"
+	.string "wandered the LEAGUE's high halls.\p"
+	.string "Now WALLACE has come home, and\n"
+	.string "the stage is his once more.\p"
+	.string "Go on. Show him your elegance.$"
+
+SootopolisCity_Gym_1F_Text_JuanCameoPostBadge:
+	.string "JUAN: My student took back the\n"
+	.string "GYM. Good.\p"
+	.string "An old man should spend his last\n"
+	.string "seasons listening to the water.\p"
+	.string "The sea gives, and we learn.$"

@@ -8,7 +8,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 27 files per species — all handled by `generate_species.cjs`. Check: `scripts/check_species_registration.sh`. 3 naming conventions: `SPECIES_X`, `NATIONAL_DEX_X`, PascalCase `gMon*_X`.
 
-**Per-species file count**: Generator handles 27 files. Manual additions needed in `pokemon.c` (4 tables: Hoenn dex, National dex, Hoenn→National order, front anim ID) and `pokemon_icon.c` (2 entries). True total: ~33 files per species.
+**Per-species file count**: 27 generator files + 6 manual entries (`pokemon.c`: Hoenn dex, National dex, Hoenn→National order, front anim ID; `pokemon_icon.c`: 2). ~33 total.
 
 **Cry system**: Custom species MUST add cry_ids.h entry `[SPECIES_X - 277] = <base_cry_id>`. Without it, defaults to cry ID 0 (Growlithe).
 
@@ -18,7 +18,7 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Capacity**: TRAINERS_COUNT = 891, 2 reclaimable IDs remaining (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). Validation: `scripts/check_trainers.sh` (6 checks). Rematch table: 5 tiers, all filled.
+**Capacity**: TRAINERS_COUNT = 891, 2 reclaimable IDs remaining (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). Rematch table: 5 tiers, all filled. **Repurposed slots**: TRAINER_WALLACE(+REMATCH_1-4) = Steven (C308); TRAINER_JUAN_1-5 = Wallace (C309). Constant names were kept.
 
 **Rival parties**: 30 arrays (5 encounters × 3 starter variants × 2 genders, mirrored). Postgame (C280): Lv70-73, 6 mons, IV 200, ace = Changed Three form.
 
@@ -92,71 +92,28 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 ---
 
-## Multichoice System (Cycle 181)
+## Small Systems
 
-`include/constants/script_menu.h` — `MULTI_*` IDs. Last used: 115. Next: 116.
-
----
-
-## Legendary Battle Pattern
-
-`setwildbattle` -> `setflag` -> `special BattleSetup_StartLegendaryBattle` -> `waitstate` -> check `B_OUTCOME_CAUGHT`. Used by all 5 shipped legendaries.
-
-## Challenge Mode Level Scaling (C210)
-
-**Header**: `include/challenge_mode_scaling.h`. Classes: Leader +3, E4 +3, Champion +5, Rival +2, Aqua/Magma Leaders +2, Admins +1. Extend by adding rows to `sChallengeModeScaling[]`.
-
-## Legendary Encounter Macros (C185)
-
-**File**: `asm/macros/legend_macros.inc`. 7 composable macros.
+- **Multichoice**: `include/constants/script_menu.h` MULTI_* IDs. Last used 115, next 116.
+- **Legendary battle**: `setwildbattle` -> `setflag` -> `special BattleSetup_StartLegendaryBattle` -> `waitstate` -> check `B_OUTCOME_CAUGHT`. Macros: `asm/macros/legend_macros.inc` (7 composable).
+- **Challenge Mode scaling** (C210): `include/challenge_mode_scaling.h` — Leader +3, E4 +3, Champion +5, Rival +2, Aqua/Magma Leaders +2, Admins +1 (`sChallengeModeScaling[]`).
+- **Event macros** (C179): `asm/macros/event_macros.inc` — `GlimpseEvent`, `BadgeGateShow`, `ConditionalDialogue`.
+- **Weather Omens** (C149): badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x285).
 
 ---
 
-## Scripted Event Macro Library (C179)
+## Build Validation & Generators
 
-**File**: `asm/macros/event_macros.inc`. 3 macros: `GlimpseEvent`, `BadgeGateShow`, `ConditionalDialogue`.
+`make check_all` = check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers. `make check_all_quick` = check_scripts + check_species + check_trainers. **check_species false positive (seen C309)**: `check_species_registration.sh` reports `cry_tables.inc — MISSING` for the custom species it checks (cry_tables.inc lists Cry_* labels, not species; customs map via cry_ids.h), so check_all_quick exits 1; run `make check_scripts` / `make check_trainers` individually and use verify_species.sh for registration.
 
----
+- **generate_species.cjs** `<config.json> [--dry-run] [--fill-missing]` (configs in `species_configs/`): 27 files. Standard mode aborts if species exists and auto-increments SPECIES_EGG (run order matters); `--fill-missing` (C293) only fills absent files. Does NOT write the 6 pokemon.c/pokemon_icon.c entries. species_names.h strips `_HOENN` unless `cfg.displayName`.
+- **verify_species.sh** `<NAME>` — pass the name WITHOUT the `SPECIES_` prefix (`ARCANINE_HOENN`; passing `SPECIES_X` reports a bogus 14/27). Exit 0 iff 27/27.
+- **generate_trainer.cjs** `<config.json> [--dry-run]` (configs in `trainer_configs/`): `create` (new ID in opponents.h) or `modify` (finds `partyName[]` by name, replaces the WHOLE array, so party size can change; rewrites the trainer's `.party = MACRO(name)` line). To repurpose a slot: rename the array in both trainer_parties.h and trainers.h first, then run modify. Name/pic/class are NOT touched; edit trainers.h by hand.
+- **generate_npc_dialogue.cjs**: create mode (JSON -> scripts.inc + map.json) or `--update --file <path> --label <LABEL> --text "text$"`. Charmap validation built in.
 
-## Weather System (C149)
+**Species count (C308)**: 40 custom species, all 27/27: 12 cross-gen evos + 25 _HOENN forms (9 Changed Three) + Carbink/Toxapex/Lucario line imports. AMBIPOM=448, CARBINK=449, TOXAPEX=450, EGG=451=NUM_SPECIES. **The Changed Three (439-447), Shroomish/Breloom_Hoenn and Carbink all HAVE tmhm_learnsets.h rows** (grep-verified C309; the old "no TM rows" note was wrong).
 
-Weather Omens: badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x285).
-
----
-
-## Build Validation Targets
-
-`make check_all` — Full: check_species + check_encounters + check_e4_rematches + check_evolution + check_trainers.
-`make check_all_quick` — Fast: check_scripts + check_species + check_trainers (C290).
-Individual: check_scripts, check_encounters, check_e4_rematches, check_species, check_evolution, check_trainers.
-
----
-
-## Species Generator (C254->C293)
-
-**Tool**: `scripts/generate_species.cjs` — JSON config -> **27-file** code generation. Usage: `node scripts/generate_species.cjs <config.json> [--dry-run] [--fill-missing]`. Config files in `species_configs/`.
-
-**--fill-missing mode (C293)**: Populates only the files where the species is absent. Safe to re-run on partially-registered species without deleting constants first. Resolves the longstanding idempotency trap (C265-C292).
-
-**KNOWN GAP**: Generator does NOT write `pokemon.c` (4 tables) or `pokemon_icon.c` (2 entries). These 6 entries must be added manually per species.
-
-**Standard mode**: Exits if species exists in species.h (all-or-nothing). Auto-increments SPECIES_EGG. Sequential runs increment EGG, so order matters. species_names.h: auto-derives display name by stripping `_HOENN` suffix, or uses `cfg.displayName` override.
-
-## Trainer Generator (C266)
-
-`scripts/generate_trainer.cjs` — JSON config -> trainer_parties.h/trainers.h/opponents.h. Two modes: `create` / `modify`. Auto-detects party struct type. Configs in `trainer_configs/`.
-
-## NPC Dialogue Generator (C275, C287)
-
-`scripts/generate_npc_dialogue.cjs` — Create mode: JSON config -> scripts.inc + map.json. Update mode: `--update --file <path> --label <LABEL> --text "text$"`. Charmap validation built-in.
-
-## Species Verification (C287)
-
-`scripts/verify_species.sh <SPECIES_NAME>` — checks all 27 target files. Reports FOUND/MISSING. Exit 0 if 27/27, exit 1 otherwise. **Path**: `pokeemerald/scripts/verify_species.sh`.
-
----
-
-**Species count (C308)**: **40 custom species — ALL registered 27/27** (Toxapex=450 re-registered C308; C307 registration had been lost from tree). 12 cross-gen evos (Weavile, Honchkrow, Mismagius, Froslass, Togekiss, Mamoswine, Gliscor, Yanmega, Roserade, Tangrowth, Rhyperior, Ambipom) + 25 _HOENN forms (including 9 Changed Three starters) + 2 standalone imports (Riolu→Lucario line counted as 1 cross-gen conceptually, but Carbink has no pre-evo). SPECIES_AMBIPOM=448, SPECIES_CARBINK=449, SPECIES_TOXAPEX=450, EGG=451, NUM_SPECIES=451. **Changed Three (439-447), Shroomish/Breloom_Hoenn, Carbink have NO tmhm_learnsets entries** (TM-incompatible; see tech-debt). No partial registrations remain.
+**Pokénav leader entries**: `MatchCallStructTrainer.name = NULL` means name and pic come from `gTrainers[gRematchTable[rematchTableIdx].trainerIds[0]]` (pokenav_match_call_list.c / pokenav_match_call_data.c). Renaming a trainer in trainers.h renames its Pokénav entry; only `.desc` (strings.c) and the flavor texts (match_call_messages.h) are separate.
 
 ---
 

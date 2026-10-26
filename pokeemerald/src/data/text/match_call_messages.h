@@ -358,10 +358,10 @@ const u8 gText_MatchCallMysticDuo_TateAndLiza_Pokemon[] = _("Always friendly POK
 const u8 gText_MatchCallMysticDuo_TateAndLiza_Intro1[] = _("Papa has trouble telling");
 const u8 gText_MatchCallMysticDuo_TateAndLiza_Intro2[] = _("the two of us apart!");
 
-const u8 gText_MatchCallDandyCharm_Juan_Strategy[] = _("I use splendid waterpower.");
-const u8 gText_MatchCallDandyCharm_Juan_Pokemon[] = _("POKéMON of elegance!");
-const u8 gText_MatchCallDandyCharm_Juan_Intro1[] = _("The adulation of beautiful");
-const u8 gText_MatchCallDandyCharm_Juan_Intro2[] = _("ladies fills me with energy!");
+const u8 gText_MatchCallDandyCharm_Juan_Strategy[] = _("Water shaped into art.");
+const u8 gText_MatchCallDandyCharm_Juan_Pokemon[] = _("POKéMON of grace, renewed.");
+const u8 gText_MatchCallDandyCharm_Juan_Intro1[] = _("I came home to guard");
+const u8 gText_MatchCallDandyCharm_Juan_Intro2[] = _("the water I grew up on.");
 
 const u8 gText_MatchCallEliteFour_Sidney_Strategy[] = _("Offense over defense!");
 const u8 gText_MatchCallEliteFour_Sidney_Pokemon[] = _("The DARK side's beauties.");
@@ -383,10 +383,10 @@ const u8 gText_MatchCallEliteFour_Drake_Pokemon[] = _("The raw power of DRAGONS!
 const u8 gText_MatchCallEliteFour_Drake_Intro1[] = _("I dedicate myself to the");
 const u8 gText_MatchCallEliteFour_Drake_Intro2[] = _("POKéMON that saved me.");
 
-const u8 gText_MatchCallChampion_Wallace_Strategy[] = _("Dignity and respect.");
-const u8 gText_MatchCallChampion_Wallace_Pokemon[] = _("I prefer POKéMON of grace.");
-const u8 gText_MatchCallChampion_Wallace_Intro1[] = _("I represent beauty as");
-const u8 gText_MatchCallChampion_Wallace_Intro2[] = _("well as intelligence.");
+const u8 gText_MatchCallChampion_Wallace_Strategy[] = _("Know the stone, then strike.");
+const u8 gText_MatchCallChampion_Wallace_Pokemon[] = _("Steel and the CHANGED THREE.");
+const u8 gText_MatchCallChampion_Wallace_Intro1[] = _("I walked every changed");
+const u8 gText_MatchCallChampion_Wallace_Intro2[] = _("route to reach this seat.");
 
 const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT] =
 {

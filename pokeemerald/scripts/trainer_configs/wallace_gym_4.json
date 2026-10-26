@@ -1,0 +1,80 @@
+{
+  "_note": "C309: source of truth for Wallace (Gym rematch 3) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/wallace_gym_4.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_JUAN_4",
+  "partyName": "sParty_WallaceGym4",
+  "party": [
+    {
+      "iv": 200,
+      "lvl": 62,
+      "species": "SPECIES_WALREIN",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_BLIZZARD",
+        "MOVE_SURF",
+        "MOVE_BODY_SLAM",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 63,
+      "species": "SPECIES_WHISCASH",
+      "heldItem": "ITEM_SHELL_BELL",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_SURF",
+        "MOVE_ICE_BEAM",
+        "MOVE_REST"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 64,
+      "species": "SPECIES_TOXAPEX",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_TOXIC",
+        "MOVE_PROTECT",
+        "MOVE_POISON_JAB",
+        "MOVE_HAZE"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 65,
+      "species": "SPECIES_ARCANINE_HOENN",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_SURF",
+        "MOVE_FLAMETHROWER",
+        "MOVE_EXTREME_SPEED",
+        "MOVE_CRUNCH"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 65,
+      "species": "SPECIES_GYARADOS",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_DRAGON_DANCE",
+        "MOVE_WATERFALL",
+        "MOVE_EARTHQUAKE",
+        "MOVE_STONE_EDGE"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 68,
+      "species": "SPECIES_MILOTIC",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_HYDRO_PUMP",
+        "MOVE_ICE_BEAM",
+        "MOVE_RECOVER",
+        "MOVE_MIRROR_COAT"
+      ]
+    }
+  ]
+}

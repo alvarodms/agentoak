@@ -2224,37 +2224,34 @@ MatchCall_Text_TateLiza4::
 	.string "LIZA: We could all battle again!$"
 
 MatchCall_Text_Juan1::
-	.string "JUAN: Hmm…\n"
-	.string "{PLAYER}{KUN}… Was it?\p"
-	.string "Our battle together--it brought\n"
-	.string "to me memories of when I first\l"
-	.string "encountered WALLACE.\p"
-	.string "Perhaps you are a genius who may\n"
-	.string "yet surpass WALLACE!$"
+	.string "WALLACE: {PLAYER}{KUN}…\n"
+	.string "Our battle was a joy.\p"
+	.string "It reminded me of the day I first\n"
+	.string "battled my mentor, JUAN.\p"
+	.string "Perhaps you will see further than\n"
+	.string "either of us.$"
 
 MatchCall_Text_Juan2::
-	.string "JUAN: Fufu… {PLAYER}{KUN}…\n"
-	.string "You've finally achieved your goal.\p"
-	.string "My eye for appraising talent wasn't\n"
-	.string "mistaken…\p"
-	.string "I wish for another chance to meet\n"
-	.string "you, for you have scaled the peak\l"
-	.string "of power and prestige.$"
+	.string "WALLACE: Bravo, {PLAYER}{KUN}!\n"
+	.string "You've reached the summit.\p"
+	.string "When I left the LEAGUE, I hoped\n"
+	.string "the seat would go to someone who\l"
+	.string "had walked every changed route.\p"
+	.string "It seems it did.$"
 
 MatchCall_Text_Juan3::
-	.string "JUAN: Hoho… {PLAYER}{KUN}…\p"
-	.string "Our SOOTOPOLIS GYM has finally\n"
-	.string "reopened.\p"
+	.string "WALLACE: Hello, {PLAYER}{KUN}.\p"
+	.string "Our SOOTOPOLIS GYM is open again.\p"
 	.string "If you wish to see me, you are\n"
 	.string "welcome to visit anytime.$"
 
 MatchCall_Text_Juan4::
-	.string "JUAN: {PLAYER}{KUN}…\p"
+	.string "WALLACE: {PLAYER}{KUN}…\p"
 	.string "Like the finest music, the battles\n"
 	.string "we wage together strike chords\l"
 	.string "of inspiration in my heart…\p"
-	.string "When I close my eyes, I see visions\n"
-	.string "of you soaring with the melody…$"
+	.string "JUAN sends his regards. He spends\n"
+	.string "his days listening to the water.$"
 
 MatchCall_Text_Sidney::
 	.string "SIDNEY: Yo, {PLAYER}!\p"
@@ -2293,18 +2290,13 @@ MatchCall_Text_Drake::
 	.string "Don't you agree, {PLAYER}?$"
 
 MatchCall_Text_Wallace::
-	.string "WALLACE: Hello, {PLAYER}{KUN}.\n"
-	.string "Have you met STEVEN?\p"
-	.string "He is…\n"
-	.string "Actually incredibly skilled.\p"
-	.string "However, he's an odd soul who\n"
-	.string "rarely battles.\p"
-	.string "Instead, he would rather look for\n"
-	.string "rare stones.\p"
-	.string "I'm sure he's digging in a cave or\n"
-	.string "a craggy mountain somewhere.\p"
-	.string "But what is a rare stone exactly?\n"
-	.string "All I can think of is a METEORITE…$"
+	.string "STEVEN: Hello, {PLAYER}{KUN}.\p"
+	.string "Have you visited WALLACE in\n"
+	.string "SOOTOPOLIS lately?\p"
+	.string "He gave up this seat so he could\n"
+	.string "guard his city's water.\p"
+	.string "I only hope I'm keeping it warm\n"
+	.string "for someone like you.$"
 
 MatchCall_Text_MayRayquazaCall:
 	.string "… … … … … …\n"

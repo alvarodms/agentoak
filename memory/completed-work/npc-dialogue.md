@@ -57,3 +57,18 @@ EverGrandeCity_ChampionsRoom/{scripts.inc,map.json}: STEVEN object gfx, LOCALID_
 ---
 
 Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).
+
+## C309 — Wallace comes home (Sootopolis Gym 8)
+| File | Change |
+|---|---|
+| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | All Juan leader texts → Wallace (intro, short defeat, badge, Pokénav registration, post-battle Steven handoff, statue, rematch set). Gym guide texts → Wallace. New `EventScript_JuanCameo`/`JuanCameoPostBadge` + 2 texts. Replaces C307 Juan rematch text and earlier Juan fisherman intro. |
+| `data/maps/SootopolisCity_Gym_1F/map.json` | Leader object gfx → OBJ_EVENT_GFX_WALLACE; new Juan object (9,2) → JuanCameo. |
+| `data/maps/SootopolisCity_Gym_B1F/scripts.inc` | 9 trainer texts: JUAN → WALLACE. |
+| `data/maps/SootopolisCity/scripts.inc` | Gym sign; GiveWaterfall now fades Wallace out (removeobject + setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE; WallaceMoveFromGym subs left unused); ExplainWaterfallGoToGym + DazzledByMentor rewritten. |
+| `data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc` | WallaceToughestInHoenn → "gave up his seat and came home". |
+| `data/maps/SootopolisCity_House3/scripts.inc` | Fan text → Wallace. |
+| `data/maps/CaveOfOrigin_B1F/scripts.inc` | WallaceStory: 3 paragraphs → current Gym Leader / former Champion. |
+| `data/maps/MossdeepCity/scripts.inc` | Sootopolis gym rumor → "old LEADER back". |
+| `data/text/match_call.inc` | Juan1-4 now spoken by WALLACE; MatchCall_Text_Wallace (Champion header) now STEVEN. |
+| `src/data/text/match_call_messages.h` | DandyCharm_Juan (Wallace) + Champion_Wallace (Steven) flavor texts. |
+| `src/strings.c` | gText_JuanMatchCallDesc → "WATER ARTIST". |
