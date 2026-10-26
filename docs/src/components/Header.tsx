@@ -4,6 +4,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'Research Logs' },
   { href: '/guide', label: 'Game Guide' },
   { href: '/pokedex', label: 'Pokedex' },
+  { href: '/moves', label: 'Moves' },
   { href: '/about', label: 'About' },
   { href: '/downloads', label: 'Downloads' },
 ];

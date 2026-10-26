@@ -6,7 +6,7 @@ import TypeBadge from '../components/TypeBadge';
 import { TYPE_EMOJIS } from '../lib/type-utils';
 import { GAME_PROGRESSION } from '../lib/game-progression';
 import type { ProgressionStep } from '../lib/game-progression';
-import type { GuideData, EncounterEntry } from '../lib/types';
+import type { GuideData, EncounterEntry, RouteTrainer } from '../lib/types';
 
 /** Collect all unique species from a set of route keys. */
 function collectSpecies(data: GuideData, routeKeys: string[]): string[] {
@@ -90,6 +90,72 @@ function computeStats(data: GuideData) {
   };
 }
 
+/** Tabbed tier selector for rematch sections. */
+function RematchTierViewer({
+  title,
+  tiers,
+  renderTier,
+}: {
+  title: string;
+  tiers: number[];
+  renderTier: (tier: number) => React.ReactNode;
+}) {
+  const [activeTier, setActiveTier] = useState(tiers[0]);
+
+  return (
+    <div className="guide-section">
+      <h3 className="guide-section-title">{title}</h3>
+      <div className="tier-tabs">
+        {tiers.map(tier => (
+          <button
+            key={tier}
+            className={`tier-tab${activeTier === tier ? ' active' : ''}`}
+            onClick={() => setActiveTier(tier)}
+          >
+            Rematch {tier}
+          </button>
+        ))}
+      </div>
+      <div className="tier-content">
+        {renderTier(activeTier)}
+      </div>
+    </div>
+  );
+}
+
+/** Tabbed starter selector for rival battles. */
+function StarterTabViewer({
+  title,
+  starters,
+  renderStarter,
+}: {
+  title: string;
+  starters: string[];
+  renderStarter: (starter: string) => React.ReactNode;
+}) {
+  const [activeStarter, setActiveStarter] = useState(starters[0]);
+
+  return (
+    <div className="guide-section">
+      <h3 className="guide-section-title">{title}</h3>
+      <div className="tier-tabs">
+        {starters.map(s => (
+          <button
+            key={s}
+            className={`tier-tab${activeStarter === s ? ' active' : ''}`}
+            onClick={() => setActiveStarter(s)}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+      <div className="tier-content">
+        {renderStarter(activeStarter)}
+      </div>
+    </div>
+  );
+}
+
 /** Render a single progression step. */
 function StepRenderer({
   step,
@@ -137,19 +203,30 @@ function StepRenderer({
       const validKeys = step.routeKeys.filter(k => data.routes[k]);
       if (validKeys.length === 0) return null;
 
-      // For multi-floor / multi-area locations, merge into a combined view
-      if (validKeys.length === 1) {
-        return (
-          <RouteCard
-            name={step.label}
-            route={data.routes[validKeys[0]]}
-            newSpecies={newSpecies}
-          />
-        );
+      // Collect route trainers for all route keys in this step
+      const routeTrainerEntries: RouteTrainer[] = [];
+      if (data.routeTrainers) {
+        for (const key of step.routeKeys) {
+          // Try exact match and common variations
+          const candidates = [key, key.replace(/ /g, '')];
+          for (const candidate of candidates) {
+            const trainers = data.routeTrainers[candidate];
+            if (trainers) {
+              routeTrainerEntries.push(...trainers);
+              break;
+            }
+          }
+        }
       }
 
-      // Multiple sub-areas — render each
-      return (
+      // For multi-floor / multi-area locations, merge into a combined view
+      const routeCards = validKeys.length === 1 ? (
+        <RouteCard
+          name={step.label}
+          route={data.routes[validKeys[0]]}
+          newSpecies={newSpecies}
+        />
+      ) : (
         <div className="route-group">
           <div className="route-group-label">{step.label}</div>
           {validKeys.map(key => (
@@ -161,6 +238,21 @@ function StepRenderer({
             />
           ))}
         </div>
+      );
+
+      return (
+        <>
+          {routeCards}
+          {routeTrainerEntries.length > 0 && (
+            <TrainerCard
+              title={`Trainers \u2014 ${step.label}`}
+              subtitle={`${routeTrainerEntries.length} trainer${routeTrainerEntries.length !== 1 ? 's' : ''}`}
+              typeBadge="Trainer"
+              party={[]}
+              routeTrainers={routeTrainerEntries}
+            />
+          )}
+        </>
       );
     }
 
@@ -207,25 +299,45 @@ function StepRenderer({
       });
       if (battles.length === 0) return null;
 
-      // Group by rival name, show all starter matchups
-      return (
-        <>
-          {battles
-            .sort((a, b) => {
-              const maxA = Math.max(...a.party.map(p => p.level));
-              const maxB = Math.max(...b.party.map(p => p.level));
-              return maxA - maxB;
-            })
-            .map((battle, i) => (
+      // Get unique starter matchups for tabs
+      const matchups = [...new Set(battles.map(r => r.starterMatchup).filter(Boolean))] as string[];
+
+      if (matchups.length <= 1) {
+        // No starter variants — just show the battles directly
+        return (
+          <>
+            {battles.map((battle, i) => (
               <TrainerCard
                 key={i}
                 title={`${battle.rival} \u2014 ${battle.location}`}
-                subtitle={battle.starterMatchup ? `If player chose: ${battle.starterMatchup}` : ''}
                 typeBadge="Rival"
                 party={battle.party}
               />
             ))}
-        </>
+          </>
+        );
+      }
+
+      // Tabbed view — one tab per starter choice
+      return (
+        <StarterTabViewer
+          title={step.label}
+          starters={matchups}
+          renderStarter={(starter) => {
+            const filtered = battles
+              .filter(r => r.starterMatchup === starter)
+              // Deduplicate Brendan/May (same teams, different gender)
+              .filter((b, i, arr) => arr.findIndex(x => x.rival === b.rival) === i);
+            return filtered.map((battle, i) => (
+              <TrainerCard
+                key={i}
+                title={`${battle.rival} \u2014 ${battle.location}`}
+                typeBadge="Rival"
+                party={battle.party}
+              />
+            ));
+          }}
+        />
       );
     }
 
@@ -259,6 +371,76 @@ function StepRenderer({
         </div>
       );
 
+    case 'rematches': {
+      if (step.label === 'Gym Leader Rematches' && data.gymRematches?.length > 0) {
+        const tierNums = [...new Set(data.gymRematches.map(r => r.tier))].sort();
+        return (
+          <RematchTierViewer
+            title="Gym Leader Rematches"
+            tiers={tierNums}
+            renderTier={(tier) =>
+              data.gymRematches
+                .filter(r => r.tier === tier)
+                .map((r, i) => (
+                  <TrainerCard
+                    key={i}
+                    title={r.name}
+                    subtitle={r.location + (r.doubleBattle ? ' \u00B7 Double Battle' : '')}
+                    typeBadge={r.type}
+                    party={r.party}
+                  />
+                ))
+            }
+          />
+        );
+      }
+      if (step.label === 'Elite Four Rematches' && data.e4Rematches?.length > 0) {
+        const tierNums = [...new Set(data.e4Rematches.map(r => r.tier))].sort();
+        return (
+          <RematchTierViewer
+            title="Elite Four Rematches"
+            tiers={tierNums}
+            renderTier={(tier) =>
+              data.e4Rematches
+                .filter(r => r.tier === tier)
+                .map((r, i) => (
+                  <TrainerCard
+                    key={i}
+                    title={r.name}
+                    subtitle={`${r.type} Specialist`}
+                    typeBadge={r.type}
+                    party={r.party}
+                  />
+                ))
+            }
+          />
+        );
+      }
+      if (step.label === 'Champion Rematches' && data.championRematches?.length > 0) {
+        const tierNums = [...new Set(data.championRematches.map(r => r.tier))].sort();
+        return (
+          <RematchTierViewer
+            title="Champion Rematches"
+            tiers={tierNums}
+            renderTier={(tier) =>
+              data.championRematches
+                .filter(r => r.tier === tier)
+                .map((r, i) => (
+                  <TrainerCard
+                    key={i}
+                    title={`Champion ${r.name}`}
+                    subtitle="The final challenge"
+                    typeBadge="Champion"
+                    party={r.party}
+                  />
+                ))
+            }
+          />
+        );
+      }
+      return null;
+    }
+
     case 'landmark':
       return (
         <div className="landmark-card">
@@ -285,6 +467,7 @@ function stepTypeClass(type: ProgressionStep['type']): string {
     case 'elite-four': return 'step-elite';
     case 'champion': return 'step-champion';
     case 'starter': return 'step-starter';
+    case 'rematches': return 'step-rematches';
     case 'landmark': return 'step-landmark';
     case 'chapter': return 'step-chapter';
     default: return '';

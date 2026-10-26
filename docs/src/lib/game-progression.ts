@@ -4,7 +4,7 @@
  */
 
 export interface ProgressionStep {
-  type: 'starter' | 'route' | 'gym' | 'rival' | 'elite-four' | 'champion' | 'landmark' | 'chapter' | 'boss';
+  type: 'starter' | 'route' | 'gym' | 'rival' | 'elite-four' | 'champion' | 'landmark' | 'chapter' | 'boss' | 'rematches' | 'route-trainers';
   label: string;
   /** Matches key in GuideData.routes (e.g. "Route 101", "Petalburg Woods") */
   routeKeys?: string[];
@@ -16,6 +16,8 @@ export interface ProgressionStep {
   bossKeys?: string[];
   /** Flavor text for landmarks / chapters */
   description?: string;
+  /** For type === 'route-trainers': map name key to look up in routeTrainers */
+  trainerMapKey?: string;
 }
 
 export const GAME_PROGRESSION: ProgressionStep[] = [
@@ -106,7 +108,7 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'route', label: 'Shoal Cave', routeKeys: ['Shoal Cave Low Tide Entrance Room', 'Shoal Cave Low Tide Ice Room', 'Shoal Cave Low Tide Inner Room', 'Shoal Cave Low Tide Lower Room', 'Shoal Cave Low Tide Stairs Room'] },
   { type: 'landmark', label: 'Mossdeep City', description: 'Home to the Space Center and the 7th Gym.' },
   { type: 'gym', label: 'Gym 7: Tate & Liza', gymNumber: 7 },
-  { type: 'boss', label: 'Boss Fights \u2014 Tabitha, Maxie & Steven (Mossdeep City)', bossKeys: ['tabitha_mossdeep', 'maxie_mossdeep', 'steven_multi'] },
+  { type: 'boss', label: 'Boss Fights \u2014 Tabitha & Maxie (Mossdeep City)', bossKeys: ['tabitha_mossdeep', 'maxie_mossdeep'] },
   { type: 'route', label: 'Route 127', routeKeys: ['Route 127'] },
   { type: 'route', label: 'Seafloor Cavern', routeKeys: ['Seafloor Cavern Entrance', 'Seafloor Cavern Room1', 'Seafloor Cavern Room2', 'Seafloor Cavern Room3', 'Seafloor Cavern Room4', 'Seafloor Cavern Room5', 'Seafloor Cavern Room6', 'Seafloor Cavern Room7', 'Seafloor Cavern Room8'] },
   { type: 'boss', label: 'Boss Fights \u2014 Shelly & Archie (Seafloor Cavern)', bossKeys: ['shelly_seafloor_cavern', 'archie'] },
@@ -128,12 +130,20 @@ export const GAME_PROGRESSION: ProgressionStep[] = [
   { type: 'champion', label: 'Champion' },
 
   // ── Postgame ──
-  { type: 'chapter', label: 'Postgame', description: 'Explore remaining areas and catch rare Pok\u00e9mon.' },
+  { type: 'chapter', label: 'Postgame', description: 'Explore remaining areas, challenge rematches, and uncover the cosmic mystery.' },
+  { type: 'rival', label: 'Rival Battle \u2014 Littleroot Town (Postgame)', rivalLocation: 'Postgame' },
   { type: 'route', label: 'Route 115', routeKeys: ['Route 115'] },
   { type: 'route', label: 'Sky Pillar', routeKeys: ['Sky Pillar 1f', 'Sky Pillar 3f'] },
-  { type: 'route', label: 'Meteor Falls (Deep)', routeKeys: ['Meteor Falls B1f 1r', 'Meteor Falls B1f 2r', 'Meteor Falls Stevens Cave'] },
+  { type: 'route', label: 'Meteor Falls (Deep)', routeKeys: ['Meteor Falls B1f 1r', 'Meteor Falls B1f 2r'] },
+  { type: 'boss', label: 'Boss Fight \u2014 Steven (Meteor Falls)', bossKeys: ['steven_postgame'] },
   { type: 'route', label: 'Altering Cave', routeKeys: ['Altering Cave'] },
   { type: 'route', label: 'Artisan Cave', routeKeys: ['Artisan Cave 1f', 'Artisan Cave B1f'] },
   { type: 'route', label: 'Desert Underpass', routeKeys: ['Desert Underpass'] },
   { type: 'route', label: 'Abandoned Ship', routeKeys: ['Abandoned Ship Hidden Floor Corridors', 'Abandoned Ship Rooms B1f'] },
+
+  // ── Rematches ──
+  { type: 'chapter', label: 'Rematches', description: 'Gym leader, Elite Four, and Champion rematch tiers with escalating teams.' },
+  { type: 'rematches', label: 'Gym Leader Rematches' },
+  { type: 'rematches', label: 'Elite Four Rematches' },
+  { type: 'rematches', label: 'Champion Rematches' },
 ];
