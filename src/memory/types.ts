@@ -32,9 +32,37 @@ export interface Memory {
   pokemonKnowledge: MemoryFile;
 }
 
-/** Token usage tracking for a cycle */
+/**
+ * Token usage tracking for a cycle. Input is split the way it is billed:
+ * uncached input, prompt-cache writes and prompt-cache reads (the cheapest,
+ * and by far the largest share of an agent run's input).
+ */
 export interface TokenUsage {
   inputTokens: number;
+  cacheWriteTokens: number;
+  cacheReadTokens: number;
   outputTokens: number;
   totalTokens: number;
+}
+
+export const EMPTY_TOKEN_USAGE: TokenUsage = {
+  inputTokens: 0,
+  cacheWriteTokens: 0,
+  cacheReadTokens: 0,
+  outputTokens: 0,
+  totalTokens: 0,
+};
+
+/** Aggregate token usage from multiple phases */
+export function mergeTokenUsage(...usages: TokenUsage[]): TokenUsage {
+  return usages.reduce(
+    (acc, u) => ({
+      inputTokens: acc.inputTokens + u.inputTokens,
+      cacheWriteTokens: acc.cacheWriteTokens + u.cacheWriteTokens,
+      cacheReadTokens: acc.cacheReadTokens + u.cacheReadTokens,
+      outputTokens: acc.outputTokens + u.outputTokens,
+      totalTokens: acc.totalTokens + u.totalTokens,
+    }),
+    EMPTY_TOKEN_USAGE,
+  );
 }

@@ -367,7 +367,7 @@ describe("parseClaudeOutput", () => {
     expect(result.tokenUsage.outputTokens).toBe(99);
   });
 
-  it("counts prompt-cache tokens as input tokens", () => {
+  it("reports prompt-cache writes and reads apart from uncached input", () => {
     const input = msg("result", [], {
       result: "done",
       usage: {
@@ -378,8 +378,32 @@ describe("parseClaudeOutput", () => {
       },
     });
     const result = parseClaudeOutput(input);
-    expect(result.tokenUsage.inputTokens).toBe(5012);
-    expect(result.tokenUsage.totalTokens).toBe(5111);
+    expect(result.tokenUsage).toEqual({
+      inputTokens: 2,
+      cacheWriteTokens: 4110,
+      cacheReadTokens: 900,
+      outputTokens: 99,
+      totalTokens: 5111,
+    });
+  });
+
+  it("sums cache tokens across messages when no result message arrives", () => {
+    const input = [
+      msg("assistant", [textBlock("one")], {
+        usage: { input_tokens: 3, cache_creation_input_tokens: 1000, output_tokens: 10 },
+      }),
+      msg("assistant", [textBlock("two")], {
+        usage: { input_tokens: 1, cache_read_input_tokens: 1000, output_tokens: 20 },
+      }),
+    ].join("\n");
+    const result = parseClaudeOutput(input);
+    expect(result.tokenUsage).toEqual({
+      inputTokens: 4,
+      cacheWriteTokens: 1000,
+      cacheReadTokens: 1000,
+      outputTokens: 30,
+      totalTokens: 2034,
+    });
   });
 
   // --- Narrative text ---

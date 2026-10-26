@@ -94,7 +94,7 @@ ${data.nextSteps || "No next steps specified."}
 ## Stats
 
 - Tool calls: ${data.toolCallCount}
-- Tokens used: ${data.tokenUsage.totalTokens.toLocaleString()} (input: ${data.tokenUsage.inputTokens.toLocaleString()}, output: ${data.tokenUsage.outputTokens.toLocaleString()})
+- Tokens used: ${formatTokenUsage(data.tokenUsage)}
 `;
 
   fs.writeFileSync(filePath, content, "utf-8");
@@ -215,4 +215,15 @@ function formatValidationSection(
   parts.push("");
 
   return parts.join("\n");
+}
+
+/**
+ * One-line token breakdown. Cache reads dominate an agent run's total (every
+ * turn re-reads the conversation) but bill at a fraction of uncached input,
+ * so they are reported apart from it.
+ */
+export function formatTokenUsage(usage: TokenUsage): string {
+  const n = (value: number) => value.toLocaleString("en-US");
+  return `${n(usage.totalTokens)} (input: ${n(usage.inputTokens)}, cache write: ${n(usage.cacheWriteTokens)}, `
+    + `cache read: ${n(usage.cacheReadTokens)}, output: ${n(usage.outputTokens)})`;
 }

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { validateCycle } from "./validator.js";
 import type { ChangeSet } from "../repo/game-tree.js";
 import type { ClaudeCodeResult } from "../agent/output-parser.js";
+import { EMPTY_TOKEN_USAGE } from "../memory/types.js";
 
 /** Build a minimal ClaudeCodeResult with overrides */
 function makeResult(overrides: Partial<ClaudeCodeResult> = {}): ClaudeCodeResult {
@@ -13,7 +14,7 @@ function makeResult(overrides: Partial<ClaudeCodeResult> = {}): ClaudeCodeResult
     cycleChanges: [],
     nextSteps: "",
     issueOutcomes: [],
-    tokenUsage: { inputTokens: 0, outputTokens: 0, totalTokens: 0 },
+    tokenUsage: EMPTY_TOKEN_USAGE,
     toolCallCount: 0,
     resultText: "",
     narrativeText: "",
