@@ -125,14 +125,38 @@ jobs:
           sleep 60
           npm run cycle
 
+      # main can move while a cycle runs (merged PRs, manual pushes), so a
+      # plain push gets rejected as non-fast-forward. Merge the new main in
+      # and retry. Merge rather than rebase: the cycle has already published
+      # its commit SHA (sprite feedback image URLs, release notes), and a
+      # rebase would orphan it.
       - name: Push changes
         run: |
-          # Push only if there are new commits
-          if git diff --quiet origin/main..HEAD; then
+          if [ "$(git rev-list --count origin/main..HEAD)" -eq 0 ]; then
             echo "No new commits to push"
-          else
-            git push origin main
+            exit 0
           fi
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); merging latest origin/main..."
+            git fetch origin main
+            if ! git merge --no-edit origin/main -m "Merge origin/main into agent cycle"; then
+              git merge --abort || true
+              break
+            fi
+            sleep $((attempt * 5))
+          done
+
+          # Could not land on main: park the cycle's commits on a branch so
+          # the work survives for a manual merge, then fail the run.
+          rescue="cycle-rescue/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git push origin "HEAD:refs/heads/$rescue"
+          echo "::error::Could not push to main (conflict or repeated rejection). Cycle commits saved to branch $rescue — merge it manually."
+          exit 1
 
   deploy-docs:
     needs: run-cycle
