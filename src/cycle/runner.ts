@@ -21,7 +21,7 @@ import { saveBuildLog } from "../repo/build.js";
 import { beginGameTree, type BuildFixer, type GameTree } from "../repo/game-tree.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalDigests } from "../journal/writer.js";
-import { commitCycle, commitJournalOnly, getStrategyNotesDiff } from "../git/committer.js";
+import { commitCycle, commitJournalOnly, getStrategyNotesDiff, listCommittedSpriteImages } from "../git/committer.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
@@ -827,13 +827,14 @@ export async function runCycle(): Promise<void> {
         );
       } else {
         const meta = spriteResult.metadata;
-        const imagePaths = spriteResult.filesCreated.filter(
-          (f) => f.includes("graphics/pokemon/") && f.endsWith(".png"),
-        );
         const repoInfo = getRepoInfo();
         const repoSlug = repoInfo ? `${repoInfo.owner}/${repoInfo.repo}` : undefined;
         log.info("Phase 3.6: Posting sprite feedback issue...");
         try {
+          const imagePaths = await listCommittedSpriteImages(commitHash);
+          if (imagePaths.length === 0) {
+            log.warn(`  ⚠ Phase 3.6: commit ${commitHash.slice(0, 7)} changed no sprite PNGs — the feedback post will have no images.`);
+          }
           if (meta.isIteration && meta.existingIssueNumber) {
             await postSpriteIterationUpdate(
               meta.existingIssueNumber,

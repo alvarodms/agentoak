@@ -118,3 +118,24 @@ export async function getStrategyNotesDiff(): Promise<string> {
     return "";
   }
 }
+
+/**
+ * Sprite PNGs a commit added or modified under pokeemerald/graphics/pokemon/,
+ * as repo-relative paths. Feedback issues pin image URLs to the cycle commit,
+ * so its diff is the source of truth: the Sprite Designer edits PNGs through
+ * scripts run in Bash, which tool-call file tracking never sees.
+ * Footprints are left out; they are 1-bit marks with nothing to give feedback on.
+ */
+export async function listCommittedSpriteImages(
+  commitHash: string,
+  repoRoot: string = PROJECT_ROOT,
+): Promise<string[]> {
+  const out = await simpleGit(repoRoot).raw([
+    "diff-tree", "--no-commit-id", "--name-only", "-r", "--no-renames", "--diff-filter=AM",
+    commitHash, "--", "pokeemerald/graphics/pokemon/",
+  ]);
+  return out
+    .split("\n")
+    .map((f) => f.trim())
+    .filter((f) => f.endsWith(".png") && !f.endsWith("/footprint.png"));
+}
