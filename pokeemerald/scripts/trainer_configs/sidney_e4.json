@@ -1,0 +1,68 @@
+{
+  "_note": "C313: source of truth for Elite Four Sidney (tier 0, base E4) -- \"the one who followed the storm\": Hoenn-native Dark-types, Absol ace, Honchkrow signature; no Tyranitar/Houndoom (#193 one-owner rule). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/sidney_e4.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_SIDNEY",
+  "partyName": "sParty_Sidney",
+  "party": [
+    {
+      "iv": 250,
+      "lvl": 44,
+      "species": "SPECIES_MIGHTYENA",
+      "heldItem": "ITEM_QUICK_CLAW",
+      "moves": [
+        "MOVE_CRUNCH",
+        "MOVE_TAUNT",
+        "MOVE_SWAGGER",
+        "MOVE_IRON_TAIL"
+      ]
+    },
+    {
+      "iv": 250,
+      "lvl": 45,
+      "species": "SPECIES_SHIFTRY",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_FAKE_OUT",
+        "MOVE_FAINT_ATTACK",
+        "MOVE_GIGA_DRAIN",
+        "MOVE_AERIAL_ACE"
+      ]
+    },
+    {
+      "iv": 250,
+      "lvl": 46,
+      "species": "SPECIES_SHARPEDO",
+      "heldItem": "ITEM_FOCUS_BAND",
+      "moves": [
+        "MOVE_CRUNCH",
+        "MOVE_WATERFALL",
+        "MOVE_ICE_BEAM",
+        "MOVE_EARTHQUAKE"
+      ]
+    },
+    {
+      "iv": 250,
+      "lvl": 47,
+      "species": "SPECIES_HONCHKROW",
+      "heldItem": "ITEM_BLACK_GLASSES",
+      "moves": [
+        "MOVE_NIGHT_SLASH",
+        "MOVE_DRILL_PECK",
+        "MOVE_STEEL_WING",
+        "MOVE_TAUNT"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 48,
+      "species": "SPECIES_ABSOL",
+      "heldItem": "ITEM_SCOPE_LENS",
+      "moves": [
+        "MOVE_SLASH",
+        "MOVE_FAINT_ATTACK",
+        "MOVE_QUICK_ATTACK",
+        "MOVE_ROCK_SLIDE"
+      ]
+    }
+  ]
+}

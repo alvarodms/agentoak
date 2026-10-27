@@ -1,0 +1,80 @@
+{
+  "_note": "C313: source of truth for Elite Four Sidney (tier 2, rematch 2) -- \"the one who followed the storm\": Hoenn-native Dark-types, Absol ace, Honchkrow signature; no Tyranitar/Houndoom (#193 one-owner rule). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/sidney_rematch_2.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_SIDNEY_REMATCH_2",
+  "partyName": "sParty_SidneyRematch2",
+  "party": [
+    {
+      "iv": 255,
+      "lvl": 70,
+      "species": "SPECIES_MIGHTYENA",
+      "heldItem": "ITEM_QUICK_CLAW",
+      "moves": [
+        "MOVE_CRUNCH",
+        "MOVE_TAUNT",
+        "MOVE_SWAGGER",
+        "MOVE_IRON_TAIL"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 72,
+      "species": "SPECIES_CACTURNE",
+      "heldItem": "ITEM_BRIGHT_POWDER",
+      "moves": [
+        "MOVE_SPIKES",
+        "MOVE_GIGA_DRAIN",
+        "MOVE_FAINT_ATTACK",
+        "MOVE_DYNAMIC_PUNCH"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 74,
+      "species": "SPECIES_CRAWDAUNT",
+      "heldItem": "ITEM_MYSTIC_WATER",
+      "moves": [
+        "MOVE_CRABHAMMER",
+        "MOVE_KNOCK_OFF",
+        "MOVE_AERIAL_ACE",
+        "MOVE_SLUDGE_BOMB"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 75,
+      "species": "SPECIES_UMBREON",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_TOXIC",
+        "MOVE_CONFUSE_RAY",
+        "MOVE_MOONLIGHT",
+        "MOVE_FAINT_ATTACK"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 77,
+      "species": "SPECIES_HONCHKROW",
+      "heldItem": "ITEM_BLACK_GLASSES",
+      "moves": [
+        "MOVE_NIGHT_SLASH",
+        "MOVE_BRAVE_BIRD",
+        "MOVE_SUCKER_PUNCH",
+        "MOVE_STEEL_WING"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 80,
+      "species": "SPECIES_ABSOL",
+      "heldItem": "ITEM_SCOPE_LENS",
+      "moves": [
+        "MOVE_SWORDS_DANCE",
+        "MOVE_SLASH",
+        "MOVE_FAINT_ATTACK",
+        "MOVE_QUICK_ATTACK"
+      ]
+    }
+  ]
+}

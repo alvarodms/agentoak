@@ -3865,37 +3865,37 @@ static const struct TrainerMonItemCustomMoves sParty_Sidney[] = {
     {
     .iv = 250,
     .lvl = 44,
-    .species = SPECIES_ABSOL,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_NIGHT_SLASH, MOVE_SWORDS_DANCE, MOVE_SHADOW_CLAW, MOVE_ROCK_SLIDE}
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_CRUNCH, MOVE_TAUNT, MOVE_SWAGGER, MOVE_IRON_TAIL}
     },
     {
     .iv = 250,
     .lvl = 45,
-    .species = SPECIES_HOUNDOOM,
-    .heldItem = ITEM_CHARCOAL,
-    .moves = {MOVE_NASTY_PLOT, MOVE_FLAMETHROWER, MOVE_SHADOW_BALL, MOVE_CRUNCH}
+    .species = SPECIES_SHIFTRY,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_FAKE_OUT, MOVE_FAINT_ATTACK, MOVE_GIGA_DRAIN, MOVE_AERIAL_ACE}
     },
     {
     .iv = 250,
     .lvl = 46,
     .species = SPECIES_SHARPEDO,
     .heldItem = ITEM_FOCUS_BAND,
-    .moves = {MOVE_CRUNCH, MOVE_AQUA_TAIL, MOVE_EARTHQUAKE, MOVE_ICE_BEAM}
+    .moves = {MOVE_CRUNCH, MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
     },
     {
     .iv = 250,
     .lvl = 47,
     .species = SPECIES_HONCHKROW,
     .heldItem = ITEM_BLACK_GLASSES,
-    .moves = {MOVE_NIGHT_SLASH, MOVE_AERIAL_ACE, MOVE_STEEL_WING, MOVE_TAUNT}
+    .moves = {MOVE_NIGHT_SLASH, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_TAUNT}
     },
     {
     .iv = 255,
     .lvl = 48,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_CRUNCH, MOVE_STONE_EDGE, MOVE_EARTHQUAKE, MOVE_FIRE_BLAST}
+    .species = SPECIES_ABSOL,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_QUICK_ATTACK, MOVE_ROCK_SLIDE}
     }
 };
 
@@ -5167,44 +5167,44 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch1[] = {
     {
     .iv = 255,
     .lvl = 60,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_BLACK_GLASSES,
-    .moves = {MOVE_NIGHT_SLASH, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_TAUNT}
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_CRUNCH, MOVE_TAUNT, MOVE_SWAGGER, MOVE_IRON_TAIL}
     },
     {
     .iv = 255,
     .lvl = 62,
     .species = SPECIES_SHARPEDO,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_CRUNCH, MOVE_SURF, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .heldItem = ITEM_FOCUS_BAND,
+    .moves = {MOVE_CRUNCH, MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
     },
     {
     .iv = 255,
     .lvl = 63,
-    .species = SPECIES_ABSOL,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_NIGHT_SLASH, MOVE_SWORDS_DANCE, MOVE_SHADOW_BALL, MOVE_SUCKER_PUNCH}
+    .species = SPECIES_SHIFTRY,
+    .heldItem = ITEM_MIRACLE_SEED,
+    .moves = {MOVE_FAKE_OUT, MOVE_GIGA_DRAIN, MOVE_AERIAL_ACE, MOVE_EXPLOSION}
     },
     {
     .iv = 255,
     .lvl = 65,
-    .species = SPECIES_HOUNDOOM,
-    .heldItem = ITEM_WHITE_HERB,
-    .moves = {MOVE_OVERHEAT, MOVE_CRUNCH, MOVE_SHADOW_BALL, MOVE_WILL_O_WISP}
+    .species = SPECIES_UMBREON,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_CONFUSE_RAY, MOVE_MOONLIGHT, MOVE_FAINT_ATTACK}
     },
     {
     .iv = 255,
     .lvl = 66,
-    .species = SPECIES_UMBREON,
-    .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_TOXIC, MOVE_MOONLIGHT, MOVE_CONFUSE_RAY, MOVE_SHADOW_BALL}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_BRAVE_BIRD, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
     },
     {
     .iv = 255,
     .lvl = 68,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_STONE_EDGE, MOVE_CRUNCH, MOVE_EARTHQUAKE}
+    .species = SPECIES_ABSOL,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_QUICK_ATTACK, MOVE_ROCK_SLIDE}
     }
 };
 
@@ -5394,44 +5394,44 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch2[] = {
     {
     .iv = 255,
     .lvl = 70,
-    .species = SPECIES_CRAWDAUNT,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_CRUNCH, MOVE_BRICK_BREAK}
+    .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_CRUNCH, MOVE_TAUNT, MOVE_SWAGGER, MOVE_IRON_TAIL}
     },
     {
     .iv = 255,
     .lvl = 72,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_BLACK_GLASSES,
-    .moves = {MOVE_SUCKER_PUNCH, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_TAUNT}
+    .species = SPECIES_CACTURNE,
+    .heldItem = ITEM_BRIGHT_POWDER,
+    .moves = {MOVE_SPIKES, MOVE_GIGA_DRAIN, MOVE_FAINT_ATTACK, MOVE_DYNAMIC_PUNCH}
     },
     {
     .iv = 255,
     .lvl = 74,
-    .species = SPECIES_SHARPEDO,
-    .heldItem = ITEM_SALAC_BERRY,
-    .moves = {MOVE_CRUNCH, MOVE_EARTHQUAKE, MOVE_ICE_BEAM, MOVE_SURF}
+    .species = SPECIES_CRAWDAUNT,
+    .heldItem = ITEM_MYSTIC_WATER,
+    .moves = {MOVE_CRABHAMMER, MOVE_KNOCK_OFF, MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB}
     },
     {
     .iv = 255,
-    .lvl = 76,
-    .species = SPECIES_HOUNDOOM,
-    .heldItem = ITEM_WHITE_HERB,
-    .moves = {MOVE_OVERHEAT, MOVE_CRUNCH, MOVE_SLUDGE_BOMB, MOVE_SUCKER_PUNCH}
+    .lvl = 75,
+    .species = SPECIES_UMBREON,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_CONFUSE_RAY, MOVE_MOONLIGHT, MOVE_FAINT_ATTACK}
     },
     {
     .iv = 255,
-    .lvl = 78,
-    .species = SPECIES_ABSOL,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STONE_EDGE}
+    .lvl = 77,
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_BRAVE_BIRD, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
     },
     {
     .iv = 255,
     .lvl = 80,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_STONE_EDGE, MOVE_CRUNCH, MOVE_EARTHQUAKE}
+    .species = SPECIES_ABSOL,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_QUICK_ATTACK}
     }
 };
 
@@ -5621,44 +5621,44 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch3[] = {
     {
     .iv = 255,
     .lvl = 80,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_BLACK_GLASSES,
-    .moves = {MOVE_SUCKER_PUNCH, MOVE_BRAVE_BIRD, MOVE_STEEL_WING, MOVE_TAUNT}
+    .species = SPECIES_SHARPEDO,
+    .heldItem = ITEM_FOCUS_BAND,
+    .moves = {MOVE_TAUNT, MOVE_CRUNCH, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
     },
     {
     .iv = 255,
     .lvl = 82,
-    .species = SPECIES_SHIFTRY,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_BRICK_BREAK, MOVE_SUCKER_PUNCH, MOVE_EXPLOSION}
+    .species = SPECIES_CACTURNE,
+    .heldItem = ITEM_BRIGHT_POWDER,
+    .moves = {MOVE_SPIKES, MOVE_GIGA_DRAIN, MOVE_FAINT_ATTACK, MOVE_DYNAMIC_PUNCH}
     },
     {
     .iv = 255,
     .lvl = 83,
     .species = SPECIES_CRAWDAUNT,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_CRUNCH, MOVE_BRICK_BREAK}
+    .heldItem = ITEM_MYSTIC_WATER,
+    .moves = {MOVE_CRABHAMMER, MOVE_KNOCK_OFF, MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB}
     },
     {
     .iv = 255,
-    .lvl = 85,
-    .species = SPECIES_HOUNDOOM,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_NASTY_PLOT, MOVE_FLAMETHROWER, MOVE_CRUNCH, MOVE_SHADOW_BALL}
+    .lvl = 84,
+    .species = SPECIES_UMBREON,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TOXIC, MOVE_CONFUSE_RAY, MOVE_MOONLIGHT, MOVE_FAINT_ATTACK}
     },
     {
     .iv = 255,
     .lvl = 86,
-    .species = SPECIES_ABSOL,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STONE_EDGE}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_BRAVE_BIRD, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
     },
     {
     .iv = 255,
     .lvl = 88,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_STONE_EDGE, MOVE_EARTHQUAKE, MOVE_CRUNCH, MOVE_IRON_HEAD}
+    .species = SPECIES_ABSOL,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_QUICK_ATTACK}
     }
 };
 
@@ -5848,44 +5848,44 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch4[] = {
     {
     .iv = 255,
     .lvl = 88,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_BLACK_GLASSES,
-    .moves = {MOVE_SUCKER_PUNCH, MOVE_BRAVE_BIRD, MOVE_STEEL_WING, MOVE_SWAGGER}
+    .species = SPECIES_SHARPEDO,
+    .heldItem = ITEM_FOCUS_BAND,
+    .moves = {MOVE_TAUNT, MOVE_CRUNCH, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
     },
     {
     .iv = 255,
     .lvl = 89,
     .species = SPECIES_SHIFTRY,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_BRICK_BREAK, MOVE_SUCKER_PUNCH, MOVE_EXPLOSION}
+    .heldItem = ITEM_QUICK_CLAW,
+    .moves = {MOVE_FAKE_OUT, MOVE_GIGA_DRAIN, MOVE_AERIAL_ACE, MOVE_EXPLOSION}
+    },
+    {
+    .iv = 255,
+    .lvl = 90,
+    .species = SPECIES_CRAWDAUNT,
+    .heldItem = ITEM_LIECHI_BERRY,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_KNOCK_OFF, MOVE_AERIAL_ACE}
     },
     {
     .iv = 255,
     .lvl = 91,
-    .species = SPECIES_CRAWDAUNT,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_CRABHAMMER, MOVE_CRUNCH, MOVE_BRICK_BREAK}
-    },
-    {
-    .iv = 255,
-    .lvl = 92,
-    .species = SPECIES_HOUNDOOM,
-    .heldItem = ITEM_WHITE_HERB,
-    .moves = {MOVE_OVERHEAT, MOVE_SUCKER_PUNCH, MOVE_SHADOW_BALL, MOVE_SLUDGE_BOMB}
+    .species = SPECIES_UMBREON,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_MEAN_LOOK, MOVE_TOXIC, MOVE_CONFUSE_RAY, MOVE_MOONLIGHT}
     },
     {
     .iv = 255,
     .lvl = 93,
-    .species = SPECIES_ABSOL,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_NIGHT_SLASH, MOVE_STONE_EDGE, MOVE_SUCKER_PUNCH}
+    .species = SPECIES_HONCHKROW,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_NIGHT_SLASH, MOVE_BRAVE_BIRD, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
     },
     {
     .iv = 255,
     .lvl = 95,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_STONE_EDGE, MOVE_CRUNCH, MOVE_EARTHQUAKE}
+    .species = SPECIES_ABSOL,
+    .heldItem = ITEM_SCOPE_LENS,
+    .moves = {MOVE_SWORDS_DANCE, MOVE_SLASH, MOVE_FAINT_ATTACK, MOVE_QUICK_ATTACK}
     }
 };
 

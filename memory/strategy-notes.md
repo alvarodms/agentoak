@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201).
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201).
 
 ---
 
@@ -63,12 +63,16 @@ Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/
 
 | Species | Boss Trainers | On Steven's New Team? |
 |---------|--------------|----------------------|
-| Tyranitar | Sidney, Drake, Rival, Steven (Meteor Falls) — 4 bosses | No |
-| Houndoom | Sidney, Maxie, Tabitha — 3+ bosses | No |
-| Honchkrow | Sidney (all tiers), Wally — 2 bosses | No |
+| Tyranitar | Rival postgame (Brendan/May Mudkip variants), Meteor Falls Steven (`sParty_Steven`, Larvitar lineage), Roxanne5 — **Sidney removed C313**; Drake has none (ROM grep C313) | No |
+| Houndoom | Maxie (Hideout+Mossdeep), Tabitha (Hideout+Mossdeep) = Magma's dog; also Flannery1/3/4/5 + Magma grunts — **Sidney removed C313** | No |
+| Honchkrow | Sidney (signature, all 5 tiers), Winona1-5 (ROM data — NOT Wally; review Winona overlap later) | No |
 | Corsola_Hoenn | Phoebe, Aqua grunts (Juan slots are now Wallace, no Corsola_H) | No |
 
-Steven's new team: **ZERO overlap** with overused species. Primary #193 target: Sidney's Tyranitar/Houndoom/Honchkrow saturation (C313).
+**ONE-OWNER RULE:** each overused species belongs to the boss whose identity it fits; don't re-add Tyranitar/Houndoom to Sidney.
+
+**Sidney C313 — "the one who followed the storm"** (source of truth: `pokeemerald/scripts/trainer_configs/sidney_*.json`, apply with generate_trainer.cjs): Hoenn-native Dark-types, Absol ace (last slot), Honchkrow signature. Base (44-48, 5 mons): Mightyena/Shiftry/Sharpedo/Honchkrow/Absol. R1 (60-68): Mightyena/Sharpedo/Shiftry/Umbreon/Honchkrow/Absol. R2 (70-80): Mightyena/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol(SD). R3 (80-88): Sharpedo lead/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol. R4 (88-95): Sharpedo/Shiftry/Crawdaunt(SD+Liechi)/Umbreon(Mean Look trap)/Honchkrow/Absol. All moves legal per ROM learnsets (Absol uses Slash/Faint Attack/Quick Attack — no Night Slash/Sucker Punch in its vanilla learnset; see tech-debt). Overlap with Phoebe/Glacia/Drake/Steven/Wallace arrays: **0 shared species** (grep C313). Intro text now names Absol pacing before the migration.
+
+Steven's new team: **ZERO overlap** with overused species. Next #193: Phoebe/Glacia overlap test, then villain team diversity.
 
 ### Remaining Wallace/Juan threads
 - Juan postgame Double Battle (slot 568) — not built yet. SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
@@ -94,8 +98,8 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 302-310 | Learnsets, Ambipom/Carbink/Toxapex rosters, Steven champion, Wallace cascade, Fey Flame — **ALL DONE** | #180, #182, #192, #194 partial, #193 partial |
 | 311 | Undertow (ABILITY 83) + Torchic/Combusken_H Will-O-Wisp Lv24 + Mudkip-line sprite lint — **DONE** | #201 partial |
 | 312 | Mt. Pyre starlight Torchic, the first den discovery beat (visible static Torchic_H Lv30 @Star Piece + 2 cue signs) — **DONE** | #201 partial (Torchic-line sprite lint) |
-| 313 | Sidney/boss species-reuse audit | #193 |
-| 314 | Treecko-line palette restore (regressed to vanilla green — must land BEFORE the Meteor Falls den spotlights it) + next #201 family | #201 |
+| 313 | Sidney rebuilt as "the one who followed the storm" (Absol ace, Honchkrow signature, no Tyranitar/Houndoom; sidney_*.json configs + intro line) — **DONE** | #193 partial |
+| 314 | Phoebe/Glacia overlap test + Winona/Sidney Honchkrow overlap review; then villain team diversity (#193 remainder). Treecko-line palette restore DONE C313; remaining #201: eye-check Lotad/Lombre/Ludicolo + Shroomish/Breloom_H for the same vanilla regression | #193, #201 |
 | 314+ | v2.9 polish | — |
 | 315+ | Meteor Falls crystal Treecko den — discovery beat, same static pattern; also sets up the Steven Regirock/Regice postgame scene | #194 |
 | 316+ | Shoal Cave titan Mudkip den — discovery beat, same static pattern | — |

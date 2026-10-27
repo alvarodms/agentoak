@@ -38,3 +38,4 @@ EGG=451, NUM_SPECIES=451.
 - C311 sprite lint (#201): graphics/pokemon/{mudkip,marshtomp,swampert}_hoenn/back.png PLTE re-synced to normal.pal; marshtomp_hoenn front.png + anim_front.png jaggies fixed. Details in sprite-iterations.md.
 - C312 sprite lint + palette restore (#201): graphics/pokemon/{torchic,combusken,blaziken}_hoenn/{front,back,anim_front}.png + normal.pal + shiny.pal — palettes had regressed to vanilla orange/red; starlit violet-gold rebuilt, jaggies fixed. Details in sprite-iterations.md.
 - Sprites for Changed Three, Toxapex front are placeholders (vanilla base / Tentacruel).
+- C313 palette restore (#201): graphics/pokemon/{treecko,grovyle,sceptile}_hoenn/{front,back,anim_front}.png + normal.pal + shiny.pal — regressed to vanilla green; crystal-steel normal + "frost-dawn" shiny rebuilt, Grovyle jaggies fixed, Sceptile eye px remapped. Icons untouched (shared green icon pal). Details in sprite-iterations.md.
