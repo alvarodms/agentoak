@@ -70,7 +70,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Flag System Layout
 
-Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B4. Next available: **0x2B5**. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B5. Next available: **0x2B6**. Mt. Pyre starlight Torchic hide flag: 0x2B5 (C312). Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
 
 **Shoal Cave tide architecture**: `ShoalCave_LowTideEntranceRoom` handles BOTH tides — `OnTransition` calls `UpdateShoalTideFlag` then swaps layout. Object events on `LowTideEntranceRoom` appear in both tides. Use `call` subroutine pattern for OnTransition logic.
 
@@ -98,6 +98,8 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 - **Legendary battle**: `setwildbattle` -> `setflag` -> `special BattleSetup_StartLegendaryBattle` -> `waitstate` -> check `B_OUTCOME_CAUGHT`. Macros: `asm/macros/legend_macros.inc` (7 composable).
 - **Challenge Mode scaling** (C210): `include/challenge_mode_scaling.h` — Leader +3, E4 +3, Champion +5, Rival +2, Aqua/Magma Leaders +2, Admins +1 (`sChallengeModeScaling[]`).
 - **Event macros** (C179): `asm/macros/event_macros.inc` — `GlimpseEvent`, `BadgeGateShow`, `ConditionalDialogue`.
+- **Static Encounter Recipe** (vanilla AquaHideout_B1F Electrode; used C312 MtPyre_Exterior): object_event with `flag: FLAG_HIDE_X` + script `lock` → `playmoncry`/`waitmoncry` → `setwildbattle SPECIES, LV, ITEM` → `setflag FLAG_SYS_CTRL_OBJ_DELETE` → `dowildbattle` → `clearflag FLAG_SYS_CTRL_OBJ_DELETE` → `specialvar VAR_RESULT, GetBattleOutcome`; WON/RAN/PLAYER_TELEPORTED → `goto Common_EventScript_RemoveStaticPokemon` (fades + removeobject; hides only until next map load unless you also set the flag), CAUGHT → `setflag FLAG_HIDE_X`. Map needs `MAP_SCRIPT_ON_RESUME` → `call_if_set FLAG_SYS_CTRL_OBJ_DELETE, TryRemove` (GetBattleOutcome == CAUGHT → `removeobject VAR_LAST_TALKED`) so the sprite is gone when the catch returns to the field. `setwildbattle` third arg = held item (default ITEM_NONE).
+- **Overworld Pokémon stand-ins**: `OBJ_EVENT_GFX_*_DOLL` (e.g. OBJ_EVENT_GFX_TORCHIC_DOLL=155, event_objects.h) work as visible wild Pokémon. Single frame, so skip `faceplayer` and use MOVEMENT_TYPE_FACE_DOWN.
 - **Weather Omens** (C149): badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x285).
 
 ---

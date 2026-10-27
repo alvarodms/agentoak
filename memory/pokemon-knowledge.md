@@ -21,6 +21,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Champion Replacement & Wallace Cascade — Verified Evidence | 309 | [champion-replacement-correction-c306.md](pokemon-knowledge/champion-replacement-correction-c306.md) |
 | Difficulty Mechanics Landscape — Item Bans, Stat Boosts, Type Changes | 306 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
 | Toxapex on Boss Trainers — The Stall Pitfall | 307 | [toxapex-boss-design-stall-pitfall-c307.md](pokemon-knowledge/toxapex-boss-design-stall-pitfall-c307.md) |
+| Discovery Beats & Exploration Rewards | 312 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
 | Steven Rematch Design & the Regi Question (#194) | 308 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

@@ -740,7 +740,7 @@
 #define FLAG_RECKONING_TALKED_ROUTE128             0x2B2
 #define FLAG_RECKONING_TALKED_SHOAL_CAVE           0x2B3
 #define FLAG_RECKONING_COMPLETE  0x2B4
-#define FLAG_UNUSED_0x2B5  0x2B5 // Unused Flag
+#define FLAG_HIDE_MT_PYRE_STARLIGHT_TORCHIC  0x2B5 // C312: set when the player CATCHES the Mt. Pyre static Torchic_Hoenn
 #define FLAG_UNUSED_0x2B6  0x2B6 // Unused Flag
 #define FLAG_UNUSED_0x2B7  0x2B7 // Unused Flag
 #define FLAG_UNUSED_0x2B8  0x2B8 // Unused Flag

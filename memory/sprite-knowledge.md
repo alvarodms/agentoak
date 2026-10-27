@@ -12,7 +12,6 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Subtle palette shifts are invisible at 64x64** — push colors aggressively
 - **Always apply palette to PNG embedded palette** — `.pal` files only matter at GBA compile time
 - **Low-usage indices are free accent slots** — repurpose low-pixel-count indices for accent colors
-- **Pixel map analysis is essential** before placing glyphs — use run-length analysis to find safe canvas areas
 - **Apply edits to ALL sprite files consistently** — front.png, back.png, both frames of anim_front.png
 - **spritekit lint audit (all 25 variants, pre-gate)**: 8 had back.png embedded palette ≠ normal.pal (vanilla: 14/398); ~10 had near-duplicate used colors (e.g. Vulpix idx 2/12, Ninetales 6/11 + 7/12) — wasted slots and flat shading; accent/emanation passes tripled stray pixels on Ludicolo (15→49), Pinsir (12→36), Lotad (9→22). Vulpix's 16 colors all sat at hue 205–230°, which is why it reads washed out.
 - **Shinies must change hue, not just darken**: lint requires 40%+ of front.png (outline aside) to visibly change (vanilla median ~55%). Pre-gate, 7 variants were below it — Lotad 6%, Ludicolo 12% (body yellow-green -> darker olive), Corsola 15%, Lombre 15%, Blaziken 22%, Arcanine 23%, Combusken 29%.
@@ -37,6 +36,7 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **No python3 in the runner image** (C311): do pixel/palette work in TypeScript via `npx tsx` importing `src/sprite-tools/png.ts` (decodePng, parseJascPal). For palette-only fixes rewrite just the PLTE chunk bytes + CRC (IHDR/IDAT untouched, so bit depth and indices can't drift). For pixel edits on 4-bit PNGs, repack nibbles and swap only IDAT — `encodeIndexedPng` always writes 8-bit. Assert each pixel's old index before changing it.
 - **Stale back.png PLTE ≠ wrong mapping**: Mudkip line backs carried an old purple/orange palette, but indices already matched normal.pal's body parts — syncing PLTE was enough. Always preview after syncing to confirm that.
 - **Jaggy fix = drop the L-corner pixel to the fill on the outer side** (belly rim → body, outline corner → body, mouth rim → mouth fill). `lintSprite(img).jaggies` lists coordinates even for non-failing frames.
+- **Lint PASS does not prove the art direction survived** (C312): the Torchic line had silently regressed to vanilla orange palettes (probably the C308 pipeline repair re-fetching base sprites) while memory still said "violet-gold". Lint only compares against the base for noise, not intent. Before any cleanup, preview and check the colors against the sprite-iterations description; for any species touched by a re-fetch/repair, assume the palette may be vanilla.
 
 - **Sad expression via highlight/pupil swap**: Move bright highlight pixel from eye-top to eye-bottom, move dark pupil from eye-bottom to eye-top. Creates "downcast/heavy-lidded" look. Works because viewers read dark-on-top as closed/drooping eyelid.
 - **Frown mouth via ∩ pixel pattern**: Replace flat horizontal mouth with dark idx 4 pixels arranged as: center line at y (closer to eyes) + corners at y+1 (drooping away from eyes). At 64x64, even a 1-row vertical offset reads as curved. Use dark body-outline color, not amber — amber reads warm/happy.
@@ -55,6 +55,6 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Lotad_Hoenn**: Citrine gold lily pad, warm green body, lightning-bolt veins (23px, 5 radial zigzag paths). Shiny: deep amber + dark olive.
 - **Shroomish_Hoenn**: Frost-purple cap, icy-blue crystallization spots, frost emanation. Shiny: steel-blue cap + teal-green body.
 - **Treecko/Grovyle/Sceptile_Hoenn**: Cool steel-blue body, crystal gleam highlights, violet prismatic accents. Amber eyes for warm contrast. Shiny: warm gold-amber + cool blue eyes.
-- **Torchic/Combusken/Blaziken_Hoenn**: Violet-gold celestial theme. Halo/aura emanation. Duplicate palette indices (1-3 and 11-13) allow different crest vs beak coloring. Shiny: inverted "Dawn Bird" gold + indigo.
+- **Torchic/Combusken/Blaziken_Hoenn** (rebuilt C312): Torchic violet-white body + gold crest/beak (1-3 and 11-13 duplicate golds, shiny splits them: indigo crest, rose beak); Combusken violet body + gold crest/thighs + lavender talons; Blaziken pale gold body + deep violet plumes + blue-white starfire leg flames + blue eyes. Shiny: inverted "Dawn Bird" gold + indigo. C277 halo/aura emanation pixels are gone (art is newer-gen expansion art).
 - **Mudkip/Marshtomp/Swampert_Hoenn**: Shoal Cave slate-indigo, soft lavender headfin accents (bioluminescent, NOT neon), brine-stone belly. Shiny "Midnight Monk": charcoal + amber/gold.
 
