@@ -232,12 +232,14 @@ FortreeCity_Gym_Text_DariusPostBattle:
 	.string "WINONA's POKéMON are all business.$"
 
 FortreeCity_Gym_Text_WinonaIntro:
-	.string "New shadows over FORTREE.\p"
+	.string "New shadows passed over FORTREE.\p"
 	.string "A dark bird from the migration --\n"
-	.string "patient, clever.\p"
-	.string "I took it under my wing.\p"
-	.string "Let me show you how the sky\n"
-	.string "has changed.$"
+	.string "patient, clever. I raised it here.\p"
+	.string "One stormy night it flew south,\n"
+	.string "toward the ELITE FOUR.\p"
+	.string "My birds stayed.\n"
+	.string "HOENN's own wings.\p"
+	.string "Let me show you how they've grown!$"
 
 FortreeCity_Gym_Text_WinonaDefeat:
 	.string "Never before have I seen a TRAINER\n"
@@ -287,7 +289,7 @@ FortreeCity_Gym_Text_WinonaPreRematch:
 	.string "Murkrow from foreign skies have\n"
 	.string "joined the flock above my city.\p"
 	.string "Their cunning has sharpened my\n"
-	.string "own aerial strategies.\n"
+	.string "own aerial strategies.\p"
 	.string "Shall we soar together once more?$"
 
 FortreeCity_Gym_Text_WinonaRematchDefeat:

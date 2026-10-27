@@ -1,5 +1,5 @@
 {
-  "_note": "C313: source of truth for Elite Four Sidney (tier 0, base E4) -- \"the one who followed the storm\": Hoenn-native Dark-types, Absol ace, Honchkrow signature; no Tyranitar/Houndoom (#193 one-owner rule). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/sidney_e4.json",
+  "_note": "C314: Sharpedo→Crawdaunt (Archie owns Sharpedo). C313: source of truth for Elite Four Sidney (tier 0, base E4) -- \"the one who followed the storm\": Hoenn-native Dark-types, Absol ace, Honchkrow signature; no Tyranitar/Houndoom (#193 one-owner rule). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/sidney_e4.json",
   "mode": "modify",
   "trainerId": "TRAINER_SIDNEY",
   "partyName": "sParty_Sidney",
@@ -31,13 +31,13 @@
     {
       "iv": 250,
       "lvl": 46,
-      "species": "SPECIES_SHARPEDO",
+      "species": "SPECIES_CRAWDAUNT",
       "heldItem": "ITEM_FOCUS_BAND",
       "moves": [
-        "MOVE_CRUNCH",
-        "MOVE_WATERFALL",
+        "MOVE_CRABHAMMER",
+        "MOVE_KNOCK_OFF",
         "MOVE_ICE_BEAM",
-        "MOVE_EARTHQUAKE"
+        "MOVE_BRICK_BREAK"
       ]
     },
     {

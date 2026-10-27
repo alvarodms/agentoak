@@ -1,5 +1,5 @@
 {
-  "_note": "C308: source of truth for Steven (Champion) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/steven_rematch_1.json",
+  "_note": "C314: Flygon→Donphan (Drake owns Flygon). C308: source of truth for Steven (Champion) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/steven_rematch_1.json",
   "mode": "modify",
   "trainerId": "TRAINER_WALLACE_REMATCH_1",
   "partyName": "sParty_StevenRematch1",
@@ -19,13 +19,13 @@
     {
       "iv": 255,
       "lvl": 65,
-      "species": "SPECIES_FLYGON",
+      "species": "SPECIES_DONPHAN",
       "heldItem": "ITEM_CHOICE_BAND",
       "moves": [
         "MOVE_EARTHQUAKE",
-        "MOVE_DRAGON_CLAW",
         "MOVE_ROCK_SLIDE",
-        "MOVE_CRUNCH"
+        "MOVE_IRON_TAIL",
+        "MOVE_DOUBLE_EDGE"
       ]
     },
     {

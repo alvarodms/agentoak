@@ -38,11 +38,11 @@ TRAINER_WALLACE + _REMATCH_1-4 slots now = STEVEN (pic TRAINER_PIC_STEVEN, class
 | Slot | Base | T1 | T2 | T3 | T4 |
 |---|---|---|---|---|---|
 | 1 | Cradily 53 | Cradily 64 | Skarmory 73 | Skarmory 82 | Carbink 90 |
-| 2 | Flygon 54 (CB) | Flygon 65 | Flygon 75 (Fire Punch) | Aggron 84 (CB) | Registeel 91 |
+| 2 | Donphan 54 (CB) | Donphan 65 (CB) | Donphan 75 (CB) | Aggron 84 (CB) | Registeel 91 |
 | 3-5 | Sceptile_H 55 / Swampert_H 55 / Blaziken_H 56 | 66/67/68 | 76/78/80 | 85/86/88 (Blaz: Fire Blast) | 92/93/94 |
 | 6 | Metagross 57 | 71 | 82 | 90 | 95 (Agility over Ice Punch) |
 
-Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/Cross Chop/Bulk Up/EQ @Sitrus · Blaziken_H Flamethrower/Moonblast/CM/Will-O-Wisp @Petaya. (C306's Tidal Flare + Spore Fist were illegal + wrong category — swapped.)
+Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Double-Edge @Choice Band, Sturdy; chosen over Aggron because Flygon's loss left Ground/Fighting 3-weak with no resist (Aggron 4x both). Slot-2 lineage: Donphan T0-T2 → Aggron T3 → Registeel T4. Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/Cross Chop/Bulk Up/EQ @Sitrus · Blaziken_H Flamethrower/Moonblast/CM/Will-O-Wisp @Petaya. (C306's Tidal Flare + Spore Fist were illegal + wrong category — swapped.)
 **Engine facts (verified C308)**: trainer mons ALWAYS get ability slot 0 (Swampert_H = Undertow since C311, was Torrent; Aggron Sturdy; Corsola_H Rock Head). Crit: Iron Leaf w/ Scope Lens + Tempered Blade = stage 3 (1/3); Leaf Blade = stage 2 (1/4). Nature = trainer-name + species-name hash (renaming/reordering changes it). Challenge mode = +5 lv for CLASS_CHAMPION (capped 100).
 **Not possible yet**: natures/EVs/abilities per mon — needs TrainerMon struct expansion (tech debt).
 **#194 (Regis)**: Skarmory T2-T3, Registeel T4 (attack-only, no Rest/Curse) ADOPTED. Regirock/Regice → deferred to Meteor Falls Steven postgame.
@@ -65,14 +65,21 @@ Sets: Sceptile_H Iron Leaf/Leaf Blade/SD/EQ @Scope Lens · Swampert_H Waterfall/
 |---------|--------------|----------------------|
 | Tyranitar | Rival postgame (Brendan/May Mudkip variants), Meteor Falls Steven (`sParty_Steven`, Larvitar lineage), Roxanne5 — **Sidney removed C313**; Drake has none (ROM grep C313) | No |
 | Houndoom | Maxie (Hideout+Mossdeep), Tabitha (Hideout+Mossdeep) = Magma's dog; also Flannery1/3/4/5 + Magma grunts — **Sidney removed C313** | No |
-| Honchkrow | Sidney (signature, all 5 tiers), Winona1-5 (ROM data — NOT Wally; review Winona overlap later) | No |
+| Honchkrow | Sidney only (signature, all 5 tiers) — **Winona removed C314** ("dark bird flew south" story) | No |
+| Sharpedo | Archie / Team Aqua (grunts, Shelly, admin) — **Sidney removed C314** (→ Crawdaunt/Cacturne/Shiftry/Mightyena) | No |
+| Flygon | Drake (base + R1/R2) — **Steven T0-T2 removed C314** (→ Donphan) | No |
+| Crobat | Archie (+ Maxie, villain) — **Winona4/5 removed C314** | No |
+| Skarmory | **OPEN**: Winona 1/3/4/5 AND Steven T2/T3 + Meteor Falls `sParty_Steven`. Candidate fix: Steven T2/T3 lead → Metang or Lairon | T2/T3 |
 | Corsola_Hoenn | Phoebe, Aqua grunts (Juan slots are now Wallace, no Corsola_H) | No |
 
 **ONE-OWNER RULE:** each overused species belongs to the boss whose identity it fits; don't re-add Tyranitar/Houndoom to Sidney.
 
 **Sidney C313 — "the one who followed the storm"** (source of truth: `pokeemerald/scripts/trainer_configs/sidney_*.json`, apply with generate_trainer.cjs): Hoenn-native Dark-types, Absol ace (last slot), Honchkrow signature. Base (44-48, 5 mons): Mightyena/Shiftry/Sharpedo/Honchkrow/Absol. R1 (60-68): Mightyena/Sharpedo/Shiftry/Umbreon/Honchkrow/Absol. R2 (70-80): Mightyena/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol(SD). R3 (80-88): Sharpedo lead/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol. R4 (88-95): Sharpedo/Shiftry/Crawdaunt(SD+Liechi)/Umbreon(Mean Look trap)/Honchkrow/Absol. All moves legal per ROM learnsets (Absol uses Slash/Faint Attack/Quick Attack — no Night Slash/Sucker Punch in its vanilla learnset; see tech-debt). Overlap with Phoebe/Glacia/Drake/Steven/Wallace arrays: **0 shared species** (grep C313). Intro text now names Absol pacing before the migration.
+**C314 Sharpedo swap** (only that slot changed): Base slot 3 → Crawdaunt 46 (Crabhammer/Knock Off/Ice Beam/Brick Break); R1 slot 2 → Cacturne 62 (Spikes/Giga Drain/Faint Attack/Thunder Punch); R3 lead → Shiftry 80 (Fake Out/Faint Attack/Giga Drain/Explosion); R4 lead → Mightyena 88 (Taunt/Crunch/Iron Tail/Swagger). Every tier now has a distinct 6-species roster (pool of 7: Mightyena/Shiftry/Cacturne/Crawdaunt + fixed Umbreon/Honchkrow/Absol). Intro: "HONCHKROW rode a storm down from FORTREE. Runs the crew now."
 
-Steven's new team: **ZERO overlap** with overused species. Next #193: Phoebe/Glacia overlap test, then villain team diversity.
+**Winona C314 — "Hoenn's own wings"** (source of truth: `pokeemerald/scripts/trainer_configs/winona_gym_1..5.json`, apply with generate_trainer.cjs): Honchkrow → Sidney, Crobat → Archie. W1 Skarmory/Tropius/Pelipper/Altaria(ace, DD); W2 Swellow/Pelipper/Tropius/Altaria; W3 Skarmory/Pelipper/Swellow/Tropius/Altaria; W4 Skarmory/Pelipper/Dodrio/Masquerain/Tropius/Altaria; W5 Skarmory/Swellow/Dodrio/Tropius/Pelipper/Altaria 75. Badge 6 is softer than C313 (70-Atk Altaria ace vs Brave Bird Honchkrow) — the fight's key beat is "stop the Dragon Dance". Story link: Winona intro says the dark bird she raised "flew south, toward the ELITE FOUR"; Sidney's intro says it "rode a storm down from FORTREE". Rematch pre-text still mentions Murkrow flocks in the sky (flavour, not party).
+
+Steven's team: zero overlap except the open Skarmory row. **Phoebe and Glacia: 0 overlap** with other bosses (planning grep C314). Next #193: villain team diversity (C316); Crawdaunt is also on Shelly + Aqua admin — review there.
 
 ### Remaining Wallace/Juan threads
 - Juan postgame Double Battle (slot 568) — not built yet. SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
@@ -99,10 +106,10 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 311 | Undertow (ABILITY 83) + Torchic/Combusken_H Will-O-Wisp Lv24 + Mudkip-line sprite lint — **DONE** | #201 partial |
 | 312 | Mt. Pyre starlight Torchic, the first den discovery beat (visible static Torchic_H Lv30 @Star Piece + 2 cue signs) — **DONE** | #201 partial (Torchic-line sprite lint) |
 | 313 | Sidney rebuilt as "the one who followed the storm" (Absol ace, Honchkrow signature, no Tyranitar/Houndoom; sidney_*.json configs + intro line) — **DONE** | #193 partial |
-| 314 | Phoebe/Glacia overlap test + Winona/Sidney Honchkrow overlap review; then villain team diversity (#193 remainder). Treecko-line palette restore DONE C313; remaining #201: eye-check Lotad/Lombre/Ludicolo + Shroomish/Breloom_H for the same vanilla regression | #193, #201 |
-| 314+ | v2.9 polish | — |
-| 315+ | Meteor Falls crystal Treecko den — discovery beat, same static pattern; also sets up the Steven Regirock/Regice postgame scene | #194 |
-| 316+ | Shoal Cave titan Mudkip den — discovery beat, same static pattern | — |
+| 314 | Boss collisions removed: Honchkrow Winona→Sidney (intro story both ends), Sharpedo off Sidney (Archie), Flygon off Steven T0-T2 (Drake; →Donphan), Crobat off Winona (Archie); Phoebe/Glacia 0 overlap. Lotad-line "violet-storm lily" shinies; `check_palettes.sh` guard + manifest — **DONE** | #193 partial, #201 partial, #163 partial |
+| 315 | Meteor Falls crystal Treecko den — discovery beat. Before copying the C312 Mt. Pyre static script, RE-READ it and confirm the hide flag is set only on catch. Add a reusable cue-sign line for a future Field Notes hint. Also set up the Steven Regirock/Regice postgame scene | #194 |
+| 316 | Villain team diversity — Maxie/Archie/admins (Crawdaunt on Shelly/admin, Crobat on Archie+Maxie, Sharpedo spam on Aqua) | #193 remainder |
+| 317+ | Shoal Cave titan Mudkip den — discovery beat, same static pattern; Skarmory Winona/Steven collision; v2.9 polish | — |
 
 ---
 

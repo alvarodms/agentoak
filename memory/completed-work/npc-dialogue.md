@@ -72,3 +72,4 @@ Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 
 | `data/text/match_call.inc` | Juan1-4 now spoken by WALLACE; MatchCall_Text_Wallace (Champion header) now STEVEN. |
 | `src/data/text/match_call_messages.h` | DandyCharm_Juan (Wallace) + Champion_Wallace (Steven) flavor texts. |
 | `src/strings.c` | gText_JuanMatchCallDesc → "WATER ARTIST". |
+| `data/maps/FortreeCity_Gym/scripts.inc` + `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **C314** Honchkrow migration story: Winona intro ("flew south, toward the ELITE FOUR") + Sidney intro ("rode a storm down from FORTREE"). Detail in trainer-parties.md C314 row. |

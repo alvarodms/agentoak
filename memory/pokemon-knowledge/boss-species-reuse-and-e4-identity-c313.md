@@ -1,8 +1,13 @@
 # Boss Species Reuse & Elite Four Identity (#193)
 
-**Cycle**: 313 | **Date**: October 2026
+**Cycle**: 314 | **Date**: October 2026
 
 ---
+
+## C314 additions (Winona / villain overlap)
+- **Vanilla Winona** (Serebii): Swablu/Tropius/Pelipper/Skarmory/Altaria, with no Honchkrow. Honchkrow on Winona1-5 was **added by this hack**, so under the one-owner rule it goes back to Sidney. Winona's vanilla Skarmory is also on Steven T2-T3. That overlap comes from vanilla (vanilla Steven had it too), so it has the lowest priority.
+- **Vanilla Archie** (Bulbapedia): Mightyena/Crobat/Sharpedo. Aqua grunts use Poochyena/Mightyena/Carvanha. **The C313 Sidney rebuild now shares Mightyena and Sharpedo with Archie and Aqua.** Sharpedo is Archie's vanilla signature, so check Archie's ROM arrays before the villain pass.
+- Searches for hack admin rosters (Inclement Emerald, Imperium) and for community complaints about grunt variety found nothing usable. There is no external demand signal; the case is internal consistency only.
 
 ## External evidence
 - **Inclement Emerald Sidney** (summarised by romprofessor.com, not checked against the hack's own docs): Tyranitar, Cacturne, Alolan Muk, Greninja, Mandibuzz, Mega Absol. Pattern: **every slot is Dark + a different secondary type** (Rock/Grass/Poison/Water/Flying). The ace is Sidney's vanilla signature mon (Absol), upgraded. Tyranitar stays, so the hack doesn't avoid Tyranitar on Sidney. It just never has him share it.
@@ -22,3 +27,5 @@
 - https://nuzlocketracker.org/guides/emerald-kaizo
 - https://www.pokecommunity.com/threads/pok%C3%A9mon-radical-red-version-4-1-released-gen-9-dlc-pokemon-character-customization-now-available.437688/page-20
 - https://www.serebii.net/emerald/elite.shtml
+- https://serebii.net/emerald/entrycall/winona.shtml
+- https://bulbapedia.bulbagarden.net/wiki/Team_Aqua

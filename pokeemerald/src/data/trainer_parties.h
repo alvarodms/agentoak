@@ -3879,9 +3879,9 @@ static const struct TrainerMonItemCustomMoves sParty_Sidney[] = {
     {
     .iv = 250,
     .lvl = 46,
-    .species = SPECIES_SHARPEDO,
+    .species = SPECIES_CRAWDAUNT,
     .heldItem = ITEM_FOCUS_BAND,
-    .moves = {MOVE_CRUNCH, MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .moves = {MOVE_CRABHAMMER, MOVE_KNOCK_OFF, MOVE_ICE_BEAM, MOVE_BRICK_BREAK}
     },
     {
     .iv = 250,
@@ -4165,16 +4165,16 @@ static const struct TrainerMonItemCustomMoves sParty_Winona1[] = {
     {
     .iv = 220,
     .lvl = 32,
-    .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_AERIAL_ACE, MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER}
+    .species = SPECIES_PELIPPER,
+    .heldItem = ITEM_MYSTIC_WATER,
+    .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_PROTECT, MOVE_TOXIC}
     },
     {
     .iv = 255,
     .lvl = 33,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
+    .species = SPECIES_ALTARIA,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
     }
 };
 
@@ -5128,9 +5128,9 @@ static const struct TrainerMonItemCustomMoves sParty_StevenChampion[] = {
     {
     .iv = 255,
     .lvl = 54,
-    .species = SPECIES_FLYGON,
+    .species = SPECIES_DONPHAN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_CRUNCH}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_IRON_TAIL, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
@@ -5174,9 +5174,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch1[] = {
     {
     .iv = 255,
     .lvl = 62,
-    .species = SPECIES_SHARPEDO,
+    .species = SPECIES_CACTURNE,
     .heldItem = ITEM_FOCUS_BAND,
-    .moves = {MOVE_CRUNCH, MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .moves = {MOVE_SPIKES, MOVE_GIGA_DRAIN, MOVE_FAINT_ATTACK, MOVE_THUNDER_PUNCH}
     },
     {
     .iv = 255,
@@ -5354,9 +5354,9 @@ static const struct TrainerMonItemCustomMoves sParty_StevenRematch1[] = {
     {
     .iv = 255,
     .lvl = 65,
-    .species = SPECIES_FLYGON,
+    .species = SPECIES_DONPHAN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_CRUNCH}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_IRON_TAIL, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
@@ -5581,9 +5581,9 @@ static const struct TrainerMonItemCustomMoves sParty_StevenRematch2[] = {
     {
     .iv = 255,
     .lvl = 75,
-    .species = SPECIES_FLYGON,
+    .species = SPECIES_DONPHAN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_FIRE_PUNCH}
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_IRON_TAIL, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
@@ -5621,9 +5621,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch3[] = {
     {
     .iv = 255,
     .lvl = 80,
-    .species = SPECIES_SHARPEDO,
+    .species = SPECIES_SHIFTRY,
     .heldItem = ITEM_FOCUS_BAND,
-    .moves = {MOVE_TAUNT, MOVE_CRUNCH, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .moves = {MOVE_FAKE_OUT, MOVE_FAINT_ATTACK, MOVE_GIGA_DRAIN, MOVE_EXPLOSION}
     },
     {
     .iv = 255,
@@ -5848,9 +5848,9 @@ static const struct TrainerMonItemCustomMoves sParty_SidneyRematch4[] = {
     {
     .iv = 255,
     .lvl = 88,
-    .species = SPECIES_SHARPEDO,
+    .species = SPECIES_MIGHTYENA,
     .heldItem = ITEM_FOCUS_BAND,
-    .moves = {MOVE_TAUNT, MOVE_CRUNCH, MOVE_ICE_BEAM, MOVE_EARTHQUAKE}
+    .moves = {MOVE_TAUNT, MOVE_CRUNCH, MOVE_IRON_TAIL, MOVE_SWAGGER}
     },
     {
     .iv = 255,
@@ -13973,9 +13973,9 @@ static const struct TrainerMonItemCustomMoves sParty_Winona2[] = {
     {
     .iv = 100,
     .lvl = 40,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
+    .species = SPECIES_TROPIUS,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_MAGICAL_LEAF, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE, MOVE_SYNTHESIS}
     },
     {
     .iv = 100,
@@ -14004,9 +14004,9 @@ static const struct TrainerMonItemCustomMoves sParty_Winona3[] = {
     {
     .iv = 100,
     .lvl = 50,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
+    .species = SPECIES_SWELLOW,
+    .heldItem = ITEM_SILK_SCARF,
+    .moves = {MOVE_AERIAL_ACE, MOVE_RETURN, MOVE_STEEL_WING, MOVE_QUICK_ATTACK}
     },
     {
     .iv = 100,
@@ -14049,16 +14049,16 @@ static const struct TrainerMonItemCustomMoves sParty_Winona4[] = {
     {
     .iv = 150,
     .lvl = 61,
-    .species = SPECIES_CROBAT,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_SHADOW_BALL, MOVE_TAUNT}
+    .species = SPECIES_MASQUERAIN,
+    .heldItem = ITEM_SILVER_POWDER,
+    .moves = {MOVE_SILVER_WIND, MOVE_ICE_BEAM, MOVE_GIGA_DRAIN, MOVE_STUN_SPORE}
     },
     {
     .iv = 150,
     .lvl = 62,
-    .species = SPECIES_HONCHKROW,
-    .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
+    .species = SPECIES_TROPIUS,
+    .heldItem = ITEM_MIRACLE_SEED,
+    .moves = {MOVE_SUNNY_DAY, MOVE_SOLAR_BEAM, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
     },
     {
     .iv = 150,
@@ -14087,16 +14087,16 @@ static const struct TrainerMonItemCustomMoves sParty_Winona5[] = {
     {
     .iv = 200,
     .lvl = 70,
-    .species = SPECIES_HONCHKROW,
+    .species = SPECIES_DODRIO,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_BRAVE_BIRD, MOVE_NIGHT_SLASH, MOVE_SUCKER_PUNCH, MOVE_STEEL_WING}
+    .moves = {MOVE_DRILL_PECK, MOVE_RETURN, MOVE_DOUBLE_EDGE, MOVE_STEEL_WING}
     },
     {
     .iv = 200,
     .lvl = 71,
-    .species = SPECIES_CROBAT,
-    .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_AERIAL_ACE, MOVE_SLUDGE_BOMB, MOVE_SHADOW_BALL, MOVE_TAUNT}
+    .species = SPECIES_TROPIUS,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_SUNNY_DAY, MOVE_SOLAR_BEAM, MOVE_EARTHQUAKE, MOVE_SYNTHESIS}
     },
     {
     .iv = 200,

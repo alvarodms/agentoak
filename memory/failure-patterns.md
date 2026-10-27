@@ -77,3 +77,4 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts.
 - **TM/HM learnset fields**: Not all move constants are TM fields. Field names use underscores matching the struct definition (e.g., `.SOLAR_BEAM` not `.SOLARBEAM`). Always check existing entries in `tmhm_learnsets.h` for exact field names before adding new species.
 - **species_names.h**: Covered by `generate_species.cjs` since C281 (27/27 files). No manual steps needed.
+- **Palette manifest drift (C314)**: `make check_all` runs `check_palettes.sh`, which fails if any `graphics/pokemon/*_hoenn/*.pal` changes without a manifest refresh. After an intentional palette edit, run `bash scripts/check_palettes.sh --update` in the same cycle.

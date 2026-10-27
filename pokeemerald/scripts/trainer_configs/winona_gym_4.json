@@ -1,0 +1,80 @@
+{
+  "_note": "C314: source of truth for Winona. Honchkrow→Sidney, Crobat→Archie (one-owner rule). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/winona_gym_4.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_WINONA_4",
+  "partyName": "sParty_Winona4",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 58,
+      "species": "SPECIES_SKARMORY",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SPIKES",
+        "MOVE_DRILL_PECK",
+        "MOVE_WHIRLWIND",
+        "MOVE_TOXIC"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 59,
+      "species": "SPECIES_PELIPPER",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SURF",
+        "MOVE_ICE_BEAM",
+        "MOVE_TOXIC",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 60,
+      "species": "SPECIES_DODRIO",
+      "heldItem": "ITEM_CHOICE_BAND",
+      "moves": [
+        "MOVE_DRILL_PECK",
+        "MOVE_RETURN",
+        "MOVE_DOUBLE_EDGE",
+        "MOVE_STEEL_WING"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 61,
+      "species": "SPECIES_MASQUERAIN",
+      "heldItem": "ITEM_SILVER_POWDER",
+      "moves": [
+        "MOVE_SILVER_WIND",
+        "MOVE_ICE_BEAM",
+        "MOVE_GIGA_DRAIN",
+        "MOVE_STUN_SPORE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 62,
+      "species": "SPECIES_TROPIUS",
+      "heldItem": "ITEM_MIRACLE_SEED",
+      "moves": [
+        "MOVE_SUNNY_DAY",
+        "MOVE_SOLAR_BEAM",
+        "MOVE_EARTHQUAKE",
+        "MOVE_AERIAL_ACE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 63,
+      "species": "SPECIES_ALTARIA",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_DRAGON_DANCE",
+        "MOVE_AERIAL_ACE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_DRAGON_CLAW"
+      ]
+    }
+  ]
+}
