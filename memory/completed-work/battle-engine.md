@@ -19,6 +19,9 @@
 | SCALDING TOUCH | 80 | 289 | Arcanine_Hoenn (1) | same, after Frozen Spore | 33% burn, contact only |
 | TEMPERED BLADE | 81 | 300 | Treecko/Grovyle/Sceptile_Hoenn (0) | `battle_script_commands.c` Cmd_critcalc | +1 crit on Steel contact moves |
 | FEY FLAME | 82 | 310 | Torchic/Combusken/Blaziken_Hoenn (0), Blaze slot 1 | `pokemon.c` CalculateBaseDamage + switch-in msg | 1.5x power vs burned target, any move |
+| UNDERTOW | 83 | 311 | Mudkip/Marshtomp/Swampert_Hoenn (0), Torrent slot 1 (Guts removed) | `pokemon.c` CalculateBaseDamage + switch-in msg | 1.3x power, any move, if holder already took damage this turn |
+
+**Next free IDs: ABILITY 84 (ABILITIES_COUNT=84), STRINGID 384 (BATTLESTRINGS_COUNT=384).**
 
 Every ability touches `include/constants/abilities.h` (ID + ABILITIES_COUNT), `src/data/text/abilities.h` (description string, gAbilityNames, gAbilityDescriptionPointers), `species_info.h`. C289 raised ABILITY_NAME_LENGTH 12→14 in `include/constants/global.h`.
 
@@ -35,6 +38,22 @@ Every ability touches `include/constants/abilities.h` (ID + ABILITIES_COUNT), `s
 | `scripts/check_species_registration.sh` | Removed false-positive `sound/cry_tables.inc` check (uses Cry_ labels); validator 18/18 |
 
 Built and VERIFIED C310. Not playtested in-emulator yet.
+
+### Undertow (C311) — second use of the Fey Flame template
+
+| File | What Changed |
+|---|---|
+| `include/constants/abilities.h` | ABILITY_UNDERTOW 83, ABILITIES_COUNT→84 |
+| `src/data/text/abilities.h` | sUndertowDescription "Hits harder after\nbeing hit." + name "UNDERTOW" + pointer |
+| `src/pokemon.c` | CalculateBaseDamage, right after the FEY_FLAME line: `gProtectStructs[battlerIdAtk].physicalDmg \|\| .specialDmg` → 1.3x gBattleMovePower |
+| `include/constants/battle_string_ids.h` | STRINGID_UNDERTOWACTIVATES=383, BATTLESTRINGS_COUNT→384 |
+| `src/battle_message.c` | sText_UndertowActivates "…'s UNDERTOW\nstirs below the surface!\pIf struck, it will hit\nback harder!" + table entry |
+| `data/battle_scripts_1.s` + `include/battle_scripts.h` | BattleScript_UndertowActivates after FeyFlameActivates + extern |
+| `src/battle_util.c` | ON_SWITCHIN `case ABILITY_UNDERTOW` after FEY_FLAME (same unguarded shape) |
+| `src/data/pokemon/species_info.h` | Mudkip/Marshtomp/Swampert_Hoenn `.abilities` {TORRENT, GUTS} → {UNDERTOW, TORRENT} |
+| `scripts/{mudkip,marshtomp,swampert}_hoenn.json` | Generator configs synced to the new abilities so a regen won't revert them |
+
+Design: Swampert_H is slow (55 Spe), so it usually moves second and the boost is live most turns — a Revenge/Avalanche-style "take the hit, hit back" brawler that rewards Bulk Up + Sitrus. Not boosted when it moves first. Cmd_datahpupdate (battle_script_commands.c ~1939) skips recording when HITMARKER_PASSIVE_HP_UPDATE is set (poison/weather/etc. don't count); whether confusion self-hits or recoil trip it is UNVERIFIED. No trainer party changes: champion (`sParty_StevenChampion`, used by TRAINER_WALLACE + rematches) and Brendan/May postgame Swampert_H get it via slot 0. Validators 18/18 + runner build SUCCESS C311; emulator test pending.
 
 ## Signature Moves
 

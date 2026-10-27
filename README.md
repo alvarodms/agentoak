@@ -41,12 +41,13 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Full learnset parity** — every new move is learnable by player Pokemon through level-up across 58 species
 - **Move category icons** in the battle UI so you always know what you're picking
 - **Fairy type** fully implemented with type matchups, STAB, and AI awareness
-- **5 custom abilities** — each expresses how a regional form's ecology changed its biology:
+- **6 custom abilities** — each expresses how a regional form's ecology changed its biology:
   - *Toxic Touch* (Deoxys Hoenn) — 30% chance to poison on any damaging move, rewarding the glass cannon playstyle
   - *Frozen Spore* (Breloom Hoenn) — 20% chance to freeze on contact moves, turning the cryogenic brawler's fists into weapons of winter
   - *Scalding Touch* (Arcanine Hoenn) — 33% chance to burn on contact moves, channeling the undersea fire that forged a Water/Fire predator
   - *Tempered Blade* (Hoennian Treecko line) — Steel-type contact moves are more likely to land critical hits
-  - *Fey Flame* (Hoennian Torchic line) — every attack hits burned foes 1.5x harder, and it announces itself the moment the Pokemon enters battle, so you see a Will-O-Wisp → Moonblast combo coming
+  - *Fey Flame* (Hoennian Torchic line) — every attack hits burned foes 1.5x harder, and it announces itself the moment the Pokemon enters battle, so you see a Will-O-Wisp → Moonblast combo coming (Hoennian Torchic and Combusken now learn Will-O-Wisp at Lv24)
+  - *Undertow* (Hoennian Mudkip line) — after taking a hit, its next attack that turn lands 1.3x harder; slow and sturdy, it waits for you to strike first
 - **3 signature moves** — unique attacks designed for specific regional forms:
   - *Spore Fist* (Breloom Hoenn) — Ice/Physical, 75 power, 10% freeze chance — a cryogenic punch that encases the target in frost
   - *Tidal Flare* (Arcanine Hoenn) — Water/Special, 85 power, 30% burn chance — a geyser of superheated brine
@@ -176,9 +177,9 @@ Hoenn's original starter trio, transformed by the migration. Discoverable as rar
 | Torchic (Hoenn) | Fire/Fairy | Mt. Pyre Exterior (4%) | Fey Flame | Lv16 → Combusken (Hoenn) |
 | Combusken (Hoenn) | Fire/Fairy | — | Fey Flame | Lv36 → Blaziken (Hoenn) |
 | Blaziken (Hoenn) | Fire/Fairy | — | Fey Flame | Evolved from Combusken (Hoenn) |
-| Mudkip (Hoenn) | Water/Fighting | Shoal Cave Low Tide (4%) | Guts | Lv16 → Marshtomp (Hoenn) |
-| Marshtomp (Hoenn) | Water/Fighting | — | Guts | Lv36 → Swampert (Hoenn) |
-| Swampert (Hoenn) | Water/Fighting | — | Guts | Evolved from Marshtomp (Hoenn) |
+| Mudkip (Hoenn) | Water/Fighting | Shoal Cave Low Tide (4%) | Undertow | Lv16 → Marshtomp (Hoenn) |
+| Marshtomp (Hoenn) | Water/Fighting | — | Undertow | Lv36 → Swampert (Hoenn) |
+| Swampert (Hoenn) | Water/Fighting | — | Undertow | Evolved from Marshtomp (Hoenn) |
 
 #### The Cosmic Form
 

@@ -2561,6 +2561,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 gBattleScripting.battler = battler;
                 effect++;
                 break;
+            case ABILITY_UNDERTOW:
+                BattleScriptPushCursorAndCallback(BattleScript_UndertowActivates);
+                gBattleScripting.battler = battler;
+                effect++;
+                break;
             case ABILITY_INTIMIDATE:
                 if (!(gSpecialStatuses[battler].intimidatedMon))
                 {

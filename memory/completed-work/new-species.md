@@ -34,4 +34,6 @@ EGG=451, NUM_SPECIES=451.
 - Generator idempotency skips species whose constant already exists → use `--fill-missing` (C270, C293, C308 repairs all came from partial registrations).
 - Run `scripts/verify_species.sh` / `make check_all_quick` after any species work; C310 fixed its cry_tables false positive so it's now trustworthy (18/18).
 - Changed Three learnsets (C302): Treecko_H Metal Claw→Iron Leaf→Leaf Blade→SD; Torchic_H Charm→Dazzling Gleam→CM→Moonblast→Fire Blast; Mudkip_H Low Kick→Bulk Up→Waterfall→Cross Chop.
+- C311 Will-O-Wisp rider (level_up_learnsets.h): Torchic_H + Combusken_H learn WILL_O_WISP at Lv24 (Torchic between Sand Attack 19 and Fire Spin 25; Combusken between Sand Attack 21 and Calm Mind 28) so player-raised Blaziken_H can use Fey Flame. Blaziken_H unchanged (Lv1 Will-O-Wisp). tmhm_learnsets.h untouched.
+- C311 sprite lint (#201): graphics/pokemon/{mudkip,marshtomp,swampert}_hoenn/back.png PLTE re-synced to normal.pal; marshtomp_hoenn front.png + anim_front.png jaggies fixed. Details in sprite-iterations.md.
 - Sprites for Changed Three, Toxapex front are placeholders (vanilla base / Tentacruel).

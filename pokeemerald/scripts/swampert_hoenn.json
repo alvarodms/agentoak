@@ -15,7 +15,7 @@
   "friendship": 70,
   "growthRate": "GROWTH_MEDIUM_SLOW",
   "eggGroups": ["EGG_GROUP_MONSTER", "EGG_GROUP_WATER_1"],
-  "abilities": ["ABILITY_TORRENT", "ABILITY_GUTS"],
+  "abilities": ["ABILITY_UNDERTOW", "ABILITY_TORRENT"],
   "safariZoneFleeRate": 0,
   "bodyColor": "BODY_COLOR_BLUE",
   "noFlip": false,

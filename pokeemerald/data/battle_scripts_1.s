@@ -3996,6 +3996,12 @@ BattleScript_FeyFlameActivates::
 	waitmessage B_WAIT_TIME_LONG
 	end3
 
+BattleScript_UndertowActivates::
+	pause B_WAIT_TIME_SHORT
+	printstring STRINGID_UNDERTOWACTIVATES
+	waitmessage B_WAIT_TIME_LONG
+	end3
+
 BattleScript_ShedSkinActivates::
 	printstring STRINGID_PKMNSXCUREDYPROBLEM
 	waitmessage B_WAIT_TIME_LONG

@@ -24,6 +24,6 @@
 | Torchic Hoenn | Fairy | v1 | 277 | — | new — starlit chick, pale violet-white body, luminous gold crest + halo emanation, warm golden-white eyes |
 | Combusken Hoenn | Fairy/Flying | v1 | 277 | — | new — starlit fowl, deep violet body, pale gold wing feathers + edge shimmer, lavender legs |
 | Blaziken Hoenn | Fairy/Flying | v1 | 277 | — | new — celestial angel-bird, pale gold body, deep violet wing-plumes, celestial blue eyes, aura emanation |
-| Mudkip Hoenn | Fighting | v1 | 278 | — | new — tidal monk, slate-indigo body, lavender headfin tip + emanation, brine-stone gills |
-| Marshtomp Hoenn | Fighting/Psychic | v1 | 278 | — | new — tidal monk, dark slate body, lavender headfin + forearm bioluminescent marks |
-| Swampert Hoenn | Fighting/Psychic | v1 | 278 | — | new — tidal titan, deep slate-indigo body, violet headcrest emanation, vivid lavender psychic accents |
+| Mudkip Hoenn | Water/Fighting | v2 | 311 | #201 | lint cleanup — back.png PLTE re-synced to normal.pal (was stale purple/orange set, 11 entries off; indices untouched). Lint FAIL(1)→PASS |
+| Marshtomp Hoenn | Water/Fighting | v2 | 311 | #201 | lint cleanup — back.png PLTE re-synced (15 entries off); jaggies front/f1 2→0 [(35,48) c→4 belly rim, (34,52) 2→4 leg], f2 4→0 [(35,46),(34,50) same fixes, (35,25) 9→5 + (40,26) c→b mouth rim]. Lint FAIL(2)→PASS |
+| Swampert Hoenn | Water/Fighting | v2 | 311 | #201 | lint cleanup — back.png PLTE re-synced (11 entries off). Lint FAIL(1)→PASS; f2 still 5 jaggies vs base 3 (within +2 gate) |

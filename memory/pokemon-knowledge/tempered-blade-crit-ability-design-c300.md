@@ -1,6 +1,6 @@
 # Custom Ability Design — Crit (Tempered Blade) & Changed Three Parity
 
-**Cycle**: 310 | **Date**: October 2026 (crit section from C300)
+**Cycle**: 311 | **Date**: October 2026 (crit section from C300)
 
 ---
 
@@ -23,7 +23,16 @@ Gen 3 crit stages: 0=6.25%, 1=12.5%, 2=25%, 3=33%, 4=50%. A +1 stage ability alo
 - **Engine**: trainer mons always use ability slot 0. A custom ability in slot 1 is never seen in any boss fight.
 - Gen 3 has no ability popup banner: effects without a battle message read as noise.
 
+## C311 Findings — Swampert_Hoenn (Water/Fighting)
+
+- Searches for a Water/Fighting or Swampert custom ability in other hacks came back thin. Elite Redux v2.5 gave Swampert Riptide/Shell Armor/Skill Link plus innates (per a Nuzlocke Forums LP, unverified and version-dependent). Nothing worth copying, and no Radical Red data found.
+- **Set-fit trap repeats**: Steven's Swampert_H set (Waterfall/Cross Chop/Bulk Up/EQ @Sitrus) has NO punch moves, so an Iron Fist clone is dead in the flagship fight. That's the same failure as Pixilate on Blaziken_H.
+- **Canon precedent that fits**: Stamina (Gen 7, the Mudbray line, a Ground-adjacent brawler) gives +1 Def when hit. It stacks with Bulk Up/Sitrus, and its counterplay is legible: special attacks and status get around it. Weak spot: Bulk Up + Sitrus + Stamina can stall out, which is the C307 Toxapex pitfall. Cap it or make it trigger once per switch-in.
+- Damage multipliers are already used (Fey Flame), and contact-status abilities are already used 3 times. A **defensive/reactive** ability fills the gap left by the other Changed Three abilities (offence crit, offence multiplier).
+
 ## Sources
+- [Nuzlocke Forums — Elite Redux v2.5 LP](https://nuzlockeforums.com/forum/threads/yep-im-doing-this-a-third-time-lets-play-elite-redux-v2-5.22417/)
+- [romhackdex — Emerald Rogue Swampert](https://www.romhackdex.net/emerald-rogue/pokedex/swampert/)
 - [Bulbapedia — Critical Hit](https://bulbapedia.bulbagarden.net/wiki/Critical_hit)
 - [Bulbapedia — Pixilate](https://bulbapedia.bulbagarden.net/wiki/Pixilate_(Ability))
 - [PokeCommunity — Elite Redux thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-elite-redux-v2-65-beta-complete-%E2%80%94-unique-multi-ability-difficulty-hack.499227/)
