@@ -1,0 +1,56 @@
+{
+  "_note": "Houndoom Dark STAB is Bite only (Faint Attack Lv43). C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_tabitha_magma_hideout.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_TABITHA_MAGMA_HIDEOUT",
+  "partyName": "sParty_TabithaMagmaHideout",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 36,
+      "species": "SPECIES_MUK",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_THUNDER_PUNCH",
+        "MOVE_ICE_PUNCH",
+        "MOVE_ACID_ARMOR"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 36,
+      "species": "SPECIES_MAGMAR",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_THUNDER_PUNCH",
+        "MOVE_BRICK_BREAK",
+        "MOVE_PSYCHIC"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 36,
+      "species": "SPECIES_SANDSLASH",
+      "heldItem": "ITEM_SOFT_SAND",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_AERIAL_ACE",
+        "MOVE_SWORDS_DANCE"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 38,
+      "species": "SPECIES_HOUNDOOM",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_BITE",
+        "MOVE_WILL_O_WISP",
+        "MOVE_ROAR"
+      ]
+    }
+  ]
+}

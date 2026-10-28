@@ -1,8 +1,16 @@
 # Boss Species Reuse & Elite Four Identity (#193)
 
-**Cycle**: 314 | **Date**: October 2026
+**Cycle**: 316 | **Date**: October 2026
 
 ---
+
+## C316 villain pass (Maxie/Archie/admins)
+- **Vanilla Emerald baseline** (Bulbapedia/Serebii, from my own knowledge; this cycle's searches cut off before the tables): Maxie = Mightyena/Crobat/Camerupt. Archie = Mightyena/Crobat/Sharpedo. Tabitha = Numel/Mightyena/Zubat(Golbat)/Camerupt. Shelly = Carvanha/Mightyena, later Sharpedo/Mightyena. Matt = Mightyena/Golbat. Courtney and Matt-at-Chimney don't appear in Emerald; Tabitha and Shelly take their roles.
+- **So Crobat on both leaders and Mightyena across both teams is VANILLA design.** It's a faction "house pool" (like Rocket's Zubat/Koffing), and the shared Zubat line makes the two teams read as mirrors. Shelly's Crawdaunt was **added by the hack** and is the real collision.
+- **ORAS pattern**: each leader gets one mega signature (Camerupt / Sharpedo), and each admin pair shares that faction's signature line. Within a faction, sharing is the point. Between factions and the E4, it isn't.
+- **New collision from C313/C314**: Sidney's Mightyena (all tiers) + Sharpedo/Crawdaunt pool now overlaps both villain teams' vanilla house mon.
+- **Emerald Imperium** reworked Magma/Aqua fights as harder optional mini-bosses (PokeCommunity release thread). Villain fights are a place for difficulty spikes, not just roster cleanup.
+- Two searches for hack admin rosters and for grunt-variety complaints came back empty again. There is still no external demand signal.
 
 ## C314 additions (Winona / villain overlap)
 - **Vanilla Winona** (Serebii): Swablu/Tropius/Pelipper/Skarmory/Altaria, with no Honchkrow. Honchkrow on Winona1-5 was **added by this hack**, so under the one-owner rule it goes back to Sidney. Winona's vanilla Skarmory is also on Steven T2-T3. That overlap comes from vanilla (vanilla Steven had it too), so it has the lowest priority.

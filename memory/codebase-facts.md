@@ -20,6 +20,10 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Capacity**: TRAINERS_COUNT = 891, 2 reclaimable IDs remaining (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). Rematch table: 5 tiers, all filled. **Repurposed slots**: TRAINER_WALLACE(+REMATCH_1-4) = Steven (C308); TRAINER_JUAN_1-5 = Wallace (C309). Constant names were kept.
 
+**Tag/multi battles load at most 3 mons per opponent** (`battle_main.c` CreateNPCTrainerParty: `BATTLE_TYPE_TWO_OPPONENTS` → monsCount = PARTY_SIZE/2). Mossdeep Space Center (SPECIAL_BATTLE_STEVEN) is one, so any boss fought in a tag battle needs a ≤3-mon array or slots 4+ (often the ace) silently never appear. C316 fixed sParty_MaxieMossdeep (was 4 mons, Camerupt ace cut).
+
+**Villain parties (C316)**: all 10 Maxie/Tabitha/Archie/Shelly/Matt arrays are generated from `scripts/trainer_configs/villain_*.json`. Ownership/collision check: `node scripts/audit_boss_species.cjs [--strict]` (BOSS_GROUPS regex map → per-boss species, ACCEPTED_OVERLAPS with allowed pairs, `COLLISIONS: N`; exit 1 only under --strict). Grunts/route trainers are not audited.
+
 **Rival parties**: 30 arrays (5 encounters × 3 starter variants × 2 genders, mirrored). Postgame (C280): Lv70-73, 6 mons, IV 200, ace = Changed Three form.
 
 ---
@@ -70,7 +74,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Flag System Layout
 
-Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B5. Next available: **0x2B6**. Mt. Pyre starlight Torchic hide flag: 0x2B5 (C312). Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B6. Next available: **0x2B7** (0x2B7-0x2BB FLAG_UNUSED; verified C316). Den caught flags: 0x2B5 Mt. Pyre Torchic, 0x2B6 Meteor Falls Treecko. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
 
 **Shoal Cave tide architecture**: `ShoalCave_LowTideEntranceRoom` handles BOTH tides — `OnTransition` calls `UpdateShoalTideFlag` then swaps layout. Object events on `LowTideEntranceRoom` appear in both tides. Use `call` subroutine pattern for OnTransition logic.
 
@@ -111,6 +115,7 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 - **generate_species.cjs** `<config.json> [--dry-run] [--fill-missing]` (configs in `species_configs/`): 27 files. Standard mode aborts if species exists and auto-increments SPECIES_EGG (run order matters); `--fill-missing` (C293) only fills absent files. Does NOT write the 6 pokemon.c/pokemon_icon.c entries. species_names.h strips `_HOENN` unless `cfg.displayName`.
 - **verify_species.sh** `<NAME>` — pass the name WITHOUT the `SPECIES_` prefix (`ARCANINE_HOENN`; passing `SPECIES_X` reports a bogus 14/27). Exit 0 iff 27/27.
 - **generate_trainer.cjs** `<config.json> [--dry-run]` (configs in `trainer_configs/`): `create` (new ID in opponents.h) or `modify` (finds `partyName[]` by name, replaces the WHOLE array, so party size can change; rewrites the trainer's `.party = MACRO(name)` line). To repurpose a slot: rename the array in both trainer_parties.h and trainers.h first, then run modify. Name/pic/class are NOT touched; edit trainers.h by hand. Trainer-ID lookup is bracket-exact (`[TRAINER_SIDNEY]` does not match `_REMATCH_1`). Running modify on an unchanged macro leaves trainers.h byte-identical. `scripts/verify_species.sh` takes the bare name (`HONCHKROW`), NOT `SPECIES_HONCHKROW` (that reports 13/27 false missing).
+- **check_dialogue.sh**: its smart-quote byte-bracket also matches `…` (and other multibyte chars), so it reports hundreds of false positives on vanilla text. Check only your added lines (`git diff -U0 | grep '^+'`, grep -P for \x{2018}\x{2019}\x{201C}\x{201D}).
 - **generate_npc_dialogue.cjs**: create mode (JSON -> scripts.inc + map.json) or `--update --file <path> --label <LABEL> --text "text$"`. Charmap validation built in.
 
 **Species count (C308)**: 40 custom species, all 27/27: 12 cross-gen evos + 25 _HOENN forms (9 Changed Three) + Carbink/Toxapex/Lucario line imports. AMBIPOM=448, CARBINK=449, TOXAPEX=450, EGG=451=NUM_SPECIES. **The Changed Three (439-447), Shroomish/Breloom_Hoenn and Carbink all HAVE tmhm_learnsets.h rows** (grep-verified C309; the old "no TM rows" note was wrong).

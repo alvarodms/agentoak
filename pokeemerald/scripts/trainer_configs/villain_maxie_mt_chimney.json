@@ -1,0 +1,52 @@
+{
+  "_note": "No held items (NO_ITEM_CUSTOM_MOVES). No EQ/Eruption: runs straight after Tabitha. C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_maxie_mt_chimney.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_MAXIE_MT_CHIMNEY",
+  "partyName": "sParty_MaxieMtChimney",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 27,
+      "species": "SPECIES_KOFFING",
+      "moves": [
+        "MOVE_SLUDGE",
+        "MOVE_WILL_O_WISP",
+        "MOVE_SHOCK_WAVE",
+        "MOVE_SELF_DESTRUCT"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 27,
+      "species": "SPECIES_RHYHORN",
+      "moves": [
+        "MOVE_ROCK_TOMB",
+        "MOVE_MAGNITUDE",
+        "MOVE_STOMP",
+        "MOVE_SCARY_FACE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 28,
+      "species": "SPECIES_NIDORINO",
+      "moves": [
+        "MOVE_HORN_ATTACK",
+        "MOVE_DOUBLE_KICK",
+        "MOVE_DIG",
+        "MOVE_TOXIC"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 30,
+      "species": "SPECIES_CAMERUPT",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_MAGNITUDE",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_TAKE_DOWN"
+      ]
+    }
+  ]
+}

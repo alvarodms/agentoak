@@ -203,8 +203,9 @@ MagmaHideout_4F_Text_MaxieOhItWasYou:
 	.string "MAXIE: Oh, so it was you?\p"
 	.string "I've seen you poking around uninvited\n"
 	.string "here and there…\p"
-	.string "I get it now!\n"
-	.string "You must have pulled a cheap stunt!$"
+	.string "Everything else fled the heat.\n"
+	.string "My CAMERUPT never left this\l"
+	.string "mountain. Neither will I.$"
 
 MagmaHideout_4F_Text_MaxieDefeat:
 	.string "What makes you so adept at handling\n"

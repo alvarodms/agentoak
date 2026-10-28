@@ -19,6 +19,9 @@ SeafloorCavern_Room3_Text_ShellyIntro:
 	.string "haven't you?\l"
 	.string "The new species. The changes.\p"
 	.string "I've been watching too.\p"
+	.string "My HUNTAIL came up from the\n"
+	.string "trench last spring. It's never\l"
+	.string "been this shallow before.\p"
 	.string "But we can discuss that\n"
 	.string "after I've tested you.$"
 

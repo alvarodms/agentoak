@@ -1,0 +1,56 @@
+{
+  "_note": "Corsola_Hoenn = Aqua adopted migrant (accepted overlap with Phoebe R1). C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_shelly_seafloor_cavern.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_SHELLY_SEAFLOOR_CAVERN",
+  "partyName": "sParty_ShellySeafloorCavern",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 40,
+      "species": "SPECIES_CORSOLA_HOENN",
+      "heldItem": "ITEM_SPELL_TAG",
+      "moves": [
+        "MOVE_SHADOW_CLAW",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_CONFUSE_RAY"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 40,
+      "species": "SPECIES_QWILFISH",
+      "heldItem": "ITEM_POISON_BARB",
+      "moves": [
+        "MOVE_SPIKES",
+        "MOVE_WATERFALL",
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_PIN_MISSILE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 41,
+      "species": "SPECIES_OCTILLERY",
+      "heldItem": "ITEM_SHELL_BELL",
+      "moves": [
+        "MOVE_OCTAZOOKA",
+        "MOVE_ICE_BEAM",
+        "MOVE_FLAMETHROWER",
+        "MOVE_THUNDER_WAVE"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 42,
+      "species": "SPECIES_HUNTAIL",
+      "heldItem": "ITEM_MYSTIC_WATER",
+      "moves": [
+        "MOVE_RAIN_DANCE",
+        "MOVE_SURF",
+        "MOVE_CRUNCH",
+        "MOVE_ICE_BEAM"
+      ]
+    }
+  ]
+}

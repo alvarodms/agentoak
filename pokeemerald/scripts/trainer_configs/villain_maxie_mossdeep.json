@@ -1,0 +1,44 @@
+{
+  "_note": "TAG BATTLE (SPECIAL_BATTLE_STEVEN, BATTLE_TYPE_TWO_OPPONENTS): battle_main.c loads at most 3 mons per opponent, so Rhydon was dropped (designer minimum fix) or the Camerupt ace would never appear. Rhydon stays Maxie-owned via MagmaHideout. No partner-hitting spread moves. C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_maxie_mossdeep.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_MAXIE_MOSSDEEP",
+  "partyName": "sParty_MaxieMossdeep",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 44,
+      "species": "SPECIES_WEEZING",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_FIRE_BLAST",
+        "MOVE_THUNDERBOLT",
+        "MOVE_WILL_O_WISP"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 45,
+      "species": "SPECIES_NIDOKING",
+      "heldItem": "ITEM_NEVER_MELT_ICE",
+      "moves": [
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_ICE_BEAM",
+        "MOVE_THUNDERBOLT",
+        "MOVE_FLAMETHROWER"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 46,
+      "species": "SPECIES_CAMERUPT",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_ERUPTION",
+        "MOVE_FLAMETHROWER",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_SUNNY_DAY"
+      ]
+    }
+  ]
+}

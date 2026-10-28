@@ -94,7 +94,8 @@ AquaHideout_B2F_Text_MattIntro:
 	.string "I'm a cut above the GRUNTS you've seen\n"
 	.string "so far.\p"
 	.string "I'm not stalling for time.\n"
-	.string "I'm going to pulverize you!$"
+	.string "POLIWRATH and I are going to\l"
+	.string "pulverize you!$"
 
 AquaHideout_B2F_Text_MattDefeat:
 	.string "…Heh.\p"

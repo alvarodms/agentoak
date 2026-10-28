@@ -567,7 +567,9 @@ MtChimney_Text_TabithaIntro:
 	.string "So you've come all the way here!\p"
 	.string "But you're too late!\n"
 	.string "I've already delivered the METEORITE\l"
-	.string "from METEOR FALLS to the BOSS!$"
+	.string "from METEOR FALLS to the BOSS!\p"
+	.string "My HOUNDOOM's had your scent\n"
+	.string "since FIERY PATH. Hehehe!$"
 
 MtChimney_Text_TabithaDefeat:
 	.string "Hehehe... heh.\p"

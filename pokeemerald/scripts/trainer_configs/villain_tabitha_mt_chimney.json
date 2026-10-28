@@ -1,0 +1,44 @@
+{
+  "_note": "Houndoom ace (\"had your scent since FIERY PATH\"). C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_tabitha_mt_chimney.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_TABITHA_MT_CHIMNEY",
+  "partyName": "sParty_TabithaMtChimney",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 27,
+      "species": "SPECIES_GRIMER",
+      "heldItem": "ITEM_NONE",
+      "moves": [
+        "MOVE_SLUDGE",
+        "MOVE_ICE_PUNCH",
+        "MOVE_THUNDER_PUNCH",
+        "MOVE_DISABLE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 28,
+      "species": "SPECIES_MAGMAR",
+      "heldItem": "ITEM_NONE",
+      "moves": [
+        "MOVE_FIRE_PUNCH",
+        "MOVE_THUNDER_PUNCH",
+        "MOVE_SMOG",
+        "MOVE_SMOKESCREEN"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 29,
+      "species": "SPECIES_HOUNDOOM",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_BITE",
+        "MOVE_ROAR",
+        "MOVE_HOWL"
+      ]
+    }
+  ]
+}

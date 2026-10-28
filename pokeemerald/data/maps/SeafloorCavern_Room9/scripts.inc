@@ -298,9 +298,12 @@ SeafloorCavern_Room9_Text_ArchieYouMustDisappear:
 	.string "Don't you see what the migration\n"
 	.string "means? The sea is reclaiming\l"
 	.string "Hoenn -- and it is BEAUTIFUL!\p"
-	.string "The ocean migrants have nowhere\l"
-	.string "to go because humans took the land!\n"
-	.string "Kyogre will restore the balance!$"
+	.string "The ocean migrants have nowhere\n"
+	.string "to go because humans took the land!\l"
+	.string "Kyogre will restore the balance!\p"
+	.string "Where my SHARPEDO swims, the\n"
+	.string "whole pack follows. So will\l"
+	.string "the sea!$"
 
 SeafloorCavern_Room9_Text_ArchieDefeat:
 	.string "What?!\n"

@@ -22,7 +22,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Difficulty Mechanics Landscape — Item Bans, Stat Boosts, Type Changes | 306 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
 | Toxapex on Boss Trainers — The Stall Pitfall | 307 | [toxapex-boss-design-stall-pitfall-c307.md](pokemon-knowledge/toxapex-boss-design-stall-pitfall-c307.md) |
 | Discovery Beats & Exploration Rewards (+ C315 missable-static evidence) | 315 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
-| Boss Species Reuse & Elite Four Identity (#193) | 314 | [boss-species-reuse-and-e4-identity-c313.md](pokemon-knowledge/boss-species-reuse-and-e4-identity-c313.md) |
+| Boss Species Reuse & Elite Four Identity (#193, + C316 villain house pools) | 316 | [boss-species-reuse-and-e4-identity-c313.md](pokemon-knowledge/boss-species-reuse-and-e4-identity-c313.md) |
 | Steven Rematch Design & the Regi Question (#194) | 308 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
