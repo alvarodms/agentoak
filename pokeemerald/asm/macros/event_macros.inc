@@ -65,3 +65,52 @@
 	release
 	end
 	.endm
+
+@ StaticDen — visible den Pokemon that returns until CAUGHT (C315).
+@ The object_event's flag must be a FLAG_TEMP_* (removeobject sets it, and temp
+@ flags clear on map load), so a KO/flee hides it only until the player leaves.
+@ caught_flag is permanent and set only on B_OUTCOME_CAUGHT.
+@ Pair with EventMacro_StaticDenTransition (ON_TRANSITION) and
+@ EventMacro_StaticDenTryRemove (ON_RESUME subroutine).
+@ Used by the Mt. Pyre starlight Torchic and Meteor Falls crystal Treecko dens.
+@
+@ species/level/item: wild battle parameters (item = held item)
+@ caught_flag: permanent flag set only on a catch
+@ approach_text / caught_text / faded_text: text labels
+	.macro EventMacro_StaticDen species:req, level:req, item:req, caught_flag:req, approach_text:req, caught_text:req, faded_text:req
+	lock
+	msgbox \approach_text, MSGBOX_DEFAULT
+	playmoncry \species, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry
+	setwildbattle \species, \level, \item
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	dowildbattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, .Lstaticden_caught_\@
+	msgbox \faded_text, MSGBOX_DEFAULT
+	goto Common_EventScript_RemoveStaticPokemon
+.Lstaticden_caught_\@:
+	setflag \caught_flag
+	msgbox \caught_text, MSGBOX_DEFAULT
+	release
+	end
+	.endm
+
+@ StaticDenTransition — inline inside a MAP_SCRIPT_ON_TRANSITION script, before its `end`.
+@ Re-hides the den object (via its temp flag) once the Pokemon has been caught.
+	.macro EventMacro_StaticDenTransition caught_flag:req, temp_flag:req
+	goto_if_unset \caught_flag, .Lstaticden_keep_\@
+	setflag \temp_flag
+.Lstaticden_keep_\@:
+	.endm
+
+@ StaticDenTryRemove — body of the ON_RESUME subroutine called via
+@ call_if_set FLAG_SYS_CTRL_OBJ_DELETE. Removes the sprite only after a catch.
+	.macro EventMacro_StaticDenTryRemove
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject VAR_LAST_TALKED
+	return
+	.endm

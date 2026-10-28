@@ -5,6 +5,7 @@ MtPyre_Exterior_MapScripts::
 
 MtPyre_Exterior_OnTransition:
 	call MtPyre_Exterior_EventScript_CheckEnterFromSummit
+	EventMacro_StaticDenTransition FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, FLAG_TEMP_11
 	end
 
 MtPyre_Exterior_OnResume:
@@ -12,10 +13,7 @@ MtPyre_Exterior_OnResume:
 	end
 
 MtPyre_Exterior_EventScript_TryRemoveStarlightTorchic::
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
-	removeobject VAR_LAST_TALKED
-	return
+	EventMacro_StaticDenTryRemove
 
 MtPyre_Exterior_EventScript_CheckEnterFromSummit::
 	getplayerxy VAR_TEMP_0, VAR_TEMP_1
@@ -55,28 +53,7 @@ MtPyre_Exterior_Text_CoralMourner:
 @ =============================================
 
 MtPyre_Exterior_EventScript_StarlightTorchic::
-	lock
-	msgbox MtPyre_Exterior_Text_StarlightTorchicApproach, MSGBOX_DEFAULT
-	playmoncry SPECIES_TORCHIC_HOENN, CRY_MODE_ENCOUNTER
-	delay 40
-	waitmoncry
-	setwildbattle SPECIES_TORCHIC_HOENN, 30, ITEM_STAR_PIECE
-	setflag FLAG_SYS_CTRL_OBJ_DELETE
-	dowildbattle
-	clearflag FLAG_SYS_CTRL_OBJ_DELETE
-	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_eq VAR_RESULT, B_OUTCOME_WON, MtPyre_Exterior_EventScript_StarlightTorchicFaded
-	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, MtPyre_Exterior_EventScript_StarlightTorchicFaded
-	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, MtPyre_Exterior_EventScript_StarlightTorchicFaded
-	setflag FLAG_HIDE_MT_PYRE_STARLIGHT_TORCHIC
-	msgbox MtPyre_Exterior_Text_StarlightTorchicCaught, MSGBOX_DEFAULT
-	release
-	end
-
-MtPyre_Exterior_EventScript_StarlightTorchicFaded::
-	msgbox MtPyre_Exterior_Text_StarlightTorchicFaded, MSGBOX_DEFAULT
-	goto Common_EventScript_RemoveStaticPokemon
-	end
+	EventMacro_StaticDen SPECIES_TORCHIC_HOENN, 30, ITEM_STAR_PIECE, FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, MtPyre_Exterior_Text_StarlightTorchicApproach, MtPyre_Exterior_Text_StarlightTorchicCaught, MtPyre_Exterior_Text_StarlightTorchicFaded
 
 MtPyre_Exterior_EventScript_ScorchMark::
 	msgbox MtPyre_Exterior_Text_ScorchMark, MSGBOX_SIGN

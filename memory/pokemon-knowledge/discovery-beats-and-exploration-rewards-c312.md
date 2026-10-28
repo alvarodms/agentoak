@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 312 | **Date**: October 2026
+**Cycle**: 315 | **Date**: October 2026
 
 ---
 
@@ -21,3 +21,11 @@
 2. Give **one specific payoff per note**: a species, a lore line, or a Changed-form behaviour. Avoid "catch 10 Zigzagoon".
 3. A **daily/conditional reset** (time of day, weather, tide like Shoal Cave) gives players a reason to come back. Reuse existing tide/time hooks instead of building a new system.
 4. Notes should tell the migration story in the world (Tell:Show ratio rule from C298).
+
+## C315 addendum: static encounters that can be missed (searched Oct 2026)
+- **Bulbapedia's "List of permanently missable Pokémon"** exists mainly because statics don't respawn after fainting or fleeing. The community treats this as a design flaw, and a whole wiki page exists to warn players about it.
+- **The official fix is a respawn after the Champion.** FRLG/Emerald brought back fainted Mew/Lugia/Ho-Oh after the Hall of Fame. From Platinum on, fainted legendaries return after you beat the Champion. Static Pokémon stopped being permanently missable.
+- **Hack practice varies per script.** Infinite Fusion's wiki says statics "will not respawn (unless specified otherwise)", meaning a capture, defeat or flee removes them. A PokeCommunity [Emerald] help thread shows a modder making a KO'd legendary come back with a small flag edit, so players do ask for this.
+- **Inclement Emerald** (pokeemerald decomp): every wild, gift and static encounter has at least 3 perfect IVs, guaranteed since v1.7. A hand-placed static is a *better* mon than a random wild one, which is what players expect from an encounter that was placed on purpose.
+- Takeaway: a den static should (a) set its hide flag only on catch, (b) never be lost to a KO or flee, and (c) feel "special" in its stats (fixed IVs/held item), not just in where it sits.
+- Searches found no named hack that puts Regis on Steven's postgame team. Still no external precedent (see steven-rematch-and-regi-question-c308.md).

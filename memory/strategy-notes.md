@@ -47,7 +47,7 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 **Not possible yet**: natures/EVs/abilities per mon — needs TrainerMon struct expansion (tech debt).
 **#194 (Regis)**: Skarmory T2-T3, Registeel T4 (attack-only, no Rest/Curse) ADOPTED. Regirock/Regice → deferred to Meteor Falls Steven postgame.
 **Dialogue**: Intro/Defeat/Post/Rematch rewritten in ChampionsRoom; starter-aware beat after first-clear post-battle uses VAR_STARTER_MON (0 Larvitar / 1 Bagon / 2 Dratini — the REAL starters; the Changed Three are wild/postgame-gift only, so the C306 "Your SCEPTILE…" lines were factually wrong for a first clear). Hall of Fame + Drake post-battle + E4 mugshot updated.
-**Design caveat**: the "mirror" premise assumed the player raises a Changed starter. Originally only players who caught Treecko/Torchic/Mudkip_Hoenn in the wild did; since C312 the visible Mt. Pyre starlight Torchic (Lv30 static, returns until caught) gives every player a visible pre-Champion route to a Changed starter. Steven's team still reads as "master of the migration" — revisit if playtesters miss the mirror.
+**Design caveat**: the "mirror" premise assumed the player raises a Changed starter. Originally only players who caught Treecko/Torchic/Mudkip_Hoenn in the wild did; since C312 the visible Mt. Pyre starlight Torchic (Lv30 static) and since C315 the Meteor Falls crystal Treecko (Lv40 static, B1F_2R, post-Waterfall; Steven's chalked "- S." note sits beside it) give every player visible pre-Champion routes to a Changed starter. Both return until caught (C315 den fix). Steven's team still reads as "master of the migration" — revisit if playtesters miss the mirror.
 
 ### Wallace Cascade — SHIPPED C309 (source of truth: `pokeemerald/scripts/trainer_configs/wallace_gym_*.json`)
 
@@ -107,19 +107,32 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 312 | Mt. Pyre starlight Torchic, the first den discovery beat (visible static Torchic_H Lv30 @Star Piece + 2 cue signs) — **DONE** | #201 partial (Torchic-line sprite lint) |
 | 313 | Sidney rebuilt as "the one who followed the storm" (Absol ace, Honchkrow signature, no Tyranitar/Houndoom; sidney_*.json configs + intro line) — **DONE** | #193 partial |
 | 314 | Boss collisions removed: Honchkrow Winona→Sidney (intro story both ends), Sharpedo off Sidney (Archie), Flygon off Steven T0-T2 (Drake; →Donphan), Crobat off Winona (Archie); Phoebe/Glacia 0 overlap. Lotad-line "violet-storm lily" shinies; `check_palettes.sh` guard + manifest — **DONE** | #193 partial, #201 partial, #163 partial |
-| 315 | Meteor Falls crystal Treecko den — discovery beat. Before copying the C312 Mt. Pyre static script, RE-READ it and confirm the hide flag is set only on catch. Add a reusable cue-sign line for a future Field Notes hint. Also set up the Steven Regirock/Regice postgame scene | #194 |
+| 315 | Den fix + StaticDen macros + Meteor Falls crystal Treecko Lv40 @Moon Stone (B1F_2R) + grooved-stone/silver-leaf cues + Steven chalk note; Regi scene deferred — **DONE** | #194 (Regi scene deferred) |
 | 316 | Villain team diversity — Maxie/Archie/admins (Crawdaunt on Shelly/admin, Crobat on Archie+Maxie, Sharpedo spam on Aqua) | #193 remainder |
-| 317+ | Shoal Cave titan Mudkip den — discovery beat, same static pattern; Skarmory Winona/Steven collision; v2.9 polish | — |
+| 317+ | Shoal Cave titan Mudkip den — discovery beat, 3 lines via EventMacro_StaticDen (needs FLAG_CAUGHT_* 0x2B7 + doll object on FLAG_TEMP_11 + ON_TRANSITION/ON_RESUME); Steven Regirock/Regice Meteor Falls postgame scene (deferred from 315); Skarmory Winona/Steven collision; v2.9 polish | — |
+
+### Den emulator checklist (C315 — not yet playtested; run for BOTH dens: Mt. Pyre Exterior Torchic (22,13), Meteor Falls B1F_2R Treecko (7,4))
+- Doll visible on first entry. Torchic doll visible inside the summit fog.
+- KO it → faded text, doll gone; still gone after closing menus; back after leaving and re-entering the map.
+- Run from it → same as KO.
+- Catch it → caught text, doll gone; still gone after re-entering (FLAG_CAUGHT_* set).
+- Whiteout during the battle → doll still there on return.
+- Old saves: pre-C315 KO of the Torchic leaves it hidden forever (0x2B5 reused) — expected, see discovery-beats.md.
+- Meteor Falls: TM Dragon Claw ball (5,3) still reachable with the doll at (7,4) (surf up, land on row 4).
+
+### Field Notes future cue lines (Birch voice, not in-game yet)
+- "Old note: TORCHIC shun mountains. - Something glitters in the fog atop MT. PYRE."
+- "Old note: TREECKO shun caves. - Something hums in the deepest dark of METEOR FALLS."
 
 ---
 
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264+. Next available: 0x2B6.
+- **Flag space**: Custom 0x264+. Next available: 0x2B7.
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
-- **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue), `difficulty_utils.inc` (DifficultyDialogue).
+- **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue, StaticDen/StaticDenTransition/StaticDenTryRemove), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Custom species (40)**: Last = Toxapex(450). EGG=451, NUM_SPECIES=451. 12 cross-gen evos + 25 _HOENN forms + 3 standalone imports (Carbink, Toxapex, etc.), all fully registered + verified.
 - **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82), UNDERTOW(83). ABILITIES_COUNT=84. Next: 84. BATTLESTRINGS_COUNT=384 (next STRINGID 384).

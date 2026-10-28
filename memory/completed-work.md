@@ -7,10 +7,6 @@ Each system has its own detail file under `memory/completed-work/`.
 
 ---
 
-Before modifying ANY file: check the system index below → open detail file → verify current state.
-
----
-
 | System | Cycles | Files | Detail |
 |--------|--------|-------|--------|
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
@@ -18,7 +14,7 @@ Before modifying ANY file: check the system index below → open detail file →
 | Trainer Parties | 6–12, 16, 17, 19, 49–58, 71–74, 89, 90, 94, 101, 102, 122–124, 126, 127, 130–133, 136, 146, 147, 148, 150, 172, 173, 175, 176, 177, 182, 203, 204, **206**, **212**, **213**, **214**, **218**, **244**, **247**, **248**, **249**, **251**, **262**, **264**, **265**, **267**, **268**, **270**, **271**, **272**, **273**, **280**, **293**, **294**, **298**, **304**, **307**, **308**, **309**, **313**, **314** | 6 (parties, trainers, opponents, battle_setup, flags, learnsets) + trainer_configs (steven_*, wallace_gym_*, sidney_*, winona_gym_*) | [trainer-parties.md](completed-work/trainer-parties.md) |
 | NPC Dialogue (all regions + narrative) | 15, 24–29, 32, 33, 36, 38, 42, 50, 63, 65, 94, 95, 103, 104, 113, 116, 120, 125, 126, 135, 136, 137, 139, 140, 141, 142, 144, 145, 146, 149, 152, 153, 154, 159, 160, 161(reverted), 162, 180, 181, 183, 186, 187, 188, 189, 190, 192, 193, 194, 195, 200, 203, 204, 205, **207**, **208**, **209**, **210**, **213**, **214**, **224**, **225**, **232**, **233**, **235**, **236**, **237**, **242**, **243**, **244**, **248**, **249**, **250**, **257**, **258**, **262**, **267**, **269**, **270**, **271**, **272**, **273**, **279**, **280**, **284**, **285**, **286**, **298**, **299**, **303**, **307**, **308**, **309**, **313** (Sidney intro, see trainer-parties.md), **314** | ~90 | [npc-dialogue.md](completed-work/npc-dialogue.md) |
 | Battle Engine (P/S Split + Fairy + Gen4/5 Moves + Difficulty + Custom Abilities + Signature Moves + Animations) | 43–46, 52, 129, 181, 182, **207**, **210**, **241**, **288**, **289**, **290**, **293**, **294**, **297**, **300**, **310**, **311** | 19 (+19 modified; C310 Fey Flame + C311 Undertow: abilities.h, text/abilities.h, pokemon.c, battle_string_ids.h, battle_message.c, battle_scripts_1.s, battle_scripts.h, battle_util.c, species_info.h, trainer_parties.h (C310 only), scripts/check_species_registration.sh (C310 only), scripts/{mudkip,marshtomp,swampert}_hoenn.json (C311)) | [battle-engine.md](completed-work/battle-engine.md) |
-| Discovery Beats (visible statics + cue signs) | **312** | 3 (flags.h, MtPyre_Exterior scripts.inc + map.json) | [discovery-beats.md](completed-work/discovery-beats.md) |
+| Discovery Beats (visible statics + cue signs) | 312, **315** | 8 (flags.h, event_macros.inc StaticDen trio, MtPyre_Exterior scripts.inc + map.json, MeteorFalls_B1F_2R scripts.inc + map.json, MeteorFalls_B1F_1R scripts.inc + map.json) | [discovery-beats.md](completed-work/discovery-beats.md) |
 | QoL Changes & Release | 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229**, **297** | 31 | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | **60**, **61**, **68**, **70**, **195**, **198**, **208**, **212**, **213**, **214**, **216**, **217**, **218**, **219**, **222**, **223**, **230**, **231**, **240**, **250**, **251**, **252**, **256**, **257**, **259**, **261**, **263**, **264**, **265**, **276**, **277**, **278**, **280**, **288**, **292**, **293**, **294**, **302**, **304**, **307**, **308**, **311**, **312** | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | **228** | 16 .pal + 6 PNG = 22 files | [protagonist-palette.md](completed-work/protagonist-palette.md) |
@@ -37,12 +33,13 @@ Before modifying ANY file: check the system index below → open detail file →
 - **BirchLab/scripts.inc**: 15 cycles (last: C286) — difficulty selection, migration dialogue, legendary saga, Changed Three postgame gift, Reckoning collection payoff
 - **MossdeepCity/scripts.inc**: 8 cycles (last: **C309** Sootopolis-gym rumor line) — beast sightings, post-climax reactions, badge-conditional atmosphere
 - **SootopolisCity/scripts.inc**: 6 cycles (last: **C309**) — Rayquaza reactions, badge-conditional atmosphere; C309 gym sign LEADER: WALLACE, Wallace fades out after HM Waterfall (FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE)
-- **PacifidlogTown/scripts.inc**: 10 cycles (last: C195) — Draconid legend, breadcrumbs, badge-conditional atmosphere, Quest 1 encounter
 - **trainer_parties.h / trainers.h**: ~35 cycles each — all trainer data. C294: Swampert_Hoenn replaces vanilla Swampert as postgame rival ace (Torchic variant). C310: rival Blaziken_Hoenn (Treecko variant) Shadow Ball → Will-O-Wisp (battle-engine.md).
 - **wild_encounters.json**: 32 cycles (last: C294) — all encounter tables. C294: restored SPECIES_MUDKIP_HOENN in Shoal Cave Inner Room (slot 8, 4%)
-- **include/constants/flags.h**: Many cycles — custom flags through 0x2B5 (FLAG_HIDE_MT_PYRE_STARLIGHT_TORCHIC C312), next: 0x2B6
+- **include/constants/flags.h**: Many cycles — custom flags through 0x2B6 (C315: 0x2B5 renamed FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, 0x2B6 FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO), next: 0x2B7
 - **include/constants/species.h**: Many cycles — **40 custom species** through 450 (Toxapex), EGG=451, NUM_SPECIES=451. C308: Toxapex re-registered + 16 partial species repaired to 27/27. MOVES_COUNT=381 (Iron Leaf=380).
-- **MtPyre_Exterior/scripts.inc + map.json**: C312 starlight Torchic static (22,13) + cue signs (11,31)/(27,21) — discovery-beats.md. Coral Mourner from earlier cycle.
+- **MtPyre_Exterior/scripts.inc + map.json**: C312 starlight Torchic static (22,13) + cue signs (11,31)/(27,21); **C315** converted to StaticDen macros, doll flag FLAG_TEMP_11 — discovery-beats.md. Coral Mourner from earlier cycle.
+- **MeteorFalls_B1F_2R + B1F_1R (scripts.inc + map.json)**: 2R Resonance meteorite sign (3,5) C233-242; **C315** crystal Treecko den doll (7,4) + ON_TRANSITION/ON_RESUME + SilverLeaf (8,14)/ChalkNote (8,3); 1R quest researcher + **C315** GroovedStone (19,5) — discovery-beats.md.
+- **asm/macros/event_macros.inc**: C179 (3 macros) + **C315** StaticDen/StaticDenTransition/StaticDenTryRemove — engineering-validation.md + discovery-beats.md.
 - **LittlerootTown/scripts.inc**: C280 — postgame rival battle script + dialogue (OnTransition show/hide + gender/starter branching + cleartrainerflag rematches)
 - **EverGrandeCity_ChampionsRoom/scripts.inc**: C303 (Wallace witness dialogue), **C308** (Steven champion swap — all labels/texts Steven, VAR_STARTER_MON beat). HallOfFame + DrakesRoom also C308.
 - **Sootopolis Wallace cascade (C309)**: SootopolisCity_Gym_1F (scripts.inc + map.json: Wallace object + Juan cameo at 9,2), Gym_B1F, PokemonCenter_1F, House3, CaveOfOrigin_B1F, MossdeepCity, data/text/match_call.inc, src/data/text/match_call_messages.h, src/strings.c, trainer_parties.h/trainers.h (sParty_WallaceGym1-5) + scripts/trainer_configs/wallace_gym_1-5.json. Details: trainer-parties.md + npc-dialogue.md.

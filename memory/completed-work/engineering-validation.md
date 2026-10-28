@@ -8,6 +8,7 @@
 | `pokeemerald/scripts/check_encounters.sh` | **C170** | Encounter table validator (species exist, slot counts, level sanity, duplicate maps) |
 | `pokeemerald/Makefile` | C127, C141, C145, **C170** | check_trainers/check_ascii/check_scripts/check_flags targets (C127-C145); check_encounters target + check_scripts as rom prerequisite (C170) |
 | `pokeemerald/asm/macros/event_macros.inc` | **C179** | New file: 3 parameterized macros (GlimpseEvent, BadgeGateShow, ConditionalDialogue) for reusable script patterns |
+| `pokeemerald/asm/macros/event_macros.inc` | **C315** | +3 den macros: EventMacro_StaticDen, EventMacro_StaticDenTransition, EventMacro_StaticDenTryRemove (see discovery-beats.md) |
 | `pokeemerald/asm/macros/legend_macros.inc` | **C185** | New file: 7 parameterized macros (ScreenShake, PlayCry, SetWeather, ClearWeather, FadeOut, FadeIn, StartBattle) for legendary encounters |
 | `pokeemerald/asm/macros/difficulty_utils.inc` | **C190** | New file: `EventMacro_DifficultyDialogue` — convenience wrapper for Challenge Mode NPC branching. Hardcodes FLAG_DIFFICULTY_CHALLENGE, handles lock/faceplayer/branch/release/end. |
 | `pokeemerald/asm/macros.inc` | C179, C185, **C190** | Added `.include "asm/macros/difficulty_utils.inc"` after legend_macros.inc |

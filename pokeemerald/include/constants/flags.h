@@ -740,8 +740,8 @@
 #define FLAG_RECKONING_TALKED_ROUTE128             0x2B2
 #define FLAG_RECKONING_TALKED_SHOAL_CAVE           0x2B3
 #define FLAG_RECKONING_COMPLETE  0x2B4
-#define FLAG_HIDE_MT_PYRE_STARLIGHT_TORCHIC  0x2B5 // C312: set when the player CATCHES the Mt. Pyre static Torchic_Hoenn
-#define FLAG_UNUSED_0x2B6  0x2B6 // Unused Flag
+#define FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC  0x2B5 // C312/C315: set ONLY when the player catches the Mt. Pyre den Torchic_Hoenn (object uses FLAG_TEMP_11)
+#define FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO  0x2B6 // C315: set ONLY when the player catches the Meteor Falls den Treecko_Hoenn (object uses FLAG_TEMP_11)
 #define FLAG_UNUSED_0x2B7  0x2B7 // Unused Flag
 #define FLAG_UNUSED_0x2B8  0x2B8 // Unused Flag
 #define FLAG_UNUSED_0x2B9  0x2B9 // Unused Flag

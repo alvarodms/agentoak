@@ -21,7 +21,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Champion Replacement & Wallace Cascade — Verified Evidence | 309 | [champion-replacement-correction-c306.md](pokemon-knowledge/champion-replacement-correction-c306.md) |
 | Difficulty Mechanics Landscape — Item Bans, Stat Boosts, Type Changes | 306 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
 | Toxapex on Boss Trainers — The Stall Pitfall | 307 | [toxapex-boss-design-stall-pitfall-c307.md](pokemon-knowledge/toxapex-boss-design-stall-pitfall-c307.md) |
-| Discovery Beats & Exploration Rewards | 312 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
+| Discovery Beats & Exploration Rewards (+ C315 missable-static evidence) | 315 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
 | Boss Species Reuse & Elite Four Identity (#193) | 314 | [boss-species-reuse-and-e4-identity-c313.md](pokemon-knowledge/boss-species-reuse-and-e4-identity-c313.md) |
 | Steven Rematch Design & the Regi Question (#194) | 308 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 

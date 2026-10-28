@@ -1,5 +1,18 @@
 MeteorFalls_B1F_2R_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MeteorFalls_B1F_2R_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, MeteorFalls_B1F_2R_OnResume
 	.byte 0
+
+MeteorFalls_B1F_2R_OnTransition:
+	EventMacro_StaticDenTransition FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, FLAG_TEMP_11
+	end
+
+MeteorFalls_B1F_2R_OnResume:
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, MeteorFalls_B1F_2R_EventScript_TryRemoveCrystalTreecko
+	end
+
+MeteorFalls_B1F_2R_EventScript_TryRemoveCrystalTreecko::
+	EventMacro_StaticDenTryRemove
 
 @ =============================================
 @ Quest 6: The Resonance — Meteorite Investigation (C233)
@@ -93,3 +106,50 @@ MeteorFalls_B1F_2R_Text_CosmicAftermath:
 	.string "The warmth that lived here\n"
 	.string "has gone somewhere.\p"
 	.string "You think you know where.$"
+
+@ =============================================
+@ C315: Discovery beat - the crystal Treecko
+@ =============================================
+
+MeteorFalls_B1F_2R_EventScript_CrystalTreecko::
+	EventMacro_StaticDen SPECIES_TREECKO_HOENN, 40, ITEM_MOON_STONE, FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, MeteorFalls_B1F_2R_Text_CrystalTreeckoApproach, MeteorFalls_B1F_2R_Text_CrystalTreeckoCaught, MeteorFalls_B1F_2R_Text_CrystalTreeckoFaded
+
+MeteorFalls_B1F_2R_EventScript_SilverLeaf::
+	msgbox MeteorFalls_B1F_2R_Text_SilverLeaf, MSGBOX_SIGN
+	end
+
+MeteorFalls_B1F_2R_EventScript_ChalkNote::
+	msgbox MeteorFalls_B1F_2R_Text_ChalkNote, MSGBOX_SIGN
+	end
+
+MeteorFalls_B1F_2R_Text_CrystalTreeckoApproach:
+	.string "A faint chime... like ice\n"
+	.string "settling in the dark.\p"
+	.string "A TREECKO...? Down here?\p"
+	.string "No... its leaves aren't green.\n"
+	.string "They're clear as crystal,\l"
+	.string "and sharp as glass.$"
+
+MeteorFalls_B1F_2R_Text_CrystalTreeckoCaught:
+	.string "The chiming stops.\p"
+	.string "For a moment, the meteorite\n"
+	.string "fragments hum in answer.$"
+
+MeteorFalls_B1F_2R_Text_CrystalTreeckoFaded:
+	.string "The glint sinks back into\n"
+	.string "the rock...\p"
+	.string "Perhaps it will return once\n"
+	.string "the cave is still again.$"
+
+MeteorFalls_B1F_2R_Text_SilverLeaf:
+	.string "A silver leaf is wedged into\n"
+	.string "the stalagmite.\p"
+	.string "It's as thin as a knife,\n"
+	.string "and cold to the touch.$"
+
+MeteorFalls_B1F_2R_Text_ChalkNote:
+	.string "Words are chalked on the cave\n"
+	.string "wall in a neat hand:\p"
+	.string "Not mine to collect.\n"
+	.string "Some things should be found.\p"
+	.string "- S.$"

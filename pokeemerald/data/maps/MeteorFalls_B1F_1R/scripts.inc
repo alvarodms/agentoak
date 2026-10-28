@@ -67,3 +67,16 @@ MeteorFalls_B1F_1R_Text_ResearcherPostQuest:
 	.string "against the cave wall.\p"
 	.string "I think this is their home\n"
 	.string "now. HOENN is their home.$"
+
+@ C315: crystal Treecko den cue
+MeteorFalls_B1F_1R_EventScript_GroovedStone::
+	msgbox MeteorFalls_B1F_1R_Text_GroovedStone, MSGBOX_SIGN
+	end
+
+MeteorFalls_B1F_1R_Text_GroovedStone:
+	.string "Neat, shallow grooves are cut\n"
+	.string "into this meteorite chunk.\p"
+	.string "Something has been sharpening\n"
+	.string "itself on this stone.\p"
+	.string "The cuts are too clean\n"
+	.string "for claws.$"
