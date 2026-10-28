@@ -1,8 +1,15 @@
 # Boss Species Reuse & Elite Four Identity (#193)
 
-**Cycle**: 316 | **Date**: October 2026
+**Cycle**: 317 | **Date**: October 2026
 
 ---
+
+## C317 Flannery vs Magma aces
+- **Vanilla Emerald Flannery** (my own knowledge; this cycle's searches did not return the tables): Numel 24 / Slugma 24 / Camerupt 26 / **Torkoal 29 (ace, White Herb, Sunny Day per Sportskeeda)**. Vanilla Tabitha at Mt. Chimney also has Camerupt, so **the Camerupt echo between Chimney and Gym 4 is in vanilla**. The Houndoom ace on Flannery1 was **added by this hack**, which makes it the real problem.
+- **Pokémon Sinking Sapphire** (nuzlocketracker): Flannery = Ninetales/Houndoom/Delphox/Magcargo/Camerupt/Torkoal, so hacks do NOT avoid Houndoom/Camerupt on her. The problem is specific to us because our own Magma ownership table puts both species on Magma's aces.
+- In official games Torkoal is her **signature** mon everywhere (anime, Masters, ORAS ace). Gen 3 Torkoal has no Drought, so "sun" comes from the move Sunny Day, as in vanilla.
+- Bulbapedia: Flannery's Gym team is all female and her rematch teams are all male. Gym = 2 Hyper Potions, rematches = 3 Full Restores.
+- **Pattern**: give the ace back to the signature mon (Torkoal), and keep only one mid-team Fire mon that a villain also uses.
 
 ## C316 villain pass (Maxie/Archie/admins)
 - **Vanilla Emerald baseline** (Bulbapedia/Serebii, from my own knowledge; this cycle's searches cut off before the tables): Maxie = Mightyena/Crobat/Camerupt. Archie = Mightyena/Crobat/Sharpedo. Tabitha = Numel/Mightyena/Zubat(Golbat)/Camerupt. Shelly = Carvanha/Mightyena, later Sharpedo/Mightyena. Matt = Mightyena/Golbat. Courtney and Matt-at-Chimney don't appear in Emerald; Tabitha and Shelly take their roles.
@@ -37,3 +44,6 @@
 - https://www.serebii.net/emerald/elite.shtml
 - https://serebii.net/emerald/entrycall/winona.shtml
 - https://bulbapedia.bulbagarden.net/wiki/Team_Aqua
+- https://nuzlocketracker.org/guides/sinking-sapphire
+- https://bulbapedia.bulbagarden.net/wiki/Flannery
+- https://sportskeeda.com/pokemon/10-strongest-pokemon-gym-leaders-time-ranked

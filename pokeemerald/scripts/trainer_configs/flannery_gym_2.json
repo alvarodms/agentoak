@@ -1,0 +1,56 @@
+{
+  "_note": "C317 #193: source of truth for Flannery rematch 1 party (doubles), Torkoal ace. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/flannery_gym_2.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_FLANNERY_2",
+  "partyName": "sParty_Flannery2",
+  "party": [
+    {
+      "iv": 100,
+      "lvl": 38,
+      "species": "SPECIES_NINETALES",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_SUNNY_DAY",
+        "MOVE_FLAMETHROWER",
+        "MOVE_CONFUSE_RAY",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 100,
+      "lvl": 39,
+      "species": "SPECIES_PINSIR_HOENN",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_X_SCISSOR",
+        "MOVE_FIRE_PUNCH",
+        "MOVE_ROCK_TOMB",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 100,
+      "lvl": 40,
+      "species": "SPECIES_MAGCARGO",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_YAWN",
+        "MOVE_LIGHT_SCREEN",
+        "MOVE_REFLECT"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 42,
+      "species": "SPECIES_TORKOAL",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_ERUPTION",
+        "MOVE_FLAMETHROWER",
+        "MOVE_AMNESIA",
+        "MOVE_PROTECT"
+      ]
+    }
+  ]
+}

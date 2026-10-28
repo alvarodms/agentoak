@@ -1,5 +1,5 @@
 {
-  "_note": "C309: source of truth for Wallace (Gym rematch 1) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/wallace_gym_2.json",
+  "_note": "C309: source of truth for Wallace (Gym rematch 1) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/wallace_gym_2.json. C317 #193: Relicanth replaces WALREIN (Glacia owns the Spheal line).",
   "mode": "modify",
   "trainerId": "TRAINER_JUAN_2",
   "partyName": "sParty_WallaceGym2",
@@ -7,12 +7,12 @@
     {
       "iv": 150,
       "lvl": 48,
-      "species": "SPECIES_WALREIN",
+      "species": "SPECIES_RELICANTH",
       "heldItem": "ITEM_LEFTOVERS",
       "moves": [
-        "MOVE_ICE_BEAM",
-        "MOVE_SURF",
-        "MOVE_BODY_SLAM",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_WATERFALL",
+        "MOVE_YAWN",
         "MOVE_PROTECT"
       ]
     },

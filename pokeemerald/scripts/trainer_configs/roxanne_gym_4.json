@@ -1,0 +1,80 @@
+{
+  "_note": "C317 #193: source of truth for Roxanne rematch 3 party, Rustboro fossil hall. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/roxanne_gym_4.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_ROXANNE_4",
+  "partyName": "sParty_Roxanne4",
+  "party": [
+    {
+      "iv": 150,
+      "lvl": 58,
+      "species": "SPECIES_GOLEM",
+      "heldItem": "ITEM_SHELL_BELL",
+      "moves": [
+        "MOVE_ROCK_SLIDE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_DOUBLE_EDGE",
+        "MOVE_EXPLOSION"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 59,
+      "species": "SPECIES_ARMALDO",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_ROCK_SLIDE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_SWORDS_DANCE",
+        "MOVE_BRICK_BREAK"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 60,
+      "species": "SPECIES_CRADILY",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_GIGA_DRAIN",
+        "MOVE_ANCIENT_POWER",
+        "MOVE_TOXIC",
+        "MOVE_CONFUSE_RAY"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 61,
+      "species": "SPECIES_OMASTAR",
+      "heldItem": "ITEM_MYSTIC_WATER",
+      "moves": [
+        "MOVE_SURF",
+        "MOVE_ICE_BEAM",
+        "MOVE_ANCIENT_POWER",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 62,
+      "species": "SPECIES_AERODACTYL",
+      "heldItem": "ITEM_SCOPE_LENS",
+      "moves": [
+        "MOVE_ROCK_SLIDE",
+        "MOVE_AERIAL_ACE",
+        "MOVE_EARTHQUAKE",
+        "MOVE_DOUBLE_EDGE"
+      ]
+    },
+    {
+      "iv": 150,
+      "lvl": 60,
+      "species": "SPECIES_CARBINK",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_REFLECT",
+        "MOVE_LIGHT_SCREEN",
+        "MOVE_MOONBLAST",
+        "MOVE_CALM_MIND"
+      ]
+    }
+  ]
+}

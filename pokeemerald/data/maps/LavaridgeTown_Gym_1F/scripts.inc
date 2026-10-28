@@ -303,6 +303,9 @@ LavaridgeTown_Gym_1F_Text_FlanneryIntro:
 	.string "ROUTE 112? They breathe fire\l"
 	.string "now -- the volcanic slopes\l"
 	.string "changed them somehow.\p"
+	.string "And those MAGMA types up top\n"
+	.string "want the mountain to rage.\l"
+	.string "My TORKOAL just keeps it warm.\p"
 	.string "My grandpa would have loved\n"
 	.string "this. Now feel OUR heat!$"
 
@@ -359,12 +362,11 @@ LavaridgeTown_Gym_1F_Text_GymStatueCertified:
 
 LavaridgeTown_Gym_1F_Text_FlanneryPreRematch:
 	.string "Oh! {PLAYER}! You're back!\p"
-	.string "A Houndour pack settled near the\n"
-	.string "hot springs on MT. CHIMNEY…\p"
-	.string "Their fire burns differently from\n"
-	.string "Hoenn's native POKéMON.\p"
+	.string "The hot springs have been busy.\n"
+	.string "TORKOAL doze in the steam, and\l"
+	.string "MAGCARGO bask by the vents.\p"
 	.string "I've been training with them and\n"
-	.string "I'm burning hotter than ever!\n"
+	.string "I'm burning hotter than ever!\l"
 	.string "Let's battle!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat:
@@ -372,10 +374,10 @@ LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat:
 	.string "But I won't stop burning!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryPostRematch:
-	.string "The Houndour that migrated here…\n"
-	.string "their flames are fierce and loyal.\p"
-	.string "I feel like my team has found\n"
-	.string "a new source of fire inside!$"
+	.string "TEAM MAGMA wanted the mountain\n"
+	.string "to rage. We just keep it warm.\p"
+	.string "My TORKOAL taught me that.\n"
+	.string "Slow heat lasts the longest!$"
 
 LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons:
 	.string "H-hey! You need at least two\n"

@@ -1,0 +1,56 @@
+{
+  "_note": "C317 #193: source of truth for Flannery (Gym 4) party, Torkoal ace, no Houndoom/Camerupt (Tabitha/Maxie own them). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/flannery_gym_1.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_FLANNERY_1",
+  "partyName": "sParty_Flannery1",
+  "party": [
+    {
+      "iv": 200,
+      "lvl": 27,
+      "species": "SPECIES_PINSIR_HOENN",
+      "heldItem": "ITEM_ORAN_BERRY",
+      "moves": [
+        "MOVE_X_SCISSOR",
+        "MOVE_FLAME_WHEEL",
+        "MOVE_ROCK_TOMB",
+        "MOVE_STRENGTH"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 26,
+      "species": "SPECIES_MAGCARGO",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_ROCK_TOMB",
+        "MOVE_LIGHT_SCREEN",
+        "MOVE_REFLECT"
+      ]
+    },
+    {
+      "iv": 220,
+      "lvl": 27,
+      "species": "SPECIES_ARCANINE",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_BITE",
+        "MOVE_BODY_SLAM",
+        "MOVE_ROAR"
+      ]
+    },
+    {
+      "iv": 250,
+      "lvl": 29,
+      "species": "SPECIES_TORKOAL",
+      "heldItem": "ITEM_WHITE_HERB",
+      "moves": [
+        "MOVE_OVERHEAT",
+        "MOVE_BODY_SLAM",
+        "MOVE_YAWN",
+        "MOVE_SUNNY_DAY"
+      ]
+    }
+  ]
+}

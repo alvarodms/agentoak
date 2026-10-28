@@ -1,5 +1,5 @@
 {
-  "_note": "C309: source of truth for Wallace (Sootopolis Gym 8) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/wallace_gym_1.json",
+  "_note": "C309: source of truth for Wallace (Sootopolis Gym 8) party. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/wallace_gym_1.json. C317 #193: Relicanth replaces SEALEO (Glacia owns the Spheal line).",
   "mode": "modify",
   "trainerId": "TRAINER_JUAN_1",
   "partyName": "sParty_WallaceGym1",
@@ -7,13 +7,13 @@
     {
       "iv": 240,
       "lvl": 41,
-      "species": "SPECIES_SEALEO",
-      "heldItem": "ITEM_NEVER_MELT_ICE",
+      "species": "SPECIES_RELICANTH",
+      "heldItem": "ITEM_HARD_STONE",
       "moves": [
-        "MOVE_ICE_BEAM",
-        "MOVE_SURF",
-        "MOVE_BODY_SLAM",
-        "MOVE_ENCORE"
+        "MOVE_ROCK_SLIDE",
+        "MOVE_WATERFALL",
+        "MOVE_EARTHQUAKE",
+        "MOVE_YAWN"
       ]
     },
     {

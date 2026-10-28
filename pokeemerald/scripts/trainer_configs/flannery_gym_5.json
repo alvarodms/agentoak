@@ -1,0 +1,80 @@
+{
+  "_note": "C317 #193: source of truth for Flannery rematch 4 party (doubles), Torkoal ace. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/flannery_gym_5.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_FLANNERY_5",
+  "partyName": "sParty_Flannery5",
+  "party": [
+    {
+      "iv": 200,
+      "lvl": 68,
+      "species": "SPECIES_PINSIR_HOENN",
+      "heldItem": "ITEM_SALAC_BERRY",
+      "moves": [
+        "MOVE_X_SCISSOR",
+        "MOVE_FIRE_PUNCH",
+        "MOVE_SWORDS_DANCE",
+        "MOVE_ROCK_SLIDE"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 69,
+      "species": "SPECIES_NINETALES",
+      "heldItem": "ITEM_WHITE_HERB",
+      "moves": [
+        "MOVE_SUNNY_DAY",
+        "MOVE_OVERHEAT",
+        "MOVE_CONFUSE_RAY",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 70,
+      "species": "SPECIES_RAPIDASH",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_FIRE_BLAST",
+        "MOVE_SOLAR_BEAM",
+        "MOVE_BOUNCE",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 71,
+      "species": "SPECIES_MAGCARGO",
+      "heldItem": "ITEM_SHELL_BELL",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_YAWN",
+        "MOVE_AMNESIA"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 72,
+      "species": "SPECIES_ARCANINE",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_EXTREME_SPEED",
+        "MOVE_BITE",
+        "MOVE_PROTECT"
+      ]
+    },
+    {
+      "iv": 250,
+      "lvl": 75,
+      "species": "SPECIES_TORKOAL",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_ERUPTION",
+        "MOVE_HEAT_WAVE",
+        "MOVE_AMNESIA",
+        "MOVE_PROTECT"
+      ]
+    }
+  ]
+}

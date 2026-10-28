@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery).
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed).
 
 ---
 
@@ -61,26 +61,35 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 
 ### Species Reuse (#193)
 
-| Species | Final owner (C316) | Notes |
+| Species | Final owner (C317) | Notes |
 |---------|-------------------|-------|
-| Camerupt (ace), Weezing line, Rhydon line, Nidoking line | **Maxie** (Magma = land) | Ace last slot every tier. **Camerupt also on Flannery2-5 — OPEN collision (audit)** |
-| Houndoom (ace), Muk line, Magmar, Sandslash | **Tabitha** | **Houndoom also Flannery1 ace + Flannery3/4/5 — OPEN collision (audit)** |
+| Camerupt (ace), Weezing line, Rhydon line, Nidoking line | **Maxie** (Magma = land) | Ace last slot every tier. Off Flannery C317 |
+| Houndoom (ace), Muk line, Magmar, Sandslash | **Tabitha** | Off Flannery C317 (Houndour stays a wild migration species) |
 | Sharpedo (ace), Crobat, Wailord, Gliscor_Hoenn | **Archie** (Aqua = sea) | Gliscor_H also Brawly4/5 rematch (accepted) |
 | Huntail (ace), Octillery, Qwilfish, Carvanha (WI), Corsola_Hoenn | **Shelly** | Corsola_H also Phoebe R1 (accepted, Aqua adopted migrant) |
 | Poliwrath (ace), Kingler, Quagsire, Tentacruel | **Matt** | |
 | Crawdaunt, Mightyena | **Sidney** | No villain boss fields either |
 | Honchkrow | **Sidney** (all 5 tiers) | Winona removed C314 |
 | Gyarados | **Wallace** | |
-| Arcanine | **Flannery** | |
+| Torkoal (ace), Arcanine, Magcargo, Ninetales, Rapidash, Pinsir_Hoenn | **Flannery** | C317 "steam, not smoke": Torkoal ace every tier (F1 White Herb Overheat; F2-F5 sun Eruption). Source of truth `flannery_gym_1-5.json`. Intro/rematch text: Magma wants the mountain to rage, Torkoal keeps it warm |
+| Omastar, Kabutops, Aerodactyl, Armaldo | **Roxanne** (fossil hall) | C317 `roxanne_gym_2-5.json`; Omastar replaces Lunatone, R5 ace = banded Aerodactyl 75 (Kabutops R5 only). Golem kept |
+| Relicanth | **Wallace** | C317: replaces Sealeo (Gym1) / Walrein (Gym2-4) in slot 1 of `wallace_gym_1-4.json`. Gym5 untouched |
+| Walrein/Sealeo | **Glacia** | Off Wallace C317 |
+| Lunatone | **Tate&Liza** | Off Roxanne C317 |
+| Sceptile_Hoenn | **Steven** only | Off Drake R3/R4 C317 (→ Flygon, `drake_rematch_3/4.json`) |
 | Claydol | **Tate&Liza** | |
 | Flygon | **Drake** | Steven T0-T2 → Donphan C314 |
-| Tyranitar | Rival postgame, Meteor Falls Steven, Roxanne5, Steven rematches | Roxanne+Steven collision OPEN (audit) |
+| Tyranitar | Rival postgame, Meteor Falls Steven, Steven rematches | Off Roxanne5 C317 |
+| Kingdra | Wallace Gym5 (Juan's) + Drake R3/R4 | **Accepted overlap** (both postgame-only) |
+| Carbink, Cradily | Roxanne R3+ + Steven | **Accepted overlap** (stone student / stone master; fossil hall Steven inspired) |
 | Skarmory | Winona 1/3/4/5 + Steven T2/T3 + Meteor Falls Steven | **Accepted overlap** (vanilla on both, #194) |
 | Grunts (any species) | — | **Exempt** — faction uniforms |
 
 **Villain source of truth (C316):** `pokeemerald/scripts/trainer_configs/villain_*.json` (10 configs; apply with generate_trainer.cjs modify). **Tag battles cap each opponent at 3 mons** (battle_main.c, BATTLE_TYPE_TWO_OPPONENTS) — sParty_MaxieMossdeep is Weezing/Nidoking/Camerupt (Rhydon dropped so the ace appears; Rhydon stays Maxie's via the Hideout).
 
-**Audit (C316):** `node pokeemerald/scripts/audit_boss_species.cjs [--strict]`. Result C316: Maxie ∩ Archie = ∅; accepted Skarmory/Corsola_H/Gliscor_H; **COLLISIONS: 9** — villain: Camerupt (Flannery+Maxie), Houndoom (Flannery+Tabitha); non-villain: Carbink/Cradily/Tyranitar (Roxanne+Steven), Kingdra (Wallace+Drake), Lunatone (Roxanne+Tate&Liza), Sceptile_Hoenn (Drake+Steven), Walrein (Wallace+Glacia). **Producer decision needed**: the two villain aces collide with Flannery's rematch/gym rosters (Flannery1 ace is Houndoom). Fix is on Flannery's side (villain species are fixed) — pick replacements in planning, do not invent in implementation.
+**Audit (C317):** `node pokeemerald/scripts/audit_boss_species.cjs [--strict]`; **`make check_bosses` (--strict) is part of `make check_all`**, so any new boss species share fails the checks. Result C317: **COLLISIONS: 0**, stale allowlist none. Accepted (each with a written `why`, required by --strict): Skarmory, Mightyena (pairs []), Corsola_H, Gliscor_H, Kingdra, Carbink, Cradily. New overlaps: fix the roster first; allowlist only with a story reason.
+
+**C317 playtest watch:** Flannery badge 4 is now a sun/Torkoal fight (F1 Torkoal 29 White Herb Overheat, Magcargo 26 under-levelled vs Slugma's Lv38 evo — accepted). Check it isn't harder than Brawly→Norman curve; next fix for a too-hard report is dropping Overheat to Flamethrower, not changing species. Drake illegal-move fix (tech-debt C317) is the natural next roster-legality job.
 
 **ONE-OWNER RULE:** each overused species belongs to the boss whose identity it fits; don't re-add Tyranitar/Houndoom to Sidney.
 
@@ -89,7 +98,7 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 
 **Winona C314 — "Hoenn's own wings"** (source of truth: `pokeemerald/scripts/trainer_configs/winona_gym_1..5.json`, apply with generate_trainer.cjs): Honchkrow → Sidney, Crobat → Archie. W1 Skarmory/Tropius/Pelipper/Altaria(ace, DD); W2 Swellow/Pelipper/Tropius/Altaria; W3 Skarmory/Pelipper/Swellow/Tropius/Altaria; W4 Skarmory/Pelipper/Dodrio/Masquerain/Tropius/Altaria; W5 Skarmory/Swellow/Dodrio/Tropius/Pelipper/Altaria 75. Badge 6 is softer than C313 (70-Atk Altaria ace vs Brave Bird Honchkrow) — the fight's key beat is "stop the Dragon Dance". Story link: Winona intro says the dark bird she raised "flew south, toward the ELITE FOUR"; Sidney's intro says it "rode a storm down from FORTREE". Rematch pre-text still mentions Murkrow flocks in the sky (flavour, not party).
 
-**Phoebe and Glacia: 0 overlap** with villain bosses. #193 villain pass DONE C316 (Crawdaunt off Shelly/Matt, Crobat Archie-only, Sharpedo Archie-only among bosses). Remaining collisions are the audit list above.
+**Phoebe and Glacia: 0 overlap** with villain bosses. #193 villain pass DONE C316 (Crawdaunt off Shelly/Matt, Crobat Archie-only, Sharpedo Archie-only among bosses). #193 closed C317 (audit 0).
 
 ### Remaining Wallace/Juan threads
 - Juan postgame Double Battle (slot 568) — not built yet. SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
@@ -119,7 +128,7 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 314 | Boss collisions removed: Honchkrow Winona→Sidney (intro story both ends), Sharpedo off Sidney (Archie), Flygon off Steven T0-T2 (Drake; →Donphan), Crobat off Winona (Archie); Phoebe/Glacia 0 overlap. Lotad-line "violet-storm lily" shinies; `check_palettes.sh` guard + manifest — **DONE** | #193 partial, #201 partial, #163 partial |
 | 315 | Den fix + StaticDen macros + Meteor Falls crystal Treecko Lv40 @Moon Stone (B1F_2R) + grooved-stone/silver-leaf cues + Steven chalk note; Regi scene deferred — **DONE** | #194 (Regi scene deferred) |
 | 316 | Villain ownership table: 10 arrays rebuilt from villain_*.json (Magma land / Aqua sea, one ace each, Maxie ∩ Archie = ∅), 5 ace dialogue lines, audit_boss_species.cjs, den static review, Gliscor_H still-front-pic fix — **DONE** | #193 |
-| 317 | **Flannery roster vs Magma aces (C316 reflection: urgent)** — the player fights Tabitha's Houndoom ace at Mt. Chimney, then Flannery's Houndoom ace (Gym 4) minutes later; Camerupt is on Flannery2-5. Create flannery_gym_1-5.json configs without Houndoom/Camerupt (planning picks replacements, e.g. Torkoal ace + Magcargo/Ninetales_H/Arcanine). Then triage the 7 non-villain collisions: fix or add to ACCEPTED_OVERLAPS, so audit reaches 0 and `--strict` can join check_all. | #193 |
+| 317 | Flannery rebuilt around Torkoal (no Houndoom/Camerupt) + Magma line; Roxanne rematch fossil hall (Omastar/Kabutops/Aerodactyl ace); Drake R3/R4 Sceptile_H → Flygon; Wallace Spheal line → Relicanth; Kingdra/Carbink/Cradily allowlisted; audit COLLISIONS: 0 and `check_bosses` in check_all — **DONE** | #193 closed |
 | 318 | Shoal Cave titan Mudkip den — EventMacro_StaticDen (FLAG_CAUGHT_* 0x2B7, temp-flag doll, ON_TRANSITION/ON_RESUME). **Only after the den emulator checklist below is run.** | — |
 | 319 | Steven Regirock/Regice Meteor Falls postgame scene (deferred from 315) | #194 |
 | 320 | Maintenance pass + v2.9 polish / release-stage review | — |

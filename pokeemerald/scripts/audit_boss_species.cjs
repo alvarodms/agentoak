@@ -7,8 +7,14 @@
 // every species fielded by two or more bosses. Grunts and route trainers are
 // not audited (faction uniforms / filler are exempt by design).
 //
+// Every ACCEPTED_OVERLAPS entry must carry a written `why` (the story reason
+// the two bosses share it). Entries whose bosses no longer both field the
+// species are listed under "Stale allowlist" as a warning.
+//
 // Usage: node scripts/audit_boss_species.cjs [--strict]
-//   --strict  exit 1 when any unaccepted collision exists (default: always 0)
+//   --strict  exit 1 when any unaccepted collision exists or any allowlist
+//             entry lacks a `why` (default: always 0). Run by `make check_bosses`
+//             (part of `make check_all`).
 
 const fs = require('fs');
 const path = require('path');
@@ -45,6 +51,9 @@ const ACCEPTED_OVERLAPS = {
   MIGHTYENA: { pairs: [], why: 'Sidney vanilla lead; villain bosses must not field it' },
   CORSOLA_HOENN: { pairs: [['Phoebe', 'Shelly']], why: 'Phoebe R1 rematch; Shelly = Aqua adopted migrant' },
   GLISCOR_HOENN: { pairs: [['Brawly', 'Archie']], why: 'Brawly rematch-only; Archie adopted migrant' },
+  KINGDRA: { pairs: [['Wallace', 'Drake']], why: "Juan's own Kingdra, entrusted to Wallace (Gym T5); Drake's rematch sea-dragon. Both postgame-only" },
+  CARBINK: { pairs: [['Roxanne', 'Steven']], why: 'Roxanne T3+ per #180; Steven R4 gem collection - stone student and stone master' },
+  CRADILY: { pairs: [['Roxanne', 'Steven']], why: "Steven's vanilla fossil; Roxanne's rematch fossil hall is the study he inspired" },
 };
 
 function parseParties(text) {
@@ -116,8 +125,29 @@ function main() {
   for (const { species, list, bad } of collisions)
     console.log(`${species}: ${list.join(', ')} (unaccepted: ${bad.join(', ')})`);
 
+  // Allowlisted pairs where the two bosses no longer both field the species.
+  console.log('\n== Stale allowlist ==');
+  const stale = [];
+  for (const [species, { pairs }] of Object.entries(ACCEPTED_OVERLAPS)) {
+    for (const [a, b] of pairs || []) {
+      const missing = [a, b].filter(boss => !bosses[boss] || !bosses[boss].species.has(species));
+      if (missing.length > 0) stale.push(`${species}: ${a}+${b} (not fielded by ${missing.join(', ')})`);
+    }
+  }
+  if (stale.length === 0) console.log('(none)');
+  for (const line of stale) console.log(`WARNING ${line}`);
+
+  const noReason = Object.entries(ACCEPTED_OVERLAPS)
+    .filter(([, entry]) => !entry.why || !String(entry.why).trim())
+    .map(([species]) => species);
+  if (noReason.length > 0) {
+    console.log('\n== Allowlist entries without a reason ==');
+    for (const species of noReason) console.log(species);
+  }
+
   console.log(`\nCOLLISIONS: ${collisions.length}`);
-  process.exit(strict && collisions.length > 0 ? 1 : 0);
+  const failed = collisions.length > 0 || noReason.length > 0;
+  process.exit(strict && failed ? 1 : 0);
 }
 
 main();
