@@ -6,11 +6,11 @@
 | Species | Type | Version | Cycle | Issue | Status |
 |---------|------|---------|-------|-------|--------|
 | Corsola Hoenn | Ghost/Rock | v3 | 216 | #116 | iterated — frown mouth (∩ shape: center y37 + drooping corners y38), vivid purple iris (130,60,180) per @alvarodms |
-| Growlithe Hoenn | Water | v2 | 258 | #131 | bulkified — 1px outline expansion (left/right/down), fill 26.6%→34.7% front, 34.0%→41.0% back |
-| Arcanine Hoenn | Water/Fire | v1 | 196 | — | awaiting feedback |
+| Growlithe Hoenn | Water | v3 | 318 | #201/#163 | lint cleanup + family shiny. Lint FAIL(1)→PASS: normal idx e (62,75,100)→(54,64,98), a GBA near-dup of idx a; 25 strays merged (front/f1 20→10, f2 16→9, back 19→11; mostly dark-mane a/e specks into outline/neighbour). New shiny "deep-sea" = indigo body b/c/d/e, pearl mane 1/7/8/9/a, cyan glow eye 4, indigo-black nose 3. Lint 57% changed — below the ~85% target because normal mane 1/7/8 is near-neutral pale steel (C<0.03), so a pearl-white shiny mane can't count as changed. Accepted, not gamed |
+| Arcanine Hoenn | Water/Fire | v2 | 318 | #201/#163 | lint cleanup + family shiny. Lint FAIL(1, shiny 23%)→PASS: 26 strays merged (front/f1 20→9, f2 35→22, back 7→3). Shiny "deep-sea" = indigo body c/d/e, pearl mane 7/8/9/a (8 = champagne pearl #f6e4ce so it counts as a hue turn), amber mouth/stripes 4/5/6/b → bioluminescent cyan. 95% changed (f2 90%). Normal untouched |
 | Vulpix Hoenn | Ice/Fairy | v1 | 208 | — | new |
 | Ninetales Hoenn | Ice/Fairy | v1 | 208 | — | new |
-| Bagon Hoenn | Dragon/Rock | v1 | 215 | — | new |
+| Bagon Hoenn | Dragon/Rock | v2 | 318 | #201/#163 | lint cleanup + new shiny. Lint FAIL(5)→PASS: idx f (black dup of outline 5, 5px in f2) remapped to 5; strays front/f1 24→5, f2 21→6, back 13→3 (rust flecks d/e kept as accents); f2 jaggies 2→1. Shiny obsidian+gold → "weathered sandstone": jade crest 3/4/6/1, terracotta body b/a/7/c/2, bleached-sand belly/eye 8/9, jade mineral flecks d/e. 46%→99% changed. Normal pal untouched |
 | Pinsir Hoenn | Bug/Fire | v1 | 230 | — | new |
 | Stantler Hoenn | Ghost/Grass | v1 | 231 | — | new |
 | Deoxys Hoenn | Poison/Fairy | v1 | 240 | — | new |
@@ -42,3 +42,6 @@ C314 sweep: all 25 `_hoenn` dirs differ from vanilla in both normal.pal and shin
 | Ludicolo_H | #f5e130 #fffa94 #8e7837 body, #87a537 #a8bc2d hat · "festival gold under olive lily" | #9b6ecf #d8c5ee #695184 body, #4c8e90 #489ea1 hat · "violet-storm dancer, teal lily" |
 | Shroomish_H | #7864a0 #9682b9 #483464 body, #d2daf0 frost, #7337a0 spots · "violet toxic frost" | #55768e #6e91a5 body, #c3d7e6 frost, #3c8c64 spots · "slate-teal glacier mould" |
 | Breloom_H | #8a55ac #52307d cap/legs, #766ca5 body, #dae1f2 #eef2fc frost · "violet cap, frost-white body" | #5c6c98 #263458 cap, #586c8e body, #378a66 accents · "slate-blue cap, jade spores" |
+| Bagon_H | #e8e1d2 #b2a591 #8a7d6c crest, #918064 #af9e82 #524434 body, #964830 rust flecks · "stony grey-brown, rust minerals" | #a0eebe #60c494 #24946e jade crest, #c07052 #e49c76 #82423a terracotta body, #fae4b4 belly, #40b28a flecks · "weathered sandstone, jade crest" |
+| Growlithe_H | #dae2ee #c0ccde mane, #91a5c3 #627698 body, #cda034 eye · "sea-spray mane, steel-blue body, amber eye" | #f6e4ce #dcc8cc pearl mane, #8070de #6040c8 #422ca6 indigo body, #3cd2d8 eye · "deep-sea" (shared with Arcanine) |
+| Arcanine_H | #bcc8e1 #525f87 mane, #6c769b #48527d body, #f2bc3a #e8ac44 ember accents · "navy and sea-spray, amber embers" | #f6e4ce #ceb6c6 pearl mane, #604cc8 #422ca6 #2e187e indigo body, #9cfaec #3cd2d8 glow mouth/stripes · "deep-sea" |

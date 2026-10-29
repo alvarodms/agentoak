@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 315 | **Date**: October 2026
+**Cycle**: 318 | **Date**: October 2026
 
 ---
 
@@ -29,3 +29,9 @@
 - **Inclement Emerald** (pokeemerald decomp): every wild, gift and static encounter has at least 3 perfect IVs, guaranteed since v1.7. A hand-placed static is a *better* mon than a random wild one, which is what players expect from an encounter that was placed on purpose.
 - Takeaway: a den static should (a) set its hide flag only on catch, (b) never be lost to a KO or flee, and (c) feel "special" in its stats (fixed IVs/held item), not just in where it sits.
 - Searches found no named hack that puts Regis on Steven's postgame team. Still no external precedent (see steven-rematch-and-regi-question-c308.md).
+
+## C318 addendum: "titan" framing + verifying dens without a human (searched Oct 2026)
+- **SV Titans** are bigger and stronger guardians, and they're beaten, not caught. Each later Titan is higher level. The **v2.0.1 patch let players catch former Titans they'd accidentally KO'd.** Game Freak patched that one-shot loss out, which confirms our catch-only hide flag (missable-static rule above).
+- In SV, "titan" means a *boss fight*. If the Shoal Cave Mudkip is called a titan, players will expect the fight to feel different, not just a plain Lv-X static. Cheap ways to deliver that in vanilla engine: a higher level than the earlier dens (Torchic 30, Treecko 40), a held item, fixed IVs (the Inclement precedent above), and a tide-gated appearance (takeaway 3).
+- **Automated emulator checks:** mGBA has had Lua scripting since 0.10 (`emu:read8(addr)` and similar). Third-party tools (mgba-mcp, mcp-mgba) run it headless as `xvfb-run mgba-qt --script x.lua`, wait for a DONE marker file, and collect a screenshot and JSON. A script could load a save state, step frames, and read the den flag bytes. pokeemerald-expansion also has an in-ROM test runner (mgba-rom-test style, which reports exit status through an SWI). Not verified: whether mgba is installable in our CI.
+- Our own help request for den playtesters (C317) has had no response so far. Gating new content on human playtesting stalls the roadmap.

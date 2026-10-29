@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed).
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed). C318: Shoal Cave titan Mudkip den (third den — all three Changed starters now have a visible route) + Drake 5 teams learnset-legal + Bagon/Growlithe/Arcanine_H lint & shinies (#201/#163 batch).
 
 ---
 
@@ -91,6 +91,10 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 
 **C317 playtest watch:** Flannery badge 4 is now a sun/Torkoal fight (F1 Torkoal 29 White Herb Overheat, Magcargo 26 under-levelled vs Slugma's Lv38 evo — accepted). Check it isn't harder than Brawly→Norman curve; next fix for a too-hard report is dropping Overheat to Flamethrower, not changing species. Drake illegal-move fix (tech-debt C317) is the natural next roster-legality job.
 
+**Flannery sun (C318 check):** Torkoal ability is WHITE_SMOKE only — Flannery's sun depends on Sunny Day (Torkoal in F1, Ninetales slot 1 in F2-F5; all five teams carry it, no change needed).
+
+**Drake learnset legality (C318):** all 5 teams legal per rom_species; source of truth `drake.json`, `drake_rematch_1-4.json`. Only exception: Dragonite Extreme Speed (Gen 3 event move, Drake signature). Backlog: R3 Flygon (Dragon Breath/Toxic Leftovers stall) hits softer than R1/R2 Flygon.
+
 **ONE-OWNER RULE:** each overused species belongs to the boss whose identity it fits; don't re-add Tyranitar/Houndoom to Sidney.
 
 **Sidney C313 — "the one who followed the storm"** (source of truth: `pokeemerald/scripts/trainer_configs/sidney_*.json`, apply with generate_trainer.cjs): Hoenn-native Dark-types, Absol ace (last slot), Honchkrow signature. Base (44-48, 5 mons): Mightyena/Shiftry/Sharpedo/Honchkrow/Absol. R1 (60-68): Mightyena/Sharpedo/Shiftry/Umbreon/Honchkrow/Absol. R2 (70-80): Mightyena/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol(SD). R3 (80-88): Sharpedo lead/Cacturne/Crawdaunt/Umbreon/Honchkrow/Absol. R4 (88-95): Sharpedo/Shiftry/Crawdaunt(SD+Liechi)/Umbreon(Mean Look trap)/Honchkrow/Absol. All moves legal per ROM learnsets (Absol uses Slash/Faint Attack/Quick Attack — no Night Slash/Sucker Punch in its vanilla learnset; see tech-debt). Overlap with Phoebe/Glacia/Drake/Steven/Wallace arrays: **0 shared species** (grep C313). Intro text now names Absol pacing before the migration.
@@ -129,11 +133,11 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 315 | Den fix + StaticDen macros + Meteor Falls crystal Treecko Lv40 @Moon Stone (B1F_2R) + grooved-stone/silver-leaf cues + Steven chalk note; Regi scene deferred — **DONE** | #194 (Regi scene deferred) |
 | 316 | Villain ownership table: 10 arrays rebuilt from villain_*.json (Magma land / Aqua sea, one ace each, Maxie ∩ Archie = ∅), 5 ace dialogue lines, audit_boss_species.cjs, den static review, Gliscor_H still-front-pic fix — **DONE** | #193 |
 | 317 | Flannery rebuilt around Torkoal (no Houndoom/Camerupt) + Magma line; Roxanne rematch fossil hall (Omastar/Kabutops/Aerodactyl ace); Drake R3/R4 Sceptile_H → Flygon; Wallace Spheal line → Relicanth; Kingdra/Carbink/Cradily allowlisted; audit COLLISIONS: 0 and `check_bosses` in check_all — **DONE** | #193 closed |
-| 318 | Shoal Cave titan Mudkip den — EventMacro_StaticDen (FLAG_CAUGHT_* 0x2B7, temp-flag doll, ON_TRANSITION/ON_RESUME). **Only after the den emulator checklist below is run.** | — |
-| 319 | Steven Regirock/Regice Meteor Falls postgame scene (deferred from 315) | #194 |
+| 318 | Shoal Cave titan Mudkip den — Lower Room (18,6) Lv38 @Shell Bell, FLAG_CAUGHT 0x2B7, FLAG_TEMP_12, tide-aware Entrance cue (13,29) + tide-pool cue (18,7), no Steven note; Drake 5 teams learnset-legal (`drake*.json`) — **DONE** | #201 partial, #163 partial (Bagon/Growlithe/Arcanine_H lint PASS + new shinies: Bagon "weathered sandstone", Growlithe/Arcanine shared "deep-sea") |
+| 319 | Next #201/#163 sprite batch (Corsola_H, Vulpix/Ninetales_H first) + emulator pass on the three dens if possible; then Steven Regirock/Regice Meteor Falls postgame scene (deferred from 315) — blocked on deciding use of reclaimable trainer IDs 568/853 | #194 |
 | 320 | Maintenance pass + v2.9 polish / release-stage review | — |
 
-### Den emulator checklist (C315 — not yet playtested; run for BOTH dens: Mt. Pyre Exterior Torchic (22,13), Meteor Falls B1F_2R Treecko (7,4))
+### Den emulator checklist (C315/C318 — not yet playtested; run for all THREE dens: Mt. Pyre Exterior Torchic (22,13), Meteor Falls B1F_2R Treecko (7,4), Shoal Cave Lower Room Mudkip (18,6))
 - Doll visible on first entry. Torchic doll visible inside the summit fog.
 - KO it → faded text, doll gone; still gone after closing menus; back after leaving and re-entering the map.
 - Run from it → same as KO.
@@ -141,19 +145,21 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 - Whiteout during the battle → doll still there on return.
 - Old saves: pre-C315 KO of the Torchic leaves it hidden forever (0x2B5 reused) — expected, see discovery-beats.md.
 - Meteor Falls: TM Dragon Claw ball (5,3) still reachable with the doll at (7,4) (surf up, land on row 4). **STATICALLY VERIFIED C316** (porymap blockdata): rows y=3-4 x=3..7 are land (elev 3), rows 5-13 surf water (elev 1); doll blocks only (7,4) — land at (5,4) from (5,5), face north. Chalk note sign (8,3) readable from (7,3).
+- Shoal Cave Lower Room Mudkip (18,6): doll only reachable at low tide; Entrance cue (13,29) text switches with tide (FLAG_SYS_SHOAL_TIDE). Tide-pool sign (18,7) is readable from (19,7) facing west (the doll blocks (18,6)). **STATICALLY VERIFIED C318** (/tmp BFS over map.bin, ledges + elevation + surf rules): doll sits in the ledge pocket x15-19 y5-6 (entered by jumping the south ledges on row 4 / east ledges at (14,5-6), or from warp (19,11)); blocking it leaves every warp, the boulder and the Black Belt reachable. High tide: Lower Room NOT reachable — Inner Room warps 4 (15,19) and 5 (30,25) sit on MB_OCEAN_WATER in the high-tide layout (water is not a warp behavior, so they do not fire) and warp 3 ladder (19,14, elev 4) is unreachable by walk or surf. Entrance cue stand tile (14,29) is walkable land reachable from (20,30) in both tide layouts.
 
 **Static review C316 (verified without emulator):** (a) FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC 0x2B5 and FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO 0x2B6 are unique in flags.h and referenced only by their own den script (StaticDen + StaticDenTransition); check_flags.sh passes. (b) Each doll uses FLAG_TEMP_11; no other object on MtPyre_Exterior (2 item balls, Coral Mourner flag 0) or MeteorFalls_B1F_2R (1 item ball) uses a temp flag, and neither scripts.inc sets/clears FLAG_TEMP_* elsewhere. (c) above. Both maps wire ON_TRANSITION (StaticDenTransition) + ON_RESUME (call_if_set FLAG_SYS_CTRL_OBJ_DELETE → StaticDenTryRemove). No bugs found. **Still needs emulator:** every behavioural bullet above (render, KO/run/catch/whiteout persistence, fog visibility).
 
 ### Field Notes future cue lines (Birch voice, not in-game yet)
 - "Old note: TORCHIC shun mountains. - Something glitters in the fog atop MT. PYRE."
 - "Old note: TREECKO shun caves. - Something hums in the deepest dark of METEOR FALLS."
+- "Old note: MUDKIP shun salt water. - Something stirs in a tide pool deep in SHOAL CAVE."
 
 ---
 
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264-0x2B6 (verified C316). Next available: **0x2B7** (0x2B7-0x2BB are FLAG_UNUSED; 0x2BC+ vanilla).
+- **Flag space**: Custom 0x264-0x2B7 (C318: 0x2B7 = FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP). Next available: **0x2B8** (0x2B8-0x2BB are FLAG_UNUSED; 0x2BC+ vanilla).
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
 - **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue, StaticDen/StaticDenTransition/StaticDenTryRemove), `difficulty_utils.inc` (DifficultyDialogue).

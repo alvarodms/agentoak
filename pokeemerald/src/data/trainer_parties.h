@@ -3988,7 +3988,7 @@ static const struct TrainerMonItemCustomMoves sParty_Drake[] = {
     .lvl = 51,
     .species = SPECIES_BAGON_HOENN,
     .heldItem = ITEM_HARD_STONE,
-    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_CRUNCH, MOVE_BRICK_BREAK}
     },
     {
     .iv = 250,
@@ -4009,7 +4009,7 @@ static const struct TrainerMonItemCustomMoves sParty_Drake[] = {
     .lvl = 54,
     .species = SPECIES_GARCHOMP,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_IRON_HEAD}
+    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_CRUNCH, MOVE_BRICK_BREAK}
     },
     {
     .iv = 255,
@@ -5318,21 +5318,21 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch1[] = {
     .lvl = 64,
     .species = SPECIES_BAGON_HOENN,
     .heldItem = ITEM_HARD_STONE,
-    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_BRICK_BREAK}
     },
     {
     .iv = 255,
     .lvl = 66,
     .species = SPECIES_KINGDRA,
     .heldItem = ITEM_MYSTIC_WATER,
-    .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_DRAGON_DANCE, MOVE_TOXIC}
+    .moves = {MOVE_DRAGON_DANCE, MOVE_WATERFALL, MOVE_DOUBLE_EDGE, MOVE_ICE_BEAM}
     },
     {
     .iv = 255,
     .lvl = 67,
     .species = SPECIES_GABITE,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE, MOVE_SWORDS_DANCE}
+    .moves = {MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_TOMB, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
@@ -5545,21 +5545,21 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch2[] = {
     .lvl = 74,
     .species = SPECIES_BAGON_HOENN,
     .heldItem = ITEM_HARD_STONE,
-    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
+    .moves = {MOVE_DRAGON_DANCE, MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
     .lvl = 76,
     .species = SPECIES_KINGDRA,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_RAIN_DANCE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_DRAGON_PULSE}
+    .moves = {MOVE_RAIN_DANCE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
     .lvl = 78,
     .species = SPECIES_GABITE,
     .heldItem = ITEM_DRAGON_FANG,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE}
+    .moves = {MOVE_OUTRAGE, MOVE_EARTHQUAKE, MOVE_ROCK_TOMB, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
@@ -5772,21 +5772,21 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch3[] = {
     .lvl = 83,
     .species = SPECIES_BAGON_HOENN,
     .heldItem = ITEM_SCOPE_LENS,
-    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_IRON_HEAD}
+    .moves = {MOVE_FOCUS_ENERGY, MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
     .lvl = 85,
     .species = SPECIES_KINGDRA,
     .heldItem = ITEM_MYSTIC_WATER,
-    .moves = {MOVE_RAIN_DANCE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_DRAGON_PULSE}
+    .moves = {MOVE_RAIN_DANCE, MOVE_HYDRO_PUMP, MOVE_ICE_BEAM, MOVE_DOUBLE_EDGE}
     },
     {
     .iv = 255,
     .lvl = 86,
     .species = SPECIES_GARCHOMP,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_ROCK_SLIDE}
+    .moves = {MOVE_OUTRAGE, MOVE_EARTHQUAKE, MOVE_FIRE_BLAST, MOVE_BRICK_BREAK}
     },
     {
     .iv = 255,
@@ -5992,7 +5992,7 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     .lvl = 90,
     .species = SPECIES_BAGON_HOENN,
     .heldItem = ITEM_CHOICE_BAND,
-    .moves = {MOVE_STONE_EDGE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_EARTHQUAKE}
+    .moves = {MOVE_ROCK_SLIDE, MOVE_DRAGON_CLAW, MOVE_DOUBLE_EDGE, MOVE_BRICK_BREAK}
     },
     {
     .iv = 255,
@@ -6006,7 +6006,7 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     .lvl = 92,
     .species = SPECIES_KINGDRA,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_RAIN_DANCE, MOVE_SURF, MOVE_ICE_BEAM, MOVE_DRAGON_PULSE}
+    .moves = {MOVE_SUBSTITUTE, MOVE_RAIN_DANCE, MOVE_HYDRO_PUMP, MOVE_ICE_BEAM}
     },
     {
     .iv = 255,
@@ -6027,7 +6027,7 @@ static const struct TrainerMonItemCustomMoves sParty_DrakeRematch4[] = {
     .lvl = 95,
     .species = SPECIES_GARCHOMP,
     .heldItem = ITEM_SALAC_BERRY,
-    .moves = {MOVE_SWORDS_DANCE, MOVE_EARTHQUAKE, MOVE_DRAGON_CLAW, MOVE_STONE_EDGE}
+    .moves = {MOVE_OUTRAGE, MOVE_EARTHQUAKE, MOVE_FIRE_BLAST, MOVE_CRUNCH}
     }
 };
 

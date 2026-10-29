@@ -1,5 +1,5 @@
 {
-  "_note": "C317 #193: source of truth for Drake rematch 4 party, banded Flygon replaces Sceptile_Hoenn (Steven owns it). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/drake_rematch_4.json",
+  "_note": "C317 #193: banded Flygon replaces Sceptile_Hoenn (Steven owns it). C318: learnset-legal moves (rom_species). Dragonite Extreme Speed is an intentional Gen 3 event-legal exception. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/drake_rematch_4.json",
   "mode": "modify",
   "trainerId": "TRAINER_DRAKE_REMATCH_4",
   "partyName": "sParty_DrakeRematch4",
@@ -10,10 +10,10 @@
       "species": "SPECIES_BAGON_HOENN",
       "heldItem": "ITEM_CHOICE_BAND",
       "moves": [
-        "MOVE_STONE_EDGE",
+        "MOVE_ROCK_SLIDE",
         "MOVE_DRAGON_CLAW",
         "MOVE_DOUBLE_EDGE",
-        "MOVE_EARTHQUAKE"
+        "MOVE_BRICK_BREAK"
       ]
     },
     {
@@ -34,10 +34,10 @@
       "species": "SPECIES_KINGDRA",
       "heldItem": "ITEM_LEFTOVERS",
       "moves": [
+        "MOVE_SUBSTITUTE",
         "MOVE_RAIN_DANCE",
-        "MOVE_SURF",
-        "MOVE_ICE_BEAM",
-        "MOVE_DRAGON_PULSE"
+        "MOVE_HYDRO_PUMP",
+        "MOVE_ICE_BEAM"
       ]
     },
     {
@@ -70,10 +70,10 @@
       "species": "SPECIES_GARCHOMP",
       "heldItem": "ITEM_SALAC_BERRY",
       "moves": [
-        "MOVE_SWORDS_DANCE",
+        "MOVE_OUTRAGE",
         "MOVE_EARTHQUAKE",
-        "MOVE_DRAGON_CLAW",
-        "MOVE_STONE_EDGE"
+        "MOVE_FIRE_BLAST",
+        "MOVE_CRUNCH"
       ]
     }
   ]

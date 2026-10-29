@@ -1,6 +1,6 @@
 # Discovery Beats (visible static encounters + environmental cues)
 
-Pattern: a visible overworld Pokémon (OBJ_EVENT_GFX_*_DOLL stand-in) that becomes a static battle and comes back until caught, hinted by optional sign-type bg_event "cues". Recipe and macros: codebase-facts.md → "Static Encounter Recipe" (C315 StaticDen pattern: object flag FLAG_TEMP_11 + permanent FLAG_CAUGHT_*).
+Pattern: a visible overworld Pokémon (OBJ_EVENT_GFX_*_DOLL stand-in) that becomes a static battle and comes back until caught, hinted by optional sign-type bg_event "cues". Recipe and macros: codebase-facts.md → "Static Encounter Recipe" (C315 StaticDen pattern: object flag = a FLAG_TEMP_* unused on that map (FLAG_TEMP_11 Mt. Pyre/Meteor Falls, FLAG_TEMP_12 Shoal Cave, where the boulder owns 11) + permanent FLAG_CAUGHT_*).
 
 | File | Change | Cycle | Notes |
 |------|--------|-------|-------|
@@ -11,9 +11,13 @@ Pattern: a visible overworld Pokémon (OBJ_EVENT_GFX_*_DOLL stand-in) that becom
 | `data/maps/MeteorFalls_B1F_2R/map.json` | +object TREECKO_DOLL (7,4) elev 3, FACE_DOWN, flag FLAG_TEMP_11; +sign SilverLeaf (8,14); +sign ChalkNote (8,3) | **315** | Room is land rows 3-4 / water rows 5-13 / land rows 14-15. The doll is on the far shelf, 2 tiles from the TM ball (5,3), so the ball stays reachable by surfing (BFS-checked). The plan wanted SilverLeaf at y 9-13, but nothing there touches a walkable tile, so it went on the entrance shelf instead. ChalkNote is read from (7,3), next to the doll |
 | `data/maps/MeteorFalls_B1F_2R/scripts.inc` | +ON_TRANSITION/ON_RESUME map scripts; CrystalTreecko = `EventMacro_StaticDen SPECIES_TREECKO_HOENN, 40, ITEM_MOON_STONE, ...`; SilverLeaf + ChalkNote ("- S.", Steven) texts | **315** | Resonance meteorite (C233/236/242) untouched |
 | `data/maps/MeteorFalls_B1F_1R/map.json` + `scripts.inc` | +sign GroovedStone at (19,5): a lone rock 4 tiles from the B1F_2R warp (17,3) | **315** | First cue on the approach |
+| `include/constants/flags.h` | `FLAG_UNUSED_0x2B7` → `FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP` | **318** | Set only on catch. Next free flag: 0x2B8 |
+| `data/maps/ShoalCave_LowTideLowerRoom/map.json` | +object MUDKIP_DOLL (18,6) elev 3, FACE_DOWN, flag `FLAG_TEMP_12` (boulder uses FLAG_TEMP_11); +sign TidePool (18,7) elev 0 | **318** | Doll sits in the ledge pocket x15-19 y5-6 (entered by jumping the row-4 south ledges / (14,5-6) east ledges, or from warp (19,11)). Not a chokepoint (BFS). TidePool is a rock tile (metatile 0x20a); the doll blocks (18,6), so it is read from (19,7) facing west. No water metatiles exist in this room |
+| `data/maps/ShoalCave_LowTideLowerRoom/scripts.inc` | +ON_TRANSITION (StaticDenTransition) / ON_RESUME (TryRemoveTitanMudkip); TitanMudkip = `EventMacro_StaticDen SPECIES_MUDKIP_HOENN, 38, ITEM_SHELL_BELL, ...`; TidePool sign + 4 texts | **318** | Existing ON_LOAD (Shoal Salt metatile), Shoal Salt 4 and Black Belt untouched. No Steven chalk note, deliberately |
+| `data/maps/ShoalCave_LowTideEntranceRoom/map.json` + `scripts.inc` | +sign WebbedPrints (13,29), west wall 7 tiles from the Route 125 warp (20,30), read from (14,29); `goto_if_set FLAG_SYS_SHOAL_TIDE` picks the high- or low-tide text | **318** | (14,29) is land reachable from (20,30) in BOTH tide layouts. OnTransition untouched |
 
 Mt. Pyre also has Torchic_Hoenn as a 4% wild slot (C279, wild-encounters.md). The den is the visible, guaranteed way to get it.
 
-Future beat using the same pattern (strategy-notes roadmap): Shoal Cave titan Mudkip den (flag 0x2B7, 3 lines via EventMacro_StaticDen).
+Three dens exist (C318): Mt. Pyre Torchic, Meteor Falls Treecko, Shoal Cave Mudkip. Shoal Cave also has Mudkip_Hoenn as a 4% wild slot in the Inner Room (C294). High-tide check (C318): the Lower Room cannot be reached at high tide (Inner Room warps 4/5 are on ocean water in the high-tide layout, so they do not fire; warp 3 ladder is unreachable).
 
 **Save-compat caveat (C315 reflection)**: 0x2B5 kept its number when renamed. Pre-C315 saves where the player KO'd/fled the Torchic have 0x2B5 set (old removeobject), so the den now reads as "caught" and stays hidden for them. Fresh saves unaffected; accepted, no migration code.

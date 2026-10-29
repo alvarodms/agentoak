@@ -19,7 +19,7 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 ## Community Feedback Patterns
 
 - **Expression matters for concept** (@alvarodms, Corsola #116): "bleached dead coral" should look sad/mournful. Facial expression must match the lore. Addressed via: (1) highlight/pupil swap for downcast eyes (C209), (2) frown mouth via ∩ pixel pattern + vivid iris (C216).
-- **Iris color must be aggressive**: Muted colors disappear at game scale. Push saturation hard — (130,60,180) reads as vivid purple; (100,50,150) was still too muted; (136,102,170) reads as gray.
+- **Iris color must be aggressive**: Muted colors disappear at game scale. Push saturation hard — (130,60,180) reads as vivid purple; (100,50,150) was still too muted; (136,102,170) reads as gray. Keep green ≤60 to avoid muddy lavender.
 - **Dual-type balance reads from accent color, not body** (@manta89640, Gliscor #149): Grey accents on a teal body = reads Rock. Aqua accents on the same body = reads Water. The accent palette indices (8-12,14-15) drive type perception more than the base body color.
 
 ## Techniques Validated
@@ -37,18 +37,18 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Stale back.png PLTE ≠ wrong mapping**: Mudkip line backs carried an old purple/orange palette, but indices already matched normal.pal's body parts — syncing PLTE was enough. Always preview after syncing to confirm that.
 - **Jaggy fix = drop the L-corner pixel to the fill on the outer side** (belly rim → body, outline corner → body, mouth rim → mouth fill). `lintSprite(img).jaggies` lists coordinates even for non-failing frames.
 - **Per-material hue remap for shinies** (C314, Lotad line): when a shiny is just a darker copy of normal, group indices by material and set each group to a new hue in HSL, scaling S (~0.55-0.8) and L (~1.1 for the hero material) while keeping each index's own lightness. Shading ramps survive intact and the line stays coherent (same mapping across evolutions). Script pattern: read normal.pal, write shiny.pal; only the .pal changes (PNGs embed normal). Lotad 6%→99%, Lombre 15%→98%, Ludicolo 12%→93%. Pure 0.9 saturation teal reads neon on large areas (Ludicolo hat): keep ≤0.65 there.
+- **Near-white materials can't pass the shiny metric by hue** (C318): `visiblyDifferent` needs both chromas ≥0.03 for a hue turn, so a near-neutral normal (Growlithe_H pale-steel mane, C≈0.02) vs a pearl/white shiny counts as unchanged however warm it looks. Give the shiny a light champagne tint (C≥0.035, e.g. #f6e4ce) where the normal's chroma is ≥0.03 (Arcanine mane 8); otherwise accept the lower share and say so. De-speckle: merge each lint orphan not at a base-orphan coordinate into its most common 8-neighbour index, excluding deliberate accent indices.
 - **Lint PASS does not prove the art direction survived** (C312): the Torchic line had silently regressed to vanilla orange palettes (probably the C308 pipeline repair re-fetching base sprites) while memory still said "violet-gold". Lint only compares against the base for noise, not intent. Before any cleanup, preview and check the colors against the sprite-iterations description; for any species touched by a re-fetch/repair, assume the palette may be vanilla. C313 found the same on the Treecko line; their back.png PLTEs carried the shiny pal.
 - **Shared eye/accent indices** (C313 Sceptile): when the eye uses the same indices as an accent you are recolouring, remap only the few eye pixels onto a family that keeps the intended eye colour (Sceptile: 7→9, 8→10). Assert the old index first; ascii region offsets are easy to misread by 1–2 px, so the assertion catches it.
 - **Sad expression via highlight/pupil swap**: Move bright highlight pixel from eye-top to eye-bottom, move dark pupil from eye-bottom to eye-top. Creates "downcast/heavy-lidded" look. Works because viewers read dark-on-top as closed/drooping eyelid.
 - **Frown mouth via ∩ pixel pattern**: Replace flat horizontal mouth with dark idx 4 pixels arranged as: center line at y (closer to eyes) + corners at y+1 (drooping away from eyes). At 64x64, even a 1-row vertical offset reads as curved. Use dark body-outline color, not amber — amber reads warm/happy.
-- **Ghost iris: push past 130 saturation**: (100,50,150) still too muted at game scale. (130,60,180) clearly reads as vivid purple. The green channel is key — keep it low (≤60) to avoid muddy lavender.
 
 ## Palette Recipes
 
-- **Growlithe/Arcanine_Hoenn**: Steel-blue/indigo body, sea-spray mane, warm amber accents. Amber eye = "ember that survives" hook.
+- **Growlithe/Arcanine_Hoenn**: Steel-blue/indigo body, sea-spray mane, warm amber accents. Amber eye = "ember that survives" hook. Shiny (C318) shared "deep-sea": vivid indigo body, champagne-pearl mane, amber → bioluminescent cyan (eye, Arcanine mouth/stripes).
 - **Vulpix/Ninetales_Hoenn**: Icy blue body, frost-white belly, deep blue shadows. Frost crystal emanations at tail tips. Shiny: aurora green body + rose pink belly.
 - **Corsola_Hoenn**: Warm gray body, amber fossil accents. Ghost iris: vivid purple (130,60,180). Dark frown mouth. Shiny: cool blue-gray + teal.
-- **Bagon_Hoenn**: Stony grey-brown, rust-red mineral accents. Shiny: obsidian + bright gold.
+- **Bagon_Hoenn**: Stony grey-brown, rust-red mineral flecks (single px idx d/e, intentional; keep when de-speckling). Shiny (C318) "weathered sandstone": terracotta body, jade crest + jade flecks, bleached-sand belly/eye.
 - **Pinsir_Hoenn**: Deep crimson body, amber heat-glow pincers. Shiny: obsidian + blue-white cooling.
 - **Stantler_Hoenn**: Mossy green body, spectral teal antlers, bright emerald eyes. Shiny: twilight purple + rose-pink + golden-amber eyes.
 - **Deoxys_Hoenn**: Hot pink body, cyan crystalline accents, bioluminescent chest crystal. Inner glow emanation. Shiny: midnight purple + pale gold.

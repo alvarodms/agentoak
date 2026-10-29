@@ -1,0 +1,80 @@
+{
+  "_note": "C318: learnset-legal moves (rom_species). Dragonite Extreme Speed is an intentional Gen 3 event-legal exception. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/drake_rematch_1.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_DRAKE_REMATCH_1",
+  "partyName": "sParty_DrakeRematch1",
+  "party": [
+    {
+      "iv": 255,
+      "lvl": 63,
+      "species": "SPECIES_FLYGON",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_DRAGON_CLAW",
+        "MOVE_FLAMETHROWER",
+        "MOVE_CRUNCH"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 64,
+      "species": "SPECIES_BAGON_HOENN",
+      "heldItem": "ITEM_HARD_STONE",
+      "moves": [
+        "MOVE_ROCK_SLIDE",
+        "MOVE_DRAGON_CLAW",
+        "MOVE_DOUBLE_EDGE",
+        "MOVE_BRICK_BREAK"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 66,
+      "species": "SPECIES_KINGDRA",
+      "heldItem": "ITEM_MYSTIC_WATER",
+      "moves": [
+        "MOVE_DRAGON_DANCE",
+        "MOVE_WATERFALL",
+        "MOVE_DOUBLE_EDGE",
+        "MOVE_ICE_BEAM"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 67,
+      "species": "SPECIES_GABITE",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_DRAGON_CLAW",
+        "MOVE_ROCK_TOMB",
+        "MOVE_DOUBLE_EDGE"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 68,
+      "species": "SPECIES_SALAMENCE",
+      "heldItem": "ITEM_DRAGON_FANG",
+      "moves": [
+        "MOVE_DRAGON_DANCE",
+        "MOVE_DRAGON_CLAW",
+        "MOVE_EARTHQUAKE",
+        "MOVE_AERIAL_ACE"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 70,
+      "species": "SPECIES_DRAGONITE",
+      "heldItem": "ITEM_LUM_BERRY",
+      "moves": [
+        "MOVE_DRAGON_CLAW",
+        "MOVE_EARTHQUAKE",
+        "MOVE_THUNDER",
+        "MOVE_ICE_BEAM"
+      ]
+    }
+  ]
+}

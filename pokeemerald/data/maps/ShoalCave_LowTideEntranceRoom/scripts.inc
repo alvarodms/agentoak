@@ -134,3 +134,24 @@ ShoalCave_LowTideEntranceRoom_Text_ExAquaGruntShort:
 	.string "...\p"
 	.string "It's peaceful in here.\n"
 	.string "I can see why they chose it.$"
+
+@ C318: Den cue - tide-aware prints pointing to the Lower Room titan Mudkip
+ShoalCave_LowTideEntranceRoom_EventScript_WebbedPrints::
+	goto_if_set FLAG_SYS_SHOAL_TIDE, ShoalCave_LowTideEntranceRoom_EventScript_WebbedPrintsHighTide
+	msgbox ShoalCave_LowTideEntranceRoom_Text_WebbedPrintsLowTide, MSGBOX_SIGN
+	end
+
+ShoalCave_LowTideEntranceRoom_EventScript_WebbedPrintsHighTide::
+	msgbox ShoalCave_LowTideEntranceRoom_Text_WebbedPrintsHighTide, MSGBOX_SIGN
+	end
+
+ShoalCave_LowTideEntranceRoom_Text_WebbedPrintsLowTide:
+	.string "Webbed prints, far too wide\n"
+	.string "for any MUDKIP, lead down\l"
+	.string "where the water drew back.$"
+
+ShoalCave_LowTideEntranceRoom_Text_WebbedPrintsHighTide:
+	.string "Wide webbed prints run to the\n"
+	.string "water's edge and vanish.\p"
+	.string "Whatever made them walks\n"
+	.string "here when the tide is out.$"
