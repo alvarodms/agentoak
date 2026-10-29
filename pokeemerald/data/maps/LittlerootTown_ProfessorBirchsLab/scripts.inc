@@ -1000,8 +1000,9 @@ LittlerootTown_ProfessorBirchsLab_Text_CompletedDexOffer:
 	.string "Choose whichever speaks to you.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CanHaveAnyOneOfRarePokemon:
-	.string "PROF. BIRCH: These are the Changed\n"
-	.string "Three, HOENN's transformed starters.\p"
+	.string "PROF. BIRCH: These are the\n"
+	.string "Changed Three, HOENN's\l"
+	.string "transformed starters.\p"
 	.string "Choose whichever speaks to you.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_YoullTakeCyndaquil:

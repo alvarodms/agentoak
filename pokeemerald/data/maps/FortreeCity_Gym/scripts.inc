@@ -298,11 +298,11 @@ FortreeCity_Gym_Text_WinonaRematchDefeat:
 
 FortreeCity_Gym_Text_WinonaPostRematch:
 	.string "The foreign birds taught my team\n"
-	.string "patience… the patience to ride\n"
-	.string "the wind and wait for the\n"
+	.string "patience… the patience to ride\l"
+	.string "the wind and wait for the\l"
 	.string "perfect moment to strike.$"
 
 FortreeCity_Gym_Text_WinonaRematchNeedTwoMons:
 	.string "I'd love to take flight with you,\n"
-	.string "but please bring at least two\n"
+	.string "but please bring at least two\l"
 	.string "POKéMON.$"

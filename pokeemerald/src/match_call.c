@@ -2074,22 +2074,28 @@ enum {
     BIRCH_FIELD_NOTE_ANY,
 };
 
-// Birch's Field Notes (C319): one rumour per den the player can reach but hasn't caught yet
+// Field Notes give one rumour per call: nearest den first (badge order), then the all-found line
+static u8 GetActiveFieldNote(void)
+{
+    if (FlagGet(FLAG_BADGE05_GET) && !FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC))
+        return BIRCH_FIELD_NOTE_TORCHIC;
+    if (FlagGet(FLAG_BADGE06_GET) && !FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP))
+        return BIRCH_FIELD_NOTE_MUDKIP;
+    if (FlagGet(FLAG_BADGE08_GET) && !FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO))
+        return BIRCH_FIELD_NOTE_TREECKO;
+    if (FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC) && FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP) && FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO))
+        return BIRCH_FIELD_NOTE_ALL_FOUND;
+    return BIRCH_FIELD_NOTE_ANY; // sentinel: nothing to say
+}
+
+// Birch's Field Notes (C319, one-hint cap C320): match call and prof_birch.inc both ask here
 static bool32 IsFieldNoteActive(u8 id)
 {
-    bool32 torchic = FlagGet(FLAG_BADGE05_GET) && !FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC);
-    bool32 mudkip = FlagGet(FLAG_BADGE06_GET) && !FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP);
-    bool32 treecko = FlagGet(FLAG_BADGE08_GET) && !FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
-    bool32 allFound = FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC) && FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP) && FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
-    switch (id)
-    {
-    case BIRCH_FIELD_NOTE_TORCHIC:   return torchic;
-    case BIRCH_FIELD_NOTE_MUDKIP:    return mudkip;
-    case BIRCH_FIELD_NOTE_TREECKO:   return treecko;
-    case BIRCH_FIELD_NOTE_ALL_FOUND: return allFound;
-    case BIRCH_FIELD_NOTE_ANY:       return torchic || mudkip || treecko || allFound;
-    }
-    return FALSE;
+    u8 active = GetActiveFieldNote();
+    // ANY doubles as the "no note" sentinel, so asking for ANY means "is any note active?"
+    if (id == BIRCH_FIELD_NOTE_ANY)
+        return active != BIRCH_FIELD_NOTE_ANY;
+    return active == id;
 }
 
 u16 IsBirchFieldNoteActive(void)
@@ -2106,6 +2112,7 @@ static u8 *AppendBirchFieldNotes(u8 *str)
         [BIRCH_FIELD_NOTE_ALL_FOUND] = gBirchFieldNoteText_AllFound,
     };
     u8 i;
+    // One rumour per call, nearest reachable den first: the loop hits at most one entry
     if (!IsFieldNoteActive(BIRCH_FIELD_NOTE_ANY))
         return str;
     *(str++) = CHAR_PROMPT_CLEAR;

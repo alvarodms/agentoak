@@ -9,9 +9,8 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 
 ## Lessons Learned
 
-- **Subtle palette shifts are invisible at 64x64** — push colors aggressively
+- **Subtle palette shifts are invisible at 64x64** — push colors aggressively; low-pixel-count indices are free accent slots
 - **Always apply palette to PNG embedded palette** — `.pal` files only matter at GBA compile time
-- **Low-usage indices are free accent slots** — repurpose low-pixel-count indices for accent colors
 - **Apply edits to ALL sprite files consistently** — front.png, back.png, both frames of anim_front.png
 - **spritekit lint audit (all 25 variants, pre-gate)**: 8 had back.png embedded palette ≠ normal.pal (vanilla: 14/398); ~10 had near-duplicate used colors (e.g. Vulpix idx 2/12, Ninetales 6/11 + 7/12) — wasted slots and flat shading; accent/emanation passes tripled stray pixels on Ludicolo (15→49), Pinsir (12→36), Lotad (9→22). Vulpix's 16 colors all sat at hue 205–230°, which is why it reads washed out.
 - **Shinies must change hue, not just darken**: lint requires 40%+ of front.png (outline aside) to visibly change (vanilla median ~55%). Pre-gate, 7 variants were below it — Lotad 6%, Ludicolo 12% (body yellow-green -> darker olive), Corsola 15%, Lombre 15%, Blaziken 22%, Arcanine 23%, Combusken 29%.
@@ -41,6 +40,7 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Lint PASS does not prove the art direction survived** (C312): the Torchic line had silently regressed to vanilla orange palettes (probably the C308 pipeline repair re-fetching base sprites) while memory still said "violet-gold". Lint only compares against the base for noise, not intent. Before any cleanup, preview and check the colors against the sprite-iterations description; for any species touched by a re-fetch/repair, assume the palette may be vanilla. C313 found the same on the Treecko line; their back.png PLTEs carried the shiny pal.
 - **Shared eye/accent indices** (C313 Sceptile): when the eye uses the same indices as an accent you are recolouring, remap only the few eye pixels onto a family that keeps the intended eye colour (Sceptile: 7→9, 8→10). Assert the old index first; ascii region offsets are easy to misread by 1–2 px, so the assertion catches it.
 - **Shiny vs a vanilla look-alike** (C319 Ninetales): check the shiny against the vanilla NORMAL too, not just our normal. A warm cream shiny on Ninetales_H read as vanilla Ninetales; whitening the main fur and pushing gold into the shadow creases fixed it (at the cost of the lint % for near-neutral fur).
+- **Back sprites can map materials to different indices than the front** (C320 Breloom): the expansion back.png drew cap/seeds on the front's claw indices and the neck on the front's cap indices, so any shiny that split those materials showed a jade front cap but a plum back cap. Compare front vs back material-by-material in the preview; fix with one simultaneous index permutation on back.png (exclude regions like claws that really are the other material).
 - **Sad expression**: swap eye highlight (to bottom) and dark pupil (to top) for a downcast lid; frown = dark outline-colour ∩ (centre row y, corners y+1) — at 64x64 a 1-row offset reads as curved; never amber (reads happy).
 
 ## Palette Recipes
@@ -52,9 +52,9 @@ Type anchor colors live in the Sprite Designer prompt. Build each material's sha
 - **Pinsir_Hoenn**: Deep crimson body, amber heat-glow pincers. Shiny: obsidian + blue-white cooling.
 - **Stantler_Hoenn**: Mossy green body, spectral teal antlers, bright emerald eyes. Shiny: twilight purple + rose-pink + golden-amber eyes.
 - **Deoxys_Hoenn**: Hot pink body, cyan crystalline accents, bioluminescent chest crystal. Inner glow emanation. Shiny: midnight purple + pale gold.
-- **Gligar/Gliscor_Hoenn**: Teal-blue body, barnacle brown tips, wing fin-ray streaks. Shiny: deep indigo + gold mineral / amber + blue-patina.
+- **Gligar/Gliscor_Hoenn**: Teal-blue body, grey (Gligar) / aqua (Gliscor) accents, barnacle slate-brown, Gliscor fin-ray striations. Shiny (C320) "sunset shoal": rose-sandstone body, mauve/plum wings, champagne fin rays, dark-slate barnacles + shadow edges. Claws share body indices in both (no free slot), so only their shadow edge goes slate.
 - **Lotad/Lombre/Ludicolo_Hoenn**: Citrine gold lily pad/hat/body, warm green body/cape, Lotad lightning-bolt veins (23px). Shiny (C314) "violet-storm lily": lavender-violet leaf/hat/body, deep teal stem/cape, rose beak/Lombre skin; Ludicolo beak/mouth/tongue kept. Hex in sprite-iterations.md.
-- **Shroomish_Hoenn**: Frost-purple cap, icy-blue crystallization spots, frost emanation. Shiny: steel-blue cap + teal-green body.
+- **Shroomish/Breloom_Hoenn**: Frost-lavender cap, frost-white body/frill, violet toxic streaks/mouth. Shiny (C320) "spring thaw": mossy jade cap, pale-lilac spots, warm-cream body, soft-plum claws/feet/mouth. Keep the jade bluish (oklch h≥140) and the cream pale: yellow-green + tan is vanilla Breloom.
 - **Treecko/Grovyle/Sceptile_Hoenn** (rebuilt C313): steel-blue body, violet crystal accents (Treecko belly, Grovyle leaves, Sceptile orbs), Grovyle bright cyan blade edges, Sceptile indigo→cyan tail fan + amber throat, amber eyes. Shiny "frost-dawn": silver-white body + rose-gold accents. Icons still use the shared green icon palette (not touched). Exact hex in sprite-iterations.md.
 - **Torchic/Combusken/Blaziken_Hoenn** (rebuilt C312): Torchic violet-white body + gold crest/beak (1-3 and 11-13 duplicate golds, shiny splits them: indigo crest, rose beak); Combusken violet body + gold crest/thighs + lavender talons; Blaziken pale gold body + deep violet plumes + blue-white starfire leg flames + blue eyes. Shiny: inverted "Dawn Bird" gold + indigo. C277 halo/aura emanation pixels are gone (art is newer-gen expansion art).
 - **Mudkip/Marshtomp/Swampert_Hoenn**: Shoal Cave slate-indigo, soft lavender headfin accents (bioluminescent, NOT neon), brine-stone belly. Shiny "Midnight Monk": charcoal + amber/gold.

@@ -14,14 +14,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 - **Flavor NPCs** (~30 cycles): Early foreshadowing (sighting events), mid-game escalation (Bagon Colony, weather omens), The Gathering Storm (ocean witnesses), Echo Dialogue Layer (C232), Changed Trainer Witnesses (C235,238), Migration Acknowledgment NPCs (C267)
 - **Quests** (C116-243): Beast sightings, Primal network, Sky Guardian, 4 side quests, Resonance (C233), Cosmic (C242,243)
 - **Difficulty NPC** (C214): PetalburgCity PokemonCenter downgrade
-
-## Wally VR Migration Dialogue — C270
-
-VictoryRoad_1F: Petalburg Woods frost narrative, Shroomish_Hoenn finding. Rewrites C246 generic text.
-
-## Rival Migration Arc — C273
-
-Route 119 + Lilycove: May/Brendan intro/defeat/post-battle referencing specific regional forms + routes.
+- **Wally VR** (C270, VictoryRoad_1F) + **Rival arc** (C273, Route119/Lilycove): regional-form references
 
 ## Reckoning Arc (C284-286)
 
@@ -73,3 +66,11 @@ Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 
 | `src/data/text/match_call_messages.h` | DandyCharm_Juan (Wallace) + Champion_Wallace (Steven) flavor texts. |
 | `src/strings.c` | gText_JuanMatchCallDesc → "WATER ARTIST". |
 | `data/maps/FortreeCity_Gym/scripts.inc` + `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **C314** Honchkrow migration story: Winona intro ("flew south, toward the ELITE FOUR") + Sidney intro ("rode a storm down from FORTREE"). Detail in trainer-parties.md C314 row. |
+
+## C320 — v2.9 release-candidate polish
+
+| File | Change |
+|------|--------|
+| `data/maps/FortreeCity/scripts.inc` | `FortreeCity_EventScript_MigrationBirdKeeper` (live object 20,8) now lock/faceplayer + `goto_if_set FLAG_SYS_GAME_CLEAR` → `_MigrationBirdKeeperHonchkrow` + `FortreeCity_Text_MigrationBirdKeeperHonchkrow` ("Last night a big dark bird… Like it was visiting home."), the postgame Winona→Sidney Honchkrow callback. Deleted the dead C141 `FortreeCity_EventScript_MigrationBirdwatcher` + text: no map object referenced it (the plan had targeted it), it repeated the keeper's "twenty years" line, and it had a three-`\n` overflow. |
+| `data/maps/SootopolisCity/scripts.inc` | Deleted dead `SootopolisCity_EventScript_WallaceMoveFromGym(West)` + `SootopolisCity_Movement_WallaceMoveFromGym(West)` (unreferenced since the C309 fade-out). VAR_SOOTOPOLIS_WALLACE_STATE kept. |
+| `data/maps/FortreeCity_Gym/scripts.inc` | Read-through fixes: `WinonaPostRematch` and `WinonaRematchNeedTwoMons` had 3 chained `\n` lines (overflow the 2-line box) → 2nd/3rd use `\l`. |

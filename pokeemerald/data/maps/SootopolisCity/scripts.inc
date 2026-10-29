@@ -1304,20 +1304,6 @@ SootopolisCity_EventScript_GiveWaterfall::
 	release
 	end
 
-SootopolisCity_EventScript_WallaceMoveFromGym::
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
-	waitmovement 0
-	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 1
-	return
-
-SootopolisCity_EventScript_WallaceMoveFromGymWest::
-	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
-	waitmovement 0
-	copyobjectxytoperm LOCALID_SOOTOPOLIS_WALLACE
-	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 2
-	return
-
 SootopolisCity_EventScript_GoToSkyPillar::
 	msgbox SootopolisCity_Text_HaventYouScaledSkyPillar, MSGBOX_DEFAULT
 	release
@@ -1327,16 +1313,6 @@ SootopolisCity_EventScript_GoToGym::
 	msgbox SootopolisCity_Text_DazzledByMentor, MSGBOX_DEFAULT
 	release
 	end
-
-SootopolisCity_Movement_WallaceMoveFromGym:
-	walk_right
-	walk_in_place_faster_down
-	step_end
-
-SootopolisCity_Movement_WallaceMoveFromGymWest:
-	walk_left
-	walk_in_place_faster_down
-	step_end
 
 SootopolisCity_EventScript_Maxie::
 	lockall

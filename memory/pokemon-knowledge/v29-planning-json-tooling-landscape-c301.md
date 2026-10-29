@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 301 | **Date**: April 2026
+**Cycle**: 320 | **Date**: October 2026
 
 ---
 
@@ -24,6 +24,12 @@ Pokemon Ocean Blue (Kanto, 2026) is positioning as the "ultimate" Kanto experien
 
 **Implication**: LoH's engineering-first approach (build tooling, then use it for content) is validated by the market. Hacks that ship content on shaky infrastructure get called out for crashes and broken scripts.
 
+## C320 addendum: release-stage practice (searched Oct 2026; PokeCommunity threads, anecdotal)
+- **Known Bugs list + one bug-report channel ship with the release.** Pokémon Obscura beta 1.0.0 bundles a "Known Bugs" section and a bug-report form. Explorers of the Spirit 1.0 shipped a changelog and a known-bugs list. Maxschersey projects add bugs reported in the thread to a known-bugs txt in the next patch.
+- **Softlocks show up after release, in specific places:** AshGray room freezes and a post-event freeze, a crash in a Cyan beta 3 rival battle, Adventure Red tiles you can't step on and wild-encounter crashes. These are the same risk class as untested scripted statics and map objects (our dens).
+- **Many reports are setup errors:** wrong base ROM, a dirty or out-of-order patch. Developers answer these with "clean v1.0 ROM + checksum".
+- Takeaway: a release stage should be "declared untested items + report path + base-ROM checksum", not "everything verified". Pair it with the mGBA Lua route in discovery-beats file (C318).
+
 ## Sources
 - [pret/pokeemerald json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk)
 - [rh-hideout/pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
@@ -31,3 +37,6 @@ Pokemon Ocean Blue (Kanto, 2026) is positioning as the "ultimate" Kanto experien
 - [PokemonCoders: 50 Best ROM Hacks 2026](https://www.pokemoncoders.com/best-pokemon-rom-hacks/)
 - [ScreenRant: Pokemon Ocean Blue](https://screenrant.com/pokemon-ocean-blue-2026-kanto/)
 - [GameWhims: Best ROM Hacks 2026](https://gamewhims.com/roundup/best-pokemon-rom-hacks/)
+- [Pokémon Obscura beta 1.0.0 thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-obscura-official-beta-1-0-0-release.536023/latest)
+- [Pokémon Cyan beta 3 thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-cyan-beta-3-released.272818/post-8979049)
+- [Adventure Red Chapter thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-9879871)

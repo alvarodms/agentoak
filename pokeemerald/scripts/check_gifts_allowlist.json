@@ -1,0 +1,17 @@
+[
+  {
+    "label": "MeteorFalls_1F_1R_EventScript_ColonySighting",
+    "species": "SPECIES_BAGON",
+    "why": "Badge-4 colony arrival is the vanilla Bagon migrating in; the researcher's post-Champion lines tell how the juveniles later change into Bagon_Hoenn (B1F_2R wild)."
+  },
+  {
+    "label": "MossdeepCity_SpaceCenter_2F_Script_DeoxysInvestigate",
+    "species": "SPECIES_DEOXYS",
+    "why": "Space Center signal quest (v1.9) meets the original Deoxys; the Poison/Fairy cosmic form is the separate Sky Pillar Quest III battle (SkyPillar_Top, SPECIES_DEOXYS_HOENN)."
+  },
+  {
+    "label": "MossdeepCity_SpaceCenter_2F_Script_DeoxysRetryEncounter",
+    "species": "SPECIES_DEOXYS",
+    "why": "Retry of the Space Center signal battle; must stay the same vanilla Deoxys as DeoxysInvestigate."
+  }
+]

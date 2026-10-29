@@ -37,6 +37,7 @@ General project information — build system details, tool versions, configurati
 - `make clean` — remove all build artifacts
 - `make syms` — generate symbol file for debugging
 - `make generated` — generate auto-generated assets (maps, graphics)
+- `make check_all` — check_species, check_encounters, check_e4_rematches, check_evolution, check_trainers, check_palettes, check_bosses, check_dens, check_gifts (C320); ends "=== All validation checks passed ===". `make check_all_quick` = check_scripts + check_species + check_trainers. Details in codebase-facts.md "Build Validation & Generators".
 
 ### Build Tools (in `tools/`)
 

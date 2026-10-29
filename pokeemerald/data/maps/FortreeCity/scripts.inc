@@ -198,8 +198,18 @@ FortreeCity_Text_OldMan_PostWave:
 	.string "space. I hear them clashing\l"
 	.string "all night.$"
 
+@ C320: postgame callback to Winona's Honchkrow, now Sidney's (C314 Fortree -> League bird thread)
 FortreeCity_EventScript_MigrationBirdKeeper::
-	msgbox FortreeCity_Text_MigrationBirdKeeper, MSGBOX_NPC
+	lock
+	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, FortreeCity_EventScript_MigrationBirdKeeperHonchkrow
+	msgbox FortreeCity_Text_MigrationBirdKeeper, MSGBOX_DEFAULT
+	release
+	end
+
+FortreeCity_EventScript_MigrationBirdKeeperHonchkrow::
+	msgbox FortreeCity_Text_MigrationBirdKeeperHonchkrow, MSGBOX_DEFAULT
+	release
 	end
 
 FortreeCity_Text_MigrationBirdKeeper:
@@ -212,6 +222,14 @@ FortreeCity_Text_MigrationBirdKeeper:
 	.string "Even WINONA's rethinking her\n"
 	.string "gym strategy. The skies over\l"
 	.string "HOENN aren't what they used to be.$"
+
+FortreeCity_Text_MigrationBirdKeeperHonchkrow:
+	.string "Last night a big dark bird\n"
+	.string "circled the treehouses at dusk.\p"
+	.string "A HONCHKROW. Wore its crest like\n"
+	.string "it owned the place.\p"
+	.string "Not hunting. Just circling.\n"
+	.string "Like it was visiting home.$"
 
 FortreeCity_Text_WomanBeastSighting:
 	.string "My POKeMON have been restless\n"
@@ -254,24 +272,6 @@ FortreeCity_Text_ManSkyGuardianDone:
 	.string "warm. The birds are singing again.\p"
 	.string "Whatever you did up there on\n"
 	.string "SKY PILLAR... HOENN thanks you.$"
-
-@ =============================================
-@ Mid-Game Migration Thread — Birdwatcher (C141)
-@ =============================================
-
-FortreeCity_EventScript_MigrationBirdwatcher::
-	msgbox FortreeCity_Text_MigrationBirdwatcher, MSGBOX_NPC
-	end
-
-FortreeCity_Text_MigrationBirdwatcher:
-	.string "I've been watching the skies over\n"
-	.string "FORTREE for twenty years.\p"
-	.string "Last month I spotted a MURKROW\n"
-	.string "on ROUTE 120. Those aren't native\n"
-	.string "to HOENN at all.\p"
-	.string "The local SWELLOW don't seem\n"
-	.string "to mind, but... it's strange\n"
-	.string "how quickly things are changing.$"
 
 @ =============================================
 @ Echo Dialogue — Changed Trainer (C232)
