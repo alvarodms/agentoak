@@ -541,3 +541,4 @@ gSpecials::
 	def_special ScriptCheckPokedexSeen
 	def_special Special_FindBestRepelInBag
 	def_special Special_UseRepelFromBag
+	def_special IsBirchFieldNoteActive

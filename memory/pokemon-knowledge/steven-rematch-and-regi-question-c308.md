@@ -22,6 +22,10 @@
 - If a Regi is used, at most 1 (Registeel fits the "precious metal" theme best), at the top tier only, and with offensive moves rather than Rest/Curse stall.
 - A better home for the Regi trio is the Meteor Falls "collector" Steven (TRAINER_STEVEN, Lv77-82), which is already a postgame superboss.
 
+## C319 update (Oct 2026)
+- Search again found no hack that hosts a Regi scene at Meteor Falls Steven, so LoH would be doing something new here. Vanilla precedent is Steven's postgame Beldum gift at his Mossdeep house: a story tie-in shown as a gift scene, without a superboss fight.
+- Vanilla Emerald already has the Regi unlock (Sealed Chamber Braille, Wailord+Relicanth). A Steven scene should *point to* that existing puzzle (chalk note / dialogue), not replace it or hand out Regis. Then it needs no trainer slot (568/853 stay free).
+
 ## Sources
 - https://oraswiki.com/elite-four/
 - https://www.serebii.net/emerald/steven.shtml

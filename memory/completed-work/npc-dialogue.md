@@ -6,7 +6,7 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 ## Collapsed History (C15-267) — See git history for full details
 
-- **Birch/Lab** (C15,24,180,181,279,286): Opening speech, difficulty selection, postgame Changed Three gift, Reckoning collection quest (PP_MAX)
+- **Birch/Lab** (C15,24,180,181,279,286,319): Opening speech, difficulty selection, postgame Changed Three gift, Reckoning collection quest (PP_MAX)
 - **Rival** (C25-29,273): 4 encounters rewritten. C273: Route 119 + Lilycove → specific regional form references
 - **Villains** (C248,249,284,285,286): Magma (Mt.Chimney/Lavaridge/Meteor Falls) + Aqua (Slateport/R128/Shoal Cave) postgame arc. 6 ex-Team NPCs. Reckoning collection quest.
 - **Gym Leaders** (C25-29,244,245,269,271,283,305): All 8 rewritten. C269: Brawly/Norman/Drake regional form refs. C271: Wattson Lotad_Hoenn. C283: Roxanne fossil scholar + T&L Espeon empathy. C305: Roxanne post-rematch → RUSTURF TUNNEL crystals + geology rewriting (Carbink foreshadow).

@@ -113,3 +113,32 @@ gBirchDexRatingText_OnANationwideBasis::
 	.string "On a nationwide basis…\p"
 	.string "You've seen {STR_VAR_1} POKéMON,\n"
 	.string "and you've caught {STR_VAR_2} POKéMON…$"
+
+gBirchFieldNoteText_Header::
+	.string "One more thing, {PLAYER}{KUN}.\n"
+	.string "I keep rereading my old notes…$"
+
+gBirchFieldNoteText_Torchic::
+	.string "Old note: TORCHIC shun\n"
+	.string "mountains.\p"
+	.string "Yet something glitters\n"
+	.string "in the fog atop MT. PYRE.$"
+
+gBirchFieldNoteText_Mudkip::
+	.string "Old note: MUDKIP shun\n"
+	.string "salt water.\p"
+	.string "Yet something stirs in a tide\n"
+	.string "pool deep in SHOAL CAVE,\l"
+	.string "when the sea pulls back.$"
+
+gBirchFieldNoteText_Treecko::
+	.string "Old note: TREECKO shun\n"
+	.string "caves.\p"
+	.string "Yet something hums in the\n"
+	.string "deepest dark of METEOR FALLS,\l"
+	.string "past the climbing water.$"
+
+gBirchFieldNoteText_AllFound::
+	.string "Every one of those old lines\n"
+	.string "is crossed out now.\p"
+	.string "Crossed out by you, {PLAYER}{KUN}.$"

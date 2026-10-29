@@ -42,8 +42,45 @@ ProfBirch_EventScript_AskRatePokedex::
 	msgbox gBirchDexRatingText_AreYouCurious, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ProfBirch_EventScript_DeclineRating
 	call ProfBirch_EventScript_RatePokedex
+	call ProfBirch_EventScript_FieldNotes
 	release
 	end
+
+@ C319 Birch Field Notes: ids match the enum in src/match_call.c (0 Torchic, 1 Mudkip, 2 Treecko, 3 all found, 4 any)
+ProfBirch_EventScript_FieldNotes::
+	setvar VAR_0x8004, 4
+	specialvar VAR_RESULT, IsBirchFieldNoteActive
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
+	msgbox gBirchFieldNoteText_Header, MSGBOX_DEFAULT
+	setvar VAR_0x8004, 0
+	specialvar VAR_RESULT, IsBirchFieldNoteActive
+	call_if_eq VAR_RESULT, TRUE, ProfBirch_EventScript_FieldNoteTorchic
+	setvar VAR_0x8004, 1
+	specialvar VAR_RESULT, IsBirchFieldNoteActive
+	call_if_eq VAR_RESULT, TRUE, ProfBirch_EventScript_FieldNoteMudkip
+	setvar VAR_0x8004, 2
+	specialvar VAR_RESULT, IsBirchFieldNoteActive
+	call_if_eq VAR_RESULT, TRUE, ProfBirch_EventScript_FieldNoteTreecko
+	setvar VAR_0x8004, 3
+	specialvar VAR_RESULT, IsBirchFieldNoteActive
+	call_if_eq VAR_RESULT, TRUE, ProfBirch_EventScript_FieldNoteAllFound
+	return
+
+ProfBirch_EventScript_FieldNoteTorchic::
+	msgbox gBirchFieldNoteText_Torchic, MSGBOX_DEFAULT
+	return
+
+ProfBirch_EventScript_FieldNoteMudkip::
+	msgbox gBirchFieldNoteText_Mudkip, MSGBOX_DEFAULT
+	return
+
+ProfBirch_EventScript_FieldNoteTreecko::
+	msgbox gBirchFieldNoteText_Treecko, MSGBOX_DEFAULT
+	return
+
+ProfBirch_EventScript_FieldNoteAllFound::
+	msgbox gBirchFieldNoteText_AllFound, MSGBOX_DEFAULT
+	return
 
 ProfBirch_EventScript_DeclineRating::
 	msgbox gBirchDexRatingText_Cancel, MSGBOX_DEFAULT

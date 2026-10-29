@@ -1025,6 +1025,11 @@ static const struct MatchCallText *const sMatchCallGeneralTopics[] =
 extern const u8 gBirchDexRatingText_AreYouCurious[];
 extern const u8 gBirchDexRatingText_SoYouveSeenAndCaught[];
 extern const u8 gBirchDexRatingText_OnANationwideBasis[];
+extern const u8 gBirchFieldNoteText_Header[];
+extern const u8 gBirchFieldNoteText_Torchic[];
+extern const u8 gBirchFieldNoteText_Mudkip[];
+extern const u8 gBirchFieldNoteText_Treecko[];
+extern const u8 gBirchFieldNoteText_AllFound[];
 
 void InitMatchCallCounters(void)
 {
@@ -2061,6 +2066,61 @@ static const u8 *const sBirchDexRatingTexts[] =
     gBirchDexRatingText_DexCompleted,
 };
 
+enum {
+    BIRCH_FIELD_NOTE_TORCHIC,
+    BIRCH_FIELD_NOTE_MUDKIP,
+    BIRCH_FIELD_NOTE_TREECKO,
+    BIRCH_FIELD_NOTE_ALL_FOUND,
+    BIRCH_FIELD_NOTE_ANY,
+};
+
+// Birch's Field Notes (C319): one rumour per den the player can reach but hasn't caught yet
+static bool32 IsFieldNoteActive(u8 id)
+{
+    bool32 torchic = FlagGet(FLAG_BADGE05_GET) && !FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC);
+    bool32 mudkip = FlagGet(FLAG_BADGE06_GET) && !FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP);
+    bool32 treecko = FlagGet(FLAG_BADGE08_GET) && !FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
+    bool32 allFound = FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC) && FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP) && FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
+    switch (id)
+    {
+    case BIRCH_FIELD_NOTE_TORCHIC:   return torchic;
+    case BIRCH_FIELD_NOTE_MUDKIP:    return mudkip;
+    case BIRCH_FIELD_NOTE_TREECKO:   return treecko;
+    case BIRCH_FIELD_NOTE_ALL_FOUND: return allFound;
+    case BIRCH_FIELD_NOTE_ANY:       return torchic || mudkip || treecko || allFound;
+    }
+    return FALSE;
+}
+
+u16 IsBirchFieldNoteActive(void)
+{
+    return IsFieldNoteActive(gSpecialVar_0x8004);
+}
+
+static u8 *AppendBirchFieldNotes(u8 *str)
+{
+    static const u8 *const sFieldNoteTexts[] = {
+        [BIRCH_FIELD_NOTE_TORCHIC]   = gBirchFieldNoteText_Torchic,
+        [BIRCH_FIELD_NOTE_MUDKIP]    = gBirchFieldNoteText_Mudkip,
+        [BIRCH_FIELD_NOTE_TREECKO]   = gBirchFieldNoteText_Treecko,
+        [BIRCH_FIELD_NOTE_ALL_FOUND] = gBirchFieldNoteText_AllFound,
+    };
+    u8 i;
+    if (!IsFieldNoteActive(BIRCH_FIELD_NOTE_ANY))
+        return str;
+    *(str++) = CHAR_PROMPT_CLEAR;
+    str = StringExpandPlaceholders(str, gBirchFieldNoteText_Header);
+    for (i = 0; i < ARRAY_COUNT(sFieldNoteTexts); i++)
+    {
+        if (IsFieldNoteActive(i))
+        {
+            *(str++) = CHAR_PROMPT_CLEAR;
+            str = StringExpandPlaceholders(str, sFieldNoteTexts[i]);
+        }
+    }
+    return str;
+}
+
 void BufferPokedexRatingForMatchCall(u8 *destStr)
 {
     int numSeen, numCaught;
@@ -2093,9 +2153,10 @@ void BufferPokedexRatingForMatchCall(u8 *destStr)
         numCaught = GetNationalPokedexCount(FLAG_GET_CAUGHT);
         ConvertIntToDecimalStringN(gStringVar1, numSeen, STR_CONV_MODE_LEFT_ALIGN, 3);
         ConvertIntToDecimalStringN(gStringVar2, numCaught, STR_CONV_MODE_LEFT_ALIGN, 3);
-        StringExpandPlaceholders(str, gBirchDexRatingText_OnANationwideBasis);
+        str = StringExpandPlaceholders(str, gBirchDexRatingText_OnANationwideBasis);
     }
 
+    AppendBirchFieldNotes(str);
     Free(buffer);
 }
 

@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_species check_evolution check_all check_all_quick
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -208,6 +208,10 @@ check_palettes:
 check_bosses:
 	@node scripts/audit_boss_species.cjs --strict
 
+# Static den wiring guard (C319): StaticDen macros, temp flags, caught flags
+check_dens:
+	@node scripts/check_dens.cjs
+
 # Species registration completeness check
 check_species:
 	@echo "Checking species registration..."
@@ -225,7 +229,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

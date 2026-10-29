@@ -23,6 +23,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Toxapex on Boss Trainers — The Stall Pitfall | 307 | [toxapex-boss-design-stall-pitfall-c307.md](pokemon-knowledge/toxapex-boss-design-stall-pitfall-c307.md) |
 | Discovery Beats & Exploration Rewards (+ C315 missable statics, C318 titan framing / mGBA Lua verification) | 318 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
 | Boss Species Reuse & Elite Four Identity (#193, + C316 villain house pools, C317 Flannery) | 317 | [boss-species-reuse-and-e4-identity-c313.md](pokemon-knowledge/boss-species-reuse-and-e4-identity-c313.md) |
-| Steven Rematch Design & the Regi Question (#194) | 308 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
+| Custom Shiny Palette Design (#163) | 319 | [custom-shiny-palette-design.md](pokemon-knowledge/custom-shiny-palette-design.md) |
+| Steven Rematch Design & the Regi Question (#194) | 319 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

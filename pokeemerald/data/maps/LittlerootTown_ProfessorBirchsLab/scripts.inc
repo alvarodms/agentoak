@@ -251,10 +251,42 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ChooseJohtoStarter::
 	lockall
 	applymovement LOCALID_PLAYER, LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter
 	waitmovement 0
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_CompletedDexChoosePokemon, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_CompletedDexIntro, MSGBOX_DEFAULT
+	call_if_set FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTorchic
+	call_if_unset FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTorchic
+	call_if_set FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTreecko
+	call_if_unset FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTreecko
+	call_if_set FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundMudkip
+	call_if_unset FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintMudkip
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_CompletedDexOffer, MSGBOX_DEFAULT
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5
 	releaseall
 	end
+
+@ C319: the Changed Three gift reacts to which starlight dens the player has already cleared
+LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTorchic::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenFoundTorchic, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTorchic::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenHintTorchic, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTreecko::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenFoundTreecko, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTreecko::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenHintTreecko, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundMudkip::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenFoundMudkip, MSGBOX_DEFAULT
+	return
+
+LittlerootTown_ProfessorBirchsLab_EventScript_DenHintMudkip::
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenHintMudkip, MSGBOX_DEFAULT
+	return
 
 LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter:
 	walk_up
@@ -308,7 +340,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Totodile::
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter
 	applymovement LOCALID_BIRCHS_LAB_BIRCH, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
-	showmonpic SPECIES_MUDKIP, 10, 3
+	showmonpic SPECIES_MUDKIP_HOENN, 10, 3
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_YoullTakeTotodile, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile
@@ -378,9 +410,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedCyndaquil::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile::
-	bufferspeciesname STR_VAR_1, SPECIES_MUDKIP
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MUDKIP
-	givemon SPECIES_MUDKIP, 5
+	bufferspeciesname STR_VAR_1, SPECIES_MUDKIP_HOENN
+	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MUDKIP_HOENN
+	givemon SPECIES_MUDKIP_HOENN, 5
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PARTY, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToParty
 	goto_if_eq VAR_RESULT, MON_GIVEN_TO_PC, LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToPC
 	hidemonpic
@@ -928,16 +960,42 @@ LittlerootTown_ProfessorBirchsLab_Text_BrendanTakeBreakFromFieldwork:
 	.string "I'll be helping out the PROF here\n"
 	.string "for a while.$"
 
-LittlerootTown_ProfessorBirchsLab_Text_CompletedDexChoosePokemon:
+LittlerootTown_ProfessorBirchsLab_Text_CompletedDexIntro:
 	.string "PROF. BIRCH: {PLAYER}!\p"
 	.string "The migration has changed\n"
 	.string "everything.\l"
 	.string "Even HOENN's own starters.\p"
-	.string "TREECKO, TORCHIC, MUDKIP...\n"
-	.string "They're not what they were.\p"
-	.string "Crystal geckos in METEOR FALLS.\n"
-	.string "Starlight birds on MT. PYRE.\l"
-	.string "Titan tadpoles in SHOAL CAVE.\p"
+	.string "TREECKO, TORCHIC, MUDKIP…\n"
+	.string "They're not what they were.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenFoundTorchic:
+	.string "You found the starlight TORCHIC\n"
+	.string "on MT. PYRE before I did!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenHintTorchic:
+	.string "Something still glitters in the\n"
+	.string "fog atop MT. PYRE, you know.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenFoundTreecko:
+	.string "And the crystal TREECKO, deep\n"
+	.string "in METEOR FALLS!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenHintTreecko:
+	.string "Something still hums in the\n"
+	.string "deep dark of METEOR FALLS.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenFoundMudkip:
+	.string "And the titan MUDKIP, waiting\n"
+	.string "in SHOAL CAVE's tide pool!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_DenHintMudkip:
+	.string "Something still stirs in a tide\n"
+	.string "pool deep in SHOAL CAVE.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_CompletedDexOffer:
+	.string "These three hatched here at the\n"
+	.string "lab, from eggs the migration\l"
+	.string "left behind.\p"
 	.string "I'd like you to have one.\n"
 	.string "Choose whichever speaks to you.$"
 

@@ -71,6 +71,11 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: The C312 Mt. Pyre Torchic was meant to come back after a KO or flee, but it never did. Its faded path ran `Common_EventScript_RemoveStaticPokemon` → `removeobject`, and `RemoveObjectEventByLocalIdAndMap` calls FlagSet on the object's flag (`src/event_object_movement.c:1394`). The object flag was the permanent FLAG_HIDE_*, so the Torchic stayed hidden forever. The build was clean, so nothing caught this.
 **Resolution**: Use a FLAG_TEMP object flag plus a permanent caught flag. The object_event flag = `FLAG_TEMP_11` (cleared on every map load, not on return from battle). A separate permanent `FLAG_CAUGHT_*` is set only on B_OUTCOME_CAUGHT, and ON_TRANSITION re-sets the temp flag when it's set. Use `EventMacro_StaticDen` / `StaticDenTransition` / `StaticDenTryRemove`. Never give an object that the script might `removeobject` a permanent flag unless removal really should be permanent.
 
+## Gift Script Gave the Vanilla Species, Not the Custom Form (C279 → fixed C319)
+
+**Symptom**: The C279 Changed Three gift gave SPECIES_MUDKIP instead of MUDKIP_HOENN (showmonpic, bufferspeciesname, VAR_TEMP_TRANSFERRED_SPECIES, givemon), and nobody noticed for 40 cycles. The text described the titan Mudkip, and the other two balls were correct. Validators don't check what a script gives.
+**Resolution**: When a script's text describes a custom form, grep its givemon/showmonpic species: `grep -n "SPECIES_" <scripts.inc>`.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.
