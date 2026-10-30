@@ -138,8 +138,9 @@ MeteorFalls_B1F_2R_Text_CrystalTreeckoCaught:
 MeteorFalls_B1F_2R_Text_CrystalTreeckoFaded:
 	.string "The glint sinks back into\n"
 	.string "the rock...\p"
-	.string "Perhaps it will return once\n"
-	.string "the cave is still again.$"
+	.string "Somewhere below, the chime\n"
+	.string "keeps ringing. It hasn't\l"
+	.string "gone far.$"
 
 MeteorFalls_B1F_2R_Text_SilverLeaf:
 	.string "A silver leaf is wedged into\n"

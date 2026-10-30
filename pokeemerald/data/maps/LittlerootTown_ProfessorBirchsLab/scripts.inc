@@ -254,16 +254,16 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ChooseJohtoStarter::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CompletedDexIntro, MSGBOX_DEFAULT
 	call_if_set FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTorchic
 	call_if_unset FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTorchic
-	call_if_set FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTreecko
-	call_if_unset FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTreecko
 	call_if_set FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundMudkip
 	call_if_unset FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintMudkip
+	call_if_set FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTreecko
+	call_if_unset FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, LittlerootTown_ProfessorBirchsLab_EventScript_DenHintTreecko
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CompletedDexOffer, MSGBOX_DEFAULT
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5
 	releaseall
 	end
 
-@ C319: the Changed Three gift reacts to which starlight dens the player has already cleared
+@ C319/C323: the Changed Three gift reacts to which starlight dens the player has already cleared (Field Notes order)
 LittlerootTown_ProfessorBirchsLab_EventScript_DenFoundTorchic::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_DenFoundTorchic, MSGBOX_DEFAULT
 	return
@@ -973,24 +973,24 @@ LittlerootTown_ProfessorBirchsLab_Text_DenFoundTorchic:
 	.string "on MT. PYRE before I did!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_DenHintTorchic:
-	.string "Something still glitters in the\n"
-	.string "fog atop MT. PYRE, you know.$"
+	.string "That glitter on MT. PYRE…\n"
+	.string "I never did climb up to check.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_DenFoundTreecko:
-	.string "And the crystal TREECKO, deep\n"
-	.string "in METEOR FALLS!$"
+	.string "You caught the crystal TREECKO\n"
+	.string "in METEOR FALLS. Remarkable!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_DenHintTreecko:
-	.string "Something still hums in the\n"
-	.string "deep dark of METEOR FALLS.$"
+	.string "The hum in METEOR FALLS…\n"
+	.string "I've never gotten close to it.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_DenFoundMudkip:
-	.string "And the titan MUDKIP, waiting\n"
-	.string "in SHOAL CAVE's tide pool!$"
+	.string "The titan MUDKIP of SHOAL CAVE?\n"
+	.string "You've seen it with your own eyes!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_DenHintMudkip:
-	.string "Something still stirs in a tide\n"
-	.string "pool deep in SHOAL CAVE.$"
+	.string "That tide pool in SHOAL CAVE…\n"
+	.string "I keep missing the low tide.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CompletedDexOffer:
 	.string "These three hatched here at the\n"

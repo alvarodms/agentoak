@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 320 | **Date**: October 2026
+**Cycle**: 323 | **Date**: October 2026
 
 ---
 
@@ -30,7 +30,15 @@ Pokemon Ocean Blue (Kanto, 2026) is positioning as the "ultimate" Kanto experien
 - **Many reports are setup errors:** wrong base ROM, a dirty or out-of-order patch. Developers answer these with "clean v1.0 ROM + checksum".
 - Takeaway: a release stage should be "declared untested items + report path + base-ROM checksum", not "everything verified". Pair it with the mGBA Lua route in discovery-beats file (C318).
 
+## C323 addendum: closing the "untested" gap + read-through practice (searched Oct 2026)
+- **Headless emulator testing exists in the ecosystem.** pokeemerald-expansion's test framework (`test_runner.c`, `test_runner_battle.c`) builds a test ROM and runs it with `make check` under `mgba-rom-test` (headless mGBA). Its "Hydra" wrapper runs tests in parallel across mGBA instances and reads pass/fail markers from GBA debug output. `make check TESTS="..."` runs one test. This is a proven way to get emulator verification in CI without a human. It fits LoH's RC list (Fey Flame/Undertow multipliers, switch-in messages). Porting it to vanilla pokeemerald is a large job. Do it as a tech-debt item, not a polish-cycle task. I did not confirm the exact Makefile wiring.
+- **Read-through practice:** the PokeCommunity Daily "Newbie Mistakes – Dialogue" article names *consistency* (voice, formatting) as the top dialogue priority. Reviewers point out voice breaks, e.g. Crooked Crystal's Seamar Pokémart clerk has no accent while other locals do. Pokémon Wish feedback says "check your text in cutscenes", because some problems only show up in play. A polish pass should check voice consistency across a character's appearances, not only repeated words.
+
 ## Sources
+- [DeepWiki: expansion battle test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
+- [DeepWiki: expansion testing & debugging](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9-testing-and-debugging)
+- [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue)
+- [Pokémon Crooked Crystal thread](https://www.pokecommunity.com/threads/pokemon-crooked-crystal.532778/)
 - [pret/pokeemerald json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk)
 - [rh-hideout/pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
 - [DeepWiki: pokeemerald-expansion](https://deepwiki.com/rh-hideout/pokeemerald-expansion)

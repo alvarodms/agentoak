@@ -81,7 +81,7 @@ ShoalCave_LowTideLowerRoom_EventScript_TidePool::
 	end
 
 ShoalCave_LowTideLowerRoom_Text_TitanMudkipApproach:
-	.string "The tide pool goes still.\n"
+	.string "The tide pool shivers.\n"
 	.string "Then something rises from it.\p"
 	.string "A MUDKIP...? No...\n"
 	.string "It's as big as a SWAMPERT,\l"
@@ -98,8 +98,8 @@ ShoalCave_LowTideLowerRoom_Text_TitanMudkipCaught:
 ShoalCave_LowTideLowerRoom_Text_TitanMudkipFaded:
 	.string "The MUDKIP slips back into\n"
 	.string "the pool without a ripple...\p"
-	.string "Perhaps it will rise again\n"
-	.string "once the water is still.$"
+	.string "The next low tide may\n"
+	.string "bring it back.$"
 
 ShoalCave_LowTideLowerRoom_Text_TidePool:
 	.string "A tide pool, no bigger\n"

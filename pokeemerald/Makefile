@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_species check_evolution check_all check_all_quick
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -222,6 +222,10 @@ check_gifts:
 check_text_width:
 	@node scripts/check_text_width.cjs --diff
 
+# Doubles wiring guard (C323): trainerbattle_double targets are doubleBattle trainers with >=2 mons
+check_doubles:
+	@node scripts/check_doubles.cjs
+
 # Species registration completeness check
 check_species:
 	@echo "Checking species registration..."
@@ -239,7 +243,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

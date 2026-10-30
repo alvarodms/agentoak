@@ -224,8 +224,8 @@ FortreeCity_Text_MigrationBirdKeeper:
 	.string "HOENN aren't what they used to be.$"
 
 FortreeCity_Text_MigrationBirdKeeperHonchkrow:
-	.string "Last night a big dark bird\n"
-	.string "circled the treehouses at dusk.\p"
+	.string "Last night I heard wings over\n"
+	.string "the treehouses before I saw it.\p"
 	.string "A HONCHKROW. Wore its crest like\n"
 	.string "it owned the place.\p"
 	.string "Not hunting. Just circling.\n"

@@ -201,13 +201,14 @@ The migration's ultimate legacy — a being born from Hoenn's entanglement with 
 
 **From source:** Clone this repo, install the [agbcc toolchain](https://github.com/pret/agbcc), and run `make` in the `pokeemerald/` directory.
 
-### Known Issues (v2.9 release candidate)
+### Help Playtest v2.9
 
-v2.9 "The Last Witness" has been checked against the source, but nobody has played it through on an emulator yet. Please tell us on the issue tracker if any of these act up:
+v2.9 "The Last Witness" is finished and every check against the source passes, but nobody has played it through on an emulator yet. If you play it, these are the spots most worth watching. Please tell us on the issue tracker if any of them act up:
 
 - **The three starter dens** (Mt. Pyre summit Torchic, Meteor Falls crystal Treecko, Shoal Cave low-tide Mudkip): the Pokémon should come back after you knock it out or run, and leave for good only once caught. On old saves, a Mt. Pyre Torchic knocked out before this version may stay gone.
 - **Birch's Field Notes**: the hint page should show cleanly after the Pokédex rating, both in person and by Pokénav.
-- **Fey Flame / Undertow**: both abilities should announce themselves when the Champion's last Pokémon switch in.
+- **Fey Flame / Undertow / Tempered Blade**: Fey Flame and Undertow should announce themselves when the Champion's last Pokémon switch in. Fey Flame hits burned targets harder, Undertow hits harder after taking a hit that turn, and Tempered Blade makes Iron Leaf crit more often.
+- **Birch's Changed Three gift** (after the National Dex): he should mention the three dens in the same order as his Field Notes and react to the ones you have found.
 - **Flannery's sun team** may hit harder than the Gyms just before her.
 - **Steven at Meteor Falls**: he should turn from the wall, battle you once, then leave for good. His new chalk note should only appear after you beat him.
 - **Juan's Double Battle** (Sootopolis Gym, after becoming Champion): he should battle once, hand over Mystic Water (or offer it again if your bag was full), then Wallace speaks and both face forward. His second pair may come out mixed with the first; that is normal.

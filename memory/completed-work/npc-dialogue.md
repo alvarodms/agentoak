@@ -24,22 +24,8 @@ All modified NPC dialogue files — Professor Birch, Rival, Villains, Gym Leader
 
 ---
 
-## v2.8 Dialogue Subtraction — C298
-
-3 Echo NPCs converted from Tell to Show (Hours 3-6 fatigue fix):
-- **R112 Hiker** (Route112/scripts.inc): 5-paragraph migration lecture → "…" + 2-line personal anecdote ("That PINSIR burned my hand")
-- **R113 FrostTracker** (Route113/scripts.inc): Cut last 2 paragraphs (R112 cross-reference + meta-commentary). Kept personal Vulpix observation.
-- **R119 Ecologist** (Route119/scripts.inc): 7 paragraphs → 2. Cut greeting, 4-form catalogue, "regional shift" explanation. Kept Stantler observation + Hartley redirect.
-
-Tell:Show ratio Hours 3-6: 7:2 → 4:5.
-
-## v2.8 Gym Leader Showcase Dialogue — C299
-
-Brawly + Wattson defeat and re-talk text rewritten from Tell (migration exposition) to Show (battle-experience reference):
-- **DewfordTown_Gym/scripts.inc**: `BrawlyDefeat` — "GLIGAR hit you like a riptide" (visceral battle moment). `BrawlyPostBattle` — "I feel the ocean in it" (sensation through battle, no origin story).
-- **MauvilleCity_Gym/scripts.inc**: `WattsonDefeat` — "LOTAD's leaves were crackling like a live wire" (specific battle moment). `WattsonPostBattle` — "I keep notes, but honestly -- I just love the surprise!" (engineering curiosity, no Route 102 exposition).
-
-Flannery descoped — Hour 6-10 already healthy at 3:4:3.
+## v2.8 (C298-299) — collapsed
+- C298 Tell→Show: R112 Hiker, R113 FrostTracker, R119 Ecologist trimmed (Hours 3-6 Tell:Show 7:2→4:5). C299: Brawly/Wattson defeat + post-battle text rewritten to battle moments. See git history.
 
 ---
 
@@ -71,3 +57,11 @@ Sootopolis Gym_1F (Juan texts → Wallace, Juan cameo 9,2), Gym_B1F (9 trainer t
 | `data/maps/EverGrandeCity_ChampionsRoom/scripts.inc` | `PostBattleSpeech` no longer repeats the Intro's "rare stones": "I spent years reading HOENN's stone, waiting to see what it would become. / You didn't come to read anything. You just walked forward. / CHAMPION… that word belongs to you now." |
 | `data/maps/SootopolisCity_Gym_1F/scripts.inc` + `include/constants/flags.h` | **C322 Juan duet**: `JuanCameo` → `goto_if_set FLAG_SYS_GAME_CLEAR, _JuanDuet` after faceplayer. New `_JuanDuet` (defeated → `_JuanDuetDone`; YESNO offer; No → `_JuanDuetDecline`; Yes → `_Movement_JuanSpin` on VAR_LAST_TALKED → `trainerbattle_double TRAINER_JUAN_DUET` → `_JuanDuetDefeated`), `_JuanDuetDefeated` (gift text, giveitem ITEM_MYSTIC_WATER, bag full → Common_EventScript_ShowBagIsFull, set FLAG_RECEIVED_JUAN_MYSTIC_WATER (0x2B8, was FLAG_UNUSED_0x2B8), Wallace (lid 1) faces right + "You still lead, you know.", Juan (lid 3) faces left, both face down), `_JuanDuetDone` (flag unset → retry gift). 8 new texts (Offer/Decline/Intro/Defeat/NeedTwoMons/Gift/WallaceToJuan/Done). Old Juan/Wallace text unchanged. |
 | `data/maps/{DewfordTown,LavaridgeTown,Route119,RustboroCity,TerraCave_End}/scripts.inc` | **C322 width rewraps** (words unchanged, all lines ≤208px): Dewford TinyIslandCommunity box 2 → 4 scrolled lines; Lavaridge OhYouLikeHotSprings "the" moved up; Route119 WeatherIntern split into 2 boxes at "haywire!"; Rustboro MigrationScientist → \n/\l/\l; TerraCave GroudonCaught split at "grows still." |
+
+## C323 — v2.9 read-through pass (text only, labels unchanged)
+
+| File | Change |
+|------|--------|
+| `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | `_Text_IntroSpeech`: "Everybody ran when the storm came" → "when the sky went dark" (one "storm" left: "HONCHKROW rode a storm down", the Winona link). |
+| `data/maps/FortreeCity/scripts.inc` | `_Text_MigrationBirdKeeperHonchkrow` opener → "Last night I heard wings over / the treehouses before I saw it." (no longer copies Winona's "circling at dusk"). |
+| `data/maps/FortreeCity_Gym/scripts.inc` | `_Text_WinonaPreRematch`: "Murkrow" → "MURKROW", rewrapped to 3 lines (\n/\l). |

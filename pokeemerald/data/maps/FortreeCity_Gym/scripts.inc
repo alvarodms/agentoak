@@ -286,8 +286,9 @@ FortreeCity_Gym_Text_GymStatueCertified:
 FortreeCity_Gym_Text_WinonaPreRematch:
 	.string "{PLAYER}… Have you seen the dark\n"
 	.string "birds circling FORTREE at dusk?\p"
-	.string "Murkrow from foreign skies have\n"
-	.string "joined the flock above my city.\p"
+	.string "MURKROW from foreign skies\n"
+	.string "have joined the flock above\l"
+	.string "my city.\p"
 	.string "Their cunning has sharpened my\n"
 	.string "own aerial strategies.\p"
 	.string "Shall we soar together once more?$"
