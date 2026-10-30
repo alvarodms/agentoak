@@ -630,9 +630,10 @@ DewfordTown_Text_TinyIslandCommunity:
 	.string "Brawly's been training harder than\n"
 	.string "ever. Says something surfaced near\l"
 	.string "the island at low tide last night.\p"
-	.string "None of us could name it. The old\n"
-	.string "sea charts don't help anymore --\l"
-	.string "Hoenn's waters have rewritten themselves.$"
+	.string "None of us could name it.\n"
+	.string "The old sea charts don't help\l"
+	.string "anymore -- Hoenn's waters have\l"
+	.string "rewritten themselves.$"
 
 DewfordTown_Text_TownSign:
 	.string "DEWFORD TOWN\n"

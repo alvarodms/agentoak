@@ -9643,11 +9643,34 @@ static const struct TrainerMonItemCustomMoves sParty_GruntSeafloorCavern5[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_GruntUnused[] = {  // Available for future use
+static const struct TrainerMonItemCustomMoves sParty_JuanDuet[] = {
     {
-    .iv = 0,
-    .lvl = 5,
-    .species = SPECIES_MAGIKARP,
+    .iv = 255,
+    .lvl = 66,
+    .species = SPECIES_LUVDISC,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_RAIN_DANCE, MOVE_ICY_WIND, MOVE_SAFEGUARD, MOVE_ATTRACT}
+    },
+    {
+    .iv = 255,
+    .lvl = 69,
+    .species = SPECIES_LUDICOLO,
+    .heldItem = ITEM_SHELL_BELL,
+    .moves = {MOVE_FAKE_OUT, MOVE_SURF, MOVE_GIGA_DRAIN, MOVE_ICE_BEAM}
+    },
+    {
+    .iv = 255,
+    .lvl = 70,
+    .species = SPECIES_VAPOREON,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_HELPING_HAND, MOVE_SURF, MOVE_ICE_BEAM, MOVE_HAZE}
+    },
+    {
+    .iv = 255,
+    .lvl = 72,
+    .species = SPECIES_GOREBYSS,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_RAIN_DANCE, MOVE_HYDRO_PUMP, MOVE_ICE_BEAM, MOVE_PSYCHIC}
     }
 };
 

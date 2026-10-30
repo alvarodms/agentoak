@@ -19,7 +19,7 @@
 **v2.6** (C282-286): "The Reckoning" — Boss diversity pass, 6-NPC villain postgame arc, Birch collection quest (PP_MAX), dialogue polish.
 **v2.7** (C288-294): "The Living Difference" — Mechanical identity for all 25 regional forms. 3 custom abilities (Frozen Spore, Scalding Touch, Toxic Touch), 10/10 Tier 2 ability reassignments, 3 signature moves (Spore Fist, Tidal Flare, Iron Leaf). Changed Three fully registered (9 species, 27 files each). Species count: 36 custom (11 cross-gen + 25 _HOENN), all registered.
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
-**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed). C318: Shoal Cave titan Mudkip den (third den — all three Changed starters now have a visible route) + Drake 5 teams learnset-legal + Bagon/Growlithe/Arcanine_H lint & shinies (#201/#163 batch). C319: Birch's Field Notes in-game (dex rating den hints), Changed Three gift reacts to dens + Mudkip_Hoenn species fix, `check_dens` lint, Corsola/Vulpix/Ninetales_H lint & shinies. C320: release-candidate polish (Field Notes one-hint cap, Fortree Honchkrow callback, check_gifts, dead-code cut). C321: Meteor Falls Steven collector scene (Regirock/Regice, #194 closed), last #201 lint batch (#201 closed), check_text_width lint. **RELEASE CANDIDATE — not yet emulator-tested.**
+**v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed). C318: Shoal Cave titan Mudkip den (third den — all three Changed starters now have a visible route) + Drake 5 teams learnset-legal + Bagon/Growlithe/Arcanine_H lint & shinies (#201/#163 batch). C319: Birch's Field Notes in-game (dex rating den hints), Changed Three gift reacts to dens + Mudkip_Hoenn species fix, `check_dens` lint, Corsola/Vulpix/Ninetales_H lint & shinies. C320: release-candidate polish (Field Notes one-hint cap, Fortree Honchkrow callback, check_gifts, dead-code cut). C321: Meteor Falls Steven collector scene (Regirock/Regice, #194 closed), last #201 lint batch (#201 closed), check_text_width lint. C322: Juan postgame doubles (slot 568, Mystic Water, Wallace line), 5 width rewraps, check_scripts repaired, Mudkip-line tide-pool shinies — 25/25 custom shinies (#163 closed). **v2.9 CONTENT-COMPLETE RELEASE CANDIDATE — not yet emulator-tested.**
 
 ---
 
@@ -52,7 +52,7 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 ### Wallace Cascade — SHIPPED C309 (source of truth: `pokeemerald/scripts/trainer_configs/wallace_gym_*.json`)
 
 - TRAINER_JUAN_1-5 slots now = **WALLACE** (name "WALLACE", pic TRAINER_PIC_CHAMPION_WALLACE, class LEADER; items/doubles/AI unchanged). Arrays sParty_WallaceGym1-5. Constant names (TRAINER_JUAN_*, REMATCH_JUAN, FLAG_ENABLE_JUAN_MATCH_CALL, MC_HEADER_JUAN) deliberately untouched.
-- Slots **568 (GRUNT_UNUSED) and 853 (MAY_PLACEHOLDER) remain FREE**. A future Juan postgame battle should be a **Double Battle on slot 568**.
+- Slot 568 = **TRAINER_JUAN_DUET** (C322, Juan postgame doubles). **853 (MAY_PLACEHOLDER) is the LAST free trainer ID.**
 - Wallace = **Water-first, exactly one migration species (Arcanine_Hoenn, used by no other trainer)**. Milotic ace every tier. Gym: Sealeo 41 / Whiscash 42 / Arcanine_H 43 / Gyarados 43 / Milotic 46. Toxapex joins T2+ (#180 kept). T4 opens with Juan's Kingdra (entrusted to his student). Old Ludicolo_H/Ninetales_H Wallace teams retired (archive deleted).
 - Story: Wallace gave up the Champion seat to guard Sootopolis's water; Juan kept the Gym meanwhile and now stands beside him (Gym 1F object at 9,2, `SootopolisCity_Gym_1F_EventScript_JuanCameo`, FLAG_BADGE08_GET-conditional). Post-battle hands off to Steven ("Show him what you've seen"). After the HM Waterfall gift, Wallace fades out of the city (FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE) to wait in the Gym.
 - Pokénav: Juan header = Wallace (name/pic come from gTrainers; desc "WATER ARTIST"); MatchCall_Text_Wallace (Champion header) now speaks as STEVEN.
@@ -104,9 +104,9 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 **Phoebe and Glacia: 0 overlap** with villain bosses. #193 villain pass DONE C316 (Crawdaunt off Shelly/Matt, Crobat Archie-only, Sharpedo Archie-only among bosses). #193 closed C317 (audit 0).
 
 ### Remaining Wallace/Juan threads
-- Juan postgame Double Battle (slot 568) — not built yet. SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
+- Juan postgame Double Battle: DONE C322 (TRAINER_JUAN_DUET=568, source of truth `scripts/trainer_configs/juan_duet.json`; Luvdisc 66/Ludicolo 69 opening duet, Vaporeon 70/Gorebyss 72 closing duet; Mystic Water on FLAG_RECEIVED_JUAN_MYSTIC_WATER 0x2B8; Wallace "You still lead, you know."). Ludicolo's Fake Out is inherited from Lombre L19 (kept deliberately). SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
 - Meteor Falls Steven: DONE C321.
-- Trainer ID allocation (C320): 568 = Juan doubles (C322); 853 = spare; C321 Steven uses vanilla TRAINER_STEVEN.
+- Trainer ID allocation: 568 = Juan doubles (C322, used); 853 = last spare; C321 Steven uses vanilla TRAINER_STEVEN.
 
 ## Roster Fixes (#180) — Status
 
@@ -126,8 +126,9 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 | 302-314 | Learnsets, Ambipom/Carbink/Toxapex rosters, Steven champion, Wallace cascade, Fey Flame + Undertow, Mt. Pyre Torchic den, Sidney/Winona rebuilds, boss collisions, sprite lint batches — **ALL DONE** | #180, #182, #192, #193/#194/#201/#163 partial |
 | 315-320 | StaticDen macros + 3 Changed-starter dens, villain ownership + `check_bosses`, Flannery/Roxanne/Drake/Wallace collisions (audit 0), Birch Field Notes + `check_dens`/`check_gifts`, RC polish — **ALL DONE** | #193 closed, #201/#163 partial |
 | 321 | Meteor Falls Steven collector scene (Treecko-aware opener on 0x2B6, wall musing, Skarmory/Carbink/Donphan/Regirock/Regice/Metagross 80-86 on vanilla sParty_Steven via `steven_meteor_falls.json`, fades out + stays gone via object flag, second chalk note at 19,2), Bagon researcher fix, Champion PostBattle "rare stones" fix, `check_text_width` in check_all, sprite batch Pinsir/Stantler/Deoxys_H — **DONE** | #194 closed, #201, #163 partial |
-| 322 | Juan doubles on slot 568 (doubleBattle TRUE, ≥2 mons) + #163 shiny audit: Mudkip/Marshtomp/Swampert_H shinies still pending (sprite-iterations), confirm all 25 `_hoenn` shiny.pal are custom (C321: none equal vanilla) | #163 |
-| 323+ | v3.0 opener: Field Notes key item (notebook with corrections page); #190 Bag-in-trainer-battles gate belongs to v3.0 | #190 |
+| 322 | Juan postgame doubles on slot 568 (two duets + Mystic Water + Wallace line), 5 overflowing hack lines rewrapped (full tree now 114, all placeholder worst-case), `check_scripts` repaired (could never fail before), Mudkip/Marshtomp/Swampert_H "low tide" shinies (25/25 `_hoenn` shinies custom) — **ALL DONE** | #163 closed |
+| 323 | Ship v2.9 as a finished minor (no new content): read-through fixes from the C320 tone notes (gift den "And" openers, duplicated Field Notes/gift hints, Faded text template, Shoal Cave "still" repeat, Sidney double "storm"), Lotad-line stray-index lint cleanup | — |
+| 324+ | v3.0 opener: Field Notes key item (notebook with corrections page); #190 Bag-in-trainer-battles gate belongs to v3.0. Trainer IDs: only 853 left — plan a TRAINERS_COUNT bump before v3.0 adds trainers | #190 |
 
 ## v2.9 RC — Not Yet Playtested (player-facing copy in README "Known Issues", C320)
 
@@ -140,6 +141,7 @@ No headless emulator in the pipeline; everything below is statically checked onl
 - **Fortree postgame line**: the bird keeper (20,8) switches to the Honchkrow "visiting home" line after FLAG_SYS_GAME_CLEAR.
 - **Meteor Falls Steven** (C321): he faces the wall for the first box, then turns; the Treecko branch matches 0x2B6; after the battle he fades out and stays gone; the chalk note reads only after his defeat.
 - **Researcher Bagon line** (C321): reads as numbers, not first sighting.
+- **Sootopolis Gym Juan duet** (C322): after game clear, talk to Juan (9,2): Yes → spin → doubles; test faint/switch-in on both sides, bag-full Mystic Water retry, Wallace turns right then both face down; declining and the pre-clear cameo text unchanged. The closing pair can come in mixed with the opening pair (the AI picks replacements by matchup, not party order); that is expected engine behavior, not a bug.
 
 Please report anything odd on the issue tracker.
 
@@ -166,9 +168,9 @@ Please report anything odd on the issue tracker.
 ## Technical Reference
 
 - **Difficulty flag**: `FLAG_DIFFICULTY_CHALLENGE` at 0x286. Helper: `IsChallengeModeActive()`.
-- **Flag space**: Custom 0x264-0x2B7 (C318: 0x2B7 = FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP). Next available: **0x2B8** (0x2B8-0x2BB are FLAG_UNUSED; 0x2BC+ vanilla).
+- **Flag space**: Custom 0x264-0x2B8 (C322: 0x2B8 = FLAG_RECEIVED_JUAN_MYSTIC_WATER). Next available: **0x2B9** (0x2B9-0x2BB are FLAG_UNUSED; 0x2BC+ vanilla).
 - **Encounter slots**: Land 12, Water 5, Fish 10. File: `src/data/wild_encounters.json`.
-- **Trainer capacity**: 891/891, 2 reclaimable IDs (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853).
+- **Trainer capacity**: 891/891, 1 reclaimable ID left (MAY_PLACEHOLDER=853); 568 became TRAINER_JUAN_DUET (C322). After 853, a new trainer needs a TRAINERS_COUNT bump.
 - **Event Macros**: `event_macros.inc` (GlimpseEvent, BadgeGateShow, ConditionalDialogue, StaticDen/StaticDenTransition/StaticDenTryRemove), `difficulty_utils.inc` (DifficultyDialogue).
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Specials**: custom specials are appended at the end of `data/specials.inc` (`def_special Name`). C319 gained `IsBirchFieldNoteActive` (src/match_call.c, prototype in include/match_call.h).
@@ -177,5 +179,5 @@ Please report anything odd on the issue tracker.
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move. MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). Damage-multiplier + switch-in message: 9 files (see battle-engine.md Fey Flame / Undertow). ABILITY_NAME_LENGTH=14.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.
-- **Dawn Stone**: ITEM_DAWN_STONE (378), EVO_ITEM_FEMALE method, Shoal Cave low-tide.
+- **Dawn Stone**: ITEM_DAWN_STONE (99, slot 0x063, Moon Stone icon), EVO_ITEM_FEMALE method, Shoal Cave Ice Room (flag 0x468).
 - **Generator toolchain**: `generate_species.cjs` (27-file + ~6 manual in pokemon.c/pokemon_icon.c), `generate_trainer.cjs` (3-file), `generate_npc_dialogue.cjs` (2-file + --update mode C287), `verify_species.sh` (27-file check, C287).

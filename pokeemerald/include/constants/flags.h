@@ -743,7 +743,7 @@
 #define FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC  0x2B5 // C312/C315: set ONLY when the player catches the Mt. Pyre den Torchic_Hoenn (object uses FLAG_TEMP_11)
 #define FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO  0x2B6 // C315: set ONLY when the player catches the Meteor Falls den Treecko_Hoenn (object uses FLAG_TEMP_11)
 #define FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP  0x2B7 // C318: set ONLY when the player catches the Shoal Cave Lower Room den Mudkip_Hoenn (object uses FLAG_TEMP_12)
-#define FLAG_UNUSED_0x2B8  0x2B8 // Unused Flag
+#define FLAG_RECEIVED_JUAN_MYSTIC_WATER  0x2B8 // C322: set after Juan's postgame duet gift (Mystic Water) is received; retried if bag was full
 #define FLAG_UNUSED_0x2B9  0x2B9 // Unused Flag
 #define FLAG_UNUSED_0x2BA  0x2BA // Unused Flag
 #define FLAG_UNUSED_0x2BB  0x2BB // Unused Flag

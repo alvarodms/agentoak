@@ -181,7 +181,9 @@ check_ascii:
 # Note: curly quotes and ellipsis ARE valid charmap characters and should not be flagged
 check_scripts:
 	@echo "Checking scripts for non-charmap characters..."
-	@if grep -rPn '\xe2\x80[\x93\x94]' data/maps/*/scripts.inc data/maps/*/*/scripts.inc 2>/dev/null; then \
+	@HITS=$$(LC_ALL=C grep -rPn --include=scripts.inc '\xe2\x80[\x93\x94]' data/maps | grep -vP '^[^:]+:[0-9]+:\s*@'); \
+	if [ -n "$$HITS" ]; then \
+		echo "$$HITS"; \
 		echo "ERROR: En dashes or em dashes found in script files above (use -- instead)"; \
 		exit 1; \
 	else \

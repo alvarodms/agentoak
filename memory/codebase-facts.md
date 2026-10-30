@@ -18,7 +18,9 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
 
-**Capacity**: TRAINERS_COUNT = 891, 2 reclaimable IDs remaining (GRUNT_UNUSED=568, MAY_PLACEHOLDER=853). Rematch table: 5 tiers, all filled. **Repurposed slots**: TRAINER_WALLACE(+REMATCH_1-4) = Steven (C308); TRAINER_JUAN_1-5 = Wallace (C309). Constant names were kept.
+**Capacity**: TRAINERS_COUNT = 891, 1 reclaimable ID remaining (MAY_PLACEHOLDER=853; 568 = TRAINER_JUAN_DUET since C322). Rematch table: 5 tiers, all filled. **Repurposed slots**: TRAINER_WALLACE(+REMATCH_1-4) = Steven (C308); TRAINER_JUAN_1-5 = Wallace (C309). Constant names were kept.
+
+**Double-battle trainers get fixed personalities** (`battle_main.c` CreateNPCTrainerParty): `doubleBattle == TRUE` → base personality 0x80 plus the trainer-name hash << 8, so the low byte is always 0x80. Ability is always slot 0, and gender is fixed per species (0x80 against the gender threshold: Luvdisc female, 50/50 species male). Don't build a doubles boss around a slot-1 ability (Lightning Rod Marowak, Water Absorb Mantine). When a doubles trainer's mon faints, `GetMostSuitableMonToSwitchInto` (battle_ai_switch_items.c) picks the replacement by type matchup, not party order, so planned "pairs" mix after the first KO.
 
 **Tag/multi battles load at most 3 mons per opponent** (`battle_main.c` CreateNPCTrainerParty: `BATTLE_TYPE_TWO_OPPONENTS` → monsCount = PARTY_SIZE/2). Mossdeep Space Center (SPECIAL_BATTLE_STEVEN) is one, so any boss fought in a tag battle needs a ≤3-mon array or slots 4+ (often the ace) silently never appear. C316 fixed sParty_MaxieMossdeep (was 4 mons, Camerupt ace cut).
 
@@ -56,8 +58,6 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom: `EVO_LEVEL_FEMALE` (16), `EVO_ITEM_FEMALE` (17). Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
 
-**Dawn Stone item**: `ITEM_DAWN_STONE` = 99 (slot 0x063). Uses Moon Stone icon. Placed in Shoal Cave Ice Room (flag 0x468).
-
 ---
 
 ## Player Sprite Palette System (C228)
@@ -74,7 +74,7 @@ Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNe
 
 ## Flag System Layout
 
-Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B7. Next available: **0x2B8** (0x2B8-0x2BB FLAG_UNUSED; verified C318). Den caught flags: 0x2B5 Mt. Pyre Torchic, 0x2B6 Meteor Falls Treecko, 0x2B7 Shoal Cave Mudkip. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
+Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B8. Next available: **0x2B9** (0x2B9-0x2BB FLAG_UNUSED; 0x2B8 = Juan Mystic Water C322). Den caught flags: 0x2B5 Mt. Pyre Torchic, 0x2B6 Meteor Falls Treecko, 0x2B7 Shoal Cave Mudkip. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
 
 **Shoal Cave tide architecture**: `ShoalCave_LowTideEntranceRoom` handles BOTH tides — `OnTransition` calls `UpdateShoalTideFlag` then swaps layout. Object events on `LowTideEntranceRoom` appear in both tides. Use `call` subroutine pattern for OnTransition logic. **FLAG_SYS_SHOAL_TIDE SET = HIGH tide.** Only the Entrance and Inner rooms swap layouts (`setmaplayoutindex`), so their objects/bg_events exist at both tides (a sign there needs tide-aware text and a stand tile walkable in both layouts). The Lower, Stairs and Ice rooms are **low-tide-only maps**: at high tide the Inner Room warps to the Lower Room (4 at (15,19), 5 at (30,25)) sit on MB_OCEAN_WATER, and water is not in `IsWarpMetatileBehavior` (field_control_avatar.c:751), so they never fire; warp 3 (ladder at (19,14), elevation 4) is unreachable by walking or surfing. Surf can only start from elevation 3 and `CanStopSurfing` only lands on elevation 3 (field_player_avatar.c:729). Ledges (MB_JUMP_*) have collision 1 but `ShouldJumpLedge` runs before the collision check. Throwaway map.bin BFS recipe: u16 per tile, metatile bits 0-9, collision 10-11, elevation 12-15; behavior = low byte of `data/tilesets/{primary/general,secondary/cave}/metatile_attributes.bin` (secondary index = metatile-512).
 
@@ -106,7 +106,6 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 - **Birch dex rating / match call text** (C319): the Pokénav Birch call goes `MatchCall_GetMessage_Birch` (pokenav_match_call_data.c) → `BufferPokedexRatingForMatchCall(gStringVar4)` (match_call.c). It builds one string with `CHAR_PROMPT_CLEAR` between pages (each page is a button press). `StringExpandPlaceholders` returns a pointer to the EOS it wrote, so you can append by overwriting that EOS with `CHAR_PROMPT_CLEAR` and expanding again. gStringVar4 is 0x3E8 bytes. The in-person rating is a separate script path (`ProfBirch_EventScript_AskRatePokedex` → `..._RatePokedex` in data/scripts/prof_birch.inc), so any rating addition has to be written twice: in C for the call and in script for the visit. The Champion's Room also calls `..._RatePokedex`. Field Notes live in `AppendBirchFieldNotes` / special `IsBirchFieldNoteActive` (reads VAR_0x8004).
 - **Specials returning a value**: a `u16 Fn(void)` added with `def_special Fn` at the end of data/specials.inc can be used with `specialvar VAR_RESULT, Fn`. Pass the argument in VAR_0x8004 (`gSpecialVar_0x8004`).
 - **Overworld Pokémon stand-ins**: `OBJ_EVENT_GFX_*_DOLL` (e.g. OBJ_EVENT_GFX_TORCHIC_DOLL=155, event_objects.h) work as visible wild Pokémon. Single frame, so skip `faceplayer` and use MOVEMENT_TYPE_FACE_DOWN.
-- **Weather Omens** (C149): badge-gated permanent weather on R111/119/120/125 (flags 0x282-0x285).
 
 ---
 

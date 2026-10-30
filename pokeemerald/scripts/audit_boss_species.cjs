@@ -32,6 +32,7 @@ const BOSS_GROUPS = {
   Winona: [/^sParty_Winona\d$/],
   TateAndLiza: [/^sParty_TateAndLiza\d$/],
   Wallace: [/^sParty_WallaceGym\d$/],
+  Juan: [/^sParty_JuanDuet$/],
   Sidney: [/^sParty_Sidney(Rematch\d)?$/],
   Phoebe: [/^sParty_Phoebe(Rematch\d)?$/],
   Glacia: [/^sParty_Glacia(Rematch\d)?$/],

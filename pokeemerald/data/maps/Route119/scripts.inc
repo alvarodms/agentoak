@@ -845,8 +845,9 @@ Route119_EventScript_WeatherIntern::
 	end
 
 Route119_Text_WeatherIntern:
-	.string "Our instruments have been going haywire!\n"
-	.string "Barometric pressure, wind speed,\l"
+	.string "Our instruments have been\n"
+	.string "going haywire!\p"
+	.string "Barometric pressure, wind speed,\n"
 	.string "humidity - all off the charts.\p"
 	.string "The senior researchers say they've\n"
 	.string "never recorded storms like these.$"

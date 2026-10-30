@@ -176,7 +176,8 @@ TerraCave_End_Text_PrimalGroudonAwakens:
 	.string "as something ancient stirs below...$"
 
 TerraCave_End_Text_GroudonCaught:
-	.string "The ground beneath your feet grows still.\n"
+	.string "The ground beneath your feet\n"
+	.string "grows still.\p"
 	.string "The searing heat begins to fade.\p"
 	.string "The continent POKéMON rests within\n"
 	.string "your POKé BALL, its primal fury\l"

@@ -1041,8 +1041,9 @@ RustboroCity_Text_HeyThatsRustborosGymBadge:
 	.string "RUSTBORO's is the coolest, I'd say.$"
 
 RustboroCity_Text_MigrationScientist:
-	.string "DEVON CORPORATION has been monitoring\n"
-	.string "unusual species readings near RUSTBORO.\p"
+	.string "DEVON CORPORATION has been\n"
+	.string "monitoring unusual species readings\l"
+	.string "near RUSTBORO.\p"
 	.string "A POKéMON called RIOLU was detected\n"
 	.string "on ROUTE 116. It's native to SINNOH,\l"
 	.string "not HOENN. Fascinating, really.$"

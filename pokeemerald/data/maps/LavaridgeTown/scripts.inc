@@ -374,8 +374,8 @@ LavaridgeTown_Text_PokemonNippedBackside:
 	.string "A POKéMON nipped my backside!$"
 
 LavaridgeTown_Text_OhYouLikeHotSprings:
-	.string "They say Houndour packs followed\n"
-	.string "the volcanic warmth here from the north.\l"
+	.string "They say Houndour packs followed the\n"
+	.string "volcanic warmth here from the north.\l"
 	.string "First I thought it was just a rumor.\p"
 	.string "Then I saw them on the FIERY PATH --\n"
 	.string "a dozen, heading toward the crater.\l"

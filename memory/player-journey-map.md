@@ -73,6 +73,8 @@ Brawly/Wattson redesigned. **Brawly's team now includes Gligar_Hoenn (Water/Rock
 
 **Postgame Rival Battle (C280)**: Rival appears in Littleroot Town with full 6-mon team including Changed Three form matching their starter. Lv70-73, IV 200. Narrative capstone — rival traveled Hoenn too and raised what the migration brought.
 
+**Juan Duet (C322)**: after game clear, Juan (Sootopolis Gym 9,2) offers one Double Battle: Luvdisc/Ludicolo then Vaporeon/Gorebyss (Lv66-72, rain/Helping Hand). Win → Mystic Water, and Wallace says "You still lead, you know." A teacher-student closing beat, not a power spike.
+
 **Changed Three Gift (C279, reactive C319)**: Birch offers the Changed Three starters postgame. Before the offer he reacts to each den: "You found the starlight TORCHIC on MT. PYRE before I did!" if it's caught, or "Something still glitters in the fog atop MT. PYRE" if not. The same goes for Meteor Falls Treecko and Shoal Cave Mudkip. Then he says the three "hatched here at the lab, from eggs the migration left behind." C319 fix: the Mudkip ball now really gives SPECIES_MUDKIP_HOENN. From C279 to C318 it showed and gave vanilla Mudkip.
 
 **v2.6 Shipped** (C284-286): 6 ex-villain NPCs (3 Magma + 3 Aqua), champion-gated. Emotional arc: denial → acceptance.

@@ -156,6 +156,7 @@ SootopolisCity_Gym_1F_EventScript_GymGuidePostVictory::
 SootopolisCity_Gym_1F_EventScript_JuanCameo::
 	lock
 	faceplayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, SootopolisCity_Gym_1F_EventScript_JuanDuet
 	goto_if_set FLAG_BADGE08_GET, SootopolisCity_Gym_1F_EventScript_JuanCameoPostBadge
 	msgbox SootopolisCity_Gym_1F_Text_JuanCameo, MSGBOX_DEFAULT
 	release
@@ -165,6 +166,58 @@ SootopolisCity_Gym_1F_EventScript_JuanCameoPostBadge::
 	msgbox SootopolisCity_Gym_1F_Text_JuanCameoPostBadge, MSGBOX_DEFAULT
 	release
 	end
+
+SootopolisCity_Gym_1F_EventScript_JuanDuet::
+	goto_if_defeated TRAINER_JUAN_DUET, SootopolisCity_Gym_1F_EventScript_JuanDuetDone
+	msgbox SootopolisCity_Gym_1F_Text_JuanDuetOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SootopolisCity_Gym_1F_EventScript_JuanDuetDecline
+	applymovement VAR_LAST_TALKED, SootopolisCity_Gym_1F_Movement_JuanSpin
+	waitmovement 0
+	trainerbattle_double TRAINER_JUAN_DUET, SootopolisCity_Gym_1F_Text_JuanDuetIntro, SootopolisCity_Gym_1F_Text_JuanDuetDefeat, SootopolisCity_Gym_1F_Text_JuanDuetNeedTwoMons, SootopolisCity_Gym_1F_EventScript_JuanDuetDefeated
+	release
+	end
+
+SootopolisCity_Gym_1F_EventScript_JuanDuetDecline::
+	msgbox SootopolisCity_Gym_1F_Text_JuanDuetDecline, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Gym_1F_EventScript_JuanDuetDefeated::
+	msgbox SootopolisCity_Gym_1F_Text_JuanDuetGift, MSGBOX_DEFAULT
+	giveitem ITEM_MYSTIC_WATER
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_JUAN_MYSTIC_WATER
+	closemessage
+	applymovement 1, Common_Movement_FaceRight
+	waitmovement 0
+	msgbox SootopolisCity_Gym_1F_Text_WallaceToJuan, MSGBOX_DEFAULT
+	closemessage
+	applymovement 3, Common_Movement_FaceLeft
+	waitmovement 0
+	delay 30
+	applymovement 3, Common_Movement_FaceDown
+	applymovement 1, Common_Movement_FaceDown
+	waitmovement 0
+	release
+	end
+
+SootopolisCity_Gym_1F_EventScript_JuanDuetDone::
+	goto_if_unset FLAG_RECEIVED_JUAN_MYSTIC_WATER, SootopolisCity_Gym_1F_EventScript_JuanDuetDefeated
+	msgbox SootopolisCity_Gym_1F_Text_JuanDuetDone, MSGBOX_DEFAULT
+	release
+	end
+
+SootopolisCity_Gym_1F_Movement_JuanSpin:
+	face_left
+	delay_8
+	face_up
+	delay_8
+	face_right
+	delay_8
+	face_down
+	delay_8
+	face_player
+	step_end
 
 SootopolisCity_Gym_1F_EventScript_LeftGymStatue::
 	lockall
@@ -314,3 +367,37 @@ SootopolisCity_Gym_1F_Text_JuanCameoPostBadge:
 	.string "An old man should spend his last\n"
 	.string "seasons listening to the water.\p"
 	.string "The sea gives, and we learn.$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetOffer:
+	.string "JUAN: My KINGDRA swims for\n"
+	.string "WALLACE now. Good.\p"
+	.string "A teacher should be outgrown.\p"
+	.string "But a dance needs two.\n"
+	.string "Will you keep time with me?$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetDecline:
+	.string "JUAN: Fufu… The music will wait.$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetIntro:
+	.string "JUAN: Two by two, then.\n"
+	.string "Watch my partners, not my face!$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetDefeat:
+	.string "JUAN: Bravo… You kept time\n"
+	.string "better than I did.$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetNeedTwoMons:
+	.string "JUAN: A duet needs two dancers.\n"
+	.string "Return with two POKéMON.$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetGift:
+	.string "JUAN: Take this.\n"
+	.string "The rhythm, bottled.$"
+
+SootopolisCity_Gym_1F_Text_WallaceToJuan:
+	.string "WALLACE: You still lead,\n"
+	.string "you know.$"
+
+SootopolisCity_Gym_1F_Text_JuanDuetDone:
+	.string "JUAN: Fufu… Some steps are\n"
+	.string "only danced once.$"
