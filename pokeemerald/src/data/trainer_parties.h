@@ -14498,45 +14498,45 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Darius[] = {
 static const struct TrainerMonItemCustomMoves sParty_Steven[] = {
     {
     .iv = 255,
-    .lvl = 77,
+    .lvl = 80,
     .species = SPECIES_SKARMORY,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_TOXIC, MOVE_AERIAL_ACE, MOVE_SPIKES, MOVE_STEEL_WING}
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SPIKES, MOVE_DRILL_PECK, MOVE_STEEL_WING, MOVE_ROCK_SLIDE}
     },
     {
     .iv = 255,
-    .lvl = 77,
-    .species = SPECIES_STEELIX,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_EARTHQUAKE, MOVE_IRON_TAIL, MOVE_ROCK_SLIDE, MOVE_CRUNCH}
-    },
-    {
-    .iv = 255,
-    .lvl = 78,
-    .species = SPECIES_AGGRON,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_THUNDER, MOVE_EARTHQUAKE, MOVE_IRON_TAIL, MOVE_ROCK_SLIDE}
-    },
-    {
-    .iv = 255,
-    .lvl = 78,
-    .species = SPECIES_SCIZOR,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_SLASH, MOVE_STEEL_WING, MOVE_SWORDS_DANCE, MOVE_AERIAL_ACE}
-    },
-    {
-    .iv = 255,
-    .lvl = 79,
-    .species = SPECIES_TYRANITAR,
-    .heldItem = ITEM_NONE,
-    .moves = {MOVE_CRUNCH, MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_FIRE_BLAST}
+    .lvl = 81,
+    .species = SPECIES_CARBINK,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_MOONBLAST, MOVE_ROCK_SLIDE, MOVE_PSYCHIC, MOVE_LIGHT_SCREEN}
     },
     {
     .iv = 255,
     .lvl = 82,
+    .species = SPECIES_DONPHAN,
+    .heldItem = ITEM_SHELL_BELL,
+    .moves = {MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_BODY_SLAM, MOVE_IRON_TAIL}
+    },
+    {
+    .iv = 255,
+    .lvl = 83,
+    .species = SPECIES_REGIROCK,
+    .heldItem = ITEM_LIECHI_BERRY,
+    .moves = {MOVE_ROCK_SLIDE, MOVE_EARTHQUAKE, MOVE_SUPERPOWER, MOVE_EXPLOSION}
+    },
+    {
+    .iv = 255,
+    .lvl = 84,
+    .species = SPECIES_REGICE,
+    .heldItem = ITEM_PETAYA_BERRY,
+    .moves = {MOVE_ICE_BEAM, MOVE_THUNDERBOLT, MOVE_ANCIENT_POWER, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 255,
+    .lvl = 86,
     .species = SPECIES_METAGROSS,
     .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_EARTHQUAKE, MOVE_PSYCHIC, MOVE_METEOR_MASH, MOVE_SHADOW_BALL}
+    .moves = {MOVE_METEOR_MASH, MOVE_EARTHQUAKE, MOVE_ICE_PUNCH, MOVE_PSYCHIC}
     }
 };
 

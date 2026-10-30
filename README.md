@@ -63,6 +63,7 @@ Hoenn's ecosystem is changing. A migration event has drawn rare Pokemon from dis
 - **Winona flies Hoenn's own wings** — Fortree's Gym is all native birds now, led by a Dragon Dance Altaria. Bosses are being given signature species of their own, so you no longer meet the same Honchkrow, Sharpedo or Flygon twice on the road to the summit
 - **Every boss has their own partners.** Flannery's Gym now runs on a Torkoal ace, steam rather than smoke, with no Team Magma Houndoom or Camerupt in sight. Roxanne's rematches turn into a fossil hall led by a Choice Band Aerodactyl, Drake flies Flygon in his late rematches, and Wallace leads with an ancient Relicanth. A build check now stops any two bosses sharing a signature Pokémon without a story reason
 - **Steven Stone is the Champion** — the geologist who came to Hoenn seeking rare stones and found a region in transformation. He is the only trainer who has mastered all three Changed starters: steel-bladed Sceptile, fairy-fire Blaziken and Water/Fighting Swampert, flanked by Cradily, a Choice Band Donphan and his ace Metagross. Whatever you bring, one of them is built to answer it. Win by leaning on the whole team you raised, and he has a word for the partner you chose on Route 101. Four rematch tiers rotate in Skarmory, Aggron, Carbink and finally Registeel, "the last piece of his collection"
+- **Steven at Meteor Falls**: after the credits, look for him in his quiet corner of Meteor Falls. He's off duty there, a collector rather than a Champion, and his first words depend on whether you found the crystal Treecko under his chalk note. His personal team adds Regirock and Regice to Skarmory, Carbink, Donphan and Metagross (Lv80-86). When it's over, he leaves one more note on the wall
 - **Tuned level curve** from Roxanne (Lv15) through Steven (Lv57) with smooth progression
 - **4-tier rematch progression** for all gym leaders and Elite Four with escalating teams — E4 rematches feature migration-themed rosters, regional forms from Tier 2 onward, and strategic evolution arcs (Drake's Gabite grows into Garchomp, Phoebe's Corsola_Hoenn strengthens, Steven's Changed Three anchor every tier)
 - **Rival arc** — all 30 rival parties (5 battles x 3 starter variants x 2 genders) completely rebuilt with custom movesets, held items, migration companions, and escalating team sizes (1->2->3->4->5 Pokemon); the rival grows from a stumbling novice with a single starter to a five-strong powerhouse wielding Spore, Will-O-Wisp, and Belly Drum. In the postgame, the rival's ace is a Changed Three form matching the starter triangle — face Sceptile (Steel), Blaziken (Fairy), or Swampert (Water/Fighting) at Lv70+
@@ -90,7 +91,7 @@ Beat the Elite Four and a whole new story begins — five interconnected arcs th
 ### Visual Identity
 
 - **Custom protagonist palette** — Brendan and May wear sea-glass teal instead of vanilla blue/red, tying their look to Hoenn's ocean-and-migration theme from the very first frame
-- **Custom shiny palettes** — shiny Hoennian forms get their own colour stories instead of darker copies: violet-storm Lotad lilies, a weathered-sandstone Bagon with a jade crest, deep-sea indigo Growlithe and Arcanine with pearl manes and glowing cyan eyes, a slate-teal Corsola whose rims are blushing back to living coral, and bone-white "Lavaridge steam" Vulpix and Ninetales with hot-spring gold tails
+- **Custom shiny palettes** — shiny Hoennian forms get their own colour stories instead of darker copies: violet-storm Lotad lilies, a weathered-sandstone Bagon with a jade crest, deep-sea indigo Growlithe and Arcanine with pearl manes and glowing cyan eyes, a slate-teal Corsola whose rims are blushing back to living coral, and bone-white "Lavaridge steam" Vulpix and Ninetales with hot-spring gold tails, plus new shinies for Pinsir, Stantler and Deoxys
 - **Changed Trainer witnesses** — after becoming Champion, the people who know you best notice what the migration did to you. Your mom sees it the moment you walk in, your rival struggles to put it into words, Norman acknowledges it with quiet pride, and a Pokemon Center nurse remarks that you carry yourself differently now. The journey changed Hoenn — and it changed you
 
 ### Quality of Life
@@ -208,6 +209,7 @@ v2.9 "The Last Witness" has been checked against the source, but nobody has play
 - **Birch's Field Notes**: the hint page should show cleanly after the Pokédex rating, both in person and by Pokénav.
 - **Fey Flame / Undertow**: both abilities should announce themselves when the Champion's last Pokémon switch in.
 - **Flannery's sun team** may hit harder than the Gyms just before her.
+- **Steven at Meteor Falls**: he should turn from the wall, battle you once, then leave for good. His new chalk note should only appear after you beat him.
 
 ---
 

@@ -161,7 +161,7 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_species check_evolution check_all check_all_quick
+.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -216,6 +216,10 @@ check_dens:
 check_gifts:
 	@node scripts/check_gifts.cjs
 
+# Dialogue width guard (C321): new/changed .string lines must fit 208px (FONT_NORMAL widths)
+check_text_width:
+	@node scripts/check_text_width.cjs --diff
+
 # Species registration completeness check
 check_species:
 	@echo "Checking species registration..."
@@ -233,7 +237,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

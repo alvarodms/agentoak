@@ -414,9 +414,10 @@ MeteorFalls_1F_1R_Text_ColonyResearcher1:
 MeteorFalls_1F_1R_Text_ColonyResearcher2:
 	.string "I'm a researcher from MAUVILLE.\n"
 	.string "Something extraordinary is happening.\p"
-	.string "A colony of BAGON has appeared near\n"
-	.string "the falls. Dragon-types that have\l"
-	.string "never been recorded in HOENN.$"
+	.string "The old BAGON colony by the falls\n"
+	.string "has swollen almost overnight.\p"
+	.string "HOENN has never seen Dragon-types\n"
+	.string "in such numbers.$"
 
 MeteorFalls_1F_1R_Text_ColonyResearcher3:
 	.string "BAGON are drawn to high places.\n"
@@ -441,7 +442,7 @@ MeteorFalls_1F_1R_Text_ColonyPostBattle2:
 MeteorFalls_1F_1R_Text_ColonyPostBattle3:
 	.string "The migration is accelerating.\n"
 	.string "Whatever is drawing these creatures\l"
-	.string "to HOENN... it's far from over.\p"
+	.string "to the falls... it's far from over.\p"
 	.string "Keep your eyes open out there.$"
 
 MeteorFalls_1F_1R_Text_ResearcherPreEvent:

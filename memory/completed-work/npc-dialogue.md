@@ -49,23 +49,9 @@ EverGrandeCity_ChampionsRoom/{scripts.inc,map.json}: STEVEN object gfx, LOCALID_
 
 ---
 
-Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 114 (select), 115 (downgrade).
 
 ## C309 — Wallace comes home (Sootopolis Gym 8)
-| File | Change |
-|---|---|
-| `data/maps/SootopolisCity_Gym_1F/scripts.inc` | All Juan leader texts → Wallace (intro, short defeat, badge, Pokénav registration, post-battle Steven handoff, statue, rematch set). Gym guide texts → Wallace. New `EventScript_JuanCameo`/`JuanCameoPostBadge` + 2 texts. Replaces C307 Juan rematch text and earlier Juan fisherman intro. |
-| `data/maps/SootopolisCity_Gym_1F/map.json` | Leader object gfx → OBJ_EVENT_GFX_WALLACE; new Juan object (9,2) → JuanCameo. |
-| `data/maps/SootopolisCity_Gym_B1F/scripts.inc` | 9 trainer texts: JUAN → WALLACE. |
-| `data/maps/SootopolisCity/scripts.inc` | Gym sign; GiveWaterfall now fades Wallace out (removeobject + setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE; WallaceMoveFromGym subs left unused); ExplainWaterfallGoToGym + DazzledByMentor rewritten. |
-| `data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc` | WallaceToughestInHoenn → "gave up his seat and came home". |
-| `data/maps/SootopolisCity_House3/scripts.inc` | Fan text → Wallace. |
-| `data/maps/CaveOfOrigin_B1F/scripts.inc` | WallaceStory: 3 paragraphs → current Gym Leader / former Champion. |
-| `data/maps/MossdeepCity/scripts.inc` | Sootopolis gym rumor → "old LEADER back". |
-| `data/text/match_call.inc` | Juan1-4 now spoken by WALLACE; MatchCall_Text_Wallace (Champion header) now STEVEN. |
-| `src/data/text/match_call_messages.h` | DandyCharm_Juan (Wallace) + Champion_Wallace (Steven) flavor texts. |
-| `src/strings.c` | gText_JuanMatchCallDesc → "WATER ARTIST". |
-| `data/maps/FortreeCity_Gym/scripts.inc` + `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | **C314** Honchkrow migration story: Winona intro ("flew south, toward the ELITE FOUR") + Sidney intro ("rode a storm down from FORTREE"). Detail in trainer-parties.md C314 row. |
+Sootopolis Gym_1F (Juan texts → Wallace, Juan cameo 9,2), Gym_B1F (9 trainer texts), SootopolisCity (gym sign, Wallace fades after HM Waterfall), PokemonCenter_1F, House3, CaveOfOrigin_B1F, MossdeepCity, match_call.inc/match_call_messages.h/strings.c (Juan header = Wallace, Champion header = Steven). C314: FortreeCity_Gym + SidneysRoom Honchkrow story link. See git log C309/C314.
 
 ## C320 — v2.9 release-candidate polish
 
@@ -74,3 +60,12 @@ Key flags: Custom flags through 0x2B4. Next: 0x2B5. Difficulty multichoice IDs: 
 | `data/maps/FortreeCity/scripts.inc` | `FortreeCity_EventScript_MigrationBirdKeeper` (live object 20,8) now lock/faceplayer + `goto_if_set FLAG_SYS_GAME_CLEAR` → `_MigrationBirdKeeperHonchkrow` + `FortreeCity_Text_MigrationBirdKeeperHonchkrow` ("Last night a big dark bird… Like it was visiting home."), the postgame Winona→Sidney Honchkrow callback. Deleted the dead C141 `FortreeCity_EventScript_MigrationBirdwatcher` + text: no map object referenced it (the plan had targeted it), it repeated the keeper's "twenty years" line, and it had a three-`\n` overflow. |
 | `data/maps/SootopolisCity/scripts.inc` | Deleted dead `SootopolisCity_EventScript_WallaceMoveFromGym(West)` + `SootopolisCity_Movement_WallaceMoveFromGym(West)` (unreferenced since the C309 fade-out). VAR_SOOTOPOLIS_WALLACE_STATE kept. |
 | `data/maps/FortreeCity_Gym/scripts.inc` | Read-through fixes: `WinonaPostRematch` and `WinonaRematchNeedTwoMons` had 3 chained `\n` lines (overflow the 2-line box) → 2nd/3rd use `\l`. |
+
+## C321 — Meteor Falls Steven collector scene + read-through fixes
+
+| File | Change |
+|------|--------|
+| `data/maps/MeteorFalls_StevensCave/scripts.inc` | Full rewrite. Old Expect-the-worst / StevenDefeat / MyPredictionCameTrue texts + `_EventScript_Defeated` deleted. Steven: WallMusing (said facing the wall) → ! → face player → `goto_if_set FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO` TreeckoFound / else TreeckoWaiting → PreBattle → `trainerbattle_no_intro TRAINER_STEVEN` (Defeat) → PostBattle (collector/listens + Sealed Chamber braille hint, "two old swimmers" = vanilla `CheckRelicanthWailord`, still in SealedChamber_InnerRoom) → setflag FLAG_DEFEATED_METEOR_FALLS_STEVEN → fade, removeobject, fade. New `_EventScript_ChalkNote` (only after defeat): "Fresh chalk on the cave wall. / Some things should be found. Some should be carried. / - S." (B1F_2R note format). |
+| `data/maps/MeteorFalls_StevensCave/map.json` | Steven object flag "0" → FLAG_DEFEATED_METEOR_FALLS_STEVEN (old saves that beat him see the note). New sign bg_event (19,2) elev 3 FACING_NORTH → ChalkNote; (19,2) is wall metatile 561 (collision 1), (19,3) walkable. Flag used only in this map. |
+| `data/maps/MeteorFalls_1F_1R/scripts.inc` | `ColonyResearcher2`: "appeared ... never been recorded in HOENN" → "The old BAGON colony by the falls has swollen almost overnight. / HOENN has never seen Dragon-types in such numbers." (Drake fact conflict). `ColonyPostBattle3` "drawing these creatures to HOENN..." → "to the falls...". Other researcher texts checked: no first-sighting claims. |
+| `data/maps/EverGrandeCity_ChampionsRoom/scripts.inc` | `PostBattleSpeech` no longer repeats the Intro's "rare stones": "I spent years reading HOENN's stone, waiting to see what it would become. / You didn't come to read anything. You just walked forward. / CHAMPION… that word belongs to you now." |

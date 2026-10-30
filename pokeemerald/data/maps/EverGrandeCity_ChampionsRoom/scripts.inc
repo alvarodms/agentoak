@@ -275,11 +275,11 @@ EverGrandeCity_ChampionsRoom_Text_Defeat:
 	.string "mean for HOENN.$"
 
 EverGrandeCity_ChampionsRoom_Text_PostBattleSpeech:
-	.string "I came seeking rare stones and\n"
-	.string "found a region rewriting itself.\p"
-	.string "You didn't come seeking\n"
-	.string "anything. You just walked\l"
-	.string "forward.\p"
+	.string "I spent years reading HOENN's\n"
+	.string "stone, waiting to see what it\l"
+	.string "would become.\p"
+	.string "You didn't come to read anything.\n"
+	.string "You just walked forward.\p"
 	.string "CHAMPION… that word belongs\n"
 	.string "to you now.$"
 

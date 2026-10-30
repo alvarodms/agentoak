@@ -26,7 +26,16 @@
 - Search again found no hack that hosts a Regi scene at Meteor Falls Steven, so LoH would be doing something new here. Vanilla precedent is Steven's postgame Beldum gift at his Mossdeep house: a story tie-in shown as a gift scene, without a superboss fight.
 - Vanilla Emerald already has the Regi unlock (Sealed Chamber Braille, Wailord+Relicanth). A Steven scene should *point to* that existing puzzle (chalk note / dialogue), not replace it or hand out Regis. Then it needs no trainer slot (568/853 stay free).
 
+## C321 update (Oct 2026) — Meteor Falls Steven scene
+- **Precedent for a trainer using Regis that the player can also catch:** Frontier Brain Brandon (Platinum/HGSS Battle Pyramid) uses Regirock/Regice/Registeel ("Brandon's legendary giants"). Canon doesn't mind a duplicate, so we don't need extra story to explain it.
+- **Manga ownership (PS253-254):** Steven solved the Wailord+Relicanth riddle and partnered with **Registeel**. Regirock went with Drake/Sidney and Regice with Phoebe/Glacia. So the Ice Regi is Glacia-coded, and Steven's role is "the one who read the riddle". Point his dialogue at the Sealed Chamber, not at owning the Regis.
+- **Community weight:** The Emerald Kaizo IronMON ruleset makes "E4 + Steven in Meteor Falls" the *win condition*. Challenge players treat this fight as the true final boss, so it has to be the hardest fight in the hack and learnset-legal.
+- Search again found no hack giving Meteor Falls Steven Regis. This is still new ground.
+
 ## Sources
+- https://pastebin.com/z3Q8hVa9 (Emerald Kaizo IronMON rules)
+- https://bulbapedia.bulbagarden.net/wiki/Brandon's_legendary_giants
+- https://bulbapedia.bulbagarden.net/wiki/PS253
 - https://oraswiki.com/elite-four/
 - https://www.serebii.net/emerald/steven.shtml
 - https://www.serebii.net/omegarubyalphasapphire/trainer/steven.shtml
