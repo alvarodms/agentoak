@@ -812,6 +812,10 @@ static bool8 ShouldUseItem(void)
     u8 validMons = 0;
     bool8 shouldUse = FALSE;
 
+    // C325 #190: Challenge Mode - trainers can't reach into their BAG either (held items unaffected).
+    if (IsChallengeBagLocked())
+        return FALSE;
+
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gActiveBattler) == B_POSITION_PLAYER_RIGHT)
         return FALSE;
 

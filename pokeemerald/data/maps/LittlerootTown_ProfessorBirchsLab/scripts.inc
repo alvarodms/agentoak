@@ -2172,6 +2172,10 @@ BirchLab_Text_DifficultyPrompt:
 	.string "under field conditions - no\l"
 	.string "switching out when things get\l"
 	.string "tough.\p"
+	.string "And against TRAINERS, no reaching\n"
+	.string "into the BAG. Not you, not them.\p"
+	.string "Whatever your POKéMON hold is all\n"
+	.string "the help they get.\p"
 	.string "It's how I'd do it, honestly.$"
 
 BirchLab_Text_ChallengeModeSelected:

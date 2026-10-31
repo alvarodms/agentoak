@@ -12,8 +12,6 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Cry system**: Custom species MUST add cry_ids.h entry `[SPECIES_X - 277] = <base_cry_id>`. Without it, defaults to cry ID 0 (Growlithe).
 
----
-
 ## Trainer System
 
 **Three-file system**: `opponents.h` (IDs), `trainers.h` (metadata + macro), `trainer_parties.h` (party struct). All three must match. Macro/struct mismatch = crash. Validation: `scripts/check_trainers.sh`.
@@ -28,8 +26,6 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Rival parties**: 30 arrays (5 encounters × 3 starter variants × 2 genders, mirrored). Postgame (C280): Lv70-73, 6 mons, IV 200, ace = Changed Three form.
 
----
-
 ## Dialogue Editing System (Cycles 24-26)
 
 **Text format**: `\n` (line 2), `\l` (line 3+), `\p` (new page), `$` (terminator). Max ~35 chars/line. Smart quotes valid (charmap B1/B2). ASCII `"` (0x22) NOT in charmap. Em-dashes NOT in charmap — use `--`. Ellipsis = B0 in charmap. **Only valid escapes**: `\n`, `\l`, `\p`, `$`. Any other `\X` (e.g. `\e`, `\t`) causes build error.
@@ -38,15 +34,11 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Script temp vars**: Only VAR_0x8000 through VAR_0x800B exist. VAR_TEMP_* reset on map transition — coord_events using them as guards fire once per visit.
 
----
-
 ## Wild Encounter JSON Rules
 
 **File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5. Fishing: 10.
 
 **Conditional tables**: `GetCurrentMapWildMonHeaderId()` in `src/wild_encounter.c` (line 305). Alternate entry MUST follow base entry in JSON.
-
----
 
 ## Physical/Special Split & Move System (Cycle 43-44, 75, 128, 293, 300)
 
@@ -58,27 +50,19 @@ Discovered facts about the pokeemerald codebase — file relationships, data str
 
 **Evolution methods**: Constants 1-17 in `include/constants/pokemon.h`. Custom: `EVO_LEVEL_FEMALE` (16), `EVO_ITEM_FEMALE` (17). Snorunt→Froslass uses `EVO_ITEM_FEMALE` with `ITEM_DAWN_STONE`.
 
----
-
 ## Player Sprite Palette System (C228)
 
 22 files (16 `.pal` + 6 PNG). Sea-glass teal recolor. Manifest: `memory/pokemon-knowledge/player-sprite-manifest.md`. Key: intro uses `player.pal` for both genders; underwater has separate palette tag.
 
----
-
 ## Roaming Pokemon System (Cycle 108-109)
 
 Single roamer slot (`struct Roamer`, 28 bytes). Beast system: `roamer.c` `InitNextBeast()` sequentially releases Raikou->Entei->Suicune using 6 flags.
-
----
 
 ## Flag System Layout
 
 Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x972+). Custom flags: 0x264-0x2B8. Next available: **0x2B9** (0x2B9-0x2BB FLAG_UNUSED; 0x2B8 = Juan Mystic Water C322). Den caught flags: 0x2B5 Mt. Pyre Torchic, 0x2B6 Meteor Falls Treecko, 0x2B7 Shoal Cave Mudkip. Beast: 0x881-0x886. Difficulty: 0x286. Reckoning: 0x2AB-0x2B4.
 
 **Shoal Cave tide architecture**: `ShoalCave_LowTideEntranceRoom` handles BOTH tides — `OnTransition` calls `UpdateShoalTideFlag` then swaps layout. Object events on `LowTideEntranceRoom` appear in both tides. Use `call` subroutine pattern for OnTransition logic. **FLAG_SYS_SHOAL_TIDE SET = HIGH tide.** Only the Entrance and Inner rooms swap layouts (`setmaplayoutindex`), so their objects/bg_events exist at both tides (a sign there needs tide-aware text and a stand tile walkable in both layouts). The Lower, Stairs and Ice rooms are **low-tide-only maps**: at high tide the Inner Room warps to the Lower Room (4 at (15,19), 5 at (30,25)) sit on MB_OCEAN_WATER, and water is not in `IsWarpMetatileBehavior` (field_control_avatar.c:751), so they never fire; warp 3 (ladder at (19,14), elevation 4) is unreachable by walking or surfing. Surf can only start from elevation 3 and `CanStopSurfing` only lands on elevation 3 (field_player_avatar.c:729). Ledges (MB_JUMP_*) have collision 1 but `ShouldJumpLedge` runs before the collision check. Throwaway map.bin BFS recipe: u16 per tile, metatile bits 0-9, collision 10-11, elevation 12-15; behavior = low byte of `data/tilesets/{primary/general,secondary/cave}/metatile_attributes.bin` (secondary index = metatile-512).
-
----
 
 ## Repel System Architecture (C295, shipped C297)
 
@@ -94,8 +78,6 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 **Key macros**: `metallic_shine`, `create_leaf_blade_task`, `create_cross_impact_sprite`, `create_basic_hitsplat_sprite`, `simple_palette_blend`. All in `asm/macros/battle_anim_script.inc`.
 **Shared subroutines**: `IceCrystalEffectShort` (ice hit particles), `FlamethrowerCreateFlames` (fire stream), `EmberFireHit` (fire flare).
 
----
-
 ## Small Systems
 
 - **Multichoice**: `include/constants/script_menu.h` MULTI_* IDs. Last used 115, next 116.
@@ -108,8 +90,6 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 - **Key item that runs a field script** (C324 FIELD NOTES): item entry `.type = ITEM_USE_FIELD`, `.fieldUseFunc = ItemUseOutOfBattle_X` that sets `sItemUseOnFieldCB` and calls `SetUpItemUseOnFieldCallback(taskId)` (handles both bag use, via fade + FieldCB_UseItemOnField, and registered SELECT use, which calls the CB directly). The CB does `LockPlayerFieldControls(); ScriptContext_SetupScript(Script); DestroyTask(taskId);` (src/item_use.c Berry pattern). Extern the script in include/event_scripts.h. `releaseall` hides the field message box. Unused FRLG item slots (e.g. 363 ex-Fame Checker) can be renamed instead of adding new IDs; keep their icon symbols.
 - **Coloured text in field messages**: `{COLOR RED}{SHADOW LIGHT_RED}` (charmap FC 01 04 / FC 03 05) recolours the rest of the text until the next msgbox resets it. `msgbox gStringVar4, MSGBOX_DEFAULT` works (BattleFrontier rooms do it). check_text_width counts STR_VAR_N as 60px, so short numeric placeholders may still need a \l rewrap.
 - **Overworld Pokémon stand-ins**: `OBJ_EVENT_GFX_*_DOLL` (e.g. OBJ_EVENT_GFX_TORCHIC_DOLL=155, event_objects.h) work as visible wild Pokémon. Single frame, so skip `faceplayer` and use MOVEMENT_TYPE_FACE_DOWN.
-
----
 
 ## Build Validation & Generators
 
@@ -125,15 +105,13 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 
 **Pokénav leader entries**: `MatchCallStructTrainer.name = NULL` means name and pic come from `gTrainers[gRematchTable[rematchTableIdx].trainerIds[0]]` (pokenav_match_call_list.c / pokenav_match_call_data.c). Renaming a trainer in trainers.h renames its Pokénav entry; only `.desc` (strings.c) and the flavor texts (match_call_messages.h) are separate.
 
----
-
 ## Custom Ability Implementation (C241, expanded C289, C300, C310, C311)
 
 4+1 files: abilities.h (constant + ABILITIES_COUNT), global.h (ABILITY_NAME_LENGTH=14), text/abilities.h (string+name+pointer), battle_util.c OR battle_script_commands.c (effect), species_info.h (assign). 6 custom: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82), UNDERTOW(83). ABILITIES_COUNT=84. Next: 84.
 
 **Three implementation patterns**: Status-inflicting abilities (Toxic Touch, Frozen Spore, Scalding Touch) go in `battle_util.c` ABILITYEFFECT_ON_DAMAGE case. Crit-boosting abilities (Tempered Blade) go in `battle_script_commands.c` Cmd_critcalc. Damage multipliers (Fey Flame, Undertow) go in `pokemon.c` CalculateBaseDamage "apply abilities" block (scale gBattleMovePower; `attacker`/`defender` are struct BattlePokemon*, so `defender->status1` is readable). `battlerIdAtk`/`battlerIdDef` are also parameters, so per-battler arrays like gProtectStructs are indexable there.
 
-**Switch-in ability announcement pattern (C310)**: add a case in `AbilityBattleEffects` → `ABILITYEFFECT_ON_SWITCHIN` → `switch (gLastUsedAbility)`: `BattleScriptPushCursorAndCallback(script); gBattleScripting.battler = battler; effect++; break;`. Script in battle_scripts_1.s = `pause B_WAIT_TIME_SHORT / printstring STRINGID_X / waitmessage B_WAIT_TIME_LONG / end3` (+ extern in battle_scripts.h). String uses `{B_SCR_ACTIVE_NAME_WITH_PREFIX}` (resolves from gBattleScripting.battler). New string IDs: append after the last ID in battle_string_ids.h, bump BATTLESTRINGS_COUNT, add to gBattleStringsTable (indexed `ID - BATTLESTRINGS_TABLE_START`). ON_SWITCHIN fires at battle start (battle_main.c counter loop) and on every Cmd_switchineffects, so no guard is needed unless you want once-per-battle. Next free STRINGID: 384 (C311 Undertow took 383).
+**Switch-in ability announcement pattern (C310)**: add a case in `AbilityBattleEffects` → `ABILITYEFFECT_ON_SWITCHIN` → `switch (gLastUsedAbility)`: `BattleScriptPushCursorAndCallback(script); gBattleScripting.battler = battler; effect++; break;`. Script in battle_scripts_1.s = `pause B_WAIT_TIME_SHORT / printstring STRINGID_X / waitmessage B_WAIT_TIME_LONG / end3` (+ extern in battle_scripts.h). String uses `{B_SCR_ACTIVE_NAME_WITH_PREFIX}` (resolves from gBattleScripting.battler). New string IDs: append after the last ID in battle_string_ids.h, bump BATTLESTRINGS_COUNT, add to gBattleStringsTable (indexed `ID - BATTLESTRINGS_TABLE_START`). ON_SWITCHIN fires at battle start (battle_main.c counter loop) and on every Cmd_switchineffects, so no guard is needed unless you want once-per-battle. Next free STRINGID: 385 (C325 CHALLENGEBAGLOCKED took 384).
 
 **"Was hit this turn" flag (C311, used by Undertow)**: `gProtectStructs[battler].physicalDmg || gProtectStructs[battler].specialDmg` (include/battle.h, u32 HP amounts). Set in Cmd_datahpupdate (battle_script_commands.c ~1939) when a damaging move lands, skipped for `HITMARKER_PASSIVE_HP_UPDATE` and Pain Split; substitute hits return before this, so they do not count. TurnValuesCleanUp (battle_main.c ~4919) zeroes the whole ProtectStruct every turn, so it is reliable within one turn. Vanilla Revenge-style code reads the same flag (battle_script_commands.c ~9193). `gSpecialStatuses[].physicalDmg` is a per-move copy (TARGET_TURN_DAMAGED macro), not per-turn.
 
@@ -142,6 +120,11 @@ Story (0x00-0x2FF) → Trainer (0x500-0x873) → System (0x874+) → Daily (0x97
 ## EXP Award System & Challenge Mode Level Caps (C182)
 
 `Cmd_getexp()` in battle_script_commands.c. `GetChallengeLevelCap()` returns per-badge cap (18/20/24/30/34/38/42/48/55); EXP /= 10 when over.
+
+**Challenge BAG lock (C325, #190)**: `IsChallengeBagLocked()` (src/battle_main.c, decl include/battle_main.h) = Challenge && BATTLE_TYPE_TRAINER && !BATTLE_TYPE_PYRAMID.
+- Player: `HandleTurnActionSelectionState` case B_ACTION_USE_ITEM (STATE_WAIT_ACTION_CHOSEN) — `else if` after the vanilla link/Frontier branch, runs `BattleScript_ActionSelectionChallengeBagLocked` (STRINGID_CHALLENGEBAGLOCKED 384) and returns to STATE_BEFORE_ACTION_CHOSEN. The second B_ACTION_USE_ITEM case (STATE_WAIT_ACTION_CASE_CHOSEN) only reads the item the bag returned (0 = cancelled) — unreachable once the bag can't open, so left alone. `printselectionstring` prints in B_WIN_MSG (208px) via PlayerHandlePrintSelectionString.
+- AI: `ShouldUseItem()` (src/battle_ai_switch_items.c, only caller `AI_TrySwitchOrUseItem`) returns FALSE first. Held items/hold effects are untouched.
+- Locked: trainer singles, doubles, Steven tag (player only; partner AI never uses items anyway), Trainer Hill, secret bases. Open: wild, Safari, Wally tutorial (no TRAINER flag), Pyramid (own bag). Frontier/link/e-Reader/recorded link: already locked by vanilla (STRINGID_ITEMSCANTBEUSEDNOW).
 
 ## Postgame NPC Show/Hide Pattern (C248-286)
 

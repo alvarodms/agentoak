@@ -21,7 +21,7 @@
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
 **v2.9** (C301-): "The Last Witness" — Champion narrative capstone. C302: Changed Three learnset fix. C303: Wallace dialogue (superseded by Steven champion swap). C304: Ambipom + Norman. C305: Carbink + Roxanne. C306: Champion redesign planning — Steven returns. C307: Toxapex + Juan. C308: Steven is Champion (5 parties), species pipeline repair (16 species). C309: Wallace comes home to Gym 8 + Juan cameo. C310: Fey Flame (Blaziken_Hoenn ability, switch-in announcement). C311: Undertow (Swampert_Hoenn ability) + Torchic_H/Combusken_H Will-O-Wisp Lv24 + Mudkip line back.png palette sync / Marshtomp cleanup (#201 partial). C312: Mt. Pyre starlight Torchic (first discovery beat) + Torchic-line palette restore (#201). C313: Sidney rebuilt (Absol ace, Hoenn Dark-types, Tyranitar/Houndoom removed, #193 partial) + Treecko-line palette restore pass (#201). C314: Honchkrow/Sharpedo/Flygon/Crobat collisions removed + Lotad-line shinies. C315: StaticDen macros + Meteor Falls crystal Treecko. C316: villain ownership table (Magma land / Aqua sea, 5 ace lines) + audit_boss_species.cjs (9 collisions left, #193 stays open for Flannery). C317: Flannery Torkoal rebuild + Roxanne fossil hall + Drake Flygon + Wallace Relicanth; audit 0, `check_bosses` gates check_all (#193 closed). C318: Shoal Cave titan Mudkip den (third den — all three Changed starters now have a visible route) + Drake 5 teams learnset-legal + Bagon/Growlithe/Arcanine_H lint & shinies (#201/#163 batch). C319: Birch's Field Notes in-game (dex rating den hints), Changed Three gift reacts to dens + Mudkip_Hoenn species fix, `check_dens` lint, Corsola/Vulpix/Ninetales_H lint & shinies. C320: release-candidate polish (Field Notes one-hint cap, Fortree Honchkrow callback, check_gifts, dead-code cut). C321: Meteor Falls Steven collector scene (Regirock/Regice, #194 closed), last #201 lint batch (#201 closed), check_text_width lint. C322: Juan postgame doubles (slot 568, Mystic Water, Wallace line), 5 width rewraps, check_scripts repaired, Mudkip-line tide-pool shinies — 25/25 custom shinies (#163 closed). C323: read-through pass (Birch gift den lines reordered to Field Notes order and rewritten as reactions, Treecko/Mudkip Faded lines, Shoal Cave/Sidney/Fortree word repeats, Winona MURKROW casing) + `check_doubles` guard. **v2.9 COMPLETE (C323), finished minor; not yet emulator-tested.**
 
-**v3.0** (C324-): opens with BIRCH's FIELD NOTES key item (C324: notebook of Birch's 7 wrong beliefs, red-ink corrections on catch). Next: #190 Challenge-Mode bag lock (C325), trainer ID reclaim (C326).
+**v3.0** (C324-): opens with BIRCH's FIELD NOTES key item (C324: notebook of Birch's 7 wrong beliefs, red-ink corrections on catch). C325: #190 Challenge-Mode BAG lock (trainer battles, both sides). Next: trainer ID reclaim (C326).
 
 ---
 
@@ -103,16 +103,7 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 
 **Winona C314 — "Hoenn's own wings"** (source of truth: `pokeemerald/scripts/trainer_configs/winona_gym_1..5.json`, apply with generate_trainer.cjs): Honchkrow → Sidney, Crobat → Archie. W1 Skarmory/Tropius/Pelipper/Altaria(ace, DD); W2 Swellow/Pelipper/Tropius/Altaria; W3 Skarmory/Pelipper/Swellow/Tropius/Altaria; W4 Skarmory/Pelipper/Dodrio/Masquerain/Tropius/Altaria; W5 Skarmory/Swellow/Dodrio/Tropius/Pelipper/Altaria 75. Badge 6 is softer than C313 (70-Atk Altaria ace vs Brave Bird Honchkrow) — the fight's key beat is "stop the Dragon Dance". Story link: Winona intro says the dark bird she raised "flew south, toward the ELITE FOUR"; Sidney's intro says it "rode a storm down from FORTREE". Rematch pre-text still mentions Murkrow flocks in the sky (flavour, not party).
 
-**Phoebe and Glacia: 0 overlap** with villain bosses. #193 villain pass DONE C316 (Crawdaunt off Shelly/Matt, Crobat Archie-only, Sharpedo Archie-only among bosses). #193 closed C317 (audit 0).
-
-### Remaining Wallace/Juan threads
-- Juan postgame Double Battle: DONE C322 (TRAINER_JUAN_DUET=568, source of truth `scripts/trainer_configs/juan_duet.json`; Luvdisc 66/Ludicolo 69 opening duet, Vaporeon 70/Gorebyss 72 closing duet; Mystic Water on FLAG_RECEIVED_JUAN_MYSTIC_WATER 0x2B8; Wallace "You still lead, you know."). Ludicolo's Fake Out is inherited from Lombre L19 (kept deliberately). SkyPillar_Outside / PacifidlogTown / BirchLab Wallace lines checked C309: role-neutral, no change needed.
-- Meteor Falls Steven: DONE C321.
-- Trainer ID allocation: 568 = Juan doubles (C322, used); 853 = last spare; C321 Steven uses vanilla TRAINER_STEVEN.
-
-## Roster Fixes (#180) — Status
-
-**Ambipom on Norman T3+**: DONE (C304). **Carbink on Roxanne T3+**: DONE (C305). **Toxapex on Sootopolis Gym T2+**: DONE (C307; kept on Wallace rematches C309). **Corsola_Hoenn on Phoebe R1**: DONE (C308). #180 complete.
+**Juan duet (C322)**: TRAINER_JUAN_DUET=568, source of truth `juan_duet.json`; Mystic Water flag 0x2B8. #180 roster fixes all DONE (C304-C308).
 
 ## Changed Three Ability Parity
 
@@ -125,13 +116,9 @@ All three Changed starters now have signature abilities (Tempered Blade C300, Fe
 
 | Cycle | Objective | Issues |
 |-------|-----------|--------|
-| 302-314 | Learnsets, Ambipom/Carbink/Toxapex rosters, Steven champion, Wallace cascade, Fey Flame + Undertow, Mt. Pyre Torchic den, Sidney/Winona rebuilds, boss collisions, sprite lint batches — **ALL DONE** | #180, #182, #192, #193/#194/#201/#163 partial |
-| 315-320 | StaticDen macros + 3 Changed-starter dens, villain ownership + `check_bosses`, Flannery/Roxanne/Drake/Wallace collisions (audit 0), Birch Field Notes + `check_dens`/`check_gifts`, RC polish — **ALL DONE** | #193 closed, #201/#163 partial |
-| 321 | Meteor Falls Steven collector scene (Treecko-aware opener on 0x2B6, wall musing, Skarmory/Carbink/Donphan/Regirock/Regice/Metagross 80-86 on vanilla sParty_Steven via `steven_meteor_falls.json`, fades out + stays gone via object flag, second chalk note at 19,2), Bagon researcher fix, Champion PostBattle "rare stones" fix, `check_text_width` in check_all, sprite batch Pinsir/Stantler/Deoxys_H — **DONE** | #194 closed, #201, #163 partial |
-| 322 | Juan postgame doubles on slot 568 (two duets + Mystic Water + Wallace line), 5 overflowing hack lines rewrapped (full tree now 114, all placeholder worst-case), `check_scripts` repaired (could never fail before), Mudkip/Marshtomp/Swampert_H "low tide" shinies (25/25 `_hoenn` shinies custom) — **ALL DONE** | #163 closed |
-| 323 | v2.9 shipped as a finished minor: C320 read-through notes resolved in text only (gift den lines, 2 Faded lines, Shoal Cave/Sidney/Fortree repeats, Winona casing), `make check_doubles` (proven to fail) — **DONE**; sprite phase de-speckled Lotad/Lombre/Ludicolo_H (all 25 `_hoenn` dirs lint PASS) | — |
+| 302-323 | v2.9 "The Last Witness": Steven champion, Wallace cascade, Fey Flame/Undertow, 3 Changed-starter dens, Field Notes, boss audit 0, Meteor Falls Steven, Juan duet, 25/25 shinies, lint gates — **ALL DONE** | #180 #182 #192-#194 #201 #163 closed |
 | 324 | v3.0 opener: BIRCH's FIELD NOTES key item (ITEM_FIELD_NOTES 363, ex-Fame Checker) — notebook of 7 wrong beliefs + red-ink corrections, cover count, taped last page; given in the Pokedex scene + late fallback on Birch talk — **DONE** (not emulator-tested) | — |
-| 325 | #190 Bag lock in trainer battles, Challenge Mode only (`FLAG_DIFFICULTY_CHALLENGE` / `IsChallengeModeActive()`), via `HandleInputChooseAction` in src/battle_controller_player.c | #190 |
+| 325 | #190 Challenge-Mode BAG lock in trainer battles, both sides: `IsChallengeBagLocked()` (src/battle_main.c) gates the player's B_ACTION_USE_ITEM selection (new selection script + STRINGID_CHALLENGEBAGLOCKED) and the AI's `ShouldUseItem()`; Birch's difficulty prompt states the rule — **DONE** (not emulator-tested) | #190 |
 | 326 | Trainer capacity: reclaim never-battled vanilla IDs (see Trainer cap decision); no TRAINERS_COUNT bump | — |
 
 ## v2.9 RC — Not Yet Playtested (player-facing copy in README "Known Issues", C320)
@@ -171,6 +158,26 @@ Please report anything odd on the issue tracker.
 - Adding a page: text pair, `sFieldNotesPages` entry + enum, Open/Inked switch cases, FIELD_NOTES_PAGE_COUNT, and a setvar/call pair in the script (last page id moves up).
 - Emulator checks (not done): red ink renders in the field message box; registered-SELECT use works; cover count on a fresh save reads "0 of 4".
 
+### C325 Challenge Bag-lock audit (read-only; no fights changed)
+Cap = `GetChallengeLevelCap()` badges held at the fight (soft: EXP /10 at or over cap, so players can overshoot). Ace = trainer_parties.h level + `sChallengeModeScaling` boost (Leader +3, Rival +2, Champion +5). Items = `gTrainers[].items` the AI can no longer use in Challenge.
+
+| Fight (trainer ID) | Cap | Ace (base → Challenge) | Items removed by lock | Gap |
+|---|---|---|---|---|
+| Flannery (TRAINER_FLANNERY_1, 3 badges) | 30 | Torkoal 29 → 32 | 2x Hyper Potion | 2 |
+| Juan (TRAINER_JUAN_1, 7 badges) | 48 | Milotic 46 → 49 | 2x Hyper Potion | 1 |
+| Wally VR (TRAINER_WALLY_VR_1, RIVAL) | 55 | Gardevoir 58 → 60 | 3x Full Restore | 5 (edge, not flagged) |
+| Champion Steven (TRAINER_WALLACE, CHAMPION) | 55 | Metagross 57 → 62 | 4x Full Restore | **7 — watch for wall** |
+| Meteor Falls Steven (TRAINER_STEVEN, RIVAL, postgame) | 55 | Metagross 86 → 88 | 4x Full Restore | **33 — watch for wall** (postgame superboss; cap never rises past 55) |
+
+Every audited fight lost its trainer items, so the lock makes each one easier for the AI side, while the player loses potions too. Champion: whether losing 4 Full Restores (him) vs. the player's whole BAG nets out is the playtest question. If Champion Challenge reports come back as a wall, the levers are the CHAMPION +5 boost or the 55 cap, not his roster. Mossdeep Steven tag partner: his AI is already item-less (INGAME_PARTNER early-out in `ShouldUseItem`).
+
+### C325 BAG lock — Emulator checklist (not done)
+- (a) Challenge + trainer battle: BAG → "CHALLENGE: your BAG stays shut! / Fight with what you brought." then back to the FIGHT/BAG/POKéMON/RUN menu (no turn lost).
+- (b) Challenge + wild battle: BAG opens, Poké Balls throw and catch.
+- (c) Normal Mode trainer battle: BAG opens as before.
+- (d) Challenge vs an item trainer (Wally VR / Champion / Meteor Falls Steven, all Full Restore): the AI never uses one; held items (Sitrus, Leftovers, Lum) still trigger.
+- Also: Birch's difficulty prompt shows the 2 new boxes before "It's how I'd do it, honestly." and the multichoice still lands on the last box.
+
 ---
 
 ## Technical Reference
@@ -184,7 +191,7 @@ Please report anything odd on the issue tracker.
 - **Multichoice IDs**: Last used 115. Next: 116.
 - **Specials**: custom specials are appended at the end of `data/specials.inc` (`def_special Name`). C319 gained `IsBirchFieldNoteActive`, C324 `BufferFieldNotesPage` (both src/match_call.c, prototypes in include/match_call.h).
 - **Custom species (40)**: Last = Toxapex(450). EGG=451, NUM_SPECIES=451. 12 cross-gen evos + 25 _HOENN forms + 3 standalone imports (Carbink, Toxapex, etc.), all fully registered + verified.
-- **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82), UNDERTOW(83). ABILITIES_COUNT=84. Next: 84. BATTLESTRINGS_COUNT=384 (next STRINGID 384).
+- **Custom abilities**: TOXIC_TOUCH(78), FROZEN_SPORE(79), SCALDING_TOUCH(80), TEMPERED_BLADE(81), FEY_FLAME(82), UNDERTOW(83). ABILITIES_COUNT=84. Next: 84. BATTLESTRINGS_COUNT=385 (next STRINGID 385).
 - **Custom moves**: SPORE_FIST(378), TIDAL_FLARE(379), IRON_LEAF(380). MOVES_COUNT=381. Next: 381. 6 files per move. MOVE_NAME_LENGTH=12.
 - **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). Damage-multiplier + switch-in message: 9 files (see battle-engine.md Fey Flame / Undertow). ABILITY_NAME_LENGTH=14.
 - **Quest flag pattern**: 3-state (STARTED -> INVESTIGATED -> COMPLETE). VAR_TEMP_1 guards prevent re-fire.

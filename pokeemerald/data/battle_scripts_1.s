@@ -4439,6 +4439,11 @@ BattleScript_ActionSelectionItemsCantBeUsed::
 	printselectionstring STRINGID_ITEMSCANTBEUSEDNOW
 	endselectionscript
 
+@ C325 #190: Challenge Mode BAG lock in trainer battles
+BattleScript_ActionSelectionChallengeBagLocked::
+	printselectionstring STRINGID_CHALLENGEBAGLOCKED
+	endselectionscript
+
 BattleScript_FlushMessageBox::
 	printstring STRINGID_EMPTYSTRING3
 	return

@@ -114,6 +114,7 @@ Choose your challenge in Professor Birch's lab:
 - **Challenge Mode** — For trainers who want to earn every victory:
   - **Set battle style** enforced — no free switches after KOs
   - **Badge-based level caps** — soft EXP reduction when your Pokemon reach the cap for your current badge count, scaling from Lv18 (pre-Roxanne) to Lv55 (8 badges)
+  - **No Bag in trainer battles** — neither you nor your opponent can use items from the Bag (no more Full Restore stalling from gym leaders), but held items still work. Wild battles and catching are untouched
   - **Same encounters, same trainers** — the world doesn't change, but you must play smarter
 - Friendly NPCs in Pokemon Centers along the early routes explain your current mode and level cap
 - **Changed your mind?** A friendly NPC in the Petalburg Pokemon Center can switch you back to Normal Mode if Challenge Mode gets too tough

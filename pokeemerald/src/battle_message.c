@@ -57,6 +57,7 @@ static const u8 sText_PkmnGainedEXP[] = _("{B_BUFF1} gained{B_BUFF2}\n{B_BUFF3} 
 static const u8 sText_PkmnGainedEXPCapped[] = _("{B_BUFF1} gained\n{B_BUFF3} EXP. Points!\pEXP reduced by the level cap.\p");
 static const u8 sText_FeyFlameActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s FEY FLAME\nflickers to life!\pBurned foes will take\nmore damage!");
 static const u8 sText_UndertowActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s UNDERTOW\nstirs below the surface!\pIf struck, it will hit\nback harder!");
+static const u8 sText_ChallengeBagLocked[] = _("CHALLENGE: your BAG stays shut!\nFight with what you brought.{PAUSE 64}");
 static const u8 sText_EmptyString4[] = _("");
 static const u8 sText_ABoosted[] = _(" a boosted");
 static const u8 sText_PkmnGrewToLv[] = _("{B_BUFF1} grew to\nLV. {B_BUFF2}!{WAIT_SE}\p");
@@ -891,6 +892,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT - BATTLESTRINGS_TABLE_ST
     [STRINGID_PKMNGAINEDEXPCAPPED - BATTLESTRINGS_TABLE_START] = sText_PkmnGainedEXPCapped,
     [STRINGID_FEYFLAMEACTIVATES - BATTLESTRINGS_TABLE_START] = sText_FeyFlameActivates,
     [STRINGID_UNDERTOWACTIVATES - BATTLESTRINGS_TABLE_START] = sText_UndertowActivates,
+    [STRINGID_CHALLENGEBAGLOCKED - BATTLESTRINGS_TABLE_START] = sText_ChallengeBagLocked,
 };
 
 const u16 gMissStringIds[] =

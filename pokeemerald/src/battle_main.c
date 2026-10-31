@@ -4174,6 +4174,15 @@ enum
     STATE_SELECTION_SCRIPT_MAY_RUN
 };
 
+// C325: Challenge Mode locks the BAG for both sides in trainer battles (#190).
+// Wild battles (catching), Safari and the Battle Pyramid (own bag) are unaffected.
+bool8 IsChallengeBagLocked(void)
+{
+    return IsChallengeModeActive()
+        && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        && !(gBattleTypeFlags & BATTLE_TYPE_PYRAMID);
+}
+
 static void HandleTurnActionSelectionState(void)
 {
     s32 i;
@@ -4274,6 +4283,16 @@ static void HandleTurnActionSelectionState(void)
                     {
                         RecordedBattle_ClearBattlerAction(gActiveBattler, 1);
                         gSelectionBattleScripts[gActiveBattler] = BattleScript_ActionSelectionItemsCantBeUsed;
+                        gBattleCommunication[gActiveBattler] = STATE_SELECTION_SCRIPT;
+                        *(gBattleStruct->selectionScriptFinished + gActiveBattler) = FALSE;
+                        *(gBattleStruct->stateIdAfterSelScript + gActiveBattler) = STATE_BEFORE_ACTION_CHOSEN;
+                        return;
+                    }
+                    else if (IsChallengeBagLocked())
+                    {
+                        // C325 #190: Challenge Mode - no BAG in trainer battles; print the rule and return to the action menu.
+                        RecordedBattle_ClearBattlerAction(gActiveBattler, 1);
+                        gSelectionBattleScripts[gActiveBattler] = BattleScript_ActionSelectionChallengeBagLocked;
                         gBattleCommunication[gActiveBattler] = STATE_SELECTION_SCRIPT;
                         *(gBattleStruct->selectionScriptFinished + gActiveBattler) = FALSE;
                         *(gBattleStruct->stateIdAfterSelScript + gActiveBattler) = STATE_BEFORE_ACTION_CHOSEN;
