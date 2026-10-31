@@ -548,6 +548,10 @@ LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex, MSGBOX_DEFAULT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint1, MSGBOX_DEFAULT
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MigrationHint2, MSGBOX_DEFAULT
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_TakeFieldNotes, MSGBOX_DEFAULT
+	giveitem ITEM_FIELD_NOTES
+	setflag FLAG_RECEIVED_FIELD_NOTES
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_FieldNotesExplain, MSGBOX_DEFAULT
 	msgbox BirchLab_Text_DifficultyPrompt, MSGBOX_DEFAULT
 	multichoice 14, 6, MULTI_DIFFICULTY_SELECT, FALSE
 	compare VAR_RESULT, 1
@@ -838,6 +842,19 @@ LittlerootTown_ProfessorBirchsLab_Text_MigrationHint2:
 	.string "anything like it.\p"
 	.string "Keep your eyes open out there,\n"
 	.string "would you?$"
+
+@ C324 FIELD NOTES handoff; FieldNotesExplain is reused by ProfBirch_EventScript_GiveFieldNotesLate (prof_birch.inc)
+LittlerootTown_ProfessorBirchsLab_Text_TakeFieldNotes:
+	.string "PROF. BIRCH: Here, take these too.\n"
+	.string "My old FIELD NOTES.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_FieldNotesExplain::
+	.string "PROF. BIRCH: Everything I believed\n"
+	.string "about HOENN's POKéMON is in there.\p"
+	.string "After this year, I suspect half\n"
+	.string "of it is wrong.\p"
+	.string "When you find out which half,\n"
+	.string "write it in. In your own ink!$"
 
 LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait:
 	.string "PROF. BIRCH: Countless POKéMON\n"

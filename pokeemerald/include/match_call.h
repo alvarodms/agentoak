@@ -17,6 +17,7 @@ bool32 IsMatchCallTaskActive(void);
 void StartMatchCallFromScript(const u8 *message);
 void BufferPokedexRatingForMatchCall(u8 *destStr);
 u16 IsBirchFieldNoteActive(void);
+u16 BufferFieldNotesPage(void);
 bool32 SelectMatchCallMessage(int trainerId, u8 *str);
 void LoadMatchCallWindowGfx(u32 windowId, u32 destOffset, u32 paletteId);
 void DrawMatchCallTextBoxBorder(u32 windowId, u32 tileOffset, u32 paletteId);

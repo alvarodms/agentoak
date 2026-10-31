@@ -30,3 +30,20 @@ Three dens exist (C318): Mt. Pyre Torchic, Meteor Falls Treecko, Shoal Cave Mudk
 **Save-compat caveat (C315 reflection)**: 0x2B5 kept its number when renamed. Pre-C315 saves where the player KO'd/fled the Torchic have 0x2B5 set (old removeobject), so the den now reads as "caught" and stays hidden for them. Fresh saves unaffected; accepted, no migration code.
 | `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | **C323** gift den calls reordered to Field Notes order Torchic → Mudkip → Treecko; 5 of 6 DenFound/DenHint texts rewritten so Birch reacts to his notes instead of repeating them and each line stands alone (no "And/too/either"). DenFoundTorchic unchanged | **323** | Read against Field Notes + Intro/Offer: no contradictions |
 | `data/maps/MeteorFalls_B1F_2R/scripts.inc` + `data/maps/ShoalCave_LowTideLowerRoom/scripts.inc` | **C323** Faded texts no longer share the "Perhaps it will return once ... still" template (Treecko: chime keeps ringing below; Mudkip: next low tide may bring it back). Shoal Cave Approach "goes still" → "shivers" (Caught keeps "falls still"). Mt. Pyre Faded unchanged | **323** | |
+
+## C324 — BIRCH's FIELD NOTES key item (v3.0 opener)
+
+| File | Change | Cycle | Notes |
+|------|--------|-------|-------|
+| `include/constants/flags.h` | 0x2B9 FLAG_UNUSED → `FLAG_RECEIVED_FIELD_NOTES` | **324** | Set in exactly 2 places (lab Pokedex scene, late fallback) |
+| `include/constants/items.h` | `ITEM_FAME_CHECKER` (363) renamed `ITEM_FIELD_NOTES` | **324** | Zero ITEM_FAME_CHECKER refs left; graphics symbols gItemIcon_FameChecker kept |
+| `src/data/items.h` | [ITEM_FIELD_NOTES] "FIELD NOTES", Key Items, registrable, ITEM_USE_FIELD, fieldUseFunc `ItemUseOutOfBattle_FieldNotes` | **324** | |
+| `src/data/item_icon_table.h` | key renamed to ITEM_FIELD_NOTES (Fame Checker icon) | **324** | |
+| `src/data/text/item_descriptions.h` | sFameCheckerDesc → `sFieldNotesDesc` "PROF. BIRCH's old / notebook. Your finds / correct his guesses." | **324** | |
+| `src/item_use.c`, `include/item_use.h` | `ItemUseOutOfBattle_FieldNotes` + static `ItemUseOnFieldCB_FieldNotes` (Berry pattern, runs FieldNotes_EventScript_Read) | **324** | |
+| `include/event_scripts.h` | extern `FieldNotes_EventScript_Read` | **324** | |
+| `src/match_call.c`, `include/match_call.h` | externs for 16 gFieldNotesText_*; `sFieldNotesPages` table, `IsFieldNotesPageOpen` (badge gates = GetActiveFieldNote), `IsFieldNotesPageInked`, `u16 BufferFieldNotesPage(void)` | **324** | Compiled clean (object-only build) |
+| `data/specials.inc` | `def_special BufferFieldNotesPage` after IsBirchFieldNoteActive | **324** | |
+| `data/text/pokedex_rating.inc` | 16 `gFieldNotesText_*` (cover, 7 old/ink pairs, last page). Cover line rewrapped with \l (checker counts STR_VAR at 60px) | **324** | Ink lines start {COLOR RED}{SHADOW LIGHT_RED} |
+| `data/scripts/prof_birch.inc` | `RatePokedexOrRegister` calls `ProfBirch_EventScript_GiveFieldNotesLate` after faceplayer; new `FieldNotes_EventScript_Read` (ids 0-8 explicit) + `FieldNotes_EventScript_ShowPage` | **324** | Late fallback needs FLAG_RECEIVED_POKEDEX_FROM_BIRCH, sets flag only if giveitem succeeded |
+| `data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc` | GivePokedex: TakeFieldNotes msg + giveitem + setflag + FieldNotesExplain between MigrationHint2 and the difficulty prompt; 2 new texts (FieldNotesExplain global `::`) | **324** | |

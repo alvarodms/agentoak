@@ -8,9 +8,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 
 | Topic | Cycle | File |
 |---|---|---|
-| (collapsed) C265-C295: trainer tooling, rival arcs, Changed Three design/registration, custom abilities/moves, polish-pass patterns, v2.4-v2.8 direction — applied; files remain in `pokemon-knowledge/` | 265-295 | grep by topic |
-| Repel QoL & Encounter Findability — Implementation Landscape | 296 | [repel-qol-and-encounter-findability-c296.md](pokemon-knowledge/repel-qol-and-encounter-findability-c296.md) |
-| Battle Animation Patterns — Custom Signature Moves | 297 | [battle-animation-patterns-c297.md](pokemon-knowledge/battle-animation-patterns-c297.md) |
+| (collapsed) C265-C297 (incl. repel QoL c296, battle animation c297): trainer tooling, rival arcs, Changed Three design/registration, custom abilities/moves, polish-pass patterns, v2.4-v2.8 direction — applied; files remain in `pokemon-knowledge/` | 265-295 | grep by topic |
 | Champion Design & Mid-Game Encounter Pacing Patterns | 298 | [champion-design-and-midgame-pacing-c298.md](pokemon-knowledge/champion-design-and-midgame-pacing-c298.md) |
 | Gym Leader Dialogue & Capstone Feature Patterns | 299 | [gym-dialogue-and-capstone-patterns-c299.md](pokemon-knowledge/gym-dialogue-and-capstone-patterns-c299.md) |
 | Custom Ability Design — Crit + Changed Three Parity (Blaziken_H, Swampert_H) | 311 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
@@ -26,5 +24,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Custom Shiny Palette Design (#163) | 319 | [custom-shiny-palette-design.md](pokemon-knowledge/custom-shiny-palette-design.md) |
 | Double Battle Boss Design (Juan doubles, slot 568) | 322 | [doubles-boss-design.md](pokemon-knowledge/doubles-boss-design.md) |
 | Steven Rematch Design & the Regi Question (#194, + C321 Meteor Falls scene) | 321 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
+| v3.0 Opener — Trainer Cap Raise (save-flag shift) & Notebook Key Items | 324 | [trainer-cap-and-notebook-item-v30.md](pokemon-knowledge/trainer-cap-and-notebook-item-v30.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

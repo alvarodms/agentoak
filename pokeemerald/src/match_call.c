@@ -1030,6 +1030,22 @@ extern const u8 gBirchFieldNoteText_Torchic[];
 extern const u8 gBirchFieldNoteText_Mudkip[];
 extern const u8 gBirchFieldNoteText_Treecko[];
 extern const u8 gBirchFieldNoteText_AllFound[];
+extern const u8 gFieldNotesText_Cover[];
+extern const u8 gFieldNotesText_Lotad[];
+extern const u8 gFieldNotesText_LotadInk[];
+extern const u8 gFieldNotesText_Shroomish[];
+extern const u8 gFieldNotesText_ShroomishInk[];
+extern const u8 gFieldNotesText_Gligar[];
+extern const u8 gFieldNotesText_GligarInk[];
+extern const u8 gFieldNotesText_Vulpix[];
+extern const u8 gFieldNotesText_VulpixInk[];
+extern const u8 gFieldNotesText_Torchic[];
+extern const u8 gFieldNotesText_TorchicInk[];
+extern const u8 gFieldNotesText_Mudkip[];
+extern const u8 gFieldNotesText_MudkipInk[];
+extern const u8 gFieldNotesText_Treecko[];
+extern const u8 gFieldNotesText_TreeckoInk[];
+extern const u8 gFieldNotesText_LastPage[];
 
 void InitMatchCallCounters(void)
 {
@@ -2126,6 +2142,131 @@ static u8 *AppendBirchFieldNotes(u8 *str)
         }
     }
     return str;
+}
+
+// C324 FIELD NOTES key item: one page per call, read by FieldNotes_EventScript_Read (prof_birch.inc)
+enum {
+    FIELD_NOTES_PAGE_COVER = 0,
+    FIELD_NOTES_PAGE_COUNT = 7,
+    FIELD_NOTES_PAGE_LAST = FIELD_NOTES_PAGE_COUNT + 1,
+};
+
+enum {
+    FIELD_NOTES_LOTAD,
+    FIELD_NOTES_SHROOMISH,
+    FIELD_NOTES_GLIGAR,
+    FIELD_NOTES_VULPIX,
+    FIELD_NOTES_TORCHIC,
+    FIELD_NOTES_MUDKIP,
+    FIELD_NOTES_TREECKO,
+};
+
+struct FieldNotesPage
+{
+    const u8 *oldText;
+    const u8 *inkText;
+};
+
+static const struct FieldNotesPage sFieldNotesPages[FIELD_NOTES_PAGE_COUNT] =
+{
+    [FIELD_NOTES_LOTAD]     = {gFieldNotesText_Lotad,     gFieldNotesText_LotadInk},
+    [FIELD_NOTES_SHROOMISH] = {gFieldNotesText_Shroomish, gFieldNotesText_ShroomishInk},
+    [FIELD_NOTES_GLIGAR]    = {gFieldNotesText_Gligar,    gFieldNotesText_GligarInk},
+    [FIELD_NOTES_VULPIX]    = {gFieldNotesText_Vulpix,    gFieldNotesText_VulpixInk},
+    [FIELD_NOTES_TORCHIC]   = {gFieldNotesText_Torchic,   gFieldNotesText_TorchicInk},
+    [FIELD_NOTES_MUDKIP]    = {gFieldNotesText_Mudkip,    gFieldNotesText_MudkipInk},
+    [FIELD_NOTES_TREECKO]   = {gFieldNotesText_Treecko,   gFieldNotesText_TreeckoInk},
+};
+
+// Den pages open on the same badge gates GetActiveFieldNote uses, so the notebook and the
+// Pokenav rumours never disagree. Keep these identical to GetActiveFieldNote.
+static bool8 IsFieldNotesPageOpen(u8 i)
+{
+    switch (i)
+    {
+    case FIELD_NOTES_TORCHIC:
+        return FlagGet(FLAG_BADGE05_GET) || FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC);
+    case FIELD_NOTES_MUDKIP:
+        return FlagGet(FLAG_BADGE06_GET) || FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP);
+    case FIELD_NOTES_TREECKO:
+        return FlagGet(FLAG_BADGE08_GET) || FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
+    default:
+        return TRUE;
+    }
+}
+
+static bool8 IsFieldNotesPageInked(u8 i)
+{
+    switch (i)
+    {
+    case FIELD_NOTES_LOTAD:
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_LOTAD_HOENN), FLAG_GET_CAUGHT);
+    case FIELD_NOTES_SHROOMISH:
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_SHROOMISH_HOENN), FLAG_GET_CAUGHT);
+    case FIELD_NOTES_GLIGAR:
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_GLIGAR_HOENN), FLAG_GET_CAUGHT);
+    case FIELD_NOTES_VULPIX:
+        return GetSetPokedexFlag(SpeciesToNationalPokedexNum(SPECIES_VULPIX_HOENN), FLAG_GET_CAUGHT);
+    case FIELD_NOTES_TORCHIC:
+        return FlagGet(FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC);
+    case FIELD_NOTES_MUDKIP:
+        return FlagGet(FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP);
+    case FIELD_NOTES_TREECKO:
+        return FlagGet(FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO);
+    default:
+        return FALSE;
+    }
+}
+
+// VAR_0x8004 = page id (0 cover, 1-7 pages, 8 last page). Writes gStringVar4, returns FALSE if the page is hidden
+u16 BufferFieldNotesPage(void)
+{
+    u16 pageId = gSpecialVar_0x8004;
+    u8 *str;
+    u8 i, numOpen, numInked;
+
+    if (pageId == FIELD_NOTES_PAGE_COVER)
+    {
+        numOpen = 0;
+        numInked = 0;
+        for (i = 0; i < FIELD_NOTES_PAGE_COUNT; i++)
+        {
+            if (IsFieldNotesPageOpen(i))
+            {
+                numOpen++;
+                if (IsFieldNotesPageInked(i))
+                    numInked++;
+            }
+        }
+        ConvertIntToDecimalStringN(gStringVar1, numInked, STR_CONV_MODE_LEFT_ALIGN, 1);
+        ConvertIntToDecimalStringN(gStringVar2, numOpen, STR_CONV_MODE_LEFT_ALIGN, 1);
+        StringExpandPlaceholders(gStringVar4, gFieldNotesText_Cover);
+        return TRUE;
+    }
+    if (pageId <= FIELD_NOTES_PAGE_COUNT)
+    {
+        i = pageId - 1;
+        if (!IsFieldNotesPageOpen(i))
+            return FALSE;
+        str = StringExpandPlaceholders(gStringVar4, sFieldNotesPages[i].oldText);
+        if (IsFieldNotesPageInked(i))
+        {
+            *(str++) = CHAR_PROMPT_CLEAR;
+            StringExpandPlaceholders(str, sFieldNotesPages[i].inkText);
+        }
+        return TRUE;
+    }
+    if (pageId == FIELD_NOTES_PAGE_LAST)
+    {
+        for (i = 0; i < FIELD_NOTES_PAGE_COUNT; i++)
+        {
+            if (!IsFieldNotesPageInked(i))
+                return FALSE;
+        }
+        StringExpandPlaceholders(gStringVar4, gFieldNotesText_LastPage);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 void BufferPokedexRatingForMatchCall(u8 *destStr)

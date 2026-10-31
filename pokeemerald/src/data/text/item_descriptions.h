@@ -1484,10 +1484,10 @@ static const u8 sVSSeekerDesc[] = _(
     "that flags battle-\n"
     "ready TRAINERS.");
 
-static const u8 sFameCheckerDesc[] = _(
-    "Stores information\n"
-    "on famous people\n"
-    "for instant recall.");
+static const u8 sFieldNotesDesc[] = _(
+    "PROF. BIRCH's old\n"
+    "notebook. Your finds\n"
+    "correct his guesses.");
 
 static const u8 sTMCaseDesc[] = _(
     "A convenient case \n"

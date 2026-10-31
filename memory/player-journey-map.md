@@ -11,6 +11,8 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 **v2.3 shipped (C261-262)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 10% — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 4% — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts. **3 trainers carry Hoenn forms (C262)**: Bug Catcher Rick (Route 102, Lotad_Hoenn Lv7), Bug Catcher James (Petalburg Woods, Shroomish_Hoenn Lv8), Lass Haley (Route 104, Lotad_Hoenn Lv9). Dialogue references discovery — NPCs found them too.
 
+**FIELD NOTES key item (C324, untested)**: given with the Pokédex; first 4 pages (Lotad/Shroomish/Gligar/Vulpix) are open from minute one and gain red ink on catch, so Hours 0-6 have a collection goal. Den pages open on badges 5/6/8.
+
 **Emotional arc**: Curiosity → wonder (Pikachu) → surprise (electric lily pad / frost mushroom) → confidence (first gym)
 
 ---

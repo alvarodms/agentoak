@@ -142,3 +142,87 @@ gBirchFieldNoteText_AllFound::
 	.string "Every one of those old lines\n"
 	.string "is crossed out now.\p"
 	.string "Crossed out by you, {PLAYER}{KUN}.$"
+
+@ C324 FIELD NOTES key item pages (BufferFieldNotesPage in src/match_call.c)
+gFieldNotesText_Cover::
+	.string "PROF. BIRCH's FIELD NOTES\n"
+	.string "Pages in your ink:\l"
+	.string "{STR_VAR_1} of {STR_VAR_2}.$"
+
+gFieldNotesText_Lotad::
+	.string "p.1 ROUTE 102\n"
+	.string "LOTAD: Water and Grass.\l"
+	.string "Hides from storms. -- B.$"
+
+gFieldNotesText_LotadInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Electric! Its leaf drinks\n"
+	.string "the storm.\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Shroomish::
+	.string "p.2 PETALBURG WOODS\n"
+	.string "SHROOMISH never grow cold.\l"
+	.string "Warm, damp shade only. -- B.$"
+
+gFieldNotesText_ShroomishInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Frost on its cap. Poison\n"
+	.string "and Ice!\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Gligar::
+	.string "p.3 GRANITE CAVE\n"
+	.string "GLIGAR glide on dry wind.\l"
+	.string "Water is their enemy. -- B.$"
+
+gFieldNotesText_GligarInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Water and Rock. It swims\n"
+	.string "better than it glides!\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Vulpix::
+	.string "p.4 ROUTE 113\n"
+	.string "VULPIX love heat. Find one\l"
+	.string "where it's warm. -- B.$"
+
+gFieldNotesText_VulpixInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Ice and Fairy. Cold fur in\n"
+	.string "the falling ash!\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Torchic::
+	.string "p.5 MT. PYRE\n"
+	.string "TORCHIC shun mountains.\l"
+	.string "Too cold, too high. -- B.$"
+
+gFieldNotesText_TorchicInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Found one in the summit fog.\n"
+	.string "It wasn't shunning anything.\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Mudkip::
+	.string "p.6 SHOAL CAVE\n"
+	.string "MUDKIP shun salt water.\l"
+	.string "Fresh streams only. -- B.$"
+
+gFieldNotesText_MudkipInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}It waited in a tide pool\n"
+	.string "for the sea to pull back.\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_Treecko::
+	.string "p.7 METEOR FALLS\n"
+	.string "TREECKO shun caves. They\l"
+	.string "need sun on their leaves. -- B.$"
+
+gFieldNotesText_TreeckoInk::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}It chimed in the deepest\n"
+	.string "dark. No sun needed.\l"
+	.string "-- {PLAYER}$"
+
+gFieldNotesText_LastPage::
+	.string "LAST PAGE, sealed with tape:\n"
+	.string "If every page has your ink,\l"
+	.string "then all I believed about where\l"
+	.string "they belong was wrong.\p"
+	.string "Good. That's how it should be.\n"
+	.string "-- B.$"

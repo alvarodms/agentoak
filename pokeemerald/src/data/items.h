@@ -4354,17 +4354,17 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
 
-    [ITEM_FAME_CHECKER] =
+    [ITEM_FIELD_NOTES] =
     {
-        .name = _("FAME CHECKER"),
-        .itemId = ITEM_FAME_CHECKER,
+        .name = _("FIELD NOTES"),
+        .itemId = ITEM_FIELD_NOTES,
         .price = 0,
-        .description = sFameCheckerDesc,
+        .description = sFieldNotesDesc,
         .importance = 1,
         .registrability = TRUE,
         .pocket = POCKET_KEY_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_FieldNotes,
     },
 
     [ITEM_TM_CASE] =

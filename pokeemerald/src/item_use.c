@@ -60,6 +60,7 @@ static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
+static void ItemUseOnFieldCB_FieldNotes(u8);
 static bool8 TryToWaterSudowoodo(void);
 static void BootUpSoundTMHM(u8);
 static void Task_ShowTMHMContainedMessage(u8);
@@ -701,6 +702,20 @@ static void ItemUseOnFieldCB_Berry(u8 taskId)
     RemoveBagItem(gSpecialVar_ItemId, 1);
     LockPlayerFieldControls();
     ScriptContext_SetupScript(BerryTree_EventScript_ItemUsePlantBerry);
+    DestroyTask(taskId);
+}
+
+// C324 FIELD NOTES: read Birch's notebook on the field (pages built by BufferFieldNotesPage)
+void ItemUseOutOfBattle_FieldNotes(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_FieldNotes;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_FieldNotes(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(FieldNotes_EventScript_Read);
     DestroyTask(taskId);
 }
 

@@ -35,6 +35,7 @@ ProfBirch_EventScript_MoveToRoute103::
 ProfBirch_EventScript_RatePokedexOrRegister::
 	lock
 	faceplayer
+	call_if_unset FLAG_RECEIVED_FIELD_NOTES, ProfBirch_EventScript_GiveFieldNotesLate
 	goto_if_unset FLAG_HAS_MATCH_CALL, ProfBirch_EventScript_AskRatePokedex
 	goto_if_unset FLAG_ENABLE_PROF_BIRCH_MATCH_CALL, EventScript_RegisterProfBirch
 
@@ -112,4 +113,50 @@ ProfBirch_EventScript_RatePokedex::
 	buffernumberstring STR_VAR_1, VAR_0x8008  @ Num National seen
 	buffernumberstring STR_VAR_2, VAR_0x8009  @ Num National caught
 	msgbox gBirchDexRatingText_OnANationwideBasis, MSGBOX_DEFAULT
+	return
+
+@ C324 late FIELD NOTES for saves already past the Pokedex scene
+ProfBirch_EventScript_GiveFieldNotesLate::
+	goto_if_unset FLAG_RECEIVED_POKEDEX_FROM_BIRCH, Common_EventScript_NopReturn
+	msgbox ProfBirch_Text_FieldNotesLate, MSGBOX_DEFAULT
+	giveitem ITEM_FIELD_NOTES
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
+	setflag FLAG_RECEIVED_FIELD_NOTES
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_FieldNotesExplain, MSGBOX_DEFAULT
+	return
+
+ProfBirch_Text_FieldNotesLate:
+	.string "PROF. BIRCH: Oh! Before I forget,\n"
+	.string "{PLAYER}{KUN}, take my old FIELD NOTES.$"
+
+@ C324 FIELD NOTES key item: pages built by BufferFieldNotesPage (src/match_call.c); 0 cover, 1-7 pages, 8 last page
+FieldNotes_EventScript_Read::
+	lockall
+	setvar VAR_0x8004, 0
+	specialvar VAR_RESULT, BufferFieldNotesPage
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	setvar VAR_0x8004, 1
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 2
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 3
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 4
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 5
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 6
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 7
+	call FieldNotes_EventScript_ShowPage
+	setvar VAR_0x8004, 8
+	call FieldNotes_EventScript_ShowPage
+	releaseall
+	end
+
+FieldNotes_EventScript_ShowPage::
+	specialvar VAR_RESULT, BufferFieldNotesPage
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
+	playse SE_DEX_PAGE
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	return
