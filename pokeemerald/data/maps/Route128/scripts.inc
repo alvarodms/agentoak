@@ -447,5 +447,66 @@ Route128_Text_ExAquaGrunt:
 Route128_Text_ExAquaGruntShort:
 	.string "You ever look at the ocean\n"
 	.string "and feel like it's looking back?\p"
-	.string "...No? Good.$"
+	.string "...No? Good.\p"
+	.string "The boss sits by the spot\n"
+	.string "where it came up. Every day.\p"
+	.string "I can't look. He can't stop.$"
 
+@ C326: Archie Reckoning rematch (slot 852, reclaimed TRAINER_LEAF)
+Route128_EventScript_ArchieReckoning::
+	lock
+	faceplayer
+	goto_if_defeated TRAINER_ARCHIE_RECKONING, Route128_EventScript_ArchieReckoningDone
+	msgbox Route128_Text_ArchieReckoningOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route128_EventScript_ArchieReckoningDecline
+	trainerbattle_single TRAINER_ARCHIE_RECKONING, Route128_Text_ArchieReckoningIntro, Route128_Text_ArchieReckoningDefeat, Route128_EventScript_ArchieReckoningDefeated
+	release
+	end
+
+Route128_EventScript_ArchieReckoningDecline::
+	msgbox Route128_Text_ArchieReckoningDecline, MSGBOX_DEFAULT
+	release
+	end
+
+Route128_EventScript_ArchieReckoningDefeated::
+	msgbox Route128_Text_ArchieReckoningPost, MSGBOX_DEFAULT
+	release
+	end
+
+Route128_EventScript_ArchieReckoningDone::
+	msgbox Route128_Text_ArchieReckoningDone, MSGBOX_DEFAULT
+	release
+	end
+
+Route128_Text_ArchieReckoningOffer:
+	.string "ARCHIE: Ahoy, {PLAYER}.\p"
+	.string "This is where it came up.\n"
+	.string "I watch the spot every day.\p"
+	.string "Water's calm. Been calm for\n"
+	.string "a good long while now.\p"
+	.string "I wanted the sea to grow.\n"
+	.string "Turns out it never needed me.\p"
+	.string "...SHARPEDO's restless, though.\n"
+	.string "Fancy a round, for old times?$"
+
+Route128_Text_ArchieReckoningIntro:
+	.string "ARCHIE: No grand plans today.\n"
+	.string "Just a sailor and his crew!$"
+
+Route128_Text_ArchieReckoningDefeat:
+	.string "ARCHIE: Ha! Swept clean off\n"
+	.string "the deck. Fair's fair.$"
+
+Route128_Text_ArchieReckoningPost:
+	.string "ARCHIE: Sea was fine.\n"
+	.string "It was me that needed filling.\p"
+	.string "Go on. The tide's yours too.$"
+
+Route128_Text_ArchieReckoningDecline:
+	.string "ARCHIE: Suit yourself.\n"
+	.string "The sea's in no hurry.$"
+
+Route128_Text_ArchieReckoningDone:
+	.string "ARCHIE: Some days a WAILMER\n"
+	.string "surfaces right there.\p"
+	.string "Never asks me for a thing.$"

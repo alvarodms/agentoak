@@ -65,3 +65,12 @@ Sootopolis Gym_1F (Juan texts → Wallace, Juan cameo 9,2), Gym_B1F (9 trainer t
 | `data/maps/EverGrandeCity_SidneysRoom/scripts.inc` | `_Text_IntroSpeech`: "Everybody ran when the storm came" → "when the sky went dark" (one "storm" left: "HONCHKROW rode a storm down", the Winona link). |
 | `data/maps/FortreeCity/scripts.inc` | `_Text_MigrationBirdKeeperHonchkrow` opener → "Last night I heard wings over / the treehouses before I saw it." (no longer copies Winona's "circling at dusk"). |
 | `data/maps/FortreeCity_Gym/scripts.inc` | `_Text_WinonaPreRematch`: "Murkrow" → "MURKROW", rewrapped to 3 lines (\n/\l). |
+
+## C326 — Reckoning rematches (postgame villain epilogue)
+
+| File | Change |
+|------|--------|
+| `data/maps/MtChimney/map.json` | Appended Maxie object (13,6, FACE_RIGHT, no LOCALID) → `MtChimney_EventScript_MaxieReckoning`, flag FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT (reused). Original Maxie on the same tile stays hidden by FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA. |
+| `data/maps/MtChimney/scripts.inc` | New `_MaxieReckoning{,Decline,Defeated,Done}` + 6 texts (YESNO offer → trainerbattle_single TRAINER_MAXIE_RECKONING). `_Text_PostgameMagmaGruntShort` now hints "The boss is up by the machine most nights." |
+| `data/maps/Route128/map.json` | Appended Archie object (37,22, FACE_LEFT) → `Route128_EventScript_ArchieReckoning`, flag FLAG_HIDE_ROUTE128_POSTGAME_AQUA_GRUNT (reused). Original Archie removed for good in the Kyogre scene. |
+| `data/maps/Route128/scripts.inc` | New `_ArchieReckoning{,Decline,Defeated,Done}` + 6 texts. `_Text_ExAquaGruntShort` adds "The boss sits by the spot where it came up. Every day." |

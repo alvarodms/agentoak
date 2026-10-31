@@ -852,6 +852,69 @@ MtChimney_Text_PostgameMagmaGrunt:
 	.string "I don't think about it.$"
 
 MtChimney_Text_PostgameMagmaGruntShort:
-	.string "...Still here.\p"
-	.string "Still not thinking about it.$"
+	.string "...Still here.\n"
+	.string "Still not thinking about it.\p"
+	.string "The boss is up by the machine\n"
+	.string "most nights. Doesn't say why.$"
 
+@ C326: Maxie Reckoning rematch (slot 851, reclaimed TRAINER_RED)
+MtChimney_EventScript_MaxieReckoning::
+	lock
+	faceplayer
+	goto_if_defeated TRAINER_MAXIE_RECKONING, MtChimney_EventScript_MaxieReckoningDone
+	msgbox MtChimney_Text_MaxieReckoningOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MtChimney_EventScript_MaxieReckoningDecline
+	trainerbattle_single TRAINER_MAXIE_RECKONING, MtChimney_Text_MaxieReckoningIntro, MtChimney_Text_MaxieReckoningDefeat, MtChimney_EventScript_MaxieReckoningDefeated
+	release
+	end
+
+MtChimney_EventScript_MaxieReckoningDecline::
+	msgbox MtChimney_Text_MaxieReckoningDecline, MSGBOX_DEFAULT
+	release
+	end
+
+MtChimney_EventScript_MaxieReckoningDefeated::
+	msgbox MtChimney_Text_MaxieReckoningPost, MSGBOX_DEFAULT
+	release
+	end
+
+MtChimney_EventScript_MaxieReckoningDone::
+	msgbox MtChimney_Text_MaxieReckoningDone, MSGBOX_DEFAULT
+	release
+	end
+
+MtChimney_Text_MaxieReckoningOffer:
+	.string "MAXIE: Ah. {PLAYER}.\p"
+	.string "I come up here most nights\n"
+	.string "to measure the crater.\p"
+	.string "I wanted the land to grow.\n"
+	.string "It grew without me.\p"
+	.string "Rocks fly now. Ash falls on\n"
+	.string "new flowers. All of it, without\l"
+	.string "one order from TEAM MAGMA.\p"
+	.string "...My CAMERUPT still wants\n"
+	.string "to settle something.\l"
+	.string "Will you indulge us?$"
+
+MtChimney_Text_MaxieReckoningIntro:
+	.string "MAXIE: No speeches this time.\n"
+	.string "Just the mountain, and us.$"
+
+MtChimney_Text_MaxieReckoningDefeat:
+	.string "MAXIE: ...Yes.\n"
+	.string "That's the answer I came for.$"
+
+MtChimney_Text_MaxieReckoningPost:
+	.string "MAXIE: The mountain is warm.\n"
+	.string "That's all it ever needed to be.\p"
+	.string "FLANNERY said that, years ago.\n"
+	.string "I wasn't listening then.$"
+
+MtChimney_Text_MaxieReckoningDecline:
+	.string "MAXIE: Of course. The crater\n"
+	.string "will still be here.$"
+
+MtChimney_Text_MaxieReckoningDone:
+	.string "MAXIE: Two meters wider than\n"
+	.string "last year. It grows on its own.\p"
+	.string "...I only write it down now.$"

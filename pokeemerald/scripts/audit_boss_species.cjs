@@ -40,7 +40,7 @@ const BOSS_GROUPS = {
   Steven: [/^sParty_Steven(Champion|Rematch\d)?$/],
   Maxie: [/^sParty_Maxie/],
   Tabitha: [/^sParty_Tabitha/],
-  Archie: [/^sParty_Archie$/],
+  Archie: [/^sParty_Archie/],
   Shelly: [/^sParty_Shelly/],
   Matt: [/^sParty_Matt$/],
 };

@@ -1,0 +1,80 @@
+{
+  "_note": "C326: Maxie Reckoning postgame rematch at the Mt. Chimney meteorite machine (slot 851, reclaimed from never-battled TRAINER_RED). Maxie: Water key, Electric/Giga Drain punish; no weather -- he no longer needs Groudon. Source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_maxie_reckoning.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_MAXIE_RECKONING",
+  "partyName": "sParty_MaxieReckoning",
+  "party": [
+    {
+      "iv": 200,
+      "lvl": 64,
+      "species": "SPECIES_WEEZING",
+      "heldItem": "ITEM_LEFTOVERS",
+      "moves": [
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_FLAMETHROWER",
+        "MOVE_THUNDERBOLT",
+        "MOVE_DESTINY_BOND"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 65,
+      "species": "SPECIES_SWALOT",
+      "heldItem": "ITEM_SITRUS_BERRY",
+      "moves": [
+        "MOVE_YAWN",
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_GIGA_DRAIN",
+        "MOVE_ICE_BEAM"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 66,
+      "species": "SPECIES_RHYDON",
+      "heldItem": "ITEM_HARD_STONE",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_MEGAHORN",
+        "MOVE_THUNDER_PUNCH"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 66,
+      "species": "SPECIES_TYPHLOSION",
+      "heldItem": "ITEM_SHELL_BELL",
+      "moves": [
+        "MOVE_FLAMETHROWER",
+        "MOVE_THUNDER_PUNCH",
+        "MOVE_EARTHQUAKE",
+        "MOVE_ROCK_SLIDE"
+      ]
+    },
+    {
+      "iv": 200,
+      "lvl": 67,
+      "species": "SPECIES_NIDOKING",
+      "heldItem": "ITEM_SOFT_SAND",
+      "moves": [
+        "MOVE_EARTHQUAKE",
+        "MOVE_SLUDGE_BOMB",
+        "MOVE_ICE_BEAM",
+        "MOVE_THUNDERBOLT"
+      ]
+    },
+    {
+      "iv": 255,
+      "lvl": 70,
+      "species": "SPECIES_CAMERUPT",
+      "heldItem": "ITEM_CHARCOAL",
+      "moves": [
+        "MOVE_ERUPTION",
+        "MOVE_EARTHQUAKE",
+        "MOVE_ROCK_SLIDE",
+        "MOVE_FLAMETHROWER"
+      ]
+    }
+  ]
+}

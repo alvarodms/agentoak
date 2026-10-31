@@ -24,6 +24,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Custom Shiny Palette Design (#163) | 319 | [custom-shiny-palette-design.md](pokemon-knowledge/custom-shiny-palette-design.md) |
 | Double Battle Boss Design (Juan doubles, slot 568) | 322 | [doubles-boss-design.md](pokemon-knowledge/doubles-boss-design.md) |
 | Steven Rematch Design & the Regi Question (#194, + C321 Meteor Falls scene) | 321 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
-| v3.0 Opener — Trainer Cap Raise (save-flag shift) & Notebook Key Items | 324 | [trainer-cap-and-notebook-item-v30.md](pokemon-knowledge/trainer-cap-and-notebook-item-v30.md) |
+| v3.0 Opener — Trainer Cap Raise (save-flag shift), ID Reclaim (C326 link-placeholder caveat) & Notebook Key Items | 326 | [trainer-cap-and-notebook-item-v30.md](pokemon-knowledge/trainer-cap-and-notebook-item-v30.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

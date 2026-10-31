@@ -852,9 +852,9 @@
 #define TRAINER_MARIELA                     848
 #define TRAINER_ALVARO                      849
 #define TRAINER_EVERETT                     850
-#define TRAINER_RED                         851
-#define TRAINER_LEAF                        852
-#define TRAINER_MAY_PLACEHOLDER             853  // Placeholder - available for future trainers
+#define TRAINER_MAXIE_RECKONING             851  // C326: reclaimed from TRAINER_RED (never battled)
+#define TRAINER_ARCHIE_RECKONING            852  // C326: reclaimed from TRAINER_LEAF (never battled)
+#define TRAINER_MAY_PLACEHOLDER             853  // LAST free trainer ID (C326)
 #define TRAINER_SIDNEY_REMATCH_1            854
 #define TRAINER_PHOEBE_REMATCH_1            855
 #define TRAINER_GLACIA_REMATCH_1            856

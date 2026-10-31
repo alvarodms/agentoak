@@ -1,8 +1,15 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 324 | **Date**: October 2026
+**Cycle**: 326 | **Date**: October 2026
 
 ---
+
+## C326 — Reclaiming IDs: the pret "Link Battle placeholders" guide
+- pret/pokeemerald wiki "Repurposing the Link Battle placeholders" is the community-standard route for exactly this: TRAINER_RED, TRAINER_LEAF, TRAINER_BRENDAN_PLACEHOLDER, TRAINER_MAY_PLACEHOLDER (bottom of trainers.h / trainer_parties.h) = up to 4 new trainers with no table growth.
+- **Caveat the guide states**: if the player can reach the Cable Club (Pokémon Center 2F link rooms), that trainer data "may end up overwritten" in link play. The guide's fix is to block the Cable Club first. So "zero grep references by name" is not the whole check: link code can index these slots by arithmetic/version, not by constant name.
+- Rules from the guide: keep the constant and party names (TRAINER_RED, sParty_Red); change only the name string, class, pic, AI, party. Copy music/pic/AI from a same-class trainer.
+- Save safety: a reclaimed slot's trainer flag (0x500 + id) is clear in every v2.9 save because it was never battled, so the new trainer starts unbeaten. No flag shift.
+- Beyond the 4 placeholders: Bulbapedia "Unused Trainer data" and TCRF RS page list unused RS-era Aqua/Magma parties (levels never fought, some unnamed) — carried into Emerald's table, a likely second pool. Verify each by script grep (Trick House 848-850 proved some "FRLG-looking" IDs ARE used).
 
 ## Trainer cap (TRAINERS_COUNT bump) — community evidence + local code check
 
@@ -22,6 +29,9 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://github-wiki-see.page/m/pret/pokeemerald/wiki/Repurposing-the-Link-Battle-placeholders
+- https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data
+- https://tcrf.net/Pokemon_Ruby_and_Sapphire
 - https://www.pokecommunity.com/threads/maximum-number-of-trainers-in-pokeemerald.425848/
 - https://www.pokecommunity.com/threads/firered-expand-max-of-trainers.383237/
 - https://pokeromcodex.notion.site/Unbound-081f9972dc5b4ee8b77ae7d2c343ca54
