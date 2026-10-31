@@ -234,3 +234,11 @@ bool8 ScriptCheckPokedexSeen(void)
     gSpecialVar_Result = GetSetPokedexFlag(nationalDexNum, FLAG_GET_SEEN);
     return gSpecialVar_Result;
 }
+
+// Returns TRUE if the species in gSpecialVar_0x8004 has been caught (C327 Route 104 LOTAD skeptic).
+bool8 ScriptCheckPokedexCaught(void)
+{
+    u16 nationalDexNum = SpeciesToNationalPokedexNum(gSpecialVar_0x8004);
+    gSpecialVar_Result = GetSetPokedexFlag(nationalDexNum, FLAG_GET_CAUGHT);
+    return gSpecialVar_Result;
+}

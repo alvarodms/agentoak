@@ -543,3 +543,4 @@ gSpecials::
 	def_special Special_UseRepelFromBag
 	def_special IsBirchFieldNoteActive
 	def_special BufferFieldNotesPage
+	def_special ScriptCheckPokedexCaught

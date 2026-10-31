@@ -16,6 +16,7 @@ Route104_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Route104_EventScript_TrySetRivalPos
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
+	call Route104_EventScript_SetLotadSkepticFacing
 	end
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
@@ -36,6 +37,18 @@ Route104_EventScript_TrySetRivalPos::
 	return
 
 Route104_EventScript_DontSetRivalPos::
+	return
+
+@ C327 Red Ink: he faces the sea (west) while he trusts BIRCH's page, and turns east
+@ toward PETALBURG / ROUTE 102 once the player has caught LOTAD_HOENN (same truth as the inked page).
+Route104_EventScript_SetLotadSkepticFacing::
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	call_if_eq VAR_RESULT, TRUE, Route104_EventScript_LotadSkepticFaceEast
+	return
+
+Route104_EventScript_LotadSkepticFaceEast::
+	setobjectmovementtype LOCALID_ROUTE104_LOTAD_SKEPTIC, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route104_EventScript_Rival::
@@ -340,6 +353,21 @@ Route104_EventScript_ReceivedBulletSeed::
 
 Route104_EventScript_Girl2::
 	msgbox Route104_Text_ImNotATrainer, MSGBOX_NPC
+	end
+
+Route104_EventScript_LotadSkeptic::
+	lock
+	faceplayer
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, TRUE, Route104_EventScript_LotadSkepticCorrected
+	msgbox Route104_Text_LotadSkepticBelief, MSGBOX_DEFAULT
+	release
+	end
+
+Route104_EventScript_LotadSkepticCorrected::
+	msgbox Route104_Text_LotadSkepticCorrected, MSGBOX_DEFAULT
+	release
 	end
 
 Route104_EventScript_SailToDewford::
@@ -1229,3 +1257,22 @@ Route104_Text_MigrationGlimpse2:
 	.string "The air smells faintly of smoke...\p"
 	.string "Strange. Nothing around here should\n"
 	.string "give off that scent.$"
+
+Route104_Text_LotadSkepticBelief:
+	.string "I copied this straight out of\n"
+	.string "PROF. BIRCH's notes. Listen.\p"
+	.string "LOTAD: Water and Grass.\n"
+	.string "Hides from storms.\p"
+	.string "Some girl past the woods says\n"
+	.string "her LOTAD throws sparks. Ha!\p"
+	.string "Storm's coming. I'm watching\n"
+	.string "the sea for where they hide.$"
+
+Route104_Text_LotadSkepticCorrected:
+	.string "You caught a LOTAD? Let me see.\p"
+	.string "...It's crackling. Its leaf is\n"
+	.string "drinking the storm.\p"
+	.string "PROF. BIRCH never wrote that.\n"
+	.string "You did.\p"
+	.string "...Mind if I borrow your\n"
+	.string "red pen?$"

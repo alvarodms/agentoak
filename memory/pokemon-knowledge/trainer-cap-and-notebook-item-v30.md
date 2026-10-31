@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 326 | **Date**: October 2026
+**Cycle**: 327 | **Date**: October 2026
 
 ---
+
+## C327 — Reactive "skeptic" NPCs & the second slot pool
+- Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
+- Legends: Arceus requests are the cautionary case: players complain about manual turn-in ("interactive log that auto-completes"), poor signposting (looking requests up online), and tedium (Upcomer, Bulbagarden, Twinfinite). Tom's Guide liked the *pleas themselves*. Lesson: a correction NPC should react **passively** (read the flag on talk, no hand-over step) and sit on a road the player already walks.
+- Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
+- A dialogue-only skeptic does NOT need a trainer slot (flag-gated text on a plain object). Spend slot 853 only if a battle is part of the beat.
 
 ## C326 — Reclaiming IDs: the pret "Link Battle placeholders" guide
 - pret/pokeemerald wiki "Repurposing the Link Battle placeholders" is the community-standard route for exactly this: TRAINER_RED, TRAINER_LEAF, TRAINER_BRENDAN_PLACEHOLDER, TRAINER_MAY_PLACEHOLDER (bottom of trainers.h / trainer_parties.h) = up to 4 new trainers with no table growth.
@@ -29,6 +35,11 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data (C327)
+- https://upcomer.com/i-cant-be-bothered-to-finish-the-boring-side-quests-in-arceus/
+- https://bulbagarden.net/threads/what-are-somethings-you-dont-like-about-pokemon-legends-arceus.291749/post-7475289
+- https://www.tomsguide.com/reviews/pokemon-legends-arceus
+- https://abratabia.com/game-narrative/writing-game-characters.php
 - https://github-wiki-see.page/m/pret/pokeemerald/wiki/Repurposing-the-Link-Battle-placeholders
 - https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data
 - https://tcrf.net/Pokemon_Ruby_and_Sapphire
