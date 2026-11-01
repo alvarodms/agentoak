@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 328 | **Date**: November 2026
+**Cycle**: 329 | **Date**: November 2026
 
 ---
+
+## C329 — "Show me" NPCs: the two official grammars
+- **Dex-entry check (Sun/Moon Pokédex quests)**: the NPC wants to *see the entry*; no party needed, no time limit, mostly money rewards (supercheats, serebii). Passive, never strands the player.
+- **Party check (Legends Z-A side missions, e.g. "I'd like to see an Ekans", Skiddo)**: the mon must be on the team when you talk. Reads as literally "showing" it, but costs a box trip.
+- Applied: the hiker's state must stay dex-caught (= page ink, so notebook and NPC never disagree). Word him as reacting to the *record* ("Your POKéDEX says…"), not to a mon at your side. Otherwise players will try to show their party and wonder why the dex is what counts.
+- Granite Cave already has a vanilla hiker near the entrance who hands out HM05 Flash. Put the believer clearly apart from him, or players will mix up the two hikers.
 
 ## C328 — Notebook ↔ NPC feedback loop (Bombers' Notebook precedent)
 - Majora's Mask Bombers' Notebook: one row per character, and solving their problem stamps a **Happy Sticker** on that row. The notebook records *who* the player helped, not just what was found. MM3D rebuilt it as a fuller quest log so every rewarding NPC has an entry. Kafei's schedule changes based on other events' outcomes, so the interlocking chains only work once the individual characters are established.
@@ -24,16 +30,9 @@
 - Save safety: a reclaimed slot's trainer flag (0x500 + id) is clear in every v2.9 save because it was never battled, so the new trainer starts unbeaten. No flag shift.
 - Beyond the 4 placeholders: Bulbapedia "Unused Trainer data" and TCRF RS page list unused RS-era Aqua/Magma parties (levels never fought, some unnamed) — carried into Emerald's table, a likely second pool. Verify each by script grep (Trick House 848-850 proved some "FRLG-looking" IDs ARE used).
 
-## Trainer cap (TRAINERS_COUNT bump) — community evidence + local code check
-
-- Vanilla Emerald: 855 trainers used of MAX_TRAINERS_COUNT 864; trainer flags at fixed base 0x500 (PokéCommunity t=425848).
-- Community reports: raising MAX_TRAINERS_COUNT "collides with system flags"; one user hit a hard ceiling of 992 after save-block edits. Recommended routes: **free unused flags / add a second trainer-flag block** rather than grow the first; FireRed guide notes the trainer-flag handler hardcodes the 0x500 base.
-- **Local fact (C324 read of include/constants/flags.h)**: `SYSTEM_FLAGS = TRAINER_FLAGS_END + 1`, and `TRAINER_FLAGS_END = 0x500 + MAX_TRAINERS_COUNT - 1`. This hack already has MAX = 891, so system flags start at 0x87B (vanilla 0x860; the comments in flags.h still say 0x860/0x85F/874 — stale).
-  - => Every MAX bump **shifts every FLAG_SYS_* flag** (badges, FLAG_SYS_GAME_CLEAR, POKEDEX_GET, B_DASH, Frontier symbols). Existing v2.9 saves would load with wrong badges/game-clear. Save-breaking.
-- Save-safe alternatives, best first:
-  1. **Reclaim dead vanilla IDs**: TRAINER_MARIELA/ALVARO/EVERETT (848-850) and RED/LEAF (851-852) are unused in vanilla Emerald battles (verify with grep before reuse) → +5 slots with zero flag movement.
-  2. Pin SYSTEM_FLAGS to an absolute constant (0x87B) before bumping, then put new trainer flags in a second block (e.g., the unused 0x4D?-0x4EF range) with a range check in the trainer-flag helpers.
-  3. Plain bump only if v3.0 is declared save-incompatible (state it in README).
+## Trainer cap (TRAINERS_COUNT bump)
+- Community (PokéCommunity t=425848, t=383237): raising MAX_TRAINERS_COUNT "collides with system flags"; prefer a second flag block or reclaiming IDs.
+- Local: `SYSTEM_FLAGS = TRAINER_FLAGS_END + 1`, so any MAX bump shifts every FLAG_SYS_* flag and breaks v2.9 saves. Route chosen: reclaim zero-ref IDs (Trick House 848-850 ARE used); fallback is to pin SYSTEM_FLAGS before bumping.
 
 ## Notebook / log key items
 
@@ -42,6 +41,9 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests (C329)
+- https://www.gamerguides.com/pokemon-legends-z-a/database/missions/side-missions/i-d-like-to-see-an-ekans (C329)
+- https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329)
 - https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook (C328)
 - https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ (C328)
 - https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)

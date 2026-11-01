@@ -16,7 +16,9 @@ Route104_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Route104_EventScript_TrySetRivalPos
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
-	call Route104_EventScript_SetLotadSkepticFacing
+	@ C327 Red Ink: he faces the sea (west) while he trusts BIRCH's page, and turns east
+	@ toward PETALBURG / ROUTE 102 once the player has caught LOTAD_HOENN (same truth as the inked page).
+	EventMacro_DexBelieverPlace SPECIES_LOTAD_HOENN, LOCALID_ROUTE104_LOTAD_SKEPTIC, 33, 49, MOVEMENT_TYPE_FACE_RIGHT
 	end
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
@@ -37,18 +39,6 @@ Route104_EventScript_TrySetRivalPos::
 	return
 
 Route104_EventScript_DontSetRivalPos::
-	return
-
-@ C327 Red Ink: he faces the sea (west) while he trusts BIRCH's page, and turns east
-@ toward PETALBURG / ROUTE 102 once the player has caught LOTAD_HOENN (same truth as the inked page).
-Route104_EventScript_SetLotadSkepticFacing::
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	call_if_eq VAR_RESULT, TRUE, Route104_EventScript_LotadSkepticFaceEast
-	return
-
-Route104_EventScript_LotadSkepticFaceEast::
-	setobjectmovementtype LOCALID_ROUTE104_LOTAD_SKEPTIC, MOVEMENT_TYPE_FACE_RIGHT
 	return
 
 Route104_EventScript_Rival::

@@ -21,6 +21,8 @@
 //     whose nearest preceding `setvar VAR_0x8004, SPECIES_X` in the same label block names a
 //     vanilla SPECIES_X that has a SPECIES_X_HOENN twin (Red Ink world reactions must test the
 //     regional form the inked page is about). Also fails when no species setvar precedes it.
+//     C329: an `EventMacro_DexBelieverPlace SPECIES_X, ...` line counts as a dex check of its
+//     first argument (must be a SPECIES_ constant; same vanilla-twin rule and allowlist).
 //
 // Usage: node scripts/check_gifts.cjs   (run by `make check_gifts`, part of `make check_all`)
 
@@ -124,6 +126,20 @@ for (const file of listIncFiles(DATA_DIR).sort()) {
     const line = stripComment(raw).trim();
     const sv = /^setvar\s+VAR_0x8004\s*,\s*(\w+)/.exec(line);
     if (sv) dexSpecies = sv[1];
+    const bm = /^EventMacro_DexBelieverPlace\b\s*([^,]*)/.exec(line);
+    if (bm) {
+      dexChecks++;
+      const species = bm[1].trim();
+      const key = `${rel}:${label}`;
+      if (DEX_CHECK_ALLOWLIST.includes(key)) {
+        dexAllowUsed.add(key);
+      } else if (!/^SPECIES_\w+$/.test(species)) {
+        errors.push(`${rel}:${idx + 1} ${label} EventMacro_DexBelieverPlace needs a SPECIES_X_HOENN first argument`);
+      } else if (paired.has(species)) {
+        errors.push(`${rel}:${idx + 1} ${label} dex check of vanilla ${species} — ${species}_HOENN exists; check the regional form or add to DEX_CHECK_ALLOWLIST`);
+      }
+      return;
+    }
     if (/^special(var\s+\w+\s*,)?\s*ScriptCheckPokedexCaught\b/.test(line)) {
       dexChecks++;
       const key = `${rel}:${label}`;
@@ -165,7 +181,7 @@ allowlist.forEach((entry, i) => {
 });
 
 for (const key of DEX_CHECK_ALLOWLIST)
-  if (!dexAllowUsed.has(key)) errors.push(`DEX_CHECK_ALLOWLIST ${key}: stale, matches no ScriptCheckPokedexCaught call`);
+  if (!dexAllowUsed.has(key)) errors.push(`DEX_CHECK_ALLOWLIST ${key}: stale, matches no ScriptCheckPokedexCaught call or EventMacro_DexBelieverPlace`);
 
 if (errors.length > 0) {
   console.error(`check_gifts: ${errors.length} problem(s)`);

@@ -4,22 +4,11 @@ PetalburgWoods_MapScripts::
 
 PetalburgWoods_OnTransition::
 	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
-	call PetalburgWoods_EventScript_SetForagerPos
+	@ C328 Red Ink page 2: she waits in the warm south clearing (faces the entrance light) while
+	@ she trusts BIRCH's page; once SHROOMISH_HOENN is caught she stands in the cold patch by the
+	@ frost bug catcher, facing the dark.
+	EventMacro_DexBelieverPlace SPECIES_SHROOMISH_HOENN, LOCALID_PETALBURG_WOODS_FORAGER, 11, 24, MOVEMENT_TYPE_FACE_UP
 	end
-
-@ C328 Red Ink page 2: she waits in the warm south clearing (faces the entrance light) while
-@ she trusts BIRCH's page; once SHROOMISH_HOENN is caught she stands in the cold patch by the
-@ frost bug catcher, facing the dark.
-PetalburgWoods_EventScript_SetForagerPos::
-	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	call_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerMoveToCold
-	return
-
-PetalburgWoods_EventScript_ForagerMoveToCold::
-	setobjectxyperm LOCALID_PETALBURG_WOODS_FORAGER, 11, 24
-	setobjectmovementtype LOCALID_PETALBURG_WOODS_FORAGER, MOVEMENT_TYPE_FACE_UP
-	return
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall

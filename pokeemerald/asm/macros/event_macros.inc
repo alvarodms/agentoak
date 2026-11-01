@@ -114,3 +114,16 @@
 	removeobject VAR_LAST_TALKED
 	return
 	.endm
+
+@ DexBelieverPlace — Red Ink world reaction (C329). Inline inside a MAP_SCRIPT_ON_TRANSITION
+@ script, before its end/goto. Once \species is Pokedex-caught, the believer object \localid
+@ is moved to (\x,\y) and given \movement. Pass the object's own map.json tile to change only
+@ its facing. Dialogue stays hand-written per believer. check_gifts.cjs Rule C reads \species.
+	.macro EventMacro_DexBelieverPlace species:req, localid:req, x:req, y:req, movement:req
+	setvar VAR_0x8004, \species
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_ne VAR_RESULT, TRUE, .Ldexbeliever_end_\@
+	setobjectxyperm \localid, \x, \y
+	setobjectmovementtype \localid, \movement
+.Ldexbeliever_end_\@:
+	.endm
