@@ -8,8 +8,8 @@ General project information — build system details, tool versions, configurati
 
 - **Trainer Flag Allocation**: 0x500-0x874 = 891 flag slots
 - **Current Status (C282 audit)**: TRAINERS_COUNT = 891, MAX_TRAINERS_COUNT = 891
-- **Available Slots**: only TRAINER_MAY_PLACEHOLDER (853). 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
-- **Future Capacity**: reuse 853 or find more never-battled IDs (grep for zero script refs); never bump TRAINERS_COUNT (shifts SYSTEM_FLAGS, breaks saves)
+- **Available Slots**: 9 unreferenced IDs per check_trainer_slots (C327): 117,173,462,485,486,581,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT. 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
+- **Future Capacity**: run `make check_trainer_slots` for the current unreferenced list; add each reclaimed ID to its RECLAIMED guard list. Never bump TRAINERS_COUNT (shifts SYSTEM_FLAGS, breaks saves)
 
 ## Build System
 

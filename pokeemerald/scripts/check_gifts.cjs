@@ -17,6 +17,10 @@
 //     of vanilla SPECIES_X. Allowlist: scripts/check_gifts_allowlist.json,
 //     [{"label": "...", "species": "SPECIES_X", "why": "..."}]. An entry needs a
 //     non-empty `why`; an entry that matches nothing is stale and fails.
+//   Rule C (C328, fails unless in DEX_CHECK_ALLOWLIST): a `specialvar ..., ScriptCheckPokedexCaught`
+//     whose nearest preceding `setvar VAR_0x8004, SPECIES_X` in the same label block names a
+//     vanilla SPECIES_X that has a SPECIES_X_HOENN twin (Red Ink world reactions must test the
+//     regional form the inked page is about). Also fails when no species setvar precedes it.
 //
 // Usage: node scripts/check_gifts.cjs   (run by `make check_gifts`, part of `make check_all`)
 
@@ -30,6 +34,9 @@ const ALLOWLIST = path.join(__dirname, 'check_gifts_allowlist.json');
 
 const COMMANDS = ['givemon', 'setwildbattle', 'showmonpic', 'EventMacro_StaticDen'];
 const GIFT_COMMANDS = ['givemon', 'setwildbattle', 'EventMacro_StaticDen'];
+
+// Rule C exceptions, as 'data/maps/Foo/scripts.inc:Label' strings. Starts empty.
+const DEX_CHECK_ALLOWLIST = [];
 
 const errors = [];
 
@@ -81,12 +88,15 @@ const allowUsed = new Array(allowlist.length).fill(false);
 let sites = 0;
 let allowlisted = 0;
 const vanillaHits = [];
+let dexChecks = 0;
+const dexAllowUsed = new Set();
 
 for (const file of listIncFiles(DATA_DIR).sort()) {
   const rel = path.relative(ROOT, file);
   const lines = fs.readFileSync(file, 'utf8').split('\n');
   let label = '(file start)';
   let block = [];
+  let dexSpecies = null; // last `setvar VAR_0x8004, X` in this label block
 
   const flush = () => {
     const byBase = {};
@@ -108,9 +118,24 @@ for (const file of listIncFiles(DATA_DIR).sort()) {
     if (lm) {
       flush();
       label = lm[1];
+      dexSpecies = null;
       return;
     }
     const line = stripComment(raw).trim();
+    const sv = /^setvar\s+VAR_0x8004\s*,\s*(\w+)/.exec(line);
+    if (sv) dexSpecies = sv[1];
+    if (/^special(var\s+\w+\s*,)?\s*ScriptCheckPokedexCaught\b/.test(line)) {
+      dexChecks++;
+      const key = `${rel}:${label}`;
+      if (DEX_CHECK_ALLOWLIST.includes(key)) {
+        dexAllowUsed.add(key);
+      } else if (!dexSpecies || !dexSpecies.startsWith('SPECIES_')) {
+        errors.push(`${rel}:${idx + 1} ${label} ScriptCheckPokedexCaught with no preceding \`setvar VAR_0x8004, SPECIES_X\` in the block`);
+      } else if (paired.has(dexSpecies)) {
+        errors.push(`${rel}:${idx + 1} ${label} dex check of vanilla ${dexSpecies} — ${dexSpecies}_HOENN exists; check the regional form or add to DEX_CHECK_ALLOWLIST`);
+      }
+      return;
+    }
     const cm = /^(\w+)\s+(SPECIES_\w+)/.exec(line);
     if (!cm || !COMMANDS.includes(cm[1])) return;
     const [, cmd, species] = cm;
@@ -139,6 +164,9 @@ allowlist.forEach((entry, i) => {
     errors.push(`allowlist entry ${i} (${entry && entry.label} ${entry && entry.species}): stale, matches no givemon/setwildbattle`);
 });
 
+for (const key of DEX_CHECK_ALLOWLIST)
+  if (!dexAllowUsed.has(key)) errors.push(`DEX_CHECK_ALLOWLIST ${key}: stale, matches no ScriptCheckPokedexCaught call`);
+
 if (errors.length > 0) {
   console.error(`check_gifts: ${errors.length} problem(s)`);
   for (const e of errors) console.error(`  - ${e}`);
@@ -146,3 +174,4 @@ if (errors.length > 0) {
 }
 
 console.log(`check_gifts: ${sites} gift/static sites OK (${allowlisted} allowlisted)`);
+console.log(`check_gifts: dex-check species: ${dexChecks} calls OK (${dexAllowUsed.size} allowlisted)`);

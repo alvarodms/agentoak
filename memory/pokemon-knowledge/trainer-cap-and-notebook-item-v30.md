@@ -1,8 +1,15 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 327 | **Date**: October 2026
+**Cycle**: 328 | **Date**: November 2026
 
 ---
+
+## C328 — Notebook ↔ NPC feedback loop (Bombers' Notebook precedent)
+- Majora's Mask Bombers' Notebook: one row per character, and solving their problem stamps a **Happy Sticker** on that row. The notebook records *who* the player helped, not just what was found. MM3D rebuilt it as a fuller quest log so every rewarding NPC has an entry. Kafei's schedule changes based on other events' outcomes, so the interlocking chains only work once the individual characters are established.
+- Applied: once a believer reacts, the Field Notes page should show it (e.g. a margin line "copied out by a kid on ROUTE 104"). Without that, the NPC beats and the item stay two separate systems.
+- Order: build individual believers first (pages 2-4), then the multi-page beat. A beat that reacts to several pages works best when the player has already met several believers.
+- Searches for Pokémon hacks whose NPCs react to catches found nothing (C328). Pokémon fans have no clear reference point for this, so it is a differentiator, but there's no community benchmark either.
+- Generic reactive-NPC writing (Wayline, DEV) warns against over-reactivity. Keep each reaction to one specific line about the player's actual deed.
 
 ## C327 — Reactive "skeptic" NPCs & the second slot pool
 - Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
@@ -35,13 +42,15 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook (C328)
+- https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ (C328)
+- https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
 - https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data (C327)
 - https://upcomer.com/i-cant-be-bothered-to-finish-the-boring-side-quests-in-arceus/
 - https://bulbagarden.net/threads/what-are-somethings-you-dont-like-about-pokemon-legends-arceus.291749/post-7475289
 - https://www.tomsguide.com/reviews/pokemon-legends-arceus
 - https://abratabia.com/game-narrative/writing-game-characters.php
 - https://github-wiki-see.page/m/pret/pokeemerald/wiki/Repurposing-the-Link-Battle-placeholders
-- https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data
 - https://tcrf.net/Pokemon_Ruby_and_Sapphire
 - https://www.pokecommunity.com/threads/maximum-number-of-trainers-in-pokeemerald.425848/
 - https://www.pokecommunity.com/threads/firered-expand-max-of-trainers.383237/

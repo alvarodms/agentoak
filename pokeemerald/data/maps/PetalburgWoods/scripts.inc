@@ -4,7 +4,22 @@ PetalburgWoods_MapScripts::
 
 PetalburgWoods_OnTransition::
 	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
+	call PetalburgWoods_EventScript_SetForagerPos
 	end
+
+@ C328 Red Ink page 2: she waits in the warm south clearing (faces the entrance light) while
+@ she trusts BIRCH's page; once SHROOMISH_HOENN is caught she stands in the cold patch by the
+@ frost bug catcher, facing the dark.
+PetalburgWoods_EventScript_SetForagerPos::
+	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	call_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerMoveToCold
+	return
+
+PetalburgWoods_EventScript_ForagerMoveToCold::
+	setobjectxyperm LOCALID_PETALBURG_WOODS_FORAGER, 11, 24
+	setobjectmovementtype LOCALID_PETALBURG_WOODS_FORAGER, MOVEMENT_TYPE_FACE_UP
+	return
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall
@@ -550,4 +565,69 @@ PetalburgWoods_Text_FrostBugCatcher:
 	.string "purple ones.\p"
 	.string "I touched one and my hands\n"
 	.string "went numb. It's cold here.$"
+
+PetalburgWoods_EventScript_ShroomishForager::
+	lock
+	faceplayer
+	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerCorrected
+	msgbox PetalburgWoods_Text_ForagerBelief, MSGBOX_DEFAULT
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerBoyStopped
+	msgbox PetalburgWoods_Text_ForagerBoyReads, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgWoods_EventScript_ForagerBoyStopped::
+	msgbox PetalburgWoods_Text_ForagerBoyStopped, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgWoods_EventScript_ForagerCorrected::
+	msgbox PetalburgWoods_Text_ForagerCorrected, MSGBOX_DEFAULT
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerWhatElse
+	release
+	end
+
+PetalburgWoods_EventScript_ForagerWhatElse::
+	msgbox PetalburgWoods_Text_ForagerWhatElse, MSGBOX_DEFAULT
+	release
+	end
+
+PetalburgWoods_Text_ForagerBelief:
+	.string "PROF. BIRCH wrote it plain.\n"
+	.string "SHROOMISH never grow cold.\p"
+	.string "Warm, damp shade only. So I\n"
+	.string "stand here, where it's warm.\p"
+	.string "Twelve springs now. They'll\n"
+	.string "come. I just need patience.$"
+
+PetalburgWoods_Text_ForagerBoyReads:
+	.string "There's a boy by the sea who\n"
+	.string "reads BIRCH's notes out loud.\p"
+	.string "Good lad.$"
+
+PetalburgWoods_Text_ForagerBoyStopped:
+	.string "That boy by the sea stopped\n"
+	.string "reading BIRCH's notes aloud.\p"
+	.string "Says someone wrote over his\n"
+	.string "page in red. Odd thing to do.$"
+
+PetalburgWoods_Text_ForagerCorrected:
+	.string "You caught a SHROOMISH?\n"
+	.string "Let me see it.\p"
+	.string "...Frost. On the cap.\n"
+	.string "In these woods.\p"
+	.string "Twelve springs I stood in the\n"
+	.string "sun, waiting for them.\p"
+	.string "...I'll need a warmer coat.$"
+
+PetalburgWoods_Text_ForagerWhatElse:
+	.string "That boy stopped reading his\n"
+	.string "page too.\p"
+	.string "What else did BIRCH get wrong?$"
 
