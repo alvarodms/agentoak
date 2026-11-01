@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 329 | **Date**: November 2026
+**Cycle**: 330 | **Date**: November 2026
 
 ---
+
+## C330 — Multi-page payoff: count thresholds, not one completion prize
+- **Oak's aides (FRLG/Gen III)**: aides stand at fixed spots on roads the player already walks and check a *count* (Itemfinder at 30, Exp. Share at 50 on the Route 15 gate 2F). Several small rewards at thresholds, not one at 100%. Guides disagree on which item goes with which count, so players can't hold the exact numbers in their heads. Only the "talk to the aide, get a thing" loop sticks.
+- **Bombers' Notebook**: guides say there is NO single reward for completing it. The payoff is in each entry, and finishing it all counts toward 100% and (some claim) a better ending. One source contradicts the other here, so it's weak evidence. Lesson: the per-NPC beats ARE the reward. The multi-page beat should be a small narrative acknowledgement, not a loot prize.
+- Applied: `CountInkedFieldNotePages` should drive tiers (e.g. 3+ = believers "talk to each other", 7 = last page). Pages 5-7 are badge-gated, so an all-pages gate can't be reached until late. Pages 1-4 can all be inked by Route 113, so a ≥3 beat lands mid-game.
+- Route 113 locale (Bulbapedia): Glass Workshop (NW) turns ash into glass furniture; its owner gives the Soot Sack, and ash grass collects soot per step. Two Ninja Boys hide under fake ash piles. Existing route verbs for a believer to use: sweeping/collecting ash, glass-making, hiding.
 
 ## C329 — "Show me" NPCs: the two official grammars
 - **Dex-entry check (Sun/Moon Pokédex quests)**: the NPC wants to *see the entry*; no party needed, no time limit, mostly money rewards (supercheats, serebii). Passive, never strands the player.
@@ -41,22 +47,12 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://allthings.how/pokemon-firered-and-leafgreen-oaks-aides-and-tm-locations/ (C330)
+- https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330)
 - https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests (C329)
 - https://www.gamerguides.com/pokemon-legends-z-a/database/missions/side-missions/i-d-like-to-see-an-ekans (C329)
 - https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329)
 - https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook (C328)
 - https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ (C328)
 - https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
-- https://bulbapedia.bulbagarden.net/wiki/Unused_Trainer_data (C327)
-- https://upcomer.com/i-cant-be-bothered-to-finish-the-boring-side-quests-in-arceus/
-- https://bulbagarden.net/threads/what-are-somethings-you-dont-like-about-pokemon-legends-arceus.291749/post-7475289
-- https://www.tomsguide.com/reviews/pokemon-legends-arceus
-- https://abratabia.com/game-narrative/writing-game-characters.php
-- https://github-wiki-see.page/m/pret/pokeemerald/wiki/Repurposing-the-Link-Battle-placeholders
-- https://tcrf.net/Pokemon_Ruby_and_Sapphire
-- https://www.pokecommunity.com/threads/maximum-number-of-trainers-in-pokeemerald.425848/
-- https://www.pokecommunity.com/threads/firered-expand-max-of-trainers.383237/
-- https://pokeromcodex.notion.site/Unbound-081f9972dc5b4ee8b77ae7d2c343ca54
-- https://retrohandhelds.gg/pokemon-unbound-the-very-best-rom-hack
-- https://animecollective.com/pokemon-unbound-review/
-- https://git.32bit.cafe/cassie/cassiedotink/raw/branch/master/public/early-thoughts-on-pokemon-unbound/index.html
+- C326-C327 (applied): bulbapedia Unused_Trainer_data, pret wiki "Repurposing-the-Link-Battle-placeholders", tcrf RS, PokéCommunity t=425848/383237, upcomer/Bulbagarden/Tom's Guide on Legends: Arceus requests, Unbound reviews (retrohandhelds, animecollective)

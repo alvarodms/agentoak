@@ -7,9 +7,12 @@ Route113_OnResume:
 	setstepcallback STEP_CB_ASH
 	end
 
+@ C330 Red Ink page 4: the picnicker waits by the warm rocks while she trusts BIRCH's page;
+@ once VULPIX_HOENN is caught she stands out in the open ash, face to the sky.
 Route113_OnTransition:
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
 	call Route113_EventScript_CheckSetAshWeather
+	EventMacro_DexBelieverPlace SPECIES_VULPIX_HOENN, LOCALID_ROUTE113_ASH_PICNICKER, 38, 6, MOVEMENT_TYPE_FACE_UP
 	end
 
 Route113_EventScript_CheckSetAshWeather::
@@ -193,3 +196,61 @@ Route113_Text_FrostTracker:
 	.string "The ash seems to nourish them\n"
 	.string "somehow. Their fur glistens\l"
 	.string "like fresh snow.$"
+
+Route113_EventScript_AshPicnicker::
+	lock
+	faceplayer
+	setvar VAR_0x8004, SPECIES_VULPIX_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, TRUE, Route113_EventScript_AshPicnickerShown
+	msgbox Route113_Text_AshPicnickerWaiting, MSGBOX_DEFAULT
+	specialvar VAR_RESULT, CountInkedFieldNotePages
+	call_if_ge VAR_RESULT, 2, Route113_EventScript_AshPicnickerRumour
+	closemessage
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+Route113_EventScript_AshPicnickerRumour::
+	msgbox Route113_Text_AshPicnickerRumour, MSGBOX_DEFAULT
+	return
+
+Route113_EventScript_AshPicnickerShown::
+	playse SE_PIN
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox Route113_Text_AshPicnickerShowAgain, MSGBOX_DEFAULT
+	msgbox Route113_Text_AshPicnickerThreeDays, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceUp
+	waitmovement 0
+	msgbox Route113_Text_AshPicnickerLaugh, MSGBOX_DEFAULT
+	release
+	end
+
+Route113_Text_AshPicnickerWaiting:
+	.string "PROF. BIRCH wrote it down!\n"
+	.string "VULPIX love heat.\p"
+	.string "So I'm sitting by the warmest\n"
+	.string "rocks on the whole route.\p"
+	.string "Three days now!\n"
+	.string "Any minute. Any minute!$"
+
+Route113_Text_AshPicnickerRumour:
+	.string "Oh! Have you heard? Some kid\n"
+	.string "with a red pen is going around\l"
+	.string "arguing with the PROFESSOR.\p"
+	.string "Can you imagine?$"
+
+Route113_Text_AshPicnickerShowAgain:
+	.string "…Wait. Is that a VULPIX?\n"
+	.string "Show me again! Again!$"
+
+Route113_Text_AshPicnickerThreeDays:
+	.string "Cold fur! In the ash!\p"
+	.string "I sat by those rocks\n"
+	.string "for THREE DAYS!$"
+
+Route113_Text_AshPicnickerLaugh:
+	.string "Ahaha! Ahahahaha!$"

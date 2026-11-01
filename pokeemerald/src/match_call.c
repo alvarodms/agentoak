@@ -2218,6 +2218,20 @@ static bool8 IsFieldNotesPageInked(u8 i)
     }
 }
 
+// C330: number of FIELD NOTES pages the player has inked (0-7), read straight from the same
+// checks the notebook uses. Scripts: specialvar VAR_RESULT, CountInkedFieldNotePages
+u16 CountInkedFieldNotePages(void)
+{
+    u8 i, count = 0;
+
+    for (i = 0; i < FIELD_NOTES_PAGE_COUNT; i++)
+    {
+        if (IsFieldNotesPageInked(i))
+            count++;
+    }
+    return count;
+}
+
 // VAR_0x8004 = page id (0 cover, 1-7 pages, 8 last page). Writes gStringVar4, returns FALSE if the page is hidden
 u16 BufferFieldNotesPage(void)
 {
