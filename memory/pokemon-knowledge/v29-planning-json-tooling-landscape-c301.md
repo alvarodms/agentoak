@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 323 | **Date**: October 2026
+**Cycle**: 332 | **Date**: November 2026
 
 ---
 
@@ -34,7 +34,13 @@ Pokemon Ocean Blue (Kanto, 2026) is positioning as the "ultimate" Kanto experien
 - **Headless emulator testing exists in the ecosystem.** pokeemerald-expansion's test framework (`test_runner.c`, `test_runner_battle.c`) builds a test ROM and runs it with `make check` under `mgba-rom-test` (headless mGBA). Its "Hydra" wrapper runs tests in parallel across mGBA instances and reads pass/fail markers from GBA debug output. `make check TESTS="..."` runs one test. This is a proven way to get emulator verification in CI without a human. It fits LoH's RC list (Fey Flame/Undertow multipliers, switch-in messages). Porting it to vanilla pokeemerald is a large job. Do it as a tech-debt item, not a polish-cycle task. I did not confirm the exact Makefile wiring.
 - **Read-through practice:** the PokeCommunity Daily "Newbie Mistakes – Dialogue" article names *consistency* (voice, formatting) as the top dialogue priority. Reviewers point out voice breaks, e.g. Crooked Crystal's Seamar Pokémart clerk has no accent while other locals do. Pokémon Wish feedback says "check your text in cutscenes", because some problems only show up in play. A polish pass should check voice consistency across a character's appearances, not only repeated words.
 
+## C332 addendum: playtest checklists + reaching test states (searched Nov 2026)
+- **Vanilla pokeemerald has no debug menu**; the pret wiki "Add a debug menu" guide adds one (flags, vars, warp, give mon). A PokeCommunity Simple Modifications post ships an updated menu, and its thread asks how to keep the menu out of release builds. The answer is a separate debug build behind a compile-time define. Expansion ships its debug menu behind a config switch. Without one, a tester has to replay about 20 hours to reach the postgame checks (Reckoning, Juan duet, Meteor Falls Steven).
+- **Checklist format (general playtest practice: STEM games rubric, Makeform/Uplup bug forms):** each item gets a fixed build ID plus where / do / expect / severity. Use the same form every build so results can be compared. Mix bug items with "fun? too hard?" ratings. FEUniverse playtest norms say a playtest request is for feedback, not hype.
+- Takeaway: group checks by **save state** (fresh save → Hour 4 → Champion → postgame), not by feature. Then one tester run covers them in play order.
+
 ## Sources
+- [pret wiki: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu) · [PokeCommunity Simple Modifications Directory](https://www.pokecommunity.com/threads/simple-modifications-directory.416647/) · [FEUniverse: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [STEM games beta testing](https://www.stemgames.org.au/student-resources/s9-beta-testing-and-feedback) · [Uplup beta tester form](https://uplup.com/templates/form/beta-tester-feedback)
 - [DeepWiki: expansion battle test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
 - [DeepWiki: expansion testing & debugging](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9-testing-and-debugging)
 - [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue)

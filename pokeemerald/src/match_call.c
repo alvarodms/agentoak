@@ -2380,8 +2380,14 @@ void BufferPokedexRatingForMatchCall(u8 *destStr)
     str = AppendBirchFieldNotes(str);
     if (CountInkedFieldNotePages() >= FIELD_NOTES_REPORT_MIN_PAGES)
     {
-        *(str++) = CHAR_PROMPT_CLEAR;
-        WriteBirchRedInkReport(str);
+        // C332: build the report in the scratch buffer; append it only if it fits gStringVar4.
+        // The in-person rating still reads the full report (BufferBirchRedInkReport)
+        u8 *reportEnd = WriteBirchRedInkReport(buffer);
+        if ((str - destStr) + 1 + (reportEnd - buffer) + 1 <= (int)sizeof(gStringVar4))
+        {
+            *(str++) = CHAR_PROMPT_CLEAR;
+            StringCopy(str, buffer);
+        }
     }
     Free(buffer);
 }
