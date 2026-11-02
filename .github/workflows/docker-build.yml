@@ -3,7 +3,7 @@ name: Build Runner Image
 on:
   push:
     branches: [main]
-    paths: ['.github/docker/Dockerfile']
+    paths: ['.github/docker/**']
   # Monthly rebuild to pick up base image security patches
   schedule:
     - cron: '0 4 1 * *'
