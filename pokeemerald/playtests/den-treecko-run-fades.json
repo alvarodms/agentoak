@@ -1,0 +1,67 @@
+{
+  "name": "den-treecko-run-fades",
+  "checks": "C315 den: running from the battle shows the faded text and the doll is gone; caught flag stays clear",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 6,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "comment": "action menu: FIGHT BAG / POKéMON RUN; RUN is right then down"
+    },
+    {
+      "press": "RIGHT"
+    },
+    {
+      "press": "DOWN"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "Got away safely!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "The glint sinks back into"
+    },
+    {
+      "expectObject": {
+        "id": 2,
+        "absent": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO": false
+      }
+    }
+  ]
+}

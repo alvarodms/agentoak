@@ -1,0 +1,58 @@
+{
+  "name": "baglock-challenge-wild",
+  "checks": "C325 (b): Challenge + wild battle: BAG opens",
+  "scenario": {
+    "map": "MAP_ROUTE101",
+    "x": 13,
+    "y": 11,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_DIFFICULTY_CHALLENGE",
+      "FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE",
+      "FLAG_HIDE_ROUTE_101_ZIGZAGOON",
+      "FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG"
+    ],
+    "vars": {
+      "VAR_ROUTE101_STATE": 4
+    },
+    "party": [
+      {
+        "species": "SPECIES_BAGON",
+        "level": 5
+      }
+    ],
+    "bag": {
+      "ITEM_POKE_BALL": 5
+    }
+  },
+  "steps": [
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ]
+      }
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "RIGHT"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitFor": "CB2_BagMenuRun",
+      "maxFrames": 300
+    },
+    {
+      "screenshot": "bag"
+    }
+  ]
+}

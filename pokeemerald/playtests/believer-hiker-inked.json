@@ -1,0 +1,62 @@
+{
+  "name": "believer-hiker-inked",
+  "checks": "C329 hiker, GLIGAR_HOENN caught: faces down; ReadsDex, Relents, gives HARD_STONE once (flag 0x2BA), then Corrected on the next talk",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B1F",
+    "x": 28,
+    "y": 20,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+        "x": 28,
+        "y": 19,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Your POKéDEX. Hold it up.",
+        "It swam. Didn't it.",
+        "Don't go telling DEWFORD.",
+        "Kid on ROUTE 104. Lady in the"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE": true
+      }
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "I face the deep now."
+    },
+    {
+      "expectNoText": "Your POKéDEX. Hold it up."
+    }
+  ]
+}

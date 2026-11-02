@@ -1,0 +1,53 @@
+{
+  "name": "den-treecko-battle",
+  "checks": "C315 Meteor Falls crystal Treecko: doll visible on first entry; approach text, then a Lv40 TREECKO_HOENN battle",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 6,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 2,
+        "x": 7,
+        "y": 4,
+        "visible": true
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "A TREECKO...? Down here?"
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TREECKO_HOENN",
+        "level": 40
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "battle"
+    }
+  ]
+}

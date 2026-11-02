@@ -1,0 +1,68 @@
+{
+  "name": "juan-duet",
+  "checks": "C322 Juan duet: after game clear, talking to Juan (9,2) and answering YES starts the double battle (Luvdisc lead)",
+  "scenario": {
+    "map": "MAP_SOOTOPOLIS_CITY_GYM_1F",
+    "x": 9,
+    "y": 3,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 70
+      },
+      {
+        "species": "SPECIES_SWAMPERT",
+        "level": 70
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 3,
+        "x": 9,
+        "y": 2
+      }
+    },
+    {
+      "expectObject": {
+        "id": 1,
+        "x": 8,
+        "y": 2
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LUVDISC"
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "battle"
+    }
+  ]
+}

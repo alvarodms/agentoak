@@ -1,0 +1,28 @@
+{
+  "name": "den-treecko-caught",
+  "checks": "C315 den: once caught (FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO), the doll is gone for good",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 6,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 2,
+        "absent": true
+      }
+    }
+  ]
+}

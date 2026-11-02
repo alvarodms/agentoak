@@ -112,6 +112,7 @@ Tempered Blade (Sceptile_H, 81), Fey Flame (Blaziken_H, 82: 1.5x vs burned, swit
 ## v2.9 RC — Not Yet Playtested (player-facing copy in README "Known Issues", C320)
 
 No headless emulator in the pipeline; everything below is statically checked only.
+**Update (runner playtest suite, after C331):** dens (visible, battle, run → faded, caught → gone), all four believers and the C325 Bag lock (a)-(c) now pass in mGBA. See `pokeemerald/playtests/` and memory/completed-work/playtest-hook.md for what is still uncovered.
 - **Dens** (Mt. Pyre Exterior Torchic 22,13 · Meteor Falls B1F_2R Treecko 7,4 · Shoal Cave Lower Room Mudkip 18,6): doll visible on first entry (Torchic inside the summit fog); KO or run → faded text, doll gone until you leave and re-enter; catch → gone for good; whiteout mid-battle → doll still there. Old saves: a pre-C315 KO of the Torchic hides it forever (0x2B5 reused). Shoal Cave doll is low-tide only; Entrance cue (13,29) text switches with the tide.
 - **Birch's Field Notes**: one hint per call (nearest reachable den first, then the all-found line). Worst-case Pokénav call is 506 B of the 1000 B gStringVar4 (C320 hand count); check the CHAR_PROMPT_CLEAR page breaks render and the in-person hint reads as one beat.
 - **Fey Flame / Undertow**: both switch-in messages render (Champion back three: Swampert_H then Blaziken_H); Undertow 1.3x only after being hit that turn; Fey Flame 1.5x vs burned targets.

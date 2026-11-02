@@ -15,7 +15,7 @@ import os from "node:os";
 import path from "node:path";
 import { POKEEMERALD_DIR } from "../utils/paths.js";
 
-/** Headers every lookup includes. map_groups.h only exists after a build. */
+/** Headers every lookup includes. map_groups.h and map_event_ids.h only exist after a build. */
 const HEADERS = [
   "constants/global.h",
   "constants/flags.h",
@@ -24,6 +24,7 @@ const HEADERS = [
   "constants/items.h",
   "constants/moves.h",
   "constants/map_groups.h",
+  "constants/map_event_ids.h",
 ];
 
 const IDENTIFIER = /^[A-Za-z_][A-Za-z0-9_]*$/;

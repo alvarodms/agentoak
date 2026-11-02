@@ -1,0 +1,74 @@
+{
+  "name": "reckoning-maxie",
+  "checks": "C326 Maxie Reckoning: after game clear Maxie stands at Mt. Chimney 13,6; YES starts the TRAINER_MAXIE_RECKONING battle (Weezing lead)",
+  "scenario": {
+    "map": "MAP_MT_CHIMNEY",
+    "x": 14,
+    "y": 6,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA",
+      "FLAG_HIDE_MT_CHIMNEY_TEAM_AQUA"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 70
+      },
+      {
+        "species": "SPECIES_SWAMPERT",
+        "level": 70
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "postgame: the story's Team Magma/Aqua objects are hidden, as after the Mt. Chimney event"
+    },
+    {
+      "expectObject": {
+        "id": 32,
+        "x": 13,
+        "y": 6,
+        "visible": true
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "MAXIE: Ah.",
+        "It grew without me.",
+        "Will you indulge us?"
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_WEEZING"
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "battle"
+    }
+  ]
+}

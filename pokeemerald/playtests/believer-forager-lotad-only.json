@@ -1,0 +1,47 @@
+{
+  "name": "believer-forager-lotad-only",
+  "checks": "C328 forager, only LOTAD_HOENN caught: still at 18,34; BoyStopped replaces BoyReads",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 18,
+    "y": 35,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "PROF. BIRCH wrote it plain.",
+        "That boy by the sea stopped"
+      ]
+    },
+    {
+      "expectNoText": "There's a boy by the sea who"
+    }
+  ]
+}

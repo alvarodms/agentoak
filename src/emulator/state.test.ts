@@ -3,7 +3,7 @@ import { LAYOUT, LAYOUT_COUNT, decodeBattleMon, decodePartyMon, facingName, pars
 
 // Vanilla Emerald offsets, as the ROM's gPlaytestLayout reports them.
 const VANILLA: Layout = {
-  version: 1,
+  version: 2,
   saveBlock1Location: 0x04,
   saveBlock1Flags: 0x1270,
   saveBlock1Vars: 0x139c,
@@ -23,6 +23,11 @@ const VANILLA: Layout = {
   flagsCount: 0x900,
   varsStart: 0x4000,
   varsCount: 0x100,
+  objectEventLocalId: 0x08,
+  objectEventMapNum: 0x09,
+  objectEventMapGroup: 0x0a,
+  objectEventGraphicsId: 0x05,
+  objectEventsCount: 16,
 };
 
 /** Builds an encrypted struct Pokemon the way the game stores it. */
@@ -48,7 +53,13 @@ describe("parseLayout", () => {
   it("reads the u16 table in PlaytestLayoutField order", () => {
     const raw = Buffer.alloc(LAYOUT_COUNT * 2);
     for (const [key, index] of Object.entries(LAYOUT)) raw.writeUInt16LE(VANILLA[key as keyof Layout], index * 2);
-    expect(parseLayout(raw)).toEqual(VANILLA);
+    expect(parseLayout(raw, 2)).toEqual(VANILLA);
+  });
+
+  it("refuses a ROM built with another layout version", () => {
+    const raw = Buffer.alloc(LAYOUT_COUNT * 2);
+    raw.writeUInt16LE(1, 0);
+    expect(() => parseLayout(raw, 2)).toThrow(/layout version 1, harness expects 2/);
   });
 });
 

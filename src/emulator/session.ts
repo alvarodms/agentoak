@@ -14,11 +14,14 @@ import { POKEEMERALD_DIR } from "../utils/paths.js";
 import { decodeGameText, loadCharmap, type Charmap } from "./charmap.js";
 import { ConstantNames, resolveConstants } from "./constants.js";
 import { MgbaDriver, driverBinary } from "./driver.js";
-import { resolveScenario, writeScenarioRom, type Scenario } from "./scenario.js";
+import { LAYOUT_VERSION, resolveScenario, writeScenarioRom, type Scenario } from "./scenario.js";
 import {
   LAYOUT_COUNT,
   MAP_OFFSET,
+  OBJECT_EVENT_ACTIVE,
   OBJECT_EVENT_FACING_OFFSET,
+  OBJECT_EVENT_INVISIBLE,
+  SCRIPT_CONTEXT_SHUTDOWN,
   decodeBattleMon,
   decodePartyMon,
   facingName,
@@ -98,6 +101,15 @@ export interface BootScenarioOptions extends StartOptions {
 
 export interface PartyMember extends PartyMon {
   speciesName: string;
+}
+
+export interface MapObject {
+  localId: number;
+  graphicsId: number;
+  x: number;
+  y: number;
+  facing: Facing;
+  visible: boolean;
 }
 
 export interface GameState {
@@ -326,6 +338,47 @@ export class EmulatorSession {
     return { frame: this.frameCount, screen: callback2, map, x, y, facing, party, battle };
   }
 
+  /**
+   * Object events loaded for the current map (NPCs, item balls, dolls),
+   * excluding the player. Objects hidden by their flag are not loaded at all.
+   */
+  async objects(): Promise<MapObject[]> {
+    const layout = await this.getLayout();
+    const sb1 = await this.deref("gSaveBlock1Ptr");
+    const location = await this.read(sb1 + layout.saveBlock1Location, 2);
+    const playerObjectId = await this.readU8(this.symbols.address("gPlayerAvatar") + layout.playerAvatarObjectEventId);
+    const raw = await this.read(this.symbols.address("gObjectEvents"), layout.objectEventsCount * layout.objectEventSize);
+    const out: MapObject[] = [];
+    for (let i = 0; i < layout.objectEventsCount; i++) {
+      if (i === playerObjectId) continue;
+      const obj = raw.subarray(i * layout.objectEventSize, (i + 1) * layout.objectEventSize);
+      if (!(obj[OBJECT_EVENT_ACTIVE.byte] & OBJECT_EVENT_ACTIVE.mask)) continue;
+      if (obj[layout.objectEventMapGroup] !== location[0] || obj[layout.objectEventMapNum] !== location[1]) continue;
+      out.push({
+        localId: obj[layout.objectEventLocalId],
+        graphicsId: obj[layout.objectEventGraphicsId],
+        x: obj.readInt16LE(layout.objectEventCoords) - MAP_OFFSET,
+        y: obj.readInt16LE(layout.objectEventCoords + 2) - MAP_OFFSET,
+        facing: facingName(obj[OBJECT_EVENT_FACING_OFFSET] & 0xf),
+        visible: !(obj[OBJECT_EVENT_INVISIBLE.byte] & OBJECT_EVENT_INVISIBLE.mask),
+      });
+    }
+    return out;
+  }
+
+  /** One object by local id (a number or a LOCALID_* name), or null if it is not loaded. */
+  async object(localId: number | string): Promise<MapObject | null> {
+    const id = typeof localId === "number" ? localId : this.constant(localId);
+    return (await this.objects()).find((o) => o.localId === id) ?? null;
+  }
+
+  /** True when no field script is running and the player has control. */
+  async scriptIdle(): Promise<boolean> {
+    const status = await this.readU8(this.symbols.address("sGlobalScriptContextStatus"));
+    const locked = await this.readU8(this.symbols.address("sLockFieldControls"));
+    return status === SCRIPT_CONTEXT_SHUTDOWN && locked === 0;
+  }
+
   /** Reads a FLAG_* from the save block (not the special/temporary 0x4000+ range). */
   async flag(name: string): Promise<boolean> {
     const layout = await this.getLayout();
@@ -363,7 +416,7 @@ export class EmulatorSession {
 
   private async getLayout(): Promise<Layout> {
     if (!this.layout) {
-      this.layout = parseLayout(await this.readSymbol("gPlaytestLayout", LAYOUT_COUNT * 2));
+      this.layout = parseLayout(await this.readSymbol("gPlaytestLayout", LAYOUT_COUNT * 2), LAYOUT_VERSION);
     }
     return this.layout;
   }

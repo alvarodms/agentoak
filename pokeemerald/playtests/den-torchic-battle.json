@@ -1,0 +1,53 @@
+{
+  "name": "den-torchic-battle",
+  "checks": "C312/C315 Mt. Pyre starlight Torchic: doll visible in the summit fog at 22,13; Lv30 TORCHIC_HOENN battle",
+  "scenario": {
+    "map": "MAP_MT_PYRE_EXTERIOR",
+    "x": 22,
+    "y": 14,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 4,
+        "x": 22,
+        "y": 13,
+        "visible": true
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "A TORCHIC...? Up here?"
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TORCHIC_HOENN",
+        "level": 30
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "battle"
+    }
+  ]
+}
