@@ -62,7 +62,6 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 **Juan Duet (C322)**: after game clear, Juan (Sootopolis Gym 9,2) offers one Double Battle: Luvdisc/Ludicolo then Vaporeon/Gorebyss (Lv66-72, rain/Helping Hand). Win → Mystic Water, and Wallace says "You still lead, you know." A teacher-student closing beat, not a power spike.
 **Changed Three Gift (C279, reactive C319)**: Birch offers the Changed Three starters postgame. Before the offer he reacts to each den: "You found the starlight TORCHIC on MT. PYRE before I did!" if it's caught, or "Something still glitters in the fog atop MT. PYRE" if not. The same goes for Meteor Falls Treecko and Shoal Cave Mudkip. Then he says the three "hatched here at the lab, from eggs the migration left behind." C319 fix: the Mudkip ball now really gives SPECIES_MUDKIP_HOENN. From C279 to C318 it showed and gave vanilla Mudkip.
 
-
 ---
 
 ## Red Ink believers — static walkthrough (C330)
@@ -84,3 +83,17 @@ Trace result (C330): no bug found. No branch is unreachable (the picnicker's rum
 - Hiker: fresh save faces up and does NOT turn when talked to; mock lines appear per Lotad/Shroomish; after GLIGAR_HOENN he turns away and back and gives the Hard Stone once (and with a full bag: refuses cleanly, gives it on the retry); after re-entry he faces down.
 - Picnicker: fresh save at 38,8 facing the rock, turns back to it after talking; rumour only with 2+ pages inked; after VULPIX_HOENN the "!" plays and she turns up in-scene; after re-entry she stands at 38,6 facing up in the ash grass, visible through the ash weather, not blocking the path.
 
+### Red Ink payoff — static walkthrough (C331)
+
+Source: `BufferFieldNotesPage` (notebook), `WriteBirchRedInkReport` (shared writer) and `BufferBirchRedInkReport` (special) in src/match_call.c. The report fires when `CountInkedFieldNotePages()` ≥ `FIELD_NOTES_REPORT_MIN_PAGES` (3). No flag, so it repeats on every rating. Pokénav order: rating → (den hint) → report. In person, `ProfBirch_EventScript_AskRatePokedex` runs RatePokedex → FieldNotes (den hint) → `ProfBirch_EventScript_RedInkReport`. Margin = third box on an inked page 1-4 (old text → red ink → red margin).
+
+| State | Cover | Margins | Pokénav call (after rating + any den hint) | In person (Yes to rating) |
+|---|---|---|---|---|
+| (a) P1+P2 inked | plain `gFieldNotesText_Cover` "2 of N" | P1 (kid stopped watching the sea), P2 (lady left her warm spot) | no report (count 2) | no report |
+| (b) P1+P2+P3 | `CoverYours`: "FIELD NOTES of PROF. BIRCH / and {PLAYER} (red). / Pages in your ink: / 3 of N." | P1, P2, P3 | Open → schoolkid → forager → hiker → Believed → Close | same text, one msgbox after the den hint |
+| (c) P1-P4 | CoverYours "4 of N" (+ den pages open by badge) | P1-P4 | Open → schoolkid → forager → hiker → picnicker → Believed → Close (worst case 869 B) | same |
+| (d) only P5-P7 (dens caught, no P1-P4 species) | CoverYours "3 of 7" (den pages open because they're caught) | none (den rows have NULL margin) | Open → OnlyYou → Close | same; follows the den all-found line |
+| (e) Champion's Room rating | — | — | — | no report: ChampionsRoom calls `ProfBirch_EventScript_RatePokedex` directly, never AskRatePokedex |
+
+Trace notes: (d) reachable but unlikely (P1-P4 are early wilds). Declining the rating skips den hint + report. Cover numInked == CountInkedFieldNotePages (inked pages are always open), so cover and report switch together.
+**Emulator checks (C331, none done):** red "and {PLAYER}" on the cover then dark-gray count; margin box after ink on P1-P4 (third A-press); Pokénav report breaks cleanly at each CHAR_PROMPT_CLEAR and 28-char lines fit; in-person report is a separate msgbox after the den hint.

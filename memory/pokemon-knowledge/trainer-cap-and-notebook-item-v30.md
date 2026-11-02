@@ -1,8 +1,13 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 330 | **Date**: November 2026
+**Cycle**: 331 | **Date**: November 2026
 
 ---
+
+## C331 — Mentor payoff: phone call vs. in-person
+- HGSS/GSC phone (Bulbagarden fan threads): players call the phone "annoying over time"; Bill's automated calls were "useless". Elm's *story* calls (e.g. after a badge) are remembered, not hated. Fans resent calls that interrupt without new content, not calls in general.
+- Emerald Match Call: Birch is one of the few non-trainer entries. Rematch calls roll on step/minute counters + chance (`TryStartMatchCall`: step counter → minutes → chance → map allows → trainer select), so they can't be predicted. Vanilla one-shot story calls (Wally/Scott/Steven style) are a separate step-triggered path; verify in field code before reuse.
+- Applied: the ≥3-pages beat should be ONE player-initiated or guaranteed-once beat. Best fit: in-person `ProfBirch_EventScript_FieldNotes` + the existing dex-rating Match Call (both already read `GetActiveFieldNote`). No random unprompted call. A forced call needs a flag (0x2BB is the last one free).
 
 ## C330 — Multi-page payoff: count thresholds, not one completion prize
 - **Oak's aides (FRLG/Gen III)**: aides stand at fixed spots on roads the player already walks and check a *count* (Itemfinder at 30, Exp. Share at 50 on the Route 15 gate 2F). Several small rewards at thresholds, not one at 100%. Guides disagree on which item goes with which count, so players can't hold the exact numbers in their heads. Only the "talk to the aide, get a thing" loop sticks.
@@ -29,16 +34,9 @@
 - Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
 - A dialogue-only skeptic does NOT need a trainer slot (flag-gated text on a plain object). Spend slot 853 only if a battle is part of the beat.
 
-## C326 — Reclaiming IDs: the pret "Link Battle placeholders" guide
-- pret/pokeemerald wiki "Repurposing the Link Battle placeholders" is the community-standard route for exactly this: TRAINER_RED, TRAINER_LEAF, TRAINER_BRENDAN_PLACEHOLDER, TRAINER_MAY_PLACEHOLDER (bottom of trainers.h / trainer_parties.h) = up to 4 new trainers with no table growth.
-- **Caveat the guide states**: if the player can reach the Cable Club (Pokémon Center 2F link rooms), that trainer data "may end up overwritten" in link play. The guide's fix is to block the Cable Club first. So "zero grep references by name" is not the whole check: link code can index these slots by arithmetic/version, not by constant name.
-- Rules from the guide: keep the constant and party names (TRAINER_RED, sParty_Red); change only the name string, class, pic, AI, party. Copy music/pic/AI from a same-class trainer.
-- Save safety: a reclaimed slot's trainer flag (0x500 + id) is clear in every v2.9 save because it was never battled, so the new trainer starts unbeaten. No flag shift.
-- Beyond the 4 placeholders: Bulbapedia "Unused Trainer data" and TCRF RS page list unused RS-era Aqua/Magma parties (levels never fought, some unnamed) — carried into Emerald's table, a likely second pool. Verify each by script grep (Trick House 848-850 proved some "FRLG-looking" IDs ARE used).
-
-## Trainer cap (TRAINERS_COUNT bump)
-- Community (PokéCommunity t=425848, t=383237): raising MAX_TRAINERS_COUNT "collides with system flags"; prefer a second flag block or reclaiming IDs.
-- Local: `SYSTEM_FLAGS = TRAINER_FLAGS_END + 1`, so any MAX bump shifts every FLAG_SYS_* flag and breaks v2.9 saves. Route chosen: reclaim zero-ref IDs (Trick House 848-850 ARE used); fallback is to pin SYSTEM_FLAGS before bumping.
+## C326 — Reclaiming IDs / trainer cap (applied)
+- pret wiki "Repurposing the Link Battle placeholders": RED/LEAF/BRENDAN_/MAY_PLACEHOLDER = 4 slots, keep constant+party names, change only name/class/pic/AI/party. Its Cable Club overwrite caveat doesn't apply here (gTrainers const, C326). Reclaimed slots start unbeaten (flag never set).
+- Raising MAX_TRAINERS_COUNT collides with system flags (PokéCommunity t=425848/383237; local `SYSTEM_FLAGS = TRAINER_FLAGS_END + 1`). Route: reclaim zero-ref IDs, verified by script grep (Trick House 848-850 ARE used).
 
 ## Notebook / log key items
 
@@ -47,6 +45,7 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://bulbapedia.bulbagarden.net/wiki/Match_Call , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_HeartGold_and_SoulSilver/Part_1 , https://www.bulbagarden.net/goto/post?id=939348 , https://pokecommunity.com/showthread.php?p=10212056 (C331)
 - https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://allthings.how/pokemon-firered-and-leafgreen-oaks-aides-and-tm-locations/ (C330)
 - https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330)
 - https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests (C329)

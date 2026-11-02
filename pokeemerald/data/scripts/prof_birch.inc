@@ -44,6 +44,7 @@ ProfBirch_EventScript_AskRatePokedex::
 	goto_if_eq VAR_RESULT, NO, ProfBirch_EventScript_DeclineRating
 	call ProfBirch_EventScript_RatePokedex
 	call ProfBirch_EventScript_FieldNotes
+	call ProfBirch_EventScript_RedInkReport
 	release
 	end
 
@@ -81,6 +82,13 @@ ProfBirch_EventScript_FieldNoteTreecko::
 
 ProfBirch_EventScript_FieldNoteAllFound::
 	msgbox gBirchFieldNoteText_AllFound, MSGBOX_DEFAULT
+	return
+
+@ C331 Red Ink payoff: 3+ FIELD NOTES pages inked (no flag; text built by BufferBirchRedInkReport in src/match_call.c)
+ProfBirch_EventScript_RedInkReport::
+	specialvar VAR_RESULT, BufferBirchRedInkReport
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	return
 
 ProfBirch_EventScript_DeclineRating::

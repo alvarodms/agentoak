@@ -1046,6 +1046,19 @@ extern const u8 gFieldNotesText_MudkipInk[];
 extern const u8 gFieldNotesText_Treecko[];
 extern const u8 gFieldNotesText_TreeckoInk[];
 extern const u8 gFieldNotesText_LastPage[];
+extern const u8 gFieldNotesText_LotadMargin[];
+extern const u8 gFieldNotesText_ShroomishMargin[];
+extern const u8 gFieldNotesText_GligarMargin[];
+extern const u8 gFieldNotesText_VulpixMargin[];
+extern const u8 gFieldNotesText_CoverYours[];
+extern const u8 gBirchRedInkText_Open[];
+extern const u8 gBirchRedInkText_Lotad[];
+extern const u8 gBirchRedInkText_Shroomish[];
+extern const u8 gBirchRedInkText_Gligar[];
+extern const u8 gBirchRedInkText_Vulpix[];
+extern const u8 gBirchRedInkText_Believed[];
+extern const u8 gBirchRedInkText_OnlyYou[];
+extern const u8 gBirchRedInkText_Close[];
 
 void InitMatchCallCounters(void)
 {
@@ -2161,21 +2174,26 @@ enum {
     FIELD_NOTES_TREECKO,
 };
 
+// C331: Birch's red ink report (and the named cover) need this many inked pages
+#define FIELD_NOTES_REPORT_MIN_PAGES 3
+
 struct FieldNotesPage
 {
     const u8 *oldText;
     const u8 *inkText;
+    const u8 *marginText; // C331: NULL on den pages (no believer)
+    const u8 *birchText;  // C331: NULL on den pages (no believer)
 };
 
 static const struct FieldNotesPage sFieldNotesPages[FIELD_NOTES_PAGE_COUNT] =
 {
-    [FIELD_NOTES_LOTAD]     = {gFieldNotesText_Lotad,     gFieldNotesText_LotadInk},
-    [FIELD_NOTES_SHROOMISH] = {gFieldNotesText_Shroomish, gFieldNotesText_ShroomishInk},
-    [FIELD_NOTES_GLIGAR]    = {gFieldNotesText_Gligar,    gFieldNotesText_GligarInk},
-    [FIELD_NOTES_VULPIX]    = {gFieldNotesText_Vulpix,    gFieldNotesText_VulpixInk},
-    [FIELD_NOTES_TORCHIC]   = {gFieldNotesText_Torchic,   gFieldNotesText_TorchicInk},
-    [FIELD_NOTES_MUDKIP]    = {gFieldNotesText_Mudkip,    gFieldNotesText_MudkipInk},
-    [FIELD_NOTES_TREECKO]   = {gFieldNotesText_Treecko,   gFieldNotesText_TreeckoInk},
+    [FIELD_NOTES_LOTAD]     = {gFieldNotesText_Lotad,     gFieldNotesText_LotadInk,     gFieldNotesText_LotadMargin,     gBirchRedInkText_Lotad},
+    [FIELD_NOTES_SHROOMISH] = {gFieldNotesText_Shroomish, gFieldNotesText_ShroomishInk, gFieldNotesText_ShroomishMargin, gBirchRedInkText_Shroomish},
+    [FIELD_NOTES_GLIGAR]    = {gFieldNotesText_Gligar,    gFieldNotesText_GligarInk,    gFieldNotesText_GligarMargin,    gBirchRedInkText_Gligar},
+    [FIELD_NOTES_VULPIX]    = {gFieldNotesText_Vulpix,    gFieldNotesText_VulpixInk,    gFieldNotesText_VulpixMargin,    gBirchRedInkText_Vulpix},
+    [FIELD_NOTES_TORCHIC]   = {gFieldNotesText_Torchic,   gFieldNotesText_TorchicInk,   NULL,                            NULL},
+    [FIELD_NOTES_MUDKIP]    = {gFieldNotesText_Mudkip,    gFieldNotesText_MudkipInk,    NULL,                            NULL},
+    [FIELD_NOTES_TREECKO]   = {gFieldNotesText_Treecko,   gFieldNotesText_TreeckoInk,   NULL,                            NULL},
 };
 
 // Den pages open on the same badge gates GetActiveFieldNote uses, so the notebook and the
@@ -2232,6 +2250,38 @@ u16 CountInkedFieldNotePages(void)
     return count;
 }
 
+// C331: Birch reads the red ink. One writer for the Pokenav call and the in-person rating
+static u8 *WriteBirchRedInkReport(u8 *str)
+{
+    u8 i;
+    bool8 namedAnyone = FALSE;
+
+    str = StringExpandPlaceholders(str, gBirchRedInkText_Open);
+    for (i = 0; i < FIELD_NOTES_PAGE_COUNT; i++)
+    {
+        if (sFieldNotesPages[i].birchText != NULL && IsFieldNotesPageInked(i))
+        {
+            *(str++) = CHAR_PROMPT_CLEAR;
+            str = StringExpandPlaceholders(str, sFieldNotesPages[i].birchText);
+            namedAnyone = TRUE;
+        }
+    }
+    *(str++) = CHAR_PROMPT_CLEAR;
+    str = StringExpandPlaceholders(str, namedAnyone ? gBirchRedInkText_Believed : gBirchRedInkText_OnlyYou);
+    *(str++) = CHAR_PROMPT_CLEAR;
+    str = StringExpandPlaceholders(str, gBirchRedInkText_Close);
+    return str;
+}
+
+// Scripts: specialvar VAR_RESULT, BufferBirchRedInkReport; then msgbox gStringVar4
+u16 BufferBirchRedInkReport(void)
+{
+    if (CountInkedFieldNotePages() < FIELD_NOTES_REPORT_MIN_PAGES)
+        return FALSE;
+    WriteBirchRedInkReport(gStringVar4);
+    return TRUE;
+}
+
 // VAR_0x8004 = page id (0 cover, 1-7 pages, 8 last page). Writes gStringVar4, returns FALSE if the page is hidden
 u16 BufferFieldNotesPage(void)
 {
@@ -2254,7 +2304,11 @@ u16 BufferFieldNotesPage(void)
         }
         ConvertIntToDecimalStringN(gStringVar1, numInked, STR_CONV_MODE_LEFT_ALIGN, 1);
         ConvertIntToDecimalStringN(gStringVar2, numOpen, STR_CONV_MODE_LEFT_ALIGN, 1);
-        StringExpandPlaceholders(gStringVar4, gFieldNotesText_Cover);
+        // Inked pages are always open, so numInked is the full inked count here
+        if (numInked >= FIELD_NOTES_REPORT_MIN_PAGES)
+            StringExpandPlaceholders(gStringVar4, gFieldNotesText_CoverYours);
+        else
+            StringExpandPlaceholders(gStringVar4, gFieldNotesText_Cover);
         return TRUE;
     }
     if (pageId <= FIELD_NOTES_PAGE_COUNT)
@@ -2266,7 +2320,12 @@ u16 BufferFieldNotesPage(void)
         if (IsFieldNotesPageInked(i))
         {
             *(str++) = CHAR_PROMPT_CLEAR;
-            StringExpandPlaceholders(str, sFieldNotesPages[i].inkText);
+            str = StringExpandPlaceholders(str, sFieldNotesPages[i].inkText);
+            if (sFieldNotesPages[i].marginText != NULL)
+            {
+                *(str++) = CHAR_PROMPT_CLEAR;
+                StringExpandPlaceholders(str, sFieldNotesPages[i].marginText);
+            }
         }
         return TRUE;
     }
@@ -2318,7 +2377,12 @@ void BufferPokedexRatingForMatchCall(u8 *destStr)
         str = StringExpandPlaceholders(str, gBirchDexRatingText_OnANationwideBasis);
     }
 
-    AppendBirchFieldNotes(str);
+    str = AppendBirchFieldNotes(str);
+    if (CountInkedFieldNotePages() >= FIELD_NOTES_REPORT_MIN_PAGES)
+    {
+        *(str++) = CHAR_PROMPT_CLEAR;
+        WriteBirchRedInkReport(str);
+    }
     Free(buffer);
 }
 

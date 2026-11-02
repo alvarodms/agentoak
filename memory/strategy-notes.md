@@ -21,7 +21,7 @@
 **v2.8** (C296-300): "The Player's Hoenn" — Polish pass. BW-style repel prompt, 3 custom battle animations, dialogue subtraction (Tell:Show 7:2->4:5 in Hours 3-6), Brawly/Wattson gym leader dialogue rewrite, Growlithe_Hoenn on R118, Tempered Blade (4th custom ability, Sceptile_Hoenn), Iron Leaf redesigned to high-crit synergy. **COMPLETE.**
 **v2.9** (C301-323): "The Last Witness" — Steven returns as Champion with the Changed Three (C308), Wallace comes home to Gym 8 + Juan cameo/duet (C309/C322), Fey Flame + Undertow abilities (C310-311), three Changed-starter dens (Mt. Pyre Torchic C312, Meteor Falls Treecko C315, Shoal Cave Mudkip C318), boss species audit 0 (C313-317), Birch's Field Notes hints (C319-320), Meteor Falls Steven Regis (C321), 25/25 custom shinies, lint gates (check_bosses/dens/gifts/text_width/doubles). **COMPLETE C323; not yet emulator-tested.**
 
-**v3.0 "Red Ink"** (C324-): the player corrects the record of a changed Hoenn. Every chapter puts someone who still holds an old belief (Birch's notes, the villains' plans, townsfolk repeating the old notes) in front of a player who has seen the truth, and lets the player's catches and battles write the correction. C324 Field Notes (Birch's 7 wrong beliefs, red ink on catch). C325 #190 Challenge Bag lock. C326 Maxie/Archie Reckoning rematches (slots 851/852): the leaders admit the land and sea grew without them. C327-330: one believer per open page — Route 104 schoolkid (P1, accepts), Petalburg Woods forager (P2, grieves), Granite Cave B1F hiker (P3, refuses then relents, HARD_STONE), Route 113 ash picnicker (P4, delight) — via `EventMacro_DexBelieverPlace` (C329) + `CountInkedFieldNotePages` special (C330). Next: C331 multi-page payoff.
+**v3.0 "Red Ink"** (C324-): the player corrects the record of a changed Hoenn. Every chapter puts someone who still holds an old belief (Birch's notes, the villains' plans, townsfolk repeating the old notes) in front of a player who has seen the truth, and lets the player's catches and battles write the correction. C324 Field Notes (Birch's 7 wrong beliefs, red ink on catch). C325 #190 Challenge Bag lock. C326 Maxie/Archie Reckoning rematches (slots 851/852): the leaders admit the land and sea grew without them. C327-330: one believer per open page — Route 104 schoolkid (P1, accepts), Petalburg Woods forager (P2, grieves), Granite Cave B1F hiker (P3, refuses then relents, HARD_STONE), Route 113 ash picnicker (P4, delight) — via `EventMacro_DexBelieverPlace` (C329) + `CountInkedFieldNotePages` special (C330). C331 Red Ink payoff: with 3+ pages inked, Birch reads the player's red ink and names the believers (Pokénav + in person, one C writer). Pages 1-4 gain red margin lines, and the cover adds the player's name in red. No flags. Next: C332 consolidation/playtest checklist.
 
 ---
 
@@ -57,7 +57,6 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 - Wallace = **Water-first, exactly one migration species (Arcanine_Hoenn, used by no other trainer)**. Milotic ace every tier. Gym: Sealeo 41 / Whiscash 42 / Arcanine_H 43 / Gyarados 43 / Milotic 46. Toxapex joins T2+ (#180 kept). T4 opens with Juan's Kingdra (entrusted to his student). Old Ludicolo_H/Ninetales_H Wallace teams retired (archive deleted).
 - Story: Wallace gave up the Champion seat to guard Sootopolis's water; Juan kept the Gym meanwhile and now stands beside him (Gym 1F object at 9,2, `SootopolisCity_Gym_1F_EventScript_JuanCameo`, FLAG_BADGE08_GET-conditional). Post-battle hands off to Steven ("Show him what you've seen"). After the HM Waterfall gift, Wallace fades out of the city (FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE) to wait in the Gym.
 - Pokénav: Juan header = Wallace (name/pic come from gTrainers; desc "WATER ARTIST"); MatchCall_Text_Wallace (Champion header) now speaks as STEVEN.
-
 
 ### Species Reuse (#193)
 
@@ -97,7 +96,6 @@ Donphan (C314, replaced Flygon — Drake owns Flygon) EQ/Rock Slide/Iron Tail/Do
 
 **Winona (C314)**: "Hoenn's own wings" — Altaria DD ace, no Honchkrow/Crobat; source `winona_gym_1..5.json`. Story link: her dark bird "flew south" → Sidney's Honchkrow "rode a storm down from FORTREE".
 
-
 ## Changed Three Ability Parity — DONE (C300/C310/C311)
 
 Tempered Blade (Sceptile_H, 81), Fey Flame (Blaziken_H, 82: 1.5x vs burned, switch-in msg; Torchic_H/Combusken_H Will-O-Wisp Lv24), Undertow (Swampert_H line, 83: 1.3x after taking damage this turn, switch-in msg). Last hand-built ability; build generate_ability.cjs (tech-debt) before a 7th.
@@ -108,7 +106,8 @@ Tempered Blade (Sceptile_H, 81), Fey Flame (Blaziken_H, 82: 1.5x vs burned, swit
 |-------|-----------|--------|
 | 302-323 | v2.9 "The Last Witness": Steven champion, Wallace cascade, Fey Flame/Undertow, 3 Changed-starter dens, Field Notes, boss audit 0, Meteor Falls Steven, Juan duet, 25/25 shinies, lint gates — **ALL DONE** | #180 #182 #192-#194 #201 #163 closed |
 | 324-330 | v3.0 opener: FIELD NOTES key item (C324), #190 Challenge BAG lock (C325), Maxie/Archie Reckoning rematches 851/852 (C326), believers P1-P4 (C327-330) + check_trainer_slots, check_gifts Rule C, DexBelieverPlace macro, CountInkedFieldNotePages — **DONE** (none emulator-tested) | #190 closed |
-| 331 | Multi-page payoff: Birch reacts once ≥3 pages are inked (`CountInkedFieldNotePages`). Prefer a Pokénav call or lab beat where Birch reads the red ink and names the people it changed, plus notebook margin lines per inked page (creative-backlog 328-330; dex-caught only, no flags). Also consider a small in-scene turn for the skeptic/forager (they have no in-scene beat). Flag 0x2BB (LAST free) only if a one-time reward is truly needed — prefer none | — |
+| 331 | Red Ink multi-page payoff: `BufferBirchRedInkReport` / `WriteBirchRedInkReport` (Pokénav call + in-person rating, ≥3 pages inked), margin lines on inked P1-P4, `CoverYours` named cover. No flags (0x2BB still free) — **DONE** (not emulator-tested) | — |
+| 332 | Consolidation/patch: merge all outstanding v3.0 emulator checks (FIELD NOTES, 4 believers, C331 payoff, Reckoning rematches, Bag lock) into one README playtest checklist; optional skeptic/forager in-scene turn. No new content. | — |
 
 ## v2.9 RC — Not Yet Playtested (player-facing copy in README "Known Issues", C320)
 
@@ -118,20 +117,15 @@ No headless emulator in the pipeline; everything below is statically checked onl
 - **Fey Flame / Undertow**: both switch-in messages render (Champion back three: Swampert_H then Blaziken_H); Undertow 1.3x only after being hit that turn; Fey Flame 1.5x vs burned targets.
 - **Sootopolis Gym 1F**: Wallace (8,2) and Juan (9,2) have flag 0 (always visible); Wallace should never show in the city and the Gym at once in a normal route (Gym door is reached after the city scene).
 - **Flannery badge 4**: sun/Torkoal fight (F1 Torkoal 29 White Herb Overheat; Magcargo 26 under-levelled, accepted). If it feels harder than the Brawly→Norman curve, drop Overheat to Flamethrower — don't change species.
-- **Fortree postgame line**: the bird keeper (20,8) switches to the Honchkrow "visiting home" line after FLAG_SYS_GAME_CLEAR.
+- **Fortree postgame line**: bird keeper (20,8) switches to the Honchkrow "visiting home" line after game clear. **Researcher Bagon line** (C321) reads as numbers, not first sighting.
 - **Meteor Falls Steven** (C321): he faces the wall for the first box, then turns; the Treecko branch matches 0x2B6; after the battle he fades out and stays gone; the chalk note reads only after his defeat.
-- **Researcher Bagon line** (C321): reads as numbers, not first sighting.
 - **Sootopolis Gym Juan duet** (C322): after game clear, talk to Juan (9,2): Yes → spin → doubles; test faint/switch-in on both sides, bag-full Mystic Water retry, Wallace turns right then both face down; declining and the pre-clear cameo text unchanged. The closing pair can come in mixed with the opening pair (the AI picks replacements by matchup, not party order); that is expected engine behavior, not a bug.
-
-Please report anything odd on the issue tracker.
-
-**Static verification (no emulator):** C316 — den flags 0x2B5/0x2B6 unique, FLAG_TEMP_11 unshared, ON_TRANSITION + ON_RESUME wired, Meteor Falls TM Dragon Claw (5,3) still reachable. C318 — Shoal Cave BFS: doll pocket reachable at low tide only, blocking it leaves all warps/items reachable, Entrance cue tile reachable in both tides. C319+ — `make check_dens` and (C320) `make check_gifts` guard den wiring and vanilla-vs-_HOENN gift/static species in check_all.
 
 ### Field Notes (IN-GAME C319, one hint per call C320; source `GetActiveFieldNote` in src/match_call.c)
 - Texts: `gBirchFieldNoteText_{Header,Torchic,Mudkip,Treecko,AllFound}` in data/text/pokedex_rating.inc.
 - Match call: `BufferPokedexRatingForMatchCall` → `AppendBirchFieldNotes` (CHAR_PROMPT_CLEAR-separated) after the Hoenn/National rating. In person: `ProfBirch_EventScript_AskRatePokedex` → `ProfBirch_EventScript_FieldNotes` (special `IsBirchFieldNoteActive`, VAR_0x8004 = 0 Torchic, 1 Mudkip, 2 Treecko, 3 all found, 4 any). NOT in `ProfBirch_EventScript_RatePokedex` (Champion's Room shares it).
 - `GetActiveFieldNote` returns ONE id, first match wins: Torchic (badge 5 && !0x2B5) → Mudkip (badge 6 && !0x2B7) → Treecko (badge 8 && !0x2B6) → ALL_FOUND (all three caught) → ANY = "nothing to say" sentinel. Both paths read it, so they can't disagree.
-- Worst case (C320 hand count, {PLAYER} 7 chars, 3-digit counts): AreYouCurious 81 + SoYouveSeen 65 + LessThan160 102 + OnANationwideBasis 84 + Header 55 + Mudkip hint 113 + 6 separators/EOS = **506 B** of 1000 (three hints were ~700 B).
+- Worst case (C320 hand count, {PLAYER} 7 chars, 3-digit counts): AreYouCurious 81 + SoYouveSeen 65 + LessThan160 102 + OnANationwideBasis 84 + Header 55 + Mudkip hint 113 + 6 separators/EOS = **506 B** of 1000 (three hints were ~700 B). C331 Red Ink report adds up to 363 B → **869 B** (see FIELD NOTES section).
 - Gift/notes agree: 8/8 cases (C320). The Changed Three gift (BirchLab `ChooseJohtoStarter`) shows found-or-hint for each den in Field Notes order Torchic, Mudkip, Treecko (C323); its lines react to the notes ("That glitter on MT. PYRE…") instead of repeating them, and each stands alone (no "And/too/either") since any found/unfound mix can occur. It uses the same three FLAG_CAUGHT_* flags; it is postgame, so badge gates don't matter, and it gives SPECIES_TREECKO/MUDKIP/TORCHIC_HOENN.
 - Adding a 4th den: enum entry before ALL_FOUND (renumber the script ids!), text, `sFieldNoteTexts` entry, a `GetActiveFieldNote` branch in reach order, the all-found term, a script block — AND a FIELD NOTES notebook page (below).
 
@@ -144,7 +138,15 @@ Please report anything odd on the issue tracker.
 - Texts: `gFieldNotesText_*` in data/text/pokedex_rating.inc.
 - Flag `FLAG_RECEIVED_FIELD_NOTES` (0x2B9), set in exactly 2 places: BirchLab `GivePokedex` (after MigrationHint2, before the difficulty prompt) and `ProfBirch_EventScript_GiveFieldNotesLate` (called from `ProfBirch_EventScript_RatePokedexOrRegister` after faceplayer; needs FLAG_RECEIVED_POKEDEX_FROM_BIRCH; v2.9 saves get it here — lab, Route 101, Route 103 Birch).
 - Shared text `LittlerootTown_ProfessorBirchsLab_Text_FieldNotesExplain::` (global) is reused by the late fallback.
-- Adding a page: text pair, `sFieldNotesPages` entry + enum, Open/Inked switch cases, FIELD_NOTES_PAGE_COUNT, and a setvar/call pair in the script (last page id moves up).
+- Adding a page: text pair, `sFieldNotesPages` entry (4 fields: oldText, inkText, marginText, birchText; the last two are NULL if the page has no believer) + enum, Open/Inked switch cases, FIELD_NOTES_PAGE_COUNT, and a setvar/call pair in the script (last page id moves up). A page with a believer also needs `gFieldNotesText_<X>Margin` (red, player's voice, "Since then: …") and `gBirchRedInkText_<X>` (≤28 chars/line; C-built text skips check_text_width). Re-hand-count the Pokénav worst case below.
+- **Red Ink payoff (C331)**: `#define FIELD_NOTES_REPORT_MIN_PAGES 3` (next to the page enum).
+  - Cover: once numInked ≥ 3, `BufferFieldNotesPage` uses `gFieldNotesText_CoverYours` ("FIELD NOTES of PROF. BIRCH / {COLOR RED}and {PLAYER}{COLOR DARK_GRAY}. / Pages in your ink: / X of Y"). The count is split over two `\l` lines because check_text_width counts each STR_VAR as 60px.
+  - Inked pages with a non-NULL `marginText` add a third box (CHAR_PROMPT_CLEAR) after the ink.
+  - `static u8 *WriteBirchRedInkReport(u8 *str)` (after `CountInkedFieldNotePages`) writes Open, then each inked page's non-NULL `birchText`, then Believed (if any name was written) or OnlyYou (den pages only), then Close, all CHAR_PROMPT_CLEAR-separated.
+  - Callers: `BufferPokedexRatingForMatchCall` (after `AppendBirchFieldNotes`, which now returns str) and the special `u16 BufferBirchRedInkReport(void)` (FALSE under 3, else writes gStringVar4) → `ProfBirch_EventScript_RedInkReport` (prof_birch.inc, called from AskRatePokedex after FieldNotes; NOT RatePokedex/Champion's Room).
+  - Texts: `gFieldNotesText_{Lotad,Shroomish,Gligar,Vulpix}Margin`, `gFieldNotesText_CoverYours`, `gBirchRedInkText_{Open,Lotad,Shroomish,Gligar,Vulpix,Believed,OnlyYou,Close}`.
+  - **Pokénav worst case (C331 hand count): 506 (C320) + report 363 (Open 44 + names 53+51+51+53 + Believed 56 + Close 48 + 7 separators) = 869 B of 1000.** Longest notebook page: Gligar 70+64+57 + 2 separators + EOS = 194 B.
+  - Static trace: memory/player-journey-map.md "Red Ink payoff — static walkthrough (C331)". Emulator checks there.
 - Emulator checks (not done): red ink renders in the field message box; registered-SELECT use works; cover count on a fresh save reads "0 of 4".
 - **`CountInkedFieldNotePages` special (C330)**: 0-7 inked, all pages, not just open (src/match_call.c, right after `IsFieldNotesPageInked`; `specialvar VAR_RESULT, CountInkedFieldNotePages`). Use this for any multi-page check instead of chaining ScriptCheckPokedexCaught. Not used by the cover count (that counts open pages only). First user: the Route 113 picnicker's rumour line.
 - World reactions: Route 104 skeptic (page 1, LOTAD_HOENN), Petalburg Woods forager (page 2, SHROOMISH_HOENN), Granite Cave B1F hiker (page 3, GLIGAR_HOENN) and Route 113 picnicker (page 4, VULPIX_HOENN) read the same dex-caught truth as IsFieldNotesPageInked.

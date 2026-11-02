@@ -226,3 +226,61 @@ gFieldNotesText_LastPage::
 	.string "they belong was wrong.\p"
 	.string "Good. That's how it should be.\n"
 	.string "-- B.$"
+
+@ C331 margin lines: shown under the red ink on inked pages 1-4 (player's voice)
+gFieldNotesText_LotadMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a kid on ROUTE\n"
+	.string "104 stopped watching the sea.$"
+
+gFieldNotesText_ShroomishMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: the lady in the\n"
+	.string "woods left her warm spot.$"
+
+gFieldNotesText_GligarMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a hiker in GRANITE\n"
+	.string "CAVE faces the deep.$"
+
+gFieldNotesText_VulpixMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: someone on ROUTE\n"
+	.string "113 laughs in the falling ash.$"
+
+@ C331 cover once 3+ pages are inked (the player's name goes on the cover)
+gFieldNotesText_CoverYours::
+	.string "FIELD NOTES of PROF. BIRCH\n"
+	.string "{COLOR RED}{SHADOW LIGHT_RED}and {PLAYER}{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}.\l"
+	.string "Pages in your ink:\l"
+	.string "{STR_VAR_1} of {STR_VAR_2}.$"
+
+@ C331 Birch reads the red ink (BufferBirchRedInkReport in src/match_call.c). Pokenav + in person.
+@ Lines hand-capped at 28 chars: the Pokenav box is narrower and C-built text skips check_text_width.
+gBirchRedInkText_Open::
+	.string "Oh, and word of your red\n"
+	.string "ink has reached me.$"
+
+gBirchRedInkText_Lotad::
+	.string "A schoolkid on ROUTE 104\n"
+	.string "copied my notes out by hand.$"
+
+gBirchRedInkText_Shroomish::
+	.string "A forager in PETALBURG\n"
+	.string "WOODS waited twelve springs.$"
+
+gBirchRedInkText_Gligar::
+	.string "A hiker in GRANITE CAVE\n"
+	.string "kept his back to the water.$"
+
+gBirchRedInkText_Vulpix::
+	.string "A picnicker on ROUTE 113\n"
+	.string "sat three days by hot rocks.$"
+
+gBirchRedInkText_Believed::
+	.string "They believed me because I'm\n"
+	.string "the PROFESSOR. I was wrong.$"
+
+gBirchRedInkText_OnlyYou::
+	.string "No one else ever read my\n"
+	.string "den pages. Only you went.$"
+
+gBirchRedInkText_Close::
+	.string "These are your notes now,\n"
+	.string "{PLAYER}{KUN}. Keep the pen.$"
