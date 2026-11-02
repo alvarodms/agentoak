@@ -66,6 +66,7 @@
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
+#include "playtest.h"
 
 struct CableClubPlayer
 {
@@ -1535,11 +1536,13 @@ void CB2_NewGame(void)
     StopMapMusic();
     ResetSafariZoneFlag_();
     NewGameInitData();
+    if (Playtest_IsActive())
+        Playtest_ApplyScenario(); // flags, party, bag, then warp to the scenario's tile
     ResetInitialPlayerAvatarState();
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    gFieldCallback = ExecuteTruckSequence;
+    gFieldCallback = Playtest_IsActive() ? NULL : ExecuteTruckSequence;
     gFieldCallback2 = NULL;
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();

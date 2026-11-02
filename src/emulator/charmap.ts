@@ -84,6 +84,29 @@ export function loadCharmap(path: string): Charmap {
 }
 
 /**
+ * Encodes plain text (no placeholders or control codes) into game bytes,
+ * terminated with EOS. Throws on characters the charmap cannot represent.
+ */
+export function encodeGameText(text: string, charmap: Charmap): Uint8Array {
+  const reverse = new Map<string, number>();
+  for (const [byte, glyph] of charmap.glyphs) {
+    if ([...glyph].length === 1 && !reverse.has(glyph)) reverse.set(glyph, byte);
+  }
+  const out: number[] = [];
+  for (const ch of text) {
+    if (ch === "\n") {
+      out.push(CHAR_NEWLINE);
+      continue;
+    }
+    const byte = reverse.get(ch);
+    if (byte === undefined || byte === EOS) throw new Error(`character ${JSON.stringify(ch)} is not in the charmap`);
+    out.push(byte);
+  }
+  out.push(EOS);
+  return Uint8Array.from(out);
+}
+
+/**
  * Decodes bytes up to EOS (0xFF) or the end of the buffer.
  *
  * Line breaks (\n, \l) become "\n" and paragraph breaks (\p) become "\n\n".

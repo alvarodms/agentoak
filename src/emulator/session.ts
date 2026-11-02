@@ -7,10 +7,26 @@
  * RTC, so the same calls on the same ROM always produce the same frames.
  */
 
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { POKEEMERALD_DIR } from "../utils/paths.js";
 import { decodeGameText, loadCharmap, type Charmap } from "./charmap.js";
+import { ConstantNames, resolveConstants } from "./constants.js";
 import { MgbaDriver, driverBinary } from "./driver.js";
+import { resolveScenario, writeScenarioRom, type Scenario } from "./scenario.js";
+import {
+  LAYOUT_COUNT,
+  MAP_OFFSET,
+  OBJECT_EVENT_FACING_OFFSET,
+  decodeBattleMon,
+  decodePartyMon,
+  facingName,
+  parseLayout,
+  type Facing,
+  type Layout,
+  type PartyMon,
+} from "./state.js";
 import { SymbolTable } from "./symbols.js";
 
 export const BUTTONS = {
@@ -73,15 +89,47 @@ export interface PressOptions {
   release?: number;
 }
 
+export interface BootScenarioOptions extends StartOptions {
+  /** Give up if the overworld has not appeared after this many frames. Default 1800. */
+  maxFrames?: number;
+  /** Frames to let the map fade in once the overworld is running. Default 60. */
+  settleFrames?: number;
+}
+
+export interface PartyMember extends PartyMon {
+  speciesName: string;
+}
+
+export interface GameState {
+  frame: number;
+  /** gMain.callback2, named: "CB2_Overworld", "BattleMainCB2", ... */
+  screen: string;
+  map: string;
+  /** Player tile in map coordinates (what porymap shows). */
+  x: number;
+  y: number;
+  facing: Facing;
+  party: PartyMember[];
+  /** Battlers in gBattleMons order, while a battle is running. */
+  battle: PartyMember[] | null;
+}
+
 /** Longest text read in one go; gStringVar4 is 1000 bytes. */
 const MAX_TEXT = 1000;
 
 export class EmulatorSession {
+  private layout: Layout | undefined;
+  private names: ConstantNames | undefined;
+  /** Temp dirs (patched ROMs) removed on close. */
+  private readonly cleanup: string[] = [];
+
   private constructor(
     private readonly driver: MgbaDriver,
     readonly symbols: SymbolTable,
     readonly charmap: Charmap,
     private frameCount: number,
+    /** pokeemerald/ checkout the ROM was built from, for constant lookups. */
+    private readonly sourceDir: string,
   ) {}
 
   static async start(build: RomBuild = defaultBuild(), opts: StartOptions = {}): Promise<EmulatorSession> {
@@ -95,7 +143,50 @@ export class EmulatorSession {
       await driver.close();
       throw err;
     }
-    return new EmulatorSession(driver, symbols, charmap, 0);
+    return new EmulatorSession(driver, symbols, charmap, 0, path.dirname(build.charmap));
+  }
+
+  /**
+   * Boots a copy of the ROM with `scenario` patched in and returns once the
+   * player is standing on the scenario's tile with the map faded in.
+   */
+  static async bootScenario(
+    scenario: Scenario,
+    build: RomBuild = defaultBuild(),
+    opts: BootScenarioOptions = {},
+  ): Promise<EmulatorSession> {
+    const symbols = opts.symbols ?? SymbolTable.load(build.elf, build.map);
+    const encoded = resolveScenario(scenario, loadCharmap(build.charmap), {
+      pokeemeraldDir: path.dirname(build.charmap),
+    });
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "oak-scenario-"));
+    const rom = path.join(tmp, "scenario.gba");
+    let session: EmulatorSession | undefined;
+    try {
+      writeScenarioRom(build.rom, rom, encoded, symbols);
+      session = await EmulatorSession.start({ ...build, rom }, { ...opts, symbols });
+      session.cleanup.push(tmp);
+      await session.runUntilScreen("CB2_Overworld", opts.maxFrames ?? 1800);
+      await session.run(opts.settleFrames ?? 60);
+      return session;
+    } catch (err) {
+      if (session) await session.close();
+      else fs.rmSync(tmp, { recursive: true, force: true });
+      throw err;
+    }
+  }
+
+  /** Runs until gMain.callback2 is `screen`, checking every 10 frames. */
+  async runUntilScreen(screen: string, maxFrames: number): Promise<void> {
+    const deadline = this.frameCount + maxFrames;
+    for (;;) {
+      const { callback2 } = await this.callbacks();
+      if (callback2 === screen) return;
+      if (this.frameCount >= deadline) {
+        throw new Error(`screen ${screen} not reached within ${maxFrames} frames (still on ${callback2})`);
+      }
+      await this.run(10);
+    }
   }
 
   /** Frames emulated since the last load or reset. */
@@ -194,8 +285,92 @@ export class EmulatorSession {
     };
   }
 
+  /** Where the player is, who is in the party, and what is on screen. */
+  async readState(): Promise<GameState> {
+    const layout = await this.getLayout();
+    const names = this.getNames();
+    const { callback2 } = await this.callbacks();
+
+    const sb1 = await this.deref("gSaveBlock1Ptr");
+    const location = await this.read(sb1 + layout.saveBlock1Location, 2);
+    const map = names.mapName(location.readInt8(0), location.readInt8(1));
+
+    const playerObjectId = await this.readU8(this.symbols.address("gPlayerAvatar") + layout.playerAvatarObjectEventId);
+    const player = await this.read(
+      this.symbols.address("gObjectEvents") + playerObjectId * layout.objectEventSize,
+      layout.objectEventSize,
+    );
+    const x = player.readInt16LE(layout.objectEventCoords) - MAP_OFFSET;
+    const y = player.readInt16LE(layout.objectEventCoords + 2) - MAP_OFFSET;
+    const facing = facingName(player.readUInt8(OBJECT_EVENT_FACING_OFFSET) & 0xf);
+
+    const named = (mon: PartyMon): PartyMember => ({ ...mon, speciesName: names.speciesName(mon.species) });
+    const partyCount = Math.min(await this.readU8(this.symbols.address("gPlayerPartyCount")), 6);
+    const partyRaw = await this.read(this.symbols.address("gPlayerParty"), partyCount * layout.pokemonSize);
+    const party: PartyMember[] = [];
+    for (let i = 0; i < partyCount; i++) {
+      const raw = partyRaw.subarray(i * layout.pokemonSize, (i + 1) * layout.pokemonSize);
+      party.push(named(decodePartyMon(raw, layout)));
+    }
+
+    let battle: PartyMember[] | null = null;
+    if (callback2 === "BattleMainCB2") {
+      const count = Math.min(await this.readU8(this.symbols.address("gBattlersCount")), 4);
+      const raw = await this.read(this.symbols.address("gBattleMons"), count * layout.battlePokemonSize);
+      battle = [];
+      for (let i = 0; i < count; i++) {
+        battle.push(named(decodeBattleMon(raw.subarray(i * layout.battlePokemonSize), layout)));
+      }
+    }
+
+    return { frame: this.frameCount, screen: callback2, map, x, y, facing, party, battle };
+  }
+
+  /** Reads a FLAG_* from the save block (not the special/temporary 0x4000+ range). */
+  async flag(name: string): Promise<boolean> {
+    const layout = await this.getLayout();
+    const id = this.constant(name);
+    if (id >= layout.flagsCount) throw new Error(`${name} (0x${id.toString(16)}) is not a saved flag`);
+    const sb1 = await this.deref("gSaveBlock1Ptr");
+    const byte = await this.readU8(sb1 + layout.saveBlock1Flags + (id >> 3));
+    return ((byte >> (id & 7)) & 1) === 1;
+  }
+
+  /** Reads a VAR_* from the save block (not the special 0x8000+ vars). */
+  async getVar(name: string): Promise<number> {
+    const layout = await this.getLayout();
+    const id = this.constant(name);
+    if (id < layout.varsStart || id >= layout.varsStart + layout.varsCount) {
+      throw new Error(`${name} (0x${id.toString(16)}) is not a saved var`);
+    }
+    const sb1 = await this.deref("gSaveBlock1Ptr");
+    return this.readU16(sb1 + layout.saveBlock1Vars + (id - layout.varsStart) * 2);
+  }
+
   async close(): Promise<void> {
-    await this.driver.close();
+    try {
+      await this.driver.close();
+    } finally {
+      for (const dir of this.cleanup.splice(0)) fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+
+  private constant(name: string): number {
+    const value = resolveConstants([name], { pokeemeraldDir: this.sourceDir }).get(name);
+    if (value === undefined) throw new Error(`could not resolve ${name}`);
+    return value;
+  }
+
+  private async getLayout(): Promise<Layout> {
+    if (!this.layout) {
+      this.layout = parseLayout(await this.readSymbol("gPlaytestLayout", LAYOUT_COUNT * 2));
+    }
+    return this.layout;
+  }
+
+  private getNames(): ConstantNames {
+    this.names ??= ConstantNames.load({ pokeemeraldDir: this.sourceDir });
+    return this.names;
   }
 }
 
