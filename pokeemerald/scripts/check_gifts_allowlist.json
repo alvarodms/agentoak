@@ -13,5 +13,11 @@
     "label": "MossdeepCity_SpaceCenter_2F_Script_DeoxysRetryEncounter",
     "species": "SPECIES_DEOXYS",
     "why": "Retry of the Space Center signal battle; must stay the same vanilla Deoxys as DeoxysInvestigate."
+  },
+  {
+    "trade": "INGAME_TRADE_HORSEA",
+    "field": "requestedSpecies",
+    "species": "SPECIES_BAGON",
+    "why": "Vanilla Pacifidlog trade asks for the vanilla Bagon, which the player can still own (starter choice in starter_choose.c, Meteor Falls wild slots); asking for Bagon_Hoenn would gate it behind B1F_2R. Untouched vanilla trade data."
   }
 ]

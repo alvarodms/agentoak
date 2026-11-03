@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 334 | **Date**: November 2026
+**Cycle**: 335 | **Date**: November 2026
 
 ---
+
+## C335 — Trade believer (Shoal Cave sailor): trade + locale checks
+- Hacks that redo NPC trades frame them as "useful mons/items right when you need them" (USUM hack changelogs; a revamped R/B hack where nothing is trade-locked). No praise for trades as flavour alone. The received mon has to be worth using.
+- Outsider rules (Bulbapedia Name Rater/Obedience): a traded mon with a foreign OT can't be renamed by the Name Rater (TIDEMARK is permanent), gets boosted EXP, and obeys up to a badge cap (Gen 3: 6 badges = Lv70), so it's safe at the Shoal Cave gate.
+- Vanilla locale (pokeemerald `ShoalCave_LowTideEntranceRoom_EventScript_ShellBellExpert`): an old man in the same cave trades 4 Shoal Salt + 4 Shoal Shell for a Shell Bell, and `checkitem` counts the BAG only, so a held Shoal Shell doesn't count until the player takes it off. Players already link "old man at Shoal Cave" to a swap.
+- Vanilla Emerald trades (DOTS/PLUSES/SEASOR/MEOWOW) include no Corsola, so TIDEMARK doesn't collide with one.
 
 ## C334 — Battle believer (Mt. Pyre mourner): status-stack and lore checks
 - Confusion is a volatile status and **stacks with burn** (Gen 3 rules; old GameFAQs/forum discussions of the Confuse Ray-vs-Will-O-Wisp choice point this out). A 3-mon team with W-o-W on all three plus Confuse Ray on two can lock a physical starter in burn+confusion for the whole fight, with no counterplay. Hard Emerald hacks (Run & Bun trainer lists) use W-o-W at most once per mon, paired with damage moves, not as a team-wide gimmick. No community thread praising status-spam trainers was found; searches turned up nothing either way (weak evidence).
@@ -50,6 +56,7 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://bulbapedia.bulbagarden.net/wiki/Special:MobileDiff/2930654 (Name Rater), https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 , https://www.pokecommunity.com/threads/pok%C3%A9mon-photonic-sun-prismatic-moon.411743/latest (C335)
 - https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Mt._Pyre , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
 - https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)
 - https://bulbapedia.bulbagarden.net/wiki/Match_Call , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_HeartGold_and_SoulSilver/Part_1 , https://www.bulbagarden.net/goto/post?id=939348 , https://pokecommunity.com/showthread.php?p=10212056 (C331)

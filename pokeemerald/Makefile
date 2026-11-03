@@ -216,6 +216,7 @@ check_dens:
 
 # Gift / static species guard (C320): vanilla vs _HOENN form in givemon/setwildbattle/showmonpic
 check_gifts:
+	@node scripts/check_gifts.cjs --selftest
 	@node scripts/check_gifts.cjs
 
 # Dialogue width guard (C321): new/changed .string lines must fit 208px (FONT_NORMAL widths)

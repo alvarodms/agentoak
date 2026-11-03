@@ -22,7 +22,7 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 
 12. **Where:** any trainer battle. **Do:** choose BAG. **Expect:** "CHALLENGE: your BAG stays shut! / Fight with what you brought.", then back to FIGHT/BAG/POKéMON/RUN with no turn lost. In wild battles the BAG opens and Poké Balls work. In Normal Mode the BAG always opens.
 13. **Where:** Lavaridge Gym, Flannery. **Expect:** she never uses Hyper Potions in Challenge. Does her sun team feel much harder than Norman's?
-14. **Where:** Mt. Pyre summit fog, Meteor Falls B1F (crystal Treecko), Shoal Cave low tide (Mudkip). **Do:** knock out or run from each den Pokémon, then catch it. **Expect:** it returns after a KO or run and leaves for good once caught. With badges 5/6/8, FIELD NOTES pages 5/6/7 open and each catch inks its page. Pages 6/7 have no margin note; page 5's appears only after step 25. Birch's Pokénav hint names the nearest unfound den. On a save from before v2.9, a Mt. Pyre Torchic knocked out back then may stay gone.
+14. **Where:** Mt. Pyre summit fog, Meteor Falls B1F (crystal Treecko), Shoal Cave low tide (Mudkip). **Do:** knock out or run from each den Pokémon, then catch it. **Expect:** it returns after a KO or run and leaves for good once caught. With badges 5/6/8, FIELD NOTES pages 5/6/7 open and each catch inks its page. Page 7 has no margin note; page 5's appears only after step 25, page 6's only after step 33. Birch's Pokénav hint names the nearest unfound den. On a save from before v2.9, a Mt. Pyre Torchic knocked out back then may stay gone.
 15. **Where:** Sootopolis Gym. **Expect:** Wallace is the Gym Leader and Juan stands beside him.
 16. **Where:** the Champion's room, Steven. **Expect:** Fey Flame and Undertow announce themselves when his last Pokémon switch in. He never uses Full Restore in Challenge, but held berries and Leftovers still work.
 
@@ -35,6 +35,15 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 27. **Do:** leave the summit area and come back. **Expect:** she stands one tile north in the little alcove (17,11), facing the graves. Talking gives "…I'm talking to her now…" and she does NOT turn around.
 28. **Do:** open FIELD NOTES page 5 before and after beating her; then get a red ink report from Birch (3+ pages inked). **Expect:** page 5's red "Since then: a mourner on MT. PYRE…" margin appears only after the win. Birch's report adds "Word came from the dens too." If none of pages 1-4's people are named, it ends without "No one else ever read my den pages".
 29. **Where:** Mt. Pyre exterior, the woman near the graves (coral mourner). **Expect:** her last box mentions "That woman by the graves" who has watched the fog for weeks.
+
+## Den believers — Shoal Cave (C335; do these after step 14, before Part 3)
+
+30. **Where:** Shoal Cave low tide, lower room, the sailor in the little pocket west of the tide pool (17,6). **Do:** talk to him BEFORE catching the titan Mudkip. **Expect:** he turns to you; "Forty years at sea…", the pool's "child of the sea… Big as a SWAMPERT", "It belongs to the sea. Not to some PROFESSOR's notebook." No trade offer. The Mudkip doll (18,6) can still be reached from 18,5 or 19,6.
+31. **Do:** read the tide pool sign (from 19,7) before the catch, after the catch, and after step 33. **Expect:** three different texts: "It stirs below the surface…", then "Its water lies flat and still now.", then "A whiskered fish circles the salt water."
+32. **Do:** catch the titan Mudkip, talk to him, answer NO; talk again, answer YES and press B in the party menu; talk again, answer YES and pick anything that is not a BARBOACH (also try an EGG). **Expect:** the offer names BARBOACH and CORSOLA and ends "Deal?" with YES/NO. NO and B both give "Then the ledger stays open… Whiskers swim the fresh water past FORTREE." A wrong Pokémon or an EGG gives "That's no BARBOACH." and then the same ledger text. No trade happens.
+33. **Do:** fish a BARBOACH (Route 111/114/120 or Meteor Falls, Good Rod), come back, trade it. **Expect:** the normal trade scene. TIDEMARK arrives: a Hoennian CORSOLA (Ghost/Rock), female, Adamant, holding a SHOAL SHELL, OT MARLOW, at your BARBOACH's level. The Name Rater refuses to rename it. After the scene the sailor turns right to the pool, a splash plays, then "There. A river fish for the sea…" ending "Maybe nothing belongs to one water. I'll keep the pool."
+34. **Do:** leave the room and come back (low tide). **Expect:** he stands on 18,6 (where the Mudkip was) facing down at the pool. Talking gives "Fresh or salt, the tide doesn't care…" then the shell-bell line, and he does NOT turn around.
+35. **Do:** open FIELD NOTES page 6 before and after the trade; get a red ink report from Birch (3+ pages inked). **Expect:** page 6's red "Since then: a sailor keeps the tide pool for the sea." margin appears only after the trade. Birch's report has "Word came from the dens too." once page 5 or page 6 has its margin.
 
 ## Part 3 — Postgame (a cleared save)
 
@@ -52,6 +61,7 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 - Did Birch's report sound like Birch being humbled, or like a list of things you did? Did it wear thin by the second or third rating?
 - Did you meet the Route 104 schoolkid before or after catching your Hoennian LOTAD? Did you ever see him facing the sea?
 - Did any of the four believers seem to do nothing after your catch?
+- Did the sailor's trade feel like a bargain or a chore? Did you already have a BARBOACH?
 - In Challenge Mode, was the Champion a wall without your BAG?
 
-README copy: "Help Playtest v3.0" (C332). Edit this file first, then mirror it into README.md with the same step numbers.
+README copy: "Help Playtest v3.0" (C332). Edit this file first, then mirror it into README.md with the same step numbers. Mirrored through step 35 (C335 reflection).

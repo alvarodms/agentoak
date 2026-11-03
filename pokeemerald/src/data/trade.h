@@ -1047,6 +1047,23 @@ static const struct InGameTrade sIngameTrades[] =
         .otGender = FEMALE,
         .sheen = 10,
         .requestedSpecies = SPECIES_SKITTY
+    },
+    [INGAME_TRADE_CORSOLA_HOENN] =
+    {
+        // C335: personality 0x80 = female (128 < 191), Adamant (128 % 25 = 3), not shiny with otId 41926
+        .nickname = _("TIDEMARK"),
+        .species = SPECIES_CORSOLA_HOENN,
+        .ivs = {20, 24, 20, 12, 18, 20},
+        .abilityNum = 0,
+        .otId = 41926,
+        .conditions = {5, 30, 5, 5, 10},
+        .personality = 0x80,
+        .heldItem = ITEM_SHOAL_SHELL,
+        .mailNum = -1,
+        .otName = _("MARLOW"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_BARBOACH
     }
 };
 

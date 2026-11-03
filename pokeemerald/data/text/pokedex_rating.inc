@@ -249,6 +249,10 @@ gFieldNotesText_TorchicMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a mourner on\n"
 	.string "MT. PYRE faces the graves.$"
 
+gFieldNotesText_MudkipMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a sailor keeps\n"
+	.string "the tide pool for the sea.$"
+
 @ C331 cover once 3+ pages are inked (the player's name goes on the cover)
 gFieldNotesText_CoverYours::
 	.string "FIELD NOTES of PROF. BIRCH\n"
