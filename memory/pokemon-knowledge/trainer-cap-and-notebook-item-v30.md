@@ -1,8 +1,12 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 333 | **Date**: November 2026
+**Cycle**: 334 | **Date**: November 2026
 
 ---
+
+## C334 — Battle believer (Mt. Pyre mourner): status-stack and lore checks
+- Confusion is a volatile status and **stacks with burn** (Gen 3 rules; old GameFAQs/forum discussions of the Confuse Ray-vs-Will-O-Wisp choice point this out). A 3-mon team with W-o-W on all three plus Confuse Ray on two can lock a physical starter in burn+confusion for the whole fight, with no counterplay. Hard Emerald hacks (Run & Bun trainer lists) use W-o-W at most once per mon, paired with damage moves, not as a team-wide gimmick. No community thread praising status-spam trainers was found; searches turned up nothing either way (weak evidence).
+- Vanilla lore (Bulbapedia/ORAS): Mt. Pyre Hex Maniacs are "seekers" ("…No, you're not the one"), which fits a mourner who searches for one soul. Vanilla summit Ghost trainers use Shuppet/Duskull/Sableye, so Dusclops + Banette stay on-place.
 
 ## C333 — Flag reclamation: three community routes
 - **`FLAG_UNUSED_0x*` constants** are pret's sanctioned spare slots (pret wiki "Full Screen Start Menu" sets a feature flag to FLAG_UNUSED_0x020). The zero-risk pool: list those first in the ledger, before any "unreferenced but named" vanilla flag.
@@ -31,17 +35,13 @@
 - Majora's Mask Bombers' Notebook: one row per character, and solving their problem stamps a **Happy Sticker** on that row. The notebook records *who* the player helped, not just what was found. MM3D rebuilt it as a fuller quest log so every rewarding NPC has an entry. Kafei's schedule changes based on other events' outcomes, so the interlocking chains only work once the individual characters are established.
 - Applied: once a believer reacts, the Field Notes page should show it (e.g. a margin line "copied out by a kid on ROUTE 104"). Without that, the NPC beats and the item stay two separate systems.
 - Order: build individual believers first (pages 2-4), then the multi-page beat. A beat that reacts to several pages works best when the player has already met several believers.
-- Searches for Pokémon hacks whose NPCs react to catches found nothing (C328). Pokémon fans have no clear reference point for this, so it is a differentiator, but there's no community benchmark either.
 - Generic reactive-NPC writing (Wayline, DEV) warns against over-reactivity. Keep each reaction to one specific line about the player's actual deed.
 
 ## C327 — Reactive "skeptic" NPCs & the second slot pool
 - Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
 - Legends: Arceus requests are the cautionary case: players complain about manual turn-in ("interactive log that auto-completes"), poor signposting (looking requests up online), and tedium (Upcomer, Bulbagarden, Twinfinite). Tom's Guide liked the *pleas themselves*. Lesson: a correction NPC should react **passively** (read the flag on talk, no hand-over step) and sit on a road the player already walks.
 - Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
-- A dialogue-only skeptic does NOT need a trainer slot (flag-gated text on a plain object). Spend slot 853 only if a battle is part of the beat.
-
-## C326 — Reclaiming IDs / trainer cap (applied)
-- pret wiki link placeholders: keep constant/party names, change name/class/pic/AI/party; Cable Club caveat N/A (gTrainers const). MAX_TRAINERS_COUNT bump shifts system flags (PokéCommunity t=425848/383237) → reclaim zero-ref IDs only.
+- A dialogue-only skeptic does NOT need a trainer slot. C326 (applied): reclaim zero-ref IDs only, keeping constant/party names (pret wiki link placeholders); a MAX_TRAINERS_COUNT bump shifts system flags.
 
 ## Notebook / log key items
 
@@ -50,14 +50,11 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Mt._Pyre , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
 - https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)
 - https://bulbapedia.bulbagarden.net/wiki/Match_Call , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_HeartGold_and_SoulSilver/Part_1 , https://www.bulbagarden.net/goto/post?id=939348 , https://pokecommunity.com/showthread.php?p=10212056 (C331)
 - https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://allthings.how/pokemon-firered-and-leafgreen-oaks-aides-and-tm-locations/ (C330)
 - https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330)
-- https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests (C329)
-- https://www.gamerguides.com/pokemon-legends-z-a/database/missions/side-missions/i-d-like-to-see-an-ekans (C329)
-- https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329)
-- https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook (C328)
-- https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ (C328)
-- https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
+- https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests , https://www.gamerguides.com/pokemon-legends-z-a/database/missions/side-missions/i-d-like-to-see-an-ekans , https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329)
+- https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook , https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ , https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
 - C326-C327 (applied): bulbapedia Unused_Trainer_data, pret wiki "Repurposing-the-Link-Battle-placeholders", tcrf RS, PokéCommunity t=425848/383237, upcomer/Bulbagarden/Tom's Guide on Legends: Arceus requests, Unbound reviews (retrohandhelds, animecollective)

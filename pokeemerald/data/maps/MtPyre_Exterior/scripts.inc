@@ -5,6 +5,7 @@ MtPyre_Exterior_MapScripts::
 
 MtPyre_Exterior_OnTransition:
 	call MtPyre_Exterior_EventScript_CheckEnterFromSummit
+	call_if_defeated TRAINER_PYRE_MOURNER, MtPyre_Exterior_EventScript_MournerAtGraves
 	EventMacro_StaticDenTransition FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, FLAG_TEMP_11
 	end
 
@@ -46,7 +47,105 @@ MtPyre_Exterior_Text_CoralMourner:
 	.string "coral that didn't survive the\l"
 	.string "crossing.\p"
 	.string "I find them beautiful, in a\n"
-	.string "mournful sort of way.$"
+	.string "mournful sort of way.\p"
+	.string "That woman by the graves has\n"
+	.string "watched the fog for weeks.$"
+
+@ =============================================
+@ C334: Red Ink page 5 - the mourner (battle believer)
+@ ISOLDE (TRAINER_PYRE_MOURNER, slot 581) believes the starlight
+@ Torchic is a soul-light of the dead. Her trainer flag is the only
+@ state: a whiteout leaves her re-offering. Beaten, she moves to the
+@ 17,11 alcove facing the graves (on re-entry) and page 5 gains its
+@ red margin (IsFieldNotesMarginEarned, src/match_call.c).
+@ =============================================
+
+MtPyre_Exterior_EventScript_MournerAtGraves:
+	setobjectxyperm LOCALID_MT_PYRE_EXTERIOR_MOURNER, 17, 11
+	setobjectmovementtype LOCALID_MT_PYRE_EXTERIOR_MOURNER, MOVEMENT_TYPE_FACE_UP
+	return
+
+MtPyre_Exterior_EventScript_Mourner::
+	lock
+	goto_if_defeated TRAINER_PYRE_MOURNER, MtPyre_Exterior_EventScript_MournerDone
+	faceplayer
+	goto_if_unset FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, MtPyre_Exterior_EventScript_MournerSilent
+	msgbox MtPyre_Exterior_Text_MournerChallenge, MSGBOX_DEFAULT
+	msgbox MtPyre_Exterior_Text_MournerAsk, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, MtPyre_Exterior_EventScript_MournerDecline
+	trainerbattle_single TRAINER_PYRE_MOURNER, MtPyre_Exterior_Text_MournerIntro, MtPyre_Exterior_Text_MournerDefeat, MtPyre_Exterior_EventScript_MournerDefeated
+	release
+	end
+
+MtPyre_Exterior_EventScript_MournerDefeated::
+	msgbox MtPyre_Exterior_Text_MournerAfter, MSGBOX_DEFAULT
+	applymovement LOCALID_MT_PYRE_EXTERIOR_MOURNER, Common_Movement_FaceUp
+	waitmovement 0
+	release
+	end
+
+MtPyre_Exterior_EventScript_MournerSilent::
+	msgbox MtPyre_Exterior_Text_MournerSilent, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_Exterior_EventScript_MournerDecline::
+	msgbox MtPyre_Exterior_Text_MournerDecline, MSGBOX_DEFAULT
+	release
+	end
+
+@ No faceplayer: she keeps facing the graves
+MtPyre_Exterior_EventScript_MournerDone::
+	msgbox MtPyre_Exterior_Text_MournerDone, MSGBOX_DEFAULT
+	release
+	end
+
+MtPyre_Exterior_Text_MournerSilent:
+	.string "…You climbed past the graves\n"
+	.string "with a notebook in your bag.\p"
+	.string "The lights in the summit fog\n"
+	.string "are not for notebooks.\p"
+	.string "I won't speak of them.\n"
+	.string "Not to you.$"
+
+MtPyre_Exterior_Text_MournerChallenge:
+	.string "The summit fog thinned when\n"
+	.string "you came down. A soul-light\l"
+	.string "left the mountain with you.\p"
+	.string "My grandmother burned bright\n"
+	.string "like that. I watch for her.\p"
+	.string "If you carry her, prove you\n"
+	.string "carry her with respect.$"
+
+MtPyre_Exterior_Text_MournerAsk:
+	.string "Will you show me how\n"
+	.string "you carry it?$"
+
+MtPyre_Exterior_Text_MournerDecline:
+	.string "Then carry it quietly.\n"
+	.string "I'll be here.$"
+
+MtPyre_Exterior_Text_MournerIntro:
+	.string "Show me, then.$"
+
+MtPyre_Exterior_Text_MournerDefeat:
+	.string "…It burned for you.\n"
+	.string "Not for the dead.$"
+
+MtPyre_Exterior_Text_MournerAfter:
+	.string "Soul-lights don't battle.\n"
+	.string "What you caught is alive.\p"
+	.string "A living flame, pink as\n"
+	.string "cold starlight.\p"
+	.string "Grandmother burned orange.\n"
+	.string "Warm, like a hearth.\p"
+	.string "It was never her. …I can\n"
+	.string "say goodbye now. Properly.$"
+
+MtPyre_Exterior_Text_MournerDone:
+	.string "…I'm talking to her now.\n"
+	.string "The real her. Up there.\p"
+	.string "Thank you for the battle.$"
 
 @ =============================================
 @ C312: Discovery beat - the starlight Torchic

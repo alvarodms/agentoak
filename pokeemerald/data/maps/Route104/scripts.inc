@@ -357,6 +357,8 @@ Route104_EventScript_LotadSkeptic::
 
 Route104_EventScript_LotadSkepticCorrected::
 	msgbox Route104_Text_LotadSkepticCorrected, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE104_LOTAD_SKEPTIC, Common_Movement_FaceRight
+	waitmovement 0
 	release
 	end
 

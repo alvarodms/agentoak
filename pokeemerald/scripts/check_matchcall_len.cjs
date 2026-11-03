@@ -19,6 +19,7 @@
 //   - any other {...} is an error: add a cost here first
 //   - the trailing $ is not counted; EOS is counted once per joined path
 //   - every join adds 1 byte (CHAR_PROMPT_CLEAR)
+//   - C334: the report worst case includes gBirchRedInkText_Dens (den believers) as well as Believed
 //
 // Fails (exit 1) when a required label is missing, a placeholder has no cost, or any
 // total exceeds 1000 B. Warns (exit 0) when the Pokenav total exceeds 950 B, or when a
@@ -53,6 +54,7 @@ const REQUIRED = [
   'gBirchRedInkText_Open',
   'gBirchRedInkText_Believed',
   'gBirchRedInkText_OnlyYou',
+  'gBirchRedInkText_Dens',
   'gBirchRedInkText_Close',
 ];
 const NOTEBOOK_PAGES = ['Lotad', 'Shroomish', 'Gligar', 'Vulpix', 'Torchic', 'Mudkip', 'Treecko'];
@@ -145,17 +147,20 @@ function analyse(labels) {
 
   const ratings = maxOf(all.filter((n) => /^gBirchDexRatingText_(LessThan\d+|DexCompleted)$/.test(n)));
   const notes = maxOf(all.filter((n) => n.startsWith('gBirchFieldNoteText_') && n !== 'gBirchFieldNoteText_Header'));
-  const fixedInk = new Set(['Open', 'Believed', 'OnlyYou', 'Close'].map((s) => `gBirchRedInkText_${s}`));
+  const fixedInk = new Set(['Open', 'Believed', 'OnlyYou', 'Dens', 'Close'].map((s) => `gBirchRedInkText_${s}`));
   const believers = all.filter((n) => n.startsWith('gBirchRedInkText_') && !fixedInk.has(n));
   const verdict = maxOf(['gBirchRedInkText_Believed', 'gBirchRedInkText_OnlyYou']);
 
-  // In-person report alone: Open + (1 + name)* + 1 + verdict + 1 + Close + EOS
+  // In-person report alone: Open + (1 + name)* + 1 + Dens + 1 + verdict + 1 + Close + EOS
+  // (C334: Dens and Believed can both appear; Dens and OnlyYou never do, so max() is an upper bound)
   let report = c('gBirchRedInkText_Open');
   lines.push(`  red ink Open                             ${c('gBirchRedInkText_Open')}`);
   for (const b of believers) {
     report += 1 + c(b);
     lines.push(`  + 1 + ${b.padEnd(34)} ${c(b)}`);
   }
+  report += 1 + c('gBirchRedInkText_Dens');
+  lines.push(`  + 1 + den summary gBirchRedInkText_Dens      ${c('gBirchRedInkText_Dens')}`);
   report += 1 + verdict.len + 1 + c('gBirchRedInkText_Close') + 1;
   lines.push(`  + 1 + max(Believed, OnlyYou) ${verdict.name.padEnd(25)} ${verdict.len}`);
   lines.push(`  + 1 + red ink Close                      ${c('gBirchRedInkText_Close')}`);
@@ -244,8 +249,8 @@ function selftest() {
   };
   const small = analyse(fixture(10));
   if (small.errors.length) fail(`small fixture reported ${small.errors.join('; ')}`);
-  // 4 one-byte parts x (1+1) + 2 absent maxima x (0+1) = 10; report Open 1 + (1+10) + 1+1 + 1+1 + EOS 1 = 17
-  if (small.totals.pokenav !== 27) fail(`small fixture total ${small.totals.pokenav}, expected 27`);
+  // 4 one-byte parts x (1+1) + 2 absent maxima x (0+1) = 10; report Open 1 + (1+10) + Dens 1+1 + 1+1 + 1+1 + EOS 1 = 19
+  if (small.totals.pokenav !== 29) fail(`small fixture total ${small.totals.pokenav}, expected 29`);
   const big = analyse(fixture(1200));
   if (!big.errors.some((e) => e.includes('exceeds'))) fail('fixture over 1000 B was not reported');
   console.log('check_matchcall_len: selftest OK');

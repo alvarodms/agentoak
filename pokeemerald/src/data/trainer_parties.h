@@ -9830,11 +9830,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Clarence[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Terry[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_PyreMourner[] = {
     {
-    .iv = 0,
-    .lvl = 37,
-    .species = SPECIES_GIRAFARIG,
+    .iv = 100,
+    .lvl = 38,
+    .species = SPECIES_DUSCLOPS,
+    .moves = {MOVE_CONFUSE_RAY, MOVE_SHADOW_PUNCH, MOVE_NIGHT_SHADE, MOVE_PURSUIT}
+    },
+    {
+    .iv = 100,
+    .lvl = 39,
+    .species = SPECIES_CHIMECHO,
+    .moves = {MOVE_CONFUSION, MOVE_SHADOW_BALL, MOVE_UPROAR, MOVE_PSYWAVE}
+    },
+    {
+    .iv = 150,
+    .lvl = 40,
+    .species = SPECIES_BANETTE,
+    .moves = {MOVE_WILL_O_WISP, MOVE_SHADOW_BALL, MOVE_FAINT_ATTACK, MOVE_KNOCK_OFF}
     }
 };
 

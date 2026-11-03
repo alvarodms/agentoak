@@ -244,6 +244,11 @@ gFieldNotesText_VulpixMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: someone on ROUTE\n"
 	.string "113 laughs in the falling ash.$"
 
+@ C334 den margins: gated by IsFieldNotesMarginEarned (src/match_call.c), not by the ink alone
+gFieldNotesText_TorchicMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a mourner on\n"
+	.string "MT. PYRE faces the graves.$"
+
 @ C331 cover once 3+ pages are inked (the player's name goes on the cover)
 gFieldNotesText_CoverYours::
 	.string "FIELD NOTES of PROF. BIRCH\n"
@@ -280,6 +285,11 @@ gBirchRedInkText_Believed::
 gBirchRedInkText_OnlyYou::
 	.string "No one else ever read my\n"
 	.string "den pages. Only you went.$"
+
+@ C334 one line for every den believer (replaces OnlyYou when no P1-P4 believer is named)
+gBirchRedInkText_Dens::
+	.string "Word came from the dens too.\n"
+	.string "Your ink went deep.$"
 
 gBirchRedInkText_Close::
 	.string "These are your notes now,\n"
