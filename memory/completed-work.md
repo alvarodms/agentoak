@@ -5,8 +5,6 @@
 
 Each system has its own detail file under `memory/completed-work/`.
 
----
-
 | System | Cycles | Files | Detail |
 |--------|--------|-------|--------|
 | Starters & Core Mechanics | 2, 12, 31, 32, 35, 52, 53, 58, **86** | 7 | [starters-core-mechanics.md](completed-work/starters-core-mechanics.md) |
@@ -36,7 +34,7 @@ Each system has its own detail file under `memory/completed-work/`.
 - **FortreeCity/scripts.inc**: C112 (roamer sighting), C141 (migration NPCs), **C320** (bird keeper postgame Honchkrow branch on FLAG_SYS_GAME_CLEAR; dead C141 MigrationBirdwatcher script+text deleted), **C323** Honchkrow line opener rewritten — npc-dialogue.md; also **FortreeCity_Gym/scripts.inc** (C320 rewraps, **C323** WinonaPreRematch MURKROW) + **EverGrandeCity_SidneysRoom/scripts.inc** (C313 rebuild, **C323** intro "sky went dark") — npc-dialogue.md
 - **trainer_parties.h / trainers.h**: ~36 cycles each — all trainer data. C316: 10 villain boss arrays now generated from `scripts/trainer_configs/villain_*.json` — edit the JSON, not the .h. C318: all 5 Drake arrays from `drake*.json`. C322: slot 568 = TRAINER_JUAN_DUET from `juan_duet.json`. C294: Swampert_Hoenn replaces vanilla Swampert as postgame rival ace (Torchic variant). C310: rival Blaziken_Hoenn (Treecko variant) Shadow Ball → Will-O-Wisp (battle-engine.md).
 - **wild_encounters.json**: 32 cycles (last: C294) — all encounter tables. C294: restored SPECIES_MUDKIP_HOENN in Shoal Cave Inner Room (slot 8, 4%)
-- **include/constants/flags.h**: Many cycles — custom flags through 0x2BA (C329: 0x2BA FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE; C324: 0x2B9 FLAG_RECEIVED_FIELD_NOTES; C322: 0x2B8 FLAG_RECEIVED_JUAN_MYSTIC_WATER; C315: 0x2B5 renamed FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, 0x2B6 FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO; C318: 0x2B7 FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP), next: 0x2BB
+- **include/constants/flags.h**: Many cycles — custom flags through 0x2BA (0x2B5-0x2B7 den caught flags, 0x2B8 Juan Mystic Water, 0x2B9 FIELD_NOTES, 0x2BA hiker HARD_STONE). Next: rename a FLAG_UNUSED_0x* from the verified pool (strategy-notes Flag space; 0x2D = Shoal trade, 0x2BB reserved Steven chalk)
 - **include/constants/species.h**: Many cycles — **40 custom species** through 450 (Toxapex), EGG=451, NUM_SPECIES=451. C308: Toxapex re-registered + 16 partial species repaired to 27/27. MOVES_COUNT=381 (Iron Leaf=380).
 - **MtPyre_Exterior/scripts.inc + map.json**: C312 starlight Torchic static (22,13) + cue signs (11,31)/(27,21); **C315** converted to StaticDen macros, doll flag FLAG_TEMP_11 — discovery-beats.md. Coral Mourner from earlier cycle.
 - **MeteorFalls_B1F_2R + B1F_1R (scripts.inc + map.json)**: 2R Resonance meteorite sign (3,5) C233-242; **C315** crystal Treecko den doll (7,4) + ON_TRANSITION/ON_RESUME + SilverLeaf (8,14)/ChalkNote (8,3); 1R quest researcher + **C315** GroovedStone (19,5); **C323** CrystalTreeckoFaded rewritten — discovery-beats.md.

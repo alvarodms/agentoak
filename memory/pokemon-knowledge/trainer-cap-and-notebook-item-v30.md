@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 331 | **Date**: November 2026
+**Cycle**: 333 | **Date**: November 2026
 
 ---
+
+## C333 — Flag reclamation: three community routes
+- **`FLAG_UNUSED_0x*` constants** are pret's sanctioned spare slots (pret wiki "Full Screen Start Menu" sets a feature flag to FLAG_UNUSED_0x020). The zero-risk pool: list those first in the ledger, before any "unreferenced but named" vanilla flag.
+- **pret wiki "Reuse filler save space for Variables and Flags"**: copies a `gAdditionalSaveData` array in/out of each save sector's `unused` bytes (src/save.c); IDs from 0xF000 map there (flags 1 bit, vars 2 bytes; the two ranges must not overlap). The wiki says it keeps vanilla saves compatible. This is a route to hundreds of new flags without touching any vanilla bit. Check first that old saves read the sector padding as zero.
+- Sibling pret pages: "Reclaim Unused Vars", "Saveblock Size" (measures headroom).
+- Engine traps for a grep-only scanner (codebase knowledge, not from the wiki): temp flags are cleared on map load, daily flags by ClearDailyFlags, and trainer/hidden-item/item-ball flags are referenced from map.json, by range, or through computed IDs. A flag with zero grep hits inside a range can still be wiped or set. The ledger must exclude whole ranges, not only grep for names.
 
 ## C331 — Mentor payoff: phone call vs. in-person
 - HGSS/GSC phone (Bulbagarden fan threads): players call the phone "annoying over time"; Bill's automated calls were "useless". Elm's *story* calls (e.g. after a badge) are remembered, not hated. Fans resent calls that interrupt without new content, not calls in general.
@@ -35,8 +41,7 @@
 - A dialogue-only skeptic does NOT need a trainer slot (flag-gated text on a plain object). Spend slot 853 only if a battle is part of the beat.
 
 ## C326 — Reclaiming IDs / trainer cap (applied)
-- pret wiki "Repurposing the Link Battle placeholders": RED/LEAF/BRENDAN_/MAY_PLACEHOLDER = 4 slots, keep constant+party names, change only name/class/pic/AI/party. Its Cable Club overwrite caveat doesn't apply here (gTrainers const, C326). Reclaimed slots start unbeaten (flag never set).
-- Raising MAX_TRAINERS_COUNT collides with system flags (PokéCommunity t=425848/383237; local `SYSTEM_FLAGS = TRAINER_FLAGS_END + 1`). Route: reclaim zero-ref IDs, verified by script grep (Trick House 848-850 ARE used).
+- pret wiki link placeholders: keep constant/party names, change name/class/pic/AI/party; Cable Club caveat N/A (gTrainers const). MAX_TRAINERS_COUNT bump shifts system flags (PokéCommunity t=425848/383237) → reclaim zero-ref IDs only.
 
 ## Notebook / log key items
 
@@ -45,6 +50,7 @@
 - Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
 
 ## Sources
+- https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)
 - https://bulbapedia.bulbagarden.net/wiki/Match_Call , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_HeartGold_and_SoulSilver/Part_1 , https://www.bulbagarden.net/goto/post?id=939348 , https://pokecommunity.com/showthread.php?p=10212056 (C331)
 - https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://allthings.how/pokemon-firered-and-leafgreen-oaks-aides-and-tm-locations/ (C330)
 - https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330)

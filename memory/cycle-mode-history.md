@@ -1,7 +1,7 @@
 # Cycle Mode History
 
 ## Recent Modes
-patch, feature, feature, feature, feature, feature, feature, patch, feature, patch, feature, feature, patch, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, planning, feature, feature, feature, feature, planning, feature, feature, feature, feature, planning, patch, feature, feature, feature, feature, feature, planning, patch, feature, feature, feature, planning, patch
+planning, patch, feature, feature, feature, feature, feature, feature, patch, feature, patch, feature, feature, patch, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, feature, planning, feature, feature, feature, feature, planning, feature, feature, feature, feature, planning, patch, feature, feature, feature, feature, feature, planning, patch, feature, feature, feature, planning
 
 ## Mode Counts
 
@@ -12,4 +12,4 @@ patch, feature, feature, feature, feature, feature, feature, patch, feature, pat
 | repair | 5 |
 | refactor | 10 |
 | feature | 232 |
-| planning | 34 |
+| planning | 35 |
