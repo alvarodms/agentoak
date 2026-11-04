@@ -22,7 +22,7 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 
 12. **Where:** any trainer battle. **Do:** choose BAG. **Expect:** "CHALLENGE: your BAG stays shut! / Fight with what you brought.", then back to FIGHT/BAG/POKéMON/RUN with no turn lost. In wild battles the BAG opens and Poké Balls work. In Normal Mode the BAG always opens.
 13. **Where:** Lavaridge Gym, Flannery. **Expect:** she never uses Hyper Potions in Challenge. Does her sun team feel much harder than Norman's?
-14. **Where:** Mt. Pyre summit fog, Meteor Falls B1F (crystal Treecko), Shoal Cave low tide (Mudkip). **Do:** knock out or run from each den Pokémon, then catch it. **Expect:** it returns after a KO or run and leaves for good once caught. With badges 5/6/8, FIELD NOTES pages 5/6/7 open and each catch inks its page. Page 7 has no margin note; page 5's appears only after step 25, page 6's only after step 33. Birch's Pokénav hint names the nearest unfound den. On a save from before v2.9, a Mt. Pyre Torchic knocked out back then may stay gone.
+14. **Where:** Mt. Pyre summit fog, Meteor Falls B1F (crystal Treecko), Shoal Cave low tide (Mudkip). **Do:** knock out or run from each den Pokémon, then catch it. **Expect:** it returns after a KO or run and leaves for good once caught. With badges 5/6/8, FIELD NOTES pages 5/6/7 open and each catch inks its page. Page 5's margin appears only after step 25, page 6's only after step 33, page 7's only after step 39. Birch's Pokénav hint names the nearest unfound den. On a save from before v2.9, a Mt. Pyre Torchic knocked out back then may stay gone.
 15. **Where:** Sootopolis Gym. **Expect:** Wallace is the Gym Leader and Juan stands beside him.
 16. **Where:** the Champion's room, Steven. **Expect:** Fey Flame and Undertow announce themselves when his last Pokémon switch in. He never uses Full Restore in Challenge, but held berries and Leftovers still work.
 
@@ -45,6 +45,16 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 34. **Do:** leave the room and come back (low tide). **Expect:** he stands on 18,6 (where the Mudkip was) facing down at the pool. Talking gives "Fresh or salt, the tide doesn't care…" then the shell-bell line, and he does NOT turn around.
 35. **Do:** open FIELD NOTES page 6 before and after the trade; get a red ink report from Birch (3+ pages inked). **Expect:** page 6's red "Since then: a sailor keeps the tide pool for the sea." margin appears only after the trade. Birch's report has "Word came from the dens too." once page 5 or page 6 has its margin.
 
+## Den believers -- Meteor Falls (C336; read step 36 before step 14's Treecko catch, the rest after it, before Part 3)
+
+36. **Where:** Meteor Falls B1F (the back room with the crystal Treecko doll at 7,4). **Do:** BEFORE catching the Treecko, stand on 7,3 facing right and read the chalked wall (8,3). **Expect:** only the old note: "Not mine to collect. Some things should be found. - S."
+37. **Do:** catch the crystal Treecko, then read the wall again in the same visit. **Expect:** the caught text ends "The chalk on the wall above seems to catch the light." The wall shows the old note and then "A stub of fresh chalk sits on the ledge below the words. Someone means to come back." No new lines yet.
+38. **Do:** step out to the neighbouring B1F room and read the grooved meteorite stone (19,5). **Expect:** "Fresh chalk dust lies on it. Neat footprints lead back toward the inner chamber." (not the old "too clean for claws" text).
+39. **Do:** walk out and back into the Treecko room (a warp in counts; saving and continuing inside the room does not) and read the wall. **Expect:** the answer: "Under the old chalk, a new line in the same neat hand:", "Found, then. Good.", "You were right. It needs no sun down here.", "But its kind still whet their leaves on forest bark.", "This one came for the meteor. The forest still remembers.", "- S.", then a page-turn sound and "You copy it down. Chalk dust greys the page under your ink." Read it again: the answer only, no sound, no copy line.
+40. **Do:** open FIELD NOTES page 7, then re-read the grooved stone, then get a red ink report from Birch (3+ pages inked). **Expect:** page 7 shows the old text (dark), the red ink, then a grey box "Copied from the cave wall: Its kind still whet leaves on forest bark. This one came for the meteor. - S." **LEGIBILITY CHECK:** if the grey is too faint to read, the margin should switch to `{COLOR BLUE}{SHADOW LIGHT_BLUE}` (gFieldNotesText_TreeckoMargin, pokedex_rating.inc); last resort is the default colour, keeping "- S.". The grooved stone is back to its old text. Birch's report has "Word came from the dens too."
+41. **Do:** on a v2.9 save without FIELD NOTES, catch the Treecko, leave, come back and read the wall. **Expect:** the answer reads, but no page-turn sound and no copy line; once you hold FIELD NOTES, re-reading the wall (after a fresh map load) copies it, and only then does page 7 get its grey box.
+- check_flag_pairs (C336) found no genuine orphans (ALLOWLIST empty), so there are no orphan-flag checks to add.
+
 ## Part 3 — Postgame (a cleared save)
 
 17. **Where:** Mt. Chimney, at the meteorite machine. **Do:** talk to Maxie, answer YES. **Expect:** one battle (Camerupt ace); afterwards he only speaks.
@@ -61,7 +71,9 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 - Did Birch's report sound like Birch being humbled, or like a list of things you did? Did it wear thin by the second or third rating?
 - Did you meet the Route 104 schoolkid before or after catching your Hoennian LOTAD? Did you ever see him facing the sea?
 - Did any of the four believers seem to do nothing after your catch?
+- Did Isolde's battle feel like a test of your Torchic, or just another trainer? Did her goodbye land?
 - Did the sailor's trade feel like a bargain or a chore? Did you already have a BARBOACH?
+- Did you go back to the Meteor Falls wall on your own, or only because this list said so? Did Steven correcting you feel fair?
 - In Challenge Mode, was the Champion a wall without your BAG?
 
 README copy: "Help Playtest v3.0" (C332). Edit this file first, then mirror it into README.md with the same step numbers. Mirrored through step 35 (C335 reflection).

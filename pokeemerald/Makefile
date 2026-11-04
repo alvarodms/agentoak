@@ -190,9 +190,10 @@ check_scripts:
 		echo "All script files clean."; \
 	fi
 
-# Flag-chain validator: detect flags that are checked but never set in scripts
+# Flag pairing (C336): every custom flag is both read and set
 check_flags:
-	@bash scripts/check_flags.sh
+	@node scripts/check_flag_pairs.cjs --selftest
+	@node scripts/check_flag_pairs.cjs
 
 # Encounter table validation
 check_encounters:
@@ -259,7 +260,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

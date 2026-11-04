@@ -291,5 +291,10 @@ function main() {
   console.log('check_flag_values: OK');
 }
 
-if (process.argv.includes('--selftest')) selftest();
-else main();
+// C336: check_flag_pairs.cjs reuses the flags.h parser
+module.exports = { parseDefines, parseEnum, evaluate, flagNamesOf, isMarker, ROOT, FLAGS_H, OPPONENTS_H, REMATCHES_H };
+
+if (require.main === module) {
+  if (process.argv.includes('--selftest')) selftest();
+  else main();
+}

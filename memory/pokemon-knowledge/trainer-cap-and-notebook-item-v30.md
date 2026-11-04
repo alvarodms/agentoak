@@ -1,8 +1,13 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 335 | **Date**: November 2026
+**Cycle**: 336 | **Date**: November 2026
 
 ---
+
+## C336 — Humility believer (Meteor Falls Steven chalk): precedent + reach risk
+- Vanilla precedent: Steven already talks to the player through a note left behind. After the Hall of Fame, his Mossdeep house has a note on the desk next to a Poké Ball holding Beldum, "my favorite Pokémon" (Bulbapedia Steven/Quotes; guides). A short signed note from an offscreen Steven is canon voice, not a new invention.
+- Reach risk: vanilla B1F_2R is the **dead-end back room behind Surf + Waterfall** (TM02 Dragon Claw, Bagon). Once the TM and the den are taken, nothing brings the player back. A beat that waits for re-entry can be missed unless something points back to it. Fixes, from cheapest: the beat also fires on leaving and re-entering the room straight away (any warp out counts); the post-catch text or the page-7 ink hints "Steven chalks this wall"; Birch's Field Notes names the wall.
+- General "content changes on revisit" design (itch devlogs, Deathloop note-rereading): players pick up a change on revisit only when they have a reason to look again. No strong source found (weak evidence).
 
 ## C335 — Trade believer (Shoal Cave sailor): trade + locale checks
 - Hacks that redo NPC trades frame them as "useful mons/items right when you need them" (USUM hack changelogs; a revamped R/B hack where nothing is trade-locked). No praise for trades as flavour alone. The received mon has to be worth using.
@@ -31,17 +36,9 @@
 - Applied: `CountInkedFieldNotePages` should drive tiers (e.g. 3+ = believers "talk to each other", 7 = last page). Pages 5-7 are badge-gated, so an all-pages gate can't be reached until late. Pages 1-4 can all be inked by Route 113, so a ≥3 beat lands mid-game.
 - Route 113 locale (Bulbapedia): Glass Workshop (NW) turns ash into glass furniture; its owner gives the Soot Sack, and ash grass collects soot per step. Two Ninja Boys hide under fake ash piles. Existing route verbs for a believer to use: sweeping/collecting ash, glass-making, hiding.
 
-## C329 — "Show me" NPCs: the two official grammars
-- **Dex-entry check (Sun/Moon Pokédex quests)**: the NPC wants to *see the entry*; no party needed, no time limit, mostly money rewards (supercheats, serebii). Passive, never strands the player.
-- **Party check (Legends Z-A side missions, e.g. "I'd like to see an Ekans", Skiddo)**: the mon must be on the team when you talk. Reads as literally "showing" it, but costs a box trip.
-- Applied: the hiker's state must stay dex-caught (= page ink, so notebook and NPC never disagree). Word him as reacting to the *record* ("Your POKéDEX says…"), not to a mon at your side. Otherwise players will try to show their party and wonder why the dex is what counts.
-- Granite Cave already has a vanilla hiker near the entrance who hands out HM05 Flash. Put the believer clearly apart from him, or players will mix up the two hikers.
+## C329 — "Show me" NPCs (applied): dex-entry checks (SM Pokédex quests) are passive; party checks (Z-A "I'd like to see an Ekans") cost a box trip. Believers read dex-caught (= page ink) and word it as the *record*. Keep believers apart from vanilla look-alike NPCs (Granite Cave Flash hiker).
 
-## C328 — Notebook ↔ NPC feedback loop (Bombers' Notebook precedent)
-- Majora's Mask Bombers' Notebook: one row per character, and solving their problem stamps a **Happy Sticker** on that row. The notebook records *who* the player helped, not just what was found. MM3D rebuilt it as a fuller quest log so every rewarding NPC has an entry. Kafei's schedule changes based on other events' outcomes, so the interlocking chains only work once the individual characters are established.
-- Applied: once a believer reacts, the Field Notes page should show it (e.g. a margin line "copied out by a kid on ROUTE 104"). Without that, the NPC beats and the item stay two separate systems.
-- Order: build individual believers first (pages 2-4), then the multi-page beat. A beat that reacts to several pages works best when the player has already met several believers.
-- Generic reactive-NPC writing (Wayline, DEV) warns against over-reactivity. Keep each reaction to one specific line about the player's actual deed.
+## C328 — Notebook ↔ NPC loop (applied): Bombers' Notebook stamps *who* was helped per row → believer margins on pages; build single believers before the multi-page beat; one specific reactive line per deed (Wayline).
 
 ## C327 — Reactive "skeptic" NPCs & the second slot pool
 - Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
@@ -49,13 +46,10 @@
 - Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
 - A dialogue-only skeptic does NOT need a trainer slot. C326 (applied): reclaim zero-ref IDs only, keeping constant/party names (pret wiki link placeholders); a MAX_TRAINERS_COUNT bump shifts system flags.
 
-## Notebook / log key items
-
-- **Unbound's Mission Log** is among its most praised QoL features (retrohandhelds, animecollective reviews): it tracks quest progress AND "which items have been found in collectathons". Praise is for *organization*, not prose.
-- Criticism of Unbound side content: fetch/"do X times" tasks; the log can't save weak content.
-- Takeaway for Field Notes item: lead with a found/not-found checklist of the three dens (state at a glance); the "corrections page" voice is flavor on top, not the core function.
+## Notebook / log key items: Unbound's Mission Log is praised for *organization* (progress + collectathon state), not prose; it can't save weak fetch tasks. Lead with state at a glance; voice is flavour.
 
 ## Sources
+- https://bulbapedia.bulbagarden.net/wiki/Steven%20Stone/Quotes , https://www.ludo.guide/guide/pokemon-emerald/the-gift-that-steven-left-you , https://strategywiki.org/wiki/Pokémon_Ruby_and_Sapphire/Meteor_Falls , https://www.nme.com/features/in-game-exposition-dumps-are-nothing-new-so-why-is-deathloop-so-good-at-it-3048526 (C336)
 - https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://bulbapedia.bulbagarden.net/wiki/Special:MobileDiff/2930654 (Name Rater), https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 , https://www.pokecommunity.com/threads/pok%C3%A9mon-photonic-sun-prismatic-moon.411743/latest (C335)
 - https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Mt._Pyre , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
 - https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)

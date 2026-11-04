@@ -1052,6 +1052,7 @@ extern const u8 gFieldNotesText_GligarMargin[];
 extern const u8 gFieldNotesText_VulpixMargin[];
 extern const u8 gFieldNotesText_TorchicMargin[];
 extern const u8 gFieldNotesText_MudkipMargin[];
+extern const u8 gFieldNotesText_TreeckoMargin[];
 extern const u8 gFieldNotesText_CoverYours[];
 extern const u8 gBirchRedInkText_Open[];
 extern const u8 gBirchRedInkText_Lotad[];
@@ -2184,7 +2185,7 @@ struct FieldNotesPage
 {
     const u8 *oldText;
     const u8 *inkText;
-    const u8 *marginText; // C331; den margins are gated by IsFieldNotesMarginEarned (NULL until the den's believer ships)
+    const u8 *marginText; // C331; den margins are gated by IsFieldNotesMarginEarned
     const u8 *birchText;  // C331: NULL on den pages (gBirchRedInkText_Dens speaks for them)
 };
 
@@ -2196,7 +2197,7 @@ static const struct FieldNotesPage sFieldNotesPages[FIELD_NOTES_PAGE_COUNT] =
     [FIELD_NOTES_VULPIX]    = {gFieldNotesText_Vulpix,    gFieldNotesText_VulpixInk,    gFieldNotesText_VulpixMargin,    gBirchRedInkText_Vulpix},
     [FIELD_NOTES_TORCHIC]   = {gFieldNotesText_Torchic,   gFieldNotesText_TorchicInk,   gFieldNotesText_TorchicMargin,   NULL},
     [FIELD_NOTES_MUDKIP]    = {gFieldNotesText_Mudkip,    gFieldNotesText_MudkipInk,    gFieldNotesText_MudkipMargin,    NULL},
-    [FIELD_NOTES_TREECKO]   = {gFieldNotesText_Treecko,   gFieldNotesText_TreeckoInk,   NULL,                            NULL},
+    [FIELD_NOTES_TREECKO]   = {gFieldNotesText_Treecko,   gFieldNotesText_TreeckoInk,   gFieldNotesText_TreeckoMargin,   NULL},
 };
 
 // Den pages open on the same badge gates GetActiveFieldNote uses, so the notebook and the
@@ -2255,7 +2256,7 @@ static bool8 IsFieldNotesMarginEarned(u8 i)
     case FIELD_NOTES_MUDKIP:
         return FlagGet(FLAG_DEN_SHOAL_TRADE_DONE);
     case FIELD_NOTES_TREECKO:
-        return FALSE; // C336: FLAG_DEN_METEOR_STEVEN_CHALK
+        return FlagGet(FLAG_DEN_METEOR_STEVEN_CHALK);
     default:
         return FALSE;
     }

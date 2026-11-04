@@ -746,7 +746,7 @@
 #define FLAG_RECEIVED_JUAN_MYSTIC_WATER  0x2B8 // C322: set after Juan's postgame duet gift (Mystic Water) is received; retried if bag was full
 #define FLAG_RECEIVED_FIELD_NOTES  0x2B9 // C324: set when Birch hands over the FIELD NOTES key item (Pokedex scene or late fallback)
 #define FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE  0x2BA // C329: Red Ink page-3 hiker gives HARD_STONE once GLIGAR_HOENN is caught
-#define FLAG_UNUSED_0x2BB  0x2BB // Unused Flag
+#define FLAG_DEN_METEOR_STEVEN_CHALK  0x2BB // C336 Steven's chalk answer copied into FIELD NOTES
 
 // Event Flags
 #define FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG                      0x2BC
