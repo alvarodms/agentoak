@@ -15,6 +15,20 @@ ShoalCave_LowTideLowerRoom_EventScript_SailorAtPool::
 	setobjectmovementtype LOCALID_SHOAL_CAVE_LOWER_SAILOR, MOVEMENT_TYPE_FACE_DOWN
 	return
 
+@ C338: on-catch cue, called from EventMacro_StaticDen. He sizes up the catcher, then looks back at the still pool.
+ShoalCave_LowTideLowerRoom_EventScript_SailorWeighsCatch::
+	applymovement LOCALID_SHOAL_CAVE_LOWER_SAILOR, ShoalCave_LowTideLowerRoom_Movement_SailorWeighsCatch
+	waitmovement 0
+	return
+
+ShoalCave_LowTideLowerRoom_Movement_SailorWeighsCatch:
+	face_player
+	emote_question_mark
+	delay_16
+	delay_16
+	face_right
+	step_end
+
 ShoalCave_LowTideLowerRoom_OnResume:
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, ShoalCave_LowTideLowerRoom_EventScript_TryRemoveTitanMudkip
 	end
@@ -81,7 +95,7 @@ ShoalCave_LowTideLowerRoom_Text_EverythingStartsWithFocus:
 @ =============================================
 
 ShoalCave_LowTideLowerRoom_EventScript_TitanMudkip::
-	EventMacro_StaticDen SPECIES_MUDKIP_HOENN, 38, ITEM_SHELL_BELL, FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, ShoalCave_LowTideLowerRoom_Text_TitanMudkipApproach, ShoalCave_LowTideLowerRoom_Text_TitanMudkipCaught, ShoalCave_LowTideLowerRoom_Text_TitanMudkipFaded
+	EventMacro_StaticDen SPECIES_MUDKIP_HOENN, 38, ITEM_SHELL_BELL, FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, ShoalCave_LowTideLowerRoom_Text_TitanMudkipApproach, ShoalCave_LowTideLowerRoom_Text_TitanMudkipCaught, ShoalCave_LowTideLowerRoom_Text_TitanMudkipFaded, ShoalCave_LowTideLowerRoom_EventScript_SailorWeighsCatch
 
 ShoalCave_LowTideLowerRoom_EventScript_TidePool::
 	goto_if_set FLAG_DEN_SHOAL_TRADE_DONE, ShoalCave_LowTideLowerRoom_EventScript_TidePoolFish

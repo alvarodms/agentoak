@@ -210,16 +210,19 @@ The migration's ultimate legacy — a being born from Hoenn's entanglement with 
 
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
-#### Three things we most need eyes on
-If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
+#### Four things we most need eyes on
+The den items need a save with badge 5 or more (Mt. Pyre first); allow about twenty minutes per den. If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
 
 1. **Steven's chalk on the wall (Meteor Falls).** Catch the crystal Treecko in the back room of B1F, then walk out into the next chamber. Did you notice anything in the chalk dust? Did you go back into the room on your own? Is there an answer under Steven's old note now? (The answer appears when you walk back in through the entrance. Saving and reloading inside the room won't make it appear, and that's expected.)
 2. **Page 7's margin.** Copy Steven's answer, then open FIELD NOTES to page 7. Can you read the lines under "Copied from the cave wall" without squinting? Do they look like a different hand from your red ink?
 3. **Birch's longest call.** With most pages inked, call PROF. BIRCH on the PokéNav. Does every text box end cleanly, with no cut-off or garbled words? Does "Word came from the dens too." get its own box, or is it squeezed onto the end of the names?
+4. **Right after the den catch.** At Mt. Pyre's summit and Shoal Cave's tide pool, watch ISOLDE and MARLOW the moment the battle ends, before you talk to anyone. What did they do? "Nothing" is a useful report.
 
 For every person who reacts to your red ink (pages 1-7), there's one more question: **did you notice the change (someone moved, turned, or stood somewhere new) before anyone explained it?**
 
-Report with the build (commit hash), the item number above or the step number below, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
+Already known (no need to report): Steven's chalk dust in Meteor Falls is text only, so it is easy to miss; the Granite Cave B1F hiker and the Mt. Pyre summit keeper stand slightly inside the rock wall (you can still talk to them).
+
+Report with the build (commit hash), your emulator or device, the item number above or the step number below, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
 #### Part 1 — New game, hours 0-4 (Normal or Challenge)
 
@@ -246,7 +249,7 @@ Report with the build (commit hash), the item number above or the step number be
 #### Den believers — Mt. Pyre (do these after step 14, before Part 3)
 
 23. **Where:** Mt. Pyre summit, the Hex Maniac ISOLDE two steps west of the summit path (17,12). **Do:** talk to her BEFORE catching the starlight Torchic. **Expect:** she turns to you, speaks of "lights in the summit fog" that are "not for notebooks", and won't battle. She never blocks the path up to the summit.
-24. **Do:** catch the starlight Torchic, then talk to her. **Expect:** her soul-light/grandmother speech, then "Will you show me how you carry it?" YES/NO. NO gives "Then carry it quietly…"; talking again asks again.
+24. **Do:** catch the starlight Torchic, then talk to her. **Expect:** right after the catch, before any text, she turns to face where the light stood. Then talking gives her soul-light/grandmother speech, then "Will you show me how you carry it?" YES/NO. NO gives "Then carry it quietly…"; talking again asks again.
 25. **Do:** answer YES and battle (Dusclops 38, Chimecho 39, Banette 40; Hex Maniac music). Try switching the Torchic in when Banette goes for Will-O-Wisp. **Expect:** "It doesn't affect TORCHIC…". Banette never picks Will-O-Wisp while the Torchic is already out. After you win: her goodbye lines (pink starlight vs. an orange hearth), then she turns to face north on the spot.
 26. **Do:** lose to her on purpose (separate save). **Expect:** whiteout; when you come back she offers the battle again.
 27. **Do:** leave the summit area and come back. **Expect:** she stands one tile north in the little alcove (17,11), facing the graves. Talking gives "…I'm talking to her now…" and she does NOT turn around.
@@ -257,7 +260,7 @@ Report with the build (commit hash), the item number above or the step number be
 
 30. **Where:** Shoal Cave low tide, lower room, the sailor in the little pocket west of the tide pool (17,6). **Do:** talk to him BEFORE catching the titan Mudkip. **Expect:** he turns to you; "Forty years at sea…", the pool's "child of the sea… Big as a SWAMPERT", "It belongs to the sea. Not to some PROFESSOR's notebook." No trade offer. The Mudkip doll (18,6) can still be reached from 18,5 or 19,6.
 31. **Do:** read the tide pool sign (from 19,7) before the catch, after the catch, and after step 33. **Expect:** three different texts: "It stirs below the surface…", then "Its water lies flat and still now.", then "A whiskered fish circles the salt water."
-32. **Do:** catch the titan Mudkip, talk to him, answer NO; talk again, answer YES and press B in the party menu; talk again, answer YES and pick anything that is not a BARBOACH (also try an EGG). **Expect:** the offer names BARBOACH and CORSOLA and ends "Deal?" with YES/NO. NO and B both give "Then the ledger stays open… Whiskers swim the fresh water past FORTREE." A wrong Pokémon or an EGG gives "That's no BARBOACH." and then the same ledger text. No trade happens.
+32. **Do:** catch the titan Mudkip, talk to him, answer NO; talk again, answer YES and press B in the party menu; talk again, answer YES and pick anything that is not a BARBOACH (also try an EGG). **Expect:** right after the catch he looks at you with a "?" and turns back to the pool. Then the offer names BARBOACH and CORSOLA and ends "Deal?" with YES/NO. NO and B both give "Then the ledger stays open… Whiskers swim the fresh water past FORTREE." A wrong Pokémon or an EGG gives "That's no BARBOACH." and then the same ledger text. No trade happens.
 33. **Do:** fish a BARBOACH (Route 111/114/120 or Meteor Falls, Good Rod), come back, trade it. **Expect:** the normal trade scene. TIDEMARK arrives: a Hoennian CORSOLA (Ghost/Rock), female, Adamant, holding a SHOAL SHELL, OT MARLOW, at your BARBOACH's level. The Name Rater refuses to rename it. After the scene the sailor turns right to the pool, a splash plays, then "There. A river fish for the sea…" ending "Maybe nothing belongs to one water. I'll keep the pool."
 34. **Do:** leave the room and come back (low tide). **Expect:** he stands on 18,6 (where the Mudkip was) facing down at the pool. Talking gives "Fresh or salt, the tide doesn't care…" then the shell-bell line, and he does NOT turn around.
 35. **Do:** open FIELD NOTES page 6 before and after the trade; get a red ink report from Birch (3+ pages inked). **Expect:** page 6's red "Since then: a sailor keeps the tide pool for the sea." margin appears only after the trade. Birch's report has "Word came from the dens too." once page 5 or page 6 has its margin.

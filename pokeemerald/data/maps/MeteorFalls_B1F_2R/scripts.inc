@@ -212,5 +212,6 @@ MeteorFalls_B1F_2R_Text_ChalkAnswer:
 	.string "- S.$"
 
 MeteorFalls_B1F_2R_Text_ChalkCopy:
-	.string "You copy it down. Chalk dust\n"
-	.string "greys the page under your ink.$"
+	.string "You copy it down.\n"
+	.string "Blue chalk dust settles\l"
+	.string "under your red ink.$"

@@ -5,12 +5,13 @@
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
 ---
-## Three things we most need eyes on
+## Four things we most need eyes on
 If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
 
 1. **Steven's chalk on the wall (Meteor Falls).** Catch the crystal Treecko in the back room of B1F, then walk out into the next chamber. Did you notice anything in the chalk dust? Did you go back into the room on your own? Is there an answer under Steven's old note now? (The answer appears when you walk back in through the entrance. Saving and reloading inside the room won't make it appear, and that's expected.)
 2. **Page 7's margin.** Copy Steven's answer, then open FIELD NOTES to page 7. Can you read the lines under "Copied from the cave wall" without squinting? Do they look like a different hand from your red ink?
 3. **Birch's longest call.** With most pages inked, call PROF. BIRCH on the PokéNav. Does every text box end cleanly, with no cut-off or garbled words? Does "Word came from the dens too." get its own box, or is it squeezed onto the end of the names?
+4. **Right after the den catch.** At Mt. Pyre's summit and Shoal Cave's tide pool, watch ISOLDE and MARLOW the moment the battle ends, before you talk to anyone. What did they do? "Nothing" is a useful report.
 
 For every person who reacts to your red ink (pages 1-7), there's one more question: **did you notice the change (someone moved, turned, or stood somewhere new) before anyone explained it?**
 
@@ -43,7 +44,7 @@ Report with the build (commit hash), the item number above or the step number be
 ## Den believers — Mt. Pyre (C334, pending; do these after step 14, before Part 3)
 
 23. **Where:** Mt. Pyre summit, the Hex Maniac ISOLDE two steps west of the summit path (17,12). **Do:** talk to her BEFORE catching the starlight Torchic. **Expect:** she turns to you, speaks of "lights in the summit fog" that are "not for notebooks", and won't battle. She never blocks the path up to the summit.
-24. **Do:** catch the starlight Torchic, then talk to her. **Expect:** her soul-light/grandmother speech, then "Will you show me how you carry it?" YES/NO. NO gives "Then carry it quietly…"; talking again asks again.
+24. **Do:** catch the starlight Torchic, then talk to her. **Expect:** right after the catch, before any text, she turns to face where the light stood. Then talking gives her soul-light/grandmother speech, then "Will you show me how you carry it?" YES/NO. NO gives "Then carry it quietly…"; talking again asks again.
 25. **Do:** answer YES and battle (Dusclops 38, Chimecho 39, Banette 40; Hex Maniac music). Try switching the Torchic in when Banette goes for Will-O-Wisp. **Expect:** "It doesn't affect TORCHIC…". Banette never picks Will-O-Wisp while the Torchic is already out. After you win: her goodbye lines (pink starlight vs. an orange hearth), then she turns to face north on the spot.
 26. **Do:** lose to her on purpose (separate save). **Expect:** whiteout; when you come back she offers the battle again.
 27. **Do:** leave the summit area and come back. **Expect:** she stands one tile north in the little alcove (17,11), facing the graves. Talking gives "…I'm talking to her now…" and she does NOT turn around.
@@ -54,7 +55,7 @@ Report with the build (commit hash), the item number above or the step number be
 
 30. **Where:** Shoal Cave low tide, lower room, the sailor in the little pocket west of the tide pool (17,6). **Do:** talk to him BEFORE catching the titan Mudkip. **Expect:** he turns to you; "Forty years at sea…", the pool's "child of the sea… Big as a SWAMPERT", "It belongs to the sea. Not to some PROFESSOR's notebook." No trade offer. The Mudkip doll (18,6) can still be reached from 18,5 or 19,6.
 31. **Do:** read the tide pool sign (from 19,7) before the catch, after the catch, and after step 33. **Expect:** three different texts: "It stirs below the surface…", then "Its water lies flat and still now.", then "A whiskered fish circles the salt water."
-32. **Do:** catch the titan Mudkip, talk to him, answer NO; talk again, answer YES and press B in the party menu; talk again, answer YES and pick anything that is not a BARBOACH (also try an EGG). **Expect:** the offer names BARBOACH and CORSOLA and ends "Deal?" with YES/NO. NO and B both give "Then the ledger stays open… Whiskers swim the fresh water past FORTREE." A wrong Pokémon or an EGG gives "That's no BARBOACH." and then the same ledger text. No trade happens.
+32. **Do:** catch the titan Mudkip, talk to him, answer NO; talk again, answer YES and press B in the party menu; talk again, answer YES and pick anything that is not a BARBOACH (also try an EGG). **Expect:** right after the catch he looks at you with a "?" and turns back to the pool. Then the offer names BARBOACH and CORSOLA and ends "Deal?" with YES/NO. NO and B both give "Then the ledger stays open… Whiskers swim the fresh water past FORTREE." A wrong Pokémon or an EGG gives "That's no BARBOACH." and then the same ledger text. No trade happens.
 33. **Do:** fish a BARBOACH (Route 111/114/120 or Meteor Falls, Good Rod), come back, trade it. **Expect:** the normal trade scene. TIDEMARK arrives: a Hoennian CORSOLA (Ghost/Rock), female, Adamant, holding a SHOAL SHELL, OT MARLOW, at your BARBOACH's level. The Name Rater refuses to rename it. After the scene the sailor turns right to the pool, a splash plays, then "There. A river fish for the sea…" ending "Maybe nothing belongs to one water. I'll keep the pool."
 34. **Do:** leave the room and come back (low tide). **Expect:** he stands on 18,6 (where the Mudkip was) facing down at the pool. Talking gives "Fresh or salt, the tide doesn't care…" then the shell-bell line, and he does NOT turn around.
 35. **Do:** open FIELD NOTES page 6 before and after the trade; get a red ink report from Birch (3+ pages inked). **Expect:** page 6's red "Since then: a sailor keeps the tide pool for the sea." margin appears only after the trade. Birch's report has "Word came from the dens too." once page 5 or page 6 has its margin.
@@ -104,7 +105,7 @@ Objects: starlight Torchic doll 22,13 (FLAG_TEMP_11); ISOLDE LOCALID_MT_PYRE_EXT
 | P0 first visit, nothing done | — | doll 22,13; ISOLDE 17,12 facing down | ISOLDE: `_Text_MournerSilent` (faceplayer); doll: `_Text_StarlightTorchicApproach` | — | hidden unless BADGE05; if open: old text only | no |
 | P1 Torchic KO'd / ran | FLAG_TEMP_11 (removeobject) | doll gone; ISOLDE unchanged | `_Text_StarlightTorchicFaded`; ISOLDE still Silent | doll vanishes | unchanged | no |
 | P2 re-enter after P1 | TEMP_11 cleared by the warp | doll back at 22,13 | Approach | doll returns | unchanged | no |
-| P3 Torchic caught (same visit) | CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, TEMP_11 (ON_RESUME TryRemove) | doll gone; ISOLDE still 17,12 facing down | caught text; ISOLDE: `_Text_MournerChallenge` + `_Text_MournerAsk` YES/NO | doll gone; ISOLDE does not move (SUSPECT: design, see Known issues #2) | opens even without badge 5; old + red ink; no margin | Dens: no (margin not earned) |
+| P3 Torchic caught (same visit) | CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, TEMP_11 (ON_RESUME TryRemove) | doll gone; after the caught text ISOLDE turns right (toward 22,13) and steps in place (C338 on_caught `_EventScript_MournerSeesLightGone`, no text) | caught text; ISOLDE: `_Text_MournerChallenge` + `_Text_MournerAsk` YES/NO | doll gone; ISOLDE turns to where the light stood. Re-entry before beating her: 17,12 FACE_RIGHT (OnTransition `_MournerWatchesFog`; the beaten state P8 overrides it) | opens even without badge 5; old + red ink; no margin | Dens: no (margin not earned) |
 | P4 answer NO | same as P3 | same | `_Text_MournerDecline` | none | same | no |
 | P5 lose to her | same as P3 (trainer flag 0x745 unset) | whiteout; on return ISOLDE 17,12 | Challenge + Ask again | none | same | no |
 | P6 beat her (same visit) | + trainer flag 0x745 | ISOLDE turns up on the spot at 17,12 (`Common_Movement_FaceUp`) | `_Text_MournerDefeat`, `_Text_MournerAfter`; talk again: `_Text_MournerDone`, no faceplayer | she faces the graves | ink + red margin `gFieldNotesText_TorchicMargin` | yes |
@@ -120,7 +121,7 @@ Objects: titan Mudkip doll 18,6 (FLAG_TEMP_12); sailor LOCALID_SHOAL_CAVE_LOWER_
 |---|---|---|---|---|---|---|
 | S0 first visit (low tide) | — | doll 18,6; sailor 17,6 facing right | sailor: `_Text_SailorWarn` (faceplayer); pool: `_Text_TidePool` ("stirs") | — | hidden unless BADGE06; if open: old text | no |
 | S1 Mudkip KO'd / ran | FLAG_TEMP_12 | doll gone until re-entry | `_Text_TitanMudkipFaded`; sailor Warn; pool still "stirs" | doll vanishes | unchanged | no |
-| S2 Mudkip caught | CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, TEMP_12 | doll gone; sailor 17,6 (facing the player after talk) | caught text; sailor `_Text_SailorOffer` YES/NO; pool `_Text_TidePoolStill` | doll gone; pool text changes; sailor does not move | ink, no margin | no |
+| S2 Mudkip caught (same visit) | CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, TEMP_12 | doll gone; after the caught text MARLOW turns to the player with "?", then back right to the pool (C338 on_caught `_EventScript_SailorWeighsCatch`); re-entry: 17,6 FACE_RIGHT (map default, unchanged) | caught text; sailor `_Text_SailorOffer` YES/NO; pool `_Text_TidePoolStill` | doll gone; MARLOW sizes up the catcher; pool text changes | ink, no margin | no |
 | S3 NO / B / wrong mon / egg | same as S2 | same | `_Text_SailorDecline` (wrong mon: `_Text_SailorWrongMon` then Decline) | none | same | no |
 | S4 trade done (same visit) | + FLAG_DEN_SHOAL_TRADE_DONE | sailor turns right to the empty 18,6, splash | `_Text_SailorTraded`; talk again: `_Text_SailorDone`, no faceplayer; pool `_Text_TidePoolFish` | he faces the pool; pool text changes | ink + red margin `gFieldNotesText_MudkipMargin` | yes |
 | S5 save + Continue in the room after S4 | same | sailor 17,6 facing right (saved) | Done | none | same | yes |
@@ -153,10 +154,11 @@ Ordering (a): catch then Continue inside B1F_2R = M3 (no answer until a warp in)
 ## Known issues (static)
 
 Found by reading code, not by play. Severity uses the A/B/C scale above.
-1. **C, text:** `MeteorFalls_B1F_2R_Text_ChalkCopy` still says "Chalk dust greys the page under your ink." The page-7 margin is now blue (C337), not grey. A dialogue change was out of C337 scope. Candidate fix: "Chalk dust smudges the page under your ink."
-2. **C, design:** ISOLDE (page 5) and MARLOW (page 6) show no visible change after the den catch until they have spoken (ISOLDE turns only after the battle; MARLOW only after the trade). The funnel's "did you notice the change before anyone explained it?" can only get a yes on the re-entry move (P8 / S6).
+1. **Fixed C338:** `MeteorFalls_B1F_2R_Text_ChalkCopy` now reads "You copy it down. / Blue chalk dust settles / under your red ink.", matching the blue page-7 margin.
+2. **Fixed C338:** ISOLDE and MARLOW now react on screen the moment the den Pokémon is caught (EventMacro_StaticDen optional 8th arg `on_caught`; P3 / S2 rows above). Funnel item 4 asks testers whether they noticed.
 3. **C, design:** Steven's chalk dust (M4) is text-only on a stone the player may already have read; the B1F_2R answer (M5) also adds nothing on the map. If testers miss it (funnel item 1), the cheapest visible cue would be a metatile or object change, which needs a design cycle.
 4. Palette (C337, gMessageBox_Pal from graphics/text_window/message_box.png): idx4 RED = 224,8,8 (red); idx5 LIGHT_RED = 248,184,112, a peach shadow. That is vanilla Emerald's red-text shadow, so the six red margins and the cover are fine. **Not a Severity-A finding.**
-5. Not re-verified C337: collision at ISOLDE's 17,11 alcove and MARLOW's 18,6 move tile (checked when built, C334/C335).
+5. **Checked C338 by `make check_object_tiles`** (175 scripted destinations + 205 start tiles, 0 errors): ISOLDE 17,11 and MARLOW 18,6 pass (18,6 is a warning only: it is the TEMP_12 Mudkip doll's start tile, hidden by then). The first run found two **C, looks off** Agent Oak NPCs standing inside a wall (collision 1, always present, still talkable from the open side), listed in the lint's KNOWN_ISSUES and NOT moved during the den freeze: GraniteCave_B1F hiker 28,19 (C329 Red Ink page 3, in the wall above the B2F ladder, talk from 28,20) and MtPyre_Summit keeper old woman 20,25 (in the west rock wall, talk from 21,25). Fix = move each to an open tile, then delete its KNOWN_ISSUES entry (a stale entry fails the lint).
 
-README copy: 'Help Playtest v3.0'. Reflection C337: mirror the new 'Three things we most need eyes on' block to the top of that README section, above the full route.
+
+README copy: 'Help Playtest v3.0' mirrors this file (Four things funnel, scope line, known-issues line, emulator field: synced C338 Reflection). Edit here first.

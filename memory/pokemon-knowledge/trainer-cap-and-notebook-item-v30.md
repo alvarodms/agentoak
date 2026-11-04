@@ -47,7 +47,6 @@
 - A dialogue-only skeptic does NOT need a trainer slot. C326 (applied): reclaim zero-ref IDs only, keeping constant/party names (pret wiki link placeholders); a MAX_TRAINERS_COUNT bump shifts system flags.
 
 ## Notebook / log key items: Unbound's Mission Log is praised for *organization* (progress + collectathon state), not prose; it can't save weak fetch tasks. Lead with state at a glance; voice is flavour.
-
 ## Sources
 - https://bulbapedia.bulbagarden.net/wiki/Steven%20Stone/Quotes , https://www.ludo.guide/guide/pokemon-emerald/the-gift-that-steven-left-you , https://strategywiki.org/wiki/Pokémon_Ruby_and_Sapphire/Meteor_Falls , https://www.nme.com/features/in-game-exposition-dumps-are-nothing-new-so-why-is-deathloop-so-good-at-it-3048526 (C336)
 - https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://bulbapedia.bulbagarden.net/wiki/Special:MobileDiff/2930654 (Name Rater), https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 , https://www.pokecommunity.com/threads/pok%C3%A9mon-photonic-sun-prismatic-moon.411743/latest (C335)

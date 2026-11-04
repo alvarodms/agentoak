@@ -5,6 +5,7 @@ MtPyre_Exterior_MapScripts::
 
 MtPyre_Exterior_OnTransition:
 	call MtPyre_Exterior_EventScript_CheckEnterFromSummit
+	call_if_set FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, MtPyre_Exterior_EventScript_MournerWatchesFog
 	call_if_defeated TRAINER_PYRE_MOURNER, MtPyre_Exterior_EventScript_MournerAtGraves
 	EventMacro_StaticDenTransition FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, FLAG_TEMP_11
 	end
@@ -64,6 +65,25 @@ MtPyre_Exterior_EventScript_MournerAtGraves:
 	setobjectxyperm LOCALID_MT_PYRE_EXTERIOR_MOURNER, 17, 11
 	setobjectmovementtype LOCALID_MT_PYRE_EXTERIOR_MOURNER, MOVEMENT_TYPE_FACE_UP
 	return
+
+@ C338: Torchic caught, ISOLDE not yet beaten - she keeps watching where the light stood (matches the on-catch cue)
+MtPyre_Exterior_EventScript_MournerWatchesFog:
+	setobjectmovementtype LOCALID_MT_PYRE_EXTERIOR_MOURNER, MOVEMENT_TYPE_FACE_RIGHT
+	return
+
+@ C338: on-catch cue, called from EventMacro_StaticDen. No text: the turn is the message.
+MtPyre_Exterior_EventScript_MournerSeesLightGone::
+	applymovement LOCALID_MT_PYRE_EXTERIOR_MOURNER, MtPyre_Exterior_Movement_MournerSeesLightGone
+	waitmovement 0
+	return
+
+MtPyre_Exterior_Movement_MournerSeesLightGone:
+	face_right
+	delay_16
+	delay_16
+	walk_in_place_slow_right
+	delay_16
+	step_end
 
 MtPyre_Exterior_EventScript_Mourner::
 	lock
@@ -152,7 +172,7 @@ MtPyre_Exterior_Text_MournerDone:
 @ =============================================
 
 MtPyre_Exterior_EventScript_StarlightTorchic::
-	EventMacro_StaticDen SPECIES_TORCHIC_HOENN, 30, ITEM_STAR_PIECE, FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, MtPyre_Exterior_Text_StarlightTorchicApproach, MtPyre_Exterior_Text_StarlightTorchicCaught, MtPyre_Exterior_Text_StarlightTorchicFaded
+	EventMacro_StaticDen SPECIES_TORCHIC_HOENN, 30, ITEM_STAR_PIECE, FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, MtPyre_Exterior_Text_StarlightTorchicApproach, MtPyre_Exterior_Text_StarlightTorchicCaught, MtPyre_Exterior_Text_StarlightTorchicFaded, MtPyre_Exterior_EventScript_MournerSeesLightGone
 
 MtPyre_Exterior_EventScript_ScorchMark::
 	msgbox MtPyre_Exterior_Text_ScorchMark, MSGBOX_SIGN

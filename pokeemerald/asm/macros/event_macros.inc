@@ -77,7 +77,8 @@
 @ species/level/item: wild battle parameters (item = held item)
 @ caught_flag: permanent flag set only on a catch
 @ approach_text / caught_text / faded_text: text labels
-	.macro EventMacro_StaticDen species:req, level:req, item:req, caught_flag:req, approach_text:req, caught_text:req, faded_text:req
+@ on_caught (optional, C338): subroutine called after caught_text, same visit; used for a believer's live reaction. Must end in return.
+	.macro EventMacro_StaticDen species:req, level:req, item:req, caught_flag:req, approach_text:req, caught_text:req, faded_text:req, on_caught
 	lock
 	msgbox \approach_text, MSGBOX_DEFAULT
 	playmoncry \species, CRY_MODE_ENCOUNTER
@@ -94,6 +95,9 @@
 .Lstaticden_caught_\@:
 	setflag \caught_flag
 	msgbox \caught_text, MSGBOX_DEFAULT
+	.ifnb \on_caught
+	call \on_caught
+	.endif
 	release
 	end
 	.endm
