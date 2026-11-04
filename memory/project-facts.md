@@ -8,8 +8,12 @@ General project information — build system details, tool versions, configurati
 
 - **Trainer Flag Allocation**: 0x500-0x874 = 891 flag slots
 - **Current Status (C282 audit)**: TRAINERS_COUNT = 891, MAX_TRAINERS_COUNT = 891
-- **Available Slots**: 9 unreferenced IDs per check_trainer_slots (C327): 117,173,462,485,486,581,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT. 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
+- **Available Slots**: 8 unreferenced trainer IDs (C334 recount; 581 became TRAINER_PYRE_MOURNER): 117,173,462,485,486,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT. 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
 - **Future Capacity**: run `make check_trainer_slots` for the current unreferenced list; add each reclaimed ID to its RECLAIMED guard list. Never bump TRAINERS_COUNT (shifts SYSTEM_FLAGS, breaks saves)
+
+## Emulator tooling
+
+- 2026-11-04 (C337 probe): no mGBA (mgba, mgba-sdl, mgba-qt, mgba-rom-test) or xvfb-run in the runner image, nothing in /usr/games; pngjs is NOT installed (no node_modules at the repo root); no python3; tools/gbagfx is not built until `make`. PNG palettes can still be read with plain Node (the PLTE chunk is uncompressed: walk chunks from byte 8, PLTE data = RGB triplets).
 
 ## Build System
 
@@ -43,12 +47,6 @@ General project information — build system details, tool versions, configurati
 
 `gbagfx` (PNG→4bpp), `mid2agb` (MIDI→M4A), `scaninc`, `preproc`, `mapjson` (JSON→asm), `gbafix`.
 
-## Game Identity
-
-- Game ID: BPEE (Pokémon Emerald)
-- Target: Game Boy Advance
-- Region: US (can vary by configuration)
-
 ## Key Paths
 
 - ROM source root: `/__w/agentoak/agentoak/pokeemerald/`
@@ -60,7 +58,7 @@ General project information — build system details, tool versions, configurati
 
 - **`gh` CLI not installed** — cannot query GitHub issues/PRs directly. Use journal/memory search for issue context instead.
 - **`python3` not available** — use Node.js for scripting.
-- **`pngjs` npm package available** — use for sprite PNG manipulation.
+- **`pngjs` NOT installed** (C337 probe) — read PNG palettes with plain Node (see "Emulator tooling").
 
 ## MCP Tools — Pokémon Specialist
 

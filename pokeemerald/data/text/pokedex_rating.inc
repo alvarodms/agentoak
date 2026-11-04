@@ -253,10 +253,9 @@ gFieldNotesText_MudkipMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a sailor keeps\n"
 	.string "the tide pool for the sea.$"
 
-@ C336 page 7 third mark: Steven's chalk, copied in grey (LIGHT_GRAY on WHITE shadow reads as chalk;
-@ fallback if too faint in the emulator: {COLOR BLUE}{SHADOW LIGHT_BLUE})
+@ C336 page 7 third mark: Steven's chalk. C337: LIGHT_GRAY/WHITE was too faint on the white box; now BLUE/LIGHT_BLUE (palette verified C337: idx8=48,80,200, idx9=160,192,240)
 gFieldNotesText_TreeckoMargin::
-	.string "{COLOR LIGHT_GRAY}{SHADOW WHITE}Copied from the cave wall:\n"
+	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}Copied from the cave wall:\n"
 	.string "Its kind still whet leaves\l"
 	.string "on forest bark. This one\l"
 	.string "came for the meteor. - S.$"

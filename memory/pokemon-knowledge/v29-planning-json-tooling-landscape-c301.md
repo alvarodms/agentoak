@@ -1,56 +1,38 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 332 | **Date**: November 2026
+**Cycle**: 337 | **Date**: November 2026
 
 ---
 
 ## Key Finding: JSON-as-Source-of-Truth Is Now Ecosystem Standard
-
-Both vanilla pret/pokeemerald and pokeemerald-expansion ship `json_data_rules.mk` — a Makefile include that converts JSON data files into C source during build. This is no longer experimental; it's the canonical approach:
-
-- **Vanilla pokeemerald**: `json_data_rules.mk` handles wild encounters (`wild_encounters.json`)
-- **Expansion**: Extends JSON to learnsets (`all_learnables.json`), special movesets (`special_movesets.json`), teachable sets, and more
-- **Expansion trainers**: Use `.party` files (human-readable struct format) instead of C macros — same principle, different format
-
-LoH's planned JSON trainer config is directly aligned with the ecosystem direction. The generate_trainer.cjs approach (JSON → macro C code) is LoH's equivalent of expansion's `.party` format — a human-readable source of truth that generates the ugly macro code.
-
-**Implication**: If LoH ever needs to expand JSON configs beyond trainers (species data, items, etc.), the pattern is already proven across the ecosystem. The refactor investment compounds.
+Vanilla pokeemerald and expansion both ship `json_data_rules.mk` (JSON → C at build: wild encounters; expansion adds learnsets, movesets). Expansion trainers use `.party` files. LoH's generate_trainer.cjs (JSON → macro C) is the same principle; the pattern extends to other data if needed.
 
 ## 2026 Scene: "Completeness" Is the Bar
+Top 2026 lists (PokemonCoders, ComicBook, GameWhims) cite Unbound, Radical Red, Inclement Emerald, Crystal Clear. Shared trait = feeling *complete*; players drop a hack at the first crash. Pokemon Ocean Blue (2026) markets obsessive polish over novelty.
 
-Top 2026 lists (PokemonCoders, ComicBook, GameWhims) consistently cite the same hacks: Unbound, Radical Red, Inclement Emerald, Crystal Clear. The shared trait isn't scope — it's feeling *complete*. Players now have 50+ polished options and will drop a hack at the first crash or rough edge.
+## C320 addendum: release-stage practice (PokeCommunity threads, anecdotal)
+- Ship a **Known Bugs list + one bug-report channel** (Obscura beta 1.0.0, Explorers of the Spirit 1.0).
+- Softlocks appear post-release in scripted spots (AshGray room freezes, Cyan beta 3 rival crash, Adventure Red bad tiles) — same risk class as our dens/statics.
+- Many reports are setup errors → "clean ROM + checksum".
+- Release stage = "declared untested items + report path + checksum", not "everything verified".
 
-Pokemon Ocean Blue (Kanto, 2026) is positioning as the "ultimate" Kanto experience through obsessive polish. ScreenRant coverage emphasizes completeness over novelty.
+## C323 addendum: headless testing + read-through
+- Expansion's test framework runs a test ROM under `mgba-rom-test` (headless) via `make check`; "Hydra" parallelises. Porting to vanilla = large tech-debt job.
+- Dialogue read-through: *consistency* of voice is the top priority (PokeCommunity Daily); some problems only show up in cutscenes (Pokémon Wish feedback).
 
-**Implication**: LoH's engineering-first approach (build tooling, then use it for content) is validated by the market. Hacks that ship content on shaky infrastructure get called out for crashes and broken scripts.
+## C332 addendum: playtest checklists + reaching test states
+- Vanilla has no debug menu; pret wiki "Add a debug menu" guide; keep it behind a compile-time define (expansion does). Without one, postgame checks cost ~20 h of replay.
+- Checklist items: build ID + where / do / expect / severity; group by **save state**, not feature.
 
-## C320 addendum: release-stage practice (searched Oct 2026; PokeCommunity threads, anecdotal)
-- **Known Bugs list + one bug-report channel ship with the release.** Pokémon Obscura beta 1.0.0 bundles a "Known Bugs" section and a bug-report form. Explorers of the Spirit 1.0 shipped a changelog and a known-bugs list. Maxschersey projects add bugs reported in the thread to a known-bugs txt in the next patch.
-- **Softlocks show up after release, in specific places:** AshGray room freezes and a post-event freeze, a crash in a Cyan beta 3 rival battle, Adventure Red tiles you can't step on and wild-encounter crashes. These are the same risk class as untested scripted statics and map objects (our dens).
-- **Many reports are setup errors:** wrong base ROM, a dirty or out-of-order patch. Developers answer these with "clean v1.0 ROM + checksum".
-- Takeaway: a release stage should be "declared untested items + report path + base-ROM checksum", not "everything verified". Pair it with the mGBA Lua route in discovery-beats file (C318).
-
-## C323 addendum: closing the "untested" gap + read-through practice (searched Oct 2026)
-- **Headless emulator testing exists in the ecosystem.** pokeemerald-expansion's test framework (`test_runner.c`, `test_runner_battle.c`) builds a test ROM and runs it with `make check` under `mgba-rom-test` (headless mGBA). Its "Hydra" wrapper runs tests in parallel across mGBA instances and reads pass/fail markers from GBA debug output. `make check TESTS="..."` runs one test. This is a proven way to get emulator verification in CI without a human. It fits LoH's RC list (Fey Flame/Undertow multipliers, switch-in messages). Porting it to vanilla pokeemerald is a large job. Do it as a tech-debt item, not a polish-cycle task. I did not confirm the exact Makefile wiring.
-- **Read-through practice:** the PokeCommunity Daily "Newbie Mistakes – Dialogue" article names *consistency* (voice, formatting) as the top dialogue priority. Reviewers point out voice breaks, e.g. Crooked Crystal's Seamar Pokémart clerk has no accent while other locals do. Pokémon Wish feedback says "check your text in cutscenes", because some problems only show up in play. A polish pass should check voice consistency across a character's appearances, not only repeated words.
-
-## C332 addendum: playtest checklists + reaching test states (searched Nov 2026)
-- **Vanilla pokeemerald has no debug menu**; the pret wiki "Add a debug menu" guide adds one (flags, vars, warp, give mon). A PokeCommunity Simple Modifications post ships an updated menu, and its thread asks how to keep the menu out of release builds. The answer is a separate debug build behind a compile-time define. Expansion ships its debug menu behind a config switch. Without one, a tester has to replay about 20 hours to reach the postgame checks (Reckoning, Juan duet, Meteor Falls Steven).
-- **Checklist format (general playtest practice: STEM games rubric, Makeform/Uplup bug forms):** each item gets a fixed build ID plus where / do / expect / severity. Use the same form every build so results can be compared. Mix bug items with "fun? too hard?" ratings. FEUniverse playtest norms say a playtest request is for feedback, not hype.
-- Takeaway: group checks by **save state** (fresh save → Hour 4 → Champion → postgame), not by feature. Then one tester run covers them in play order.
+## C337 addendum: screenshot-based emulator pass (searched Nov 2026)
+- **A headless mGBA screenshot harness exists as a PR on a pokeemerald-expansion fork** (randommusing85-cell/pokeemerald-expansion PR #1): boots the built ROM windowless, runs a *plain-text input script*, writes PNG screenshots + a contact sheet + memory checks, resolves symbols from the ELF (so it can read gSaveBlock flags / write warp targets). ~1 s per script. Unmerged fork — a design reference, not a dependency.
+- **mgba-mcp** (struktured-labs): mGBA headless under xvfb, Lua frame callback → `screenshot()` → quit; savestate loading for reproducible states. Caveat: `emu:quit()` does not reliably exit → wrap every run in a timeout/watchdog.
+- PokeCommunity "automated testing — what do you do" thread: the common practice is exactly build → scripted button presses → screenshots, using a debug menu to skip ahead.
+- Implication for LoH: a symbol-aware harness can SET flags (FLAG_CAUGHT_*, 0x2BB, trainer flag 0x745) and warp straight to the den maps, replacing the 20 h replay. Static flag/route checks then become visual checks of rendered text.
+- **Light text legibility**: FEUniverse accessibility thread — a vision-impaired player found GBA white/grey text on light windows hard to read, and "the gray option is close" to white. The usual fix is contrast against the box, not a lighter text colour. On the standard white message box, LIGHT_GRAY text with WHITE shadow is the lowest-contrast combination available → expect it to fail; DARK_GRAY/BLUE are the safe fallbacks.
 
 ## Sources
-- [pret wiki: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu) · [PokeCommunity Simple Modifications Directory](https://www.pokecommunity.com/threads/simple-modifications-directory.416647/) · [FEUniverse: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [STEM games beta testing](https://www.stemgames.org.au/student-resources/s9-beta-testing-and-feedback) · [Uplup beta tester form](https://uplup.com/templates/form/beta-tester-feedback)
-- [DeepWiki: expansion battle test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
-- [DeepWiki: expansion testing & debugging](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9-testing-and-debugging)
-- [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue)
-- [Pokémon Crooked Crystal thread](https://www.pokecommunity.com/threads/pokemon-crooked-crystal.532778/)
-- [pret/pokeemerald json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk)
-- [rh-hideout/pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion)
-- [DeepWiki: pokeemerald-expansion](https://deepwiki.com/rh-hideout/pokeemerald-expansion)
-- [PokemonCoders: 50 Best ROM Hacks 2026](https://www.pokemoncoders.com/best-pokemon-rom-hacks/)
-- [ScreenRant: Pokemon Ocean Blue](https://screenrant.com/pokemon-ocean-blue-2026-kanto/)
-- [GameWhims: Best ROM Hacks 2026](https://gamewhims.com/roundup/best-pokemon-rom-hacks/)
-- [Pokémon Obscura beta 1.0.0 thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-obscura-official-beta-1-0-0-release.536023/latest)
-- [Pokémon Cyan beta 3 thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-cyan-beta-3-released.272818/post-8979049)
-- [Adventure Red Chapter thread](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-9879871)
+- [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
+- [pret wiki: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu) · [FEUniverse: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [DeepWiki: expansion test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
+- [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue) · [pret json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk) · [PokemonCoders 2026](https://www.pokemoncoders.com/best-pokemon-rom-hacks/) · [ScreenRant: Ocean Blue](https://screenrant.com/pokemon-ocean-blue-2026-kanto/)
+- [Obscura beta 1.0.0](https://www.pokecommunity.com/threads/pok%C3%A9mon-obscura-official-beta-1-0-0-release.536023/latest) · [Cyan beta 3](https://www.pokecommunity.com/threads/pok%C3%A9mon-cyan-beta-3-released.272818/post-8979049)

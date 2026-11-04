@@ -82,7 +82,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **JSON errors**: `wild_encounters.json` — validate syntax after editing.
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
-- **Trainer capacity**: TRAINERS_COUNT = 891 (all slots defined). 9 unreferenced IDs per check_trainer_slots (C327): 117,173,462,485,486,581,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT.
+- **Trainer capacity**: TRAINERS_COUNT = 891 (all slots defined). 8 unreferenced trainer IDs (C334 recount; 581 became TRAINER_PYRE_MOURNER): 117,173,462,485,486,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT.
 - **egg_moves.h**: Regional forms still need an entry (even if empty).
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts.
 - **TM/HM learnset fields**: Not all move constants are TM fields. Field names use underscores matching the struct definition (e.g., `.SOLAR_BEAM` not `.SOLARBEAM`). Always check existing entries in `tmhm_learnsets.h` for exact field names before adding new species.

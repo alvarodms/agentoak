@@ -660,10 +660,10 @@
 #define FLAG_PRIMAL_STIRRING_STARTED     0x264 // Birch sends player to investigate anomalies
 #define FLAG_TREMORS_INVESTIGATED        0x265 // Lavaridge/Fiery Path tremor check done
 #define FLAG_TIDES_INVESTIGATED          0x266 // Dewford/Slateport tidal anomaly check done
-#define FLAG_REGI_RESONANCE_CHECKED      0x267 // Player visited a Regi tomb
+#define FLAG_UNUSED_0x267                0x267 // Unused Flag (C337 reclaimed: was FLAG_REGI_RESONANCE_CHECKED, never referenced)
 #define FLAG_ALL_SIGNS_REPORTED          0x268 // All 3 anomalies reported to Birch
-#define FLAG_PRIMAL_GROUDON_AVAILABLE    0x269 // Groudon encounter unlocked
-#define FLAG_PRIMAL_KYOGRE_AVAILABLE     0x26A // Kyogre encounter unlocked
+#define FLAG_UNUSED_0x269                0x269 // Unused Flag (C337 reclaimed: was FLAG_PRIMAL_GROUDON_AVAILABLE, never referenced)
+#define FLAG_UNUSED_0x26A                0x26A // Unused Flag (C337 reclaimed: was FLAG_PRIMAL_KYOGRE_AVAILABLE, never referenced)
 #define FLAG_DEFEATED_PRIMAL_GROUDON     0x26B // Groudon defeated (not caught)
 #define FLAG_CAUGHT_PRIMAL_GROUDON       0x26C // Groudon caught
 #define FLAG_DEFEATED_PRIMAL_KYOGRE      0x26D // Kyogre defeated (not caught)

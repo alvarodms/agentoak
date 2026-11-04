@@ -4,6 +4,20 @@
 
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
+---
+## Three things we most need eyes on
+If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
+
+1. **Steven's chalk on the wall (Meteor Falls).** Catch the crystal Treecko in the back room of B1F, then walk out into the next chamber. Did you notice anything in the chalk dust? Did you go back into the room on your own? Is there an answer under Steven's old note now? (The answer appears when you walk back in through the entrance. Saving and reloading inside the room won't make it appear, and that's expected.)
+2. **Page 7's margin.** Copy Steven's answer, then open FIELD NOTES to page 7. Can you read the lines under "Copied from the cave wall" without squinting? Do they look like a different hand from your red ink?
+3. **Birch's longest call.** With most pages inked, call PROF. BIRCH on the PokéNav. Does every text box end cleanly, with no cut-off or garbled words? Does "Word came from the dens too." get its own box, or is it squeezed onto the end of the names?
+
+For every person who reacts to your red ink (pages 1-7), there's one more question: **did you notice the change (someone moved, turned, or stood somewhere new) before anyone explained it?**
+
+Report with the build (commit hash), the item number above or the step number below, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
+
+---
+
 ## Part 1 — New game, hours 0-4 (Normal or Challenge)
 
 1. **Where:** Birch's lab, after the Route 103 rival battle. **Do:** receive the Pokédex. **Expect:** Birch also hands you FIELD NOTES before the difficulty prompt. In the prompt, Challenge shows two extra boxes about the BAG before "It's how I'd do it, honestly.", and the YES/NO choice appears on the last box.
@@ -51,8 +65,8 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 37. **Do:** catch the crystal Treecko, then read the wall again in the same visit. **Expect:** the caught text ends "The chalk on the wall above seems to catch the light." The wall shows the old note and then "A stub of fresh chalk sits on the ledge below the words. Someone means to come back." No new lines yet.
 38. **Do:** step out to the neighbouring B1F room and read the grooved meteorite stone (19,5). **Expect:** "Fresh chalk dust lies on it. Neat footprints lead back toward the inner chamber." (not the old "too clean for claws" text).
 39. **Do:** walk out and back into the Treecko room (a warp in counts; saving and continuing inside the room does not) and read the wall. **Expect:** the answer: "Under the old chalk, a new line in the same neat hand:", "Found, then. Good.", "You were right. It needs no sun down here.", "But its kind still whet their leaves on forest bark.", "This one came for the meteor. The forest still remembers.", "- S.", then a page-turn sound and "You copy it down. Chalk dust greys the page under your ink." Read it again: the answer only, no sound, no copy line.
-40. **Do:** open FIELD NOTES page 7, then re-read the grooved stone, then get a red ink report from Birch (3+ pages inked). **Expect:** page 7 shows the old text (dark), the red ink, then a grey box "Copied from the cave wall: Its kind still whet leaves on forest bark. This one came for the meteor. - S." **LEGIBILITY CHECK:** if the grey is too faint to read, the margin should switch to `{COLOR BLUE}{SHADOW LIGHT_BLUE}` (gFieldNotesText_TreeckoMargin, pokedex_rating.inc); last resort is the default colour, keeping "- S.". The grooved stone is back to its old text. Birch's report has "Word came from the dens too."
-41. **Do:** on a v2.9 save without FIELD NOTES, catch the Treecko, leave, come back and read the wall. **Expect:** the answer reads, but no page-turn sound and no copy line; once you hold FIELD NOTES, re-reading the wall (after a fresh map load) copies it, and only then does page 7 get its grey box.
+40. **Do:** open FIELD NOTES page 7, then re-read the grooved stone, then get a red ink report from Birch (3+ pages inked). **Expect:** page 7 shows the old text (dark), the red ink, then a blue box "Copied from the cave wall: Its kind still whet leaves on forest bark. This one came for the meteor. - S." **LEGIBILITY CHECK (C337):** the C336 grey was replaced by `{COLOR BLUE}{SHADOW LIGHT_BLUE}` after a palette check (gFieldNotesText_TreeckoMargin, pokedex_rating.inc). If the blue is hard to read or looks like the red ink, the last resort is the default colour, keeping "- S.". The grooved stone is back to its old text. Birch's report has "Word came from the dens too."
+41. **Do:** on a v2.9 save without FIELD NOTES, catch the Treecko, leave, come back and read the wall. **Expect:** the answer reads, but no page-turn sound and no copy line; once you hold FIELD NOTES, re-reading the wall (after a fresh map load) copies it, and only then does page 7 get its blue box.
 - check_flag_pairs (C336) found no genuine orphans (ALLOWLIST empty), so there are no orphan-flag checks to add.
 
 ## Part 3 — Postgame (a cleared save)
@@ -76,4 +90,73 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 - Did you go back to the Meteor Falls wall on your own, or only because this list said so? Did Steven correcting you feel fair?
 - In Challenge Mode, was the Champion a wall without your BAG?
 
-README copy: "Help Playtest v3.0" (C332). Edit this file first, then mirror it into README.md with the same step numbers. Mirrored through step 35 (C335 reflection).
+## Den chapter state walk (static, C337)
+
+Built from the scripts, not from play: MtPyre_Exterior, ShoalCave_LowTideLowerRoom, MeteorFalls_B1F_2R + B1F_1R scripts.inc/map.json, src/match_call.c (IsFieldNotesPageOpen / IsFieldNotesPageInked / IsFieldNotesMarginEarned / WriteBirchRedInkReport / BufferFieldNotesPage), asm/macros/event_macros.inc (StaticDen trio). Engine facts used: ON_TRANSITION runs on warp/connection map loads, NOT on Continue (CB2_ContinueSavedGame → InitMapFromSavedGame runs ON_LOAD, then ON_RESUME); temp flags 0x00-0x1F are cleared by ClearTempFieldEventData on warp only and are restored from the save on Continue; returning from a battle runs ON_RESUME only and keeps object positions/facings.
+
+Shared rules: a page opens on its badge (5/6/8) OR its den catch; ink = den CAUGHT flag; the margin box shows only when inked AND IsFieldNotesMarginEarned; Birch's "Word came from the dens too." needs one den page inked AND earned, and the whole report needs 3+ inked pages (FIELD_NOTES_REPORT_MIN_PAGES). Den pages never name anyone in the report (birchText NULL). Without the 4 P1-P4 names, the report goes Open → Dens → Close (no Believed, no OnlyYou).
+
+### Mt. Pyre / Torchic / ISOLDE (page 5)
+Objects: starlight Torchic doll 22,13 (FLAG_TEMP_11); ISOLDE LOCALID_MT_PYRE_EXTERIOR_MOURNER 17,12 FACE_DOWN, TRAINER_TYPE_NONE (no sight battle).
+
+| State | Flags/temp flags true | What is on screen | Text label shown | What visibly changed vs previous | Page 5 shows | Birch report line? |
+|---|---|---|---|---|---|---|
+| P0 first visit, nothing done | — | doll 22,13; ISOLDE 17,12 facing down | ISOLDE: `_Text_MournerSilent` (faceplayer); doll: `_Text_StarlightTorchicApproach` | — | hidden unless BADGE05; if open: old text only | no |
+| P1 Torchic KO'd / ran | FLAG_TEMP_11 (removeobject) | doll gone; ISOLDE unchanged | `_Text_StarlightTorchicFaded`; ISOLDE still Silent | doll vanishes | unchanged | no |
+| P2 re-enter after P1 | TEMP_11 cleared by the warp | doll back at 22,13 | Approach | doll returns | unchanged | no |
+| P3 Torchic caught (same visit) | CAUGHT_MT_PYRE_STARLIGHT_TORCHIC, TEMP_11 (ON_RESUME TryRemove) | doll gone; ISOLDE still 17,12 facing down | caught text; ISOLDE: `_Text_MournerChallenge` + `_Text_MournerAsk` YES/NO | doll gone; ISOLDE does not move (SUSPECT: design, see Known issues #2) | opens even without badge 5; old + red ink; no margin | Dens: no (margin not earned) |
+| P4 answer NO | same as P3 | same | `_Text_MournerDecline` | none | same | no |
+| P5 lose to her | same as P3 (trainer flag 0x745 unset) | whiteout; on return ISOLDE 17,12 | Challenge + Ask again | none | same | no |
+| P6 beat her (same visit) | + trainer flag 0x745 | ISOLDE turns up on the spot at 17,12 (`Common_Movement_FaceUp`) | `_Text_MournerDefeat`, `_Text_MournerAfter`; talk again: `_Text_MournerDone`, no faceplayer | she faces the graves | ink + red margin `gFieldNotesText_TorchicMargin` | yes |
+| P7 save + Continue on the exterior after P6 | same | ISOLDE still 17,12 facing up (saved object; no ON_TRANSITION) | Done | none | same | yes |
+| P8 re-enter the map | same; TEMP_11 set by StaticDenTransition | ISOLDE at the 17,11 alcove, FACE_UP; no doll | Done | one tile north, facing graves | same | yes |
+
+Ordering (a): beating ISOLDE before the catch is impossible (Silent, no battle, no sight). Ordering (c): page 5 read at P3-P5 = ink only; at P6+ = ink + margin.
+
+### Shoal Cave / Mudkip / sailor MARLOW (page 6)
+Objects: titan Mudkip doll 18,6 (FLAG_TEMP_12); sailor LOCALID_SHOAL_CAVE_LOWER_SAILOR 17,6 FACE_RIGHT (facing the doll); tide pool sign 18,7.
+
+| State | Flags/temp flags true | What is on screen | Text label shown | What visibly changed vs previous | Page 6 shows | Birch report line? |
+|---|---|---|---|---|---|---|
+| S0 first visit (low tide) | — | doll 18,6; sailor 17,6 facing right | sailor: `_Text_SailorWarn` (faceplayer); pool: `_Text_TidePool` ("stirs") | — | hidden unless BADGE06; if open: old text | no |
+| S1 Mudkip KO'd / ran | FLAG_TEMP_12 | doll gone until re-entry | `_Text_TitanMudkipFaded`; sailor Warn; pool still "stirs" | doll vanishes | unchanged | no |
+| S2 Mudkip caught | CAUGHT_SHOAL_CAVE_TITAN_MUDKIP, TEMP_12 | doll gone; sailor 17,6 (facing the player after talk) | caught text; sailor `_Text_SailorOffer` YES/NO; pool `_Text_TidePoolStill` | doll gone; pool text changes; sailor does not move | ink, no margin | no |
+| S3 NO / B / wrong mon / egg | same as S2 | same | `_Text_SailorDecline` (wrong mon: `_Text_SailorWrongMon` then Decline) | none | same | no |
+| S4 trade done (same visit) | + FLAG_DEN_SHOAL_TRADE_DONE | sailor turns right to the empty 18,6, splash | `_Text_SailorTraded`; talk again: `_Text_SailorDone`, no faceplayer; pool `_Text_TidePoolFish` | he faces the pool; pool text changes | ink + red margin `gFieldNotesText_MudkipMargin` | yes |
+| S5 save + Continue in the room after S4 | same | sailor 17,6 facing right (saved) | Done | none | same | yes |
+| S6 re-enter (low tide) | same; TEMP_12 set by transition | sailor on 18,6 (the doll's tile, never shared: trade needs the catch) FACE_DOWN at the pool | Done | moved onto the titan's tile | same | yes |
+
+Ordering (a): trading before the catch is impossible (Warn, no offer). Ordering (c): S2-S3 ink only; S4+ ink + margin.
+
+### Meteor Falls B1F_2R + B1F_1R / Treecko / Steven chalk (page 7, FLAG_DEN_METEOR_STEVEN_CHALK 0x2BB)
+Objects: crystal Treecko doll B1F_2R 7,4 (FLAG_TEMP_11); chalk wall bg 8,3 (read from 7,3 facing right); grooved stone B1F_1R bg 19,5; B1F_2R's only warp 5,15 → B1F_1R warp 3. No Steven object anywhere in this beat.
+
+| State | Flags/temp flags true | What is on screen | Text label shown | What visibly changed vs previous | Page 7 shows | Birch report line? |
+|---|---|---|---|---|---|---|
+| M0 first visit | — | doll 7,4 | wall: `_Text_ChalkNote` (sign); stone: `_Text_GroovedStone` | — | hidden unless BADGE08; if open: old text | no |
+| M1 Treecko KO'd / ran | TEMP_11 | doll gone until re-entry | `_Text_CrystalTreeckoFaded`; wall old note | doll vanishes | unchanged | no |
+| M2 Treecko caught (same visit) | CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, TEMP_11; TEMP_13 clear (ON_TRANSITION ran before the catch) | doll gone | caught text ends "…seems to catch the light."; wall `_ChalkWaiting` = old note + `_Text_ChalkStub` | doll gone; nothing new on the map (stub is text only) | opens; ink, no margin | no |
+| M3 save + Continue inside B1F_2R after M2 | same as M2 (TEMP_13 restored clear; no ON_TRANSITION) | same | still Waiting | none (expected; funnel item 1 warns testers) | same | no |
+| M4 walk out to B1F_1R | caught, 0x2BB clear | no map change | stone: `_Text_GroovedStoneChalk` (dust + footprints) | text only, and only if the player re-reads a stone they may have read before (SUSPECT: design, Known issues #3) | same | no |
+| M5 re-enter B1F_2R through warp 5,15 | + TEMP_13 (`_NewChalk`), TEMP_11 | no doll; no other change | wall `_ChalkAnswer`; with FIELD NOTES: SE_DEX_PAGE + `_Text_ChalkCopy`, sets 0x2BB | text only | ink + blue margin `gFieldNotesText_TreeckoMargin` (once 0x2BB is set) | yes (once 0x2BB is set) |
+| M6 read the wall again | + 0x2BB | same | `_ChalkCopied` = answer as a sign, no sound | none | same | yes |
+| M7 save + Continue inside B1F_2R after M5 | TEMP_13 restored set | same | Answer (or Copied) | none; consistent with M5 | same | yes if copied |
+| M8 B1F_1R after 0x2BB | 0x2BB | no change | stone back to `_Text_GroovedStone` | dust gone (text only) | same | yes |
+| M9 M5 without FIELD NOTES (v2.9 save) | caught, TEMP_13; 0x2BB clear | same | `_ChalkAnswer` → `_ChalkNoBook` (no sound, no copy) | none | page not readable (no notebook) | no |
+| M10 M9 then get FIELD NOTES, re-enter, read | + 0x2BB | same | Answer + sound + Copy | none | ink + blue margin | yes |
+
+Ordering (a): catch then Continue inside B1F_2R = M3 (no answer until a warp in). Ordering (b): KO = M1/M0 loop, no state change. Ordering (c): page 7 at M2-M4 = ink only; M5 (with notebook) onward = ink + margin. Ordering (d): warp in = M5 (answer); Continue = M3 (no answer) or M7 (answer stays if TEMP_13 was already set when saved).
+
+### Matchcall worst case (C337 re-check)
+`make check_matchcall_len` worst-case fixture = dex rating + longest field note + red ink Open + all 4 P1-P4 names + gBirchRedInkText_Dens + max(Believed, OnlyYou) + Close: **918/1000 B** (exit 0). Notebook pages are priced as old + ink + margin; longest is Treecko 248 B (all margins included). The C337 colour change swaps one 6-byte colour pair for another, so both totals are unchanged. No fixture change needed.
+
+## Known issues (static)
+
+Found by reading code, not by play. Severity uses the A/B/C scale above.
+1. **C, text:** `MeteorFalls_B1F_2R_Text_ChalkCopy` still says "Chalk dust greys the page under your ink." The page-7 margin is now blue (C337), not grey. A dialogue change was out of C337 scope. Candidate fix: "Chalk dust smudges the page under your ink."
+2. **C, design:** ISOLDE (page 5) and MARLOW (page 6) show no visible change after the den catch until they have spoken (ISOLDE turns only after the battle; MARLOW only after the trade). The funnel's "did you notice the change before anyone explained it?" can only get a yes on the re-entry move (P8 / S6).
+3. **C, design:** Steven's chalk dust (M4) is text-only on a stone the player may already have read; the B1F_2R answer (M5) also adds nothing on the map. If testers miss it (funnel item 1), the cheapest visible cue would be a metatile or object change, which needs a design cycle.
+4. Palette (C337, gMessageBox_Pal from graphics/text_window/message_box.png): idx4 RED = 224,8,8 (red); idx5 LIGHT_RED = 248,184,112, a peach shadow. That is vanilla Emerald's red-text shadow, so the six red margins and the cover are fine. **Not a Severity-A finding.**
+5. Not re-verified C337: collision at ISOLDE's 17,11 alcove and MARLOW's 18,6 move tile (checked when built, C334/C335).
+
+README copy: 'Help Playtest v3.0'. Reflection C337: mirror the new 'Three things we most need eyes on' block to the top of that README section, above the full route.
