@@ -23,6 +23,7 @@ Each system has its own detail file under `memory/completed-work/`.
 | Roamer System (Beast Core) | 109, 111, 112, **142** | 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) + 6 sighting NPC fixes | [roamer-system.md](completed-work/roamer-system.md) |
 | Migration Climax + Primal Stirring | 115, 116, 118, 120, 121, 122, 123, 124, 125, **126** | BirchLab, CaveOfOrigin, 3 city scripts, flags.h, 6 NPC scripts+maps, TerraCave+SeafloorCavern scripts+maps, remnant trainers+parties, Groudon+Kyogre encounters, world reaction | [migration-climax.md](completed-work/migration-climax.md) |
 | Regional Variant Pipeline | PoC validated + first species (C195) | 30+ files | [regional-variant-pipeline.md](../regional-variant-pipeline.md) |
+| Playtest Hook (runner infrastructure, not a cycle) | — | 5 (playtest.h, playtest.c, intro.c + overworld.c hook lines, ld_script.ld) | [playtest-hook.md](completed-work/playtest-hook.md) |
 
 ---
 

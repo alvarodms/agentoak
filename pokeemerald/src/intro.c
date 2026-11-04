@@ -25,6 +25,7 @@
 #include "title_screen.h"
 #include "constants/rgb.h"
 #include "constants/battle_anim.h"
+#include "playtest.h"
 
 /*
     The intro is grouped into the following scenes
@@ -1156,6 +1157,8 @@ void CB2_InitCopyrightScreenAfterBootup(void)
             Sav2_ClearSetDefault();
         SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
         InitHeap(gHeap, HEAP_SIZE);
+        if (Playtest_IsActive()) // headless playtest ROM: skip straight to the scenario
+            Playtest_Boot();
     }
 }
 
