@@ -224,7 +224,7 @@ The den items need a save with badge 5 or more (Mt. Pyre first); allow about twe
 
 For every person who reacts to your red ink (pages 1-7), there's one more question: **did you notice the change (someone moved, turned, or stood somewhere new) before anyone explained it?**
 
-Already known (no need to report): Steven's chalk dust in Meteor Falls is text only, so it is easy to miss; the Granite Cave B1F hiker and the Mt. Pyre summit keeper stand slightly inside the rock wall (you can still talk to them).
+Already known (no need to report): Steven's chalk dust in Meteor Falls is text only, so it is easy to miss.
 
 Report with the build (commit hash), your emulator or device, the item number above or the step number below, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
@@ -233,7 +233,7 @@ Report with the build (commit hash), your emulator or device, the item number ab
 1. **Where:** Birch's lab, after the Route 103 rival battle. **Do:** receive the Pokédex. **Expect:** Birch also hands you FIELD NOTES before the difficulty prompt. In the prompt, Challenge shows two extra boxes about the BAG before "It's how I'd do it, honestly.", and the YES/NO choice appears on the last box.
 2. **Where:** anywhere. **Do:** open BAG > KEY ITEMS > FIELD NOTES, then register it and press SELECT. **Expect:** the cover reads "0 of 4"; four pages of Birch's notes; no extra pages yet.
 3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 10, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
-4. **Where:** Route 104 shore between Petalburg and the woods, the schoolkid. **Do:** talk to him. **Expect:** before you've caught that LOTAD, he faces the sea and repeats Birch's note. After the catch, and once you've re-entered the route, he faces east with new lines.
+4. **Where:** Route 104 shore between Petalburg and the woods, the schoolkid. **Do:** talk to him. **Expect:** before you've caught that LOTAD, he faces the sea and repeats Birch's note. After the catch, he says his new lines and then turns east (toward Petalburg) on the spot; after you re-enter the route he still faces east.
 5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 25, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
 6. **Where:** Pokénav, call Birch (1-2 pages inked). **Expect:** the Pokédex rating only; no red ink report yet.
 7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 20, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.

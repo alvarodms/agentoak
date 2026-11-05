@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 339 | **Date**: November 2026
+**Cycle**: 341 | **Date**: November 2026
 
 ---
 
@@ -43,10 +43,16 @@ Top 2026 lists (PokemonCoders, ComicBook, GameWhims) cite Unbound, Radical Red, 
 - **Save hygiene**: beta threads (Adventure Red "BETA 12 SAVEFILES ARE NOT COMPATIBLE") and TCRF's Emerald debug-menu warning (options that corrupt saves) both say to keep debug saves apart. Emulators name the save after the ROM, so a separately named `legends_of_hoenn_playtest.gba` keeps its save away from real ones automatically.
 - An itch.io beta offered a "skip loading a save to select chapters" option. Chapter select is the player-facing version of the same idea.
 
+## C341 addendum: keeping a variant build from rotting + postgame callbacks (searched Nov 2026; thin)
+- pret-derived CI (DizzyEggg fork build.yml) builds **every variant on every push**: agbcc, then `MODERN=1 COMPARE=0`, then the test ELF + `make check`. The habit is "compile each variant", not "lint the variant's setup text". Expansion 1.15.1 notes fixed its test ROM **running out of space at 90%+ usage**, so an extra-content variant can fail where the release build passes.
+- For LoH: the cheapest guard against a stale `make playtest` is building it inside check_all/runner. A grep-lint only catches renamed symbols, and the compiler already catches those once it builds.
+- Postgame recognition: a Bulbagarden "You are the Champion" thread complains that "virtually nothing changes when you beat the Champion"; hacks answer with rematches/scaling (World Adventures, Emerald Imperium), rarely with NPC lines. That is a wish, not proof of praise.
+
 ## Sources
 - [FEU: skipping chapter portions](https://feuniverse.us/t/skipping-portions-of-a-chapter-for-play-testing/24828) · [Adventure Red beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/) · [TCRF Emerald debug menu](https://new.tcrf.net/Proto:Pok%C3%A9mon_Emerald/Debug_Menu) · [itch.io chapter-select beta](https://itch.io/post/9411911)
 - [REGIUS beta](https://www.pokecommunity.com/threads/regius-an-island-adventure-full-game-beta.531729) · [Crimson Ruby](https://r.datuan.dev/r/PokemonROMhacks/comments/1u8csa9/pokémon_crimson_ruby_oras_rom_hack/) · [FEUniverse Playtesting Listings](https://feuniverse.us/t/playtesting-listings/30608) · [Phoenix Red testers](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers) · [PokeCommunity: event when wild mon defeated](https://www.pokecommunity.com/threads/event-when-a-certain-wild-pokemon-is-defeated.418674)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
+- [DizzyEggg pokeemerald build.yml](https://github.com/DizzyEggg/pokeemerald/blob/c3e9f4b571717c0e12cf4a3fe61c0f3a50185327/.github/workflows/build.yml) · [Expansion 1.15.1 notes](https://newreleases.io/project/github/rh-hideout/pokeemerald-expansion/release/expansion%2F1.15.1) · [Bulbagarden: You are the Champion](https://bulbagarden.net/threads/you-are-the-champion.101329/) (C341)
 - [pret wiki: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu) · [FEUniverse: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [DeepWiki: expansion test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
 - [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue) · [pret json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk) · [PokemonCoders 2026](https://www.pokemoncoders.com/best-pokemon-rom-hacks/) · [ScreenRant: Ocean Blue](https://screenrant.com/pokemon-ocean-blue-2026-kanto/)
 - [Obscura beta 1.0.0](https://www.pokecommunity.com/threads/pok%C3%A9mon-obscura-official-beta-1-0-0-release.536023/latest) · [Cyan beta 3](https://www.pokecommunity.com/threads/pok%C3%A9mon-cyan-beta-3-released.272818/post-8979049)
