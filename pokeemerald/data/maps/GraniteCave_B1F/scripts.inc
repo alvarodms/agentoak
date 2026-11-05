@@ -7,7 +7,7 @@ GraniteCave_B1F_MapScripts::
 @ C329 Red Ink page 3: the hiker keeps his back to the deep ladder while he trusts BIRCH's page;
 @ once GLIGAR_HOENN is caught he faces down toward it.
 GraniteCave_B1F_OnTransition:
-	EventMacro_DexBelieverPlace SPECIES_GLIGAR_HOENN, LOCALID_GRANITE_CAVE_B1F_HIKER, 28, 19, MOVEMENT_TYPE_FACE_DOWN
+	EventMacro_DexBelieverPlace SPECIES_GLIGAR_HOENN, LOCALID_GRANITE_CAVE_B1F_HIKER, 26, 20, MOVEMENT_TYPE_FACE_DOWN
 	goto CaveHole_FixCrackedGround
 
 GraniteCave_B1F_SetHoleWarp:

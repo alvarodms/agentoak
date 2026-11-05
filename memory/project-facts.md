@@ -75,3 +75,4 @@ Available via MCP server (Pokédex tools). All default to Gen 3.
 - Graphics must be in PNG format; `gbagfx` converts them during build
 - Assembly `.s` files in `data/` are part of the build and preprocessed with `preproc`
 - The `generated/` directory contains auto-generated headers during build
+- **Playtest ROM (C339)**: `make playtest` (from pokeemerald/) = `$(MAKE) PLAYTEST=1 rom` → `pokeemerald_playtest.gba`, objects in `build/playtest`, `-DPLAYTEST=1`. The runner/release only builds and ships the default `pokeemerald.gba`, so testers must build the den-tour ROM themselves (unless the runner learns to attach it). Default ROM is not byte-identical to pre-C339 (the den-tour script is always linked, never run).

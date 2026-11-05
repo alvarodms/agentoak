@@ -103,14 +103,11 @@ const ALLOWLIST = {
   'PetalburgWoods:12,28': 'Agent Oak migration cutscene: Pikachu bursts out of the south tree line',
 };
 
-// NOT vanilla: Agent Oak NPCs that stand inside a wall/tree line (found by the
-// first run, C338). Both are always present (flag 0) and still talkable from the open side, so they are
-// reported as warnings and logged as Known issue #5 in memory/playtest-checklist.md
-// instead of being moved during the den-chapter freeze. Remove an entry once the
-// NPC is moved (a stale entry fails).
+// NOT vanilla: Agent Oak NPCs that stand on a bad tile and are awaiting a fix,
+// 'Map:x,y': 'reason' (warning only). C338 found two NPCs in walls; both were
+// moved in C339 (Granite B1F hiker 28,19 -> 26,20, Pyre summit keeper 20,25 -> 21,25).
+// Remove an entry once the NPC is moved (a stale entry fails).
 const KNOWN_ISSUES = {
-  'GraniteCave_B1F:28,19': 'C329 Red Ink hiker in the cave wall above the B2F ladder (talk from 28,20)',
-  'MtPyre_Summit:20,25': 'summit keeper (old woman) in the west rock wall (talk from 21,25)',
 };
 
 function stripComment(line) {

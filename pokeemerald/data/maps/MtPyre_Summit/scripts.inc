@@ -675,7 +675,6 @@ MtPyre_Summit_EventScript_PyreKeeperPost::
 
 MtPyre_Summit_Movement_KeeperApproach:
 	walk_right
-	walk_right
 	walk_in_place_faster_left
 	step_end
 

@@ -44,6 +44,12 @@
 #define CHAR_DEC_SEPARATOR CHAR_COMMA
 #endif
 
+/* C339: `make playtest` passes -DPLAYTEST=1 (den-tour new game, see data/scripts/playtest_den_tour.inc).
+   Constant 0 here so the normal build still compiles and links the playtest branch. */
+#ifndef PLAYTEST
+#define PLAYTEST 0
+#endif
+
 // Uncomment to fix some identified minor bugs
 //#define BUGFIX
 

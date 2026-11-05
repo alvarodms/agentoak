@@ -210,6 +210,9 @@ The migration's ultimate legacy — a being born from Hoenn's entanglement with 
 
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
+#### Shortcut: the den-tour ROM
+Building from source? Run `make playtest` in `pokeemerald/` to get `pokeemerald_playtest.gba` (its own save file). A new game skips the truck and wakes you in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team with FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and all three dens untouched. Call PROF. BIRCH first, then go Mt. Pyre → Shoal Cave → Meteor Falls. Only those routes are set up; oddities elsewhere are the shortcut, not the hack.
+
 #### Four things we most need eyes on
 The den items need a save with badge 5 or more (Mt. Pyre first); allow about twenty minutes per den. If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
 

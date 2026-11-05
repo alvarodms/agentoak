@@ -4,6 +4,9 @@
 
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
+## Quick start: the den-tour ROM (C339)
+Build with `make playtest` (from pokeemerald/) to get `pokeemerald_playtest.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team that knows FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and every den still untouched. Call PROF. BIRCH on the PokéNav first, then follow the chapter in its intended order: Mt. Pyre (Route 122), Shoal Cave (fly to MOSSDEEP, Route 125, low tide), Meteor Falls (fly to FALLARBOR, Route 114). Story events outside these routes are not set up; anything odd away from them is probably the shortcut, not the hack. Tell us the first moment something surprised you.
+
 ---
 ## Four things we most need eyes on
 If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
@@ -158,7 +161,8 @@ Found by reading code, not by play. Severity uses the A/B/C scale above.
 2. **Fixed C338:** ISOLDE and MARLOW now react on screen the moment the den Pokémon is caught (EventMacro_StaticDen optional 8th arg `on_caught`; P3 / S2 rows above). Funnel item 4 asks testers whether they noticed.
 3. **C, design:** Steven's chalk dust (M4) is text-only on a stone the player may already have read; the B1F_2R answer (M5) also adds nothing on the map. If testers miss it (funnel item 1), the cheapest visible cue would be a metatile or object change, which needs a design cycle.
 4. Palette (C337, gMessageBox_Pal from graphics/text_window/message_box.png): idx4 RED = 224,8,8 (red); idx5 LIGHT_RED = 248,184,112, a peach shadow. That is vanilla Emerald's red-text shadow, so the six red margins and the cover are fine. **Not a Severity-A finding.**
-5. **Checked C338 by `make check_object_tiles`** (175 scripted destinations + 205 start tiles, 0 errors): ISOLDE 17,11 and MARLOW 18,6 pass (18,6 is a warning only: it is the TEMP_12 Mudkip doll's start tile, hidden by then). The first run found two **C, looks off** Agent Oak NPCs standing inside a wall (collision 1, always present, still talkable from the open side), listed in the lint's KNOWN_ISSUES and NOT moved during the den freeze: GraniteCave_B1F hiker 28,19 (C329 Red Ink page 3, in the wall above the B2F ladder, talk from 28,20) and MtPyre_Summit keeper old woman 20,25 (in the west rock wall, talk from 21,25). Fix = move each to an open tile, then delete its KNOWN_ISSUES entry (a stale entry fails the lint).
+5. **Fixed C339:** the two in-wall Agent Oak NPCs found by the first `make check_object_tiles` run (C338) are on open ground and their KNOWN_ISSUES rows are deleted (lint: 175 destinations + 205 start tiles, 0 errors). GraniteCave_B1F hiker 28,19 → **26,20** (same pocket as the B2F ladder 28,21, FACE_UP before / FACE_DOWN after GLIGAR_HOENN; the ladder stays reachable from 27,21, 28,22 and 28,20 via 27,20). MtPyre_Summit keeper old woman 20,25 → **21,25** (her ghost-migration approach is now one walk_right and still ends on 22,25). ISOLDE 17,11 and MARLOW 18,6 still pass (18,6 is a warning only: the TEMP_12 Mudkip doll's start tile, hidden by then).
 
 
 README copy: 'Help Playtest v3.0' mirrors this file (Four things funnel, scope line, known-issues line, emulator field: synced C338 Reflection). Edit here first.
+C339: README should add the Quick start paragraph and the line 'Start the PLAYTEST ROM and follow Birch's call. Tell us the first moment something surprised you.'
