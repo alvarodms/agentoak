@@ -1049,6 +1049,7 @@ extern const u8 gFieldNotesText_LastPage[];
 extern const u8 gFieldNotesText_LotadMargin[];
 extern const u8 gFieldNotesText_ShroomishMargin[];
 extern const u8 gFieldNotesText_GligarMargin[];
+extern const u8 gFieldNotesText_GligarDoubt[];
 extern const u8 gFieldNotesText_VulpixMargin[];
 extern const u8 gFieldNotesText_TorchicMargin[];
 extern const u8 gFieldNotesText_MudkipMargin[];
@@ -2371,7 +2372,13 @@ u16 BufferFieldNotesPage(void)
             if (sFieldNotesPages[i].marginText != NULL && IsFieldNotesMarginEarned(i))
             {
                 *(str++) = CHAR_PROMPT_CLEAR;
-                StringExpandPlaceholders(str, sFieldNotesPages[i].marginText);
+                str = StringExpandPlaceholders(str, sFieldNotesPages[i].marginText);
+            }
+            // C340: page 3 carries the player's own doubt once the Lilycove old woman has spoken
+            if (i == FIELD_NOTES_GLIGAR && FlagGet(FLAG_LILYCOVE_GLIGAR_DOUBT))
+            {
+                *(str++) = CHAR_PROMPT_CLEAR;
+                StringExpandPlaceholders(str, gFieldNotesText_GligarDoubt);
             }
         }
         return TRUE;

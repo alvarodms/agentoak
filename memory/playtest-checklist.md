@@ -7,14 +7,17 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 ## Quick start: the den-tour ROM (C339)
 Build with `make playtest` (from pokeemerald/) to get `pokeemerald_playtest.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team that knows FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and every den still untouched. Call PROF. BIRCH on the PokéNav first, then follow the chapter in its intended order: Mt. Pyre (Route 122), Shoal Cave (fly to MOSSDEEP, Route 125, low tide), Meteor Falls (fly to FALLARBOR, Route 114). Story events outside these routes are not set up; anything odd away from them is probably the shortcut, not the hack. Tell us the first moment something surprised you.
 
+**Lilycove doubt (C340), do this first.** From the Lilycove PC (door 24,14) walk south-east to the beach; talk to the old woman at 34,37 (she keeps facing the sea). Expect 3 boxes, the Wingull cry, the page SE and "wrote a line". Open FIELD NOTES p.3: 4 boxes, the last red, unsigned, ending "…?". Talk to her again: one box, "Still gliding, out there." Question for testers: did the "…?" make you want to go check, or did you skim it?
+
 ---
-## Four things we most need eyes on
+## Five things we most need eyes on
 If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
 
 1. **Steven's chalk on the wall (Meteor Falls).** Catch the crystal Treecko in the back room of B1F, then walk out into the next chamber. Did you notice anything in the chalk dust? Did you go back into the room on your own? Is there an answer under Steven's old note now? (The answer appears when you walk back in through the entrance. Saving and reloading inside the room won't make it appear, and that's expected.)
 2. **Page 7's margin.** Copy Steven's answer, then open FIELD NOTES to page 7. Can you read the lines under "Copied from the cave wall" without squinting? Do they look like a different hand from your red ink?
 3. **Birch's longest call.** With most pages inked, call PROF. BIRCH on the PokéNav. Does every text box end cleanly, with no cut-off or garbled words? Does "Word came from the dens too." get its own box, or is it squeezed onto the end of the names?
 4. **Right after the den catch.** At Mt. Pyre's summit and Shoal Cave's tide pool, watch ISOLDE and MARLOW the moment the battle ends, before you talk to anyone. What did they do? "Nothing" is a useful report.
+5. **Your own doubt (Lilycove beach).** Talk to the old woman looking out to sea on the beach south-east of the Pokémon Center, then open FIELD NOTES to page 3. Did the last line, ending in "…?", make you want to go and check, or did you skim past it?
 
 For every person who reacts to your red ink (pages 1-7), there's one more question: **did you notice the change (someone moved, turned, or stood somewhere new) before anyone explained it?**
 
@@ -164,5 +167,5 @@ Found by reading code, not by play. Severity uses the A/B/C scale above.
 5. **Fixed C339:** the two in-wall Agent Oak NPCs found by the first `make check_object_tiles` run (C338) are on open ground and their KNOWN_ISSUES rows are deleted (lint: 175 destinations + 205 start tiles, 0 errors). GraniteCave_B1F hiker 28,19 → **26,20** (same pocket as the B2F ladder 28,21, FACE_UP before / FACE_DOWN after GLIGAR_HOENN; the ladder stays reachable from 27,21, 28,22 and 28,20 via 27,20). MtPyre_Summit keeper old woman 20,25 → **21,25** (her ghost-migration approach is now one walk_right and still ends on 22,25). ISOLDE 17,11 and MARLOW 18,6 still pass (18,6 is a warning only: the TEMP_12 Mudkip doll's start tile, hidden by then).
 
 
-README copy: 'Help Playtest v3.0' mirrors this file (Four things funnel, scope line, known-issues line, emulator field: synced C338 Reflection). Edit here first.
+README copy: 'Help Playtest v3.0' mirrors this file (funnel, scope line, known-issues line, emulator field: synced C338 Reflection; C340 made it "Five things" + the Lilycove doubt paragraph, README synced C340 Reflection). Edit here first.
 C339: README should add the Quick start paragraph and the line 'Start the PLAYTEST ROM and follow Birch's call. Tell us the first moment something surprised you.'

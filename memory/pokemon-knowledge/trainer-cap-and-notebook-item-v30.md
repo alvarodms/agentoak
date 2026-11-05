@@ -1,13 +1,18 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 336 | **Date**: November 2026
+**Cycle**: 340 | **Date**: November 2026
 
 ---
 
+## C340 — "The player's own ink is wrong": precedent (searched Nov 2026; thin)
+- No game found that *retracts* a player-written record as a designed beat; searches return unreliable narrators (Giant Bomb) and journal bugs (Caves of Qud tracker), not designed corrections. Weak evidence either way.
+- **Obra Dinn**: the logbook confirms fates only in threes and never says which guess is wrong. Critics praise that it "doesn't overly punish mistakes". Wrongness is told through *withheld confirmation*, not an NPC scolding.
+- **Outer Wilds ship log**: shows "rumor" vs confirmed entries and greys out leads; it never marks an entry false. Reviewers (Edge) say progress lives "in your own head", and the log only tracks it.
+- Implication: the precedent is "your note was a rumor / incomplete", not "your note was false". Page 7 (Steven: right but incomplete) already holds that register, so a new wrong-ink beat must differ (e.g. ink the *world* outgrows later, or the player's ink is wrong because the land changed again), or it repeats the humility reaction.
+
 ## C336 — Humility believer (Meteor Falls Steven chalk): precedent + reach risk
 - Vanilla precedent: Steven already talks to the player through a note left behind. After the Hall of Fame, his Mossdeep house has a note on the desk next to a Poké Ball holding Beldum, "my favorite Pokémon" (Bulbapedia Steven/Quotes; guides). A short signed note from an offscreen Steven is canon voice, not a new invention.
-- Reach risk: vanilla B1F_2R is the **dead-end back room behind Surf + Waterfall** (TM02 Dragon Claw, Bagon). Once the TM and the den are taken, nothing brings the player back. A beat that waits for re-entry can be missed unless something points back to it. Fixes, from cheapest: the beat also fires on leaving and re-entering the room straight away (any warp out counts); the post-catch text or the page-7 ink hints "Steven chalks this wall"; Birch's Field Notes names the wall.
-- General "content changes on revisit" design (itch devlogs, Deathloop note-rereading): players pick up a change on revisit only when they have a reason to look again. No strong source found (weak evidence).
+- Reach risk: vanilla B1F_2R is the **dead-end back room behind Surf + Waterfall** (TM02 Dragon Claw, Bagon). Once the TM and the den are taken, nothing brings the player back. Fixes: re-fire on any warp out/in; page-7 ink hints at the wall; Birch's Field Notes names it.
 
 ## C335 — Trade believer (Shoal Cave sailor): trade + locale checks
 - Hacks that redo NPC trades frame them as "useful mons/items right when you need them" (USUM hack changelogs; a revamped R/B hack where nothing is trade-locked). No praise for trades as flavour alone. The received mon has to be worth using.
@@ -36,9 +41,7 @@
 - Applied: `CountInkedFieldNotePages` should drive tiers (e.g. 3+ = believers "talk to each other", 7 = last page). Pages 5-7 are badge-gated, so an all-pages gate can't be reached until late. Pages 1-4 can all be inked by Route 113, so a ≥3 beat lands mid-game.
 - Route 113 locale (Bulbapedia): Glass Workshop (NW) turns ash into glass furniture; its owner gives the Soot Sack, and ash grass collects soot per step. Two Ninja Boys hide under fake ash piles. Existing route verbs for a believer to use: sweeping/collecting ash, glass-making, hiding.
 
-## C329 — "Show me" NPCs (applied): dex-entry checks (SM Pokédex quests) are passive; party checks (Z-A "I'd like to see an Ekans") cost a box trip. Believers read dex-caught (= page ink) and word it as the *record*. Keep believers apart from vanilla look-alike NPCs (Granite Cave Flash hiker).
-
-## C328 — Notebook ↔ NPC loop (applied): Bombers' Notebook stamps *who* was helped per row → believer margins on pages; build single believers before the multi-page beat; one specific reactive line per deed (Wayline).
+## C328-C329 (applied): dex-caught checks are passive, party checks cost a box trip (SM quests vs Z-A Ekans) → believers read dex-caught; Bombers' Notebook stamps *who* was helped → believer margins; one specific line per deed (Wayline).
 
 ## C327 — Reactive "skeptic" NPCs & the second slot pool
 - Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
@@ -48,13 +51,9 @@
 
 ## Notebook / log key items: Unbound's Mission Log is praised for *organization* (progress + collectathon state), not prose; it can't save weak fetch tasks. Lead with state at a glance; voice is flavour.
 ## Sources
-- https://bulbapedia.bulbagarden.net/wiki/Steven%20Stone/Quotes , https://www.ludo.guide/guide/pokemon-emerald/the-gift-that-steven-left-you , https://strategywiki.org/wiki/Pokémon_Ruby_and_Sapphire/Meteor_Falls , https://www.nme.com/features/in-game-exposition-dumps-are-nothing-new-so-why-is-deathloop-so-good-at-it-3048526 (C336)
-- https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://bulbapedia.bulbagarden.net/wiki/Special:MobileDiff/2930654 (Name Rater), https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 , https://www.pokecommunity.com/threads/pok%C3%A9mon-photonic-sun-prismatic-moon.411743/latest (C335)
-- https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Mt._Pyre , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
+- https://filmstories.co.uk/?p=83249 , https://unapologeticnerd.com/tag/mystery-genre/ , https://www.giantbomb.com/wd/3015-191/ , https://www.pressreader.com/australia/edge/20190620/282278141843961 , https://www.tomsguide.com/reviews/outer-wilds , https://steamcommunity.com/sharedfiles/filedetails/?id=3500382207 (C340)
+- https://bulbapedia.bulbagarden.net/wiki/Steven%20Stone/Quotes , https://strategywiki.org/wiki/Pokémon_Ruby_and_Sapphire/Meteor_Falls (C336); https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 (C335); https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
 - https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)
 - https://bulbapedia.bulbagarden.net/wiki/Match_Call , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_HeartGold_and_SoulSilver/Part_1 , https://www.bulbagarden.net/goto/post?id=939348 , https://pokecommunity.com/showthread.php?p=10212056 (C331)
-- https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://allthings.how/pokemon-firered-and-leafgreen-oaks-aides-and-tm-locations/ (C330)
-- https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330)
-- https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests , https://www.gamerguides.com/pokemon-legends-z-a/database/missions/side-missions/i-d-like-to-see-an-ekans , https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329)
-- https://strategywiki.org/wiki/The_Legend_of_Zelda:_Majora's_Mask/The_Bomber's_Notebook , https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ , https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
+- https://bulbapedia.bulbagarden.net/wiki/Professor%27s_aides , https://www.thonky.com/zelda-majoras-mask/bombers-notebook , https://bulbapedia.bulbagarden.net/wiki/Hoenn_Route_113 (C330); https://www.supercheats.com/pokemon-sun/walkthrough/pokedex-quests , https://bulbapedia.bulbagarden.net/wiki/Granite_Cave (C329); https://zeldauniverse.net/2015/01/25/hands-on-with-majoras-mask-3d-exploring-the-new-and-improved-bombers-notebook/ , https://www.wayline.io/blog/ai-npcs-reactive-game-worlds (C328)
 - C326-C327 (applied): bulbapedia Unused_Trainer_data, pret wiki "Repurposing-the-Link-Battle-placeholders", tcrf RS, PokéCommunity t=425848/383237, upcomer/Bulbagarden/Tom's Guide on Legends: Arceus requests, Unbound reviews (retrohandhelds, animecollective)

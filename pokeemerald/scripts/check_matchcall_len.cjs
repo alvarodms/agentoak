@@ -181,18 +181,20 @@ function analyse(labels) {
   }
   pokenav += report; // report already carries its EOS
 
-  // Notebook pages: old + 1 + ink [+ 1 + margin] + EOS
+  // Notebook pages: old + 1 + ink [+ 1 + margin] [+ 1 + doubt (C340, page 3 only)] + EOS
   let longestPage = { name: '-', len: 0 };
   for (const p of NOTEBOOK_PAGES) {
     const old = `gFieldNotesText_${p}`;
     const ink = `gFieldNotesText_${p}Ink`;
     const margin = `gFieldNotesText_${p}Margin`;
+    const doubt = `gFieldNotesText_${p}Doubt`;
     if (!labels.has(old) || !labels.has(ink)) {
       errors.push(`notebook page ${p}: missing ${old} or ${ink}`);
       continue;
     }
     let len = c(old) + 1 + c(ink) + 1;
     if (labels.has(margin)) len += 1 + c(margin);
+    if (labels.has(doubt)) len += 1 + c(doubt);
     if (len > longestPage.len) longestPage = { name: p, len };
   }
   for (const p of ['Cover', 'CoverYours', 'LastPage']) {

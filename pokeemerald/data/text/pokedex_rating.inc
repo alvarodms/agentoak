@@ -240,6 +240,12 @@ gFieldNotesText_GligarMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a hiker in GRANITE\n"
 	.string "CAVE faces the deep.$"
 
+@ C340 page 3 fourth mark: the player's own doubt (Lilycove old woman). Unsigned, never resolved in v3.0
+gFieldNotesText_GligarDoubt::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Seen in LILYCOVE: gliding\n"
+	.string "over the sea, dry as dust.\l"
+	.string "Wrong, or changed again…?$"
+
 gFieldNotesText_VulpixMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: someone on ROUTE\n"
 	.string "113 laughs in the falling ash.$"
