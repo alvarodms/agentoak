@@ -45,6 +45,7 @@
 #endif
 
 /* C339: `make playtest` passes -DPLAYTEST=1 (den-tour new game, see data/scripts/playtest_den_tour.inc).
+   C343: `make playtest_coda` passes -DPLAYTEST=2 (Red Ink coda, see data/scripts/playtest_coda.inc).
    Constant 0 here so the normal build still compiles and links the playtest branch. */
 #ifndef PLAYTEST
 #define PLAYTEST 0

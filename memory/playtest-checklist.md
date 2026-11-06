@@ -9,6 +9,13 @@ Build with `make playtest` (from pokeemerald/) to get `pokeemerald_playtest.gba`
 
 **Lilycove doubt (C340), do this first.** From the Lilycove PC (door 24,14) walk south-east to the beach; talk to the old woman at 34,37 (she keeps facing the sea). Expect 3 boxes, the Wingull cry, the page SE and "wrote a line". Open FIELD NOTES p.3: 4 boxes, the last red, unsigned, ending "…?". Talk to her again: one box, "Still gliding, out there." Question for testers: did the "…?" make you want to go check, or did you skim it?
 
+## Quick start: the coda ROM (C343)
+Build with `make playtest_coda` (from pokeemerald/) to get `pokeemerald_playtest_coda.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in PETALBURG's Pokémon Center on a cleared save (the credits have already rolled), with all 8 badges, FIELD NOTES pages 1-4 inked (the four Hoennian Pokémon wait in the PC) and a Lv54-55 team that knows FLY and SURF. You have NOT written the Lilycove doubt yet. Story events away from Petalburg, Route 104 and Lilycove are not set up.
+1. Walk out of the Pokémon Center and west onto Route 104. Find the schoolkid on the shore (33,49) and the little girl just south of him. Talk to him, then to her. Expect the class with your LOTAD page only (no GLIGAR lines).
+2. Fly to LILYCOVE. Talk to the old woman on the beach south-east of the Pokémon Center (34,37), then open FIELD NOTES page 3: its last line is your own red, unsigned "…?".
+3. Fly back to PETALBURG and walk onto Route 104 again. Talk to the schoolkid. Expect the class plus page 3: a "?" over the girl, then "I said never. It's in red."
+Question for testers: on the second visit, did the lesson feel like a reward or a warning? Did you want to correct him?
+
 ---
 ## Five things we most need eyes on
 If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
@@ -31,7 +38,7 @@ Report with the build (commit hash), the item number above or the step number be
 2. **Where:** anywhere. **Do:** open BAG > KEY ITEMS > FIELD NOTES, then register it and press SELECT. **Expect:** the cover reads "0 of 4"; four pages of Birch's notes; no extra pages yet.
 3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 10, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
 4. **Where:** Route 104 shore between Petalburg and the woods, the schoolkid. **Do:** talk to him. **Expect:** before you've caught that LOTAD, he faces the sea and repeats Birch's note. After the catch, he says his new lines and then turns east (toward Petalburg) on the spot (C334); after you re-enter the route he still faces east.
-4b. **(Postgame, C342 Red Ink coda; do this in Part 3.) Where:** Route 104, the schoolkid, on a save after game clear with the Hoennian LOTAD caught. **Do:** re-enter Route 104, talk to him, then talk to the little girl. **Expect:** a little girl stands just south of him (33,50) facing the sea (west), and he faces down at her. Talking to him gives the lesson: "Shh! Class is in session.", your LOTAD page recited as fact, "Red ink means it's true." If you wrote the Lilycove doubt (FLAG_LILYCOVE_GLIGAR_DOUBT, step 5 of the top list), he adds page 3 ("GLIGAR: Water and Rock…"), a "?" pops over the girl, and he says "I said never. It's in red." Either way he then turns back to her. Talking to the girl: "My teacher says LOTAD love storms…", and she turns back to the sea. Before game clear, or without the LOTAD, nothing changes (no girl; step 4 behaviour). Catching the LOTAD postgame without leaving the route gives the old step-4 lines until you re-enter. **Not reachable from the den-tour ROM** (its preset never sets GAME_CLEAR; check_playtest R4 forbids presetting FLAG_HIDE_ROUTE104_LOTAD_STUDENT). **README: Reflection phase, sync this step into Help Playtest Part 3.**
+4b. **(Postgame, C342 Red Ink coda; do this in Part 3.) Where:** Route 104, the schoolkid, on a save after game clear with the Hoennian LOTAD caught. **Do:** re-enter Route 104, talk to him, then talk to the little girl. **Expect:** a little girl stands just south of him (33,50) facing the sea (west), and he faces down at her. Talking to him gives the lesson: "Shh! Class is in session.", your LOTAD page recited as fact, "Red ink means it's true." If you wrote the Lilycove doubt (FLAG_LILYCOVE_GLIGAR_DOUBT, step 5 of the top list), he adds page 3 ("GLIGAR: Water and Rock…"), a "?" pops over the girl, and he says "I said never. It's in red." Either way he then turns back to her. Talking to the girl: "My teacher says LOTAD love storms…", and she turns back to the sea. Before game clear, or without the LOTAD, nothing changes (no girl; step 4 behaviour). Catching the LOTAD postgame without leaving the route gives the old step-4 lines until you re-enter. **Fastest route: the coda ROM (`make playtest_coda`, quick start above).** The den-tour ROM cannot reach it (its preset never sets GAME_CLEAR). (README Part 3 step 23.)
 5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 25, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
 6. **Where:** Pokénav, call Birch (1-2 pages inked). **Expect:** the Pokédex rating only; no red ink report yet.
 7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 20, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.
@@ -99,6 +106,11 @@ Report with the build (commit hash), the item number above or the step number be
 - Did you go back to the Meteor Falls wall on your own, or only because this list said so? Did Steven correcting you feel fair?
 - In Challenge Mode, was the Champion a wall without your BAG?
 - When the Route 104 kid taught your page as fact, did you feel proud, uneasy, or nothing? Did you reopen your FIELD NOTES?
+- Did you find the Lilycove old woman's GLIGAR line on your own, before this list pointed you to her?
+- Which single moment would you screenshot?
+- Did any NPC text look like a typo, or did it read like that character's own voice?
+
+README synced C343 (coda shortcut + 3 feel questions). Edit this file first, then mirror.
 
 ## Den chapter state walk (static, C337)
 

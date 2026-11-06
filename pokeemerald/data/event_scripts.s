@@ -577,6 +577,7 @@ gStdScripts_End::
 	.include "data/scripts/trainer_battle.inc"
 	.include "data/scripts/new_game.inc"
 	.include "data/scripts/playtest_den_tour.inc"
+	.include "data/scripts/playtest_coda.inc"
 	.include "data/scripts/hall_of_fame.inc"
 
 EventScript_WhiteOut::

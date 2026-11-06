@@ -91,6 +91,11 @@ ifeq ($(PLAYTEST),1)
   ROM := $(FILE_NAME)_playtest.gba
   OBJ_DIR := $(BUILD_DIR)/playtest
 endif
+# C343 coda playtest ROM (`make playtest_coda`): Red Ink coda new game, own ROM name and object dir
+ifeq ($(PLAYTEST),2)
+  ROM := $(FILE_NAME)_playtest_coda.gba
+  OBJ_DIR := $(BUILD_DIR)/playtest_coda
+endif
 ELF := $(ROM:.gba=.elf)
 MAP := $(ROM:.gba=.map)
 SYM := $(ROM:.gba=.sym)
@@ -120,8 +125,8 @@ INCLUDE_SCANINC_ARGS := $(INCLUDE_DIRS:%=-I %)
 
 O_LEVEL ?= 2
 CPPFLAGS := $(INCLUDE_CPP_ARGS) -Wno-trigraphs -DMODERN=$(MODERN)
-ifeq ($(PLAYTEST),1)
-  CPPFLAGS += -DPLAYTEST=1
+ifneq ($(PLAYTEST),0)
+  CPPFLAGS += -DPLAYTEST=$(PLAYTEST)
 endif
 ifeq ($(MODERN),0)
   CPPFLAGS += -I tools/agbcc/include -I tools/agbcc -nostdinc -undef -std=gnu89
@@ -170,9 +175,9 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-# playtest only re-invokes make (PLAYTEST=1 rom), which does the scanning itself
-RULES_NO_SCAN += playtest
-.PHONY: all rom modern compare playtest check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_playtest check_species check_evolution check_all check_all_quick
+# playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
+RULES_NO_SCAN += playtest playtest_coda
+.PHONY: all rom modern compare playtest playtest_coda check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_playtest check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -353,6 +358,10 @@ compare: all
 # C339 den-tour playtest ROM: pokeemerald_playtest.gba, objects in build/playtest
 playtest:
 	$(MAKE) PLAYTEST=1 rom
+
+# C343 Red Ink coda playtest ROM: pokeemerald_playtest_coda.gba, objects in build/playtest_coda
+playtest_coda:
+	$(MAKE) PLAYTEST=2 rom
 
 # Other rules
 rom: check_scripts $(ROM)

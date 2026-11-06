@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 340 | **Date**: November 2026
+**Cycle**: 343 | **Date**: November 2026
 
 ---
+
+## C343 — Retelling the player's record (Fortree crayon wall precedent; searched Nov 2026)
+- **Pentiment Act III mural**: the player's Act II choices become the town's painted history, and the player chooses which events it emphasizes. Critics (GameSpot) praise it as "the subjectivity of historical record"; sources frame it as *selective/shaped by the teller*, NOT factually wrong. The player stays an author of the retelling.
+- **Tim Cain "believable reactivity"**: NPCs react to *what changed* (outcomes they could plausibly know), not to the action itself. Kids copying ink must plausibly have seen the notebook (via the schoolkid lesson chain, not magic).
+- No praised "distorted rumor of player deeds" mechanic found; Shadow of Mordor Nemesis is the nearest praised cousin (enemies remember outcomes). Weak evidence.
+- Implication: a crayon wall where the words are subtly wrong risks testers reporting them as typos. Pentiment's grammar is "same facts, different emphasis/voice", so the copy should be visibly a child's paraphrase (simplified, exaggerated), not a misspelling.
 
 ## C340 — "The player's own ink is wrong": precedent (searched Nov 2026; thin)
 - No game found that *retracts* a player-written record as a designed beat; searches return unreliable narrators (Giant Bomb) and journal bugs (Caves of Qud tracker), not designed corrections. Weak evidence either way.
@@ -24,11 +30,7 @@
 - Confusion is a volatile status and **stacks with burn** (Gen 3 rules; old GameFAQs/forum discussions of the Confuse Ray-vs-Will-O-Wisp choice point this out). A 3-mon team with W-o-W on all three plus Confuse Ray on two can lock a physical starter in burn+confusion for the whole fight, with no counterplay. Hard Emerald hacks (Run & Bun trainer lists) use W-o-W at most once per mon, paired with damage moves, not as a team-wide gimmick. No community thread praising status-spam trainers was found; searches turned up nothing either way (weak evidence).
 - Vanilla lore (Bulbapedia/ORAS): Mt. Pyre Hex Maniacs are "seekers" ("…No, you're not the one"), which fits a mourner who searches for one soul. Vanilla summit Ghost trainers use Shuppet/Duskull/Sableye, so Dusclops + Banette stay on-place.
 
-## C333 — Flag reclamation: three community routes
-- **`FLAG_UNUSED_0x*` constants** are pret's sanctioned spare slots (pret wiki "Full Screen Start Menu" sets a feature flag to FLAG_UNUSED_0x020). The zero-risk pool: list those first in the ledger, before any "unreferenced but named" vanilla flag.
-- **pret wiki "Reuse filler save space for Variables and Flags"**: copies a `gAdditionalSaveData` array in/out of each save sector's `unused` bytes (src/save.c); IDs from 0xF000 map there (flags 1 bit, vars 2 bytes; the two ranges must not overlap). The wiki says it keeps vanilla saves compatible. This is a route to hundreds of new flags without touching any vanilla bit. Check first that old saves read the sector padding as zero.
-- Sibling pret pages: "Reclaim Unused Vars", "Saveblock Size" (measures headroom).
-- Engine traps for a grep-only scanner (codebase knowledge, not from the wiki): temp flags are cleared on map load, daily flags by ClearDailyFlags, and trainer/hidden-item/item-ball flags are referenced from map.json, by range, or through computed IDs. A flag with zero grep hits inside a range can still be wiped or set. The ledger must exclude whole ranges, not only grep for names.
+## C333 — Flag reclamation (applied): `FLAG_UNUSED_0x*` = pret's sanctioned spares; pret wiki "Reuse filler save space for Variables and Flags" (`gAdditionalSaveData` in sector padding, IDs from 0xF000) is the route to hundreds more flags if the pool runs out. Exclude whole engine-wiped/computed ranges, not just grep names.
 
 ## C331 — Mentor payoff: phone call vs. in-person
 - HGSS/GSC phone (Bulbagarden fan threads): players call the phone "annoying over time"; Bill's automated calls were "useless". Elm's *story* calls (e.g. after a badge) are remembered, not hated. Fans resent calls that interrupt without new content, not calls in general.
@@ -51,6 +53,7 @@
 
 ## Notebook / log key items: Unbound's Mission Log is praised for *organization* (progress + collectathon state), not prose; it can't save weak fetch tasks. Lead with state at a glance; voice is flavour.
 ## Sources
+- https://www.gamespot.com/reviews/pentiment-review/1900-6417998/ , https://primagames.com/gaming/pentiment-final-mural-endings-guide , https://bobsthoughtcloud.substack.com/p/pentiments-third-act-emphasizes-the , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity (C343)
 - https://filmstories.co.uk/?p=83249 , https://unapologeticnerd.com/tag/mystery-genre/ , https://www.giantbomb.com/wd/3015-191/ , https://www.pressreader.com/australia/edge/20190620/282278141843961 , https://www.tomsguide.com/reviews/outer-wilds , https://steamcommunity.com/sharedfiles/filedetails/?id=3500382207 (C340)
 - https://bulbapedia.bulbagarden.net/wiki/Steven%20Stone/Quotes , https://strategywiki.org/wiki/Pokémon_Ruby_and_Sapphire/Meteor_Falls (C336); https://bulbapedia.bulbagarden.net/wiki/In-game_trade , https://m.bulbapedia.bulbagarden.net/wiki/Obedience , https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough/Section_15 (C335); https://gamefaqs.gamespot.com/boards/946308-pokemon-platinum-version/48986451 , https://seatgem.com/2023/03/pokemon-run-bun-trainer-battles.html , https://bulbapedia.bulbagarden.net/wiki/Hex_Maniac_(Trainer_class) (C334)
 - https://github.com/pret/pokeemerald/wiki/Reuse-filler-save-space-for-Variables-and-Flags , https://github.com/pret/pokeemerald/wiki/Full-Screen-Start-Menu-by-Archie-and-Mudskip , https://github.com/pret/pokeemerald/wiki/Reclaim-Unused-Vars , https://github.com/pret/pokeemerald/wiki/Saveblock-Size (C333)

@@ -213,6 +213,9 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 #### Shortcut: the den-tour ROM
 Building from source? Run `make playtest` in `pokeemerald/` to get `pokeemerald_playtest.gba` (its own save file). A new game skips the truck and wakes you in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team with FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and all three dens untouched. Before you leave town, talk to the old woman on the beach south-east of the Pokémon Center (item 5 below). Call PROF. BIRCH, then go Mt. Pyre → Shoal Cave → Meteor Falls. Only those routes are set up; oddities elsewhere are the shortcut, not the hack.
 
+#### Shortcut: the coda ROM
+Run `make playtest_coda` in `pokeemerald/` to get `pokeemerald_playtest_coda.gba` (its own save file). A new game wakes you in PETALBURG's Pokémon Center on a cleared save: all 8 badges, FIELD NOTES pages 1-4 inked, a Lv54-55 team with FLY and SURF, and the Lilycove doubt not yet written. Walk west to Route 104 and watch the schoolkid's class (step 23), fly to LILYCOVE and talk to the old woman on the beach (item 5), then fly back and watch the class again. About ten minutes. Only Petalburg, Route 104 and Lilycove are set up.
+
 #### Five things we most need eyes on
 The den items need a save with badge 5 or more (Mt. Pyre first); allow about twenty minutes per den. If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
 
@@ -286,7 +289,7 @@ Report with the build (commit hash), your emulator or device, the item number ab
 20. **Where:** Meteor Falls, Steven. **Expect:** he turns from the wall, battles once, then leaves for good; his chalk note appears only after.
 21. **Where:** Birch's lab (National Dex). **Expect:** the Changed Three gift mentions the dens in Field Notes order and reacts to the ones you've found.
 22. **Where:** FIELD NOTES with all 7 pages inked. **Expect:** a final page appears.
-23. **Where:** Route 104 shore, with the Hoennian LOTAD caught. **Do:** leave and re-enter Route 104, talk to the schoolkid, then to the little girl just south of him. **Expect:** she faces the sea and he faces her. He recites your LOTAD page as fact ("Red ink means it's true."). If you heard the Lilycove old woman, he also teaches page 3, a "?" pops over the girl, and he says "I said never. It's in red." Then he turns back to her. She says her line and turns back to the sea. Before the credits, or without the LOTAD, there is no girl. (Not reachable from the den-tour ROM.)
+23. **Where:** Route 104 shore, with the Hoennian LOTAD caught. **Do:** leave and re-enter Route 104, talk to the schoolkid, then to the little girl just south of him. **Expect:** she faces the sea and he faces her. He recites your LOTAD page as fact ("Red ink means it's true."). If you heard the Lilycove old woman, he also teaches page 3, a "?" pops over the girl, and he says "I said never. It's in red." Then he turns back to her. She says her line and turns back to the sea. Before the credits, or without the LOTAD, there is no girl. (Fastest via the coda ROM above; the den-tour ROM cannot reach it.)
 
 #### Feel questions (answer in a sentence each)
 
@@ -300,6 +303,9 @@ Report with the build (commit hash), your emulator or device, the item number ab
 - Did you go back to the Meteor Falls wall on your own, or only because this list said so? Did Steven correcting you feel fair?
 - In Challenge Mode, was the Champion a wall without your BAG?
 - When the schoolkid taught your red ink as fact, and brushed off your own question mark, did it feel like a reward or a warning?
+- Did you find the Lilycove old woman's GLIGAR line on your own, before this list pointed you to her?
+- Which single moment would you screenshot?
+- Did any NPC text look like a typo, or did it read like that character's own voice?
 
 ---
 
