@@ -176,8 +176,8 @@ MAKEFLAGS += --no-print-directory
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
 # playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
-RULES_NO_SCAN += playtest playtest_coda
-.PHONY: all rom modern compare playtest playtest_coda check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_playtest check_species check_evolution check_all check_all_quick
+RULES_NO_SCAN += playtest playtest_coda check_playtest_build
+.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_playtest check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -362,6 +362,20 @@ playtest:
 # C343 Red Ink coda playtest ROM: pokeemerald_playtest_coda.gba, objects in build/playtest_coda
 playtest_coda:
 	$(MAKE) PLAYTEST=2 rom
+
+# C344: compile both playtest ROMs (own object dirs) and prove each preset is linked in. Full builds: NOT in check_all.
+# agbcc drops the dead `if (PLAYTEST == N)` branches, so each new_game.o references only its own preset and
+# overworld.o never references ExecuteTruckSequence (FieldCB_WarpExitFadeFromBlack is referenced by vanilla code too).
+check_playtest_build:
+	$(MAKE) PLAYTEST=1 rom
+	$(MAKE) PLAYTEST=2 rom
+	@$(OBJDUMP) -r $(BUILD_DIR)/playtest/src/new_game.o | grep -q EventScript_PlaytestDenTour || (echo "check_playtest_build: den-tour preset missing from build/playtest" && false)
+	@$(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/new_game.o | grep -q EventScript_PlaytestCoda || (echo "check_playtest_build: coda preset missing from build/playtest_coda" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest/src/new_game.o | grep -q EventScript_PlaytestCoda || (echo "check_playtest_build: coda preset leaked into build/playtest" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/new_game.o | grep -q EventScript_PlaytestDenTour || (echo "check_playtest_build: den-tour preset leaked into build/playtest_coda" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest/src/overworld.o | grep -q ExecuteTruckSequence || (echo "check_playtest_build: truck intro not skipped in build/playtest" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/overworld.o | grep -q ExecuteTruckSequence || (echo "check_playtest_build: truck intro not skipped in build/playtest_coda" && false)
+	@echo "check_playtest_build: OK (pokeemerald_playtest.gba, pokeemerald_playtest_coda.gba)"
 
 # Other rules
 rom: check_scripts $(ROM)

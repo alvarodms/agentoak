@@ -5,11 +5,13 @@
 Nothing below has been played on an emulator yet. Follow it in order: one new game covers Part 1, then a Challenge Mode save covers Part 2, and a cleared save covers Part 3. When you report, give the build (the commit hash on the Releases page), the step number, what you saw, and a severity: A = crash, freeze or garbled text; B = something behaves wrong; C = looks or reads off.
 
 ## Quick start: the den-tour ROM (C339)
+**First 30 seconds:** You start in LILYCOVE's POKéMON CENTER; the dens are MT. PYRE (ROUTE 122), SHOAL CAVE (MOSSDEEP → ROUTE 125, low tide), METEOR FALLS (FALLARBOR → ROUTE 114).
 Build with `make playtest` (from pokeemerald/) to get `pokeemerald_playtest.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team that knows FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and every den still untouched. Call PROF. BIRCH on the PokéNav first, then follow the chapter in its intended order: Mt. Pyre (Route 122), Shoal Cave (fly to MOSSDEEP, Route 125, low tide), Meteor Falls (fly to FALLARBOR, Route 114). Story events outside these routes are not set up; anything odd away from them is probably the shortcut, not the hack. Tell us the first moment something surprised you.
 
 **Lilycove doubt (C340), do this first.** From the Lilycove PC (door 24,14) walk south-east to the beach; talk to the old woman at 34,37 (she keeps facing the sea). Expect 3 boxes, the Wingull cry, the page SE and "wrote a line". Open FIELD NOTES p.3: 4 boxes, the last red, unsigned, ending "…?". Talk to her again: one box, "Still gliding, out there." Question for testers: did the "…?" make you want to go check, or did you skim it?
 
 ## Quick start: the coda ROM (C343)
+**First 30 seconds:** You start in PETALBURG's POKéMON CENTER; walk west to ROUTE 104 to see the lesson, FLY to LILYCOVE to write the '…?', FLY back.
 Build with `make playtest_coda` (from pokeemerald/) to get `pokeemerald_playtest_coda.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in PETALBURG's Pokémon Center on a cleared save (the credits have already rolled), with all 8 badges, FIELD NOTES pages 1-4 inked (the four Hoennian Pokémon wait in the PC) and a Lv54-55 team that knows FLY and SURF. You have NOT written the Lilycove doubt yet. Story events away from Petalburg, Route 104 and Lilycove are not set up.
 1. Walk out of the Pokémon Center and west onto Route 104. Find the schoolkid on the shore (33,49) and the little girl just south of him. Talk to him, then to her. Expect the class with your LOTAD page only (no GLIGAR lines).
 2. Fly to LILYCOVE. Talk to the old woman on the beach south-east of the Pokémon Center (34,37), then open FIELD NOTES page 3: its last line is your own red, unsigned "…?".
@@ -93,6 +95,7 @@ Report with the build (commit hash), the item number above or the step number be
 21. **Where:** Birch's lab (National Dex). **Expect:** the Changed Three gift mentions the dens in Field Notes order and reacts to the ones you've found.
 22. **Where:** FIELD NOTES with all 7 pages inked. **Expect:** a final page appears.
 22b. **Where:** Route 104 shore. **Do:** step 4b (the schoolkid's class).
+22c. **(Optional, C344, any save.) Where:** Fortree House 3 (east treehouse with the MANIAC and schoolkid). **Do:** talk to the kid with 0, 1-3 and 4+ pages inked. **Expect:** 0 = the vanilla POKéDEX lines plus "Mine's going to have wings!"; 1-3 = his crayon wall (a WAILORD in a cloud, a TORCHIC that's really a star); 4+ = more drawings (spoon SKARMORY, dizzy SPINDA) and "So I only draw the NOT true stuff." Both playtest ROMs start at 4 pages, so they show only the last tier. Funnel question: did the crayon wall feel like a break, or like another quiz?
 
 ## Feel questions (answer in a sentence each)
 
