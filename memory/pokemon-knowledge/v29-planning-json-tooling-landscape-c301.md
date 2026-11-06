@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 341 | **Date**: November 2026
+**Cycle**: 342 | **Date**: November 2026
 
 ---
 
@@ -10,11 +10,13 @@ Vanilla pokeemerald and expansion both ship `json_data_rules.mk` (JSON → C at 
 ## 2026 Scene: "Completeness" Is the Bar
 Top 2026 lists (PokemonCoders, ComicBook, GameWhims) cite Unbound, Radical Red, Inclement Emerald, Crystal Clear. Shared trait = feeling *complete*; players drop a hack at the first crash. Pokemon Ocean Blue (2026) markets obsessive polish over novelty.
 
-## C320 addendum: release-stage practice (PokeCommunity threads, anecdotal)
-- Ship a **Known Bugs list + one bug-report channel** (Obscura beta 1.0.0, Explorers of the Spirit 1.0).
-- Softlocks appear post-release in scripted spots (AshGray room freezes, Cyan beta 3 rival crash, Adventure Red bad tiles) — same risk class as our dens/statics.
-- Many reports are setup errors → "clean ROM + checksum".
-- Release stage = "declared untested items + report path + checksum", not "everything verified".
+## C320 addendum: release-stage practice (anecdotal)
+- Known Bugs list + one report channel (Obscura, Explorers of the Spirit); post-release softlocks cluster in scripted spots (AshGray, Cyan beta 3); many reports are setup errors → "clean ROM + checksum". Release = declared untested items + report path, not "everything verified".
+
+## C342 addendum: the evidence gate has no inlet (searched Nov 2026)
+- r/PokemonROMhacks recruit posts (Phoenix Red, Aug 2025) filled with volunteers **within a day or two**; testers asked for a patch/Discord link and whether they may **stream** → decide streaming rules up front. A 2026 hack asked testers for difficulty balance via a **shared doc + Discord**. The bottleneck is posting the ask, not tester supply.
+- FEU/PokeCommunity playtest guidance: offer ONE chapter, "playtest it yourself before submitting", never share the .gba (patch only).
+- Postgame-callback search (generic RPG dev threads, Elden Ring "post-game felt unchanged"): players notice *absence* of change after the ending; no Pokémon-hack evidence for/against single-NPC postgame lines. BW2's returning cast is a whole-region device, not one NPC. Thin.
 
 ## C323 addendum: headless testing + read-through
 - Expansion's test framework runs a test ROM under `mgba-rom-test` (headless) via `make check`; "Hydra" parallelises. Porting to vanilla = large tech-debt job.
@@ -49,6 +51,7 @@ Top 2026 lists (PokemonCoders, ComicBook, GameWhims) cite Unbound, Radical Red, 
 - Postgame recognition: a Bulbagarden "You are the Champion" thread complains that "virtually nothing changes when you beat the Champion"; hacks answer with rematches/scaling (World Adventures, Emerald Imperium), rarely with NPC lines. That is a wish, not proof of praise.
 
 ## Sources
+- [FEU: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [Phoenix Red reply](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers/n7241ib/?context=3) · [Elden Ring post-game thread](https://steamcommunity.com/app/1245620/discussions/0/3278065526395526404) · [Bulbapedia B2W2](https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Black_2_and_White_2) (C342)
 - [FEU: skipping chapter portions](https://feuniverse.us/t/skipping-portions-of-a-chapter-for-play-testing/24828) · [Adventure Red beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/) · [TCRF Emerald debug menu](https://new.tcrf.net/Proto:Pok%C3%A9mon_Emerald/Debug_Menu) · [itch.io chapter-select beta](https://itch.io/post/9411911)
 - [REGIUS beta](https://www.pokecommunity.com/threads/regius-an-island-adventure-full-game-beta.531729) · [Crimson Ruby](https://r.datuan.dev/r/PokemonROMhacks/comments/1u8csa9/pokémon_crimson_ruby_oras_rom_hack/) · [FEUniverse Playtesting Listings](https://feuniverse.us/t/playtesting-listings/30608) · [Phoenix Red testers](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers) · [PokeCommunity: event when wild mon defeated](https://www.pokecommunity.com/threads/event-when-a-certain-wild-pokemon-is-defeated.418674)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)

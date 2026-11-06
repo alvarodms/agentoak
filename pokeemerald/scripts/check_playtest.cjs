@@ -81,6 +81,7 @@ const NEVER_SET = {
   FLAG_DEN_METEOR_STEVEN_CHALK: 'item 1 beat (Steven\'s chalk answer)',
   FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE: 'Granite hiker reward beat',
   FLAG_SYS_GAME_CLEAR: 'postgame branches would contaminate every report',
+  FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'postgame Red Ink coda; Route104 OnTransition owns it',
 };
 const MIN_DENS = 3;
 
@@ -88,6 +89,9 @@ const MIN_DENS = 3;
 const BEATS = [
   { item: 5, map: 'LilycoveCity', script: 'LilycoveCity_EventScript_ExpertF', mustRead: ['FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_RECEIVED_FIELD_NOTES'] },
   { item: 1, map: 'MeteorFalls_B1F_2R', label: 'MeteorFalls_B1F_2R_EventScript_ChalkCopied', mustRead: ['FLAG_DEN_METEOR_STEVEN_CHALK'] },
+  // C342 Red Ink coda (postgame; not reachable from the preset, which never sets GAME_CLEAR).
+  { item: 'coda', map: 'Route104', label: 'Route104_EventScript_LotadLesson', mustRead: ['FLAG_SYS_GAME_CLEAR', 'FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_HIDE_ROUTE104_LOTAD_STUDENT'] },
+  { item: 'coda', map: 'Route104', script: 'Route104_EventScript_LotadStudent', mustRead: [] },
 ];
 const READ_RE = /^(goto_if_set|goto_if_unset|call_if_set|call_if_unset)\s+(\w+)/;
 
@@ -374,6 +378,8 @@ function selftest() {
     fail('missing FLAG_RECEIVED_FIELD_NOTES not reported (R3)');
   if (!run(withLine('\tsetflag FLAG_LILYCOVE_GLIGAR_DOUBT')).some((e) => e.startsWith('R4') && e.includes('FLAG_LILYCOVE_GLIGAR_DOUBT')))
     fail('pre-set FLAG_LILYCOVE_GLIGAR_DOUBT not reported (R4)');
+  if (!run(withLine('\tsetflag FLAG_HIDE_ROUTE104_LOTAD_STUDENT')).some((e) => e.startsWith('R4') && e.includes('FLAG_HIDE_ROUTE104_LOTAD_STUDENT')))
+    fail('pre-set FLAG_HIDE_ROUTE104_LOTAD_STUDENT not reported (R4)');
   if (!run(withLine('\tgivemon SPECIES_MUDKIP_HOENN, 38')).some((e) => e.startsWith('R4') && e.includes('SPECIES_MUDKIP_HOENN')))
     fail('den species givemon not reported (R4)');
   if (!run(good.filter((l) => l !== '\tend')).some((e) => e.startsWith('R1'))) fail('missing end not reported (R1)');

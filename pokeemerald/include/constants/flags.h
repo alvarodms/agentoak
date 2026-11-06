@@ -58,7 +58,7 @@
 #define FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT    0x2C
 #define FLAG_DEN_SHOAL_TRADE_DONE 0x2D // C335 Shoal Cave sailor trade (Red Ink p.6)
 #define FLAG_LILYCOVE_GLIGAR_DOUBT 0x2E // C340 Lilycove old woman: Red Ink p.3 doubt line
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
+#define FLAG_HIDE_ROUTE104_LOTAD_STUDENT    0x2F // C342 Red Ink coda: postgame little girl on Route 104 (OnTransition owns it)
 #define FLAG_UNUSED_0x030    0x30 // Unused Flag
 #define FLAG_UNUSED_0x031    0x31 // Unused Flag
 #define FLAG_UNUSED_0x032    0x32 // Unused Flag
