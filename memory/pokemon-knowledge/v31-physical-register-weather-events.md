@@ -1,8 +1,15 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 347 | **Date**: November 2026
+**Cycle**: 348 | **Date**: November 2026
 
 ---
+
+## C348 — Encounter-odds lint + the empty roost (searched Nov 2026; thin)
+- **No public validator for pokeemerald `wild_encounters.json` turned up** (searches: pret wiki, PokéCommunity). `make check_encounter_odds` has no outside model to copy. Two facts from the community for its design: (1) slot % is fixed by slot INDEX in the engine (pret pokered wiki "Edit the wild encounters"; Emerald land = 20/20/10/10/10/10/5/5/4/4/1/1), not stored per entry, so the lint must derive % from index and sum duplicate-species slots; (2) the JSON is regenerated through an Inja template (`wild_encounters.json.txt`, PokéCommunity 496361), so the lint reads the JSON source, not the generated .h.
+- **The per-map `encounter_rate` also counts**: a 10% slot on a map with a low rate still feels rare. Print each floor map's encounter_rate next to the % (informational; don't fail on it).
+- **Big hacks fix rare finds with a tool, not data**: Radical Red's DexNav (register a seen mon, then search it) is how it handles hard-to-find species (GameBrew, SA LP thread). LoH has no DexNav, so data floors are its stand-in. Keep that as the rationale in the lint header.
+- **Environmental storytelling**: players read meaning into placed objects and often invent more than the designer meant (Game Developer, "Environmental storytelling"). The roost works best seen BEFORE the one line of text. Don't add a sign or second box.
+- Sources: https://github.com/pret/pokered/wiki/Edit-the-wild-encounters , https://www.pokecommunity.com/threads/firered-safari-zone-enounters-not-showing-up-in-porymap.496361/latest , https://www.gamebrew.org/wiki/Pokemon_Radical_Red_GBA , https://www.gamedeveloper.com/design/environmental-storytelling
 
 ## C347 — What hacks do with weather / timed field events (searched Nov 2026; player-reception evidence thin)
 - **Gen III already joins the field to the battle**: overworld weather carries into battle from turn 1 (Bulbapedia Weather; Polished Crystal docs map field rain/hail/sand to battle weather). Vanilla Emerald has fixed weather routes (R119/R120 rain, R111 desert sand, R113 ash), plus `setweather`/`doweather` scripting. A weather beat is cheap in pokeemerald: no new engine.

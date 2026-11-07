@@ -102,6 +102,8 @@ const PRESETS = [
       FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE: 'Granite hiker reward beat',
       FLAG_SYS_GAME_CLEAR: 'postgame branches would contaminate every report',
       FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'postgame Red Ink coda; Route104 OnTransition owns it',
+      FLAG_HIDE_ROUTE106_TIDE_HIKER: 'postgame v3.1 Beat A; Route106 OnTransition owns it',
+      FLAG_HIDE_GRANITE_CAVE_B1F_HIKER: 'postgame v3.1 Beat A; GraniteCave_B1F OnTransition owns it',
     },
     routeMaps: {
       prefixes: ['LilycoveCity', 'Route121', 'Route122', 'MtPyre_', 'Route114', 'MeteorFalls_', 'MossdeepCity', 'Route125', 'ShoalCave_'],
@@ -138,6 +140,8 @@ const PRESETS = [
     neverSet: {
       FLAG_LILYCOVE_GLIGAR_DOUBT: 'the tester writes the doubt between the two Route 104 visits',
       FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'Route104 OnTransition owns it',
+      FLAG_HIDE_ROUTE106_TIDE_HIKER: 'postgame v3.1 Beat A; Route106 OnTransition owns it',
+      FLAG_HIDE_GRANITE_CAVE_B1F_HIKER: 'postgame v3.1 Beat A; GraniteCave_B1F OnTransition owns it',
     },
     routeMaps: {
       prefixes: ['Route104', 'LilycoveCity'],
@@ -155,6 +159,10 @@ const BEATS = [
   // C342 Red Ink coda (postgame): reachable via `make playtest_coda` (C343), not from the den tour.
   { item: 'coda', map: 'Route104', label: 'Route104_EventScript_LotadLesson', mustRead: ['FLAG_SYS_GAME_CLEAR', 'FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_HIDE_ROUTE104_LOTAD_STUDENT'] },
   { item: 'coda', map: 'Route104', script: 'Route104_EventScript_LotadStudent', mustRead: [] },
+  // C348 v3.1 Beat A (postgame): reachable via make playtest_coda (GAME_CLEAR + GLIGAR_HOENN); Fly/VISITED Dewford added C351.
+  { item: 'coda', map: 'Route106', label: 'Route106_OnTransition', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
+  { item: 'coda', map: 'Route106', script: 'Route106_EventScript_TideHiker', mustRead: ['FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE'] },
+  { item: 'coda', map: 'GraniteCave_B1F', label: 'GraniteCave_B1F_EventScript_SetupHikerLeft', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
 ];
 const READ_RE = /^(goto_if_set|goto_if_unset|call_if_set|call_if_unset)\s+(\w+)/;
 

@@ -60,7 +60,7 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 **Juan Duet (C322)**: after game clear, Juan (Sootopolis Gym 9,2) offers one Double Battle: Luvdisc/Ludicolo then Vaporeon/Gorebyss (Lv66-72, rain/Helping Hand). Win → Mystic Water, and Wallace says "You still lead, you know." A teacher-student closing beat, not a power spike.
 **Changed Three Gift (C279, reactive C319)**: Birch offers the Changed Three starters postgame. Before the offer he reacts to each den: "You found the starlight TORCHIC on MT. PYRE before I did!" if it's caught, or "Something still glitters in the fog atop MT. PYRE" if not. The same goes for Meteor Falls Treecko and Shoal Cave Mudkip. Then he says the three "hatched here at the lab, from eggs the migration left behind." C319 fix: the Mudkip ball now really gives SPECIES_MUDKIP_HOENN. From C279 to C318 it showed and gave vanilla Mudkip.
 
-**v3.1 "Taken at Their Word" (planned C347, design in strategy-notes)**: postgame + page species caught. A (C348) Route 106 cave mouth: Granite hiker at the tide line 54,11 beside an empty roost 55,11 (P3). B (C349) Route 119 20,110: storm-chaser brings the rain, Ludicolo_H/Thunder team (P1). C (C350) Route 113 38,5: Vulpix_H/Ninetales_H ice trainer faces the ash picnicker (P4). Page 2 gets no beat.
+**v3.1 "Taken at Their Word" (planned C347, design in strategy-notes)**: postgame + page species caught. A (C348, shipped) Route 106 cave mouth: Granite hiker alone at the tide line 54,11, back to the land, "They'll come"; B1F empty (P3). B (C349) Route 119 20,110: storm-chaser brings the rain, Ludicolo_H/Thunder team (P1). C (C350) Route 113 38,5: Vulpix_H/Ninetales_H ice trainer faces the ash picnicker (P4). Page 2 gets no beat.
 
 ---
 

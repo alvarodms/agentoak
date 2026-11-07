@@ -59,8 +59,8 @@
 #define FLAG_DEN_SHOAL_TRADE_DONE 0x2D // C335 Shoal Cave sailor trade (Red Ink p.6)
 #define FLAG_LILYCOVE_GLIGAR_DOUBT 0x2E // C340 Lilycove old woman: Red Ink p.3 doubt line
 #define FLAG_HIDE_ROUTE104_LOTAD_STUDENT    0x2F // C342 Red Ink coda: postgame little girl on Route 104 (OnTransition owns it)
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
+#define FLAG_HIDE_ROUTE106_TIDE_HIKER    0x30 // C348 v3.1 Beat A: postgame Granite hiker on Route 106's tide line (Route106 OnTransition owns it)
+#define FLAG_HIDE_GRANITE_CAVE_B1F_HIKER    0x31 // C348 v3.1 Beat A: hides the B1F hiker once he has left for the sea (B1F OnTransition owns it)
 #define FLAG_UNUSED_0x032    0x32 // Unused Flag
 #define FLAG_UNUSED_0x033    0x33 // Unused Flag
 #define FLAG_UNUSED_0x034    0x34 // Unused Flag

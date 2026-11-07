@@ -22,12 +22,11 @@ Each system has its own detail file under `memory/completed-work/`.
 | Wild Held Items | **93** | 1 (species_info.h — 19 species) | [wild-held-items.md](completed-work/wild-held-items.md) |
 | Roamer System (Beast Core) | 109, 111, 112, **142** | 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) + 6 sighting NPC fixes | [roamer-system.md](completed-work/roamer-system.md) |
 | Migration Climax + Primal Stirring | 115, 116, 118, 120, 121, 122, 123, 124, 125, **126** | BirchLab, CaveOfOrigin, 3 city scripts, flags.h, 6 NPC scripts+maps, TerraCave+SeafloorCavern scripts+maps, remnant trainers+parties, Groudon+Kyogre encounters, world reaction | [migration-climax.md](completed-work/migration-climax.md) |
+| v3.1 Taken at Their Word (postgame Red Ink beats) | **348** (Beat A tide hiker: flags.h 0x30/0x31, new_game.inc, GraniteCave_B1F map.json + scripts.inc, Route106 map.json + scripts.inc, check_playtest.cjs, new check_encounter_odds.cjs, Makefile) | 9 | [v31-taken-at-their-word.md](completed-work/v31-taken-at-their-word.md) |
 | Regional Variant Pipeline | PoC validated + first species (C195) | 30+ files | [regional-variant-pipeline.md](../regional-variant-pipeline.md) |
-
 ---
 
 ## Files Modified 3+ Times (v2.0-Relevant — Watch for Overwrites)
-
 - **BirchLab/scripts.inc**: 20 cycles (last: **C325** difficulty prompt states the Challenge BAG lock; C324 Field Notes gift; C323 gift den lines reordered + rewritten) — difficulty selection, migration dialogue, legendary saga, Changed Three postgame gift (C319: reactive per-den text + Totodile ball now gives SPECIES_MUDKIP_HOENN), Reckoning collection payoff
 - **MossdeepCity/scripts.inc**: 8 cycles (last: **C309** Sootopolis-gym rumor line) — beast sightings, post-climax reactions, badge-conditional atmosphere
 - **SootopolisCity/scripts.inc**: 7 cycles (last: **C320**) — Rayquaza reactions, badge-conditional atmosphere; C309 gym sign LEADER: WALLACE, Wallace fades out after HM Waterfall (FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE); C320 deleted dead WallaceMoveFromGym(West) scripts + movements
