@@ -86,6 +86,10 @@ Report with the build (commit hash), the item number above or the step number be
 41. **Do:** on a v2.9 save without FIELD NOTES, catch the Treecko, leave, come back and read the wall. **Expect:** the answer reads, but no page-turn sound and no copy line; once you hold FIELD NOTES, re-reading the wall (after a fresh map load) copies it, and only then does page 7 get its blue box.
 - check_flag_pairs (C336) found no genuine orphans (ALLOWLIST empty), so there are no orphan-flag checks to add.
 
+## Birch at his bookshelf (C345; a normal save, between steps 8 and 9)
+42. **Where:** Birch's lab, with 3+ FIELD NOTES pages inked. **Do:** walk in; don't talk yet. **Expect:** Birch stands on his usual spot facing AWAY from you (north, toward the back shelves). With 0-2 pages he faces you as before.
+43. **Do:** talk to him. **Expect:** he turns to you before any text, then "You caught me copying… It seemed only fair." and the usual Pokédex rating question. If you have talked to the Lilycove old woman (page 3 ends "…?"), one more box: "I copied your question mark as well…". The PokéNav call never says either line. After the conversation he keeps facing you (vanilla: a talked-to NPC keeps the player's direction until the map reloads). Leave and re-enter: facing away again. Not during the National Dex / Johto starter scenes (VAR_DEX_UPGRADE_JOHTO_STARTER_STATE 1, 2, 4, 5): there he faces you and says neither line.
+
 ## Part 3 — Postgame (a cleared save)
 
 17. **Where:** Mt. Chimney, at the meteorite machine. **Do:** talk to Maxie, answer YES. **Expect:** one battle (Camerupt ace); afterwards he only speaks.
@@ -112,6 +116,8 @@ Report with the build (commit hash), the item number above or the step number be
 - Did you find the Lilycove old woman's GLIGAR line on your own, before this list pointed you to her?
 - Which single moment would you screenshot?
 - Did any NPC text look like a typo, or did it read like that character's own voice?
+- Did you notice Birch had his back to you before he spoke? Did his copying line wear thin on later visits?
+- If you wrote the Lilycove '…?', did Birch keeping your question mark feel reassuring or unsettling?
 
 README synced C343 (coda shortcut + 3 feel questions). Edit this file first, then mirror.
 
@@ -187,3 +193,4 @@ Found by reading code, not by play. Severity uses the A/B/C scale above.
 
 README copy: 'Help Playtest v3.0' mirrors this file (funnel, scope line, known-issues line, emulator field: synced C338 Reflection; C340 made it "Five things" + the Lilycove doubt paragraph, README synced C340 Reflection; C341 Reflection fixed README's stale schoolkid step 4 and dropped the in-wall NPC known-issue line, fixed C339). Edit here first.
 C339: README should add the Quick start paragraph and the line 'Start the PLAYTEST ROM and follow Birch's call. Tell us the first moment something surprised you.'
+README synced C345 Reflection (Birch steps 42-43, crayon kid as 23b, 2 feel questions).

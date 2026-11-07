@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 344 | **Date**: November 2026
+**Cycle**: 345 | **Date**: November 2026
 
 ---
 
@@ -41,10 +41,12 @@
 - **Save hygiene**: beta threads (Adventure Red "BETA 12 SAVEFILES ARE NOT COMPATIBLE") and TCRF's Emerald debug-menu warning (options that corrupt saves) both say to keep debug saves apart. Emulators name the save after the ROM, so a separately named `legends_of_hoenn_playtest.gba` keeps its save away from real ones automatically.
 - An itch.io beta offered a "skip loading a save to select chapters" option. Chapter select is the player-facing version of the same idea.
 
-## C341 addendum: keeping a variant build from rotting + postgame callbacks (searched Nov 2026; thin)
-- pret-derived CI (DizzyEggg fork build.yml) builds **every variant on every push**: agbcc, then `MODERN=1 COMPARE=0`, then the test ELF + `make check`. The habit is "compile each variant", not "lint the variant's setup text". Expansion 1.15.1 notes fixed its test ROM **running out of space at 90%+ usage**, so an extra-content variant can fail where the release build passes.
-- For LoH: the cheapest guard against a stale `make playtest` is building it inside check_all/runner. A grep-lint only catches renamed symbols, and the compiler already catches those once it builds.
-- Postgame: Bulbagarden "virtually nothing changes when you beat the Champion"; hacks answer with rematches, rarely NPC lines (a wish, not proof).
+## C341 addendum (applied C344): pret CI builds every variant on every push; expansion 1.15.1 test ROM ran out of space at 90%+. Postgame: "nothing changes after the Champion" complaint; hacks answer with rematches (thin).
+
+## C345 addendum: when the tester ask goes quiet (searched Nov 2026)
+- FEU "Prepping for playtesting": "you aren't likely to get any feedback if you don't put any effort into asking"; a passive open issue is the low-effort ask. Recruits that worked (Phoenix Red) were *posted where testers are* (r/PokemonROMhacks, Discord), not only left in the repo.
+- Mythic Silver open beta (2024) scoped to **gym 4 / ~8 h** so testers could finish and report; a commenter: "this is beta testing, not a normal release" → state that up front. Pattern: one trusted tester checks a fix privately, then it goes public.
+- A silent GitHub issue is not evidence the build works. The bottleneck is outward-facing promotion, which only the human maintainer can do; the agent can make the ask cheaper (one ≤15-min shortcut-ROM script, 3 named questions, a copy-paste report template).
 
 ## C344 addendum: building variants + crayon-wall precedent (searched Nov 2026; thin)
 - Expansion's Makefile gives each variant its own OBJ_DIR (build/emerald, build/modern, build/test) AND passes the variant as a define (`-DTESTING=$(TEST)`). Sharing one build dir across defines reuses stale .o files: a playtest build can link retail objects and *look* fine. Separate dirs (or `make clean` between) are mandatory; then confirm the variant took (e.g. `strings`/symbol check that the preset script label is in the ELF).
@@ -53,6 +55,7 @@
 
 ## Sources
 - [FEU: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [Phoenix Red reply](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers/n7241ib/?context=3) · [Elden Ring post-game thread](https://steamcommunity.com/app/1245620/discussions/0/3278065526395526404) · [Bulbapedia B2W2](https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Black_2_and_White_2) (C342)
+- [Mythic Silver open beta thread](https://red.bismuth.it/r/PokemonROMhacks/comments/1d65k86/pokemon_mythic_silver_official_beta_release_the/l6r6x6t) · [Golden Idol design interview](https://www.gamedeveloper.com/design/case-of-the-golden-idol) (C345)
 - [FEU: skipping chapter portions](https://feuniverse.us/t/skipping-portions-of-a-chapter-for-play-testing/24828) · [Adventure Red beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/) · [TCRF Emerald debug menu](https://new.tcrf.net/Proto:Pok%C3%A9mon_Emerald/Debug_Menu) · [itch.io chapter-select beta](https://itch.io/post/9411911)
 - [REGIUS beta](https://www.pokecommunity.com/threads/regius-an-island-adventure-full-game-beta.531729) · [Crimson Ruby](https://r.datuan.dev/r/PokemonROMhacks/comments/1u8csa9/pokémon_crimson_ruby_oras_rom_hack/) · [FEUniverse Playtesting Listings](https://feuniverse.us/t/playtesting-listings/30608) · [Phoenix Red testers](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers) · [PokeCommunity: event when wild mon defeated](https://www.pokecommunity.com/threads/event-when-a-certain-wild-pokemon-is-defeated.418674)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)

@@ -131,3 +131,15 @@
 	setobjectmovementtype \localid, \movement
 .Ldexbeliever_end_\@:
 	.endm
+
+@ InkBelieverPlace — Red Ink world reaction gated on the inked-page count (C345), not a species.
+@ Inline inside a MAP_SCRIPT_ON_TRANSITION script. Once CountInkedFieldNotePages >= \min_pages,
+@ object \localid is moved to (\x,\y) and given \movement. Pass the object's own map.json tile
+@ to change only its facing. Clobbers VAR_RESULT. check_object_tiles.cjs reads \x,\y.
+	.macro EventMacro_InkBelieverPlace min_pages:req, localid:req, x:req, y:req, movement:req
+	specialvar VAR_RESULT, CountInkedFieldNotePages
+	goto_if_lt VAR_RESULT, \min_pages, .Linkbeliever_end_\@
+	setobjectxyperm \localid, \x, \y
+	setobjectmovementtype \localid, \movement
+.Linkbeliever_end_\@:
+	.endm

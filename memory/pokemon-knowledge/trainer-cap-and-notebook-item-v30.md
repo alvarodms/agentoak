@@ -1,6 +1,6 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 343 | **Date**: November 2026
+**Cycle**: 345 | **Date**: November 2026
 
 ---
 
@@ -14,6 +14,7 @@
 - No game found that *retracts* a player-written record as a designed beat; searches return unreliable narrators (Giant Bomb) and journal bugs (Caves of Qud tracker), not designed corrections. Weak evidence either way.
 - **Obra Dinn**: the logbook confirms fates only in threes and never says which guess is wrong. Critics praise that it "doesn't overly punish mistakes". Wrongness is told through *withheld confirmation*, not an NPC scolding.
 - **Outer Wilds ship log**: shows "rumor" vs confirmed entries and greys out leads; it never marks an entry false. Reviewers (Edge) say progress lives "in your own head", and the log only tracks it.
+- C345 (thin): Golden Idol (IGF design award) also confirms deductions only in structured blanks, and reviewers note it never settles every motive. The praised deduction games confirm the *facts* and leave interpretation open; none found that pays a doubt off with a cost.
 - Implication: the precedent is "your note was a rumor / incomplete", not "your note was false". Page 7 (Steven: right but incomplete) already holds that register, so a new wrong-ink beat must differ (e.g. ink the *world* outgrows later, or the player's ink is wrong because the land changed again), or it repeats the humility reaction.
 
 ## C336 — Humility believer (Meteor Falls Steven chalk): precedent + reach risk

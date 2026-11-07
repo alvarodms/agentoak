@@ -4,7 +4,7 @@
 // Scripted NPC destination tile guard (C338, tech-debt 329 walkability half).
 //
 // Several Red Ink believers are relocated by script (`setobjectxyperm` in
-// ON_TRANSITION, `EventMacro_DexBelieverPlace`). A typo in x/y puts an NPC in a
+// ON_TRANSITION, `EventMacro_DexBelieverPlace`, `EventMacro_InkBelieverPlace`). A typo in x/y puts an NPC in a
 // wall, in water, on a warp or on another NPC, and nothing in the build notices.
 // This lint resolves every literal destination against the layout's map.bin and
 // the tilesets' metatile_attributes.bin.
@@ -13,6 +13,7 @@
 //   setobjectxyperm <localid>, <x>, <y>
 //   setobjectxy <localid>, <x>, <y>
 //   EventMacro_DexBelieverPlace <species>, <localid>, <x>, <y>, <movement>
+//   EventMacro_InkBelieverPlace <min_pages>, <localid>, <x>, <y>, <movement>
 // with numeric x/y (VAR_ arguments are skipped and counted). The map is the
 // directory the script lives in. LOCALID_PLAYER and ids not on the map are
 // skipped too (counted separately).
@@ -244,6 +245,9 @@ function collectDestinations(mapName, text) {
     } else if ((m = /^EventMacro_DexBelieverPlace\s+(.*)$/.exec(line))) {
       [, localid, x, y] = splitArgs(m[1]);
       cmd = 'EventMacro_DexBelieverPlace';
+    } else if ((m = /^EventMacro_InkBelieverPlace\s+(.*)$/.exec(line))) {
+      [, localid, x, y] = splitArgs(m[1]);
+      cmd = 'EventMacro_InkBelieverPlace';
     } else {
       return;
     }
