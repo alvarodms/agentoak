@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 345 | **Date**: November 2026
+**Cycle**: 346 | **Date**: November 2026
 
 ---
 
@@ -48,10 +48,11 @@
 - Mythic Silver open beta (2024) scoped to **gym 4 / ~8 h** so testers could finish and report; a commenter: "this is beta testing, not a normal release" → state that up front. Pattern: one trusted tester checks a fix privately, then it goes public.
 - A silent GitHub issue is not evidence the build works. The bottleneck is outward-facing promotion, which only the human maintainer can do; the agent can make the ask cheaper (one ≤15-min shortcut-ROM script, 3 named questions, a copy-paste report template).
 
-## C344 addendum: building variants + crayon-wall precedent (searched Nov 2026; thin)
-- Expansion's Makefile gives each variant its own OBJ_DIR (build/emerald, build/modern, build/test) AND passes the variant as a define (`-DTESTING=$(TEST)`). Sharing one build dir across defines reuses stale .o files: a playtest build can link retail objects and *look* fine. Separate dirs (or `make clean` between) are mandatory; then confirm the variant took (e.g. `strings`/symbol check that the preset script label is in the ELF).
-- Size: expansion 1.15.1's test ROM ran out of space at 90%+; a preset adds script + data → check free ROM space of each variant.
-- Crayon wall / "world records the player's deeds as art": no Pokémon-hack precedent found. Nearest: Loominary (each choice adds a colour to a woven scarf, an accumulating artifact) and the RPG Maker "townsfolk speak of a hero's deeds" device. Pentiment's mural (C343) remains the best precedent. Evidence neither for nor against.
+## C344 addendum (applied): one OBJ_DIR per variant + verify the preset label is in the ELF; check ROM free space per variant. Crayon wall: no Pokémon precedent (Loominary, Pentiment mural nearest).
+
+## C346 addendum: after the silent window (searched Nov 2026)
+- Solo hacks don't wait for private testers to start the loop: they ship a **labelled beta with the report channel inside the release** (Obscura: bug-report form in the download folder; FireEmerald 2026 beta asks for bugs + difficulty; Liquid Crystal "Live Beta": every patch bumps a build number). Warning case: a dev whose testers never finished — "nobody has made it through besides myself." Silence ≠ pass.
+- Repeating NPC lines: standard fix is "say once" first line + short repeat (Bethesda Say Once, RPG Maker sequential-then-last). Emily Short: never drop info the player might have missed → keep the '?' fact reachable in the repeat line.
 
 ## Sources
 - [FEU: Prepping for playtesting](https://feuniverse.us/t/prepping-for-playtesting/8491) · [Phoenix Red reply](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers/n7241ib/?context=3) · [Elden Ring post-game thread](https://steamcommunity.com/app/1245620/discussions/0/3278065526395526404) · [Bulbapedia B2W2](https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_Black_2_and_White_2) (C342)
@@ -60,7 +61,8 @@
 - [REGIUS beta](https://www.pokecommunity.com/threads/regius-an-island-adventure-full-game-beta.531729) · [Crimson Ruby](https://r.datuan.dev/r/PokemonROMhacks/comments/1u8csa9/pokémon_crimson_ruby_oras_rom_hack/) · [FEUniverse Playtesting Listings](https://feuniverse.us/t/playtesting-listings/30608) · [Phoenix Red testers](https://twt.omada.cafe/r/PokemonROMhacks/comments/1mgmrcr/pokemon_phoenix_red_version_seeking_beta_testers) · [PokeCommunity: event when wild mon defeated](https://www.pokecommunity.com/threads/event-when-a-certain-wild-pokemon-is-defeated.418674)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
 - [DizzyEggg pokeemerald build.yml](https://github.com/DizzyEggg/pokeemerald/blob/c3e9f4b571717c0e12cf4a3fe61c0f3a50185327/.github/workflows/build.yml) · [Expansion 1.15.1 notes](https://newreleases.io/project/github/rh-hideout/pokeemerald-expansion/release/expansion%2F1.15.1) · [Bulbagarden: You are the Champion](https://bulbagarden.net/threads/you-are-the-champion.101329/) (C341)
-- [Expansion Makefile](https://github.com/rh-hideout-chinese/pokeemerald-expansion/blob/master/Makefile) · [netlabs variant-build ticket](https://trac.netlabs.org/fm2/ticket/396) · [Loominary](https://wbs.cdn.uib.no/wiki/Loominary) · [RPG Maker: bringing your world to life](https://rpgmaker.net/articles/137) (C344)
+- [Expansion Makefile](https://github.com/rh-hideout-chinese/pokeemerald-expansion/blob/master/Makefile) · [Loominary](https://wbs.cdn.uib.no/wiki/Loominary) (C344)
+- [Liquid Crystal Live Beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-liquid-crystal-3-3-xxxxx-live-beta.242023/) · [FireEmerald beta](https://www.techtimes.com/articles/321287/20260722/fireemerald-gba-rom-hack-merges-kanto-hoenn-one-continuous-adventure.htm) · [Setting Sun testers](https://gbatemp.net/threads/release-pokemon-setting-sun-waxing-moon-ultra-sun-moon-romhacks.491481/) · [Emily Short: NPC repeating info](https://emshort.blog/page/225/?cat=-1) · [Nexus: Say Once](https://forums.nexusmods.com/topic/490495-topic-order) (C346)
 - [pret wiki: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu) · [DeepWiki: expansion test framework](https://deepwiki.com/rh-hideout/pokeemerald-expansion/9.1-battle-test-framework)
 - [PokeCommunity Daily: Newbie Mistakes – Dialogue](https://daily.pokecommunity.com/2016/09/27/rom-hacking-newbie-mistakes-dialogue) · [pret json_data_rules.mk](https://github.com/pret/pokeemerald/blob/master/json_data_rules.mk) · [PokemonCoders 2026](https://www.pokemoncoders.com/best-pokemon-rom-hacks/) · [ScreenRant: Ocean Blue](https://screenrant.com/pokemon-ocean-blue-2026-kanto/)
 - [Obscura beta 1.0.0](https://www.pokecommunity.com/threads/pok%C3%A9mon-obscura-official-beta-1-0-0-release.536023/latest) · [Cyan beta 3](https://www.pokecommunity.com/threads/pok%C3%A9mon-cyan-beta-3-released.272818/post-8979049)

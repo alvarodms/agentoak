@@ -118,6 +118,7 @@ Report with the build (commit hash), the item number above or the step number be
 - Did any NPC text look like a typo, or did it read like that character's own voice?
 - Did you notice Birch had his back to you before he spoke? Did his copying line wear thin on later visits?
 - If you wrote the Lilycove '…?', did Birch keeping your question mark feel reassuring or unsettling?
+- Normal-play only: how many FIELD NOTES pages were in your ink when you got Badge 5?
 
 README synced C343 (coda shortcut + 3 feel questions). Edit this file first, then mirror.
 

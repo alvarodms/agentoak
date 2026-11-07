@@ -1,15 +1,14 @@
 # Player Journey Map
 
-> **Maintained by**: Game Designer advisor. Update after cycles that change player-facing content.
-
 ---
 
 ## Hour 0-3: Littleroot → Rustboro (Badges 0-1)
 
 Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes. **Roxanne now references Bagon_Hoenn near Meteor Falls (C244)** — academic curiosity, "living stone" hide. Team includes Bagon_Hoenn (Dragon/Rock).
 
-**v2.3 shipped (C261-262)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 10% — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 4% — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts. **3 trainers carry Hoenn forms (C262)**: Bug Catcher Rick (Route 102, Lotad_Hoenn Lv7), Bug Catcher James (Petalburg Woods, Shroomish_Hoenn Lv8), Lass Haley (Route 104, Lotad_Hoenn Lv9). Dialogue references discovery — NPCs found them too.
+**v2.3 shipped (C261-262)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 20% (C346) — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 10% (C346) — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts. **3 trainers carry Hoenn forms (C262)**: Bug Catcher Rick (Route 102, Lotad_Hoenn Lv7), Bug Catcher James (Petalburg Woods, Shroomish_Hoenn Lv8), Lass Haley (Route 104, Lotad_Hoenn Lv9). Dialogue references discovery — NPCs found them too.
 **FIELD NOTES key item (C324, untested)**: given with the Pokédex; first 4 pages (Lotad/Shroomish/Gligar/Vulpix) are open from minute one and gain red ink on catch, so Hours 0-6 have a collection goal. Den pages open on badges 5/6/8.
+**Red Ink reachability (C346)**: the payoff gate is 3 of pages 1-4. Casual one-pass estimate (≈8 grass encounters per route, ≈5 on B2F): ≥3 seen ≈46% (was ≈10%); a player hunting from the notebook needs ≈10 encounters per page. Playtest question: what page count did you have at Badge 5?
 
 **Emotional arc**: Curiosity → wonder (Pikachu) → surprise (electric lily pad / frost mushroom) → confidence (first gym)
 
@@ -17,7 +16,7 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 ## Hour 3-6: Dewford → Mauville (Badges 1-3)
 
-Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombre→Ludicolo_Hoenn line across 5 tiers, rain at T4-T5) rebuilt C268-271; dialogue subtracted C299 to sensation, not exposition. Meteor Falls Bagon Colony (C153). Route 113: Vulpix_Hoenn (Ice/Fairy) 4% Lv21-22 + FrostTracker (C208); Jaylen/Madeline carry it (C244). Granite Cave B2F: Gligar_Hoenn 5% Lv10-13 (C250). **Red Ink believers**: Granite Cave B1F hiker (P3, C329) and Route 113 ash picnicker (P4, C330) — see walkthrough below.
+Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombre→Ludicolo_Hoenn line across 5 tiers, rain at T4-T5) rebuilt C268-271; dialogue subtracted C299 to sensation, not exposition. Meteor Falls Bagon Colony (C153). Route 113: Vulpix_Hoenn (Ice/Fairy) 10% (C346) Lv21-22 + FrostTracker (C208); Jaylen/Madeline carry it (C244). Granite Cave B2F: Gligar_Hoenn 10% (C346) Lv10-13 (C250). **Red Ink believers**: Granite Cave B1F hiker (P3, C329) and Route 113 ash picnicker (P4, C330) — see walkthrough below.
 
 **Emotional arc**: Escalation → discovery (Bagon colony, cave creature) → wonder (ice fox in ash)
 

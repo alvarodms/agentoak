@@ -156,20 +156,20 @@ Familiar species transformed by Hoenn's unique environment. Some are discovered 
 
 | Species | Type | Where to Find | Signature Ability | Evolution |
 |---------|------|---------------|-------------------|-----------|
-| Lotad (Hoenn) | Electric/Grass | Route 102 (10%) | Lightning Rod | Lv14 → Lombre (Hoenn) |
+| Lotad (Hoenn) | Electric/Grass | Route 102 (20%) | Lightning Rod | Lv14 → Lombre (Hoenn) |
 | Lombre (Hoenn) | Electric/Grass | — | Lightning Rod | Leaf Stone → Ludicolo (Hoenn) |
 | Ludicolo (Hoenn) | Electric/Grass | — | Lightning Rod | Evolved from Lombre (Hoenn) |
-| Shroomish (Hoenn) | Poison/Ice | Petalburg Woods (4%) | Effect Spore | Lv23 → Breloom (Hoenn) |
+| Shroomish (Hoenn) | Poison/Ice | Petalburg Woods (10%) | Effect Spore | Lv23 → Breloom (Hoenn) |
 | Breloom (Hoenn) | Poison/Ice | — | **Frozen Spore** | Evolved from Shroomish (Hoenn) |
 | Corsola (Hoenn) | Ghost/Rock | Postgame quest | Levitate | — |
 | Growlithe (Hoenn) | Water | Postgame quest | Swift Swim | Water Stone → Arcanine (Hoenn) |
 | Arcanine (Hoenn) | Water/Fire | — | **Scalding Touch** | Evolved from Growlithe (Hoenn) |
 | Bagon (Hoenn) | Dragon/Rock | Meteor Falls deep (5%) | Sturdy | — (standalone form) |
-| Vulpix (Hoenn) | Ice/Fairy | Route 113 (4%) | Natural Cure | Moon Stone → Ninetales (Hoenn) |
+| Vulpix (Hoenn) | Ice/Fairy | Route 113 (10%) | Natural Cure | Moon Stone → Ninetales (Hoenn) |
 | Ninetales (Hoenn) | Ice/Fairy | — | Natural Cure | Evolved from Vulpix (Hoenn) |
 | Pinsir (Hoenn) | Bug/Fire | Route 112 (5%) | Guts | — (standalone form) |
 | Stantler (Hoenn) | Ghost/Grass | Route 119 (4%) | Effect Spore | — (standalone form) |
-| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (5%) | Swift Swim | Lv35 → Gliscor (Hoenn) |
+| Gligar (Hoenn) | Water/Rock | Granite Cave B2F (10%) | Swift Swim | Lv35 → Gliscor (Hoenn) |
 | Gliscor (Hoenn) | Water/Rock | — | Swift Swim | Evolved from Gligar (Hoenn) |
 
 #### The Changed Three

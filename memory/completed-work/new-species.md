@@ -13,13 +13,13 @@
 | 419-420 | Growlithe_H → Arcanine_H | Water → Water/Fire | Weather Inst. Quest 2 Lv40 + R118 wild; Water Stone. Arcanine_H: Intimidate/Scalding Touch, Tidal Flare L45. Wallace Gym |
 | 421-424, 428 | Dusknoir, Honchkrow, Froslass, Mamoswine, Farigiraf | cross-gen evos | E4 usage (Phoebe/Sidney/Glacia/Tate&Liza) |
 | 425 | Bagon_Hoenn | Dragon/Rock | Meteor Falls B1F_2R 5%. Rock Head/Sturdy |
-| 426-427 | Vulpix_H → Ninetales_H | Ice/Fairy | R113 4%; Moon Stone. Natural Cure/Serene Grace |
+| 426-427 | Vulpix_H → Ninetales_H | Ice/Fairy | R113 10% (C346); Moon Stone. Natural Cure/Serene Grace |
 | 429 | Pinsir_Hoenn | Bug/Fire | R112 5%. Guts/Flame Body |
 | 430 | Stantler_Hoenn | Ghost/Grass | R119 4%. Intimidate/Effect Spore |
 | 431 | Deoxys_Hoenn | Poison/Fairy | Quest III Lv70. Toxic Touch/Pressure |
-| 432-433 | Gligar_H → Gliscor_H | Water/Rock | Granite Cave B2F 5%; Lv35. Swift Swim/Water Absorb |
-| 434/436/438 | Lotad_H → Lombre_H → Ludicolo_H | Electric/Grass | R102 10% Lv3-4; Leaf Stone final |
-| 435/437 | Shroomish_H → Breloom_H | Poison/Ice | Petalburg Woods 4%; Lv23. Breloom_H: Frozen Spore/Thick Fat, Spore Fist L36 |
+| 432-433 | Gligar_H → Gliscor_H | Water/Rock | Granite Cave B2F 10% (C346); Lv35. Swift Swim/Water Absorb |
+| 434/436/438 | Lotad_H → Lombre_H → Ludicolo_H | Electric/Grass | R102 20% Lv3-4 (C346); Leaf Stone final |
+| 435/437 | Shroomish_H → Breloom_H | Poison/Ice | Petalburg Woods 10% (C346); Lv23. Breloom_H: Frozen Spore/Thick Fat, Spore Fist L36 |
 | 439-441 | Treecko/Grovyle/Sceptile_H | Grass/Steel | "The Blade". Tempered Blade/Overgrow. Iron Leaf L29 |
 | 442-444 | Torchic/Combusken/Blaziken_H | Fire/Fairy | "The Dancer" (Blaziken 80/85/70/120/80/95). **Fey Flame/Blaze (C310)** |
 | 445-447 | Mudkip/Marshtomp/Swampert_H | Water/Fighting | "Immovable Force" (Swampert 105/115/100/65/90/55). Torrent/Guts — custom ability C311. Shoal Cave low tide wild |
