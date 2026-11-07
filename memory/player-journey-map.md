@@ -50,8 +50,7 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 ## Hour 15-20+: Postgame
 
 **Legendary saga**: Birch Quest → Migration Tracker → Beasts (roaming) → Ho-Oh → Primal Stirring (Groudon/Kyogre) → Sky Guardian (Rayquaza).
-**v1.8 side quests**: Elder's Current (Corsola_Hoenn) → Hartley's Report (Growlithe_Hoenn) → Mossdeep Signal (Star Pieces) → Fog Beneath (Lapras).
-**v1.9 "The Second Signal"**: Mossdeep terminal → Deoxys Lv70. Postgame shifts from resolution to new mystery.
+**v1.8 side quests**: Elder's Current (Corsola_Hoenn) → Hartley's Report (Growlithe_Hoenn) → Mossdeep Signal (Star Pieces) → Fog Beneath (Lapras). **v1.9 "The Second Signal"**: Mossdeep terminal → Deoxys Lv70. Postgame shifts from resolution to new mystery.
 **v2.1 "The Resonance" (C233)**: After Deoxys, terminal begins SENDING a signal to Meteor Falls + Route 131. Player investigates both: pulsing meteorites underground, alien luminescence beneath the waves. Returns to learn: "This isn't a message. It's a handshake." Cosmic thread left open — something knows Hoenn answered. Star Piece ×2 reward. Rare Candy reward at Mossdeep Residue visit (C237).
 **"The Exhale" (C205)**: 6 ocean NPCs resolve from dread. R126 fog thins. "I think HOENN just exhaled."
 **Bagon Colony resolution (C209/C215)**: Researcher reports physical changes → Bagon_Hoenn encounter Meteor Falls B1F_2R.
@@ -60,6 +59,8 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 **Postgame Rival Battle (C280)**: Rival appears in Littleroot Town with full 6-mon team including Changed Three form matching their starter. Lv70-73, IV 200. Narrative capstone — rival traveled Hoenn too and raised what the migration brought.
 **Juan Duet (C322)**: after game clear, Juan (Sootopolis Gym 9,2) offers one Double Battle: Luvdisc/Ludicolo then Vaporeon/Gorebyss (Lv66-72, rain/Helping Hand). Win → Mystic Water, and Wallace says "You still lead, you know." A teacher-student closing beat, not a power spike.
 **Changed Three Gift (C279, reactive C319)**: Birch offers the Changed Three starters postgame. Before the offer he reacts to each den: "You found the starlight TORCHIC on MT. PYRE before I did!" if it's caught, or "Something still glitters in the fog atop MT. PYRE" if not. The same goes for Meteor Falls Treecko and Shoal Cave Mudkip. Then he says the three "hatched here at the lab, from eggs the migration left behind." C319 fix: the Mudkip ball now really gives SPECIES_MUDKIP_HOENN. From C279 to C318 it showed and gave vanilla Mudkip.
+
+**v3.1 "Taken at Their Word" (planned C347, design in strategy-notes)**: postgame + page species caught. A (C348) Route 106 cave mouth: Granite hiker at the tide line 54,11 beside an empty roost 55,11 (P3). B (C349) Route 119 20,110: storm-chaser brings the rain, Ludicolo_H/Thunder team (P1). C (C350) Route 113 38,5: Vulpix_H/Ninetales_H ice trainer faces the ash picnicker (P4). Page 2 gets no beat.
 
 ---
 
