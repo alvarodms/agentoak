@@ -1846,13 +1846,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_GruntSpaceCenter2[] = {
     }
 };
 
-static const struct TrainerMonItemCustomMoves sParty_Cindy2[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_StormChaser[] = {
     {
-    .iv = 0,
-    .lvl = 11,
-    .species = SPECIES_ZIGZAGOON,
-    .heldItem = ITEM_NUGGET,
-    .moves = {MOVE_TACKLE, MOVE_TAIL_WHIP, MOVE_NONE, MOVE_NONE}
+    .iv = 100,
+    .lvl = 55,
+    .species = SPECIES_LOTAD_HOENN,
+    .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_GIGA_DRAIN, MOVE_SHOCK_WAVE}
+    },
+    {
+    .iv = 100,
+    .lvl = 57,
+    .species = SPECIES_LOMBRE_HOENN,
+    .moves = {MOVE_FAKE_OUT, MOVE_THUNDER, MOVE_THUNDER_WAVE, MOVE_GIGA_DRAIN}
+    },
+    {
+    .iv = 150,
+    .lvl = 59,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_TOXIC, MOVE_PROTECT}
     }
 };
 

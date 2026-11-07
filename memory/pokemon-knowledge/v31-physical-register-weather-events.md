@@ -1,8 +1,15 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 348 | **Date**: November 2026
+**Cycle**: 349 | **Date**: November 2026
 
 ---
+
+## C349 — Beat B storm-chaser: Lightning Rod, Parasol Lady, rain teams (searched Nov 2026)
+- **Gen III Lightning Rod = redirect only, doubles only**: Bulbapedia + veekun: before Gen V it gives no Electric immunity and no SpA boost; it only pulls foes' Electric moves to the holder. In a singles fight Ludicolo_H's slot-0 LIGHTNING_ROD does NOTHING. Pokestop/BreezeWiki fan pages wrongly describe Gen V behaviour, so players will expect immunity. Don't write any line that hints the ace "eats" Electric moves.
+- **Parasol Lady is the canonical rain-setter**: Bulbapedia trainer-class page says they mostly use Water types and often carry weather moves like Rain Dance. The class choice reads right with no explanation.
+- **Inclement Emerald precedent** (unofficial Scribd battle-changes doc, unverified): permanent field rain is nerfed (1.2x) while Rain Dance rain stays 1.5x. Big hacks treat always-on route weather as too strong. LoH's scripted rain is a single fight, so vanilla 1.5x is fine. But Thunder never missing on 3 mons is the whole threat; keep the levels below the Reckoning bosses.
+- No public reviews of a "trainer summons the weather" overworld moment were found; this beat is ahead of the documented scene.
+- Sources: https://bulbapedia.bulbagarden.net/wiki/Lightning_Rod_(Ability) , https://veekun.com/dex/abilities/Lightning%20Rod , https://bulbapedia.bulbagarden.net/wiki/Parasol_Lady_(Trainer_class) , https://www.scribd.com/document/541056040/Battle-Changes
 
 ## C348 — Encounter-odds lint + the empty roost (searched Nov 2026; thin)
 - **No public validator for pokeemerald `wild_encounters.json` turned up** (searches: pret wiki, PokéCommunity). `make check_encounter_odds` has no outside model to copy. Two facts from the community for its design: (1) slot % is fixed by slot INDEX in the engine (pret pokered wiki "Edit the wild encounters"; Emerald land = 20/20/10/10/10/10/5/5/4/4/1/1), not stored per entry, so the lint must derive % from index and sum duplicate-species slots; (2) the JSON is regenerated through an Inja template (`wild_encounters.json.txt`, PokéCommunity 496361), so the lint reads the JSON source, not the generated .h.

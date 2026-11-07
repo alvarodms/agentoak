@@ -61,7 +61,7 @@
 #define FLAG_HIDE_ROUTE104_LOTAD_STUDENT    0x2F // C342 Red Ink coda: postgame little girl on Route 104 (OnTransition owns it)
 #define FLAG_HIDE_ROUTE106_TIDE_HIKER    0x30 // C348 v3.1 Beat A: postgame Granite hiker on Route 106's tide line (Route106 OnTransition owns it)
 #define FLAG_HIDE_GRANITE_CAVE_B1F_HIKER    0x31 // C348 v3.1 Beat A: hides the B1F hiker once he has left for the sea (B1F OnTransition owns it)
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
+#define FLAG_HIDE_ROUTE119_STORM_CHASER    0x32 // v3.1 Beat B (C349): postgame Parasol Lady TESSA on Route 119's riverbank (Route119 OnTransition owns it)
 #define FLAG_UNUSED_0x033    0x33 // Unused Flag
 #define FLAG_UNUSED_0x034    0x34 // Unused Flag
 #define FLAG_UNUSED_0x035    0x35 // Unused Flag

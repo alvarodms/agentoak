@@ -19,6 +19,7 @@ Route119_OnTransition:
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_EventScript_MoveInstituteWorkersDownstairs
 	setflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
 	setflag FLAG_HIDE_ROUTE119_OMEN_RANGER
+	call Route119_EventScript_SetupStormChaser
 	goto_if_set FLAG_BADGE06_GET, Route119_EventScript_SetOmenWeather
 	special SetRoute119Weather
 	end
@@ -34,6 +35,51 @@ Route119_EventScript_MoveInstituteWorkersDownstairs::
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
 	setvar VAR_WEATHER_INSTITUTE_STATE, 2
 	return
+
+@ C349 v3.1 Beat B: after the credits, once LOTAD_HOENN is caught, TESSA (Parasol Lady) has left Route 102 for
+@ Route 119's storms "because it's in red". She calls the thunderstorm down herself before she battles.
+@ Global (::) so check_playtest R5 can find the label.
+Route119_EventScript_SetupStormChaser::
+	setflag FLAG_HIDE_ROUTE119_STORM_CHASER
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Route119_EventScript_SetupStormChaserEnd
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_ne VAR_RESULT, TRUE, Route119_EventScript_SetupStormChaserEnd
+	clearflag FLAG_HIDE_ROUTE119_STORM_CHASER
+	call_if_defeated TRAINER_ROUTE119_STORM_CHASER, Route119_EventScript_StormChaserWatchesSky
+Route119_EventScript_SetupStormChaserEnd:
+	return
+
+Route119_EventScript_StormChaserWatchesSky:
+	setobjectmovementtype LOCALID_ROUTE119_STORM_CHASER, MOVEMENT_TYPE_FACE_UP
+	return
+
+@ Faceplayer, eager: the opposite of the Route 106 tide hiker. No weather is forced on map entry, so on a
+@ sunny cycle day she stands under her parasol in sunshine until the player talks to her.
+Route119_EventScript_StormChaser::
+	lock
+	goto_if_defeated TRAINER_ROUTE119_STORM_CHASER, Route119_EventScript_StormChaserDone
+	faceplayer
+	msgbox Route119_Text_StormChaserInk, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_ROUTE119_STORM_CHASER, Common_Movement_FaceUp
+	waitmovement 0
+	setweather WEATHER_RAIN_THUNDERSTORM
+	doweather
+	delay 90
+	faceplayer
+	msgbox Route119_Text_StormChaserRule, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_ROUTE119_STORM_CHASER, Route119_Text_StormChaserDefeat
+	goto Route119_EventScript_StormChaserDone
+	end
+
+Route119_EventScript_StormChaserDone::
+	faceplayer
+	msgbox Route119_Text_StormChaserNext, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE119_STORM_CHASER, Common_Movement_FaceUp
+	waitmovement 0
+	release
+	end
 
 Route119_EventScript_RivalTrigger1::
 	setvar VAR_TEMP_1, 1
@@ -867,3 +913,19 @@ Route119_Text_Ecologist:
 	.string "I've sent my findings to\n"
 	.string "DR. HARTLEY at the WEATHER\l"
 	.string "INSTITUTE.$"
+
+Route119_Text_StormChaserInk:
+	.string "Its leaf drinks the storm.\n"
+	.string "It's in red. Watch this!$"
+
+Route119_Text_StormChaserRule:
+	.string "In the rain, my THUNDER\n"
+	.string "never misses!$"
+
+Route119_Text_StormChaserDefeat:
+	.string "Struck down in my own\n"
+	.string "storm! Wonderful!$"
+
+Route119_Text_StormChaserNext:
+	.string "Next storm, wherever it's\n"
+	.string "written. I'll be there.$"
