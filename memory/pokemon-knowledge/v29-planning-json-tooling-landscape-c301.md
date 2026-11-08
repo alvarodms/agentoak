@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 351 | **Date**: November 2026
+**Cycle**: 352 | **Date**: November 2026
 
 ---
 
@@ -41,7 +41,7 @@
 - **Save hygiene**: beta threads (Adventure Red "BETA 12 SAVEFILES ARE NOT COMPATIBLE") and TCRF's Emerald debug-menu warning (options that corrupt saves) both say to keep debug saves apart. Emulators name the save after the ROM, so a separately named `legends_of_hoenn_playtest.gba` keeps its save away from real ones automatically.
 - An itch.io beta offered a "skip loading a save to select chapters" option. Chapter select is the player-facing version of the same idea.
 
-## C341/C344 addenda (applied): pret CI builds every variant; one OBJ_DIR per variant; postgame "nothing changes after the Champion" complaint. Crayon wall: no Pokémon precedent.
+## C341/C344/C345 (applied): pret CI builds every variant; one OBJ_DIR per variant; "nothing changes after the Champion" complaint; crayon wall has no precedent; a passive issue gets no testers, a human must post (silence is not a pass).
 
 ## C351 addendum: probing missable beats without priming (searched Nov 2026)
 - **Recall before naming** (Schell Games "Definitive Guide to Playtest Questions"): weak = name the feature; best = "What do you remember? What did it do?" Naming a beat tells the tester it exists, which destroys the discoverability data. Game Design Discourse "Focused vs. Open": same test, the difference is *when* you ask — open pass first, focused second.
@@ -49,13 +49,16 @@
 - Fact questions ("Did the battle hail?") are fine as bug checks; feeling questions should be open ("How did ELLIS's fight feel?" not "Was it too easy?", gamesuserresearch.com).
 - **Postgame-beat failure mode in real hacks** (Adventure Red Chapter thread): reports are "NPC vanished from the Pokécenter, bonus chapter blocked" and "NPC mentions an event I can't find". I.e. hide-flag/trigger bugs and unreachable hints, not balance. Ask testers to note where they expected someone and found no one.
 
-## C345 addendum (applied: memory/playtest-recruit-post.md): a passive issue gets no testers; the human must post where testers are (r/PokemonROMhacks, Discord). Silence is not a pass.
+## C352 addendum: static spawn checks for silent windows (searched Nov 2026)
+- Gen 3 has 64 object *templates* per map but only **16 active** objects (PokeCommunity "Restriction on max overworld sprites"). Off-screen objects (>1-2 tiles past the camera) despawn and respawn from templates; when the active array is full, **late-listed templates spawn unpredictably** ("person events not loading sometimes": first 4 always spawn, 5th-7th "whenever they want"). LoH appends every beat NPC LAST. Connected maps carry no events until the player steps on (decomp wiki) → a beat tile near a connection edge is only seen after crossing.
+- Hide-flag failure grammar (PokeCommunity hidesprite threads): wrong flag → "NPC returns after 1 step"; duplicate local IDs → wrong object moves/hides. No community lint for script labels/flags exists beyond build errors (poryscript is a compiler); one unverified MCP `validate_scripts` tool.
 
 ## C346 addendum: after the silent window (searched Nov 2026)
 - Solo hacks don't wait for private testers to start the loop: they ship a **labelled beta with the report channel inside the release** (Obscura: bug-report form in the download folder; FireEmerald 2026 beta asks for bugs + difficulty; Liquid Crystal "Live Beta": every patch bumps a build number). Warning case: a dev whose testers never finished — "nobody has made it through besides myself." Silence ≠ pass.
 - Repeating NPC lines: standard fix is "say once" first line + short repeat (Bethesda Say Once, RPG Maker sequential-then-last). Emily Short: never drop info the player might have missed → keep the '?' fact reachable in the repeat line.
 
 ## Sources
+- C352: [Max overworld sprites](https://www.pokecommunity.com/threads/restriction-on-max-number-of-overworld-sprites-showing-on-map.437983/latest) · [Person events not loading](https://www.pokecommunity.com/threads/help-with-person-events-not-loading-loading-sometimes.362360/) · [Decomp wiki tips](https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks) · [hidesprite reappears](https://www.pokecommunity.com/threads/hidesprite-wont-work-reappears-after-walking.412108)
 - Older sources (C342-C346): git history. C351: [Schell Games playtest questions](https://schellgames.com/blog/the-definitive-guide-to-playtest-questions-for-video-game-playtesters) · [Focused vs. Open Playtesting](https://gamedesigndiscourse.substack.com/p/focused-vs-open-playtesting) · [Unbiased player interviews](https://gamesuserresearch.com/how-to-run-unbiased-player-interviews/) · [Adventure Red postgame report](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-10256088)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
 - [Liquid Crystal Live Beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-liquid-crystal-3-3-xxxxx-live-beta.242023/) · [FireEmerald beta](https://www.techtimes.com/articles/321287/20260722/fireemerald-gba-rom-hack-merges-kanto-hoenn-one-continuous-adventure.htm) · [Setting Sun testers](https://gbatemp.net/threads/release-pokemon-setting-sun-waxing-moon-ultra-sun-moon-romhacks.491481/) · [Emily Short: NPC repeating info](https://emshort.blog/page/225/?cat=-1) · [Nexus: Say Once](https://forums.nexusmods.com/topic/490495-topic-order) (C346)

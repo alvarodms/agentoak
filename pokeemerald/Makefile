@@ -229,7 +229,7 @@ check_bosses:
 
 # Static den wiring guard (C319): StaticDen macros, temp flags, caught flags
 check_dens:
-	@node scripts/check_dens.cjs
+	@node scripts/check_dens.cjs --selftest && node scripts/check_dens.cjs
 
 # Gift / static species guard (C320): vanilla vs _HOENN form in givemon/setwildbattle/showmonpic
 check_gifts:
@@ -242,7 +242,7 @@ check_text_width:
 
 # Doubles wiring guard (C323): trainerbattle_double targets are doubleBattle trainers with >=2 mons
 check_doubles:
-	@node scripts/check_doubles.cjs
+	@node scripts/check_doubles.cjs --selftest && node scripts/check_doubles.cjs
 
 # Trainer ID budget (C327): lists zero-reference trainer IDs, guards reclaimed slots
 check_trainer_slots:

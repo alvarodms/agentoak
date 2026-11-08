@@ -63,3 +63,7 @@ No beat script, trainer or text changed.
 
 Validators C351: check_playtest --selftest `OK`; check_playtest `OK (2 presets, 11 beats)`, coda `29 flags`; planted break (VISITED_FALLARBOR line deleted) → exit 1 with `[coda] R3 missing setflag FLAG_VISITED_FALLARBOR_TOWN`, restored → exit 0; check_encounter_odds `OK` with Lotad_H 20% / Shroomish_H 10% / Gligar_H 10% / Vulpix_H 10%.
 | README.md (C351 Reflection) | "Help Playtest v3.0 and v3.1"; coda shortcut names the extra Fly towns; new "Coda part 2" (open pass + steps 44-46 condensed, Route 106 called out as easy to miss); rates in steps 3/5/7/10 fixed; one merged v3.1 feel question. |
+
+## C352 — silent window 1/2: static visibility audit (memory only)
+
+No beat script, map, trainer, flag or text changed. memory/playtest-checklist.md "### v3.1 visibility audit (static, C352)": spawn window derived from TrySpawnObjectEvents/RemoveObjectEventIfOutsideView (x −9..+10, y −7..+9 around the player; OBJECT_EVENTS_COUNT 16); object density A 3/16, B 4-7/16, C 8/16 (all PASS); connection edges (only A is near one: Dewford, he loads at y ≤ 18 / x ≤ 63); flag↔object binding PASS for 0x30-0x33 and every LOCALID on the four maps; re-entry sentences added to Verify 44 (A) and 46 (C, VULPIX caught on Route 113 itself); box count ≤ 2 for all three, no trim candidate. player-journey-map.md: loud/quiet list, see-first lines, ELLIS hail condition, Beat A sightline "Finding for C353 planning" (the Granite Cave walk keeps him 5-6 rows above the player, at the screen edge).

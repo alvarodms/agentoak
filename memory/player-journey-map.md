@@ -62,6 +62,27 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 
 **v3.1 "Taken at Their Word" (designed C347, all three shipped C348-C350, never emulator-tested; playtest steps 44-46)**: postgame + page species caught. A (C348, shipped) Route 106 cave mouth: Granite hiker alone at the tide line 54,11, back to the land, "They'll come"; B1F empty (P3). B (C349, shipped) Route 119 20,110: storm-chaser brings the rain, Ludicolo_H/Thunder team (P1). C (C350, shipped) Route 113 38,5: Camper ELLIS quotes page 4 ("Cold fur in the falling ash. It's in red.") facing the ash picnicker, Vulpix_H 54 / Ninetales_H 56 with Hail as one move of four (may never be used), no weather change; once beaten both stand side by side facing east (P4). Page 2 gets no beat.
 
+**Postgame: loud vs quiet beats (C352).** LOUD = a fight, a legendary or a gift. QUIET = no battle and no item, only someone standing somewhere.
+- LOUD: Legendary saga (Beasts, Ho-Oh, Groudon/Kyogre, Rayquaza); v1.8 side quests; Deoxys Lv70 (Mossdeep terminal); the Resonance (Star Pieces); Reckonings (Maxie on Mt. Chimney, Archie on Route 128); the postgame rival in Littleroot; the Juan duet; the Changed Three gift; v3.1 **TESSA** (Route 119) and **ELLIS** (Route 113), both battles.
+- QUIET: v3.1 **Route 106 tide hiker** (the HARD STONE fallback only fires if the cave reward was missed, so for most players he is pure scenery). Other postgame draw on Route 106: **none**. Nothing else in the postgame sends the player there, so only Beat A itself can pull a player onto this beach.
+- QUIET: the ex-Magma grunt on Mt. Chimney (C248). Another draw on the same map: yes, Maxie's Reckoning (MtChimney/scripts.inc).
+- QUIET: "The Exhale" ocean NPCs (Routes 124, 126, 127, 128, 131, Mossdeep). Other draws on the same routes: yes, Archie's Reckoning (Route 128), the Resonance (Route 131), the Mossdeep terminal.
+- QUIET: the Red Ink coda lesson (Route 104 schoolkid + girl, C342). Another postgame draw on Route 104: none in this list. It is reached on purpose through the Lilycove doubt.
+
+**What the player should see first (before any text box):**
+- Beat A: "A hiker on the Route 106 sand with his back to the land, staring out to sea — and, later, an empty spot by the B2F ladder in Granite Cave."
+- Beat B: "A parasol lady facing west in the Route 119 grass; when she turns her face up, the sky darkens and lightning flashes before she says another word."
+- Beat C: "Two figures in Route 113's falling ash, the camper facing down at the picnicker who faces up at him; after the win, both turn to face east side by side."
+
+**ELLIS and hail (C352, from data/battle_ai_scripts.s:2261-2276 and trainers.h `[TRAINER_ROUTE113_ASH_CAMPER]`, aiFlags CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY):** only his VULPIX knows Hail; NINETALES doesn't. AI_CV_Hail never scores Hail up in clear or ash weather (ash is not a battle weather): +1 only if sun, rain or sandstorm is already up, −1 if VULPIX is below 40% HP, and AI_CBM_Hail −8 once hail is up. AI_TryToFaint leaves Hail alone (power 0 → MOVE_POWER_OTHER), docks −1 from his weaker damaging move, and gives +4 to any move that can KO. So Hail sits at the base score, where it can tie with his strongest attack (and with Confuse Ray while the player's mon is above 70% HP); the AI picks at random among ties. It may be chosen, but only as a tie, only while VULPIX is in and at ≥ 40% HP, and never once a KO is available. Tester answer 'no hail' is consistent with this; it is not a bug.
+
+**Finding for C353 planning: Beat A sightline (Creative Visionary, static, C352).** Spawn window = 9 left / 10 right / 7 up / 9 down of the player (playtest-checklist "v3.1 visibility audit").
+- Fly to DEWFORD → Dewford Gym: never enters Route 106 (the gym door is Dewford 8,17, south side); objects on a connected map never spawn. **Never sees him.**
+- Fly to DEWFORD → Granite Cave: Dewford's top row lands on Route 106 x 63-70; rocks at 56-57,17 / 55-56,18 force the walk through row 16 to reach the door at 48,16. He loads once the player is at x ≤ 63, y ≤ 18, so he is **inside the spawn window for the whole walk, but 5-6 rows above the player**, at or just past the top edge of the screen. He is only clearly on screen if the player steps up to row ≤ 15 (x 47-61). A player heading for the cave may glimpse his head at the edge or miss him.
+- Surf Route 106 west (to Route 105 / Petalburg): the only sea lane off the beach runs along rows 0-10 right over 54,10, the tile he faces. **On screen, facing the surfer.** This is the one natural path that shows him well, and postgame players rarely take it (they Fly).
+- Surf Dewford → Route 107 / Slateport: Route 107 joins Dewford's east edge; Route 106 never loads. **Never sees him.**
+- Result: no natural postgame path shows him clearly without the player deliberately walking the Route 106 beach or surfing west from it. The cave walk puts him at the screen edge. Options for C353 (not decided): accept it (the checklist sends testers there); move him nearer the cave-door row (row 15-16) so the cave walk shows him; or give Route 106 a reason to visit. Pair this with the loud/quiet list above: he is the only quiet beat with no neighbouring draw.
+
 ---
 
 ## Red Ink believers — static walkthrough (C330)
@@ -78,11 +99,7 @@ Built by reading each map.json object and talk script (C330), not from notes. "C
 
 Trace result (C330): no bug found. No branch is unreachable (the picnicker's rumour needs 2 *other* pages inked, since her own page is not inked in that branch; reachable from any two of P1-P3, or with den pages). No item can be given twice. Since C334 every believer has an in-scene beat (the skeptic turns FACE_RIGHT right after his Corrected line).
 
-**Emulator checks still outstanding (all four believers, none done; the player-facing route is memory/playtest-checklist.md):**
-- Skeptic: fresh save faces left at 33,49; after LOTAD_HOENN he turns right in-scene after the Corrected text, and still faces right after re-entry; both texts fit.
-- Forager: fresh save at 18,34 facing down; after SHROOMISH_HOENN she grieves then turns up in-scene; after re-entry at 11,24 facing up beside the Frost Bug Catcher; BoyReads vs BoyStopped and WhatElse follow the Lotad catch.
-- Hiker: fresh save faces up and does NOT turn when talked to; mock lines appear per Lotad/Shroomish; after GLIGAR_HOENN he turns away and back and gives the Hard Stone once (and with a full bag: refuses cleanly, gives it on the retry); after re-entry he faces down.
-- Picnicker: fresh save at 38,8 facing the rock, turns back to it after talking; rumour only with 2+ pages inked; after VULPIX_HOENN the "!" plays and she turns up in-scene; after re-entry she stands at 38,6 facing up in the ash grass, visible through the ash weather, not blocking the path.
+**Emulator checks still outstanding (all four believers, none done):** the per-believer checks live in memory/playtest-checklist.md steps 3-10 (collapsed here C352).
 
 ### Red Ink payoff — static walkthrough (C331)
 

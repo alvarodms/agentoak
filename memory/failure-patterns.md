@@ -64,7 +64,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 ## Silent Sprite Palette Regression (C312)
 
 **Symptom**: Torchic line (C277 violet-gold) and Treecko line (C276 steel-blue) found with vanilla-coloured palettes in C312, while sprite-iterations still described the custom art. Lint passed — it checks noise vs base, not art intent. Likely cause: C308 pipeline repair re-fetched base sprites.
-**Resolution**: After any species re-fetch/repair, preview every touched _hoenn sprite against its sprite-iterations description. Treecko/Grovyle/Sceptile_Hoenn still need restoring (#201).
+**Resolution**: After any species re-fetch/repair, preview every touched _hoenn sprite against its sprite-iterations description. **Resolved (verified C352):** Treecko/Grovyle/Sceptile_Hoenn were restored C313 (sprite-iterations.md row "Treecko/Grovyle/Sceptile Hoenn v2, 313, palette restore"); `bash scripts/check_palettes.sh` passes (50 files), each `*_hoenn/normal.pal` differs byte-for-byte from its vanilla dir, and all three dirs are in `scripts/palette_manifest.sha256`. The palette check catches a revert to vanilla, not art drift, so the preview rule above still stands.
 
 ## Static Pokémon removeobject Permanently Sets Hide Flag (C312 → fixed C315)
 
@@ -82,7 +82,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **JSON errors**: `wild_encounters.json` — validate syntax after editing.
 - **C89 only**: Default agbcc build. No `//` comments, no declarations after statements.
 - **Graphics**: PNG, 8x8 tile multiples. `gbagfx` errors on wrong dimensions/colors.
-- **Trainer capacity**: TRAINERS_COUNT = 891 (all slots defined). 8 unreferenced trainer IDs (C334 recount; 581 became TRAINER_PYRE_MOURNER): 117,173,462,485,486,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT.
+- **Trainer capacity**: TRAINERS_COUNT = 891 (all slots defined); never bump it. **Source of truth for free slots: `node scripts/check_trainer_slots.cjs`** (prints the zero-reference ID list). Verified C352: 6 candidates left: 462 KAYLEE, 485 AMY_AND_LIV_3, 486 GINA_AND_MIA_2, 633 LUCAS_2, 634 MIKE_1, 853 MAY_PLACEHOLDER (a grep of data/ src/ include/ finds each only in opponents.h + trainers.h). 117 is now TRAINER_ROUTE119_STORM_CHASER (TESSA, C349), 173 TRAINER_ROUTE113_ASH_CAMPER (ELLIS, C350), 581 TRAINER_PYRE_MOURNER (C334). Hand-verify a slot before use (computed-ID refs are invisible to the scan) and add it to the lint's RECLAIMED list.
 - **egg_moves.h**: Regional forms still need an entry (even if empty).
 - **cry_tables.inc**: Forward and reverse tables MUST have identical entry counts.
 - **TM/HM learnset fields**: Not all move constants are TM fields. Field names use underscores matching the struct definition (e.g., `.SOLAR_BEAM` not `.SOLARBEAM`). Always check existing entries in `tmhm_learnsets.h` for exact field names before adding new species.
