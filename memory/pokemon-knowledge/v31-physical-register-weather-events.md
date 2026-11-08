@@ -1,8 +1,15 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 349 | **Date**: November 2026
+**Cycle**: 350 | **Date**: November 2026
 
 ---
+
+## C350 — Beat C hail in the ash: what Gen III hail actually does (searched Nov 2026)
+- **Gen III hail is chip damage only**: 1/16 max HP per turn to non-Ice/non-immune mons, 5 turns (Bulbapedia Hail move page; its Blizzard sure-hit clause sits under "Generation IV to VIII"). Ice Body / Snow Cloak are Gen IV (Uranium wiki). No Def boost (Inclement Emerald adds a 1.5x Ice Def boost + "Whiteout" ability precisely because vanilla hail is weak; unverified Scribd doc).
+- **Players WRONGLY expect Blizzard to be sure-hit in Emerald hail**: PokéBase thread "Am I lucky to have never missed using Hail Blizzard in Emerald?" — answer: still 70%. Smogon ADV posters confirm. Same trap as C349 Lightning Rod: never write a line implying hail helps her Blizzard; a Blizzard miss right after Hail reads as a bug.
+- **The true, sayable rule**: Ice types take no hail damage. "Hail can't touch my foxes" is honest whether or not hail goes up, and promises no accuracy.
+- **No source on vanilla Gen III AI picking weather turn 1** (expansion docs describe an AI that prioritizes field setup; vanilla doesn't). Treat the opener as probabilistic.
+- Sources: https://bulbapedia.bulbagarden.net/wiki/Hail_(move) , https://pokemondb.net/pokebase/418598/am-lucky-to-have-never-missed-using-hail-blizzard-in-emerald , https://www.smogon.com/forums/goto/post?id=3150849 , https://pokemon-uranium.fandom.com/wiki/Ice_Body_(ability) , https://www.scribd.com/document/541056040/Battle-Changes , https://expansion-docsite-kildemal.pages.dev/tutorials/ai_flags
 
 ## C349 — Beat B storm-chaser: Lightning Rod, Parasol Lady, rain teams (searched Nov 2026)
 - **Gen III Lightning Rod = redirect only, doubles only**: Bulbapedia + veekun: before Gen V it gives no Electric immunity and no SpA boost; it only pulls foes' Electric moves to the holder. In a singles fight Ludicolo_H's slot-0 LIGHTNING_ROD does NOTHING. Pokestop/BreezeWiki fan pages wrongly describe Gen V behaviour, so players will expect immunity. Don't write any line that hints the ace "eats" Electric moves.

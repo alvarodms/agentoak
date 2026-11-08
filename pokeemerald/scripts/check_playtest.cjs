@@ -104,6 +104,7 @@ const PRESETS = [
       FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'postgame Red Ink coda; Route104 OnTransition owns it',
       FLAG_HIDE_ROUTE106_TIDE_HIKER: 'postgame v3.1 Beat A; Route106 OnTransition owns it',
       FLAG_HIDE_ROUTE119_STORM_CHASER: 'postgame v3.1 Beat B; Route119 OnTransition owns it',
+      FLAG_HIDE_ROUTE113_ASH_CAMPER: 'postgame v3.1 Beat C; Route113 OnTransition owns it',
       FLAG_HIDE_GRANITE_CAVE_B1F_HIKER: 'postgame v3.1 Beat A; GraniteCave_B1F OnTransition owns it',
     },
     routeMaps: {
@@ -143,6 +144,7 @@ const PRESETS = [
       FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'Route104 OnTransition owns it',
       FLAG_HIDE_ROUTE106_TIDE_HIKER: 'postgame v3.1 Beat A; Route106 OnTransition owns it',
       FLAG_HIDE_ROUTE119_STORM_CHASER: 'postgame v3.1 Beat B; Route119 OnTransition owns it',
+      FLAG_HIDE_ROUTE113_ASH_CAMPER: 'postgame v3.1 Beat C; Route113 OnTransition owns it',
       FLAG_HIDE_GRANITE_CAVE_B1F_HIKER: 'postgame v3.1 Beat A; GraniteCave_B1F OnTransition owns it',
     },
     routeMaps: {
@@ -168,6 +170,9 @@ const BEATS = [
   // C349 v3.1 Beat B (postgame): reachable via make playtest_coda (GAME_CLEAR + LOTAD_HOENN); Fly/VISITED Fortree added C351.
   { item: 'coda', map: 'Route119', label: 'Route119_EventScript_SetupStormChaser', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
   { item: 'coda', map: 'Route119', script: 'Route119_EventScript_StormChaser', mustRead: [] },
+  // C350 v3.1 Beat C (postgame): reachable via make playtest_coda (GAME_CLEAR + VULPIX_HOENN); Fly/VISITED Fallarbor added C351.
+  { item: 'coda', map: 'Route113', label: 'Route113_EventScript_SetupAshCamper', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
+  { item: 'coda', map: 'Route113', script: 'Route113_EventScript_AshCamper', mustRead: [] },
 ];
 const READ_RE = /^(goto_if_set|goto_if_unset|call_if_set|call_if_unset)\s+(\w+)/;
 

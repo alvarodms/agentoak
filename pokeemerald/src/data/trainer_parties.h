@@ -2579,21 +2579,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Jack[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Dudley[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_AshCamper[] = {
     {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_TENTACOOL,
+    .iv = 100,
+    .lvl = 54,
+    .species = SPECIES_VULPIX_HOENN,
+    .moves = {MOVE_HAIL, MOVE_ICY_WIND, MOVE_DAZZLING_GLEAM, MOVE_CONFUSE_RAY}
     },
     {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_WINGULL,
-    },
-    {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_TENTACRUEL,
+    .iv = 120,
+    .lvl = 56,
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_CALM_MIND, MOVE_MOONLIGHT}
     }
 };
 

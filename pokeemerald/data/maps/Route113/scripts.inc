@@ -13,6 +13,7 @@ Route113_OnTransition:
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
 	call Route113_EventScript_CheckSetAshWeather
 	EventMacro_DexBelieverPlace SPECIES_VULPIX_HOENN, LOCALID_ROUTE113_ASH_PICNICKER, 38, 6, MOVEMENT_TYPE_FACE_UP
+	call Route113_EventScript_SetupAshCamper
 	end
 
 Route113_EventScript_CheckSetAshWeather::
@@ -24,6 +25,45 @@ Route113_EventScript_CheckSetAshWeather::
 
 Route113_EventScript_DontSetAshWeather::
 	return
+
+@ C350 v3.1 Beat C: after the credits, once VULPIX_HOENN is caught, ELLIS (Camper) trains his foxes in the
+@ ash facing the picnicker; once beaten, both face east side by side. No setweather: the ash stays grey.
+@ Global (::) so check_playtest R5 can find the label.
+Route113_EventScript_SetupAshCamper::
+	setflag FLAG_HIDE_ROUTE113_ASH_CAMPER
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Route113_EventScript_SetupAshCamperEnd
+	setvar VAR_0x8004, SPECIES_VULPIX_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_ne VAR_RESULT, TRUE, Route113_EventScript_SetupAshCamperEnd
+	clearflag FLAG_HIDE_ROUTE113_ASH_CAMPER
+	call_if_defeated TRAINER_ROUTE113_ASH_CAMPER, Route113_EventScript_AshPairWatches
+Route113_EventScript_SetupAshCamperEnd:
+	return
+
+Route113_EventScript_AshPairWatches:
+	setobjectmovementtype LOCALID_ROUTE113_ASH_CAMPER, MOVEMENT_TYPE_FACE_RIGHT
+	setobjectmovementtype LOCALID_ROUTE113_ASH_PICNICKER, MOVEMENT_TYPE_FACE_RIGHT
+	return
+
+Route113_EventScript_AshCamper::
+	lock
+	goto_if_defeated TRAINER_ROUTE113_ASH_CAMPER, Route113_EventScript_AshCamperDone
+	faceplayer
+	msgbox Route113_Text_AshCamperInk, MSGBOX_DEFAULT
+	msgbox Route113_Text_AshCamperRule, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_ROUTE113_ASH_CAMPER, Route113_Text_AshCamperDefeat
+	goto Route113_EventScript_AshCamperDone
+	end
+
+Route113_EventScript_AshCamperDone::
+	faceplayer
+	msgbox Route113_Text_AshCamperNext, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_ROUTE113_ASH_CAMPER, Common_Movement_FaceRight
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceRight
+	waitmovement 0
+	release
+	end
 
 Route113_EventScript_Gentleman::
 	msgbox Route113_Text_AshCanBeFashionedIntoGlass, MSGBOX_NPC
@@ -217,6 +257,7 @@ Route113_EventScript_AshPicnickerRumour::
 	return
 
 Route113_EventScript_AshPicnickerShown::
+	goto_if_unset FLAG_HIDE_ROUTE113_ASH_CAMPER, Route113_EventScript_AshPicnickerWithCamper
 	playse SE_PIN
 	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -226,6 +267,23 @@ Route113_EventScript_AshPicnickerShown::
 	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceUp
 	waitmovement 0
 	msgbox Route113_Text_AshPicnickerLaugh, MSGBOX_DEFAULT
+	release
+	end
+
+Route113_EventScript_AshPicnickerWithCamper:
+	goto_if_defeated TRAINER_ROUTE113_ASH_CAMPER, Route113_EventScript_AshPicnickerWatching
+	msgbox Route113_Text_AshPicnickerCamper, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceUp
+	waitmovement 0
+	release
+	end
+
+Route113_EventScript_AshPicnickerWatching:
+	msgbox Route113_Text_AshPicnickerWatching, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_ROUTE113_ASH_PICNICKER, Common_Movement_FaceRight
+	waitmovement 0
 	release
 	end
 
@@ -254,3 +312,28 @@ Route113_Text_AshPicnickerThreeDays:
 
 Route113_Text_AshPicnickerLaugh:
 	.string "Ahaha! Ahahahaha!$"
+
+Route113_Text_AshCamperInk:
+	.string "Cold fur in the falling ash.\n"
+	.string "It's in red. We train here!$"
+
+Route113_Text_AshCamperRule:
+	.string "If it hails, my foxes\n"
+	.string "won't even feel it!$"
+
+Route113_Text_AshCamperDefeat:
+	.string "Brr! You run colder\n"
+	.string "than we do!$"
+
+Route113_Text_AshCamperNext:
+	.string "Same time tomorrow,\n"
+	.string "right here in the ash!$"
+
+Route113_Text_AshPicnickerCamper:
+	.string "He brought his VULPIX up\n"
+	.string "here to train in the ash!\p"
+	.string "Go on! Battle him!$"
+
+Route113_Text_AshPicnickerWatching:
+	.string "Cold fur in the ash, every\n"
+	.string "day. And I get to watch!$"
