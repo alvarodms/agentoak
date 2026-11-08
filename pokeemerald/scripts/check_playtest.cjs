@@ -124,12 +124,17 @@ const PRESETS = [
       ['FLAG_SYS_GAME_CLEAR', 'Route104 SetupLotadLesson needs it: no girl, no class'],
       ['FLAG_VISITED_LILYCOVE_CITY', 'Fly to Lilycove to write the doubt'],
       ['FLAG_VISITED_PETALBURG_CITY', 'Fly back to Petalburg'],
+      ['FLAG_VISITED_DEWFORD_TOWN', 'v3.1 Beat A: Fly to Dewford for the Route 106 tide hiker'],
+      ['FLAG_VISITED_MAUVILLE_CITY', 'v3.1 Beat B: Fly to Mauville, Route 118 -> Route 119 TESSA (20,110)'],
+      ['FLAG_VISITED_FALLARBOR_TOWN', 'v3.1 Beat C: Fly to Fallarbor for Route 113 ELLIS'],
+      ['FLAG_VISITED_FORTREE_CITY', 'v3.1 Beat B: alternate way down Route 119'],
       ...BADGES.map((f) => [f, 'Fly and Surf in the field']),
     ],
     prereqItems: [['ITEM_FIELD_NOTES', 'FIELD NOTES page 3 shows the doubt']],
     prereqSpecies: [
-      ['SPECIES_LOTAD_HOENN', 'page 1 inked: the lesson recites it'],
-      ['SPECIES_GLIGAR_HOENN', 'page 3 inked: the doubt and the lesson page 3 need it'],
+      ['SPECIES_LOTAD_HOENN', 'page 1 inked: the lesson recites it; v3.1 Beat B (TESSA) needs it caught'],
+      ['SPECIES_GLIGAR_HOENN', 'page 3 inked: the doubt and the lesson page 3 need it; v3.1 Beat A needs it caught'],
+      ['SPECIES_VULPIX_HOENN', 'v3.1 Beat C: ELLIS appears only with VULPIX_HOENN caught'],
     ],
     prereqMoves: [
       ['MOVE_FLY', 'Fly between Petalburg and Lilycove'],
@@ -142,6 +147,7 @@ const PRESETS = [
     neverSet: {
       FLAG_LILYCOVE_GLIGAR_DOUBT: 'the tester writes the doubt between the two Route 104 visits',
       FLAG_HIDE_ROUTE104_LOTAD_STUDENT: 'Route104 OnTransition owns it',
+      FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE: 'v3.1 Beat A HARD_STONE fallback: the tide hiker must give it on first talk',
       FLAG_HIDE_ROUTE106_TIDE_HIKER: 'postgame v3.1 Beat A; Route106 OnTransition owns it',
       FLAG_HIDE_ROUTE119_STORM_CHASER: 'postgame v3.1 Beat B; Route119 OnTransition owns it',
       FLAG_HIDE_ROUTE113_ASH_CAMPER: 'postgame v3.1 Beat C; Route113 OnTransition owns it',
@@ -163,14 +169,14 @@ const BEATS = [
   // C342 Red Ink coda (postgame): reachable via `make playtest_coda` (C343), not from the den tour.
   { item: 'coda', map: 'Route104', label: 'Route104_EventScript_LotadLesson', mustRead: ['FLAG_SYS_GAME_CLEAR', 'FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_HIDE_ROUTE104_LOTAD_STUDENT'] },
   { item: 'coda', map: 'Route104', script: 'Route104_EventScript_LotadStudent', mustRead: [] },
-  // C348 v3.1 Beat A (postgame): reachable via make playtest_coda (GAME_CLEAR + GLIGAR_HOENN); Fly/VISITED Dewford added C351.
+  // C348 v3.1 Beat A (postgame): reachable via make playtest_coda (GAME_CLEAR + GLIGAR_HOENN) (C351: preset sets VISITED_DEWFORD_TOWN, R3).
   { item: 'coda', map: 'Route106', label: 'Route106_OnTransition', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
   { item: 'coda', map: 'Route106', script: 'Route106_EventScript_TideHiker', mustRead: ['FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE'] },
   { item: 'coda', map: 'GraniteCave_B1F', label: 'GraniteCave_B1F_EventScript_SetupHikerLeft', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
-  // C349 v3.1 Beat B (postgame): reachable via make playtest_coda (GAME_CLEAR + LOTAD_HOENN); Fly/VISITED Fortree added C351.
+  // C349 v3.1 Beat B (postgame): reachable via make playtest_coda (GAME_CLEAR + LOTAD_HOENN) (C351: preset sets VISITED_MAUVILLE_CITY + VISITED_FORTREE_CITY, R3).
   { item: 'coda', map: 'Route119', label: 'Route119_EventScript_SetupStormChaser', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
   { item: 'coda', map: 'Route119', script: 'Route119_EventScript_StormChaser', mustRead: [] },
-  // C350 v3.1 Beat C (postgame): reachable via make playtest_coda (GAME_CLEAR + VULPIX_HOENN); Fly/VISITED Fallarbor added C351.
+  // C350 v3.1 Beat C (postgame): reachable via make playtest_coda (GAME_CLEAR + VULPIX_HOENN) (C351: preset sets VISITED_FALLARBOR_TOWN, R3).
   { item: 'coda', map: 'Route113', label: 'Route113_EventScript_SetupAshCamper', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
   { item: 'coda', map: 'Route113', script: 'Route113_EventScript_AshCamper', mustRead: [] },
 ];
@@ -493,6 +499,13 @@ function selftest() {
     fail('coda: missing VAR_PETALBURG_CITY_STATE not reported (R3)');
   if (!has(run(coda, withLine(goodCoda, '\tgivemon SPECIES_MUDKIP_HOENN, 38')), 'R4', 'SPECIES_MUDKIP_HOENN'))
     fail('coda: den species givemon not reported (R4)');
+  // v3.1 beats (C351 cases)
+  if (!has(run(coda, goodCoda.filter((l) => l !== '\tsetflag FLAG_VISITED_DEWFORD_TOWN')), 'R3', 'FLAG_VISITED_DEWFORD_TOWN')) // (f)
+    fail('coda: missing FLAG_VISITED_DEWFORD_TOWN not reported (R3)');
+  if (!has(run(coda, goodCoda.filter((l) => l !== '\tgivemon SPECIES_VULPIX_HOENN, 20')), 'R3', 'SPECIES_VULPIX_HOENN')) // (g)
+    fail('coda: missing SPECIES_VULPIX_HOENN not reported (R3)');
+  if (!has(run(coda, withLine(goodCoda, '\tsetflag FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE')), 'R4', 'FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE')) // (h)
+    fail('coda: pre-set FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE not reported (R4)');
   console.log('check_playtest selftest: OK');
 }
 

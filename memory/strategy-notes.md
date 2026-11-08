@@ -61,19 +61,19 @@
 
 **Page 2 (Shroomish): deliberately no v3.1 beat.** Three beats, not four, to stop the one-per-page pattern.
 
-**Coda preset reuse**: data/scripts/playtest_coda.inc gives GAME_CLEAR (:25), 8 badges, FLY (:46), SURF (:47), pages 1-4 inked via PC (:50-53); FLAG_LILYCOVE_GLIGAR_DOUBT is NOT set (check_playtest R4, check_playtest.cjs:468). All three beats walk on `make playtest_coda`, no new preset; beat A has no doubt variant, so no Lilycove visit needed. But only Lilycove/Petalburg are VISITED (:23-24): C351 adds `setflag FLAG_VISITED_DEWFORD_TOWN / _FALLARBOR_TOWN / _FORTREE_CITY` (flags.h:1375/1377/1384) so FLY reaches all three routes.
+**Coda preset reuse**: data/scripts/playtest_coda.inc gives GAME_CLEAR (:25), 8 badges, FLY (:46), SURF (:47), pages 1-4 inked via PC (:50-53); FLAG_LILYCOVE_GLIGAR_DOUBT is NOT set (check_playtest R4, check_playtest.cjs:468). All three beats walk on `make playtest_coda`, no new preset; beat A has no doubt variant, so no Lilycove visit needed. C351 added `setflag FLAG_VISITED_DEWFORD_TOWN / _MAUVILLE_CITY / _FALLARBOR_TOWN / _FORTREE_CITY` after Petalburg's, so FLY reaches all three routes (Mauville included because TESSA is at y=110 of Route 119's 140 rows, nearer the Route 118 end than Fortree); check_playtest R3 fails the build if any of them, or VULPIX_HOENN, goes missing.
 
-## Never emulator-tested, as of C350
+## Never emulator-tested, as of C351
 Rule: when a tester report arrives, fixing v3.0 pre-empts any v3.1 beat. Step numbers = memory/playtest-checklist.md.
 - Believers P1 schoolkid (3-4), P2 forager (5), P3 Granite hiker + HARD_STONE (7), P4 ash picnicker (10).
 - Dens P5 ISOLDE (14, 23-29), P6 MARLOW + TIDEMARK trade (30-35), P7 Steven chalk (36-41).
 - Lilycove "…?" doubt (funnel 5; coda quick start 2). Route 104 coda (4b, 22b; coda quick start 1-3).
 - Fortree crayon kid (22c). Birch's bookshelf (42-43) + Red Ink report/cover (8-9, 11; funnel 3).
-- C346 encounter rates (3, 5, 7, 10; step 3 "1 in 10" and step 7 "1 in 20" are stale: now 20% / 10%).
+- C346 encounter rates (3, 5, 7, 10; corrected C351 to 1 in 5 / 1 in 10).
 - Both playtest ROMs (Quick start den tour C339, coda C343): compiled C344, never booted.
-- v3.1 Beat A (C348): Route 106 tide hiker (appears only after GAME_CLEAR + GLIGAR_HOENN), Granite B1F empty, HARD_STONE fallback when the C329 reward was missed.
-- v3.1 Beat B (C349): Route 119 TESSA (only after GAME_CLEAR + LOTAD_HOENN). Check the rain/thunder flash is visible after she turns up and before the battle transition; Lombre_H uses Fake Out on its entry turn; Thunder never shows "missed" while battle rain is up (but can after the player sets Sunny Day); on re-entry after her defeat she faces up.
-- v3.1 Beat C (C350): Route 113 ELLIS. ELLIS appears only after GAME_CLEAR + VULPIX_HOENN; picnicker at 38,6 faces him; the ash keeps falling grey (no setweather); after the win both turn to face right and stay that way on re-entry; ask whether the battle hailed.
+- v3.1 Beat A (C348, step 44): Route 106 tide hiker (appears only after GAME_CLEAR + GLIGAR_HOENN), Granite B1F empty, HARD_STONE fallback when the C329 reward was missed.
+- v3.1 Beat B (C349, step 45): Route 119 TESSA (only after GAME_CLEAR + LOTAD_HOENN). Check the rain/thunder flash is visible after she turns up and before the battle transition; Lombre_H uses Fake Out on its entry turn; Thunder never shows "missed" while battle rain is up (but can after the player sets Sunny Day); on re-entry after her defeat she faces up.
+- v3.1 Beat C (C350, step 46): Route 113 ELLIS. ELLIS appears only after GAME_CLEAR + VULPIX_HOENN; picnicker at 38,6 faces him; the ash keeps falling grey (no setweather); after the win both turn to face right and stay that way on re-entry; ask whether the battle hailed.
 
 ---
 
@@ -97,7 +97,9 @@ Kept here: engine facts, free trainer slots and the boss-species pointer (Techni
 | 348 | Beat A tide hiker (flags 0x30/0x31, Route 106 54,11; roost dropped, Cut would chop it) + `make check_encounter_odds` lint (floors: LOTAD_HOENN Route102 ≥20%, SHROOMISH_HOENN PetalburgWoods ≥10%, GLIGAR_HOENN GraniteCave ≥10%, VULPIX_HOENN Route113 ≥10%; prove it fails on a planted 4% slot; add to check_all) — DONE (tide hiker alone, no roost; odds floors 20/10/10/10, selftest plants a 4% Gligar slot) | — |
 | 349 | Beat B storm-chaser — DONE: Parasol Lady TESSA, slot 117 (TRAINER_ROUTE119_STORM_CHASER), flag 0x32, Route 119 20,110 FACE_LEFT, setweather thunderstorm + delay 90 before trainerbattle_no_intro, no weather restore; Lotad_H 55 / Lombre_H 57 / Ludicolo_H 59 (Thunder on Lombre_H + Ludicolo_H, no Rain Dance) | — |
 | 350 | Beat C "Cold fur in the ash" — DONE: Camper ELLIS, slot 173 (TRAINER_ROUTE113_ASH_CAMPER), flag 0x33, Route 113 38,5 FACE_DOWN facing the picnicker, both FACE_RIGHT once beaten; Vulpix_H 54 / Ninetales_H 56, Hail one move of four (flourish, rule sentence conditional), no Blizzard, no setweather | — |
-| 351 | Consolidation: the three beats into playtest-checklist.md + README playtest section (walkable on `make playtest_coda`; add VISITED Dewford/Fallarbor/Fortree to the preset), check_playtest BEATS/neverSet, static state walk, fix stale step 3/7 rates. Then pause v3.1 content for a two-cycle silent window (as C345-346). Checklist must flag Beat A as the beat most likely to go unseen (Route 106 has little postgame traffic; send testers there on purpose); playtest probes "What did you think he was waiting for?" (Beat A) and "Did your Route 113 battle hail?" (Beat C) | — |
+| 351 | Consolidation: the three beats into playtest-checklist.md + README playtest section (walkable on `make playtest_coda`; add VISITED Dewford/Fallarbor/Fortree to the preset), check_playtest BEATS/neverSet, static state walk, fix stale step 3/7 rates. Then pause v3.1 content for a two-cycle silent window (as C345-346). Checklist must flag Beat A as the beat most likely to go unseen (Route 106 has little postgame traffic; send testers there on purpose); playtest probes "What did you think he was waiting for?" (Beat A) and "Did your Route 113 battle hail?" (Beat C) — DONE: coda preset sets VISITED Dewford/Mauville/Fallarbor/Fortree; check_playtest R3 rows + 3 selftest cases (f/g/h) + planted-break run (VISITED_FALLARBOR removed → exit 1); checklist steps 44-46 as open pass then directed A→B→C pass + static state walk; rates fixed (steps 3/5/7/10). README synced in C351 Reflection (coda part 2 section + rates) | — |
+| 352 | Silent window 1/2: verification only (stale facts, reachability, journey map). No new content. A tester report pre-empts everything | — |
+| 353 | Silent window 2/2: verification only (stale facts, reachability, journey map). No new content. A tester report pre-empts everything | — |
 
 ## v3.0 Den Chapter: Red Ink pages 5-7 (designed C333)
 

@@ -1,6 +1,7 @@
 @ C343 PLAYTEST Red Ink coda: run by NewGameInitData only when PLAYTEST=2 (make playtest_coda).
 @ Cleared save, pages 1-4 inked, Lilycove doubt NOT written: the tester sees the Route 104 lesson,
 @ flies to Lilycove to write the "...?", then returns for page 3. Retail never calls it.
+@ C351: also walks v3.1 beats A/B/C (GAME_CLEAR + the PC Pokemon count as caught).
 @ Synchronous commands only (RunScriptImmediately): no msgbox, delay, warp or waitstate.
 EventScript_PlaytestCoda::
 	setflag FLAG_SYS_POKEMON_GET
@@ -22,6 +23,11 @@ EventScript_PlaytestCoda::
 	setflag FLAG_BADGE08_GET
 	setflag FLAG_VISITED_LILYCOVE_CITY
 	setflag FLAG_VISITED_PETALBURG_CITY
+	@ C351 v3.1 beats: Fly to Dewford (Route 106 tide hiker), Mauville (Route 118 -> 119 TESSA), Fallarbor (Route 113 ELLIS); Fortree for the walk down 119.
+	setflag FLAG_VISITED_DEWFORD_TOWN
+	setflag FLAG_VISITED_MAUVILLE_CITY
+	setflag FLAG_VISITED_FALLARBOR_TOWN
+	setflag FLAG_VISITED_FORTREE_CITY
 	setflag FLAG_SYS_GAME_CLEAR
 	@ Petalburg: Norman beaten and Wally's house visited (no gym-guide or Scott coord scenes)
 	setvar VAR_PETALBURG_CITY_STATE, 5

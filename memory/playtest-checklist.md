@@ -11,12 +11,45 @@ Build with `make playtest` (from pokeemerald/) to get `pokeemerald_playtest.gba`
 **Lilycove doubt (C340), do this first.** From the Lilycove PC (door 24,14) walk south-east to the beach; talk to the old woman at 34,37 (she keeps facing the sea). Expect 3 boxes, the Wingull cry, the page SE and "wrote a line". Open FIELD NOTES p.3: 4 boxes, the last red, unsigned, ending "…?". Talk to her again: one box, "Still gliding, out there." Question for testers: did the "…?" make you want to go check, or did you skim it?
 
 ## Quick start: the coda ROM (C343)
-**First 30 seconds:** You start in PETALBURG's POKéMON CENTER; walk west to ROUTE 104 to see the lesson, FLY to LILYCOVE to write the '…?', FLY back.
-Build with `make playtest_coda` (from pokeemerald/) to get `pokeemerald_playtest_coda.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in PETALBURG's Pokémon Center on a cleared save (the credits have already rolled), with all 8 badges, FIELD NOTES pages 1-4 inked (the four Hoennian Pokémon wait in the PC) and a Lv54-55 team that knows FLY and SURF. You have NOT written the Lilycove doubt yet. Story events away from Petalburg, Route 104 and Lilycove are not set up.
+**First 30 seconds:** You start in PETALBURG's POKéMON CENTER; walk west to ROUTE 104 to see the lesson, FLY to LILYCOVE to write the '…?', FLY back. Then do Quick start, part 2.
+Build with `make playtest_coda` (from pokeemerald/) to get `pokeemerald_playtest_coda.gba`. It keeps its own save file. Start a NEW GAME: after Birch's intro you wake up in PETALBURG's Pokémon Center on a cleared save (the credits have already rolled), with all 8 badges, FIELD NOTES pages 1-4 inked (the four Hoennian Pokémon wait in the PC) and a Lv54-55 team that knows FLY and SURF. You have NOT written the Lilycove doubt yet. You can also FLY to DEWFORD, MAUVILLE, FALLARBOR and FORTREE. Story events away from Petalburg, Route 104, Lilycove and Routes 106, 113 and 119 are not set up.
 1. Walk out of the Pokémon Center and west onto Route 104. Find the schoolkid on the shore (33,49) and the little girl just south of him. Talk to him, then to her. Expect the class with your LOTAD page only (no GLIGAR lines).
 2. Fly to LILYCOVE. Talk to the old woman on the beach south-east of the Pokémon Center (34,37), then open FIELD NOTES page 3: its last line is your own red, unsigned "…?".
 3. Fly back to PETALBURG and walk onto Route 104 again. Talk to the schoolkid. Expect the class plus page 3: a "?" over the girl, then "I said never. It's in red."
 Question for testers: on the second visit, did the lesson feel like a reward or a warning? Did you want to correct him?
+
+## Quick start, part 2: three people who believed you (v3.1, C351; coda ROM)
+*Do this after coda steps 1-3, on the same save. Don't read past the Open pass until you've done it.*
+
+**Open pass (15 minutes, no spoilers).** Your coda save can also FLY to DEWFORD, MAUVILLE, FALLARBOR and FORTREE. Spend 15 minutes wandering the routes around them however you like. Write down anything that seems different from a normal Emerald postgame, and anyone who seems to be acting on something they read. Before you scroll on, answer:
+- What changed, and where?
+- Was there anywhere you expected someone and found no one?
+
+**Directed pass.** Now visit these three places in this order. At each one, write down what you saw *before* you talked to anyone, answer the question, and only then open the Verify block. Shortcut note: this ROM puts the four Hoennian Pokémon in your PC, which counts as catching them. On a normal save, each person appears only after the credits AND after you've caught that page's Pokémon yourself.
+
+44. **FLY to DEWFORD and walk onto ROUTE 106, along the beach toward GRANITE CAVE.** Question: what did you think he was waiting for?
+<details><summary>Verify step 44 (Beat A, C348)</summary>
+
+A HIKER stands on the sand at 54,11, back to the land, facing the sea (up). Talk to him. He does NOT turn toward you. One box: "It's in red. They swim better than they glide. They'll come." On this ROM the first talk also gives a HARD STONE (you never met him in the cave); talk again: same box, no item. Then enter GRANITE CAVE and go to B1F: his old spot by the B2F ladder (26,20) is empty. No GLIGAR ever appears on Route 106. On a save before the credits, or without GLIGAR caught, there's no one on the beach and he's still on B1F (step 7).
+</details>
+
+45. **FLY to MAUVILLE, go east along ROUTE 118 (SURF across the water) and north into ROUTE 119.** Question: did the storm feel like hers?
+<details><summary>Verify step 45 (Beat B, C349)</summary>
+
+A PARASOL LADY (TESSA) stands at 20,110 facing west (left). Note whether it was already raining at her spot before you talked (Badge 6 brings storms to Route 119 on entry, but the route's weather can change as you walk). Talk: she faces you, "Its leaf drinks the storm. It's in red. Watch this!", turns to face up, and the thunderstorm (rain and flashes) should be visible for about a second and a half before she faces you again with "In the rain, my THUNDER never misses!" The battle starts with no intro: Hoennian LOTAD Lv55, LOMBRE Lv57, LUDICOLO Lv59. Check: rain is up in battle; LOMBRE uses FAKE OUT on its first turn in; THUNDER never shows "missed" while the rain lasts. After you win: "Next storm, wherever it's written. I'll be there.", she turns up. Talk again: that box only, no battle. Leave and come back: she faces up.
+</details>
+
+46. **FLY to FALLARBOR and walk east into ROUTE 113's falling ash.** Question, after the battle only: how did ELLIS's fight feel?
+<details><summary>Verify step 46 (Beat C, C350)</summary>
+
+A CAMPER (ELLIS) stands at 38,5 facing down at the picnicker (38,6, facing up at him). The ash keeps falling grey. Talk to her first: "He brought his VULPIX up here to train in the ash! Go on! Battle him!", and she turns back to him. Talk to him: he faces you, "Cold fur in the falling ash. It's in red. We train here!", "If it hails, my foxes won't even feel it!", then a battle with no intro: Hoennian VULPIX Lv54, NINETALES Lv56. After you win: "Same time tomorrow, right here in the ash!", and both turn to face right (east), side by side. Talk to him again: that box only, no battle. Talk to her: "Cold fur in the ash, every day. And I get to watch!" Leave and come back: both still face right. **Record: did your battle hail at any point?** Either answer is valid; he may never call it. On a save before the credits, or without VULPIX caught, she stands alone (step 10).
+</details>
+
+**v3.1 feel questions** (a sentence each):
+- Which of the three would you show a friend? Why?
+- Did any of them seem to be standing there for no reason?
+- What happened with the weather in TESSA's battle, and in ELLIS's?
+- Did you find any of the three during the Open pass, before this list named the route?
 
 ---
 ## Five things we most need eyes on
@@ -38,15 +71,15 @@ Report with the build (commit hash), the item number above or the step number be
 
 1. **Where:** Birch's lab, after the Route 103 rival battle. **Do:** receive the Pokédex. **Expect:** Birch also hands you FIELD NOTES before the difficulty prompt. In the prompt, Challenge shows two extra boxes about the BAG before "It's how I'd do it, honestly.", and the YES/NO choice appears on the last box.
 2. **Where:** anywhere. **Do:** open BAG > KEY ITEMS > FIELD NOTES, then register it and press SELECT. **Expect:** the cover reads "0 of 4"; four pages of Birch's notes; no extra pages yet.
-3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 10, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
+3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 5, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
 4. **Where:** Route 104 shore between Petalburg and the woods, the schoolkid. **Do:** talk to him. **Expect:** before you've caught that LOTAD, he faces the sea and repeats Birch's note. After the catch, he says his new lines and then turns east (toward Petalburg) on the spot (C334); after you re-enter the route he still faces east.
 4b. **(Postgame, C342 Red Ink coda; do this in Part 3.) Where:** Route 104, the schoolkid, on a save after game clear with the Hoennian LOTAD caught. **Do:** re-enter Route 104, talk to him, then talk to the little girl. **Expect:** a little girl stands just south of him (33,50) facing the sea (west), and he faces down at her. Talking to him gives the lesson: "Shh! Class is in session.", your LOTAD page recited as fact, "Red ink means it's true." If you wrote the Lilycove doubt (FLAG_LILYCOVE_GLIGAR_DOUBT, step 5 of the top list), he adds page 3 ("GLIGAR: Water and Rock…"), a "?" pops over the girl, and he says "I said never. It's in red." Either way he then turns back to her. Talking to the girl: "My teacher says LOTAD love storms…", and she turns back to the sea. Before game clear, or without the LOTAD, nothing changes (no girl; step 4 behaviour). Catching the LOTAD postgame without leaving the route gives the old step-4 lines until you re-enter. **Fastest route: the coda ROM (`make playtest_coda`, quick start above).** The den-tour ROM cannot reach it (its preset never sets GAME_CLEAR). (README Part 3 step 23.)
-5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 25, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
+5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 10, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
 6. **Where:** Pokénav, call Birch (1-2 pages inked). **Expect:** the Pokédex rating only; no red ink report yet.
-7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 20, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.
+7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 10, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.
 8. **Where:** anywhere, with 3 pages inked. **Do:** open FIELD NOTES. **Expect:** the cover reads "FIELD NOTES of PROF. BIRCH" with "and <your name>" in red, then "Pages in your ink: 3 of 4"; each inked page shows its red margin note.
 9. **Where:** Pokénav, then Birch in person. **Do:** ask for a Pokédex rating both ways. **Expect:** after the rating, Birch reads your red ink: an opening, one box for each person your catches reached, then a closing. Every box is clean, with no stray symbols and no freeze at the end. In person it comes right after any den hint.
-10. **Where:** Route 113 picnicker by the big rock. **Do:** talk; catch a Hoennian VULPIX in the ash grass (about 1 in 25, Lv21-22); talk again. **Expect:** before: she turns back to the rock after talking. After: a "!" and she looks up. The next time you enter the route she stands two steps north in the ash grass, facing up, without blocking the path.
+10. **Where:** Route 113 picnicker by the big rock. **Do:** talk; catch a Hoennian VULPIX in the ash grass (about 1 in 10, Lv21-22); talk again. **Expect:** before: she turns back to the rock after talking. After: a "!" and she looks up. The next time you enter the route she stands two steps north in the ash grass, facing up, without blocking the path.
 11. **Where:** Pokénav, all four pages inked. **Do:** call Birch. **Expect:** the report names all four people and ends cleanly. This is the longest call in the game; report any text that is cut off.
 
 ## Part 2 — Badges 3-8 (a Challenge Mode save)
@@ -120,7 +153,7 @@ Report with the build (commit hash), the item number above or the step number be
 - If you wrote the Lilycove '…?', did Birch keeping your question mark feel reassuring or unsettling?
 - Normal-play only: how many FIELD NOTES pages were in your ink when you got Badge 5?
 
-README synced C343 (coda shortcut + 3 feel questions). Edit this file first, then mirror.
+README synced C343 (coda shortcut + 3 feel questions) and C351 Reflection (coda part 2 = steps 44-46 condensed, open pass, rate fixes 3/5/7/10, 1 merged v3.1 feel question). Edit this file first, then mirror.
 
 ## Den chapter state walk (static, C337)
 
@@ -178,6 +211,21 @@ Objects: crystal Treecko doll B1F_2R 7,4 (FLAG_TEMP_11); chalk wall bg 8,3 (read
 | M10 M9 then get FIELD NOTES, re-enter, read | + 0x2BB | same | Answer + sound + Copy | none | ink + blue margin | yes |
 
 Ordering (a): catch then Continue inside B1F_2R = M3 (no answer until a warp in). Ordering (b): KO = M1/M0 loop, no state change. Ordering (c): page 7 at M2-M4 = ink only; M5 (with notebook) onward = ink + margin. Ordering (d): warp in = M5 (answer); Continue = M3 (no answer) or M7 (answer stays if TEMP_13 was already set when saved).
+
+### v3.1 beats state walk (static, C351)
+Built from the scripts, not from play: Route106 scripts.inc (Route106_OnTransition, _TideHiker), GraniteCave_B1F scripts.inc (_SetupHikerLeft + EventMacro_DexBelieverPlace), Route119 scripts.inc (_SetupStormChaser, _StormChaserWatchesSky, _StormChaser, _StormChaserDone), Route113 scripts.inc (_SetupAshCamper, _AshPairWatches, _AshCamper, _AshCamperDone, _AshPicnicker branches) and the four map.json files. "Caught" = ScriptCheckPokedexCaught for that beat's species (A = GLIGAR_HOENN, B = LOTAD_HOENN, C = VULPIX_HOENN). Engine facts as in the den walk above: setup runs on ON_TRANSITION only (warp or connection), not on Continue or on the return from battle.
+
+| State | Route 106 (A) | Granite B1F (A) | Route 119 (B) | Route 113 (C) |
+|---|---|---|---|---|
+| (1) **no GAME_CLEAR** | no tide hiker (FLAG_HIDE_ROUTE106_TIDE_HIKER set every entry) | hiker 26,20, C329 behaviour (FACE_UP before GLIGAR_HOENN, FACE_DOWN after) | no TESSA (FLAG_HIDE_ROUTE119_STORM_CHASER set) | picnicker alone, C330 place (38,8 FACE_RIGHT by the rock before VULPIX_HOENN; 38,6 FACE_UP after); no ELLIS |
+| (2) **GAME_CLEAR, page species not caught** | same as row 1 (no GLIGAR_HOENN) | same as row 1: 26,20 FACE_UP | same as row 1 (no LOTAD_HOENN) | same as row 1: picnicker alone at 38,8 FACE_RIGHT (no VULPIX_HOENN) |
+| (3) **GAME_CLEAR + species caught, on map entry** | hiker 54,11 FACE_UP (map default) | empty (FLAG_HIDE_GRANITE_CAVE_B1F_HIKER set) | TESSA 20,110 FACE_LEFT (map default; FACE_UP if already beaten, row 5) | ELLIS 38,5 FACE_DOWN + picnicker 38,6 FACE_UP (DexBelieverPlace) |
+| (4) **after talk / win, same visit** | unchanged: no faceplayer, same box; HARD_STONE once if FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE unset (bag full: Common_EventScript_ShowBagIsFull, flag stays unset, offered again) | — | before the battle she faces you, faces up for the storm (setweather WEATHER_RAIN_THUNDERSTORM, delay 90), faces you; after the win (or any later talk) Next + Common_Movement_FaceUp: she faces up | talk to ELLIS before the win: faces you, battle; after the win ELLIS and picnicker both Common_Movement_FaceRight; picnicker talk before the win: faceplayer, text, FaceUp back to him |
+| (5) **re-enter after win** | unchanged (no win state) | — | TESSA 20,110 FACE_UP via Route119_EventScript_StormChaserWatchesSky (call_if_defeated) | both FACE_RIGHT via Route113_EventScript_AshPairWatches (call_if_defeated), ELLIS 38,5 + picnicker 38,6 |
+| (6) **save + Continue on the route after the win** | unchanged | — | no ON_TRANSITION; saved facing (up), same as row 4 | no ON_TRANSITION; saved facing (both right), same as row 4 |
+| (7) **caught after GAME_CLEAR while standing on the route** | n/a on the route itself (no GLIGAR on Route 106); the next entry shows row 3 | GLIGAR is caught on B2F, so climbing back to B1F is a warp: he is already gone (row 3); there is no post-catch talk with him in the cave postgame | no change until re-entry (setup runs on ON_TRANSITION only) | no ELLIS until re-entry; the picnicker meanwhile gives her C330 caught branch ("!", step 10), since FLAG_HIDE_ROUTE113_ASH_CAMPER is still set |
+
+All cells agree with the scripts; no new known issue. Note row 7 (A): a postgame player who catches GLIGAR on B2F never sees the B1F reaction of step 7; the HARD STONE moves to the Route 106 first talk instead (C348 design).
 
 ### Matchcall worst case (C337 re-check)
 `make check_matchcall_len` worst-case fixture = dex rating + longest field note + red ink Open + all 4 P1-P4 names + gBirchRedInkText_Dens + max(Believed, OnlyYou) + Close: **918/1000 B** (exit 0). Notebook pages are priced as old + ink + margin; longest is Treecko 248 B (all margins included). The C337 colour change swaps one 6-byte colour pair for another, so both totals are unchanged. No fixture change needed.

@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 346 | **Date**: November 2026
+**Cycle**: 351 | **Date**: November 2026
 
 ---
 
@@ -41,20 +41,21 @@
 - **Save hygiene**: beta threads (Adventure Red "BETA 12 SAVEFILES ARE NOT COMPATIBLE") and TCRF's Emerald debug-menu warning (options that corrupt saves) both say to keep debug saves apart. Emulators name the save after the ROM, so a separately named `legends_of_hoenn_playtest.gba` keeps its save away from real ones automatically.
 - An itch.io beta offered a "skip loading a save to select chapters" option. Chapter select is the player-facing version of the same idea.
 
-## C341 addendum (applied C344): pret CI builds every variant on every push; expansion 1.15.1 test ROM ran out of space at 90%+. Postgame: "nothing changes after the Champion" complaint; hacks answer with rematches (thin).
+## C341/C344 addenda (applied): pret CI builds every variant; one OBJ_DIR per variant; postgame "nothing changes after the Champion" complaint. Crayon wall: no Pokémon precedent.
 
-## C345 addendum: when the tester ask goes quiet (searched Nov 2026)
-- FEU "Prepping for playtesting": "you aren't likely to get any feedback if you don't put any effort into asking"; a passive open issue is the low-effort ask. Recruits that worked (Phoenix Red) were *posted where testers are* (r/PokemonROMhacks, Discord), not only left in the repo.
-- Mythic Silver open beta (2024) scoped to **gym 4 / ~8 h** so testers could finish and report; a commenter: "this is beta testing, not a normal release" → state that up front. Pattern: one trusted tester checks a fix privately, then it goes public.
-- A silent GitHub issue is not evidence the build works. The bottleneck is outward-facing promotion, which only the human maintainer can do; the agent can make the ask cheaper (one ≤15-min shortcut-ROM script, 3 named questions, a copy-paste report template).
+## C351 addendum: probing missable beats without priming (searched Nov 2026)
+- **Recall before naming** (Schell Games "Definitive Guide to Playtest Questions"): weak = name the feature; best = "What do you remember? What did it do?" Naming a beat tells the tester it exists, which destroys the discoverability data. Game Design Discourse "Focused vs. Open": same test, the difference is *when* you ask — open pass first, focused second.
+- Implication: checklist order = (1) unprompted "After the credits, what changed in Hoenn? Where?" BEFORE any route is named; (2) only then "fly to Route 106". A tester sent straight to 54,11 can confirm the hiker renders, but can't say whether anyone would find him.
+- Fact questions ("Did the battle hail?") are fine as bug checks; feeling questions should be open ("How did ELLIS's fight feel?" not "Was it too easy?", gamesuserresearch.com).
+- **Postgame-beat failure mode in real hacks** (Adventure Red Chapter thread): reports are "NPC vanished from the Pokécenter, bonus chapter blocked" and "NPC mentions an event I can't find". I.e. hide-flag/trigger bugs and unreachable hints, not balance. Ask testers to note where they expected someone and found no one.
 
-## C344 addendum (applied): one OBJ_DIR per variant + verify the preset label is in the ELF; check ROM free space per variant. Crayon wall: no Pokémon precedent (Loominary, Pentiment mural nearest).
+## C345 addendum (applied: memory/playtest-recruit-post.md): a passive issue gets no testers; the human must post where testers are (r/PokemonROMhacks, Discord). Silence is not a pass.
 
 ## C346 addendum: after the silent window (searched Nov 2026)
 - Solo hacks don't wait for private testers to start the loop: they ship a **labelled beta with the report channel inside the release** (Obscura: bug-report form in the download folder; FireEmerald 2026 beta asks for bugs + difficulty; Liquid Crystal "Live Beta": every patch bumps a build number). Warning case: a dev whose testers never finished — "nobody has made it through besides myself." Silence ≠ pass.
 - Repeating NPC lines: standard fix is "say once" first line + short repeat (Bethesda Say Once, RPG Maker sequential-then-last). Emily Short: never drop info the player might have missed → keep the '?' fact reachable in the repeat line.
 
 ## Sources
-- Older playtest/beta sources (C342-C346): see git history.
+- Older sources (C342-C346): git history. C351: [Schell Games playtest questions](https://schellgames.com/blog/the-definitive-guide-to-playtest-questions-for-video-game-playtesters) · [Focused vs. Open Playtesting](https://gamedesigndiscourse.substack.com/p/focused-vs-open-playtesting) · [Unbiased player interviews](https://gamesuserresearch.com/how-to-run-unbiased-player-interviews/) · [Adventure Red postgame report](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-10256088)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
 - [Liquid Crystal Live Beta](https://www.pokecommunity.com/threads/pok%C3%A9mon-liquid-crystal-3-3-xxxxx-live-beta.242023/) · [FireEmerald beta](https://www.techtimes.com/articles/321287/20260722/fireemerald-gba-rom-hack-merges-kanto-hoenn-one-continuous-adventure.htm) · [Setting Sun testers](https://gbatemp.net/threads/release-pokemon-setting-sun-waxing-moon-ultra-sun-moon-romhacks.491481/) · [Emily Short: NPC repeating info](https://emshort.blog/page/225/?cat=-1) · [Nexus: Say Once](https://forums.nexusmods.com/topic/490495-topic-order) (C346)

@@ -49,3 +49,17 @@ Validators C349: check_flag_values `free pool 143`; check_flags `91 custom flags
 | pokeemerald/scripts/check_playtest.cjs | flag in both presets' neverSet; 2 coda BEATS rows (SetupAshCamper label, AshCamper object script). Walkable on `make playtest_coda` (it gives VULPIX_HOENN, playtest_coda.inc:53); VISITED Fallarbor for Fly is C351. |
 
 Validators C350: check_trainer_slots `OK (6 reclaimed slots battled in map scripts)`; check_playtest `OK (2 presets, 11 beats)`; check_flag_values `1554 parsed, 0 duplicates, free pool 142`; check_flags `92 custom flags, all read+set`; check_flag_pairs is not a make target (check_flags runs it); check_object_tiles `0 errors, 13 warnings` (all pre-existing); check_text_width widest 139px (Route113 "Cold fur in the falling ash."); check_gifts `dex-check species: 20 calls OK`; check_bosses `COLLISIONS: 0`; check_encounter_odds `OK (104 land tables, 4 floors)`; check_trainers.sh `0 errors, 0 warnings`; check_all_quick exit 0. No en/em dashes added to Route113 scripts.inc (the only non-ASCII bytes there are the vanilla “ ” and C330 …).
+
+## C351 — playtest consolidation
+
+No beat script, trainer or text changed.
+
+| File | Change |
+|---|---|
+| pokeemerald/data/scripts/playtest_coda.inc | header line for v3.1 A/B/C; `setflag FLAG_VISITED_DEWFORD_TOWN / _MAUVILLE_CITY / _FALLARBOR_TOWN / _FORTREE_CITY` after Petalburg's, so FLY reaches Routes 106, 118→119 and 113. FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE deliberately unset. |
+| pokeemerald/scripts/check_playtest.cjs | coda prereqFlags += the 4 VISITED flags; prereqSpecies += SPECIES_VULPIX_HOENN (LOTAD/GLIGAR reasons name Beats B/A); coda neverSet += FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE; BEATS comments updated; selftest cases (f) missing VISITED_DEWFORD → R3, (g) missing VULPIX_HOENN → R3, (h) pre-set HARD_STONE flag → R4. |
+| memory/playtest-checklist.md | coda quick start mentions the extra Fly points; new "Quick start, part 2" (open pass, directed pass, steps 44-46 with Verify blocks quoting the exact texts, 4 v3.1 feel questions); "v3.1 beats state walk (static, C351)" table; rates in steps 3/5/7/10 fixed to 1 in 5 / 1 in 10. |
+| memory/playtest-recruit-post.md | coda bullet mentions the v3.1 beats; 15-30 minutes; question 4 (expected someone, found no one). |
+
+Validators C351: check_playtest --selftest `OK`; check_playtest `OK (2 presets, 11 beats)`, coda `29 flags`; planted break (VISITED_FALLARBOR line deleted) → exit 1 with `[coda] R3 missing setflag FLAG_VISITED_FALLARBOR_TOWN`, restored → exit 0; check_encounter_odds `OK` with Lotad_H 20% / Shroomish_H 10% / Gligar_H 10% / Vulpix_H 10%.
+| README.md (C351 Reflection) | "Help Playtest v3.0 and v3.1"; coda shortcut names the extra Fly towns; new "Coda part 2" (open pass + steps 44-46 condensed, Route 106 called out as easy to miss); rates in steps 3/5/7/10 fixed; one merged v3.1 feel question. |

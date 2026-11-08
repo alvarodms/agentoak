@@ -205,7 +205,7 @@ The migration's ultimate legacy — a being born from Hoenn's entanglement with 
 
 **From source:** Clone this repo, install the [agbcc toolchain](https://github.com/pret/agbcc), and run `make` in the `pokeemerald/` directory.
 
-### Help Playtest v3.0
+### Help Playtest v3.0 and v3.1
 
 *Birch wrote it down wrong. Go prove it, and see who notices.*
 
@@ -215,7 +215,14 @@ Nothing below has been played on an emulator yet. Follow it in order: one new ga
 Building from source? Run `make playtest` in `pokeemerald/` to get `pokeemerald_playtest.gba` (its own save file). A new game skips the truck and wakes you in LILYCOVE's Pokémon Center with all 8 badges, FIELD NOTES pages 1-4 already inked (the four Hoennian Pokémon wait in the PC), a Lv41-42 team with FLY, SURF, STRENGTH, ROCK SMASH and WATERFALL, and all three dens untouched. Before you leave town, talk to the old woman on the beach south-east of the Pokémon Center (item 5 below). Call PROF. BIRCH, then go Mt. Pyre → Shoal Cave → Meteor Falls. Only those routes are set up; oddities elsewhere are the shortcut, not the hack.
 
 #### Shortcut: the coda ROM
-Run `make playtest_coda` in `pokeemerald/` to get `pokeemerald_playtest_coda.gba` (its own save file). A new game wakes you in PETALBURG's Pokémon Center on a cleared save: all 8 badges, FIELD NOTES pages 1-4 inked, a Lv54-55 team with FLY and SURF, and the Lilycove doubt not yet written. Walk west to Route 104 and watch the schoolkid's class (step 23), fly to LILYCOVE and talk to the old woman on the beach (item 5), then fly back and watch the class again. About ten minutes. Only Petalburg, Route 104 and Lilycove are set up.
+Run `make playtest_coda` in `pokeemerald/` to get `pokeemerald_playtest_coda.gba` (its own save file). A new game wakes you in PETALBURG's Pokémon Center on a cleared save: all 8 badges, FIELD NOTES pages 1-4 inked, a Lv54-55 team with FLY and SURF, and the Lilycove doubt not yet written. Walk west to Route 104 and watch the schoolkid's class (step 23), fly to LILYCOVE and talk to the old woman on the beach (item 5), then fly back and watch the class again. About ten minutes. The coda save can also FLY to DEWFORD, MAUVILLE, FALLARBOR and FORTREE for the three postgame believers below. Only Petalburg, Route 104, Lilycove and Routes 106, 113 and 119 are set up.
+
+#### Coda part 2: three people who took you at your word
+On the same coda save, after the class. **First, an open pass:** spend 15 minutes wandering around Dewford, Mauville, Fallarbor and Fortree without reading further. Write down anything that differs from a normal Emerald postgame, and anyone who seems to act on something they read. Then do these three in order, noting what you saw *before* anyone talked. (On a normal save each one appears only after the credits and after you have caught that page's Hoennian Pokémon yourself.)
+
+44. **Route 106 beach (fly to DEWFORD, walk toward GRANITE CAVE).** Someone stands on the sand. Talk to him. Does he turn to you? Then visit Granite Cave B1F: is his old spot by the ladder empty? *What did you think he was waiting for?* (This beach gets little postgame traffic, so please go there on purpose.)
+45. **Route 119 (fly to MAUVILLE, east along Route 118, north into 119).** Find the Parasol Lady and talk to her. Is the storm visible before the battle starts? Is it raining in battle, and does THUNDER ever miss while it rains? After you win, leave and come back: which way does she face? *Did the storm feel like hers?*
+46. **Route 113 (fly to FALLARBOR, walk east into the ash).** A camper stands with the picnicker. Talk to her, then to him, and battle. After the win, do both turn to face east, and do they stay that way when you come back? **Did your battle hail at any point?** (Either answer helps.)
 
 #### Five things we most need eyes on
 The den items need a save with badge 5 or more (Mt. Pyre first); allow about twenty minutes per den. If you only have twenty minutes, test these. The full route below is for anyone who wants to go further.
@@ -236,14 +243,14 @@ Report with the build (commit hash), your emulator or device, the item number ab
 
 1. **Where:** Birch's lab, after the Route 103 rival battle. **Do:** receive the Pokédex. **Expect:** Birch also hands you FIELD NOTES before the difficulty prompt. In the prompt, Challenge shows two extra boxes about the BAG before "It's how I'd do it, honestly.", and the YES/NO choice appears on the last box.
 2. **Where:** anywhere. **Do:** open BAG > KEY ITEMS > FIELD NOTES, then register it and press SELECT. **Expect:** the cover reads "0 of 4"; four pages of Birch's notes; no extra pages yet.
-3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 10, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
+3. **Where:** Route 102 grass. **Do:** catch a Hoennian LOTAD (about 1 in 5, Lv3-4), then reread FIELD NOTES. **Expect:** page 1 adds a red correction signed with your name, then a red "Since then:" margin note; the cover reads "1 of 4". Red text should be clearly red, not grey.
 4. **Where:** Route 104 shore between Petalburg and the woods, the schoolkid. **Do:** talk to him. **Expect:** before you've caught that LOTAD, he faces the sea and repeats Birch's note. After the catch, he says his new lines and then turns east (toward Petalburg) on the spot; after you re-enter the route he still faces east.
-5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 25, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
+5. **Where:** Petalburg Woods, the old woman forager. **Do:** talk; catch a Hoennian SHROOMISH in the woods (about 1 in 10, Lv6-7); talk again without leaving. **Expect:** before: her belief, then a line about a boy reading Birch's notes (it changes if you have the LOTAD). After: she grieves, then turns to face north. Leave and come back: she now stands beside the bug catcher in the cold patch, facing north.
 6. **Where:** Pokénav, call Birch (1-2 pages inked). **Expect:** the Pokédex rating only; no red ink report yet.
-7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 20, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.
+7. **Where:** Granite Cave B1F hiker. **Do:** talk; catch a Hoennian GLIGAR on B2F (about 1 in 10, Lv10-13); come back up and talk. **Expect:** before: he faces away and doesn't turn. After: he turns away and back mid-talk and gives a HARD STONE once; the next time you enter B1F he faces south.
 8. **Where:** anywhere, with 3 pages inked. **Do:** open FIELD NOTES. **Expect:** the cover reads "FIELD NOTES of PROF. BIRCH" with "and <your name>" in red, then "Pages in your ink: 3 of 4"; each inked page shows its red margin note.
 9. **Where:** Pokénav, then Birch in person. **Do:** ask for a Pokédex rating both ways. **Expect:** after the rating, Birch reads your red ink: an opening, one box for each person your catches reached, then a closing. Every box is clean, with no stray symbols and no freeze at the end. In person it comes right after any den hint.
-10. **Where:** Route 113 picnicker by the big rock. **Do:** talk; catch a Hoennian VULPIX in the ash grass (about 1 in 25, Lv21-22); talk again. **Expect:** before: she turns back to the rock after talking. After: a "!" and she looks up. The next time you enter the route she stands two steps north in the ash grass, facing up, without blocking the path.
+10. **Where:** Route 113 picnicker by the big rock. **Do:** talk; catch a Hoennian VULPIX in the ash grass (about 1 in 10, Lv21-22); talk again. **Expect:** before: she turns back to the rock after talking. After: a "!" and she looks up. The next time you enter the route she stands two steps north in the ash grass, facing up, without blocking the path.
 11. **Where:** Pokénav, all four pages inked. **Do:** call Birch. **Expect:** the report names all four people and ends cleanly. This is the longest call in the game; report any text that is cut off.
 
 #### Part 2 — Badges 3-8 (a Challenge Mode save)
@@ -310,6 +317,7 @@ Report with the build (commit hash), your emulator or device, the item number ab
 - Did you go back to the Meteor Falls wall on your own, or only because this list said so? Did Steven correcting you feel fair?
 - In Challenge Mode, was the Champion a wall without your BAG?
 - When the schoolkid taught your red ink as fact, and brushed off your own question mark, did it feel like a reward or a warning?
+- Of the three people in coda part 2, which would you show a friend? Did any of them seem to be standing there for no reason? Did you find any of them during the open pass?
 - Did you find the Lilycove old woman's GLIGAR line on your own, before this list pointed you to her?
 - Which single moment would you screenshot?
 - Did any NPC text look like a typo, or did it read like that character's own voice?
