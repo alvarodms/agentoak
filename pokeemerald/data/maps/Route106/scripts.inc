@@ -2,9 +2,10 @@ Route106_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route106_OnTransition
 	.byte 0
 
-@ C348 v3.1 Beat A: after the credits, once GLIGAR_HOENN is caught, the Granite Cave hiker stands on the
-@ tide line by the cave mouth with his back to the land, waiting for GLIGAR to come in from the sea
-@ "because it's in red". He never turns to the player; nothing ever comes.
+@ C348 v3.1 Beat A: after the credits, once GLIGAR_HOENN is caught, the Granite Cave hiker stands
+@ on the sand by the cave walk (54,15 since C354: one row above the path, out of ELLIOT's and NED's sight),
+@ back from the tide line, his back to the land, facing a sea the player can't see from beside him.
+@ He waits for GLIGAR to come in from the sea "because it's in red". He never turns; nothing ever comes.
 @ Global (::) so check_playtest R5 can find the label.
 Route106_OnTransition::
 	setflag FLAG_HIDE_ROUTE106_TIDE_HIKER

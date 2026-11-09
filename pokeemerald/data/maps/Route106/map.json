@@ -94,7 +94,7 @@
       "local_id": "LOCALID_ROUTE106_TIDE_HIKER",
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 54,
-      "y": 11,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,

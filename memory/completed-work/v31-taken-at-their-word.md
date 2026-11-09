@@ -10,7 +10,7 @@ Postgame beats where an NPC takes a Red Ink page at its word. Design + roadmap: 
 | pokeemerald/data/scripts/new_game.inc | ResetAllMapFlags: `setflag FLAG_HIDE_ROUTE106_TIDE_HIKER` after the Route 104 student line. |
 | pokeemerald/data/maps/GraniteCave_B1F/map.json | hiker object flag "0" → FLAG_HIDE_GRANITE_CAVE_B1F_HIKER. |
 | pokeemerald/data/maps/GraniteCave_B1F/scripts.inc | OnTransition calls `GraniteCave_B1F_EventScript_SetupHikerLeft::` (hide after GAME_CLEAR + GLIGAR_HOENN caught) before the DexBelieverPlace line. |
-| pokeemerald/data/maps/Route106/map.json | new last object LOCALID_ROUTE106_TIDE_HIKER, HIKER gfx, 54,11 FACE_UP, flag 0x30. No roost object (Cut would chop a CUTTABLE_TREE). |
+| pokeemerald/data/maps/Route106/map.json | new last object LOCALID_ROUTE106_TIDE_HIKER, HIKER gfx, 54,11 FACE_UP (moved to **54,15 in C354**), flag 0x30. No roost object (Cut would chop a CUTTABLE_TREE). |
 | pokeemerald/data/maps/Route106/scripts.inc | first map script: `Route106_OnTransition::`; `Route106_EventScript_TideHiker` (no faceplayer, "They'll come", HARD_STONE fallback); `Route106_Text_TideHiker`. |
 | pokeemerald/scripts/check_playtest.cjs | both flags in both presets' neverSet; 3 coda BEATS rows (Route106 x2, GraniteCave_B1F). |
 | pokeemerald/scripts/check_encounter_odds.cjs | NEW. Red Ink reachability floors: LOTAD_HOENN Route102 ≥20%, SHROOMISH_HOENN Petalburg Woods ≥10%, GLIGAR_HOENN Granite B2F ≥10%, VULPIX_HOENN Route113 ≥10% of land slots (duplicate slots summed). Asserts land rates [20,20,10,10,10,10,5,5,4,4,1,1] and ≥50 land tables. `--selftest`: unmodified pass, planted 4% Gligar fail, Lotad removed fail, Shroomish split over two 5% slots pass. |
@@ -31,7 +31,6 @@ Postgame beats where an NPC takes a Red Ink page at its word. Design + roadmap: 
 | pokeemerald/data/maps/Route119/scripts.inc | OnTransition calls `Route119_EventScript_SetupStormChaser::` (before the BADGE06 goto); `_StormChaserWatchesSky` (FACE_UP once defeated); `_StormChaser::` (ink box → FaceUp → setweather THUNDERSTORM/doweather/delay 90 → rule box → trainerbattle_no_intro → Done); `_StormChaserDone::`; 4 `Route119_Text_StormChaser*` texts. No resetweather. |
 | pokeemerald/scripts/check_playtest.cjs | flag in both presets' neverSet; 2 coda BEATS rows (SetupStormChaser label, StormChaser object script). |
 
-Validators C349: check_flag_values `free pool 143`; check_flags `91 custom flags, all read+set`; check_trainer_slots `OK (5 reclaimed slots battled in map scripts)`; check_playtest `OK (2 presets, 9 beats)`; check_object_tiles `0 errors, 13 warnings` (all pre-existing); check_text_width widest 135px (Route119 "Its leaf drinks the storm."); check_encounter_odds `OK (104 land tables, 4 floors)`; check_gifts `dex-check species: 19 calls OK`; check_bosses `COLLISIONS: 0`; check_trainers.sh `0 errors, 0 warnings`; check_all_quick passed.
 
 ## C350 — Beat C, the Route 113 ash camper ELLIS
 
@@ -48,7 +47,6 @@ Validators C349: check_flag_values `free pool 143`; check_flags `91 custom flags
 | pokeemerald/data/maps/Route113/scripts.inc | OnTransition calls `Route113_EventScript_SetupAshCamper::` AFTER the DexBelieverPlace macro (so FACE_RIGHT overrides her FACE_UP); `_AshPairWatches` (both FACE_RIGHT once defeated); `_AshCamper::` (faceplayer → ink box → rule box → trainerbattle_no_intro → Done); `_AshCamperDone::` (Next box, both turn right, `waitmovement 0`); picnicker `_AshPicnickerShown` first line branches to `_AshPicnickerWithCamper` (pre-win "Go on! Battle him!", FaceUp) / `_AshPicnickerWatching` (post-win, FaceRight) when the hide flag is clear; 6 new texts. No setweather. |
 | pokeemerald/scripts/check_playtest.cjs | flag in both presets' neverSet; 2 coda BEATS rows (SetupAshCamper label, AshCamper object script). Walkable on `make playtest_coda` (it gives VULPIX_HOENN, playtest_coda.inc:53); VISITED Fallarbor for Fly is C351. |
 
-Validators C350: check_trainer_slots `OK (6 reclaimed slots battled in map scripts)`; check_playtest `OK (2 presets, 11 beats)`; check_flag_values `1554 parsed, 0 duplicates, free pool 142`; check_flags `92 custom flags, all read+set`; check_flag_pairs is not a make target (check_flags runs it); check_object_tiles `0 errors, 13 warnings` (all pre-existing); check_text_width widest 139px (Route113 "Cold fur in the falling ash."); check_gifts `dex-check species: 20 calls OK`; check_bosses `COLLISIONS: 0`; check_encounter_odds `OK (104 land tables, 4 floors)`; check_trainers.sh `0 errors, 0 warnings`; check_all_quick exit 0. No en/em dashes added to Route113 scripts.inc (the only non-ASCII bytes there are the vanilla “ ” and C330 …).
 
 ## C351 — playtest consolidation
 
@@ -67,3 +65,16 @@ Validators C351: check_playtest --selftest `OK`; check_playtest `OK (2 presets, 
 ## C352 — silent window 1/2: static visibility audit (memory only)
 
 No beat script, map, trainer, flag or text changed. memory/playtest-checklist.md "### v3.1 visibility audit (static, C352)": spawn window derived from TrySpawnObjectEvents/RemoveObjectEventIfOutsideView (x −9..+10, y −7..+9 around the player; OBJECT_EVENTS_COUNT 16); object density A 3/16, B 4-7/16, C 8/16 (all PASS); connection edges (only A is near one: Dewford, he loads at y ≤ 18 / x ≤ 63); flag↔object binding PASS for 0x30-0x33 and every LOCALID on the four maps; re-entry sentences added to Verify 44 (A) and 46 (C, VULPIX caught on Route 113 itself); box count ≤ 2 for all three, no trim candidate. player-journey-map.md: loud/quiet list, see-first lines, ELLIS hail condition, Beat A sightline "Finding for C353 planning" (the Granite Cave walk keeps him 5-6 rows above the player, at the screen edge).
+
+## C354 — Beat A tile move + check_beat_visibility
+
+No script, text, flag, trainer or facing changed.
+
+| File | Change |
+|---|---|
+| pokeemerald/data/maps/Route106/map.json | LOCALID_ROUTE106_TIDE_HIKER y 11 → 15 (now 54,15; elevation 3, FACE_UP, flag 0x30 unchanged). Tile re-read before the edit with `tileAt`: collision 0, elevation 3, metatile 0x124 (292), behaviour 33 MB_SAND. No other object/warp/bg event on 54,15. |
+| pokeemerald/data/maps/Route106/scripts.inc | Beat A comment above `Route106_OnTransition::` rewritten (4 lines: 54,15, out of ELLIOT's/NED's sight). Script unchanged. |
+| pokeemerald/scripts/check_beat_visibility.cjs | NEW. Postgame beat visibility guard, BEATS = A tide hiker, A empty B1F spot (shows: false), B TESSA, C ELLIS (Route 104 coda left to check_playtest R5). V1 object+flag in map.json, object script label, setup reached from ON_TRANSITION (is / call / goto), setup body default flag command before first goto_if/call_if + opposite command after `goto_if_unset FLAG_SYS_GAME_CLEAR` + `setvar VAR_0x8004, <species>`; V2 species in the map's own wild tables (land/water/rock smash/fishing, gWildMonHeaders) needs an ON_RESUME path to the setup or an ALLOWLIST reason (1 entry: Route113 ELLIS, D3; stale fails); V3 start tile via check_object_tiles `tileAt`/`tileProblems` + always-present object / warp overlap. Pure `check(beats, maps, wild, allowlist, tileLookup)`; 9-case in-memory `--selftest`; parser guard ≥100 wild maps (119). Exports `check, BEATS, ALLOWLIST`. |
+| pokeemerald/Makefile | `check_beat_visibility` target (`--selftest && real run`) after check_playtest, in .PHONY, appended to check_all. |
+
+Validators C354: `check_beat_visibility: selftest OK (9 cases)`; `check_beat_visibility: OK (4 beats, 1 allowlisted)` — A tide hiker Route106 54,15 metatile 0x124 clean / A empty B1F spot GraniteCave_B1F 26,20 metatile 0x201 clean / B TESSA Route119 20,110 metatile 0x2 clean / C ELLIS Route113 38,5 metatile 0x20A clean. In-memory planted breaks (hiker on warp 48,16, B1F setup call removed, TESSA clearflag removed, ELLIS with empty allowlist) each produced the expected V3/V1/V1/V2 error. check_object_tiles `0 errors, 13 warnings` (pre-existing); check_playtest `OK (2 presets, 11 beats)`; `make check_all` passed.
