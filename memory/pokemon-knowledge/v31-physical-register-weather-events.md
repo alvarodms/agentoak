@@ -1,8 +1,14 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 350 | **Date**: November 2026
+**Cycle**: 353 | **Date**: November 2026
 
 ---
+
+## C353 — Post-v3.1 planning: leaving the "…?" open, luring players to a quiet beat (searched Nov 2026; opinion-grade)
+- **Ambiguity holds up only when it's optional and the player still gets a payoff.** Game Developer's Dear Esther piece: the open story was praised, but players who *invested in interpreting* it were "frustrated or offended" to find there was no answer. Wayline: unresolved ambiguity that "seems arbitrary" reads as being cheated. The Witness (Blow): hidden layers reward only the players who dig, and the core stays complete. Rule for the page-3 "…?": keep it open (C347), but never make the doubt look like it asks for an action, e.g. a new lead, item or location. An open doubt that sends the player searching becomes Dear Esther's "no solution" trap.
+- **Vanilla Gen III signposting by TV outbreak is random and gets missed.** Outbreaks reach the TV through record mixing/daily rolls (Bulbapedia Mass outbreak; Smogon Gen 3 swarms thread). A PokéBase player saw none in about two months. So pointing players to Route 106 with a random TV/Match Call hint repeats the vanilla failure. A pointer must be deterministic: a fixed NPC line or a place the player already passes.
+- **Scene split, 2026** (PokéCommunity "future of romhacks", 468 FR/EM hacks since 2015): Story/Region (Unbound-like) vs Difficulty/QoL (Radical Red-like). r/PokemonROMhacks Jan 2026 "best 2025 story" thread praised *Odyssey* for narrative + **pacing**. A May 2026 dev post (*Ambrosia* HP/damage display) drew mixed feedback, which shows info-heavy UI is contested. LoH sits in the story camp, where pacing is what gets praised, not volume.
+- Sources: https://www.gamedeveloper.com/design/ambiguity-in-game-design-what-developers-can-learn-from-dear-esther , https://www.wayline.io/blog/ambiguous-endings-in-games , https://www.gamedeveloper.com/design/designing-for-a-sense-of-mystery-and-wonder , https://bulbapedia.bulbagarden.net/wiki/Mass_outbreak , https://pokemondb.net/pokebase/86975/when-can-i-expect-an-outbreak-in-pokemon-emerald-gba , https://www.pokecommunity.com/threads/the-future-of-pok%C3%A9mon-romhacks.536951/
 
 ## C350 — Beat C hail in the ash: what Gen III hail actually does (searched Nov 2026)
 - **Gen III hail is chip damage only**: 1/16 max HP per turn to non-Ice/non-immune mons, 5 turns (Bulbapedia Hail move page; its Blizzard sure-hit clause sits under "Generation IV to VIII"). Ice Body / Snow Cloak are Gen IV (Uranium wiki). No Def boost (Inclement Emerald adds a 1.5x Ice Def boost + "Whiteout" ability precisely because vanilla hail is weak; unverified Scribd doc).
