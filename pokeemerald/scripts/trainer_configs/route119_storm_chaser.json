@@ -1,0 +1,33 @@
+{
+  "_note": "C349 v3.1 Beat B: TESSA, Parasol Lady storm-chaser on Route 119 (slot 117, reclaimed from never-battled TRAINER_CINDY_2). Optional postgame trainer (GAME_CLEAR + LOTAD_HOENN caught), not a boss. Her script sets WEATHER_RAIN_THUNDERSTORM before the battle, so the fight is in permanent rain and Thunder skips the accuracy check (battle_script_commands.c ~1089): rule sentence 'In the rain, my THUNDER never misses!'. No Rain Dance/Sunny Day on anyone; Thunder on Lombre_H + Ludicolo_H only; Lotad_H is the no-Thunder utility lead. Levels 55/57/59: just above the Champion (53-57) and below Wattson_4 (Ludicolo_H 61) and the Reckoning bosses (64-67). Ability: trainer mons use slot 0 = LIGHTNING_ROD, which has no effect in Gen 3 singles; nothing is designed around it (Rain Dish, slot 1, is never used). Move legality hand-checked with rom_species C349 (no lint): LOTAD_HOENN TOXIC TM06, PROTECT TM17, GIGA_DRAIN L43/TM19, SHOCK_WAVE L31/TM34; LOMBRE_HOENN FAKE_OUT L19, THUNDER TM25, THUNDER_WAVE L25, GIGA_DRAIN L49/TM19; LUDICOLO_HOENN (level-up is Lv1 only) THUNDER TM25, GIGA_DRAIN TM19, TOXIC TM06, PROTECT TM17. No held items, no trainer items. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so hand-edit them into the [TRAINER_ROUTE119_STORM_CHASER] block. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/route119_storm_chaser.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_ROUTE119_STORM_CHASER",
+  "partyName": "sParty_StormChaser",
+  "trainerClass": "TRAINER_CLASS_PARASOL_LADY",
+  "encounterMusic": "F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_FEMALE",
+  "trainerPic": "TRAINER_PIC_PARASOL_LADY",
+  "trainerName": "TESSA",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE", "AI_SCRIPT_TRY_TO_FAINT", "AI_SCRIPT_CHECK_VIABILITY"],
+  "party": [
+    {
+      "iv": 100,
+      "lvl": 55,
+      "species": "SPECIES_LOTAD_HOENN",
+      "moves": ["MOVE_TOXIC", "MOVE_PROTECT", "MOVE_GIGA_DRAIN", "MOVE_SHOCK_WAVE"]
+    },
+    {
+      "iv": 100,
+      "lvl": 57,
+      "species": "SPECIES_LOMBRE_HOENN",
+      "moves": ["MOVE_FAKE_OUT", "MOVE_THUNDER", "MOVE_THUNDER_WAVE", "MOVE_GIGA_DRAIN"]
+    },
+    {
+      "iv": 150,
+      "lvl": 59,
+      "species": "SPECIES_LUDICOLO_HOENN",
+      "moves": ["MOVE_THUNDER", "MOVE_GIGA_DRAIN", "MOVE_TOXIC", "MOVE_PROTECT"]
+    }
+  ]
+}

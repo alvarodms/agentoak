@@ -1,0 +1,33 @@
+{
+  "_note": "C334: ISOLDE, Hex Maniac mourner at the Mt. Pyre summit (slot 581, reclaimed from never-battled TRAINER_TERRY). Optional Red Ink page-5 believer, not a boss. Mt. Pyre natives only, no Fire-types: her 'flames' are borrowed lantern light. Will-O-Wisp on the Banette ace only. No items. All moves checked legal with rom_species C334. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so hand-edit them into the [TRAINER_PYRE_MOURNER] block. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/pyre_mourner.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_PYRE_MOURNER",
+  "partyName": "sParty_PyreMourner",
+  "trainerClass": "TRAINER_CLASS_HEX_MANIAC",
+  "encounterMusic": "F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS",
+  "trainerPic": "TRAINER_PIC_HEX_MANIAC",
+  "trainerName": "ISOLDE",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE", "AI_SCRIPT_TRY_TO_FAINT", "AI_SCRIPT_CHECK_VIABILITY"],
+  "party": [
+    {
+      "iv": 100,
+      "lvl": 38,
+      "species": "SPECIES_DUSCLOPS",
+      "moves": ["MOVE_CONFUSE_RAY", "MOVE_SHADOW_PUNCH", "MOVE_NIGHT_SHADE", "MOVE_PURSUIT"]
+    },
+    {
+      "iv": 100,
+      "lvl": 39,
+      "species": "SPECIES_CHIMECHO",
+      "moves": ["MOVE_CONFUSION", "MOVE_SHADOW_BALL", "MOVE_UPROAR", "MOVE_PSYWAVE"]
+    },
+    {
+      "iv": 150,
+      "lvl": 40,
+      "species": "SPECIES_BANETTE",
+      "moves": ["MOVE_WILL_O_WISP", "MOVE_SHADOW_BALL", "MOVE_FAINT_ATTACK", "MOVE_KNOCK_OFF"]
+    }
+  ]
+}

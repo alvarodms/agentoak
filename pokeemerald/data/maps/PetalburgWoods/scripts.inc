@@ -578,14 +578,16 @@ PetalburgWoods_EventScript_ForagerCorrected::
 	msgbox PetalburgWoods_Text_ForagerCorrected, MSGBOX_DEFAULT
 	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
 	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerWhatElse
+	call_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerWhatElse
+	closemessage
+	applymovement LOCALID_PETALBURG_WOODS_FORAGER, Common_Movement_FaceUp
+	waitmovement 0
 	release
 	end
 
 PetalburgWoods_EventScript_ForagerWhatElse::
 	msgbox PetalburgWoods_Text_ForagerWhatElse, MSGBOX_DEFAULT
-	release
-	end
+	return
 
 PetalburgWoods_Text_ForagerBelief:
 	.string "PROF. BIRCH wrote it plain.\n"

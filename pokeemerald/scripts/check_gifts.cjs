@@ -23,8 +23,13 @@
 //     regional form the inked page is about). Also fails when no species setvar precedes it.
 //     C329: an `EventMacro_DexBelieverPlace SPECIES_X, ...` line counts as a dex check of its
 //     first argument (must be a SPECIES_ constant; same vanilla-twin rule and allowlist).
+//   Rule D (C335, fails unless allowlisted): each sIngameTrades entry in src/data/trade.h; its
+//     `.species` (what the player receives) and `.requestedSpecies` (what the NPC asks for) must
+//     not be a vanilla SPECIES_X with a SPECIES_X_HOENN twin. Allowlist entries for trades use
+//     {"trade": "INGAME_TRADE_X", "field": "species"|"requestedSpecies", "species": "SPECIES_X", "why": "..."}
+//     in the same JSON file (same non-empty-why and stale rules).
 //
-// Usage: node scripts/check_gifts.cjs   (run by `make check_gifts`, part of `make check_all`)
+// Usage: node scripts/check_gifts.cjs [--selftest]   (run by `make check_gifts`, part of `make check_all`)
 
 const fs = require('fs');
 const path = require('path');
@@ -33,12 +38,82 @@ const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
 const SPECIES_H = path.join(ROOT, 'include/constants/species.h');
 const ALLOWLIST = path.join(__dirname, 'check_gifts_allowlist.json');
+const TRADE_H = path.join(ROOT, 'src/data/trade.h');
 
 const COMMANDS = ['givemon', 'setwildbattle', 'showmonpic', 'EventMacro_StaticDen'];
 const GIFT_COMMANDS = ['givemon', 'setwildbattle', 'EventMacro_StaticDen'];
 
 // Rule C exceptions, as 'data/maps/Foo/scripts.inc:Label' strings. Starts empty.
 const DEX_CHECK_ALLOWLIST = [];
+
+// Rule D: parse sIngameTrades out of src/data/trade.h text. Returns { trades, errors, used }
+// where `used` holds the indexes of the trade allowlist entries that matched.
+function scanTrades(text, pairedSet, allow) {
+  const out = { trades: [], errors: [], used: new Set() };
+  const start = text.indexOf('sIngameTrades[]');
+  if (start < 0) {
+    out.errors.push('src/data/trade.h: sIngameTrades[] not found (parser broke?)');
+    return out;
+  }
+  const end = text.indexOf('};', start);
+  const body = text.slice(start, end < 0 ? undefined : end);
+  const parts = body.split(/\[\s*(INGAME_TRADE_\w+)\s*\]\s*=/);
+  for (let i = 1; i < parts.length; i += 2) {
+    const id = parts[i];
+    const entry = parts[i + 1];
+    const trade = { id };
+    for (const field of ['species', 'requestedSpecies']) {
+      const m = new RegExp(`\\.${field}\\s*=\\s*(\\w+)`).exec(entry);
+      if (!m) {
+        out.errors.push(`src/data/trade.h ${id}: no .${field}`);
+        continue;
+      }
+      const species = m[1];
+      trade[field] = species;
+      if (!pairedSet.has(species)) continue;
+      const ai = allow.findIndex((a) => a && a.trade === id && a.field === field && a.species === species);
+      if (ai >= 0) out.used.add(ai);
+      else
+        out.errors.push(`src/data/trade.h ${id} .${field} = ${species} — vanilla form where ${species}_HOENN exists; use the regional form or allowlist with a "why"`);
+    }
+    out.trades.push(trade);
+  }
+  if (out.trades.length === 0) out.errors.push('src/data/trade.h: sIngameTrades has no entries (parser broke?)');
+  return out;
+}
+
+function selftest() {
+  const fail = (msg) => {
+    console.error(`check_gifts: selftest FAILED: ${msg}`);
+    process.exit(1);
+  };
+  const pairedSet = new Set(['SPECIES_BAGON', 'SPECIES_CORSOLA']);
+  const entry = (id, species, requested) =>
+    `    [${id}] =\n    {\n        .nickname = _("X"),\n        .species = ${species},\n        .mailNum = -1,\n        .requestedSpecies = ${requested}\n    },\n`;
+  const table = (...entries) => `static const struct InGameTrade sIngameTrades[] =\n{\n${entries.join('')}};\n\nstatic const u16 sOther[] = {SPECIES_CORSOLA};\n`;
+  const allow = [{ trade: 'INGAME_TRADE_HORSEA', field: 'requestedSpecies', species: 'SPECIES_BAGON', why: 't' }];
+
+  const ok = scanTrades(
+    table(entry('INGAME_TRADE_HORSEA', 'SPECIES_HORSEA', 'SPECIES_BAGON'), entry('INGAME_TRADE_C', 'SPECIES_CORSOLA_HOENN', 'SPECIES_BARBOACH')),
+    pairedSet,
+    allow
+  );
+  if (ok.errors.length) fail(`clean fixture reported: ${ok.errors.join('; ')}`);
+  if (ok.trades.length !== 2) fail(`parsed ${ok.trades.length} trades, expected 2`);
+  if (ok.trades[1].requestedSpecies !== 'SPECIES_BARBOACH') fail('.requestedSpecies not read separately from .species');
+  if (!ok.used.has(0)) fail('allowlisted Bagon request not marked used');
+
+  const given = scanTrades(table(entry('INGAME_TRADE_C', 'SPECIES_CORSOLA', 'SPECIES_BARBOACH')), pairedSet, allow);
+  if (!given.errors.some((e) => e.includes('.species = SPECIES_CORSOLA'))) fail('planted vanilla .species was not reported');
+  const asked = scanTrades(table(entry('INGAME_TRADE_C', 'SPECIES_CORSOLA_HOENN', 'SPECIES_BAGON')), pairedSet, allow);
+  if (!asked.errors.some((e) => e.includes('.requestedSpecies = SPECIES_BAGON'))) fail('allowlist matched the wrong trade id');
+  const broken = scanTrades('static const u16 sNothing[] = {};', pairedSet, allow);
+  if (!broken.errors.some((e) => e.includes('parser broke'))) fail('missing sIngameTrades was not reported');
+  console.log('check_gifts: selftest OK');
+  process.exit(0);
+}
+
+if (process.argv.includes('--selftest')) selftest();
 
 const errors = [];
 
@@ -163,7 +238,7 @@ for (const file of listIncFiles(DATA_DIR).sort()) {
     if (!GIFT_COMMANDS.includes(cmd)) return;
     sites++;
     if (hoenn) return;
-    const ai = allowlist.findIndex((a) => a && a.label === label && a.species === species);
+    const ai = allowlist.findIndex((a) => a && !a.trade && a.label === label && a.species === species);
     if (ai >= 0) {
       allowUsed[ai] = true;
       allowlisted++;
@@ -175,8 +250,14 @@ for (const file of listIncFiles(DATA_DIR).sort()) {
 }
 
 errors.push(...vanillaHits);
+
+const tradeScan = scanTrades(fs.readFileSync(TRADE_H, 'utf8'), paired, allowlist);
+errors.push(...tradeScan.errors);
 allowlist.forEach((entry, i) => {
-  if (!allowUsed[i])
+  if (entry && entry.trade) {
+    if (!tradeScan.used.has(i))
+      errors.push(`allowlist entry ${i} (${entry.trade} .${entry.field} ${entry.species}): stale, matches no sIngameTrades field`);
+  } else if (!allowUsed[i])
     errors.push(`allowlist entry ${i} (${entry && entry.label} ${entry && entry.species}): stale, matches no givemon/setwildbattle`);
 });
 
@@ -191,3 +272,4 @@ if (errors.length > 0) {
 
 console.log(`check_gifts: ${sites} gift/static sites OK (${allowlisted} allowlisted)`);
 console.log(`check_gifts: dex-check species: ${dexChecks} calls OK (${dexAllowUsed.size} allowlisted)`);
+console.log(`check_gifts: in-game trades: ${tradeScan.trades.length} OK (${tradeScan.used.size} allowlisted)`);

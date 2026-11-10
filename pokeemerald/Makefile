@@ -85,6 +85,17 @@ else
   ROM := $(MODERN_ROM_NAME)
   OBJ_DIR := $(MODERN_OBJ_DIR_NAME)
 endif
+# C339 playtest ROM (`make playtest`): den-tour new game, own ROM name and object dir
+PLAYTEST ?= 0
+ifeq ($(PLAYTEST),1)
+  ROM := $(FILE_NAME)_playtest.gba
+  OBJ_DIR := $(BUILD_DIR)/playtest
+endif
+# C343 coda playtest ROM (`make playtest_coda`): Red Ink coda new game, own ROM name and object dir
+ifeq ($(PLAYTEST),2)
+  ROM := $(FILE_NAME)_playtest_coda.gba
+  OBJ_DIR := $(BUILD_DIR)/playtest_coda
+endif
 ELF := $(ROM:.gba=.elf)
 MAP := $(ROM:.gba=.map)
 SYM := $(ROM:.gba=.sym)
@@ -114,6 +125,9 @@ INCLUDE_SCANINC_ARGS := $(INCLUDE_DIRS:%=-I %)
 
 O_LEVEL ?= 2
 CPPFLAGS := $(INCLUDE_CPP_ARGS) -Wno-trigraphs -DMODERN=$(MODERN)
+ifneq ($(PLAYTEST),0)
+  CPPFLAGS += -DPLAYTEST=$(PLAYTEST)
+endif
 ifeq ($(MODERN),0)
   CPPFLAGS += -I tools/agbcc/include -I tools/agbcc -nostdinc -undef -std=gnu89
   CC1 := tools/agbcc/bin/agbcc$(EXE)
@@ -161,7 +175,9 @@ MAKEFLAGS += --no-print-directory
 .DELETE_ON_ERROR:
 
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
-.PHONY: all rom modern compare check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_species check_evolution check_all check_all_quick
+# playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
+RULES_NO_SCAN += playtest playtest_coda check_playtest_build
+.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_species check_evolution check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -190,9 +206,10 @@ check_scripts:
 		echo "All script files clean."; \
 	fi
 
-# Flag-chain validator: detect flags that are checked but never set in scripts
+# Flag pairing (C336): every custom flag is both read and set
 check_flags:
-	@bash scripts/check_flags.sh
+	@node scripts/check_flag_pairs.cjs --selftest
+	@node scripts/check_flag_pairs.cjs
 
 # Encounter table validation
 check_encounters:
@@ -212,10 +229,11 @@ check_bosses:
 
 # Static den wiring guard (C319): StaticDen macros, temp flags, caught flags
 check_dens:
-	@node scripts/check_dens.cjs
+	@node scripts/check_dens.cjs --selftest && node scripts/check_dens.cjs
 
 # Gift / static species guard (C320): vanilla vs _HOENN form in givemon/setwildbattle/showmonpic
 check_gifts:
+	@node scripts/check_gifts.cjs --selftest
 	@node scripts/check_gifts.cjs
 
 # Dialogue width guard (C321): new/changed .string lines must fit 208px (FONT_NORMAL widths)
@@ -224,12 +242,38 @@ check_text_width:
 
 # Doubles wiring guard (C323): trainerbattle_double targets are doubleBattle trainers with >=2 mons
 check_doubles:
-	@node scripts/check_doubles.cjs
+	@node scripts/check_doubles.cjs --selftest && node scripts/check_doubles.cjs
 
 # Trainer ID budget (C327): lists zero-reference trainer IDs, guards reclaimed slots
 check_trainer_slots:
 	@node scripts/check_trainer_slots.cjs --selftest
 	@node scripts/check_trainer_slots.cjs
+
+# Flag value ledger (C334): no two flags share a bit, no FLAG_UNUSED_* referenced, registered block fits
+check_flag_values:
+	@node scripts/check_flag_values.cjs --selftest
+	@node scripts/check_flag_values.cjs
+
+# Pokenav Birch call byte budget (C332): runtime-joined dex rating + field notes + red ink report must fit gStringVar4
+check_matchcall_len:
+	@node scripts/check_matchcall_len.cjs --selftest
+	@node scripts/check_matchcall_len.cjs
+
+# Scripted NPC destination tiles (C338): setobjectxyperm/setobjectxy/DexBelieverPlace land on walkable, warp-free, unoccupied tiles
+check_object_tiles:
+	@node scripts/check_object_tiles.cjs --selftest && node scripts/check_object_tiles.cjs
+
+# Red Ink reachability floors (C348): the four page species stay findable (stand-in for DexNav)
+check_encounter_odds:
+	@node scripts/check_encounter_odds.cjs --selftest && node scripts/check_encounter_odds.cjs
+
+# Den-tour playtest preset guard (C341): prerequisites set, no beat pre-triggered, den-route hide flags covered
+check_playtest:
+	@node scripts/check_playtest.cjs --selftest && node scripts/check_playtest.cjs
+
+# Postgame beat visibility guard (C354): hide-flag wiring, same-visit catch, object tile
+check_beat_visibility:
+	@node scripts/check_beat_visibility.cjs --selftest && node scripts/check_beat_visibility.cjs
 
 # Species registration completeness check
 check_species:
@@ -248,7 +292,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility
 	@echo ""
 	@echo "=== All validation checks passed ==="
 
@@ -318,6 +362,28 @@ $(shell mkdir -p $(SUBDIRS))
 # Pretend rules that are actually flags defer to `make all`
 modern: all
 compare: all
+
+# C339 den-tour playtest ROM: pokeemerald_playtest.gba, objects in build/playtest
+playtest:
+	$(MAKE) PLAYTEST=1 rom
+
+# C343 Red Ink coda playtest ROM: pokeemerald_playtest_coda.gba, objects in build/playtest_coda
+playtest_coda:
+	$(MAKE) PLAYTEST=2 rom
+
+# C344: compile both playtest ROMs (own object dirs) and prove each preset is linked in. Full builds: NOT in check_all.
+# agbcc drops the dead `if (PLAYTEST == N)` branches, so each new_game.o references only its own preset and
+# overworld.o never references ExecuteTruckSequence (FieldCB_WarpExitFadeFromBlack is referenced by vanilla code too).
+check_playtest_build:
+	$(MAKE) PLAYTEST=1 rom
+	$(MAKE) PLAYTEST=2 rom
+	@$(OBJDUMP) -r $(BUILD_DIR)/playtest/src/new_game.o | grep -q EventScript_PlaytestDenTour || (echo "check_playtest_build: den-tour preset missing from build/playtest" && false)
+	@$(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/new_game.o | grep -q EventScript_PlaytestCoda || (echo "check_playtest_build: coda preset missing from build/playtest_coda" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest/src/new_game.o | grep -q EventScript_PlaytestCoda || (echo "check_playtest_build: coda preset leaked into build/playtest" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/new_game.o | grep -q EventScript_PlaytestDenTour || (echo "check_playtest_build: den-tour preset leaked into build/playtest_coda" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest/src/overworld.o | grep -q ExecuteTruckSequence || (echo "check_playtest_build: truck intro not skipped in build/playtest" && false)
+	@! $(OBJDUMP) -r $(BUILD_DIR)/playtest_coda/src/overworld.o | grep -q ExecuteTruckSequence || (echo "check_playtest_build: truck intro not skipped in build/playtest_coda" && false)
+	@echo "check_playtest_build: OK (pokeemerald_playtest.gba, pokeemerald_playtest_coda.gba)"
 
 # Other rules
 rom: check_scripts $(ROM)

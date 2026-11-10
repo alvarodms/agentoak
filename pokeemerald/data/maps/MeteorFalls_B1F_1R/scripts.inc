@@ -70,7 +70,15 @@ MeteorFalls_B1F_1R_Text_ResearcherPostQuest:
 
 @ C315: crystal Treecko den cue
 MeteorFalls_B1F_1R_EventScript_GroovedStone::
+	goto_if_set FLAG_DEN_METEOR_STEVEN_CHALK, MeteorFalls_B1F_1R_EventScript_GroovedStoneOld
+	goto_if_set FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO, MeteorFalls_B1F_1R_EventScript_GroovedStoneChalk
+MeteorFalls_B1F_1R_EventScript_GroovedStoneOld::
 	msgbox MeteorFalls_B1F_1R_Text_GroovedStone, MSGBOX_SIGN
+	end
+
+@ C336: Steven passed here on his way to answer the chalk note in B1F_2R
+MeteorFalls_B1F_1R_EventScript_GroovedStoneChalk::
+	msgbox MeteorFalls_B1F_1R_Text_GroovedStoneChalk, MSGBOX_SIGN
 	end
 
 MeteorFalls_B1F_1R_Text_GroovedStone:
@@ -80,3 +88,10 @@ MeteorFalls_B1F_1R_Text_GroovedStone:
 	.string "itself on this stone.\p"
 	.string "The cuts are too clean\n"
 	.string "for claws.$"
+
+MeteorFalls_B1F_1R_Text_GroovedStoneChalk:
+	.string "Neat, shallow grooves are cut\n"
+	.string "into this meteorite chunk.\p"
+	.string "Fresh chalk dust lies on it.\n"
+	.string "Neat footprints lead back\l"
+	.string "toward the inner chamber.$"

@@ -47,6 +47,8 @@
 #include "constants/items.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
+extern const u8 EventScript_PlaytestDenTour[];
+extern const u8 EventScript_PlaytestCoda[];
 
 static void ClearFrontierRecord(void);
 static void WarpToTruck(void);
@@ -205,6 +207,20 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    if (PLAYTEST == 1)
+    {
+        /* C339 den tour (make playtest): skip the truck, start in Lilycove's Pokemon Center */
+        SetWarpDestination(MAP_GROUP(MAP_LILYCOVE_CITY_POKEMON_CENTER_1F), MAP_NUM(MAP_LILYCOVE_CITY_POKEMON_CENTER_1F), 0, -1, -1);
+        WarpIntoMap();
+        RunScriptImmediately(EventScript_PlaytestDenTour);
+    }
+    else if (PLAYTEST == 2)
+    {
+        /* C343 Red Ink coda (make playtest_coda): cleared save, start in Petalburg's Pokemon Center */
+        SetWarpDestination(MAP_GROUP(MAP_PETALBURG_CITY_POKEMON_CENTER_1F), MAP_NUM(MAP_PETALBURG_CITY_POKEMON_CENTER_1F), 0, -1, -1);
+        WarpIntoMap();
+        RunScriptImmediately(EventScript_PlaytestCoda);
+    }
 }
 
 static void ResetMiniGamesRecords(void)

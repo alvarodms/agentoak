@@ -159,12 +159,12 @@
               {
                 "min_level": 3,
                 "max_level": 4,
-                "species": "SPECIES_SEEDOT"
+                "species": "SPECIES_LOTAD_HOENN"
               },
               {
                 "min_level": 3,
                 "max_level": 4,
-                "species": "SPECIES_LOTAD_HOENN"
+                "species": "SPECIES_SEEDOT"
               },
               {
                 "min_level": 3,
@@ -1135,9 +1135,9 @@
                 "species": "SPECIES_SWABLU"
               },
               {
-                "min_level": 20,
+                "min_level": 21,
                 "max_level": 22,
-                "species": "SPECIES_SPOINK"
+                "species": "SPECIES_VULPIX_HOENN"
               },
               {
                 "min_level": 21,
@@ -1155,9 +1155,9 @@
                 "species": "SPECIES_TORKOAL"
               },
               {
-                "min_level": 21,
+                "min_level": 20,
                 "max_level": 22,
-                "species": "SPECIES_VULPIX_HOENN"
+                "species": "SPECIES_SPOINK"
               },
               {
                 "min_level": 22,
@@ -1923,9 +1923,9 @@
                 "species": "SPECIES_SILCOON"
               },
               {
-                "min_level": 5,
-                "max_level": 6,
-                "species": "SPECIES_TAILLOW"
+                "min_level": 6,
+                "max_level": 7,
+                "species": "SPECIES_SHROOMISH_HOENN"
               },
               {
                 "min_level": 5,
@@ -1938,9 +1938,9 @@
                 "species": "SPECIES_SPINARAK"
               },
               {
-                "min_level": 6,
-                "max_level": 7,
-                "species": "SPECIES_SHROOMISH_HOENN"
+                "min_level": 5,
+                "max_level": 6,
+                "species": "SPECIES_TAILLOW"
               },
               {
                 "min_level": 6,
@@ -2593,9 +2593,9 @@
                 "species": "SPECIES_MAKUHITA"
               },
               {
-                "min_level": 9,
-                "max_level": 11,
-                "species": "SPECIES_MACHOP"
+                "min_level": 10,
+                "max_level": 13,
+                "species": "SPECIES_GLIGAR_HOENN"
               },
               {
                 "min_level": 10,
@@ -2608,9 +2608,9 @@
                 "species": "SPECIES_ZUBAT"
               },
               {
-                "min_level": 10,
-                "max_level": 13,
-                "species": "SPECIES_GLIGAR_HOENN"
+                "min_level": 9,
+                "max_level": 11,
+                "species": "SPECIES_MACHOP"
               },
               {
                 "min_level": 10,

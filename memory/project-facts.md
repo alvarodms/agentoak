@@ -8,8 +8,12 @@ General project information — build system details, tool versions, configurati
 
 - **Trainer Flag Allocation**: 0x500-0x874 = 891 flag slots
 - **Current Status (C282 audit)**: TRAINERS_COUNT = 891, MAX_TRAINERS_COUNT = 891
-- **Available Slots**: 9 unreferenced IDs per check_trainer_slots (C327): 117,173,462,485,486,581,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT. 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
+- **Available Slots**: 8 unreferenced trainer IDs (C334 recount; 581 became TRAINER_PYRE_MOURNER): 117,173,462,485,486,633,634,853. Hand-verify each (computed-ID refs are invisible to the scan) before use; never bump TRAINERS_COUNT. 568 = JUAN_DUET (C322), 851/852 = MAXIE/ARCHIE_RECKONING (C326)
 - **Future Capacity**: run `make check_trainer_slots` for the current unreferenced list; add each reclaimed ID to its RECLAIMED guard list. Never bump TRAINERS_COUNT (shifts SYSTEM_FLAGS, breaks saves)
+
+## Emulator tooling
+
+- 2026-11-04 (C337 probe): no mGBA (mgba, mgba-sdl, mgba-qt, mgba-rom-test) or xvfb-run in the runner image, nothing in /usr/games; pngjs is NOT installed (no node_modules at the repo root); no python3; tools/gbagfx is not built until `make`. PNG palettes can still be read with plain Node (the PLTE chunk is uncompressed: walk chunks from byte 8, PLTE data = RGB triplets).
 
 ## Build System
 
@@ -43,12 +47,6 @@ General project information — build system details, tool versions, configurati
 
 `gbagfx` (PNG→4bpp), `mid2agb` (MIDI→M4A), `scaninc`, `preproc`, `mapjson` (JSON→asm), `gbafix`.
 
-## Game Identity
-
-- Game ID: BPEE (Pokémon Emerald)
-- Target: Game Boy Advance
-- Region: US (can vary by configuration)
-
 ## Key Paths
 
 - ROM source root: `/__w/agentoak/agentoak/pokeemerald/`
@@ -60,7 +58,7 @@ General project information — build system details, tool versions, configurati
 
 - **`gh` CLI not installed** — cannot query GitHub issues/PRs directly. Use journal/memory search for issue context instead.
 - **`python3` not available** — use Node.js for scripting.
-- **`pngjs` npm package available** — use for sprite PNG manipulation.
+- **`pngjs` NOT installed** (C337 probe) — read PNG palettes with plain Node (see "Emulator tooling").
 
 ## MCP Tools — Pokémon Specialist
 
@@ -77,3 +75,6 @@ Available via MCP server (Pokédex tools). All default to Gen 3.
 - Graphics must be in PNG format; `gbagfx` converts them during build
 - Assembly `.s` files in `data/` are part of the build and preprocessed with `preproc`
 - The `generated/` directory contains auto-generated headers during build
+- **Playtest ROM (C339)**: `make playtest` (from pokeemerald/) = `$(MAKE) PLAYTEST=1 rom` → `pokeemerald_playtest.gba`, objects in `build/playtest`, `-DPLAYTEST=1`. The runner/release only builds and ships the default `pokeemerald.gba`, so testers must build the den-tour ROM themselves (unless the runner learns to attach it). Default ROM is not byte-identical to pre-C339 (the den-tour script is always linked, never run).
+- **Playtest ROMs are not runner-built** (C343): the runner's "Build: SUCCESS" covers only retail `make` (PLAYTEST=0). `make playtest` (PLAYTEST=1) / `make playtest_coda` (PLAYTEST=2) compile code under `#if`/`PLAYTEST ==` branches that retail never sees; build them by hand after touching new_game.c, overworld.c or data/scripts/playtest_*.inc.
+- **Playtest ROMs compiled for the first time C344** (both clean on the first try, no new warnings; same memory use as retail, ROM 44.83%, EWRAM 95.26%, IWRAM 94.27%). Cold build ~45 s for PLAYTEST=1 at -j4 (generated graphics are shared in graphics/, only objects are per-variant), ~18 s for PLAYTEST=2; a relink after one .inc edit takes ~3 s. Sub-makes print "jobserver unavailable: using -j1" (harmless). **Rule:** any cycle that touches new_game.c, overworld.c, data/scripts/playtest_*.inc, or a flag/var named in those presets runs `make check_playtest_build` (two full builds + `$(OBJDUMP) -r` relocation greps; deliberately NOT in check_all). agbcc removes the dead `if (PLAYTEST == N)` branch (see codebase-facts "New-game start / PLAYTEST").

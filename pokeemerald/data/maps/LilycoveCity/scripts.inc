@@ -111,8 +111,33 @@ LilycoveCity_EventScript_ExpertM1::
 	msgbox LilycoveCity_Text_SeaRemainsForeverYoung, MSGBOX_SIGN
 	end
 
+@ C340 Red Ink first doubt: once GLIGAR_HOENN is caught she has seen them glide over the bay.
+@ She never faces the player (map.json FACE_DOWN, toward the sea).
 LilycoveCity_EventScript_ExpertF::
-	msgbox LilycoveCity_Text_SixtyYearsAgoHusbandProposed, MSGBOX_SIGN
+	lock
+	goto_if_set FLAG_LILYCOVE_GLIGAR_DOUBT, LilycoveCity_EventScript_ExpertFStillGliding
+	goto_if_unset FLAG_RECEIVED_FIELD_NOTES, LilycoveCity_EventScript_ExpertFProposal
+	setvar VAR_0x8004, SPECIES_GLIGAR_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_ExpertFProposal
+	msgbox LilycoveCity_Text_ExpertFGligarGlide, MSGBOX_DEFAULT
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	waitmoncry
+	playse SE_DEX_PAGE
+	waitse
+	setflag FLAG_LILYCOVE_GLIGAR_DOUBT
+	msgbox LilycoveCity_Text_ExpertFPlayerWroteDoubt, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_ExpertFProposal::
+	msgbox LilycoveCity_Text_SixtyYearsAgoHusbandProposed, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_EventScript_ExpertFStillGliding::
+	msgbox LilycoveCity_Text_ExpertFStillGliding, MSGBOX_DEFAULT
+	release
 	end
 
 LilycoveCity_EventScript_ExpertM2::
@@ -662,6 +687,23 @@ LilycoveCity_Text_SixtyYearsAgoHusbandProposed:
 	.string "proposed to me here.\l"
 	.string "The sea remains as beautiful as ever.\p"
 	.string "Mufufufu mufufufufufu…$"
+
+LilycoveCity_Text_ExpertFGligarGlide:
+	.string "Sixty springs I've watched\n"
+	.string "this bay. This one's new.\p"
+	.string "GLIGAR glide off the cliffs\n"
+	.string "now, out over the water.\l"
+	.string "Not one ever touches it.\p"
+	.string "…Your red ink says they swim.\n"
+	.string "Funny.$"
+
+LilycoveCity_Text_ExpertFPlayerWroteDoubt:
+	.string "{PLAYER} wrote a line under\n"
+	.string "the GLIGAR page.$"
+
+LilycoveCity_Text_ExpertFStillGliding:
+	.string "Still gliding, out there.\n"
+	.string "Never touching the water.$"
 
 LilycoveCity_Text_TeamAquaRenovatedCavern:
 	.string "Hm, you know of the peculiar cavern\n"

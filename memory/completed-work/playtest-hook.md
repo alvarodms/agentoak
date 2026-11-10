@@ -31,6 +31,15 @@ not yet wired into cycle phases.
 | `src/overworld.c` | `CB2_NewGame`: apply scenario after `NewGameInitData`; no truck sequence when active |
 | `ld_script.ld` | `src/playtest.o(.text)` / `(.rodata)` after `new_game.o` |
 
+## Not the same as `make playtest`
+
+The C339/C343 preset ROMs (`make playtest` / `make playtest_coda`, compile-time
+`PLAYTEST` macro in `include/config.h`, presets in `new_game.c`) are a separate
+mechanism for human playtesters. Both can coexist in `CB2_NewGame`: a harness
+scenario (`Playtest_IsActive()`) is applied after `NewGameInitData`, so it
+overrides any preset warp, and it takes the first branch of the
+`gFieldCallback` choice.
+
 ## Rules for cycles
 
 - Keep the two hook lines when editing `CB2_InitCopyrightScreenAfterBootup` or
