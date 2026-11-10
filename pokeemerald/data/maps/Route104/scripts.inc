@@ -19,6 +19,8 @@ Route104_OnTransition:
 	@ C327 Red Ink: he faces the sea (west) while he trusts BIRCH's page, and turns east
 	@ toward PETALBURG / ROUTE 102 once the player has caught LOTAD_HOENN (same truth as the inked page).
 	EventMacro_DexBelieverPlace SPECIES_LOTAD_HOENN, LOCALID_ROUTE104_LOTAD_SKEPTIC, 33, 49, MOVEMENT_TYPE_FACE_RIGHT
+	@ C342 Red Ink coda: after game clear the schoolkid teaches a little girl who faces the sea where he once stood.
+	call Route104_EventScript_SetupLotadLesson
 	end
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
@@ -29,6 +31,17 @@ Route104_EventScript_ShowOrHideWhiteHerbFlorist::
 
 Route104_EventScript_HideWhiteHerbFlorist::
 	setflag FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST
+	return
+
+Route104_EventScript_SetupLotadLesson::
+	setflag FLAG_HIDE_ROUTE104_LOTAD_STUDENT
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Route104_EventScript_SetupLotadLessonEnd
+	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_ne VAR_RESULT, TRUE, Route104_EventScript_SetupLotadLessonEnd
+	clearflag FLAG_HIDE_ROUTE104_LOTAD_STUDENT
+	setobjectmovementtype LOCALID_ROUTE104_LOTAD_SKEPTIC, MOVEMENT_TYPE_FACE_DOWN
+Route104_EventScript_SetupLotadLessonEnd::
 	return
 
 Route104_EventScript_TrySetRivalPos::
@@ -356,7 +369,35 @@ Route104_EventScript_LotadSkeptic::
 	end
 
 Route104_EventScript_LotadSkepticCorrected::
+	@ The lesson needs the little girl on screen; she only appears on re-entry (SetupLotadLesson).
+	goto_if_set FLAG_HIDE_ROUTE104_LOTAD_STUDENT, Route104_EventScript_LotadSkepticPenLine
+	goto_if_set FLAG_SYS_GAME_CLEAR, Route104_EventScript_LotadLesson
+Route104_EventScript_LotadSkepticPenLine::
 	msgbox Route104_Text_LotadSkepticCorrected, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE104_LOTAD_SKEPTIC, Common_Movement_FaceRight
+	waitmovement 0
+	release
+	end
+
+Route104_EventScript_LotadLesson::
+	msgbox Route104_Text_LotadLesson, MSGBOX_DEFAULT
+	goto_if_unset FLAG_LILYCOVE_GLIGAR_DOUBT, Route104_EventScript_LotadLessonDone
+	msgbox Route104_Text_LotadLessonGligar, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE104_LOTAD_STUDENT, Common_Movement_QuestionMark
+	waitmovement 0
+	msgbox Route104_Text_LotadLessonNever, MSGBOX_DEFAULT
+Route104_EventScript_LotadLessonDone::
+	applymovement LOCALID_ROUTE104_LOTAD_SKEPTIC, Common_Movement_FaceDown
+	waitmovement 0
+	release
+	end
+
+Route104_EventScript_LotadStudent::
+	lock
+	faceplayer
+	msgbox Route104_Text_LotadStudent, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE104_LOTAD_STUDENT, Common_Movement_FaceLeft
+	waitmovement 0
 	release
 	end
 
@@ -1266,3 +1307,30 @@ Route104_Text_LotadSkepticCorrected:
 	.string "You did.\p"
 	.string "...Mind if I borrow your\n"
 	.string "red pen?$"
+
+Route104_Text_LotadLesson:
+	.string "Shh! Class is in session.\p"
+	.string "I'm teaching the little ones\n"
+	.string "from your red pages.\p"
+	.string "Repeat after me: LOTAD.\n"
+	.string "Electric! Its leaf drinks\l"
+	.string "the storm.\p"
+	.string "Red ink means it's true.\n"
+	.string "Everybody knows that.$"
+
+Route104_Text_LotadLessonGligar:
+	.string "And page 3. GLIGAR: Water\n"
+	.string "and Rock. It swims better\l"
+	.string "than it glides!\p"
+	.string "...The kid asked if GLIGAR\n"
+	.string "ever glide over the sea.$"
+
+Route104_Text_LotadLessonNever:
+	.string "I said never.\n"
+	.string "It's in red.$"
+
+Route104_Text_LotadStudent:
+	.string "My teacher says LOTAD love\n"
+	.string "storms. A trainer wrote it.\p"
+	.string "Storm's coming. I'm watching\n"
+	.string "the sea for where they dance.$"

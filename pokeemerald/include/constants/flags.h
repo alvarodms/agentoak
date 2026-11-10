@@ -56,13 +56,13 @@
 #define FLAG_MIGRATION_TRACKER_STAGE2   0x2A
 #define FLAG_MIGRATION_TRACKER_STAGE3   0x2B
 #define FLAG_HIDE_MT_CHIMNEY_POSTGAME_MAGMA_GRUNT    0x2C
-#define FLAG_UNUSED_0x02D    0x2D // Unused Flag
-#define FLAG_UNUSED_0x02E    0x2E // Unused Flag
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
-#define FLAG_UNUSED_0x033    0x33 // Unused Flag
+#define FLAG_DEN_SHOAL_TRADE_DONE 0x2D // C335 Shoal Cave sailor trade (Red Ink p.6)
+#define FLAG_LILYCOVE_GLIGAR_DOUBT 0x2E // C340 Lilycove old woman: Red Ink p.3 doubt line
+#define FLAG_HIDE_ROUTE104_LOTAD_STUDENT    0x2F // C342 Red Ink coda: postgame little girl on Route 104 (OnTransition owns it)
+#define FLAG_HIDE_ROUTE106_TIDE_HIKER    0x30 // C348 v3.1 Beat A: postgame Granite hiker on Route 106's tide line (Route106 OnTransition owns it)
+#define FLAG_HIDE_GRANITE_CAVE_B1F_HIKER    0x31 // C348 v3.1 Beat A: hides the B1F hiker once he has left for the sea (B1F OnTransition owns it)
+#define FLAG_HIDE_ROUTE119_STORM_CHASER    0x32 // v3.1 Beat B (C349): postgame Parasol Lady TESSA on Route 119's riverbank (Route119 OnTransition owns it)
+#define FLAG_HIDE_ROUTE113_ASH_CAMPER    0x33 // v3.1 Beat C (C350): postgame Camper ELLIS in the Route 113 ash facing the picnicker (Route113 OnTransition owns it)
 #define FLAG_UNUSED_0x034    0x34 // Unused Flag
 #define FLAG_UNUSED_0x035    0x35 // Unused Flag
 #define FLAG_UNUSED_0x036    0x36 // Unused Flag
@@ -660,10 +660,10 @@
 #define FLAG_PRIMAL_STIRRING_STARTED     0x264 // Birch sends player to investigate anomalies
 #define FLAG_TREMORS_INVESTIGATED        0x265 // Lavaridge/Fiery Path tremor check done
 #define FLAG_TIDES_INVESTIGATED          0x266 // Dewford/Slateport tidal anomaly check done
-#define FLAG_REGI_RESONANCE_CHECKED      0x267 // Player visited a Regi tomb
+#define FLAG_UNUSED_0x267                0x267 // Unused Flag (C337 reclaimed: was FLAG_REGI_RESONANCE_CHECKED, never referenced)
 #define FLAG_ALL_SIGNS_REPORTED          0x268 // All 3 anomalies reported to Birch
-#define FLAG_PRIMAL_GROUDON_AVAILABLE    0x269 // Groudon encounter unlocked
-#define FLAG_PRIMAL_KYOGRE_AVAILABLE     0x26A // Kyogre encounter unlocked
+#define FLAG_UNUSED_0x269                0x269 // Unused Flag (C337 reclaimed: was FLAG_PRIMAL_GROUDON_AVAILABLE, never referenced)
+#define FLAG_UNUSED_0x26A                0x26A // Unused Flag (C337 reclaimed: was FLAG_PRIMAL_KYOGRE_AVAILABLE, never referenced)
 #define FLAG_DEFEATED_PRIMAL_GROUDON     0x26B // Groudon defeated (not caught)
 #define FLAG_CAUGHT_PRIMAL_GROUDON       0x26C // Groudon caught
 #define FLAG_DEFEATED_PRIMAL_KYOGRE      0x26D // Kyogre defeated (not caught)
@@ -746,7 +746,7 @@
 #define FLAG_RECEIVED_JUAN_MYSTIC_WATER  0x2B8 // C322: set after Juan's postgame duet gift (Mystic Water) is received; retried if bag was full
 #define FLAG_RECEIVED_FIELD_NOTES  0x2B9 // C324: set when Birch hands over the FIELD NOTES key item (Pokedex scene or late fallback)
 #define FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE  0x2BA // C329: Red Ink page-3 hiker gives HARD_STONE once GLIGAR_HOENN is caught
-#define FLAG_UNUSED_0x2BB  0x2BB // Unused Flag
+#define FLAG_DEN_METEOR_STEVEN_CHALK  0x2BB // C336 Steven's chalk answer copied into FIELD NOTES
 
 // Event Flags
 #define FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG                      0x2BC

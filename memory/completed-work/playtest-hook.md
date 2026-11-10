@@ -53,6 +53,15 @@ Pokénav and in-person Red Ink reports, Fey Flame/Undertow multipliers,
 Meteor Falls Steven, the Archie Reckoning (on water), Bag lock (d) AI
 Full Restore, the Shoal Cave tide cue, and whiteout mid-den.
 
+## Not the same as `make playtest`
+
+The C339/C343 preset ROMs (`make playtest` / `make playtest_coda`, compile-time
+`PLAYTEST` macro in `include/config.h`, presets in `new_game.c`) are a separate
+mechanism for human playtesters. Both can coexist in `CB2_NewGame`: a harness
+scenario (`Playtest_IsActive()`) is applied after `NewGameInitData`, so it
+overrides any preset warp, and it takes the first branch of the
+`gFieldCallback` choice.
+
 ## Rules for cycles
 
 - Keep the two hook lines when editing `CB2_InitCopyrightScreenAfterBootup` or

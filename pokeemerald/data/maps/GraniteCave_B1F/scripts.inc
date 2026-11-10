@@ -6,9 +6,23 @@ GraniteCave_B1F_MapScripts::
 
 @ C329 Red Ink page 3: the hiker keeps his back to the deep ladder while he trusts BIRCH's page;
 @ once GLIGAR_HOENN is caught he faces down toward it.
+@ C348 v3.1 Beat A: after the credits he takes the red ink at its word and leaves for ROUTE 106's
+@ tide line. B1F stays bare: nothing replaces him.
 GraniteCave_B1F_OnTransition:
-	EventMacro_DexBelieverPlace SPECIES_GLIGAR_HOENN, LOCALID_GRANITE_CAVE_B1F_HIKER, 28, 19, MOVEMENT_TYPE_FACE_DOWN
+	call GraniteCave_B1F_EventScript_SetupHikerLeft
+	EventMacro_DexBelieverPlace SPECIES_GLIGAR_HOENN, LOCALID_GRANITE_CAVE_B1F_HIKER, 26, 20, MOVEMENT_TYPE_FACE_DOWN
 	goto CaveHole_FixCrackedGround
+
+@ Global (::) so check_playtest R5 can find the label.
+GraniteCave_B1F_EventScript_SetupHikerLeft::
+	clearflag FLAG_HIDE_GRANITE_CAVE_B1F_HIKER
+	goto_if_unset FLAG_SYS_GAME_CLEAR, GraniteCave_B1F_EventScript_SetupHikerLeftEnd
+	setvar VAR_0x8004, SPECIES_GLIGAR_HOENN
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_ne VAR_RESULT, TRUE, GraniteCave_B1F_EventScript_SetupHikerLeftEnd
+	setflag FLAG_HIDE_GRANITE_CAVE_B1F_HIKER
+GraniteCave_B1F_EventScript_SetupHikerLeftEnd:
+	return
 
 GraniteCave_B1F_SetHoleWarp:
 	setstepcallback STEP_CB_CRACKED_FLOOR

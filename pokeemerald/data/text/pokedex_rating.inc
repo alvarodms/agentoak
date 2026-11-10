@@ -240,9 +240,31 @@ gFieldNotesText_GligarMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a hiker in GRANITE\n"
 	.string "CAVE faces the deep.$"
 
+@ C340 page 3 fourth mark: the player's own doubt (Lilycove old woman). Unsigned, never resolved in v3.0
+gFieldNotesText_GligarDoubt::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Seen in LILYCOVE: gliding\n"
+	.string "over the sea, dry as dust.\l"
+	.string "Wrong, or changed again…?$"
+
 gFieldNotesText_VulpixMargin::
 	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: someone on ROUTE\n"
 	.string "113 laughs in the falling ash.$"
+
+@ C334 den margins: gated by IsFieldNotesMarginEarned (src/match_call.c), not by the ink alone
+gFieldNotesText_TorchicMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a mourner on\n"
+	.string "MT. PYRE faces the graves.$"
+
+gFieldNotesText_MudkipMargin::
+	.string "{COLOR RED}{SHADOW LIGHT_RED}Since then: a sailor keeps\n"
+	.string "the tide pool for the sea.$"
+
+@ C336 page 7 third mark: Steven's chalk. C337: LIGHT_GRAY/WHITE was too faint on the white box; now BLUE/LIGHT_BLUE (palette verified C337: idx8=48,80,200, idx9=160,192,240)
+gFieldNotesText_TreeckoMargin::
+	.string "{COLOR BLUE}{SHADOW LIGHT_BLUE}Copied from the cave wall:\n"
+	.string "Its kind still whet leaves\l"
+	.string "on forest bark. This one\l"
+	.string "came for the meteor. - S.$"
 
 @ C331 cover once 3+ pages are inked (the player's name goes on the cover)
 gFieldNotesText_CoverYours::
@@ -280,6 +302,11 @@ gBirchRedInkText_Believed::
 gBirchRedInkText_OnlyYou::
 	.string "No one else ever read my\n"
 	.string "den pages. Only you went.$"
+
+@ C334 one line for every den believer (replaces OnlyYou when no P1-P4 believer is named)
+gBirchRedInkText_Dens::
+	.string "Word came from the dens too.\n"
+	.string "Your ink went deep.$"
 
 gBirchRedInkText_Close::
 	.string "These are your notes now,\n"

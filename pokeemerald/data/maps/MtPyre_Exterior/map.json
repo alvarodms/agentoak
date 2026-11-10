@@ -65,6 +65,20 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "MtPyre_Exterior_EventScript_StarlightTorchic",
       "flag": "FLAG_TEMP_11"
+    },
+    {
+      "local_id": "LOCALID_MT_PYRE_EXTERIOR_MOURNER",
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "x": 17,
+      "y": 12,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MtPyre_Exterior_EventScript_Mourner",
+      "flag": "0"
     }
   ],
   "warp_events": [

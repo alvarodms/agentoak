@@ -1542,7 +1542,12 @@ void CB2_NewGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    gFieldCallback = Playtest_IsActive() ? NULL : ExecuteTruckSequence;
+    if (Playtest_IsActive())
+        gFieldCallback = NULL; // runner harness scenario (src/playtest.c): default warp-in on the scenario tile
+    else if (PLAYTEST)
+        gFieldCallback = FieldCB_WarpExitFadeFromBlack; // C339/C343 `make playtest` preset ROMs
+    else
+        gFieldCallback = ExecuteTruckSequence;
     gFieldCallback2 = NULL;
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();

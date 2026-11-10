@@ -6,7 +6,7 @@
 
 ## Implementation Summary
 - Lv34 Misdreavus with Spell Tag held item on Mt. Pyre Summit
-- Pyre Keeper NPC (OBJ_EVENT_GFX_OLD_WOMAN) at (20,25), approaches via walk_right x2
+- Pyre Keeper NPC (OBJ_EVENT_GFX_OLD_WOMAN) at (21,25) since C339 (was 20,25, inside the wall), approaches via one walk_right to 22,25
 - ShakeCamera + SE_M_CONFUSE_RAY atmospheric effects, Misdreavus cries
 - Gated on FLAG_BADGE06_GET, one-shot via FLAG_MT_PYRE_GHOST_EVENT (0x281)
 - Post-battle dialogue teases Cave of Origin / Sootopolis (Primal Stirring arc)

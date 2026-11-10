@@ -77,7 +77,8 @@
 @ species/level/item: wild battle parameters (item = held item)
 @ caught_flag: permanent flag set only on a catch
 @ approach_text / caught_text / faded_text: text labels
-	.macro EventMacro_StaticDen species:req, level:req, item:req, caught_flag:req, approach_text:req, caught_text:req, faded_text:req
+@ on_caught (optional, C338): subroutine called after caught_text, same visit; used for a believer's live reaction. Must end in return.
+	.macro EventMacro_StaticDen species:req, level:req, item:req, caught_flag:req, approach_text:req, caught_text:req, faded_text:req, on_caught
 	lock
 	msgbox \approach_text, MSGBOX_DEFAULT
 	playmoncry \species, CRY_MODE_ENCOUNTER
@@ -94,6 +95,9 @@
 .Lstaticden_caught_\@:
 	setflag \caught_flag
 	msgbox \caught_text, MSGBOX_DEFAULT
+	.ifnb \on_caught
+	call \on_caught
+	.endif
 	release
 	end
 	.endm
@@ -126,4 +130,16 @@
 	setobjectxyperm \localid, \x, \y
 	setobjectmovementtype \localid, \movement
 .Ldexbeliever_end_\@:
+	.endm
+
+@ InkBelieverPlace — Red Ink world reaction gated on the inked-page count (C345), not a species.
+@ Inline inside a MAP_SCRIPT_ON_TRANSITION script. Once CountInkedFieldNotePages >= \min_pages,
+@ object \localid is moved to (\x,\y) and given \movement. Pass the object's own map.json tile
+@ to change only its facing. Clobbers VAR_RESULT. check_object_tiles.cjs reads \x,\y.
+	.macro EventMacro_InkBelieverPlace min_pages:req, localid:req, x:req, y:req, movement:req
+	specialvar VAR_RESULT, CountInkedFieldNotePages
+	goto_if_lt VAR_RESULT, \min_pages, .Linkbeliever_end_\@
+	setobjectxyperm \localid, \x, \y
+	setobjectmovementtype \localid, \movement
+.Linkbeliever_end_\@:
 	.endm

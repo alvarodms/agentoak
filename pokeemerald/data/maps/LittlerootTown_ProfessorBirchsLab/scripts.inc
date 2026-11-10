@@ -25,6 +25,7 @@ LittlerootTown_ProfessorBirchsLab_OnTransition:
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter
+	call LittlerootTown_ProfessorBirchsLab_EventScript_TryBookshelfPose
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter::
@@ -32,6 +33,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter::
 	goto_if_eq VAR_RESULT, TRUE, LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter
 	setobjectmovementtype LOCALID_BIRCHS_LAB_RIVAL, MOVEMENT_TYPE_WANDER_UP_AND_DOWN
 	setobjectxyperm LOCALID_BIRCHS_LAB_RIVAL, 5, 10
+	call LittlerootTown_ProfessorBirchsLab_EventScript_TryBookshelfPose
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter::
@@ -46,7 +48,16 @@ LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout::
 	setmaplayoutindex LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE
 	setobjectmovementtype LOCALID_BIRCHS_LAB_RIVAL, MOVEMENT_TYPE_WANDER_UP_AND_DOWN
 	setobjectxyperm LOCALID_BIRCHS_LAB_RIVAL, 5, 10
+	call LittlerootTown_ProfessorBirchsLab_EventScript_TryBookshelfPose
 	end
+
+@ C345 Birch at his bookshelf: 3+ FIELD NOTES pages inked -> back to the room (faces north on his own tile).
+@ Skipped during the National Dex / Johto starter scenes (states 1,2,4,5), which pose him themselves.
+LittlerootTown_ProfessorBirchsLab_EventScript_TryBookshelfPose::
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, Common_EventScript_NopReturn
+	EventMacro_InkBelieverPlace 3, LOCALID_BIRCHS_LAB_BIRCH, 6, 4, MOVEMENT_TYPE_FACE_UP
+	return
 
 LittlerootTown_ProfessorBirchsLab_OnWarp:
 	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_SetPlayerPosForReceiveStarter
@@ -501,6 +512,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedJohtoStarter::
 LittlerootTown_ProfessorBirchsLab_EventScript_Birch::
 	lock
 	faceplayer
+	call LittlerootTown_ProfessorBirchsLab_EventScript_BookshelfGreeting
 	goto_if_set FLAG_SYS_GAME_CLEAR, LittlerootTown_ProfessorBirchsLab_EventScript_BirchQuestCheck
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
@@ -508,6 +520,19 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Birch::
 	goto_if_unset FLAG_ENABLE_PROF_BIRCH_MATCH_CALL, EventScript_RegisterProfBirch
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister
 	end
+
+@ C345: in person only (never the PokéNav). Same gate as TryBookshelfPose. The report itself is unchanged.
+LittlerootTown_ProfessorBirchsLab_EventScript_BookshelfGreeting::
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, Common_EventScript_NopReturn
+	specialvar VAR_RESULT, CountInkedFieldNotePages
+	goto_if_lt VAR_RESULT, 3, Common_EventScript_NopReturn
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BookshelfCopying, MSGBOX_DEFAULT
+	goto_if_unset FLAG_LILYCOVE_GLIGAR_DOUBT, Common_EventScript_NopReturn
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_BookshelfQuestionMark, MSGBOX_DEFAULT
+	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CanHaveAnyOneOfRarePokemon, MSGBOX_DEFAULT
@@ -2220,3 +2245,16 @@ BirchLab_Text_ReckoningAcknowledge:
 BirchLab_Text_ReckoningGift:
 	.string "PROF. BIRCH: Here -- take this.\n"
 	.string "For being thorough.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BookshelfCopying:
+	.string "PROF. BIRCH: Oh! {PLAYER}{KUN}!\n"
+	.string "You caught me copying.\p"
+	.string "I'm putting your corrections into\n"
+	.string "my own notes. In red, too.\p"
+	.string "It seemed only fair.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_BookshelfQuestionMark:
+	.string "PROF. BIRCH: I copied your question\n"
+	.string "mark as well. Page three.\p"
+	.string "A notebook that never asks has\n"
+	.string "stopped being a notebook.$"

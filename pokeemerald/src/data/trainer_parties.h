@@ -1846,13 +1846,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_GruntSpaceCenter2[] = {
     }
 };
 
-static const struct TrainerMonItemCustomMoves sParty_Cindy2[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_StormChaser[] = {
     {
-    .iv = 0,
-    .lvl = 11,
-    .species = SPECIES_ZIGZAGOON,
-    .heldItem = ITEM_NUGGET,
-    .moves = {MOVE_TACKLE, MOVE_TAIL_WHIP, MOVE_NONE, MOVE_NONE}
+    .iv = 100,
+    .lvl = 55,
+    .species = SPECIES_LOTAD_HOENN,
+    .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_GIGA_DRAIN, MOVE_SHOCK_WAVE}
+    },
+    {
+    .iv = 100,
+    .lvl = 57,
+    .species = SPECIES_LOMBRE_HOENN,
+    .moves = {MOVE_FAKE_OUT, MOVE_THUNDER, MOVE_THUNDER_WAVE, MOVE_GIGA_DRAIN}
+    },
+    {
+    .iv = 150,
+    .lvl = 59,
+    .species = SPECIES_LUDICOLO_HOENN,
+    .moves = {MOVE_THUNDER, MOVE_GIGA_DRAIN, MOVE_TOXIC, MOVE_PROTECT}
     }
 };
 
@@ -2568,21 +2579,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Jack[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Dudley[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_AshCamper[] = {
     {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_TENTACOOL,
+    .iv = 100,
+    .lvl = 54,
+    .species = SPECIES_VULPIX_HOENN,
+    .moves = {MOVE_HAIL, MOVE_ICY_WIND, MOVE_DAZZLING_GLEAM, MOVE_CONFUSE_RAY}
     },
     {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_WINGULL,
-    },
-    {
-    .iv = 0,
-    .lvl = 33,
-    .species = SPECIES_TENTACRUEL,
+    .iv = 120,
+    .lvl = 56,
+    .species = SPECIES_NINETALES_HOENN,
+    .moves = {MOVE_ICE_BEAM, MOVE_SHADOW_BALL, MOVE_CALM_MIND, MOVE_MOONLIGHT}
     }
 };
 
@@ -9830,11 +9838,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Clarence[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Terry[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_PyreMourner[] = {
     {
-    .iv = 0,
-    .lvl = 37,
-    .species = SPECIES_GIRAFARIG,
+    .iv = 100,
+    .lvl = 38,
+    .species = SPECIES_DUSCLOPS,
+    .moves = {MOVE_CONFUSE_RAY, MOVE_SHADOW_PUNCH, MOVE_NIGHT_SHADE, MOVE_PURSUIT}
+    },
+    {
+    .iv = 100,
+    .lvl = 39,
+    .species = SPECIES_CHIMECHO,
+    .moves = {MOVE_CONFUSION, MOVE_SHADOW_BALL, MOVE_UPROAR, MOVE_PSYWAVE}
+    },
+    {
+    .iv = 150,
+    .lvl = 40,
+    .species = SPECIES_BANETTE,
+    .moves = {MOVE_WILL_O_WISP, MOVE_SHADOW_BALL, MOVE_FAINT_ATTACK, MOVE_KNOCK_OFF}
     }
 };
 

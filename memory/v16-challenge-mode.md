@@ -26,3 +26,16 @@
 | `Rustboro PkmnCenter/scripts.inc + map.json` | Hiker difficulty NPC |
 | `Dewford PkmnCenter/scripts.inc + map.json` | Boy difficulty NPC |
 | `Mauville PkmnCenter/scripts.inc + map.json` | Researcher difficulty NPC |
+
+## C325 Challenge Bag-lock audit (moved from strategy-notes C333) (read-only; no fights changed)
+Cap = `GetChallengeLevelCap()` badges held at the fight (soft: EXP /10 at or over cap, so players can overshoot). Ace = trainer_parties.h level + `sChallengeModeScaling` boost (Leader +3, Rival +2, Champion +5). Items = `gTrainers[].items` the AI can no longer use in Challenge.
+
+| Fight (trainer ID) | Cap | Ace (base → Challenge) | Items removed by lock | Gap |
+|---|---|---|---|---|
+| Flannery (TRAINER_FLANNERY_1, 3 badges) | 30 | Torkoal 29 → 32 | 2x Hyper Potion | 2 |
+| Juan (TRAINER_JUAN_1, 7 badges) | 48 | Milotic 46 → 49 | 2x Hyper Potion | 1 |
+| Wally VR (TRAINER_WALLY_VR_1, RIVAL) | 55 | Gardevoir 58 → 60 | 3x Full Restore | 5 (edge, not flagged) |
+| Champion Steven (TRAINER_WALLACE, CHAMPION) | 55 | Metagross 57 → 62 | 4x Full Restore | **7 — watch for wall** |
+| Meteor Falls Steven (TRAINER_STEVEN, RIVAL, postgame) | 55 | Metagross 86 → 88 | 4x Full Restore | **33 — watch for wall** (postgame superboss; cap never rises past 55) |
+
+Every audited fight lost its trainer items, so the lock makes each one easier for the AI side, while the player loses potions too. Champion: whether losing 4 Full Restores (him) vs. the player's whole BAG nets out is the playtest question. If Champion Challenge reports come back as a wall, the levers are the CHAMPION +5 boost or the 55 cap, not his roster. Mossdeep Steven tag partner: his AI is already item-less (INGAME_PARTNER early-out in `ShouldUseItem`).

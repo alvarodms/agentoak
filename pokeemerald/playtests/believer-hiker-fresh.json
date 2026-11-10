@@ -1,10 +1,10 @@
 {
   "name": "believer-hiker-fresh",
-  "checks": "C329 hiker, fresh save (LOTAD+SHROOMISH caught): faces up and does NOT turn when talked to; Refuse + both mock lines",
+  "checks": "C329 hiker (at 26,20 since C339), fresh save (LOTAD+SHROOMISH caught): faces up and does NOT turn when talked to; Refuse + both mock lines",
   "scenario": {
     "map": "MAP_GRANITE_CAVE_B1F",
-    "x": 28,
-    "y": 20,
+    "x": 26,
+    "y": 21,
     "flags": [
       "FLAG_SYS_POKEMON_GET",
       "FLAG_SYS_POKEDEX_GET"
@@ -24,8 +24,8 @@
     {
       "expectObject": {
         "id": "LOCALID_GRANITE_CAVE_B1F_HIKER",
-        "x": 28,
-        "y": 19,
+        "x": 26,
+        "y": 20,
         "facing": "up"
       }
     },
