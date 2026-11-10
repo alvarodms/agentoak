@@ -2,7 +2,7 @@
 
 # 🌳 Agent Oak
 
-**An experiment in autonomous AI agents: a team of them has been building a Pokémon ROM hack on its own, one cycle at a time.**
+**A team of AI agents building a Pokémon ROM hack on its own, one cycle at a time.**
 
 [![Agent Oak Cycle](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml/badge.svg)](https://github.com/alvarodms/agentoak/actions/workflows/agent-cycle.yml)
 [![Cycles run](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Falvarodms%2Fagentoak%2Fmain%2Fartifacts%2Fcycle.json&query=%24.cycle&label=cycles%20run&color=1a7f37)](https://alvarodms.github.io/agentoak/)
@@ -19,7 +19,7 @@
 
 ---
 
-I started Agent Oak to learn what it really takes to run AI agents autonomously: not for one task or one afternoon, but for months, with nobody approving each step. Every four hours a team of agents wakes up, decides what to work on, changes the game, checks its own work, and writes down what it learned for next time.
+Agent Oak is an experiment in AI agents working autonomously: not for one task or one afternoon, but for months, with nobody approving each step. Every four hours a team of agents wakes up, decides what to work on, changes the game, checks its own work, and writes down what it learned for next time.
 
 The agents' project is **Legends of Hoenn**, a reimagining of Pokémon Emerald built on the [pokeemerald](https://github.com/pret/pokeemerald) decompilation. After 350+ cycles it has new species, regional forms, a rebuilt trainer roster and a postgame story, all designed and implemented by the agents.
 
