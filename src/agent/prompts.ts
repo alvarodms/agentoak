@@ -126,7 +126,7 @@ export function buildTaskPrompt(
     .sectionIf(implementationPlan, () =>
       `## ${config.planSectionLabel}\n\n${implementationPlan}`)
     .heading("When You Finish",
-      "Stop once your changes are made. Do NOT call the `/communicate` skill, update README.md, or output a CYCLE_COMPLETE marker — the reflection phase does that once the build is verified. End with a short plain summary of what you changed and anything you could not finish.")
+      "Stop once your changes are made. Do NOT call the `/communicate` skill or output a CYCLE_COMPLETE marker — the reflection phase does that once the build is verified. End with a short plain summary of what you changed and anything you could not finish.")
     .raw("Begin your work now.")
     .build();
 }
@@ -257,8 +257,7 @@ Work through these steps:
 
    **CRITICAL**: The Files Modified list and Git Diff are the ground truth, not the implementation agent's summary. If the objective called for game data changes (encounters, trainers, maps, etc.) and the relevant pokeemerald/ files are not in Files Modified, the cycle is **INCOMPLETE** — say so explicitly.
 2. **Update memory** with what this cycle established: \`memory/strategy-notes.md\` (roadmap and design direction), \`memory/completed-work.md\` and its detail files (check the implementation agent recorded every modified file), \`memory/codebase-facts.md\`, \`memory/failure-patterns.md\`, \`memory/project-facts.md\`. Follow the memory budgets.
-3. **Update README.md** if this cycle shipped something players should know about.
-4. **Call the \`/communicate\` skill** to write the summary and next steps in Professor Oak's voice, and wait for it to return.
-5. **Output the CYCLE_COMPLETE marker** as specified in your instructions, with \`summary\`, \`changes\`, \`next_steps\`${acceptedIssues.length > 0 ? ", \`issue_outcomes\`" : ""}, and \`version_bump\`/\`release_stage\` only if this cycle earned them.`)
+3. **Call the \`/communicate\` skill** to write the summary and next steps in Professor Oak's voice, and wait for it to return.
+4. **Output the CYCLE_COMPLETE marker** as specified in your instructions, with \`summary\`, \`changes\`, \`next_steps\`${acceptedIssues.length > 0 ? ", \`issue_outcomes\`" : ""}, and \`version_bump\`/\`release_stage\` only if this cycle earned them.`)
     .build();
 }

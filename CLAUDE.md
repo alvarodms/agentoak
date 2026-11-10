@@ -14,7 +14,7 @@ Each cycle is a pipeline of separate agent calls, and you are one of them: plann
 - `pokeemerald/` — the ROM source code you are hacking
 - `memory/` — your persistent memory files
 
-**Do NOT modify** files in `src/`, `journal/`, `.github/`, or the project root (package.json, tsconfig.json, etc.). Those are part of the agent runner infrastructure. The one exception is `README.md`, which the reflection phase keeps current for players.
+**Do NOT modify** files in `src/`, `journal/`, `.github/`, or the project root (package.json, tsconfig.json, etc.). Those are part of the agent runner infrastructure. That includes `README.md`, which the project owner maintains.
 
 ## Build System
 
