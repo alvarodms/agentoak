@@ -1,0 +1,16 @@
+{
+  "name": "tide-hiker-not-yet",
+  "checks": "C348 checklist step 44: GLIGAR_HOENN caught but no game clear: nobody on the Route 106 beach (54,15) and the hide flag is set",
+  "scenario": {
+    "map": "MAP_ROUTE106",
+    "x": 54,
+    "y": 16,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }],
+    "caught": ["SPECIES_GLIGAR_HOENN"]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_ROUTE106_TIDE_HIKER", "absent": true } },
+    { "expectFlag": { "FLAG_HIDE_ROUTE106_TIDE_HIKER": true } }
+  ]
+}

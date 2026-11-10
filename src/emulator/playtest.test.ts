@@ -1,7 +1,17 @@
 import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import { loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
-import { PLAYTESTS_DIR, formatReport } from "./run-playtests.js";
+import { PLAYTESTS_DIR, formatReport, preflight } from "./run-playtests.js";
+
+describe("preflight", () => {
+  it("says how to fix a missing ROM and a missing emulator", () => {
+    const build = { rom: "/nope/a.gba", elf: "/nope/a.elf", map: "/nope/a.map", charmap: "/nope/charmap.txt" };
+    const problems = preflight(build, "/nope/mgba-driver");
+    expect(problems).toHaveLength(2);
+    expect(problems[0]).toMatch(/make -j/);
+    expect(problems[1]).toMatch(/MGBA_DRIVER/);
+  });
+});
 
 const MINIMAL = {
   name: "minimal",

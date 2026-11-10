@@ -11,11 +11,13 @@
  * a short-lived artifact). Exits 1 if any playtest failed.
  */
 
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { ARTIFACTS_DIR, POKEEMERALD_DIR } from "../utils/paths.js";
 import { loadPlaytests, runPlaytest, type PlaytestResult } from "./playtest.js";
-import { defaultBuild } from "./session.js";
+import { driverBinary } from "./driver.js";
+import { defaultBuild, type RomBuild } from "./session.js";
 import { SymbolTable } from "./symbols.js";
 
 export const PLAYTESTS_DIR = path.join(POKEEMERALD_DIR, "playtests");
@@ -49,6 +51,24 @@ export function formatReport(results: PlaytestResult[]): string {
   return lines.join("\n") + "\n";
 }
 
+/** Problems that stop every playtest, phrased as what to do about them. */
+export function preflight(build: RomBuild, driver = driverBinary()): string[] {
+  const problems: string[] = [];
+  const missing = [build.rom, build.elf, build.map].filter((f) => !fs.existsSync(f));
+  if (missing.length) {
+    problems.push(
+      `No built ROM (missing ${missing.map((f) => path.basename(f)).join(", ")}). ` +
+        `Build first: (cd pokeemerald && make -j"$(nproc)")`,
+    );
+  }
+  try {
+    execFileSync(driver, [], { input: "quit\n", stdio: ["pipe", "ignore", "ignore"], timeout: 5000 });
+  } catch {
+    problems.push(`The emulator (${driver}) is not available. It is built into the runner image; locally set MGBA_DRIVER.`);
+  }
+  return problems;
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   let filter: string | undefined;
@@ -67,6 +87,12 @@ async function main(): Promise<void> {
   }
 
   const build = defaultBuild();
+  const problems = preflight(build);
+  if (problems.length) {
+    for (const p of problems) console.error(p);
+    process.exitCode = 2;
+    return;
+  }
   const symbols = SymbolTable.load(build.elf, build.map);
   fs.rmSync(PLAYTEST_OUT_DIR, { recursive: true, force: true });
   fs.mkdirSync(PLAYTEST_OUT_DIR, { recursive: true });

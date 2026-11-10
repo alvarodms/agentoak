@@ -41,6 +41,8 @@ export interface Scenario {
   bag?: Record<string, number>;
   /** SPECIES_* marked seen and caught in the Pokédex. */
   caught?: string[];
+  /** TRAINER_* already beaten (their trainer flag, TRAINER_FLAGS_START + id, is set). */
+  defeatedTrainers?: string[];
 }
 
 /* Mirrors include/playtest.h. Keep in sync; bump LAYOUT_VERSION together. */
@@ -94,6 +96,7 @@ export function scenarioConstants(s: Scenario): string[] {
     ...(s.party ?? []).flatMap((m) => [m.species, ...(m.item ? [m.item] : []), ...(m.moves ?? [])]),
     ...Object.keys(s.bag ?? {}),
     ...(s.caught ?? []),
+    ...(s.defeatedTrainers?.length ? ["TRAINER_FLAGS_START", ...s.defeatedTrainers] : []),
   ];
 }
 
@@ -109,6 +112,7 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   };
   const flags = s.flags ?? [];
   const clearFlags = s.clearFlags ?? [];
+  const trainerFlags = (s.defeatedTrainers ?? []).map((t) => value("TRAINER_FLAGS_START") + value(t));
   const vars = Object.entries(s.vars ?? {});
   const party = s.party ?? [];
   const bag = Object.entries(s.bag ?? {});
@@ -117,7 +121,7 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
 
   check(Number.isInteger(s.x) && s.x >= 0 && s.x <= 127, `x must be 0-127 (got ${s.x})`);
   check(Number.isInteger(s.y) && s.y >= 0 && s.y <= 127, `y must be 0-127 (got ${s.y})`);
-  check(flags.length + clearFlags.length <= LIMITS.flags, `at most ${LIMITS.flags} flags`);
+  check(flags.length + clearFlags.length + trainerFlags.length <= LIMITS.flags, `at most ${LIMITS.flags} flags (including defeated trainers)`);
   check(vars.length <= LIMITS.vars, `at most ${LIMITS.vars} vars`);
   check(party.length <= LIMITS.party, `at most ${LIMITS.party} party members`);
   check(bag.length <= LIMITS.items, `at most ${LIMITS.items} bag entries`);
@@ -135,7 +139,7 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   buf.writeInt8(s.y, OFFSET.y);
   buf.writeUInt8(s.gender === "female" ? 1 : 0, OFFSET.gender);
   buf.writeUInt8(party.length, OFFSET.partyCount);
-  buf.writeUInt8(flags.length + clearFlags.length, OFFSET.flagCount);
+  buf.writeUInt8(flags.length + trainerFlags.length + clearFlags.length, OFFSET.flagCount);
   buf.writeUInt8(vars.length, OFFSET.varCount);
   buf.writeUInt8(bag.length, OFFSET.itemCount);
   buf.writeUInt8(caught.length, OFFSET.dexCount);
@@ -144,7 +148,7 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   buf.writeUInt32LE(money, OFFSET.money);
   Buffer.from(encodeGameText(name, charmap)).copy(buf, OFFSET.playerName);
 
-  [...flags.map((f) => value(f)), ...clearFlags.map((f) => value(f) | FLAG_CLEAR)].forEach((flag, i) => {
+  [...flags.map((f) => value(f)), ...trainerFlags, ...clearFlags.map((f) => value(f) | FLAG_CLEAR)].forEach((flag, i) => {
     buf.writeUInt16LE(u16(flag, "flag"), OFFSET.flags + i * 2);
   });
   vars.forEach(([name, v], i) => {

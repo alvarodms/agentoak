@@ -1,0 +1,68 @@
+{
+  "name": "tessa-after-win",
+  "checks": "C349 checklist step 45: once TESSA is beaten (trainer flag set), she faces up whenever Route 119 loads; talking gives only the 'Next storm' box, no battle",
+  "scenario": {
+    "map": "MAP_ROUTE119",
+    "x": 21,
+    "y": 110,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100,
+        "moves": [
+          "MOVE_AERIAL_ACE"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ],
+    "defeatedTrainers": [
+      "TRAINER_ROUTE119_STORM_CHASER"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "x": 20,
+        "y": 110,
+        "facing": "up"
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "Next storm, wherever it's written. I'll be there."
+    },
+    {
+      "expectNoText": "Watch this!"
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "facing": "up"
+      }
+    }
+  ]
+}

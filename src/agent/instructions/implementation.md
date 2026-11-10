@@ -10,7 +10,7 @@ You may still improve or rewrite previous work, but acknowledge it and know why 
 
 ## Building
 
-The runner builds the ROM after you finish and hands any errors to a build-fix agent, so don't run the full `make` unless your prompt says to. For early feedback on scripts, species, and trainer data, the cheap validators are fine: `make check_all_quick` from `pokeemerald/`.
+The runner builds the ROM after you finish and hands any errors to a build-fix agent, so don't run the full `make` just to check that it compiles. The exception is playtesting (below), which needs a built ROM. For early feedback on scripts, species, and trainer data, the cheap validators are fine: `make check_all_quick` from `pokeemerald/`.
 
 ## Adding a Species: Sprites
 
