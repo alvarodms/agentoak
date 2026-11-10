@@ -13,7 +13,7 @@ import { PROJECT_ROOT } from "../utils/paths.js";
 
 export type EffortLevel = "low" | "medium" | "high" | "xhigh" | "max";
 export type McpServerName = "pokedex" | "porymap";
-export type InstructionFragment = "vision" | "community" | "implementation" | "completion";
+export type InstructionFragment = "vision" | "community" | "implementation" | "playtests" | "completion";
 
 export type AgentPhase =
   | "advisor"
@@ -36,9 +36,9 @@ export const PHASE_PROFILES: Record<AgentPhase, PhaseProfile> = {
   "planner": { effort: "high", mcpServers: ["pokedex"], instructions: ["vision", "community"] },
   "gameplay-designer": { effort: "high", mcpServers: ["pokedex"], instructions: [] },
   "sprite-designer": { effort: "medium", mcpServers: ["pokedex"], instructions: [] },
-  "implementation": { effort: "high", mcpServers: ["pokedex", "porymap"], instructions: ["implementation"] },
+  "implementation": { effort: "high", mcpServers: ["pokedex", "porymap"], instructions: ["implementation", "playtests"] },
   "build-fix": { effort: "medium", mcpServers: [], instructions: [] },
-  "validation-fix": { effort: "medium", mcpServers: ["pokedex", "porymap"], instructions: ["implementation"] },
+  "validation-fix": { effort: "medium", mcpServers: ["pokedex", "porymap"], instructions: ["implementation", "playtests"] },
   "reflection": { effort: "medium", mcpServers: [], instructions: ["completion"] },
 };
 
