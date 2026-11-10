@@ -1,0 +1,26 @@
+{
+  "name": "tide-hiker-beach",
+  "checks": "C348/C354 checklist step 44: game clear + GLIGAR_HOENN caught: tide hiker on Route 106 at 54,15 facing up; talked to from the path below (54,16) he does NOT turn, says the one box and gives HARD_STONE once (flag set); second talk is the same box with no item",
+  "scenario": {
+    "map": "MAP_ROUTE106",
+    "x": 54,
+    "y": 16,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_SYS_GAME_CLEAR"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }],
+    "caught": ["SPECIES_GLIGAR_HOENN"]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_ROUTE106_TIDE_HIKER", "x": 54, "y": 15, "facing": "up", "visible": true } },
+    { "expectFlag": { "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE": false } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": ["It's in red. They swim better than they glide. They'll come.", "HARD STONE"] },
+    { "expectObject": { "id": "LOCALID_ROUTE106_TIDE_HIKER", "x": 54, "y": 15, "facing": "up" } },
+    { "expectFlag": { "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE": true } },
+    { "talk": true },
+    { "expectText": "It's in red. They swim better than they glide. They'll come." },
+    { "expectNoText": "HARD STONE" },
+    { "expectObject": { "id": "LOCALID_ROUTE106_TIDE_HIKER", "facing": "up" } },
+    { "expectPlayer": { "map": "MAP_ROUTE106", "x": 54, "y": 16, "facing": "up" } }
+  ]
+}

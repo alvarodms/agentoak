@@ -91,6 +91,18 @@ describe("encodeScenario", () => {
     expect([...minimal.subarray(0x0b, 0x10)]).toEqual([0, 0, 0, 0, 0]);
   });
 
+  it("sets a beaten trainer's flag (TRAINER_FLAGS_START + id) before cleared flags", () => {
+    const constants = new Map([...CONSTANTS, ["TRAINER_FLAGS_START", 0x500], ["TRAINER_ROUTE119_STORM_CHASER", 117]]);
+    const buf = encodeScenario({ ...SCENARIO, defeatedTrainers: ["TRAINER_ROUTE119_STORM_CHASER"] }, constants, charmap);
+    expect(buf.readUInt8(0x0c)).toBe(3); // 1 set + 1 trainer + 1 clear
+    expect([buf.readUInt16LE(0x1c), buf.readUInt16LE(0x1e), buf.readUInt16LE(0x20)]).toEqual([0x867, 0x500 + 117, 0x8011]);
+    expect(scenarioConstants({ map: "MAP_ROUTE104", x: 0, y: 0, defeatedTrainers: ["TRAINER_X"] })).toEqual([
+      "MAP_ROUTE104",
+      "TRAINER_FLAGS_START",
+      "TRAINER_X",
+    ]);
+  });
+
   it("rejects scenarios the ROM cannot represent", () => {
     const bad = (patch: Partial<Scenario>) => () => encodeScenario({ ...SCENARIO, ...patch }, CONSTANTS, charmap);
     expect(bad({ x: 200 })).toThrow(/x must be 0-127/);

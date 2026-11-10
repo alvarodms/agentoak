@@ -1,0 +1,79 @@
+{
+  "name": "tessa-storm-call",
+  "checks": "C349 checklist step 45: without BADGE06 (so Route 119 has no forced omen storm), TESSA faces the player, says the Ink line, turns up while she calls the thunderstorm (screenshots before/during for the rain), then faces the player again",
+  "scenario": {
+    "map": "MAP_ROUTE119",
+    "x": 21,
+    "y": 110,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100,
+        "moves": [
+          "MOVE_FLAMETHROWER"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "screenshot": "before-talk"
+    },
+    {
+      "face": "left"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 400
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "facing": "right"
+      }
+    },
+    {
+      "screenshot": "ink-line"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 20
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "facing": "up"
+      }
+    },
+    {
+      "wait": 30
+    },
+    {
+      "screenshot": "storm-called"
+    },
+    {
+      "wait": 80
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "facing": "right"
+      }
+    },
+    {
+      "screenshot": "rule-line"
+    }
+  ]
+}

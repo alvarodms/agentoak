@@ -25,6 +25,7 @@ const HEADERS = [
   "constants/moves.h",
   "constants/map_groups.h",
   "constants/map_event_ids.h",
+  "constants/opponents.h",
 ];
 
 const IDENTIFIER = /^[A-Za-z_][A-Za-z0-9_]*$/;

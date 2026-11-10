@@ -1,0 +1,117 @@
+{
+  "name": "tessa-lombre-fake-out",
+  "checks": "C349 checklist step 45: 'LOMBRE uses FAKE OUT on its first turn in'. A slow Lv70 SNORLAX lets LOMBRE_HOENN act first on the turn it comes in; its first move should be FAKE OUT",
+  "scenario": {
+    "map": "MAP_ROUTE119",
+    "x": 21,
+    "y": 110,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SNORLAX",
+        "level": 70,
+        "moves": [
+          "MOVE_AERIAL_ACE"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "x": 20,
+        "y": 110,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Its leaf drinks the storm. It's in red. Watch this!",
+        "In the rain, my THUNDER never misses!"
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LOTAD_HOENN",
+        "level": 55
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SNORLAX used"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "turn1"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SNORLAX used"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "screenshot": "turn2"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LOMBRE_HOENN",
+        "level": 57
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOMBRE used"
+    },
+    {
+      "expectBattleText": "FAKE OUT"
+    }
+  ]
+}

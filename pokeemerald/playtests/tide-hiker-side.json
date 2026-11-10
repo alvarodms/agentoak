@@ -1,0 +1,19 @@
+{
+  "name": "tide-hiker-side",
+  "checks": "C348 checklist step 44: talked to from the side (53,15, facing right) the tide hiker still faces the sea (up), no faceplayer; HARD_STONE already received earlier, so no item",
+  "scenario": {
+    "map": "MAP_ROUTE106",
+    "x": 53,
+    "y": 15,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_SYS_GAME_CLEAR", "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }],
+    "caught": ["SPECIES_GLIGAR_HOENN"]
+  },
+  "steps": [
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": "It's in red. They swim better than they glide. They'll come." },
+    { "expectNoText": "HARD STONE" },
+    { "expectObject": { "id": "LOCALID_ROUTE106_TIDE_HIKER", "x": 54, "y": 15, "facing": "up" } }
+  ]
+}
