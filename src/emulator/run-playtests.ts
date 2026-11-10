@@ -15,7 +15,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { ARTIFACTS_DIR, POKEEMERALD_DIR } from "../utils/paths.js";
-import { loadPlaytests, runPlaytest, type PlaytestResult } from "./playtest.js";
+import { loadPlaytestFiles, runPlaytest, type PlaytestResult } from "./playtest.js";
 import { driverBinary } from "./driver.js";
 import { defaultBuild, type RomBuild } from "./session.js";
 import { SymbolTable } from "./symbols.js";
@@ -41,7 +41,7 @@ export function formatReport(results: PlaytestResult[]): string {
       "",
       `- **Checks:** ${r.checks}`,
       `- **File:** \`${r.file ?? "?"}\``,
-      `- **Failed at:** ${r.failedStep === -1 ? "boot" : `step ${r.failedStep}`}`,
+      `- **Failed at:** ${r.failedStep === -1 ? "before the first step (boot or invalid file)" : `step ${r.failedStep}`}`,
       `- **Error:** ${r.error}`,
     );
     if (r.transcripts.length) {
@@ -69,6 +69,58 @@ export function preflight(build: RomBuild, driver = driverBinary()): string[] {
   return problems;
 }
 
+export interface SuiteOptions {
+  /** Files or directories. Default: pokeemerald/playtests/. */
+  inputs?: string[];
+  /** Only playtests whose name contains this. */
+  filter?: string;
+  outDir?: string;
+  build?: RomBuild;
+  /** Called as each playtest finishes. */
+  onResult?: (result: PlaytestResult) => void;
+}
+
+export interface SuiteRun {
+  /** Empty when nothing stopped the run. */
+  problems: string[];
+  results: PlaytestResult[];
+}
+
+/**
+ * Runs playtests and writes report.md, report.json and screenshots to
+ * `outDir`. An invalid playtest file counts as a failed playtest. Problems
+ * that stop every playtest (no ROM, no emulator) come back in `problems`.
+ */
+export async function runSuite(opts: SuiteOptions = {}): Promise<SuiteRun> {
+  const outDir = opts.outDir ?? PLAYTEST_OUT_DIR;
+  const loaded = loadPlaytestFiles(opts.inputs?.length ? opts.inputs : [PLAYTESTS_DIR]).filter(
+    (p) => !opts.filter || p.name.includes(opts.filter),
+  );
+  if (loaded.length === 0) return { problems: [], results: [] };
+
+  const build = opts.build ?? defaultBuild();
+  const problems = preflight(build);
+  if (problems.length) return { problems, results: [] };
+
+  const symbols = SymbolTable.load(build.elf, build.map);
+  fs.rmSync(outDir, { recursive: true, force: true });
+  fs.mkdirSync(outDir, { recursive: true });
+
+  const results: PlaytestResult[] = [];
+  for (const { file, name, test, error } of loaded) {
+    const result: PlaytestResult = test
+      ? await runPlaytest(test, build, { symbols, outDir: path.join(outDir, test.name) })
+      : { name, checks: "(invalid playtest file)", passed: false, failedStep: -1, error, transcripts: [], screenshots: [], frames: 0, ms: 0 };
+    result.file = path.relative(process.cwd(), file);
+    results.push(result);
+    opts.onResult?.(result);
+  }
+
+  fs.writeFileSync(path.join(outDir, "report.json"), JSON.stringify(results, null, 2));
+  fs.writeFileSync(path.join(outDir, "report.md"), formatReport(results));
+  return { problems: [], results };
+}
+
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   let filter: string | undefined;
@@ -78,36 +130,23 @@ async function main(): Promise<void> {
     else inputs.push(args[i]);
   }
 
-  const tests = loadPlaytests(inputs.length ? inputs : [PLAYTESTS_DIR]).filter(
-    ({ test }) => !filter || test.name.includes(filter),
-  );
-  if (tests.length === 0) {
-    console.log("No playtests to run.");
-    return;
-  }
-
-  const build = defaultBuild();
-  const problems = preflight(build);
+  const { problems, results } = await runSuite({
+    inputs,
+    filter,
+    onResult: (r) => {
+      const where = r.passed ? "" : ` — step ${r.failedStep}: ${r.error}`;
+      console.log(`${r.passed ? "✓" : "✗"} ${r.name} (${r.frames} frames, ${r.ms} ms)${where}`);
+    },
+  });
   if (problems.length) {
     for (const p of problems) console.error(p);
     process.exitCode = 2;
     return;
   }
-  const symbols = SymbolTable.load(build.elf, build.map);
-  fs.rmSync(PLAYTEST_OUT_DIR, { recursive: true, force: true });
-  fs.mkdirSync(PLAYTEST_OUT_DIR, { recursive: true });
-
-  const results: PlaytestResult[] = [];
-  for (const { file, test } of tests) {
-    const result = await runPlaytest(test, build, { symbols, outDir: path.join(PLAYTEST_OUT_DIR, test.name) });
-    result.file = path.relative(process.cwd(), file);
-    results.push(result);
-    const where = result.passed ? "" : ` — step ${result.failedStep}: ${result.error}`;
-    console.log(`${result.passed ? "✓" : "✗"} ${test.name} (${result.frames} frames, ${result.ms} ms)${where}`);
+  if (results.length === 0) {
+    console.log("No playtests to run.");
+    return;
   }
-
-  fs.writeFileSync(path.join(PLAYTEST_OUT_DIR, "report.json"), JSON.stringify(results, null, 2));
-  fs.writeFileSync(path.join(PLAYTEST_OUT_DIR, "report.md"), formatReport(results));
   const failed = results.filter((r) => !r.passed).length;
   console.log(`\n${results.length - failed}/${results.length} passed. Report: ${path.relative(process.cwd(), PLAYTEST_OUT_DIR)}/report.md`);
   process.exitCode = failed ? 1 : 0;

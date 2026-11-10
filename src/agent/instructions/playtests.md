@@ -35,5 +35,10 @@ that moment; Read it when the text isn't enough.
 
 Never delete or loosen a check just to get green unless the behaviour it
 checks was deliberately removed. If you can't make a playtest pass within the
-cycle, keep it failing and explain why in your summary, so a later cycle can
-pick it up.
+cycle, keep it failing and explain why in your summary.
+
+After the build, the runner replays the whole suite on the verified ROM. Each
+failing playtest gets one `playtest-failure` issue (triaged like any bug
+report), and the issue closes itself once the playtest passes again or is
+removed. Removing a playtest closes its issue with a note asking a human to
+reopen it if the removal hid a failure.

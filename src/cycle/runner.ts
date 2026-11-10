@@ -22,6 +22,7 @@ import { beginGameTree, type BuildFixer, type GameTree } from "../repo/game-tree
 import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalDigests } from "../journal/writer.js";
 import { commitCycle, commitJournalOnly, getStrategyNotesDiff, listCommittedSpriteImages } from "../git/committer.js";
+import { formatPlaytestSection, runPlaytestGate, type PlaytestGateResult } from "./playtest-gate.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
 import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
@@ -468,6 +469,7 @@ async function runReflectionPhase(
   implResult: ClaudeCodeResult,
   buildResult: { success: boolean; errors: string[] } | null,
   validationResult: ValidationResult | null,
+  playtestGate: PlaytestGateResult | null,
   log: ReturnType<typeof cycleLogger>,
 ) {
   log.info("Phase 4: Reflection...");
@@ -481,6 +483,7 @@ async function runReflectionPhase(
     cycleChanges: implResult.cycleChanges,
     validationResult,
     acceptedIssues: acceptedIssueActions(plan),
+    playtestSection: playtestGate ? formatPlaytestSection(playtestGate) : undefined,
     timeout: phaseTimeout(AGENT_PHASE_DEFAULT_TIMEOUT_MS, 0),
   });
 }
@@ -708,6 +711,13 @@ export async function runCycle(): Promise<void> {
       }
     }
 
+    // ── Phase 3.7: Playtests (advisory: reported, never blocks or reverts) ──
+    let playtestGate: PlaytestGateResult | null = null;
+    if (!reverted) {
+      log.info("Phase 3.7: Playtests...");
+      playtestGate = await runPlaytestGate(cycleNumber, log);
+    }
+
     // ── Phase 4: Reflection (separate agent context) ──
     const reflection = await runReflectionPhase(
       cycleNumber,
@@ -715,6 +725,7 @@ export async function runCycle(): Promise<void> {
       implResult,
       finalBuildResult,
       validationResult,
+      playtestGate,
       log,
     );
 

@@ -7,6 +7,11 @@ happened. Run them with `npm run playtest` from the repo root
 (`-- --filter skeptic` for some); the report and screenshots go to
 `artifacts/playtests/`.
 
+After every cycle's build the runner replays the whole suite; each failing
+playtest gets one `playtest-failure` issue, closed automatically once it passes
+again. The cycle run's `playtests` artifact (kept 14 days) has the report and
+screenshots.
+
 The schema lives in `src/emulator/playtest.ts`. `npm test` rejects files that
 don't match it, and a file must be named after its `name`.
 

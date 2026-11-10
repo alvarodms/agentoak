@@ -312,6 +312,37 @@ export async function closeIssue(
   }
 }
 
+/** Create a label if the repository doesn't have it yet. */
+export async function ensureLabel(name: string, color: string, description: string): Promise<void> {
+  const octokit = getGitHubClient();
+  const repo = getRepoInfo();
+  if (!octokit || !repo) return;
+
+  try {
+    await octokit.issues.getLabel({ owner: repo.owner, repo: repo.repo, name });
+  } catch {
+    try {
+      await octokit.issues.createLabel({ owner: repo.owner, repo: repo.repo, name, color, description });
+      logger.info(`Created label "${name}"`);
+    } catch (err) {
+      logger.error(`Failed to create label "${name}": ${err instanceof Error ? err.message : String(err)}`);
+    }
+  }
+}
+
+/** Replace an issue's body */
+export async function updateIssueBody(issueNumber: number, body: string): Promise<void> {
+  const octokit = getGitHubClient();
+  const repo = getRepoInfo();
+  if (!octokit || !repo) return;
+
+  try {
+    await octokit.issues.update({ owner: repo.owner, repo: repo.repo, issue_number: issueNumber, body });
+  } catch (err) {
+    logger.error(`Failed to update issue #${issueNumber}: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
 /** Create a new issue and return its number, or null on failure */
 export async function createIssue(
   title: string,

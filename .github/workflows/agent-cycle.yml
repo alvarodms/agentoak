@@ -126,6 +126,18 @@ jobs:
           sleep 60
           npm run cycle
 
+      # Phase 3.7's playtest report and screenshots. Playtest-failure issues
+      # link to this run for them, so keep the retention in step with the
+      # "kept for 14 days" note in src/github/playtest-issues.ts.
+      - name: Upload playtest report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtests
+          path: artifacts/playtests/
+          retention-days: 14
+          if-no-files-found: ignore
+
       # main can move while a cycle runs (merged PRs, manual pushes), so a
       # plain push gets rejected as non-fast-forward. Merge the new main in
       # and retry. Merge rather than rebase: the cycle has already published

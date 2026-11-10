@@ -217,6 +217,7 @@ export function buildReflectionPrompt(cycleContext: {
   cycleSummary: string;
   validationResult?: ValidationResult | null;
   acceptedIssues?: IssueAction[];
+  playtestSection?: string;
 }): string {
   const actionLog = cycleContext.actions
     .map((a, i) => `${i + 1}. ${a.tool}(${JSON.stringify(a.input).slice(0, 80)}) → ${a.result.slice(0, 100)}`)
@@ -239,6 +240,7 @@ export function buildReflectionPrompt(cycleContext: {
     .heading("Implementation Agent's Summary", cycleContext.cycleSummary || "(none)")
     .sectionIf(cycleContext.validationResult, () =>
       formatValidationSection(cycleContext.validationResult!))
+    .sectionIf(cycleContext.playtestSection, () => cycleContext.playtestSection!)
     .sectionIf(acceptedIssues.length > 0, () =>
       `## Accepted Community Issues\n\nReport an \`issue_outcomes\` entry for each of these.\n\n${formatAcceptedIssues(acceptedIssues)}`)
     .raw(`---
