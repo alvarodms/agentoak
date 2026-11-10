@@ -1,0 +1,37 @@
+{
+  "name": "believer-picnicker-rumour",
+  "checks": "C330 picnicker, two other pages inked (LOTAD+SHROOMISH): the rumour line plays",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 39,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "PROF. BIRCH wrote it down!",
+        "Oh! Have you heard? Some kid"
+      ]
+    }
+  ]
+}

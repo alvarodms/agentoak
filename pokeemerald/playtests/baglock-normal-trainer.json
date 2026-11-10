@@ -1,0 +1,53 @@
+{
+  "name": "baglock-normal-trainer",
+  "checks": "C325 (c): Normal Mode trainer battle: BAG opens as before",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 32,
+    "y": 14,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_BAGON",
+        "level": 12
+      }
+    ],
+    "bag": {
+      "ITEM_POTION": 3,
+      "ITEM_POKE_BALL": 5
+    }
+  },
+  "steps": [
+    {
+      "comment": "approach Calvin (33,14, facing down) from the side, out of his line of sight"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "RIGHT"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitFor": "CB2_BagMenuRun",
+      "maxFrames": 300
+    },
+    {
+      "screenshot": "bag"
+    }
+  ]
+}

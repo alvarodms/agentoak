@@ -1,0 +1,57 @@
+{
+  "name": "believer-hiker-fresh",
+  "checks": "C329 hiker (at 26,20 since C339), fresh save (LOTAD+SHROOMISH caught): faces up and does NOT turn when talked to; Refuse + both mock lines",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B1F",
+    "x": 26,
+    "y": 21,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+        "x": 26,
+        "y": 20,
+        "facing": "up"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Not now. I don't take advice",
+        "Heard some kid on ROUTE 104",
+        "Heard the woods lady moved"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+        "facing": "up"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE": false
+      }
+    }
+  ]
+}

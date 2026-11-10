@@ -48,6 +48,11 @@ const u16 gPlaytestLayout[PLAYTEST_LAYOUT_COUNT] = {
     [PLAYTEST_LAYOUT_FLAGS_COUNT]                   = FLAGS_COUNT,
     [PLAYTEST_LAYOUT_VARS_START]                    = VARS_START,
     [PLAYTEST_LAYOUT_VARS_COUNT]                    = VARS_COUNT,
+    [PLAYTEST_LAYOUT_OBJECT_EVENT_LOCAL_ID]         = offsetof(struct ObjectEvent, localId),
+    [PLAYTEST_LAYOUT_OBJECT_EVENT_MAP_NUM]          = offsetof(struct ObjectEvent, mapNum),
+    [PLAYTEST_LAYOUT_OBJECT_EVENT_MAP_GROUP]        = offsetof(struct ObjectEvent, mapGroup),
+    [PLAYTEST_LAYOUT_OBJECT_EVENT_GRAPHICS_ID]      = offsetof(struct ObjectEvent, graphicsId),
+    [PLAYTEST_LAYOUT_OBJECT_EVENTS_COUNT]           = OBJECT_EVENTS_COUNT,
 };
 
 bool8 Playtest_IsActive(void)

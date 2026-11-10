@@ -1,0 +1,44 @@
+{
+  "name": "believer-forager-fresh",
+  "checks": "C328 forager, fresh save: at 18,34 facing down; Belief then BoyReads (LOTAD not caught)",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 18,
+    "y": 35,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "PROF. BIRCH wrote it plain.",
+        "There's a boy by the sea who"
+      ]
+    },
+    {
+      "expectNoText": "That boy by the sea stopped"
+    }
+  ]
+}

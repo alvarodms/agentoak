@@ -1,0 +1,44 @@
+{
+  "name": "believer-skeptic-fresh",
+  "checks": "C327 skeptic, fresh save: at 33,49 facing the sea (left); reads Birch's old LOTAD note",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "left"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "I copied this straight out of",
+        "LOTAD: Water and Grass."
+      ]
+    },
+    {
+      "expectNoText": "PROF. BIRCH never wrote that."
+    }
+  ]
+}

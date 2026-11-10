@@ -1,0 +1,59 @@
+{
+  "name": "baglock-challenge-trainer",
+  "checks": "C325 (a): Challenge + trainer battle: BAG shows the lock message and returns to the action menu",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 32,
+    "y": 14,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_DIFFICULTY_CHALLENGE"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_BAGON",
+        "level": 12
+      }
+    ],
+    "bag": {
+      "ITEM_POTION": 3,
+      "ITEM_POKE_BALL": 5
+    }
+  },
+  "steps": [
+    {
+      "comment": "approach Calvin (33,14, facing down) from the side, out of his line of sight"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "RIGHT"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "CHALLENGE: your BAG stays shut!"
+    },
+    {
+      "screenshot": "locked"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectScreen": "BattleMainCB2"
+    }
+  ]
+}

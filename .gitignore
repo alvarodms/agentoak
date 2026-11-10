@@ -37,3 +37,6 @@ pokeemerald/*.sym
 
 # Cached base ROM (downloaded at runtime)
 artifacts/base-rom/
+
+# Playtest reports and screenshots (uploaded as a short-lived CI artifact)
+artifacts/playtests/

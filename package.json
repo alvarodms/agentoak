@@ -1,10 +1,11 @@
 {
   "name": "agent-oak",
   "version": "0.1.0",
-  "description": "Autonomous AI agent that explores, modifies, and builds a Pokémon ROM hack through iterative learning cycles",
+  "description": "Autonomous AI agent that explores, modifies, and builds a Pok\u00e9mon ROM hack through iterative learning cycles",
   "type": "module",
   "scripts": {
     "cycle": "tsx src/index.ts",
+    "playtest": "tsx src/emulator/run-playtests.ts",
     "build:check": "tsc --noEmit",
     "build:docs": "cd docs && npm run build",
     "debug:mcp": "tsx src/mcp/debug-ui.ts",

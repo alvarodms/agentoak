@@ -1,0 +1,45 @@
+{
+  "name": "believer-forager-inked",
+  "checks": "C328 forager, SHROOMISH_HOENN + LOTAD_HOENN caught: moved to 11,24 facing up; Corrected then WhatElse",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 11,
+    "y": 25,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught a SHROOMISH?",
+        "That boy stopped reading his"
+      ]
+    }
+  ]
+}

@@ -46,7 +46,7 @@ export interface Scenario {
 /* Mirrors include/playtest.h. Keep in sync; bump LAYOUT_VERSION together. */
 export const PLAYTEST_MAGIC_INACTIVE = 0x584b414f;
 export const PLAYTEST_MAGIC_ACTIVE = 0x504b414f;
-export const LAYOUT_VERSION = 1;
+export const LAYOUT_VERSION = 2;
 export const SCENARIO_SIZE = 0x1fc;
 const LIMITS = { flags: 64, vars: 32, party: 6, items: 16, dex: 32, name: 7 } as const;
 const FLAG_CLEAR = 0x8000;

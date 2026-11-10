@@ -1,0 +1,47 @@
+{
+  "name": "believer-picnicker-fresh",
+  "checks": "C330 picnicker, fresh save: at 38,8 facing the rock (right); Waiting, no rumour (<2 pages inked), turns back to the rock",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 39,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 8,
+        "facing": "right"
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "PROF. BIRCH wrote it down!"
+    },
+    {
+      "expectNoText": "Have you heard?"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "facing": "right"
+      }
+    }
+  ]
+}

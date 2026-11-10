@@ -1,0 +1,54 @@
+{
+  "name": "believer-picnicker-inked",
+  "checks": "C330 picnicker, VULPIX_HOENN caught: stands at 38,6 facing up in the ash; ShowAgain, ThreeDays, Laugh; ends facing up",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 38,
+    "y": 7,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 6,
+        "facing": "up",
+        "visible": true
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Is that a VULPIX?",
+        "Cold fur! In the ash!",
+        "Ahaha! Ahahahaha!"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 6,
+        "facing": "up"
+      }
+    }
+  ]
+}

@@ -26,13 +26,22 @@ export const LAYOUT = {
   flagsCount: 17,
   varsStart: 18,
   varsCount: 19,
+  objectEventLocalId: 20,
+  objectEventMapNum: 21,
+  objectEventMapGroup: 22,
+  objectEventGraphicsId: 23,
+  objectEventsCount: 24,
 } as const;
-export const LAYOUT_COUNT = 20;
+export const LAYOUT_COUNT = 25;
 
 export type Layout = Record<keyof typeof LAYOUT, number>;
 
-export function parseLayout(raw: Buffer): Layout {
+export function parseLayout(raw: Buffer, expectedVersion: number): Layout {
   if (raw.length < LAYOUT_COUNT * 2) throw new Error("gPlaytestLayout is shorter than expected");
+  const version = raw.readUInt16LE(LAYOUT.version * 2);
+  if (version !== expectedVersion) {
+    throw new Error(`ROM playtest layout version ${version}, harness expects ${expectedVersion}; rebuild the ROM`);
+  }
   const out = {} as Layout;
   for (const [key, index] of Object.entries(LAYOUT)) {
     out[key as keyof Layout] = raw.readUInt16LE(index * 2);
@@ -45,6 +54,12 @@ export const MAP_OFFSET = 7;
 
 /** ObjectEvent.facingDirection is the low nibble of byte 0x18 (a bitfield, so not in the layout table). */
 export const OBJECT_EVENT_FACING_OFFSET = 0x18;
+/** ObjectEvent.active: byte 0, bit 0. ObjectEvent.invisible: byte 1, bit 5. Bitfields, vanilla layout. */
+export const OBJECT_EVENT_ACTIVE = { byte: 0, mask: 1 << 0 } as const;
+export const OBJECT_EVENT_INVISIBLE = { byte: 1, mask: 1 << 5 } as const;
+
+/** script.c's CONTEXT_SHUTDOWN: the global script context has nothing running. */
+export const SCRIPT_CONTEXT_SHUTDOWN = 2;
 
 export type Facing = "none" | "down" | "up" | "left" | "right";
 const FACINGS: Facing[] = ["none", "down", "up", "left", "right"];

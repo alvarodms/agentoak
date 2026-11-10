@@ -31,6 +31,28 @@ not yet wired into cycle phases.
 | `src/overworld.c` | `CB2_NewGame`: apply scenario after `NewGameInitData`; no truck sequence when active |
 | `ld_script.ld` | `src/playtest.o(.text)` / `(.rodata)` after `new_game.o` |
 
+## Playtest suite
+
+`pokeemerald/playtests/*.json` (format: `pokeemerald/playtests/README.md`),
+run with `npm run playtest`. The first 20 cover the v2.9/v3.0 emulator
+checklists and all pass on the C331 tree:
+
+- **Believers P1-P4:** fresh vs caught tile and facing, all dialogue branches,
+  the hiker's no-faceplayer refusal, and his single HARD_STONE (0x2BA).
+- **Dens:** all three dolls are visible and start the right battles (Torchic
+  Lv30, Mudkip Lv38, Treecko Lv40). Treecko: running away shows the faded
+  text and removes the doll; once caught, the doll is gone.
+- **C325 Bag lock:** (a) Challenge trainer battle shows the lock message and
+  returns to the menu; (b) Challenge wild battle opens the BAG; (c) Normal
+  trainer battle opens the BAG.
+- **Rematches:** Maxie Reckoning (YES → Weezing lead) and the Juan duet
+  (double battle, Luvdisc + Ludicolo).
+
+Not covered yet: the FIELD NOTES item UI and SELECT registration, the
+Pokénav and in-person Red Ink reports, Fey Flame/Undertow multipliers,
+Meteor Falls Steven, the Archie Reckoning (on water), Bag lock (d) AI
+Full Restore, the Shoal Cave tide cue, and whiteout mid-den.
+
 ## Not the same as `make playtest`
 
 The C339/C343 preset ROMs (`make playtest` / `make playtest_coda`, compile-time
