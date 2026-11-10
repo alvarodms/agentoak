@@ -46,7 +46,7 @@ Five decisions define the architecture. Each one answers a way that long-running
 
 One agent holding the whole job in one context loses focus, and it agrees with itself too easily. So a cycle is a pipeline of specialised agents, each with its own context, its own instructions and only the tools its role needs.
 
-Planning starts with four advisors (a Game Designer, a Technical Lead, a Creative Visionary and a ROM Hack Researcher) who write independent memos and are told not to seek consensus. A Producer reads the memos and makes the call. Designers turn that decision into a brief, an implementer builds it, and a separate agent reflects on the result.
+Planning starts with four advisors: a Game Designer, a Technical Lead, a Creative Visionary and a ROM Hack Researcher. Each looks at the project through its own lens and writes a memo without seeing the others', so the Producer gets four genuinely separate opinions instead of one opinion repeated four times. The Producer weighs them and makes the call. Designers turn that decision into a brief, an implementer builds it, and a separate agent reflects on the result.
 
 ### 2. Never trust the self-report
 
@@ -72,10 +72,10 @@ Nobody approves a cycle, yet the agents are not left without direction. Communit
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/readme/cycle-dark.svg">
-  <img alt="Advisors and a Producer plan, optional designers write briefs, an implementer builds, the build and the agent's claims are checked with a fix loop, then reflection rewrites memory and the verified changes are committed." src="assets/readme/cycle-light.svg">
+  <img alt="AI agents (advisors, Producer, designers, implementer, fix agent, reflection) and deterministic runner code (build check, claim check, commit). Failed checks go to the fix agent and are checked again; verified work moves on to reflection and commit." src="assets/readme/cycle-light.svg">
 </picture>
 
-Every box is a separate agent call with a fresh context. The designers are optional and run only when the Producer writes a brief for them. A cycle that cannot be repaired is reverted, and reflection still runs so that the failure is remembered.
+The blue boxes are AI agents, each a separate model call with a fresh context. The grey boxes are ordinary code in the runner: the checks that decide whether work is kept involve no AI, so an agent cannot talk its way past them. The designers are optional and run only when the Producer writes a brief for them. A cycle that cannot be repaired is reverted, and reflection still runs so that the failure is remembered.
 
 ## How it remembers
 
