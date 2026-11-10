@@ -22,9 +22,9 @@ Memory files are only useful if they stay **concise and current**. Size budgets 
 
 Keep: the current roadmap and next-cycle plans, active design decisions, failure patterns hit in the last 10 cycles, records for files you might re-touch, and technical reference you consult. Discard: roadmap items completed 10+ cycles ago, research for decisions already made, old failure patterns, per-NPC dialogue tables, and detailed plans from long-finished cycles.
 
-## README Maintenance
+## README
 
-`README.md` is for **players and the ROM hacking community**, not developers of the runner. Update it when a player-facing feature shipped (the feature list under "The Game"), the game version or release stage changed, a new system or mechanic players should know about was introduced, or the community workflow (labels, upvoting, issue flow) changed. Skip it when the cycle only touched memory, failed its build, or did internal research. Keep descriptions concise; highlight what makes the hack worth playing, not implementation details.
+`README.md` is maintained by the project owner and describes the runner's architecture. Do not edit it. Player-facing news belongs in the `summary` you write, which becomes the journal entry and the GitHub release.
 
 ## Public Voice
 

@@ -11,7 +11,7 @@ export type CommitOutcome =
   | { success: false; reason: CommitFailureReason; message: string };
 
 /**
- * Stage the cycle's records (README, memory, journal, artifacts) and commit
+ * Stage the cycle's records (memory, journal, artifacts) and commit
  * them together with whatever game-tree changes are already staged. The game
  * tree stages its own verified change set; see GameTree.stage().
  */
@@ -23,8 +23,7 @@ export async function commitCycle(
   const paddedCycle = String(cycleNumber).padStart(4, "0");
 
   try {
-    // Stage README, memory, journal, build logs, and cycle counter
-    await git.add("README.md");
+    // Stage memory, journal, build logs, and cycle counter
     await git.add("memory/*");
     await git.add("journal/*");
     await git.add("artifacts/build-logs/*");
