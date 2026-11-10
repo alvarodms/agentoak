@@ -177,7 +177,7 @@ MAKEFLAGS += --no-print-directory
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
 # playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
 RULES_NO_SCAN += playtest playtest_coda check_playtest_build
-.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_species check_evolution check_all check_all_quick
+.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_species check_evolution check_map_scan check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -263,6 +263,10 @@ check_matchcall_len:
 check_object_tiles:
 	@node scripts/check_object_tiles.cjs --selftest && node scripts/check_object_tiles.cjs
 
+# Map tile scanner (C357): selftest for scripts/map_scan.cjs (tile lookup, markers, MAPGRID mask guard, must-fail cases)
+check_map_scan:
+	@node scripts/map_scan.cjs --selftest
+
 # Red Ink reachability floors (C348): the four page species stay findable (stand-in for DexNav)
 check_encounter_odds:
 	@node scripts/check_encounter_odds.cjs --selftest && node scripts/check_encounter_odds.cjs
@@ -292,7 +296,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_map_scan
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

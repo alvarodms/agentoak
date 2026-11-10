@@ -1,0 +1,48 @@
+{
+  "name": "ash-camper-hidden-before-credits",
+  "checks": "C350 Beat C step 46: VULPIX_HOENN caught but no credits yet: ELLIS is not there; the picnicker stands at 38,6 facing up (her C330 page-4 place)",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 6,
+        "facing": "up"
+      }
+    },
+    {
+      "screenshot": "no-camper"
+    }
+  ]
+}

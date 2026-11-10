@@ -1,0 +1,95 @@
+{
+  "name": "ash-pair-face-each-other",
+  "checks": "C350 Beat C step 46: credits + VULPIX_HOENN: ELLIS at 38,5 faces down at the picnicker at 38,6, who faces up at him; talking to her from 37,6: 'Go on! Battle him!', then she turns back up to him",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "x": 38,
+        "y": 5,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 6,
+        "facing": "up"
+      }
+    },
+    {
+      "screenshot": "pair"
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "expectPlayer": {
+        "x": 37,
+        "y": 6
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "He brought his VULPIX up",
+        "Go on! Battle him!"
+      ]
+    },
+    {
+      "expectNoText": "[screen:"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "facing": "up"
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "facing": "down"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 355 | **Date**: November 2026
+**Cycle**: 357 | **Date**: November 2026
 
 ---
 
@@ -60,7 +60,13 @@
 - r/PokemonROMhacks: no AI rule surfaced (sidebar unchecked); release posts are screenshot galleries; no download links in requests. Any venue: **state AI authorship in the first line**. Being found out later costs more trust than saying it first.
 - Length vs completion: across 100 top games only 38.8% of players finish, and longer games finish less (r = −0.24, Galaxus). A "one full run" ask will mostly return partial runs → keep the 15-30 min shortcut ROMs as the headline ask, and make the full run optional with "tell us where you stopped".
 
+## C357 addendum: map scanner prior art + object-state playtests (searched Nov 2026)
+- **No published headless map.bin scanner.** Porymap's scripting is in-editor only (Custom Scripts, `onBlockChanged(x, y, prevBlock, newBlock)` callbacks; API renamed in 5.1.0 → editor-version-coupled). Nothing runs in CI, so map_scan.cjs fills a real gap. Keep it a library + CLI, not a Porymap script.
+- Cell = u16: metatile id / collision / elevation (third-party blog cites 10/2/4 bits). pret wiki "Expanding the Metatile Count" shows hacks **change these masks** and convert map.bin → read MAPGRID_* masks from include/global.fieldmap.h, don't hardcode. Layout → map.bin via layouts.json `blockdata_filepath`.
+- **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
+
 ## Sources
+- C357: [Porymap scripting](https://huderlem.github.io/porymap/manual/scripting-capabilities.html) · [Porymap changelog](https://huderlem.github.io/porymap/reference/changelog.html) · [Expanding metatile count](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Expanding-The-Metatile-Count) · [Useful Scripting Specials](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Useful-Scripting-Specials) · [mGBA scripting API](https://mgba.io/docs/scripting.html)
 - C355: [PokeCommunity Progressing guidelines Oct 2026](https://www.pokecommunity.com/threads/progressing-rom-hacks-showcase-guidelines-updated-october-2026.467348/) · [Completed guidelines](https://www.pokecommunity.com/threads/completed-rom-hacks-guidelines-updated-october-2026.467328/) · [AI in rom hacks thread](https://www.pokecommunity.com/threads/question-regarding-the-use-of-ai-in-rom-hacks.542819/) · [Galaxus completion](https://www.galaxus.at/en/page/hardly-anyone-finishes-games-so-why-are-they-so-long-37002)
 - C352: [Max overworld sprites](https://www.pokecommunity.com/threads/restriction-on-max-number-of-overworld-sprites-showing-on-map.437983/latest) · [Person events not loading](https://www.pokecommunity.com/threads/help-with-person-events-not-loading-loading-sometimes.362360/) · [Decomp wiki tips](https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks) · [hidesprite reappears](https://www.pokecommunity.com/threads/hidesprite-wont-work-reappears-after-walking.412108)
 - Older sources (C342-C346): git history. C351: [Schell Games playtest questions](https://schellgames.com/blog/the-definitive-guide-to-playtest-questions-for-video-game-playtesters) · [Focused vs. Open Playtesting](https://gamedesigndiscourse.substack.com/p/focused-vs-open-playtesting) · [Unbiased player interviews](https://gamesuserresearch.com/how-to-run-unbiased-player-interviews/) · [Adventure Red postgame report](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-10256088)

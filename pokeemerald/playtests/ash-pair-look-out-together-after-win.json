@@ -1,0 +1,187 @@
+{
+  "name": "ash-pair-look-out-together-after-win",
+  "checks": "C350 Beat C step 46: talk to ELLIS from 37,5: Ink + Rule lines, no-intro battle VULPIX_HOENN Lv54 then NINETALES_HOENN Lv56 (METEOR MASH misses it once on this seed); win ('You run colder'); 'Same time tomorrow' line; both he and the picnicker turn to face right and stay that way; second talk: that box only, no battle",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "party": [
+      {
+        "species": "SPECIES_METAGROSS",
+        "level": 100,
+        "moves": [
+          "MOVE_METEOR_MASH"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "x": 38,
+        "y": 5,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "expectPlayer": {
+        "x": 37,
+        "y": 5
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Cold fur in the falling ash.",
+        "If it hails, my foxes"
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_VULPIX_HOENN",
+        "level": 54
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "METAGROSS used"
+    },
+    {
+      "comment": "VULPIX down; ELLIS sends NINETALES (tapping B answers NO to 'change POKéMON?')"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_NINETALES_HOENN",
+        "level": 56
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "METAGROSS used"
+    },
+    {
+      "waitForBattleText": "missed"
+    },
+    {
+      "comment": "on this seed the first METEOR MASH at NINETALES misses (85% accuracy); one more turn"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_NINETALES_HOENN",
+        "level": 56
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "METAGROSS used"
+    },
+    {
+      "waitForBattleText": "You run colder"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "Same time tomorrow"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "x": 38,
+        "y": 5,
+        "facing": "right"
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 6,
+        "facing": "right"
+      }
+    },
+    {
+      "screenshot": "look-out-together"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "Same time tomorrow"
+    },
+    {
+      "expectNoText": [
+        "Cold fur in the falling ash.",
+        "[screen:"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "facing": "right"
+      }
+    }
+  ]
+}

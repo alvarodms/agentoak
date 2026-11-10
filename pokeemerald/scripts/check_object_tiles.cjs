@@ -393,7 +393,7 @@ function main() {
   process.exit(errors.length ? 1 : 0);
 }
 
-module.exports = { tileAt, tileProblems, loadBehaviorNames, loadTilesetAttrPaths, loadLayouts };
+module.exports = { tileAt, tileProblems, loadBehaviorNames, loadTilesetAttrPaths, loadLayouts, readMapJson, readBin, isBadBehavior, collectDestinations, MAPS_DIR };
 
 if (require.main === module) {
   if (process.argv.includes('--selftest')) selftest();

@@ -1,0 +1,47 @@
+{
+  "name": "ash-camper-hidden-without-vulpix",
+  "checks": "C350 Beat C: credits seen but no VULPIX_HOENN: ELLIS is not there; the picnicker still waits by the warm rocks at 38,8 facing right",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_PICNICKER",
+        "x": 38,
+        "y": 8,
+        "facing": "right"
+      }
+    }
+  ]
+}

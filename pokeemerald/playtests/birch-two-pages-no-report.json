@@ -1,0 +1,60 @@
+{
+  "name": "birch-two-pages-no-report",
+  "checks": "C331 report threshold (negative control): with only 2 pages inked Birch is not at his bookshelf (6,4 facing down, his map.json pose); the rating runs but he says nothing about copying or red ink",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "x": 6,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET"
+    ],
+    "vars": {
+      "VAR_BIRCH_LAB_STATE": 5,
+      "VAR_PETALBURG_GYM_STATE": 7
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_BIRCHS_LAB_BIRCH",
+        "x": 6,
+        "y": 4,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "Are you curious about how your"
+    },
+    {
+      "expectNoText": [
+        "Oh, and word of your red",
+        "You caught me copying.",
+        "[screen:"
+      ]
+    }
+  ]
+}
