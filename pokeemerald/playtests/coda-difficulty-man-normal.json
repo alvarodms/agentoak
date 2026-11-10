@@ -1,0 +1,21 @@
+{
+  "name": "coda-difficulty-man-normal",
+  "checks": "C355 recruit/checklist 'Known first impression, coda ROM': on a cleared save with Challenge Mode off, the first non-vanilla box in PETALBURG's Pokemon Center is the C214 difficulty man (3,6, facing down) giving the steady-pace line, with no offer and no flag change",
+  "scenario": {
+    "map": "MAP_PETALBURG_CITY_POKEMON_CENTER_1F",
+    "x": 3,
+    "y": 7,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_SYS_GAME_CLEAR"],
+    "clearFlags": ["FLAG_DIFFICULTY_CHALLENGE"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "expectObject": { "id": 6, "x": 3, "y": 6, "facing": "down", "visible": true } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": ["Challenge Mode? I hear some TRAINERS push themselves that way.", "Not for me, though. I prefer a steady pace."] },
+    { "expectNoText": "stumble after choosing" },
+    { "expectFlag": { "FLAG_DIFFICULTY_CHALLENGE": false } },
+    { "expectPlayer": { "map": "MAP_PETALBURG_CITY_POKEMON_CENTER_1F", "x": 3, "y": 7, "facing": "up" } }
+  ]
+}

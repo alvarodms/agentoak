@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 352 | **Date**: November 2026
+**Cycle**: 355 | **Date**: November 2026
 
 ---
 
@@ -53,11 +53,15 @@
 - Gen 3 has 64 object *templates* per map but only **16 active** objects (PokeCommunity "Restriction on max overworld sprites"). Off-screen objects (>1-2 tiles past the camera) despawn and respawn from templates; when the active array is full, **late-listed templates spawn unpredictably** ("person events not loading sometimes": first 4 always spawn, 5th-7th "whenever they want"). LoH appends every beat NPC LAST. Connected maps carry no events until the player steps on (decomp wiki) → a beat tile near a connection edge is only seen after crossing.
 - Hide-flag failure grammar (PokeCommunity hidesprite threads): wrong flag → "NPC returns after 1 step"; duplicate local IDs → wrong object moves/hides. No community lint for script labels/flags exists beyond build errors (poryscript is a compiler); one unverified MCP `validate_scripts` tool.
 
-## C346 addendum: after the silent window (searched Nov 2026)
-- Solo hacks don't wait for private testers to start the loop: they ship a **labelled beta with the report channel inside the release** (Obscura: bug-report form in the download folder; FireEmerald 2026 beta asks for bugs + difficulty; Liquid Crystal "Live Beta": every patch bumps a build number). Warning case: a dev whose testers never finished — "nobody has made it through besides myself." Silence ≠ pass.
-- Repeating NPC lines: standard fix is "say once" first line + short repeat (Bethesda Say Once, RPG Maker sequential-then-last). Emily Short: never drop info the player might have missed → keep the '?' fact reachable in the repeat line.
+## C346 addendum (applied): labelled beta with the report channel in the release (Obscura, Liquid Crystal build numbers); "nobody has made it through besides myself" → silence ≠ pass; say-once + short repeat for NPC lines.
+
+## C355 addendum: where the recruit post may go (searched Nov 2026)
+- **PokeCommunity bans generative AI in hacks** (Showcase + Progressing guidelines, updated Oct 2026; mod thread "Question regarding the use of AI in rom hacks"): AI art/writing not permitted, incl. thread text; AI coding only "very minimal… truly needed", disclosed in the OP; existing threads using gen-AI face deletion. LoH is agent-written end to end → **do not post on PokeCommunity**. Also needs ≥2 non-battle screenshots, which LoH cannot produce.
+- r/PokemonROMhacks: no AI rule surfaced (sidebar unchecked); release posts are screenshot galleries; no download links in requests. Any venue: **state AI authorship in the first line**. Being found out later costs more trust than saying it first.
+- Length vs completion: across 100 top games only 38.8% of players finish, and longer games finish less (r = −0.24, Galaxus). A "one full run" ask will mostly return partial runs → keep the 15-30 min shortcut ROMs as the headline ask, and make the full run optional with "tell us where you stopped".
 
 ## Sources
+- C355: [PokeCommunity Progressing guidelines Oct 2026](https://www.pokecommunity.com/threads/progressing-rom-hacks-showcase-guidelines-updated-october-2026.467348/) · [Completed guidelines](https://www.pokecommunity.com/threads/completed-rom-hacks-guidelines-updated-october-2026.467328/) · [AI in rom hacks thread](https://www.pokecommunity.com/threads/question-regarding-the-use-of-ai-in-rom-hacks.542819/) · [Galaxus completion](https://www.galaxus.at/en/page/hardly-anyone-finishes-games-so-why-are-they-so-long-37002)
 - C352: [Max overworld sprites](https://www.pokecommunity.com/threads/restriction-on-max-number-of-overworld-sprites-showing-on-map.437983/latest) · [Person events not loading](https://www.pokecommunity.com/threads/help-with-person-events-not-loading-loading-sometimes.362360/) · [Decomp wiki tips](https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks) · [hidesprite reappears](https://www.pokecommunity.com/threads/hidesprite-wont-work-reappears-after-walking.412108)
 - Older sources (C342-C346): git history. C351: [Schell Games playtest questions](https://schellgames.com/blog/the-definitive-guide-to-playtest-questions-for-video-game-playtesters) · [Focused vs. Open Playtesting](https://gamedesigndiscourse.substack.com/p/focused-vs-open-playtesting) · [Unbiased player interviews](https://gamesuserresearch.com/how-to-run-unbiased-player-interviews/) · [Adventure Red postgame report](https://www.pokecommunity.com/threads/pok%C3%A9mon-adventure-red-chapter-new-beta-expansion.298920/post-10256088)
 - [Headless mGBA harness PR (expansion fork)](https://github.com/randommusing85-cell/pokeemerald-expansion/pull/1) · [mgba-mcp](https://github.com/struktured-labs/mgba-mcp) · [mGBA scripting](https://mgba.io/2022/05/29/scripting/) · [PokeCommunity: automated testing](https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869) · [FEUniverse: darkening text windows](https://feuniverse.us/t/accessibility-darkening-text-windows-in-the-gba-games/20224)
