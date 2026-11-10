@@ -50,6 +50,12 @@ A PARASOL LADY (TESSA) stands at 20,110 facing west (left). Note whether it was 
 A CAMPER (ELLIS) stands at 38,5 facing down at the picnicker (38,6, facing up at him). The ash keeps falling grey. Talk to her first: "He brought his VULPIX up here to train in the ash! Go on! Battle him!", and she turns back to him. Talk to him: he faces you, "Cold fur in the falling ash. It's in red. We train here!", "If it hails, my foxes won't even feel it!", then a battle with no intro: Hoennian VULPIX Lv54, NINETALES Lv56. After you win: "Same time tomorrow, right here in the ash!", and both turn to face right (east), side by side. Talk to him again: that box only, no battle. Talk to her: "Cold fur in the ash, every day. And I get to watch!" Leave and come back: both still face right. **Record: did your battle hail at any point?** Either answer is valid; he may never call it. On a save before the credits, or without VULPIX caught, she stands alone (step 10). On a normal save, if you catch VULPIX on Route 113 itself, ELLIS isn't there yet: he appears only after you leave the route and come back.
 </details>
 
+46b. **After ELLIS's battle, FLY to FALLARBOR, then walk back east into ROUTE 113.** Stop as soon as ELLIS and the picnicker come into view, before you walk up to them, and take a screenshot. Question: did anything on Route 113 look different this time? What do you think caused it?
+<details><summary>Verify step 46b (v3.2 T1, C356)</summary>
+
+Six tiles around the pair are plain trodden grass instead of ash grass: 38,4 (north of ELLIS), 37,5 and 39,5 (either side of him), 37,6 and 39,6 (either side of her), 38,7 (south of her). The two tiles they stand on stay ash, and neither of them looks waist-deep in grass. The ring appears from the first map load after the win (walking or flying back in, or loading a save on the route), never during the visit when you fought him. Your own footprints in the ash grow back when you leave and come back; these six tiles don't. They are still tall grass: wild Pokémon can appear there. CUT clears them to bare ash ground like any ash grass, and they come back as trodden grass on the next map load. If your path to the pair crossed 38,4 or 38,7 before your screenshot, say so, because your own footprints look the same as the ring. On a save before the credits, or with ELLIS unbeaten, there is no ring.
+</details>
+
 **v3.1 feel questions** (a sentence each):
 - Which of the three would you show a friend? Why?
 - Did any of them seem to be standing there for no reason?

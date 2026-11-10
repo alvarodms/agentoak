@@ -1,0 +1,109 @@
+{
+  "name": "ring-in-the-ash-after-win",
+  "checks": "C356 v3.2 T1 checklist step 46b: once ELLIS is beaten, Route 113 loads with trodden grass on 37,5 and 37,6 (no ash to gather with the SOOT SACK), while 36,6 outside the ring is still ash grass",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_SOOT_SACK": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ],
+    "defeatedTrainers": [
+      "TRAINER_ROUTE113_ASH_CAMPER"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "37,4 is bare ash field: standing there gathers nothing"
+    },
+    {
+      "wait": 30
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 0
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "x": 38,
+        "y": 5,
+        "facing": "right"
+      }
+    },
+    {
+      "screenshot": "ring"
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "expectPlayer": {
+        "x": 37,
+        "y": 5
+      }
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 0
+      }
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "expectPlayer": {
+        "x": 37,
+        "y": 6
+      }
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 0
+      }
+    },
+    {
+      "comment": "control: one step outside the ring is still ash grass"
+    },
+    {
+      "walk": "left"
+    },
+    {
+      "expectPlayer": {
+        "x": 36,
+        "y": 6
+      }
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 1
+      }
+    }
+  ]
+}

@@ -23,6 +23,23 @@
 //       problem (check_object_tiles rules), is the start tile of another
 //       always-present object, or is a warp tile.
 //
+// v3.2 traces (C356): a beat that leaves a mark on the map itself, as literal
+// setmetatile lines in an ON_LOAD label. Fails when:
+//   W1. the trace label is missing or is not the map's ON_LOAD map script (the
+//       tiles would never change, or would change after the map is drawn);
+//   W2. the label body (up to its `end`) has no `goto_if_unset
+//       FLAG_SYS_GAME_CLEAR` before its first setmetatile, or has a wait*,
+//       delay*, msgbox, message, applymovement or `special DrawWholeMapView`
+//       line (these hardlock or are wrong in ON_LOAD);
+//   W3. the set of `setmetatile x, y, <metatile>, FALSE` destinations is not
+//       exactly the trace's tiles: a missing or extra tile, a non-literal x/y,
+//       another metatile or TRUE all fail (never trim the shape to pass);
+//   W4. a destination is the map.json start tile of any object (flagged or
+//       not), the x,y of an EventMacro_DexBelieverPlace / InkBelieverPlace /
+//       setobjectxyperm / setobjectxy line in the map's scripts.inc (runtime
+//       spots), a tile with collision != 0, a tile whose layout metatile is not
+//       the trace's `from` (ash grass in, grass out), or a warp tile.
+//
 // This is a static stand-in until a tester plays: passing it means the beat is wired and standing on a sane tile, not that a player notices it.
 //
 // Usage: node scripts/check_beat_visibility.cjs [--selftest]
@@ -45,6 +62,13 @@ const BEATS = [
   { beat: 'A empty B1F spot', map: 'GraniteCave_B1F', localid: 'LOCALID_GRANITE_CAVE_B1F_HIKER', hideFlag: 'FLAG_HIDE_GRANITE_CAVE_B1F_HIKER', setup: 'GraniteCave_B1F_EventScript_SetupHikerLeft', species: 'SPECIES_GLIGAR_HOENN', shows: false },
   { beat: 'B TESSA',          map: 'Route119',        localid: 'LOCALID_ROUTE119_STORM_CHASER',  hideFlag: 'FLAG_HIDE_ROUTE119_STORM_CHASER',  setup: 'Route119_EventScript_SetupStormChaser',       species: 'SPECIES_LOTAD_HOENN',  shows: true },
   { beat: 'C ELLIS',          map: 'Route113',        localid: 'LOCALID_ROUTE113_ASH_CAMPER',    hideFlag: 'FLAG_HIDE_ROUTE113_ASH_CAMPER',    setup: 'Route113_EventScript_SetupAshCamper',         species: 'SPECIES_VULPIX_HOENN', shows: true },
+];
+
+// C356 v3.2 traces: literal setmetatile changes made on map load after a beat.
+const TRACES = [
+  { map: 'Route113', label: 'Route113_OnLoad', name: 'T1 ring in the ash',
+    metatile: 'METATILE_Fallarbor_NormalGrass', from: 0x20A,
+    tiles: [[38, 4], [37, 5], [39, 5], [37, 6], [39, 6], [38, 7]] },
 ];
 
 // '<Map>:<localid>': why a same-map catch may change the beat only on re-entry (V2).
@@ -160,6 +184,81 @@ function check(beats, maps, wild, allowlist, tileLookup) {
   return { errors, allowUsed };
 }
 
+const hex = (n) => `0x${Number(n).toString(16).toUpperCase()}`;
+const RUNTIME_XY = [
+  /^EventMacro_(?:DexBeliever|InkBeliever)Place\s+[^,]+,\s*[^,]+,\s*(\d+)\s*,\s*(\d+)\s*,/,
+  /^setobjectxy(?:perm)?\s+[^,]+,\s*(\d+)\s*,\s*(\d+)$/,
+];
+const ON_LOAD_FORBIDDEN = /^(wait\w*|delay\w*|msgbox|message|applymovement)\b|^special\s+DrawWholeMapView$/;
+
+// Pure. maps[name] = { json, scripts }; tileOf(map, x, y) -> { collision, metatile }.
+// Returns error strings, each tagged W1-W4 and naming the map, label and tile.
+function checkTraces(traces, maps, tileOf) {
+  const errors = [];
+  for (const t of traces) {
+    const at = `${t.name} (${t.map} ${t.label})`;
+    const map = maps[t.map];
+    if (!map) { errors.push(`W1 ${at}: map not loaded`); continue; }
+    const lines = scriptLines(map.scripts);
+    const body = labelBody(lines, t.label, false);
+
+    // W1 wiring
+    const onLoad = mapScripts(lines).MAP_SCRIPT_ON_LOAD;
+    if (!body) { errors.push(`W1 ${at}: label missing — the ${t.tiles.length} tiles would never change`); continue; }
+    if (onLoad !== t.label)
+      errors.push(`W1 ${at}: not the MAP_SCRIPT_ON_LOAD target (${onLoad || 'none'}) — the tiles would not change, or would change after the map is drawn`);
+
+    // W2 body shape
+    const firstSet = body.findIndex((l) => /^setmetatile\s/.test(l));
+    const clearAt = body.findIndex((l) => /^goto_if_unset\s+FLAG_SYS_GAME_CLEAR\s*,/.test(l));
+    if (clearAt < 0 || (firstSet >= 0 && clearAt > firstSet))
+      errors.push(`W2 ${at}: no goto_if_unset FLAG_SYS_GAME_CLEAR before the first setmetatile — the trace would leak into the main story`);
+    for (const l of body)
+      if (ON_LOAD_FORBIDDEN.test(l)) errors.push(`W2 ${at}: \`${l}\` in an ON_LOAD body — hardlocks or redraws mid-load`);
+
+    // W3 exact destination set
+    const want = new Set(t.tiles.map(([x, y]) => `${x},${y}`));
+    const got = new Set();
+    const dests = [];
+    for (const l of body) {
+      if (!/^setmetatile\s/.test(l)) continue;
+      const m = /^setmetatile\s+(\d+)\s*,\s*(\d+)\s*,\s*(\w+)\s*,\s*(\w+)$/.exec(l);
+      if (!m) { errors.push(`W3 ${at}: \`${l}\` is not a literal setmetatile x, y, <metatile>, FALSE`); continue; }
+      const key = `${m[1]},${m[2]}`;
+      if (got.has(key)) errors.push(`W3 ${at} tile ${key}: set twice`);
+      got.add(key);
+      dests.push([Number(m[1]), Number(m[2])]);
+      if (!want.has(key)) errors.push(`W3 ${at} tile ${key}: not in the trace's tiles — the shape would be lopsided`);
+      if (m[3] !== t.metatile) errors.push(`W3 ${at} tile ${key}: metatile ${m[3]}, expected ${t.metatile}`);
+      if (m[4] !== 'FALSE') errors.push(`W3 ${at} tile ${key}: impassable ${m[4]}, expected FALSE`);
+    }
+    for (const key of want)
+      if (!got.has(key)) errors.push(`W3 ${at} tile ${key}: missing — the shape would be lopsided`);
+
+    // W4 destination tiles
+    const runtime = [];
+    for (const l of lines)
+      for (const re of RUNTIME_XY) {
+        const m = re.exec(l);
+        if (m) runtime.push({ x: Number(m[1]), y: Number(m[2]), line: l });
+      }
+    for (const [x, y] of dests) {
+      const where = `W4 ${at} tile ${x},${y}`;
+      for (const o of map.json.object_events || [])
+        if (Number(o.x) === x && Number(o.y) === y)
+          errors.push(`${where}: start tile of ${o.local_id || o.graphics_id} — they would stand waist-deep in grass`);
+      for (const r of runtime)
+        if (r.x === x && r.y === y) errors.push(`${where}: runtime spot of \`${r.line}\` — someone would stand waist-deep in grass`);
+      const tile = tileOf(t.map, x, y);
+      if (tile.collision !== 0) errors.push(`${where}: collision ${tile.collision} — the trace would sit on a wall`);
+      if (tile.metatile !== t.from) errors.push(`${where}: layout metatile ${hex(tile.metatile)}, expected ${hex(t.from)} — not the ground the trace replaces`);
+      if ((map.json.warp_events || []).some((w) => Number(w.x) === x && Number(w.y) === y))
+        errors.push(`${where}: warp tile`);
+    }
+  }
+  return errors;
+}
+
 function loadWild() {
   const json = JSON.parse(fs.readFileSync(WILD_JSON, 'utf8'));
   const group = (json.wild_encounter_groups || []).find((g) => g.label === WILD_GROUP);
@@ -178,9 +277,9 @@ function main() {
   const attrs = tiles.loadTilesetAttrPaths();
   const names = tiles.loadBehaviorNames();
   const maps = {};
-  for (const b of BEATS) {
-    const dir = path.join(MAPS_DIR, b.map);
-    maps[b.map] = {
+  for (const name of new Set([...BEATS.map((b) => b.map), ...TRACES.map((t) => t.map)])) {
+    const dir = path.join(MAPS_DIR, name);
+    maps[name] = {
       json: JSON.parse(fs.readFileSync(path.join(dir, 'map.json'), 'utf8')),
       scripts: fs.readFileSync(path.join(dir, 'scripts.inc'), 'utf8'),
     };
@@ -190,6 +289,7 @@ function main() {
 
   const wild = loadWild();
   const { errors, allowUsed } = check(BEATS, maps, wild, ALLOWLIST, tileLookup);
+  errors.push(...checkTraces(TRACES, maps, tileOf));
   const wildMaps = Object.keys(wild).length;
   if (wildMaps < MIN_WILD_MAPS)
     errors.push(`only ${wildMaps} wild encounter maps parsed (MIN_WILD_MAPS ${MIN_WILD_MAPS}; parser broke?)`);
@@ -200,12 +300,14 @@ function main() {
     for (const e of errors) console.error(`ERROR: ${e}`);
     process.exit(1);
   }
-  console.log(`check_beat_visibility: OK (${BEATS.length} beats, ${allowUsed.size} allowlisted)`);
+  console.log(`check_beat_visibility: OK (${BEATS.length} beats, ${allowUsed.size} allowlisted, ${TRACES.length} traces)`);
   for (const b of BEATS) {
     const o = maps[b.map].json.object_events.find((e) => e.local_id === b.localid);
     const t = tileOf(b.map, Number(o.x), Number(o.y));
     console.log(`  ${b.beat} ${b.map} ${o.x},${o.y} metatile 0x${t.metatile.toString(16).toUpperCase()} clean`);
   }
+  for (const t of TRACES)
+    console.log(`  ${t.name} ${t.map} ${t.label}: ${t.tiles.length} tiles ${hex(t.from)} -> ${t.metatile}`);
 }
 
 // ---- selftest ---------------------------------------------------------------
@@ -253,10 +355,44 @@ function selftest() {
   ].join('\n');
   expect('9 inverted fixture', run(beat({ setup: 'Fix_Setup', shows: false }), fixture(INVERTED)), null);
 
-  console.log('check_beat_visibility: selftest OK (9 cases)');
+  // W1-W4 traces. Fixture: object at 5,5, believer placed at runtime on 5,7,
+  // 9,9 is a wall, 8,8 is not ash grass, 2,2 is a warp.
+  const trace = (o) => ({ map: 'Fix', label: 'Fix_OnLoad', name: 'T', metatile: 'METATILE_Fix_Grass', from: 0x20A,
+    tiles: [[4, 5], [6, 5]], ...o });
+  const onLoad = (sets, extra) => [
+    'Fix_OnLoad:', '\tgoto_if_unset FLAG_SYS_GAME_CLEAR, Fix_OnLoadEnd', ...(extra || []),
+    ...sets.map(([x, y, mt, imp]) => `\tsetmetatile ${x}, ${y}, ${mt || 'METATILE_Fix_Grass'}, ${imp || 'FALSE'}`),
+    'Fix_OnLoadEnd:', '\tend',
+  ].join('\n');
+  const traceMaps = (body, header) => ({ Fix: {
+    json: { id: 'MAP_FIX', object_events: [npc()], warp_events: [{ x: 2, y: 2 }] },
+    scripts: ['Fix_MapScripts::', `\tmap_script ${header || 'MAP_SCRIPT_ON_LOAD'}, Fix_OnLoad`, '\t.byte 0',
+      'Fix_OnTransition:', '\tEventMacro_DexBelieverPlace SPECIES_FIX, LOCALID_FIX, 5, 7, MOVEMENT_TYPE_FACE_UP', '\tend',
+      body].join('\n'),
+  } });
+  const tileOf = (map, x, y) => ({ collision: x === 9 && y === 9 ? 1 : 0, metatile: x === 8 && y === 8 ? 0x218 : 0x20A });
+  const expectW = (name, errs, rule) => {
+    if (rule === null) { if (errs.length) fail(`${name}: expected no errors, got ${errs.join(' | ')}`); return; }
+    if (!errs.some((e) => e.startsWith(`${rule} `))) fail(`${name}: expected a ${rule} error, got ${errs.join(' | ') || 'none'}`);
+  };
+  const two = [[4, 5], [6, 5]];
+  const tr = (o, body, header) => checkTraces([trace(o)], traceMaps(body, header), tileOf);
+  expectW('10 good trace', tr({}, onLoad(two)), null);
+  expectW('11 on an object start tile', tr({ tiles: [[4, 5], [5, 5]] }, onLoad([[4, 5], [5, 5]])), 'W4');
+  expectW('12 collision 1', tr({ tiles: [[4, 5], [9, 9]] }, onLoad([[4, 5], [9, 9]])), 'W4');
+  expectW('13 delay in ON_LOAD', tr({}, onLoad(two, ['\tdelay 1'])), 'W2');
+  expectW('14 wired as ON_TRANSITION', tr({}, onLoad(two), 'MAP_SCRIPT_ON_TRANSITION'), 'W1');
+  expectW('15 runtime believer spot', tr({ tiles: [[4, 5], [5, 7]] }, onLoad([[4, 5], [5, 7]])), 'W4');
+  expectW('16 tile trimmed', tr({}, onLoad([[4, 5]])), 'W3');
+  expectW('17 TRUE', tr({}, onLoad([[4, 5], [6, 5, null, 'TRUE']])), 'W3');
+  expectW('18 not ash grass', tr({ tiles: [[4, 5], [8, 8]] }, onLoad([[4, 5], [8, 8]])), 'W4');
+  expectW('19 no FLAG_SYS_GAME_CLEAR', tr({}, onLoad(two).replace('\tgoto_if_unset FLAG_SYS_GAME_CLEAR, Fix_OnLoadEnd', '\tnop')), 'W2');
+  expectW('20 warp tile', tr({ tiles: [[4, 5], [2, 2]] }, onLoad([[4, 5], [2, 2]])), 'W4');
+
+  console.log('check_beat_visibility: selftest OK (20 cases)');
 }
 
-module.exports = { check, BEATS, ALLOWLIST };
+module.exports = { check, checkTraces, BEATS, ALLOWLIST, TRACES };
 
 if (require.main === module) {
   if (process.argv.includes('--selftest')) selftest();

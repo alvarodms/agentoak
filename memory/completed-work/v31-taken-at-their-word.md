@@ -48,23 +48,8 @@ Postgame beats where an NPC takes a Red Ink page at its word. Design + roadmap: 
 | pokeemerald/scripts/check_playtest.cjs | flag in both presets' neverSet; 2 coda BEATS rows (SetupAshCamper label, AshCamper object script). Walkable on `make playtest_coda` (it gives VULPIX_HOENN, playtest_coda.inc:53); VISITED Fallarbor for Fly is C351. |
 
 
-## C351 — playtest consolidation
-
-No beat script, trainer or text changed.
-
-| File | Change |
-|---|---|
-| pokeemerald/data/scripts/playtest_coda.inc | header line for v3.1 A/B/C; `setflag FLAG_VISITED_DEWFORD_TOWN / _MAUVILLE_CITY / _FALLARBOR_TOWN / _FORTREE_CITY` after Petalburg's, so FLY reaches Routes 106, 118→119 and 113. FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE deliberately unset. |
-| pokeemerald/scripts/check_playtest.cjs | coda prereqFlags += the 4 VISITED flags; prereqSpecies += SPECIES_VULPIX_HOENN (LOTAD/GLIGAR reasons name Beats B/A); coda neverSet += FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE; BEATS comments updated; selftest cases (f) missing VISITED_DEWFORD → R3, (g) missing VULPIX_HOENN → R3, (h) pre-set HARD_STONE flag → R4. |
-| memory/playtest-checklist.md | coda quick start mentions the extra Fly points; new "Quick start, part 2" (open pass, directed pass, steps 44-46 with Verify blocks quoting the exact texts, 4 v3.1 feel questions); "v3.1 beats state walk (static, C351)" table; rates in steps 3/5/7/10 fixed to 1 in 5 / 1 in 10. |
-| memory/playtest-recruit-post.md | coda bullet mentions the v3.1 beats; 15-30 minutes; question 4 (expected someone, found no one). |
-
-Validators C351: check_playtest --selftest `OK`; check_playtest `OK (2 presets, 11 beats)`, coda `29 flags`; planted break (VISITED_FALLARBOR line deleted) → exit 1 with `[coda] R3 missing setflag FLAG_VISITED_FALLARBOR_TOWN`, restored → exit 0; check_encounter_odds `OK` with Lotad_H 20% / Shroomish_H 10% / Gligar_H 10% / Vulpix_H 10%.
-| README.md (C351 Reflection) | "Help Playtest v3.0 and v3.1"; coda shortcut names the extra Fly towns; new "Coda part 2" (open pass + steps 44-46 condensed, Route 106 called out as easy to miss); rates in steps 3/5/7/10 fixed; one merged v3.1 feel question. |
-
-## C352 — silent window 1/2: static visibility audit (memory only)
-
-No beat script, map, trainer, flag or text changed. memory/playtest-checklist.md "### v3.1 visibility audit (static, C352)": spawn window derived from TrySpawnObjectEvents/RemoveObjectEventIfOutsideView (x −9..+10, y −7..+9 around the player; OBJECT_EVENTS_COUNT 16); object density A 3/16, B 4-7/16, C 8/16 (all PASS); connection edges (only A is near one: Dewford, he loads at y ≤ 18 / x ≤ 63); flag↔object binding PASS for 0x30-0x33 and every LOCALID on the four maps; re-entry sentences added to Verify 44 (A) and 46 (C, VULPIX caught on Route 113 itself); box count ≤ 2 for all three, no trim candidate. player-journey-map.md: loud/quiet list, see-first lines, ELLIS hail condition, Beat A sightline "Finding for C353 planning" (the Granite Cave walk keeps him 5-6 rows above the player, at the screen edge).
+## C351-C352 — consolidation (collapsed C356)
+C351: playtest_coda.inc VISITED flags, check_playtest R3/R4 + selftest f/g/h, checklist steps 44-46. C352: memory-only static visibility audit. Detail: git history.
 
 ## C354 — Beat A tile move + check_beat_visibility
 
@@ -83,3 +68,13 @@ Validators C354: `check_beat_visibility: selftest OK (9 cases)`; `check_beat_vis
 - `pokeemerald/playtests/coda-difficulty-man-normal.json` (new): PETALBURG Pokémon Center 1F, player at 3,7 facing up, cleared save with FLAG_DIFFICULTY_CHALLENGE clear. The difficulty man (object #6, 3,6, facing down) says the steady-pace line, with no offer and no flag change. This backs the "Known first impression, coda ROM" note in playtest-checklist.md.
 - memory: playtest-recruit-post.md rewritten (AI disclosure first, 20/30-minute tiers, five spoiler-free questions, stop-point field, paste-ready README block for the owner; README.md itself untouched). playtest-checklist.md: spoiler banner, coda first-impression note, visibility-audit row A relabelled 54,15 (C352 figures were taken at 54,11). player-journey-map.md: Beat A tile 54,11 → 54,15.
 - `make check_playtest_build`: the first C355 pass reported OK. pokeemerald_playtest.gba and pokeemerald_playtest_coda.gba (built 02:38 on 2026-11-10) are on disk. The validation-fix pass did not re-run it (that prompt forbids make).
+
+## C356 — v3.2 T1 "The ring in the ash" (content freeze declared)
+
+| File | Change |
+|---|---|
+| pokeemerald/data/maps/Route113/scripts.inc | Header gains `map_script MAP_SCRIPT_ON_LOAD, Route113_OnLoad` (first ON_LOAD on the map). `Route113_OnLoad:` → `goto_if_unset FLAG_SYS_GAME_CLEAR` / `goto_if_not_defeated TRAINER_ROUTE113_ASH_CAMPER` → `Route113_EventScript_OnLoadEnd`, else 6× `setmetatile x, y, METATILE_Fallarbor_NormalGrass, FALSE` at 38,4 / 37,5 / 39,5 / 37,6 / 39,6 / 38,7. No flags, text, waits or DrawWholeMapView. OnResume/OnTransition unchanged. |
+| pokeemerald/scripts/check_beat_visibility.cjs | `TRACES` config (1 row) + pure `checkTraces(traces, maps, tileOf)` called from main(): W1 label is the ON_LOAD target; W2 GAME_CLEAR guard before first setmetatile, no wait*/delay*/msgbox/message/applymovement/`special DrawWholeMapView`; W3 literal destination set == tiles, metatile name, FALSE; W4 not an object start tile (any flag), not a DexBeliever/InkBeliever/setobjectxy(perm) spot, collision 0, layout metatile == `from` (0x20A), not a warp. Errors are tagged `W1 `..`W4 `. Selftest 9 → 20 cases (10 good trace; 11-20 must fail: object tile, collision, delay, ON_TRANSITION wiring, runtime believer spot, trimmed tile, TRUE, non-ash tile, no GAME_CLEAR guard, warp). Exports add `checkTraces, TRACES`. |
+| pokeemerald/playtests/ring-in-the-ash-after-win.json, ring-in-the-ash-before-win.json | NEW. Soot Sack + repel; start on 37,4 (ash field). Beaten: steps onto 37,5/37,6 gather 0 ash, 36,6 gathers 1. Unbeaten: 37,5 gathers 1. |
+
+Validators C356: selftest OK (20 cases) exit 0; real run `OK (4 beats, 1 allowlisted, 1 traces)` exit 0. Planted `setmetatile 38, 7` → `38, 6` on the real tree: exit 1 (W3 38,6 not in tiles, W3 38,7 missing, W4 38,6 = picnicker's EventMacro_DexBelieverPlace spot); reverted, exit 0; `make check_beat_visibility` exit 0. Full ROM build OK; playtest suite 34/34; `make check_all_quick` exit 0. Memory: playtest-checklist.md step 46b; strategy-notes.md T1 SHIPPED, freeze, rows 356/357; player-journey-map.md postgame Route 113 line.

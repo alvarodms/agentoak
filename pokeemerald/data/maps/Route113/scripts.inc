@@ -1,7 +1,23 @@
 Route113_MapScripts::
+	map_script MAP_SCRIPT_ON_LOAD, Route113_OnLoad
 	map_script MAP_SCRIPT_ON_RESUME, Route113_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route113_OnTransition
 	.byte 0
+
+@ C356 v3.2 T1 "The ring in the ash": after the credits, once ELLIS is beaten, the six tiles around the
+@ pair load as trodden grass and never grow back into ash. Nothing marks it. 38,5 / 38,6 (where they
+@ stand) stay ash so neither gets the tall-grass overlay. Map load only: no waits, no redraw.
+Route113_OnLoad:
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Route113_EventScript_OnLoadEnd
+	goto_if_not_defeated TRAINER_ROUTE113_ASH_CAMPER, Route113_EventScript_OnLoadEnd
+	setmetatile 38, 4, METATILE_Fallarbor_NormalGrass, FALSE
+	setmetatile 37, 5, METATILE_Fallarbor_NormalGrass, FALSE
+	setmetatile 39, 5, METATILE_Fallarbor_NormalGrass, FALSE
+	setmetatile 37, 6, METATILE_Fallarbor_NormalGrass, FALSE
+	setmetatile 39, 6, METATILE_Fallarbor_NormalGrass, FALSE
+	setmetatile 38, 7, METATILE_Fallarbor_NormalGrass, FALSE
+Route113_EventScript_OnLoadEnd:
+	end
 
 Route113_OnResume:
 	setstepcallback STEP_CB_ASH

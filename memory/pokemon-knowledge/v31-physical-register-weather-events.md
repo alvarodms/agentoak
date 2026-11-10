@@ -1,8 +1,14 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 354 | **Date**: November 2026
+**Cycle**: 356 | **Date**: November 2026
 
 ---
+
+## C356 — v3.2 T1 "ring in the ash": silent persistent traces (searched Nov 2026)
+- **Silent worn-path traces mostly go unnoticed.** Death Stranding's player-worn trails (a faint trail becomes a path with use; Sony patent "gradual building of a route") were "a secret feature most players missed" in DS1 (Gfinity, 2025). Even a AAA trace with no text was missed by most players. T1 is a bonus for observant players. Don't count it as proof the arc landed. Measure it only with an open recall question ("did anything on Route 113 look different on your second visit?"), never by naming the ring.
+- **Indexical storytelling** (Fernández-Vara, GDC 2012 / DiGRA): a trace reads as story only when the player can tie the effect to a cause they remember. The DiGRA paper notes players mostly pick traces up in passing and seldom search like "archaeologists". So the ring must be on screen the moment the player arrives, with nothing to find. Its value is that it was there before the player stepped. The checklist step should check it on the first frame after the warp, before the player walks: the player's own fresh steps leave the same 0x212 and would hide it.
+- No public pokeemerald doc covers setmetatile persistence. The pret wiki only says metatile changes are "most common during map load" and that `wait*` commands in level scripts hardlock. That confirms the ON_LOAD choice and rules out any waitstate/delay in Route113_OnLoad.
+- Sources: https://www.gfinityesports.com/article/death-stranding-2-brings-back-a-secret-feature-most-players-missed-the-first-game , https://www.videogameschronicle.com/news/sony-has-patented-death-strandings-online-path-building-features , https://www.gdcvault.com/play/1016815/Environmental-Storytelling-Indices-and-the , https://dl.digra.org/index.php/dl/article/download/2943/2927/2986 , https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks
 
 ## C354 — check_beat_visibility lint + "beside the path" placement (searched Nov 2026; thin)
 - **No public pokeemerald event/visibility lint exists.** Closest is Porygon's `validate_scripts` (an MCP skill, not CI): it flags **dangling labels** (map.json `script` names with no `Label::` in scripts.inc) and undefined FLAG_/VAR_/ITEM_ constants, because a typo'd label silently breaks the event while an undefined constant fails the build. Worth folding into check_beat_visibility: each beat object's `script` and each hide-flag OnTransition label must resolve. Poryscript documents adding checks to `.github/workflows/build.yml`; LoH's `check_all` already covers that.
@@ -46,9 +52,4 @@
 - **pokeemerald downpour "canonical effects" thread** (PokéCommunity 444136): community argues about what heavy rain should do in battle. If v3.1 adds a weather effect, write the rule in one player-facing line (sign/NPC); players can't guess it.
 - Implication for v3.1: a physical beat (weather changes on a route the player already walks, carried into battle) fits the hack's "every reaction changes something visible" rule. Keep it scripted and flag-driven (one per route), not RNG. Use an override %, not a full table swap, if it changes wild slots.
 
-## Sources
-- https://bulbapedia.bulbagarden.net:443/wiki/Weather , https://code.heni.lol/decomp/polishedcrystal/wiki/Overworld-Weather
-- https://github.com/trey-gonsoulin/pokeemerald-expansion/issues/6 , https://www.pokecommunity.com/threads/16-2-weather-system-and-weather-encounters.429803/
-- https://www.pokecommunity.com/threads/pok%C3%A9mon-weather-mayhem.535675/ , https://github.com/skaternutko/weather-mayhem
-- https://www.pokecommunity.com/threads/pokeemerald-script-for-random-weather-changes.497707/ , https://www.pokecommunity.com/threads/bad-data-canonical-effects-of-the-downpour-weather-condition.444136/
-- https://www.dualshockers.com/pokemon-legends-arceus-space-time-distortion-fields-explained/ , https://www.gfinityesports.com/article/space-time-distortions
+- C347 sources: Bulbapedia Weather; polishedcrystal Overworld-Weather wiki; trey-gonsoulin/pokeemerald-expansion#6; PokéCommunity 429803, 535675, 497707, 444136; skaternutko/weather-mayhem; dualshockers/gfinity Space-time distortion guides.

@@ -13,7 +13,7 @@ General project information — build system details, tool versions, configurati
 
 ## Emulator tooling
 
-- 2026-11-04 (C337 probe): no mGBA (mgba, mgba-sdl, mgba-qt, mgba-rom-test) or xvfb-run in the runner image, nothing in /usr/games; pngjs is NOT installed (no node_modules at the repo root); no python3; tools/gbagfx is not built until `make`. PNG palettes can still be read with plain Node (the PLTE chunk is uncompressed: walk chunks from byte 8, PLTE data = RGB triplets).
+- **C356: headless mGBA works.** `npm run playtest` (repo root) replays pokeemerald/playtests/*.json against the built retail ROM, writing screenshots to artifacts/playtests/<name>/ (Read them to see the screen). Needs a built pokeemerald.gba (run make first). Still no python3 or pngjs; read PNG palettes with plain Node (PLTE chunk = RGB triplets). The C337 "no mGBA" probe is obsolete.
 
 ## Build System
 

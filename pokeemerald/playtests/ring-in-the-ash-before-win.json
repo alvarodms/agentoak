@@ -1,0 +1,75 @@
+{
+  "name": "ring-in-the-ash-before-win",
+  "checks": "C356 v3.2 T1: with ELLIS unbeaten there is no ring; 37,5 beside him is still ash grass and the SOOT SACK gathers from it",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 37,
+    "y": 4,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_SOOT_SACK": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100
+      }
+    ],
+    "caught": [
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "37,4 is bare ash field: standing there gathers nothing"
+    },
+    {
+      "wait": 30
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 0
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE113_ASH_CAMPER",
+        "x": 38,
+        "y": 5,
+        "facing": "down"
+      }
+    },
+    {
+      "screenshot": "no-ring"
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "expectPlayer": {
+        "x": 37,
+        "y": 5
+      }
+    },
+    {
+      "expectVar": {
+        "VAR_ASH_GATHER_COUNT": 1
+      }
+    }
+  ]
+}
