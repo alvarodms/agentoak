@@ -1,0 +1,15 @@
+{
+  "name": "tide-hiker-cave-before",
+  "checks": "C348 checklist step 44: game clear but GLIGAR_HOENN not caught: the hiker is still on Granite Cave B1F at 26,20 (step 7 state)",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B1F",
+    "x": 26,
+    "y": 21,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_SYS_GAME_CLEAR"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_GRANITE_CAVE_B1F_HIKER", "x": 26, "y": 20, "visible": true } },
+    { "expectFlag": { "FLAG_HIDE_GRANITE_CAVE_B1F_HIKER": false } }
+  ]
+}

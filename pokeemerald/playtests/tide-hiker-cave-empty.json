@@ -1,0 +1,16 @@
+{
+  "name": "tide-hiker-cave-empty",
+  "checks": "C348 checklist step 44: game clear + GLIGAR_HOENN caught: Granite Cave B1F hiker's old spot (26,20) is empty",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B1F",
+    "x": 26,
+    "y": 21,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_SYS_GAME_CLEAR"],
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }],
+    "caught": ["SPECIES_GLIGAR_HOENN"]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_GRANITE_CAVE_B1F_HIKER", "absent": true } },
+    { "expectFlag": { "FLAG_HIDE_GRANITE_CAVE_B1F_HIKER": true } }
+  ]
+}

@@ -48,6 +48,7 @@ const ScenarioSchema = z.strictObject({
     .optional(),
   bag: z.record(z.string(), z.number().int()).optional(),
   caught: z.array(z.string()).optional(),
+  defeatedTrainers: z.array(z.string()).optional(),
 });
 
 const StepSchema = z.union([
@@ -104,7 +105,12 @@ const StepSchema = z.union([
     waitFor: z.string(),
     maxFrames: z.number().int().positive().optional(),
   }),
-  z.strictObject({ waitForBattleText: z.string(), maxFrames: z.number().int().positive().optional() }),
+  z.strictObject({
+    waitForBattleText: z.string(),
+    maxFrames: z.number().int().positive().optional(),
+    /** Ignore the message already showing; wait for a new one (e.g. the next "What will"). */
+    fresh: z.boolean().optional(),
+  }),
   z.strictObject({
     expectBattle: z.strictObject({ opponent: z.string().optional(), level: z.number().int().optional() }),
   }),
@@ -247,7 +253,9 @@ async function runStep(
       for (let f = 0; f < 40 && !moved; f += 2) {
         await s.run(2);
         const now = await s.readState();
-        moved = now.x === before.x + dx && now.y === before.y + dy;
+        // Crossing a map connection or stepping onto a warp changes the map,
+        // and with it the coordinate system: that counts as a step taken.
+        moved = now.map !== before.map || (now.x === before.x + dx && now.y === before.y + dy);
       }
       await s.hold([]);
       await s.run(8);
@@ -367,10 +375,11 @@ async function runStep(
     // on the action menu, so tapping it while waiting is safe.
     const want = flatten(step.waitForBattleText);
     const max = step.maxFrames ?? 1800;
+    const stale = step.fresh ? flatten(await s.readText("gDisplayedStringBattle", 300)) : undefined;
     let text = "";
     for (let f = 0; f <= max; f += 30) {
       text = flatten(await s.readText("gDisplayedStringBattle", 300));
-      if (text.includes(want)) {
+      if (text.includes(want) && text !== stale) {
         await s.run(30); // let the menu that follows the message take input
         return;
       }

@@ -1,0 +1,178 @@
+{
+  "name": "tessa-battle",
+  "checks": "C349 checklist step 45: game clear + LOTAD_HOENN caught (all badges): TESSA at Route 119 20,110 facing left; talk from 21,110: Ink line, Rule line, then a no-intro battle: LOTAD_HOENN Lv55 (opens with PROTECT on this seed), rain falls in battle, LOMBRE_HOENN Lv57, LUDICOLO_HOENN Lv59; win ('Struck down in my own storm'); 'Next storm' line, she faces up; second talk: that box only, no battle",
+  "scenario": {
+    "map": "MAP_ROUTE119",
+    "x": 21,
+    "y": 110,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 100,
+        "moves": [
+          "MOVE_AERIAL_ACE"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "x": 20,
+        "y": 110,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Its leaf drinks the storm. It's in red. Watch this!",
+        "In the rain, my THUNDER never misses!"
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LOTAD_HOENN",
+        "level": 55
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SALAMENCE used"
+    },
+    {
+      "waitForBattleText": "protected itself"
+    },
+    {
+      "waitForBattleText": "Rain continues to fall"
+    },
+    {
+      "comment": "rain is up in battle (end-of-turn weather message)"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SALAMENCE used"
+    },
+    {
+      "comment": "LOTAD down; TESSA sends LOMBRE (tapping B answers NO to 'change POK\u00e9MON?')"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LOMBRE_HOENN",
+        "level": 57
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SALAMENCE used"
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LUDICOLO_HOENN",
+        "level": 59
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "SALAMENCE used"
+    },
+    {
+      "waitForBattleText": "Struck down in my own"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "Next storm, wherever it's written. I'll be there."
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "x": 20,
+        "y": 110,
+        "facing": "up"
+      }
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "Next storm, wherever it's written. I'll be there."
+    },
+    {
+      "expectNoText": [
+        "Watch this!",
+        "[screen:"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE119_STORM_CHASER",
+        "facing": "up"
+      }
+    }
+  ]
+}
