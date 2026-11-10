@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 372" width="980" height="372" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" role="img" aria-label="Agent Oak overview: a scheduled cycle is verified, committed and released; memory and community feedback loop back into the next cycle">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8c959f"/></marker><marker id="m" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8250df"/></marker><marker id="c" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#0969da"/></marker></defs>
+  <rect x="22" y="44" width="156" height="72" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="100" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2328">Schedule</text>
+  <text x="100" y="96" text-anchor="middle" font-size="12.5" fill="#59636e">every 4 hours</text><line x1="182" y1="80" x2="212" y2="80" stroke="#8c959f" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="217" y="44" width="156" height="72" rx="10" fill="#dafbe1" stroke="#1a7f37" stroke-width="1.5"/>
+  <text x="295" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#1a7f37">Cycle</text>
+  <text x="295" y="96" text-anchor="middle" font-size="12.5" fill="#59636e">a team of agents</text><line x1="377" y1="80" x2="407" y2="80" stroke="#8c959f" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="412" y="44" width="156" height="72" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="490" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2328">Verify</text>
+  <text x="490" y="96" text-anchor="middle" font-size="12.5" fill="#59636e">build + claim check</text><line x1="572" y1="80" x2="602" y2="80" stroke="#8c959f" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="607" y="44" width="156" height="72" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="685" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2328">Commit</text>
+  <text x="685" y="96" text-anchor="middle" font-size="12.5" fill="#59636e">game, memory, journal</text><line x1="767" y1="80" x2="797" y2="80" stroke="#8c959f" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="802" y="44" width="156" height="72" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="880" y="76" text-anchor="middle" font-size="16" font-weight="600" fill="#1f2328">Release</text>
+  <text x="880" y="96" text-anchor="middle" font-size="12.5" fill="#59636e">patch + website</text><path d="M685 120 V196 H567" fill="none" stroke="#8250df" stroke-width="1.5" marker-end="url(#m)"/>
+  <rect x="387" y="170" width="176" height="52" rx="10" fill="#fbefff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="475" y="192" text-anchor="middle" font-size="16" font-weight="600" fill="#8250df">Memory</text>
+  <text x="475" y="212" text-anchor="middle" font-size="12.5" fill="#59636e">what the agent knows</text><path d="M383 196 H325 V122" fill="none" stroke="#8250df" stroke-width="1.5" marker-end="url(#m)"/><path d="M880 120 V300 H769" fill="none" stroke="#0969da" stroke-width="1.5" marker-end="url(#c)"/>
+  <rect x="607" y="270" width="156" height="60" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+  <text x="685" y="296" text-anchor="middle" font-size="16" font-weight="600" fill="#0969da">Players</text>
+  <text x="685" y="316" text-anchor="middle" font-size="12.5" fill="#59636e">play each release</text><line x1="603" y1="300" x2="574" y2="300" stroke="#0969da" stroke-width="1.5" marker-end="url(#c)"/>
+  <rect x="412" y="270" width="156" height="60" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+  <text x="490" y="296" text-anchor="middle" font-size="16" font-weight="600" fill="#0969da">GitHub Issues</text>
+  <text x="490" y="316" text-anchor="middle" font-size="12.5" fill="#59636e">ideas, bugs, feedback</text><path d="M408 300 H265 V122" fill="none" stroke="#0969da" stroke-width="1.5" marker-end="url(#c)"/><text x="339" y="150" font-size="11.5" fill="#8250df" font-weight="600">memory loop</text><text x="253" y="288" font-size="11.5" fill="#0969da" font-weight="600" text-anchor="end">community loop</text>
+</svg>
