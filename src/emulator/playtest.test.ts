@@ -1,6 +1,8 @@
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
+import { loadPlaytestFiles, loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
 import { PLAYTESTS_DIR, formatReport, preflight } from "./run-playtests.js";
 
 describe("preflight", () => {
@@ -37,6 +39,24 @@ describe("parsePlaytest", () => {
 
   it("rejects names that cannot be screenshot directories", () => {
     expect(() => parsePlaytest({ ...MINIMAL, name: "has spaces" })).toThrow();
+  });
+});
+
+describe("loadPlaytestFiles", () => {
+  it("keeps an invalid file as an entry with an error instead of throwing", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "oak-pt-"));
+    try {
+      fs.writeFileSync(path.join(dir, "good.json"), JSON.stringify({ ...MINIMAL, name: "good" }));
+      fs.writeFileSync(path.join(dir, "bad.json"), "{ not json");
+      const loaded = loadPlaytestFiles([dir]);
+      expect(loaded.map((l) => [l.name, !!l.test, !!l.error])).toEqual([
+        ["bad", false, true],
+        ["good", true, false],
+      ]);
+      expect(() => loadPlaytests([dir])).toThrow();
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
 

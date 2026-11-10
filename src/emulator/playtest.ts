@@ -134,13 +134,38 @@ export function parsePlaytest(json: unknown, source = "playtest"): Playtest {
   return result.data;
 }
 
-export function loadPlaytests(paths: string[]): { file: string; test: Playtest }[] {
+export interface LoadedPlaytest {
+  file: string;
+  /** The playtest's name, or the file's base name when it could not be parsed. */
+  name: string;
+  test?: Playtest;
+  /** Why the file is not a valid playtest. */
+  error?: string;
+}
+
+/** Loads every playtest, keeping unparseable files as entries with an error. */
+export function loadPlaytestFiles(paths: string[]): LoadedPlaytest[] {
   const files = paths.flatMap((p) =>
     fs.statSync(p).isDirectory()
       ? fs.readdirSync(p).filter((f) => f.endsWith(".json")).sort().map((f) => path.join(p, f))
       : [p],
   );
-  return files.map((file) => ({ file, test: parsePlaytest(JSON.parse(fs.readFileSync(file, "utf8")), file) }));
+  return files.map((file) => {
+    try {
+      const test = parsePlaytest(JSON.parse(fs.readFileSync(file, "utf8")), file);
+      return { file, name: test.name, test };
+    } catch (err) {
+      return { file, name: path.basename(file, ".json"), error: (err as Error).message };
+    }
+  });
+}
+
+/** Loads every playtest, throwing on the first invalid file. */
+export function loadPlaytests(paths: string[]): { file: string; test: Playtest }[] {
+  return loadPlaytestFiles(paths).map(({ file, test, error }) => {
+    if (!test) throw new Error(error);
+    return { file, test };
+  });
 }
 
 export interface PlaytestResult {

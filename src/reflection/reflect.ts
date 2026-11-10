@@ -35,6 +35,8 @@ export async function runReflection(context: {
   cycleChanges: string[];
   validationResult?: ValidationResult | null;
   acceptedIssues: IssueAction[];
+  /** The "Playtests" prompt section from this cycle's playtest gate, if it ran. */
+  playtestSection?: string;
   /** Timeout for the reflection call in milliseconds */
   timeout?: number;
 }): Promise<ReflectionResult> {
