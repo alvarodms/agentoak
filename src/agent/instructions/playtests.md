@@ -37,6 +37,21 @@ Never delete or loosen a check just to get green unless the behaviour it
 checks was deliberately removed. If you can't make a playtest pass within the
 cycle, keep it failing and explain why in your summary.
 
+### Extending the harness
+
+If a playtest needs something the harness can't do yet (a YES/NO answer, a
+menu, a new expectation), **add it yourself** in `src/emulator/`, the one part
+of `src/` you may change: usually a new step in `StepSchema` and `runStep()` in
+`src/emulator/playtest.ts`, with a unit test next to it and a row in
+`pokeemerald/playtests/README.md`. Keep each step small and readable by a
+non-programmer. Ship it in the same cycle as the playtest that uses it.
+
+Before you finish, run `npm run build:check` and `npm test` from the repo root.
+After implementation the runner runs both: if either fails, every
+`src/emulator/` change from this cycle is rolled back, and playtests that use
+the new step fail. Don't weaken existing steps or checks to make a playtest
+pass, and don't touch anything else in `src/`.
+
 After the build, the runner replays the whole suite on the verified ROM. Each
 failing playtest gets one `playtest-failure` issue (triaged like any bug
 report), and the issue closes itself once the playtest passes again or is

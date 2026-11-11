@@ -265,3 +265,37 @@ describe("discarding the cycle", () => {
     expect((await tree.changeSet()).files).toEqual([]);
   });
 });
+
+describe("a tree with its own check (the playtest harness)", () => {
+  const ok = (success: boolean) => async () => ({
+    success, exitCode: success ? 0 : 1, stdout: "", stderr: "", duration: 0, timestamp: "", errors: success ? [] : ["tests failed"],
+  });
+
+  it("verifies with the given check and stages only its own directory", async () => {
+    write("src/emulator/playtest.ts", "export const a = 1;\n");
+    git("add", "-A");
+    git("commit", "-q", "-m", "harness");
+    const harness = await beginGameTree({ repoRoot: repo, gameDir: "src/emulator", label: "cycle 0001", check: ok(true), maxFixAttempts: 0 });
+    write("src/emulator/playtest.ts", "export const a = 2;\n");
+    write("pokeemerald/src/main.c", "int other;\n");
+
+    expect((await harness.verify(neverFixes().fixer)).status).toBe("verified");
+    expect(buildCount()).toBe(0);
+    expect((await harness.stage()).staged).toEqual(["src/emulator/playtest.ts"]);
+    expect(git("diff", "--cached", "--name-only").trim()).toBe("src/emulator/playtest.ts");
+  });
+
+  it("rolls back without calling the fixer when the check fails and no fixes are allowed", async () => {
+    write("src/emulator/playtest.ts", "export const a = 1;\n");
+    git("add", "-A");
+    git("commit", "-q", "-m", "harness");
+    const harness = await beginGameTree({ repoRoot: repo, gameDir: "src/emulator", label: "cycle 0001", check: ok(false), maxFixAttempts: 0 });
+    write("src/emulator/playtest.ts", "export const a = 'broken';\n");
+    const { fixer, calls } = neverFixes();
+
+    const outcome = await harness.verify(fixer);
+    expect(outcome).toMatchObject({ status: "failed", rolledBackTo: "baseline", fixAttempts: 0 });
+    expect(calls).toEqual([]);
+    expect(read("src/emulator/playtest.ts")).toBe("export const a = 1;\n");
+  });
+});

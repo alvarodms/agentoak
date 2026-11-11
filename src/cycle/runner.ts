@@ -19,13 +19,14 @@ import type { ActionRecord } from "../agent/output-parser.js";
 import { runReflection } from "../reflection/reflect.js";
 import { saveBuildLog } from "../repo/build.js";
 import { beginGameTree, type BuildFixer, type GameTree } from "../repo/game-tree.js";
+import { HARNESS_DIR, runHarnessCheck } from "../repo/harness-check.js";
 import { recordSuccessfulBuild, formatVersion, loadVersion, applyVersionBump, setReleaseStage } from "../repo/version.js";
 import { writeJournalEntry, getNextCycleNumber, getRecentJournalDigests } from "../journal/writer.js";
 import { commitCycle, commitJournalOnly, getStrategyNotesDiff, listCommittedSpriteImages } from "../git/committer.js";
 import { formatPlaytestSection, runPlaytestGate, type PlaytestGateResult } from "./playtest-gate.js";
 import { validateCycle, getUnsubstantiatedIssueCompletions } from "../reflection/validator.js";
 import type { ValidationResult, ValidationStatus } from "../reflection/validator.js";
-import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
+import { fetchNewCommunityIssues, formatIssuesForPrompt, executeIssueActions, createHelpRequest, readIssueBacklog, updateIssueBacklog, addIssueToBacklog, getStaleBacklogIssues, postIssueClosingComment, postIssuePartialDeliveryComment, formatSpriteFeedbackForPlanner, fetchOpenHelpRequests, formatHelpRequestsForPlanner, isDuplicateHelpRequest, closeHelpRequest, createSpriteFeedbackIssue, postSpriteIterationUpdate } from "../github/issues.js";
 import { closeIssue, addLabelsToIssue, setDecisionLabel, commentOnIssue, AGENT_LABELS, getRepoInfo } from "../github/client.js";
 import type { IssueAction } from "../github/client.js";
 import { cycleLogger, logger } from "../utils/logger.js";
@@ -120,6 +121,9 @@ function buildDeepSeekOverrides(): Record<string, string | undefined> | undefine
   };
 }
 
+/** New help-request issues a cycle may open. */
+const MAX_HELP_REQUESTS_PER_CYCLE = 1;
+
 /** Phase 1: Planning — ask Claude to decide mode, objective, and task list */
 async function runPlanningPhase(
   cycleNumber: number,
@@ -138,7 +142,9 @@ async function runPlanningPhase(
   log.info("  Checking for community issues...");
   const communityIssues = await fetchNewCommunityIssues();
   const spriteFeedbackSection = await formatSpriteFeedbackForPlanner();
-  const issueContext = formatIssuesForPrompt(communityIssues) + spriteFeedbackSection;
+  const openHelpRequests = await fetchOpenHelpRequests();
+  const issueContext = formatIssuesForPrompt(communityIssues) + spriteFeedbackSection
+    + formatHelpRequestsForPlanner(openHelpRequests);
   const issueBacklog = readIssueBacklog();
   const staleIssues = getStaleBacklogIssues(cycleNumber);
 
@@ -200,14 +206,32 @@ async function runPlanningPhase(
     }
   }
 
-  // Create help-request issues if the planner asked for human input
-  if (plan.helpRequests.length > 0) {
-    log.info(`  Creating ${plan.helpRequests.length} help request(s)...`);
-    for (const hr of plan.helpRequests) {
-      const issueNum = await createHelpRequest(hr.title, hr.body);
-      if (issueNum) {
-        log.info(`  Created help request issue #${issueNum}: ${hr.title}`);
-      }
+  // Close help requests the planner retired (only its own open ones)
+  const openHelpNumbers = new Set(openHelpRequests.map((r) => r.number));
+  for (const c of plan.closeHelpRequests) {
+    if (!openHelpNumbers.has(c.issueNumber)) {
+      log.warn(`  Not closing #${c.issueNumber}: not an open help request`);
+      continue;
+    }
+    await closeHelpRequest(c.issueNumber, c.comment);
+    log.info(`  Closed help request #${c.issueNumber}`);
+  }
+
+  // Create help-request issues if the planner asked for human input: at most
+  // one per cycle, and never a duplicate of one still open.
+  const stillOpen = openHelpRequests.filter((r) => !plan.closeHelpRequests.some((c) => c.issueNumber === r.number));
+  const toFile = plan.helpRequests.filter((hr) => {
+    if (!isDuplicateHelpRequest(hr.title, stillOpen)) return true;
+    log.info(`  Skipping duplicate help request: ${hr.title}`);
+    return false;
+  });
+  if (toFile.length > MAX_HELP_REQUESTS_PER_CYCLE) {
+    log.warn(`  Planner asked for ${toFile.length} help requests; filing the first ${MAX_HELP_REQUESTS_PER_CYCLE}.`);
+  }
+  for (const hr of toFile.slice(0, MAX_HELP_REQUESTS_PER_CYCLE)) {
+    const issueNum = await createHelpRequest(hr.title, hr.body);
+    if (issueNum) {
+      log.info(`  Created help request issue #${issueNum}: ${hr.title}`);
     }
   }
 
@@ -460,6 +484,40 @@ async function runValidationFixPhase(
 }
 
 /**
+ * Phase 3.6: verify this cycle's changes to the playtest harness. Returns a
+ * note for the reflection prompt, or undefined when the harness is untouched.
+ */
+async function runHarnessVerifyPhase(
+  harnessTree: GameTree,
+  reverted: boolean,
+  log: ReturnType<typeof cycleLogger>,
+): Promise<string | undefined> {
+  const changed = (await harnessTree.changeSet()).files;
+  if (changed.length === 0) return undefined;
+  const heading = "## Playtest harness";
+  if (reverted) {
+    await harnessTree.discard();
+    return `${heading}\n\nThe cycle was reverted, so its changes to \`${HARNESS_DIR}/\` were discarded too: ${changed.join(", ")}.`;
+  }
+  log.info("Phase 3.6: Verifying playtest-harness changes (typecheck + tests)...");
+  const outcome = await harnessTree.verify(async () => {});
+  if (outcome.status === "failed") {
+    log.warn(`  Harness: FAIL — rolled back to the ${outcome.rolledBackTo === "verified" ? "last verified state" : "baseline"}.`);
+    return [
+      heading,
+      "",
+      `This cycle changed \`${HARNESS_DIR}/\` (${changed.join(", ")}), but \`npx tsc --noEmit\` or \`npx vitest run\` failed, so those changes were rolled back and will not be committed. Playtests that rely on them will fail below. Record what broke in \`next_steps\` so the next cycle can redo the harness change.`,
+      "",
+      "```",
+      ...outcome.build.errors,
+      "```",
+    ].join("\n");
+  }
+  log.info("  Harness: PASS");
+  return `${heading}\n\nThis cycle's changes to \`${HARNESS_DIR}/\` passed the typecheck and the full test suite and will be committed: ${changed.join(", ")}. Make sure \`memory/\` records the new harness abilities.`;
+}
+
+/**
  * Phase 4: Reflection — a fresh agent context analyzes what happened during
  * the cycle and updates memory.
  */
@@ -470,9 +528,13 @@ async function runReflectionPhase(
   buildResult: { success: boolean; errors: string[] } | null,
   validationResult: ValidationResult | null,
   playtestGate: PlaytestGateResult | null,
+  harnessNote: string | undefined,
   log: ReturnType<typeof cycleLogger>,
 ) {
   log.info("Phase 4: Reflection...");
+  const playtestSection = [harnessNote, playtestGate ? formatPlaytestSection(playtestGate) : undefined]
+    .filter(Boolean)
+    .join("\n\n");
   return runReflection({
     cycleNumber,
     objective: plan.objective,
@@ -483,7 +545,7 @@ async function runReflectionPhase(
     cycleChanges: implResult.cycleChanges,
     validationResult,
     acceptedIssues: acceptedIssueActions(plan),
-    playtestSection: playtestGate ? formatPlaytestSection(playtestGate) : undefined,
+    playtestSection: playtestSection || undefined,
     timeout: phaseTimeout(AGENT_PHASE_DEFAULT_TIMEOUT_MS, 0),
   });
 }
@@ -539,6 +601,8 @@ export async function runCycle(): Promise<void> {
   let spriteIterationPromise: Promise<SpriteDesignResult> | null = null;
   // Hoisted so the catch block can roll the game tree back on crash
   let gameTree: GameTree | null = null;
+  // The playtest harness (src/emulator), which the agent may also change
+  let harnessTree: GameTree | null = null;
 
   try {
     // Start the game tree from its baseline; leftovers from a crashed attempt are stashed
@@ -549,6 +613,13 @@ export async function runCycle(): Promise<void> {
     if (gameTree.setAside.length > 0) {
       log.warn(`Set aside ${gameTree.setAside.length} leftover game-tree change(s) in a git stash before starting.`);
     }
+    harnessTree = await beginGameTree({
+      repoRoot: PROJECT_ROOT,
+      gameDir: HARNESS_DIR,
+      label: `cycle ${String(cycleNumber).padStart(4, "0")} (harness)`,
+      check: runHarnessCheck,
+      maxFixAttempts: 0,
+    });
 
     // ── Phase 1: Planning (separate agent context) ──
     const { memory, recentJournals, plan } = await runPlanningPhase(cycleNumber, log);
@@ -711,6 +782,11 @@ export async function runCycle(): Promise<void> {
       }
     }
 
+    // ── Phase 3.6: Playtest harness verification ──
+    // Harness edits ship only if the project still typechecks and every test
+    // passes; otherwise they are rolled back. A reverted cycle ships none.
+    const harnessNote = await runHarnessVerifyPhase(harnessTree, reverted, log);
+
     // ── Phase 3.7: Playtests (advisory: reported, never blocks or reverts) ──
     let playtestGate: PlaytestGateResult | null = null;
     if (!reverted) {
@@ -726,6 +802,7 @@ export async function runCycle(): Promise<void> {
       finalBuildResult,
       validationResult,
       playtestGate,
+      harnessNote,
       log,
     );
 
@@ -749,6 +826,11 @@ export async function runCycle(): Promise<void> {
     if (discardedChanges.length > 0) {
       log.warn(`  Discarded ${discardedChanges.length} game-tree change(s) made after verification.`);
     }
+    const { staged: stagedHarnessFiles, discarded: discardedHarness } = await harnessTree.stage();
+    if (stagedHarnessFiles.length > 0) {
+      log.info(`  Staged ${stagedHarnessFiles.length} verified playtest-harness change(s).`);
+    }
+    discardedChanges.push(...discardedHarness);
 
     // Stamp the build number once, on the cycle's final verdict
     const gameVersion = stagedGameFiles.length > 0
@@ -1070,6 +1152,7 @@ export async function runCycle(): Promise<void> {
     // A crash reverts the cycle, even if a verified change set existed (ADR 0001)
     try {
       await gameTree?.discard();
+      await harnessTree?.discard();
     } catch (discardErr) {
       log.error(`Failed to roll back the game tree: ${discardErr instanceof Error ? discardErr.message : String(discardErr)}`);
     }

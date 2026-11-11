@@ -20,9 +20,9 @@ export interface GameTree {
   /** Everything in the game tree that differs from the baseline, as git sees it. */
   changeSet(): Promise<ChangeSet>;
   /**
-   * Build the game tree. On failure, hand the errors to the fixer and rebuild,
-   * up to 3 times. If it still fails, roll back to the last verified change
-   * set (or the baseline). Skips the build when nothing changed since the
+   * Build the game tree (or run its `check`). On failure, hand the errors to
+   * the fixer and rebuild, up to 3 times (`maxFixAttempts`). If it still
+   * fails, roll back to the last verified change set (or the baseline). Skips the build when nothing changed since the
    * last verification.
    */
   verify(fixer: BuildFixer): Promise<VerifyOutcome>;
@@ -63,8 +63,17 @@ export async function beginGameTree(options: {
   gameDir?: string;
   /** Names the stash that holds leftovers, e.g. "cycle 0042". */
   label: string;
+  /**
+   * How verify() checks the tree. Defaults to `make` in it. The playtest
+   * harness tree (src/emulator) passes a typecheck + tests instead.
+   */
+  check?: (dir: string) => Promise<BuildResult>;
+  /** Fixer calls before verify() gives up and rolls back. Default 3. */
+  maxFixAttempts?: number;
 }): Promise<GameTree> {
   const gameDir = options.gameDir ?? "pokeemerald";
+  const check = options.check ?? runBuild;
+  const maxFixAttempts = options.maxFixAttempts ?? MAX_FIX_ATTEMPTS;
   const git = simpleGit(options.repoRoot);
   const root = (await git.revparse(["--show-toplevel"])).trim();
   const baseline = (await git.revparse(["HEAD"])).trim();
@@ -98,12 +107,12 @@ export async function beginGameTree(options: {
       }
 
       const buildDir = path.join(root, gameDir);
-      let build = await runBuild(buildDir);
+      let build = await check(buildDir);
       let fixAttempts = 0;
-      while (!build.success && fixAttempts < MAX_FIX_ATTEMPTS) {
+      while (!build.success && fixAttempts < maxFixAttempts) {
         fixAttempts++;
         await fixer({ errors: build.errors, stderr: build.stderr, attempt: fixAttempts });
-        build = await runBuild(buildDir);
+        build = await check(buildDir);
       }
 
       if (build.success) {

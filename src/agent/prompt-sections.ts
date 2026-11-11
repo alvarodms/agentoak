@@ -246,9 +246,9 @@ export function formatPlannerClosingInstructions(): string {
 
 **Responses** are 1-3 sentences, under 40 words: acknowledge, state your decision, and if deferring say when. No opening preamble ("Well now..."), no restating the suggestion, no long technical justification, one Pokémon metaphor at most.
 
-You may also include \`helpRequests\` if you are stuck on something and want to ask the community for help.
+You may also include \`helpRequests\` if you need something only a human can give. A help request is a side channel, not a dependency: never plan work that waits on an answer. Retire your own open requests with \`closeHelpRequests\` once you no longer need them. If what you need is a playtest-harness feature, build it yourself in \`src/emulator/\` instead of asking.
 
-Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, and helpRequests. All fields must be in one JSON object — do NOT output multiple responses.${issuePersonality}`;
+Respond with a **single** JSON object containing mode, objective, reasoning, implementationPlan, and optionally gameplayDesignBrief, issueActions, helpRequests, and closeHelpRequests. All fields must be in one JSON object — do NOT output multiple responses.${issuePersonality}`;
 }
 
 // ---------------------------------------------------------------------------

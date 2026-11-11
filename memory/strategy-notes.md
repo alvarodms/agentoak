@@ -25,7 +25,7 @@
 
 **v3.1 "Taken at Their Word"** (C347-): Hoenn acts on the red ink as fact; three postgame beats (place / fight / weather), zero new notebook text. Design below.
 
-**v3.2 "Worn In"** (designed C353, tester-gated): consequence without witnesses; at most 2 metatile traces, no new text. T1 ring in the ash (Route 113) SHIPPED C356; T2 dropped. Content freeze since C356. Design below.
+**v3.2 "Worn In"** (designed C353): consequence without witnesses; at most 2 metatile traces, no new text. T1 ring in the ash (Route 113) SHIPPED C356; T2 dropped (backlog 359 proposes a candle trace for the slot). The C356-C359 content freeze is lifted (see "Verification" below). Design below.
 
 ---
 
@@ -39,7 +39,7 @@
 1. Every v3.1 beat is a PLACE, a FIGHT or WEATHER. Zero new FIELD NOTES pages, margins, Birch report lines or match-call text.
 2. Funnel question: "What does the player SEE change before anyone explains it?" A beat that can't pass without dialogue is v3.0's register and is cut.
 3. At most 2 text boxes per NPC per state. One plain sentence may state a battle rule.
-4. Postgame only: FLAG_SYS_GAME_CLEAR plus the relevant page inked. Hours 0-20 are frozen until a tester reports.
+4. Postgame only: FLAG_SYS_GAME_CLEAR plus the relevant page inked.
 5. Never random. Scripted, flag- or dex-driven, permanent once triggered.
 6. Never swap a wild table; any spawn is an override % and `make check_encounter_odds` must pass (C346 floors).
 7. Battle content goes through scripts/trainer_configs/*.json + generate_trainer.cjs only. No new C systems.
@@ -58,7 +58,10 @@
 
 **Coda preset**: data/scripts/playtest_coda.inc gives GAME_CLEAR, 8 badges, FLY/SURF, pages 1-4 via PC, VISITED Dewford/Mauville/Fallarbor/Fortree (C351); FLAG_LILYCOVE_GLIGAR_DOUBT is NOT set. check_playtest R3 fails the build if a beat loses a prerequisite. All three beats (and T1, once ELLIS is beaten) walk on `make playtest_coda`.
 
-## No human tester yet (C359). Headless playtests (suite 54/54) cover: believers P1-P4, dens P5 Torchic / P6 Mudkip battle + MARLOW before/after trade (C358) / P7 Treecko, Lilycove doubt flag (C358), Bag lock, Maxie, Juan duet, Beat A, Beat B, Beat C, T1, Birch bookshelf + in-person Red Ink report pre-credits AND postgame (C358 fix: PostgameRedInkOffer YES/NO once per lab visit via FLAG_TEMP_1, after any Reckoning, before the quest), 2-page controls; C359: R104 coda lesson with/without the doubt + no-LOTAD control, crayon kid all 3 tiers, lab walk-out-and-back (offer returns). NOT yet: the offer's NO branch (harness `talk` always answers YES; traced statically correct C359; help request to the runner maintainer), FIELD NOTES cover/margins (Bag), Pokénav report. Checklist 9/43 still describe a normal save; postgame now matches too.
+## Verification (maintainer decision after C359)
+The headless playtest suite is the verification bar: a beat covered by a passing playtest is verified. No work waits on a human tester, a help-request reply or any other event Agent Oak can't cause. When a human report does arrive, triage it first. The harness (`src/emulator/`) may now be extended by the implementation phase itself; C360 added `talk` `answers: ["no"]` and `expectBattleWeather`.
+
+Coverage (C359, suite 54/54): believers P1-P4, dens P5 Torchic / P6 Mudkip battle + MARLOW before/after trade (C358) / P7 Treecko, Lilycove doubt flag (C358), Bag lock, Maxie, Juan duet, Beat A, Beat B, Beat C, T1, Birch bookshelf + in-person Red Ink report pre-credits AND postgame (C358 fix: PostgameRedInkOffer YES/NO once per lab visit via FLAG_TEMP_1, after any Reckoning, before the quest), 2-page controls; C359: R104 coda lesson with/without the doubt + no-LOTAD control, crayon kid all 3 tiers, lab walk-out-and-back (offer returns). NOT yet: the offer's NO branch (traced statically correct C359; now testable with `talk` `answers`), Beat C hail (now testable with `expectBattleWeather`), FIELD NOTES cover/margins (needs a Bag step: build it), Pokénav report. Checklist 9/43 still describe a normal save; postgame now matches too.
 Rule: when a tester report arrives, fixing v3.0 pre-empts any v3.1 beat. Step numbers = memory/playtest-checklist.md.
 - Believers P1 schoolkid (3-4), P2 forager (5), P3 Granite hiker + HARD_STONE (7), P4 ash picnicker (10).
 - Dens P5 ISOLDE (14, 23-29), P6 MARLOW + TIDEMARK trade (30-35), P7 Steven chalk (36-41).
@@ -72,9 +75,9 @@ Rule: when a tester report arrives, fixing v3.0 pre-empts any v3.1 beat. Step nu
 
 ---
 
-# v3.2 "Worn In" (designed C353; tester-gated, after the C355 "v3.1 playable" milestone)
+# v3.2 "Worn In" (designed C353, after the C355 "v3.1 playable" milestone)
 
-**Content freeze (C356):** no new beats, traces, dialogue or species until a tester report arrives. Allowed: engineering, consolidation, checklist and recruit outreach, and fixes from reports.
+**Content freeze (C356-C359): lifted.** It waited on a human tester report that never came. New beats resume, each shipped with playtests that prove it lands.
 
 **Premise**: things the player's ink changed that nobody remarks on. Hoenn's people have stopped talking; the ground remembers. Register: **consequence without witnesses**.
 
@@ -112,9 +115,7 @@ Kept here: engine facts, free trainer slots and the boss-species pointer (Techni
 | 354-357 | **ALL DONE.** Beat A → 54,15 + `make check_beat_visibility` (C354); recruit post + milestone in memory (C355); T1 ring in the ash + W1-W4, content freeze (C356); 8 playtests + `make check_map_scan`, found postgame Birch never read the report (C357). Detail: completed-work/v31-taken-at-their-word.md | — |
 | 358 | **DONE C358.** Defect fix in the freeze: lab PostgameRedInkOffer (first line of BirchLab_ReckoningCheckDone, FLAG_TEMP_1 once per visit): after the credits the pre-credits YES/NO + rating/den hint/report chain runs before the migration quest, after any pending Reckoning; no new text, no save flag. birch-bookshelf-postgame-greeting flipped (failed first on the old tree), + birch-postgame-reckoning-first, birch-postgame-two-pages-no-offer, lilycove-doubt-sets-flag, marlow-keeps-the-pool, marlow-warns-before-catch; suite 47/47 | — |
 | 359 | **DONE C359.** Freeze-safe tests, no ROM change: coda-lotad-lesson-no-doubt / -doubt / -needs-lotad (4b), believer-skeptic-inked + no-girl check, fortree-crayon-kid-no-ink / -wall / -full (22c), birch-postgame-offer-returns-next-visit (real walk out of the lab door and back in: the offer returns, then the quest reminder). NO branch traced statically: correct (playtest-checklist step 43). Suite 54/54 | — |
-| 360 | Maintenance pass. MUST pick ONE freeze-end condition below and write it here with a fixed cycle number. PLANNER must file the help request (C359 could not): harness `talk` needs a way to answer NO (multichoice cursor), + README "warp and come back" tip is stale (warp needs a DOWN press on the mat). | — |
-| | Freeze-end proposal, Game Designer (verbatim): 'by ~C366 no tester → cut to 20-min coda ROM + 3 questions, no content' | — |
-| | Freeze-end proposal, Researcher (verbatim): 'by C365 a human posts a labelled scoped beta (two shortcut ROMs, known-bugs list, recall-first questions, AI authorship first line, r/PokemonROMhacks, patch only); bounded content window only if that also gets nothing' | — |
+| 360 | Maintenance pass, freeze already lifted by the maintainer (no freeze-end decision needed). Use the new harness steps: playtest the PostgameRedInkOffer NO branch (step 43, `talk` `answers: ["no"]`) and Beat C hail (`expectBattleWeather`). Retire obsolete help requests with `closeHelpRequests`. Then plan the next content arc. | — |
 
 ## v3.0 Den Chapter: Red Ink pages 5-7 (designed C333)
 

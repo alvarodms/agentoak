@@ -4,7 +4,7 @@ import type { CycleMode } from "./modes.js";
 import { CYCLE_MODES } from "./modes.js";
 import { logger } from "../utils/logger.js";
 import { getCycleModeHistorySummary } from "../memory/store.js";
-import type { IssueAction, HelpRequest } from "../github/client.js";
+import type { IssueAction, HelpRequest, HelpRequestClosure } from "../github/client.js";
 import type { TokenUsage } from "../memory/types.js";
 import { shouldUseTeamPlanning, planCycleWithTeam } from "./team-planner.js";
 import {
@@ -35,6 +35,8 @@ export interface CyclePlan {
   isSpriteIteration?: boolean;
   issueActions: IssueAction[];
   helpRequests: HelpRequest[];
+  /** Open help requests the planner is retiring (solved, obsolete, or no longer waited on). */
+  closeHelpRequests: HelpRequestClosure[];
   /** Tokens spent planning (the planner, or the advisors plus the Producer) */
   tokenUsage?: TokenUsage;
 }
@@ -140,6 +142,19 @@ export const CYCLE_PLAN_SCHEMA: Record<string, unknown> = {
         additionalProperties: false,
       },
     },
+    closeHelpRequests: {
+      type: "array",
+      description: "Your own open help requests to close: solved yourself, obsolete, or no longer worth waiting on.",
+      items: {
+        type: "object",
+        properties: {
+          issueNumber: { type: "number", description: "An open agent-help-request issue number" },
+          comment: { type: "string", description: "One or two sentences posted before closing: why it is no longer needed" },
+        },
+        required: ["issueNumber", "comment"],
+        additionalProperties: false,
+      },
+    },
   },
   required: ["mode", "objective", "reasoning", "implementationPlan"],
   additionalProperties: false,
@@ -162,6 +177,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     isSpriteIteration?: boolean;
     issueActions?: IssueAction[];
     helpRequests?: HelpRequest[];
+    closeHelpRequests?: HelpRequestClosure[];
   }
   let parsed: PlanJson | null = null;
 
@@ -217,9 +233,10 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
     const mode = parsed.mode as CycleMode;
     const issueActions = Array.isArray(parsed.issueActions) ? parsed.issueActions : [];
     const helpRequests = Array.isArray(parsed.helpRequests) ? parsed.helpRequests : [];
+    const closeHelpRequests = Array.isArray(parsed.closeHelpRequests) ? parsed.closeHelpRequests : [];
     if (!CYCLE_MODES[mode]) {
       logger.warn(`Invalid mode "${parsed.mode}", defaulting to research`);
-      return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests, tokenUsage: result.tokenUsage };
+      return { mode: "research", objective: parsed.objective, reasoning: parsed.reasoning, implementationPlan: parsed.implementationPlan ?? "", issueActions, helpRequests, closeHelpRequests, tokenUsage: result.tokenUsage };
     }
     logger.info(`Cycle plan: [${mode}] ${parsed.objective}`);
     if (issueActions.length > 0) {
@@ -241,6 +258,7 @@ export function parsePlanResult(result: ClaudeCodeResult): CyclePlan {
       isSpriteIteration: parsed.isSpriteIteration ?? false,
       issueActions,
       helpRequests,
+      closeHelpRequests,
       tokenUsage: result.tokenUsage,
     };
 

@@ -11,10 +11,17 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
-import { PLAYTESTS_DIR, PLAYTEST_OUT_DIR, runSuite } from "../emulator/run-playtests.js";
-import { loadPlaytestFiles, type PlaytestResult } from "../emulator/playtest.js";
+import path from "node:path";
+import type { PlaytestResult } from "../emulator/playtest.js";
 import { syncPlaytestIssues, type SyncedIssue } from "../github/playtest-issues.js";
-import { POKEEMERALD_DIR } from "../utils/paths.js";
+import { ARTIFACTS_DIR, POKEEMERALD_DIR, PROJECT_ROOT } from "../utils/paths.js";
+
+// Not imported from src/emulator: the agent may change the harness this
+// cycle, and the gate must run the harness as it is now on disk, not the
+// copy this process loaded when the cycle started.
+const PLAYTESTS_DIR = path.join(POKEEMERALD_DIR, "playtests");
+const PLAYTEST_OUT_DIR = path.join(ARTIFACTS_DIR, "playtests");
+const SUITE_TIMEOUT_MS = 15 * 60 * 1000;
 
 export interface PlaytestGateResult {
   status: "ran" | "skipped";
@@ -42,7 +49,7 @@ export async function runPlaytestGate(cycleNumber: number, log: Log): Promise<Pl
     return { status: "skipped", reason, results: [], issues: [] };
   };
   try {
-    if (!fs.existsSync(PLAYTESTS_DIR) || loadPlaytestFiles([PLAYTESTS_DIR]).length === 0) {
+    if (!fs.existsSync(PLAYTESTS_DIR) || !fs.readdirSync(PLAYTESTS_DIR).some((f) => f.endsWith(".json"))) {
       return skipped("no playtests in pokeemerald/playtests/");
     }
 
@@ -58,10 +65,12 @@ export async function runPlaytestGate(cycleNumber: number, log: Log): Promise<Pl
       return skipped(`the ROM did not build (${build.error?.message ?? `exit ${build.status}`})`);
     }
 
-    const { problems, results } = await runSuite({
-      onResult: (r) => log.info(`  ${r.passed ? "✓" : "✗"} ${r.name}${r.passed ? "" : ` — step ${r.failedStep}: ${r.error?.slice(0, 200)}`}`),
-    });
-    if (problems.length) return skipped(problems.join(" "));
+    const suite = runSuiteInFreshProcess();
+    if ("problem" in suite) return skipped(suite.problem);
+    const results = suite.results;
+    for (const r of results) {
+      log.info(`  ${r.passed ? "✓" : "✗"} ${r.name}${r.passed ? "" : ` — step ${r.failedStep}: ${r.error?.slice(0, 200)}`}`);
+    }
 
     const failed = results.filter((r) => !r.passed).length;
     log.info(`  Playtests: ${results.length - failed}/${results.length} passed (report: ${PLAYTEST_OUT_DIR}/report.md)`);
@@ -77,6 +86,27 @@ export async function runPlaytestGate(cycleNumber: number, log: Log): Promise<Pl
   } catch (err) {
     return skipped(`the playtest run crashed: ${err instanceof Error ? err.message : String(err)}`);
   }
+}
+
+/**
+ * `npm run playtest` in a child process, so the suite runs on the harness as
+ * the agent left it this cycle. Results come back through report.json.
+ */
+function runSuiteInFreshProcess(): { results: PlaytestResult[] } | { problem: string } {
+  const report = path.join(PLAYTEST_OUT_DIR, "report.json");
+  fs.rmSync(report, { force: true });
+  const run = spawnSync("npx", ["tsx", "src/emulator/run-playtests.ts"], {
+    cwd: PROJECT_ROOT,
+    encoding: "utf8",
+    timeout: SUITE_TIMEOUT_MS,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  // Exit 0: all passed, 1: some failed; both write the report. 2: nothing could run.
+  if ((run.status === 0 || run.status === 1) && fs.existsSync(report)) {
+    return { results: JSON.parse(fs.readFileSync(report, "utf8")) as PlaytestResult[] };
+  }
+  const why = (run.stderr || run.stdout || run.error?.message || `exit ${run.status}`).trim().slice(-1000);
+  return { problem: why };
 }
 
 /** The reflection prompt's "Playtests" section. */

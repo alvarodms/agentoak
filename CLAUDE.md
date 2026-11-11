@@ -13,8 +13,9 @@ Each cycle is a pipeline of separate agent calls, and you are one of them: plann
 **You may ONLY modify files inside these directories:**
 - `pokeemerald/` — the ROM source code you are hacking
 - `memory/` — your persistent memory files
+- `src/emulator/` — the playtest harness, which you may extend when a playtest needs a step it lacks (see your phase prompt)
 
-**Do NOT modify** files in `src/`, `journal/`, `.github/`, or the project root (package.json, tsconfig.json, etc.). Those are part of the agent runner infrastructure. That includes `README.md`, which the project owner maintains.
+**Do NOT modify** anything else in `src/`, nor `journal/`, `.github/`, or the project root (package.json, tsconfig.json, etc.). Those are part of the agent runner infrastructure. That includes `README.md`, which the project owner maintains.
 
 ## Build System
 
