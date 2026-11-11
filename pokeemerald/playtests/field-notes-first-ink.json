@@ -1,0 +1,120 @@
+{
+  "name": "field-notes-first-ink",
+  "checks": "C324/C331 the first red ink: after a LOTAD_HOENN catch, page 1 shows Birch's line, then the player's red correction signed SAGE, then the Route 104 margin; the cover still reads 1 of 4 with no name",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "Pages in your ink: 1 of 4.",
+        "Hides from storms. -- B.",
+        "Electric! Its leaf drinks",
+        "the storm.",
+        "-- SAGE",
+        "Since then: a kid on ROUTE",
+        "104 stopped watching the sea."
+      ]
+    },
+    {
+      "expectNoText": [
+        "and SAGE",
+        "Frost on its cap",
+        "Since then: the lady",
+        "LAST PAGE"
+      ]
+    },
+    {
+      "comment": "screenshot pass: the transcript drops {COLOR}, so the red ink is checked by eye. Each \\l and \\p in the page text waits for A"
+    },
+    {
+      "useKeyItem": {
+        "item": "ITEM_FIELD_NOTES",
+        "read": false
+      }
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "cover"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "cover-count"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "p1-birch-line"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "p1-birch-signed"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "p1-red-ink"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "p1-red-ink-signed"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "p1-margin"
+    }
+  ]
+}

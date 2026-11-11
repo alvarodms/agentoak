@@ -408,7 +408,8 @@ export class EmulatorSession {
     }
   }
 
-  private constant(name: string): number {
+  /** Resolves a pokeemerald constant name (ITEM_*, FLAG_*, ...) against the ROM's headers. */
+  constant(name: string): number {
     const value = resolveConstants([name], { pokeemeraldDir: this.sourceDir }).get(name);
     if (value === undefined) throw new Error(`could not resolve ${name}`);
     return value;

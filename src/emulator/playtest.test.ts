@@ -2,7 +2,14 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { battleWeatherName, loadPlaytestFiles, loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
+import {
+  SAVEBLOCK1_REGISTERED_ITEM,
+  battleWeatherName,
+  loadPlaytestFiles,
+  loadPlaytests,
+  parsePlaytest,
+  type PlaytestResult,
+} from "./playtest.js";
 import { PLAYTESTS_DIR, formatReport, preflight } from "./run-playtests.js";
 
 describe("preflight", () => {
@@ -47,6 +54,15 @@ describe("parsePlaytest", () => {
   it("accepts a battle weather check", () => {
     expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleWeather: "hail" }] })).not.toThrow();
     expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleWeather: "fog" }] })).toThrow();
+  });
+
+  it("accepts useKeyItem by ITEM_ name only", () => {
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ useKeyItem: "ITEM_FIELD_NOTES" }] })).not.toThrow();
+    const full = { useKeyItem: { item: "ITEM_FIELD_NOTES", read: false, maxPresses: 50 } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [full] }).steps[0]).toEqual(full);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ useKeyItem: 377 }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ useKeyItem: "FIELD_NOTES" }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ useKeyItem: { item: 377 } }] })).toThrow();
   });
 
   it("rejects names that cannot be screenshot directories", () => {
@@ -97,6 +113,17 @@ describe("formatReport", () => {
     expect(report).toContain("## ❌ b");
     expect(report).toContain("step 3");
     expect(report).toContain("Hi / there");
+  });
+});
+
+const GLOBAL_H = path.join(path.dirname(PLAYTESTS_DIR), "include", "global.h");
+
+describe("SAVEBLOCK1_REGISTERED_ITEM", () => {
+  it.skipIf(!fs.existsSync(GLOBAL_H))("matches registeredItem's offset in include/global.h", () => {
+    const line = fs.readFileSync(GLOBAL_H, "utf8").split("\n").find((l) => /\bregisteredItem;/.test(l));
+    const offset = line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1];
+    expect(offset, "registeredItem line with a /*0x...*/ offset").toBeDefined();
+    expect(Number(offset)).toBe(SAVEBLOCK1_REGISTERED_ITEM);
   });
 });
 

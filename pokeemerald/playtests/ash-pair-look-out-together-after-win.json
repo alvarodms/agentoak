@@ -1,6 +1,6 @@
 {
   "name": "ash-pair-look-out-together-after-win",
-  "checks": "C350 Beat C step 46: talk to ELLIS from 37,5: Ink + Rule lines, no-intro battle VULPIX_HOENN Lv54 then NINETALES_HOENN Lv56 (METEOR MASH misses it once on this seed); win ('You run colder'); 'Same time tomorrow' line; both he and the picnicker turn to face right and stay that way; second talk: that box only, no battle",
+  "checks": "C350 Beat C step 46: talk to ELLIS from 37,5: Ink + Rule lines, no-intro battle VULPIX_HOENN Lv54 then NINETALES_HOENN Lv56 (METEOR MASH misses it once on this seed); win ('You run colder'); 'Same time tomorrow' line; both he and the picnicker turn to face right and stay that way; second talk: that box only, no battle; the battle opens with no battle weather (the ash is field weather only; Hail is ELLIS's AI flourish, never a gate)",
   "scenario": {
     "map": "MAP_ROUTE113",
     "x": 37,
@@ -76,6 +76,9 @@
     },
     {
       "waitForBattleText": "What will"
+    },
+    {
+      "expectBattleWeather": "none"
     },
     {
       "press": "A"

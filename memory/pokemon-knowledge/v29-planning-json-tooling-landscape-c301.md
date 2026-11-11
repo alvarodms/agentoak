@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 359 | **Date**: November 2026
+**Cycle**: 360 | **Date**: November 2026
 
 ---
 
@@ -14,20 +14,12 @@
 - FEU/PokeCommunity playtest guidance: offer ONE chapter, "playtest it yourself before submitting", never share the .gba (patch only).
 - Postgame-callback search (generic RPG dev threads, Elden Ring "post-game felt unchanged"): players notice *absence* of change after the ending; no Pokémon-hack evidence for/against single-NPC postgame lines. BW2's returning cast is a whole-region device, not one NPC. Thin.
 
-## C323 addendum: headless testing + read-through
-- Expansion's test framework runs a test ROM under `mgba-rom-test` (headless) via `make check`; "Hydra" parallelises. Porting to vanilla = large tech-debt job.
-- Dialogue read-through: *consistency* of voice is the top priority (PokeCommunity Daily); some problems only show up in cutscenes (Pokémon Wish feedback).
+## C360 addendum: where players actually are + where they quit (searched Nov 2026)
+- **Quit moments cluster EARLY** (PokeCommunity "What quit moment made you drop a large fangame/hack", thread 524956): early gyms with full competitive teams/held items; an early forest/cave route "full of empty space"; "could not FIND anything… level 30 starter and could not tell you where the first gym badge was". Forum anecdotes, no measured retention data exists for hacks.
+- Combined with C355 (38.8% finish rate, longer games finish less): most players never see postgame. LoH spent C340-C359 on postgame/coda beats → the next arc has a bigger audience in Hours 0-3.
+- 2025 ROM Hacking Awards (announced 2026) Best Story = *Odyssey* (FireRed, labyrinths instead of gyms; praised for pacing). *Ghost Grey* (Aug 2026) praised as best new horror hack. Story-camp praise = pacing + clear direction, not volume. Unbound's story is called "convoluted at times".
 
-## C332 addendum: playtest checklists + reaching test states
-- Vanilla has no debug menu; pret wiki "Add a debug menu" guide; keep it behind a compile-time define (expansion does). Without one, postgame checks cost ~20 h of replay.
-- Checklist items: build ID + where / do / expect / severity; group by **save state**, not feature.
-
-## C337 addendum: screenshot-based emulator pass (searched Nov 2026)
-- **A headless mGBA screenshot harness exists as a PR on a pokeemerald-expansion fork** (randommusing85-cell/pokeemerald-expansion PR #1): boots the built ROM windowless, runs a *plain-text input script*, writes PNG screenshots + a contact sheet + memory checks, resolves symbols from the ELF (so it can read gSaveBlock flags / write warp targets). ~1 s per script. Unmerged fork — a design reference, not a dependency.
-- **mgba-mcp** (struktured-labs): mGBA headless under xvfb, Lua frame callback → `screenshot()` → quit; savestate loading for reproducible states. Caveat: `emu:quit()` does not reliably exit → wrap every run in a timeout/watchdog.
-- PokeCommunity "automated testing — what do you do" thread: the common practice is exactly build → scripted button presses → screenshots, using a debug menu to skip ahead.
-- Implication for LoH: a symbol-aware harness can SET flags (FLAG_CAUGHT_*, 0x2BB, trainer flag 0x745) and warp straight to the den maps, replacing the 20 h replay. Static flag/route checks then become visual checks of rendered text.
-- **Light text legibility**: FEUniverse accessibility thread — a vision-impaired player found GBA white/grey text on light windows hard to read, and "the gray option is close" to white. The usual fix is contrast against the box, not a lighter text colour. On the standard white message box, LIGHT_GRAY text with WHITE shadow is the lowest-contrast combination available → expect it to fail; DARK_GRAY/BLUE are the safe fallbacks.
+## C323/C332/C337 (applied): expansion `mgba-rom-test`; debug skip behind a compile define; checklist grouped by save state; headless mGBA screenshot harness prior art (randommusing85 fork PR #1, mgba-mcp: wrap runs in a watchdog); LIGHT_GRAY on white box fails contrast → BLUE/DARK_GRAY.
 
 ## C338 (applied): REGIUS/Crimson Ruby betas = known-bugs list + report form + stated scope ("playable up to Fallarbor") + named questions; FEUniverse takes single-chapter asks; bug form asks "emulator/hardware?"; same-visit catch = `GetBattleOutcome` branch (vanilla legendaries).
 
@@ -67,6 +59,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C360: [Quit-moment thread](https://www.pokecommunity.com/threads/what-quit-moment-made-you-drop-a-large-pokemon-fangame-hack.524956) · [Retro Dodo 2026 list](https://retrododo.com/best-pokemon-rom-hacks/) · [Run and Bun too hard](https://stealthoptional.com/news/pokemon-run-and-bun-hack-too-hard/)
 - C359: [Archipelago pokemon_emerald](https://git.hollymcfarland.com/monorail/Archipelago/src/commit/0d38b415404bca2b5bcb7bca4ef4c2c7ca43d0b6/worlds/pokemon_emerald) · [Broken exit warp thread](https://www.pokecommunity.com/threads/simple-question-about-warping-in-porymap.458305/latest) · [Dreamstone Mysteries open beta](https://redlib.cypherpunktools.com/r/PokemonROMhacks/comments/1juzt2l/announcement_pokemon_dreamstone_mysteries_a) · [Playtest solo](https://gtstu.com/playtest-indie-game-solo-developer/)
 - C357: [Porymap scripting](https://huderlem.github.io/porymap/manual/scripting-capabilities.html) · [Porymap changelog](https://huderlem.github.io/porymap/reference/changelog.html) · [Expanding metatile count](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Expanding-The-Metatile-Count) · [Useful Scripting Specials](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Useful-Scripting-Specials) · [mGBA scripting API](https://mgba.io/docs/scripting.html)
 - C355: [PokeCommunity Progressing guidelines Oct 2026](https://www.pokecommunity.com/threads/progressing-rom-hacks-showcase-guidelines-updated-october-2026.467348/) · [Completed guidelines](https://www.pokecommunity.com/threads/completed-rom-hacks-guidelines-updated-october-2026.467328/) · [AI in rom hacks thread](https://www.pokecommunity.com/threads/question-regarding-the-use-of-ai-in-rom-hacks.542819/) · [Galaxus completion](https://www.galaxus.at/en/page/hardly-anyone-finishes-games-so-why-are-they-so-long-37002)

@@ -1,0 +1,52 @@
+{
+  "name": "field-notes-blank",
+  "checks": "C324 FIELD NOTES via SELECT with nothing caught: Birch's four old beliefs, a 0 of 4 cover, no red ink, no margins, no name on the cover",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "PROF. BIRCH's FIELD NOTES",
+        "Pages in your ink: 0 of 4.",
+        "p.1 ROUTE 102",
+        "Hides from storms. -- B.",
+        "p.2 PETALBURG WOODS",
+        "p.3 GRANITE CAVE",
+        "p.4 ROUTE 113"
+      ]
+    },
+    {
+      "expectNoText": [
+        "-- SAGE",
+        "Since then:",
+        "and SAGE",
+        "p.5 MT. PYRE",
+        "LAST PAGE"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    }
+  ]
+}

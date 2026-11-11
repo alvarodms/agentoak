@@ -1,0 +1,160 @@
+{
+  "name": "birch-postgame-offer-declined",
+  "checks": "C358 step 43 NO branch: decline Birch's postgame red-ink offer: no rating or report, the quest hook still comes, the offer stays quiet for the rest of the visit, and after a real walk out and back in it is offered again (YES this time, report reads)",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "x": 6,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_SYS_NATIONAL_DEX",
+      "FLAG_RESCUED_BIRCH"
+    ],
+    "vars": {
+      "VAR_BIRCH_LAB_STATE": 5,
+      "VAR_PETALBURG_GYM_STATE": 7,
+      "VAR_DEX_UPGRADE_JOHTO_STARTER_STATE": 3,
+      "VAR_LITTLEROOT_INTRO_STATE": 7,
+      "VAR_LITTLEROOT_TOWN_STATE": 4,
+      "VAR_LITTLEROOT_RIVAL_STATE": 4
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "face": "up"
+    },
+    {
+      "talk": {
+        "maxPresses": 600,
+        "answers": [
+          "no"
+        ]
+      }
+    },
+    {
+      "expectText": [
+        "Are you curious about how your",
+        "[answered NO]",
+        "I have been waiting for you."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Oh, and word of your red",
+        "A picnicker on ROUTE 113"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_BIRCH_QUEST_STARTED": true,
+        "FLAG_TEMP_1": true
+      }
+    },
+    {
+      "talk": {
+        "maxPresses": 600
+      }
+    },
+    {
+      "expectNoText": [
+        "Are you curious about how your",
+        "Oh, and word of your red"
+      ]
+    },
+    {
+      "expectText": [
+        "Any order you like."
+      ]
+    },
+    {
+      "walk": "down",
+      "tiles": 7
+    },
+    {
+      "comment": "6,12 is an arrow-warp mat: stepping on only shows the arrow, a DOWN press on it takes the exit"
+    },
+    {
+      "press": "DOWN",
+      "hold": 20
+    },
+    {
+      "wait": 180
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN",
+        "x": 7,
+        "y": 17
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "wait": 180
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+        "x": 6,
+        "y": 12
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_TEMP_1": false
+      }
+    },
+    {
+      "walk": "up",
+      "tiles": 7
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": {
+        "maxPresses": 600
+      }
+    },
+    {
+      "expectText": [
+        "Are you curious about how your",
+        "Oh, and word of your red",
+        "A picnicker on ROUTE 113",
+        "Any order you like."
+      ]
+    },
+    {
+      "expectNoText": [
+        "I have been waiting for you."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "name": "field-notes-cover-yours",
+  "checks": "C331 Red Ink payoff in the notebook: 3+ pages inked puts the player's name on the cover in red; all four pages carry red ink and their margin lines; no doubt line without the Lilycove flag",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "FIELD NOTES of PROF. BIRCH",
+        "and SAGE.",
+        "Pages in your ink: 4 of 4.",
+        "Electric! Its leaf drinks",
+        "Frost on its cap. Poison",
+        "Water and Rock. It swims",
+        "Ice and Fairy. Cold fur in",
+        "stopped watching the sea.",
+        "woods left her warm spot.",
+        "CAVE faces the deep.",
+        "laughs in the falling ash."
+      ]
+    },
+    {
+      "expectNoText": [
+        "PROF. BIRCH's FIELD NOTES",
+        "Wrong, or changed again",
+        "LAST PAGE"
+      ]
+    },
+    {
+      "useKeyItem": {
+        "item": "ITEM_FIELD_NOTES",
+        "read": false
+      }
+    },
+    {
+      "wait": 300
+    },
+    {
+      "screenshot": "cover-with-name"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "field-notes-page3-doubt",
+  "checks": "C340 the player's own doubt: with the Lilycove flag, page 3 adds the unsigned fourth mark after the red ink and margin",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_LILYCOVE_GLIGAR_DOUBT"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_GLIGAR_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "Pages in your ink: 1 of 4.",
+        "Water and Rock. It swims",
+        "CAVE faces the deep.",
+        "Seen in LILYCOVE: gliding",
+        "Wrong, or changed again"
+      ]
+    },
+    {
+      "expectNoText": [
+        "and SAGE",
+        "Electric! Its leaf drinks"
+      ]
+    }
+  ]
+}

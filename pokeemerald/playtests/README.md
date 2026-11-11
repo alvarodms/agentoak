@@ -43,6 +43,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `face`, `walk` (+`tiles`) | Turn in place, or walk tile by tile; fails if blocked. A step across a map connection or onto a warp counts (check the new map with `expectPlayer`) |
 | `press` (+`hold`, `release`, `times`), `wait` | Raw buttons and frames |
 | `talk` (+`maxPresses`, default 200; `start`; `answers`) | Press A, then keep pressing until the script ends or the field screen is left (a battle), recording every message box. A battle shows as a last entry like `[screen: CB2_OverworldBasic]` (the transition); follow with `waitFor: "battle"`. `{"start": false}` picks up a script that resumes after a battle. `{"answers": ["no"]}` answers the script's YES/NO boxes in order (`"no"` presses B; boxes after the last answer get YES; an unused answer fails the step); each shows in the text as `[answered NO]` |
+| `useKeyItem` (+`read`, default true; `maxPresses`) | Register an item (`"ITEM_FIELD_NOTES"`, must be in the scenario `bag`) and press SELECT, then record its message boxes like `talk`. `"read": false` only starts it, for `press`/`wait`/`screenshot` mid-read |
 | `expectText`, `expectNoText` | Substrings of the last `talk` (line breaks and curly quotes don't matter). Battle messages are never in it |
 | `expectPlayer`, `expectObject` | Tile and facing; objects by `LOCALID_*` or index (+1), with `x`, `y`, `facing`, `visible`, or `"absent": true` (not loaded, i.e. hidden by its flag) |
 | `expectFlag`, `expectVar`, `expectScreen` | Saved flags and vars; `gMain.callback2` by name |
@@ -68,4 +69,4 @@ Tips from writing the first suite:
 - Put the player on a walkable tile next to the target; a scenario can drop them on water.
 - Text prints at the default (mid) speed; `talk` handles it, but raw `press`/`wait` scripts need a few hundred frames per box.
 - Leaving through an indoor exit mat: walk onto the mat, then `press DOWN` (the warp fires on the press, not the step). `wait` a few hundred frames and check the new map with `expectPlayer`. Coming back in is an ordinary `walk` onto the door.
-- Not possible yet: checking the bag or using a registered key item, surfing or fishing, a battle message history. **Add the step yourself** in `src/emulator/playtest.ts` (schema + `runStep()` + a unit test + a row here) when a playtest needs it.
+- Not possible yet: checking the bag, surfing or fishing, a battle message history. **Add the step yourself** in `src/emulator/playtest.ts` (schema + `runStep()` + a unit test + a row here) when a playtest needs it.

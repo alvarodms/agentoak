@@ -25,6 +25,7 @@ import type { Facing } from "./state.js";
 const ButtonName = z.enum(Object.keys(BUTTONS) as [Button, ...Button[]]);
 const Direction = z.enum(["up", "down", "left", "right"]);
 const Strings = z.union([z.string(), z.array(z.string())]);
+const ItemName = z.string().regex(/^ITEM_[A-Z0-9_]+$/);
 
 const ScenarioSchema = z.strictObject({
   map: z.string(),
@@ -78,6 +79,17 @@ const StepSchema = z.union([
          * Boxes after the last answer get YES. Unused answers fail the step.
          */
         answers: z.array(z.enum(["yes", "no"])).min(1).optional(),
+      }),
+    ]),
+  }),
+  z.strictObject({
+    /** Registers an ITEM_* (it must be in the bag) and presses SELECT. read: record its boxes like talk. */
+    useKeyItem: z.union([
+      ItemName,
+      z.strictObject({
+        item: ItemName,
+        read: z.boolean().optional(),
+        maxPresses: z.number().int().positive().optional(),
       }),
     ]),
   }),
@@ -318,7 +330,25 @@ async function runStep(
 
   if ("talk" in step) {
     const opts = step.talk === true ? {} : step.talk;
-    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, opts.start ?? true, opts.answers ?? []));
+    const start = opts.start === false ? "resume" : "press";
+    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, start, opts.answers ?? []));
+    return;
+  }
+
+  if ("useKeyItem" in step) {
+    const opts = typeof step.useKeyItem === "string" ? { item: step.useKeyItem } : step.useKeyItem;
+    const id = s.constant(opts.item);
+    const sb1 = await s.deref("gSaveBlock1Ptr");
+    await s.write(sb1 + SAVEBLOCK1_REGISTERED_ITEM, Uint8Array.of(id & 0xff, id >> 8));
+    await s.write(s.symbols.address("gStringVar4"), Uint8Array.of(0xff)); // forget the previous message
+    await s.press("SELECT", { hold: 2, release: 6 });
+    let started = !(await s.scriptIdle());
+    for (let f = 0; f < 120 && !started; f += 2) {
+      await s.run(2);
+      started = !(await s.scriptIdle());
+    }
+    if (!started) fail(`useKeyItem ${opts.item}: SELECT started no script (is it in the bag, and is the player free to move?)`);
+    if (opts.read ?? true) result.transcripts.push(await talk(s, opts.maxPresses ?? 200, "none"));
     return;
   }
 
@@ -448,7 +478,8 @@ async function runStep(
 }
 
 /**
- * Presses A to interact (unless `start` is false), then keeps pressing A until the field script ends
+ * Starts the script ("press": A to interact; "resume": pick it up after a
+ * battle; "none": already running, e.g. from useKeyItem), then keeps pressing A until the field script ends
  * (or a battle starts), collecting each distinct message box. Message boxes
  * are read from gStringVar4, where the game expands every field message
  * before printing it, so each entry is a whole box, not what had scrolled.
@@ -456,7 +487,7 @@ async function runStep(
 async function talk(
   s: EmulatorSession,
   maxPresses: number,
-  start: boolean,
+  start: "press" | "resume" | "none",
   answers: readonly ("yes" | "no")[] = [],
 ): Promise<string[]> {
   const buffer = s.symbols.address("gStringVar4");
@@ -469,10 +500,10 @@ async function talk(
     return boxes;
   };
   let last = "";
-  if (start) {
+  if (start === "press") {
     await s.write(buffer, Uint8Array.of(0xff)); // forget the previous message
     await s.press("A", { hold: 2, release: 6 });
-  } else {
+  } else if (start === "resume") {
     // Resuming after a battle: tap B through its closing messages ("Got
     // away safely!" and the like) until the field comes back.
     for (let f = 0; (await s.callbacks()).callback2 !== "CB2_Overworld"; f += 30) {
@@ -503,6 +534,9 @@ async function talk(
   }
   fail(`talk: script still running after ${maxPresses} presses; text so far ${JSON.stringify(boxes)}`);
 }
+
+/** Offset of registeredItem in struct SaveBlock1 (include/global.h marks it 0x496; a unit test checks). */
+export const SAVEBLOCK1_REGISTERED_ITEM = 0x496;
 
 const NUM_TASKS = 16;
 /** sizeof(struct Task): func (4), isActive/prev/next/priority (4), data[16] (32). */

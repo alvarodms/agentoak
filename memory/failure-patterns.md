@@ -25,10 +25,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. C307: 0 instances (improvement).
 **Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix.
 
-## Script Path Confusion (C288) — 6 wasted actions
-
-**Symptom**: Searched for verify_species.sh in wrong locations.
-**Resolution**: All pokeemerald helper scripts are at `pokeemerald/scripts/`. The project root `scripts/` is agent runner scripts only.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26-197) — CRITICAL
 
@@ -99,3 +95,5 @@ Build failures and errors encountered, their causes, and how they were (or could
 - **Plan hand counts and flags.h hex comments drift (C334)**: C333 counted Tier B as 11 (really 12), and flags.h comments still say SYSTEM_FLAGS 0x860 / daily 0x920 (real 0x87B / 0x940 with 891 trainers). Trust `make check_flag_values` / computed values, never a hand count or a vanilla comment. Also: plans that quote generator commands get argument order wrong (`generate_trainer.cjs <config>`; mode comes from the JSON).
 - **A check that cannot fail (C344)**: the plan asked check_playtest_build to grep for FieldCB_WarpExitFadeFromBlack, but vanilla overworld.c already references it 3 times, so the check always passes. Before adding a symbol or grep check, prove it fails on a planted break (here: assert ExecuteTruckSequence is ABSENT instead).
 - **Playtest exit mats need a press, not a step (C359)**: walking onto an indoor exit mat (MB_SOUTH_ARROW_WARP, e.g. Birch lab 6,12) only shows the arrow; the warp fires on a DOWN press while standing on it. First try (`walk down 7`, `wait 180`) left the player on the mat in the lab (failure.png showed the arrow). Fix: `walk` onto the mat, then `{"press": "DOWN", "hold": 20}`, `wait 180`. Door tiles outdoors (Littleroot 7,16) warp on a plain `walk up`.
+
+- **Message boxes per page = A-presses per `\l`/`\p` (C360)**: a FIELD NOTES page with ink is 5+ boxes, not 3 (each `\l` scroll and `\p` wait for A). When a playtest screenshots a specific box, count the line breaks in the .inc text first, then place the screenshot after that many presses.
