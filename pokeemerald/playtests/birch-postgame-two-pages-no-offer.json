@@ -1,0 +1,72 @@
+{
+  "name": "birch-postgame-two-pages-no-offer",
+  "checks": "C358 control: after the credits with only 2 pages inked there is no bookshelf line and no rating offer; Birch goes straight to the migration quest",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "x": 6,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_SYS_NATIONAL_DEX"
+    ],
+    "vars": {
+      "VAR_BIRCH_LAB_STATE": 5,
+      "VAR_PETALBURG_GYM_STATE": 7,
+      "VAR_DEX_UPGRADE_JOHTO_STARTER_STATE": 3
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_BIRCHS_LAB_BIRCH",
+        "x": 6,
+        "y": 4,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "I have been waiting for you."
+      ]
+    },
+    {
+      "expectNoText": [
+        "You caught me copying.",
+        "Are you curious about how your",
+        "Oh, and word of your red",
+        "[screen:"
+      ]
+    }
+  ]
+}

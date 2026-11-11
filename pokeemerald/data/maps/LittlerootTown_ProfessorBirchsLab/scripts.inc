@@ -534,6 +534,24 @@ LittlerootTown_ProfessorBirchsLab_EventScript_BookshelfGreeting::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BookshelfQuestionMark, MSGBOX_DEFAULT
 	return
 
+@ C358: after the credits the red ink is still read in person, on request (the pre-credits YES/NO and chain), once per lab visit.
+@ Runs after a pending Reckoning (which ends the talk) and before the migration quest. Same Johto gates as BookshelfGreeting. No new text.
+LittlerootTown_ProfessorBirchsLab_EventScript_PostgameRedInkOffer::
+	goto_if_set FLAG_TEMP_1, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, Common_EventScript_NopReturn
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, Common_EventScript_NopReturn
+	specialvar VAR_RESULT, CountInkedFieldNotePages
+	goto_if_lt VAR_RESULT, 3, Common_EventScript_NopReturn
+	setflag FLAG_TEMP_1
+	msgbox gBirchDexRatingText_AreYouCurious, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Common_EventScript_NopReturn
+	call ProfBirch_EventScript_RatePokedex
+	call ProfBirch_EventScript_FieldNotes
+	call ProfBirch_EventScript_RedInkReport
+	return
+
 LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_CanHaveAnyOneOfRarePokemon, MSGBOX_DEFAULT
 	release
@@ -1157,6 +1175,8 @@ LittlerootTown_ProfessorBirchsLab_EventScript_BirchQuestCheck::
 	goto_if_unset FLAG_RECKONING_TALKED_SHOAL_CAVE, BirchLab_ReckoningCheckDone
 	goto BirchLab_EventScript_ReckoningAcknowledge
 BirchLab_ReckoningCheckDone:
+	@ C358 red ink offer; Reckoning payoff above still comes first
+	call LittlerootTown_ProfessorBirchsLab_EventScript_PostgameRedInkOffer
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 5, LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting
 	goto_if_set FLAG_BIRCH_QUEST_COMPLETE, LittlerootTown_ProfessorBirchsLab_EventScript_BirchPostQuest

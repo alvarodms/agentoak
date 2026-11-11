@@ -1,0 +1,59 @@
+{
+  "name": "marlow-keeps-the-pool",
+  "checks": "C335/C358 sailor MARLOW after the trade (titan caught, trade done): he stands on the titan's tile 18,6 facing the pool (down); talked to from his right side he gives the done line and does not turn to the player",
+  "scenario": {
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM",
+    "x": 19,
+    "y": 6,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP",
+      "FLAG_DEN_SHOAL_TRADE_DONE"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_SHOAL_CAVE_LOWER_SAILOR",
+        "x": 18,
+        "y": 6,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Fresh or salt, the tide",
+        "makes bells of them."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Forty years at sea",
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_SHOAL_CAVE_LOWER_SAILOR",
+        "x": 18,
+        "y": 6,
+        "facing": "down",
+        "visible": true
+      }
+    }
+  ]
+}

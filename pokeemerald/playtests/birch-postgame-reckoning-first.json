@@ -1,0 +1,102 @@
+{
+  "name": "birch-postgame-reckoning-first",
+  "checks": "C358: when the Reckoning payoff is pending after the credits, it comes first and ends the talk (PP MAX); the red ink offer waits for the next talk in the same visit, then the quest",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "x": 6,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_SYS_NATIONAL_DEX",
+      "FLAG_RECKONING_TALKED_MT_CHIMNEY",
+      "FLAG_RECKONING_TALKED_LAVARIDGE",
+      "FLAG_RECKONING_TALKED_METEOR_FALLS",
+      "FLAG_RECKONING_TALKED_SLATEPORT",
+      "FLAG_RECKONING_TALKED_ROUTE128",
+      "FLAG_RECKONING_TALKED_SHOAL_CAVE"
+    ],
+    "vars": {
+      "VAR_BIRCH_LAB_STATE": 5,
+      "VAR_PETALBURG_GYM_STATE": 7,
+      "VAR_DEX_UPGRADE_JOHTO_STARTER_STATE": 3
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_BIRCHS_LAB_BIRCH",
+        "x": 6,
+        "y": 4,
+        "facing": "up",
+        "visible": true
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught me copying.",
+        "You've spoken to them,"
+      ]
+    },
+    {
+      "expectNoText": [
+        "Are you curious about how your",
+        "[screen:"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_RECKONING_COMPLETE": true
+      }
+    },
+    {
+      "talk": {
+        "maxPresses": 600
+      }
+    },
+    {
+      "expectText": [
+        "Are you curious about how your",
+        "Oh, and word of your red",
+        "I have been waiting for you."
+      ]
+    },
+    {
+      "expectNoText": [
+        "You've spoken to them,",
+        "[screen:"
+      ]
+    }
+  ]
+}

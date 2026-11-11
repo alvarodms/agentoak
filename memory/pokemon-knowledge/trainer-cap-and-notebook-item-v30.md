@@ -1,8 +1,14 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 345 | **Date**: November 2026
+**Cycle**: 358 | **Date**: November 2026
 
 ---
+
+## C358 — Postgame mentor: payoff line vs. quest hook (talk order; searched Nov 2026)
+- **Hades (filmstories / Kasavin interviews)**: dialogue is a queue of nuggets with priority + unlock conditions; a fresh story beat (e.g. first Meg win) pre-empts small talk on the NEXT talk, then is spent. Kasavin: hitting repeated dialogue is "disappointing". Payoff first, once; routine lines after.
+- Modding/tooling practice (Unity forum, Strayspark, Nexus/Skyrim): gate lines by game state, not tree position; never hide essential info behind an earlier branch that can swallow it (exactly the BirchQuestCheck bug). Explicit priority systems surprise authors, so prove order with a test.
+- Vanilla Emerald postgame Birch is already crowded: National Dex upgrade + Johto starter offer after HoF + Hoenn dex (Bulbapedia). Any reorder must keep those reachable.
+- Applied: report before quest, but spend it per lab visit (FLAG_TEMP_*, cleared on map load like B1F_2R's FLAG_TEMP_13), not per talk; zero save flags.
 
 ## C343 — Retelling the player's record (Fortree crayon wall precedent; searched Nov 2026)
 - **Pentiment Act III mural**: the player's Act II choices become the town's painted history, and the player chooses which events it emphasizes. Critics (GameSpot) praise it as "the subjectivity of historical record"; sources frame it as *selective/shaped by the teller*, NOT factually wrong. The player stays an author of the retelling.
@@ -44,16 +50,14 @@
 - Applied: `CountInkedFieldNotePages` should drive tiers (e.g. 3+ = believers "talk to each other", 7 = last page). Pages 5-7 are badge-gated, so an all-pages gate can't be reached until late. Pages 1-4 can all be inked by Route 113, so a ≥3 beat lands mid-game.
 - Route 113 locale (Bulbapedia): Glass Workshop (NW) turns ash into glass furniture; its owner gives the Soot Sack, and ash grass collects soot per step. Two Ninja Boys hide under fake ash piles. Existing route verbs for a believer to use: sweeping/collecting ash, glass-making, hiding.
 
-## C328-C329 (applied): dex-caught checks are passive, party checks cost a box trip (SM quests vs Z-A Ekans) → believers read dex-caught; Bombers' Notebook stamps *who* was helped → believer margins; one specific line per deed (Wayline).
+## C328-C329 (applied): believers read dex-caught (passive; party checks cost a box trip); Bombers' Notebook stamps *who* was helped → margins; one line per deed. Unbound's Mission Log is praised for organization, not prose.
 
-## C327 — Reactive "skeptic" NPCs & the second slot pool
-- Bulbapedia "Unused Trainer data": RS unused Aqua/Magma parties are at levels never fought and often nameless, BUT "some were reworked and integrated into the final release". So the RS list overstates Emerald's free pool. The C328 scanner must check script refs per ID, not trust the wiki list.
+## C327 — Reactive "skeptic" NPCs (applied; RS unused-party list overstates Emerald's free pool, scan refs per ID)
 - Legends: Arceus requests are the cautionary case: players complain about manual turn-in ("interactive log that auto-completes"), poor signposting (looking requests up online), and tedium (Upcomer, Bulbagarden, Twinfinite). Tom's Guide liked the *pleas themselves*. Lesson: a correction NPC should react **passively** (read the flag on talk, no hand-over step) and sit on a road the player already walks.
 - Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
 - A dialogue-only skeptic does NOT need a trainer slot. C326 (applied): reclaim zero-ref IDs only, keeping constant/party names (pret wiki link placeholders); a MAX_TRAINERS_COUNT bump shifts system flags.
-
-## Notebook / log key items: Unbound's Mission Log is praised for *organization* (progress + collectathon state), not prose; it can't save weak fetch tasks. Lead with state at a glance; voice is flavour.
 ## Sources
 - https://www.gamespot.com/reviews/pentiment-review/1900-6417998/ , https://primagames.com/gaming/pentiment-final-mural-endings-guide , https://bobsthoughtcloud.substack.com/p/pentiments-third-act-emphasizes-the , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity (C343)
 - https://filmstories.co.uk/?p=83249 , https://unapologeticnerd.com/tag/mystery-genre/ , https://www.giantbomb.com/wd/3015-191/ , https://www.pressreader.com/australia/edge/20190620/282278141843961 , https://www.tomsguide.com/reviews/outer-wilds , https://steamcommunity.com/sharedfiles/filedetails/?id=3500382207 (C340)
+- https://filmstories.co.uk/?p=83138 , https://www.strayspark.studio/blog/designing-dialogue-trees-branching-narrative , https://bulbapedia.bulbagarden.net/wiki/Professor_Birch (C358)
 - Older sources (C326-C336, all applied): see git history.

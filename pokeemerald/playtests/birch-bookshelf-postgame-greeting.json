@@ -1,6 +1,6 @@
 {
   "name": "birch-bookshelf-postgame-greeting",
-  "checks": "C345 after the credits (coda preset state: GAME_CLEAR, match call registered, left the lab with the National Dex): pages 1-4 inked, Birch still faces his bookshelf and says 'You caught me copying', but the talk goes on to the migration quest, not the rating, so the in-person red ink report is not read postgame (Pokenav only)",
+  "checks": "C345/C358 after the credits (coda preset state: GAME_CLEAR, match call registered, National Dex): pages 1-4 inked, Birch faces his bookshelf, says 'You caught me copying', offers the rating (YES), reads the red ink in person naming all four believers, then starts the migration quest; a second talk in the same visit skips the offer and goes straight to the quest reminder",
   "scenario": {
     "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
     "x": 6,
@@ -55,18 +55,46 @@
       "face": "up"
     },
     {
-      "talk": true
+      "talk": {
+        "maxPresses": 600
+      }
     },
     {
       "expectText": [
         "You caught me copying.",
+        "Are you curious about how your",
+        "Oh, and word of your red",
+        "A schoolkid on ROUTE 104",
+        "A forager in PETALBURG",
+        "A hiker in GRANITE CAVE",
+        "A picnicker on ROUTE 113",
+        "These are your notes now,",
         "I have been waiting for you."
       ]
     },
     {
       "expectNoText": [
-        "Oh, and word of your red",
+        "[screen:"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_BIRCH_QUEST_STARTED": true
+      }
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught me copying.",
+        "Any order you like."
+      ]
+    },
+    {
+      "expectNoText": [
         "Are you curious about how your",
+        "Oh, and word of your red",
         "[screen:"
       ]
     }

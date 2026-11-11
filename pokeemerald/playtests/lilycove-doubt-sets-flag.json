@@ -1,0 +1,93 @@
+{
+  "name": "lilycove-doubt-sets-flag",
+  "checks": "C340/C358 Lilycove first doubt (GLIGAR_HOENN caught, FIELD NOTES held): the old woman at 34,37 tells of GLIGAR gliding over the bay, the player writes a line under the GLIGAR page and FLAG_LILYCOVE_GLIGAR_DOUBT is set; she keeps facing the sea; a second talk gives the still-gliding line without writing again",
+  "scenario": {
+    "map": "MAP_LILYCOVE_CITY",
+    "x": 34,
+    "y": 36,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_GLIGAR_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 8,
+        "x": 34,
+        "y": 37,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_LILYCOVE_GLIGAR_DOUBT": false
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "GLIGAR glide off the cliffs",
+        "the GLIGAR page."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Sixty years ago",
+        "[screen:"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_LILYCOVE_GLIGAR_DOUBT": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": 8,
+        "x": 34,
+        "y": 37,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Never touching the water."
+      ]
+    },
+    {
+      "expectNoText": [
+        "the GLIGAR page.",
+        "[screen:"
+      ]
+    }
+  ]
+}

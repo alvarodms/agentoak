@@ -112,6 +112,7 @@ Source: `BufferFieldNotesPage` (notebook), `WriteBirchRedInkReport` (shared writ
 | (b) P1+P2+P3 | `CoverYours`: "FIELD NOTES of PROF. BIRCH / and {PLAYER} (red). / Pages in your ink: / 3 of N." | P1, P2, P3 | Open → schoolkid → forager → hiker → Believed → Close | same text, one msgbox after the den hint |
 | (c) P1-P4 | CoverYours "4 of N" (+ den pages open by badge) | P1-P4 | Open → schoolkid → forager → hiker → picnicker → Believed → Close (worst case 869 B) | same |
 | (d) only P5-P7 (dens caught, no P1-P4 species) | CoverYours "3 of 7" (den pages open because they're caught) | none (den rows have NULL margin) | Open → OnlyYou → Close | same; follows the den all-found line |
+| (f) postgame lab (C358) | — | — | — | after the credits Birch offers the rating in person (same YES/NO) once per lab visit (FLAG_TEMP_1), after any pending Reckoning payoff and before the migration quest; YES reads the report; NO goes straight to the quest |
 | (e) Champion's Room rating | — | — | — | no report: ChampionsRoom calls `ProfBirch_EventScript_RatePokedex` directly, never AskRatePokedex |
 
 Trace notes: (d) reachable but unlikely (P1-P4 are early wilds). Declining the rating skips den hint + report. Cover numInked == CountInkedFieldNotePages (inked pages are always open), so cover and report switch together.

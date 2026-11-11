@@ -1,0 +1,62 @@
+{
+  "name": "marlow-warns-before-catch",
+  "checks": "C335/C358 sailor MARLOW before the titan is caught: at 17,6 beside the pool, he turns to the player and warns that the sea's child belongs to the sea; no trade",
+  "scenario": {
+    "map": "MAP_SHOAL_CAVE_LOW_TIDE_LOWER_ROOM",
+    "x": 16,
+    "y": 6,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 60
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_SHOAL_CAVE_LOWER_SAILOR",
+        "x": 17,
+        "y": 6,
+        "facing": "right",
+        "visible": true
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "There's a child of the sea in",
+        "some PROFESSOR's notebook."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Deal?",
+        "[screen:"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEN_SHOAL_TRADE_DONE": false
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_SHOAL_CAVE_LOWER_SAILOR",
+        "x": 17,
+        "y": 6,
+        "facing": "left",
+        "visible": true
+      }
+    }
+  ]
+}
