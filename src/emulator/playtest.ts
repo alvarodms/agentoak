@@ -73,6 +73,11 @@ const StepSchema = z.union([
         maxPresses: z.number().int().positive().optional(),
         /** false: don't press A to start; pick up a script that resumes after a battle. */
         start: z.boolean().optional(),
+        /**
+         * Answers for the script's YES/NO boxes, in order ("no" presses B).
+         * Boxes after the last answer get YES. Unused answers fail the step.
+         */
+        answers: z.array(z.enum(["yes", "no"])).min(1).optional(),
       }),
     ]),
   }),
@@ -114,6 +119,8 @@ const StepSchema = z.union([
   z.strictObject({
     expectBattle: z.strictObject({ opponent: z.string().optional(), level: z.number().int().optional() }),
   }),
+  /** The battle's current weather (gBattleWeather), e.g. after the foe uses Hail. */
+  z.strictObject({ expectBattleWeather: z.enum(["none", "rain", "sun", "sandstorm", "hail"]) }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
 ]);
 
@@ -311,7 +318,7 @@ async function runStep(
 
   if ("talk" in step) {
     const opts = step.talk === true ? {} : step.talk;
-    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, opts.start ?? true));
+    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, opts.start ?? true, opts.answers ?? []));
     return;
   }
 
@@ -325,6 +332,12 @@ async function runStep(
     for (const unwanted of asList("expectNoText" in step ? step.expectNoText : [])) {
       if (text.includes(flatten(unwanted))) fail(`text should not include ${JSON.stringify(unwanted)}`);
     }
+    return;
+  }
+
+  if ("expectBattleWeather" in step) {
+    const got = battleWeatherName(await s.readU16(s.symbols.address("gBattleWeather")));
+    if (got !== step.expectBattleWeather) fail(`battle weather is ${got}, expected ${step.expectBattleWeather}`);
     return;
   }
 
@@ -440,9 +453,21 @@ async function runStep(
  * are read from gStringVar4, where the game expands every field message
  * before printing it, so each entry is a whole box, not what had scrolled.
  */
-async function talk(s: EmulatorSession, maxPresses: number, start: boolean): Promise<string[]> {
+async function talk(
+  s: EmulatorSession,
+  maxPresses: number,
+  start: boolean,
+  answers: readonly ("yes" | "no")[] = [],
+): Promise<string[]> {
   const buffer = s.symbols.address("gStringVar4");
   const boxes: string[] = [];
+  const pending = [...answers];
+  const done = (): string[] => {
+    if (pending.length) {
+      fail(`talk: ${pending.length} answer(s) unused (${pending.join(", ")}); only ${answers.length - pending.length} YES/NO box(es) appeared; text ${JSON.stringify(boxes)}`);
+    }
+    return boxes;
+  };
   let last = "";
   if (start) {
     await s.write(buffer, Uint8Array.of(0xff)); // forget the previous message
@@ -460,15 +485,46 @@ async function talk(s: EmulatorSession, maxPresses: number, start: boolean): Pro
     const { callback2 } = await s.callbacks();
     if (callback2 !== "CB2_Overworld") {
       boxes.push(`[screen: ${callback2}]`);
-      return boxes;
+      return done();
     }
     const text = await s.readText(buffer);
     if (text.trim() && text !== last) {
       boxes.push(text);
       last = text;
     }
-    if (await s.scriptIdle()) return boxes;
+    if (await s.scriptIdle()) return done();
+    if (pending.length && (await yesNoBoxOpen(s))) {
+      const answer = pending.shift()!;
+      boxes.push(`[answered ${answer.toUpperCase()}]`);
+      await s.press(answer === "no" ? "B" : "A", { hold: 2, release: 10 });
+      continue;
+    }
     await s.press("A", { hold: 2, release: 10 });
   }
   fail(`talk: script still running after ${maxPresses} presses; text so far ${JSON.stringify(boxes)}`);
+}
+
+const NUM_TASKS = 16;
+/** sizeof(struct Task): func (4), isActive/prev/next/priority (4), data[16] (32). */
+const TASK_SIZE = 40;
+
+/** True while a script's YES/NO box (Task_HandleYesNoInput in script_menu.c) waits for input. */
+async function yesNoBoxOpen(s: EmulatorSession): Promise<boolean> {
+  const handler = s.symbols.address("Task_HandleYesNoInput", "src/script_menu.o");
+  const tasks = await s.read(s.symbols.address("gTasks"), NUM_TASKS * TASK_SIZE);
+  for (let i = 0; i < NUM_TASKS; i++) {
+    const func = tasks.readUInt32LE(i * TASK_SIZE) & ~1;
+    const active = tasks.readUInt8(i * TASK_SIZE + 4) !== 0;
+    if (active && func === (handler & ~1)) return true;
+  }
+  return false;
+}
+
+/** B_WEATHER_* bits (include/constants/battle.h) as one name. */
+export function battleWeatherName(bits: number): "none" | "rain" | "sun" | "sandstorm" | "hail" {
+  if (bits & 0x07) return "rain";
+  if (bits & 0x18) return "sandstorm";
+  if (bits & 0x60) return "sun";
+  if (bits & 0x80) return "hail";
+  return "none";
 }

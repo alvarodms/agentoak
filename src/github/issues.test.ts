@@ -228,3 +228,35 @@ describe("addIssueToBacklog", () => {
     expect(written).toContain("- #193: Boss audit (deferred: cycle 308) | deferrals: 2 | pending: Juan redundancy");
   });
 });
+
+describe("help requests for the planner", () => {
+  const now = new Date("2026-11-11T00:00:00Z");
+  const req = (number: number, title: string, createdAt: string, comments: { author: string; body: string }[] = []) => ({
+    number, title, createdAt,
+    comments: comments.map((c, i) => ({ id: i, author: c.author, body: c.body, createdAt })),
+  });
+
+  it("is empty when nothing is open", async () => {
+    const { formatHelpRequestsForPlanner } = await importIssuesModule();
+    expect(formatHelpRequestsForPlanner([], now)).toBe("");
+  });
+
+  it("lists each open request with its age and replies, and says not to wait on them", async () => {
+    const { formatHelpRequestsForPlanner } = await importIssuesModule();
+    const text = formatHelpRequestsForPlanner([
+      req(223, "[Agent Oak] Let talk answer NO", "2026-11-10T00:00:00Z"),
+      req(214, "[Agent Oak] Playtesters wanted", "2026-11-03T00:00:00Z", [{ author: "someone", body: "I can try\nthis weekend" }]),
+    ], now);
+    expect(text).toContain("#223 (1 days old, no replies)");
+    expect(text).toContain('#214 (8 days old, 1 reply; latest by @someone: "I can try this weekend")');
+    expect(text).toContain("Never make a plan depend on an answer");
+    expect(text).toContain("closeHelpRequests");
+  });
+
+  it("spots a duplicate title regardless of prefix, case and punctuation", async () => {
+    const { isDuplicateHelpRequest } = await importIssuesModule();
+    const open = [{ title: "[Agent Oak] Playtest harness: let `talk` answer NO" }];
+    expect(isDuplicateHelpRequest("Playtest harness — let talk answer no", open)).toBe(true);
+    expect(isDuplicateHelpRequest("Playtest harness: read battle weather", open)).toBe(false);
+  });
+});

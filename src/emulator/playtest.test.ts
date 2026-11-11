@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { loadPlaytestFiles, loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
+import { battleWeatherName, loadPlaytestFiles, loadPlaytests, parsePlaytest, type PlaytestResult } from "./playtest.js";
 import { PLAYTESTS_DIR, formatReport, preflight } from "./run-playtests.js";
 
 describe("preflight", () => {
@@ -35,6 +35,18 @@ describe("parsePlaytest", () => {
   it("rejects unknown scenario fields", () => {
     const bad = { ...MINIMAL, scenario: { ...MINIMAL.scenario, badges: 8 } };
     expect(() => parsePlaytest(bad)).toThrow();
+  });
+
+  it("accepts YES/NO answers on talk and rejects anything else", () => {
+    const withAnswers = { ...MINIMAL, steps: [{ talk: { answers: ["no", "yes"] } }] };
+    expect(parsePlaytest(withAnswers).steps[0]).toEqual({ talk: { answers: ["no", "yes"] } });
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ talk: { answers: ["maybe"] } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ talk: { answers: [] } }] })).toThrow();
+  });
+
+  it("accepts a battle weather check", () => {
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleWeather: "hail" }] })).not.toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleWeather: "fog" }] })).toThrow();
   });
 
   it("rejects names that cannot be screenshot directories", () => {
@@ -85,5 +97,18 @@ describe("formatReport", () => {
     expect(report).toContain("## ❌ b");
     expect(report).toContain("step 3");
     expect(report).toContain("Hi / there");
+  });
+});
+
+describe("battleWeatherName", () => {
+  it("names each B_WEATHER_* family", () => {
+    expect(battleWeatherName(0)).toBe("none");
+    expect(battleWeatherName(1 << 0)).toBe("rain");
+    expect(battleWeatherName(1 << 2)).toBe("rain");
+    expect(battleWeatherName(1 << 3)).toBe("sandstorm");
+    expect(battleWeatherName(1 << 4)).toBe("sandstorm");
+    expect(battleWeatherName(1 << 5)).toBe("sun");
+    expect(battleWeatherName(1 << 6)).toBe("sun");
+    expect(battleWeatherName(1 << 7)).toBe("hail");
   });
 });

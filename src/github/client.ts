@@ -64,6 +64,13 @@ export interface HelpRequest {
   body: string;
 }
 
+/** The planner retiring one of its own open help requests */
+export interface HelpRequestClosure {
+  issueNumber: number;
+  /** Posted on the issue before it closes: why it is no longer needed. */
+  comment: string;
+}
+
 // ── Label constants ────────────────────────────────────────────
 
 /** Labels the agent adds to issues it has processed */
