@@ -1,0 +1,124 @@
+{
+  "name": "coda-lotad-lesson-no-doubt",
+  "checks": "C342 Red Ink coda, cleared save, LOTAD caught, no Lilycove doubt: girl at 33,50 facing the sea, schoolkid faces down at her before any text; the lesson recites page 1 as fact with no GLIGAR lines; both turn back afterwards (C359: talked to from 32,49 and 32,50, the x=34 tiles are trees)",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 32,
+    "y": 49,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "clearFlags": [
+      "FLAG_LILYCOVE_GLIGAR_DOUBT"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_HIDE_ROUTE104_LOTAD_STUDENT": false
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "x": 33,
+        "y": 50,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "down"
+      }
+    },
+    {
+      "screenshot": "class"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Shh! Class is in session.",
+        "from your red pages.",
+        "Electric! Its leaf drinks",
+        "Red ink means it's true.",
+        "Everybody knows that."
+      ]
+    },
+    {
+      "expectNoText": [
+        "GLIGAR",
+        "I said never.",
+        "You caught a LOTAD?",
+        "LILYCOVE",
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "down"
+      }
+    },
+    {
+      "walk": "down"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "My teacher says LOTAD love",
+        "watching",
+        "the sea for where they dance."
+      ]
+    },
+    {
+      "expectNoText": [
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "x": 33,
+        "y": 50,
+        "facing": "left"
+      }
+    }
+  ]
+}

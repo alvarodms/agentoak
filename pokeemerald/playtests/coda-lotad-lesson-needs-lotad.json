@@ -1,0 +1,70 @@
+{
+  "name": "coda-lotad-lesson-needs-lotad",
+  "checks": "C342 control: cleared save without the Hoennian LOTAD, no girl and no lesson; the schoolkid gives his pre-catch belief",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 32,
+    "y": 49,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_HIDE_ROUTE104_LOTAD_STUDENT": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "left"
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "I copied this straight out of",
+        "PROF. BIRCH's notes. Listen."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Shh! Class is in session.",
+        "[screen:"
+      ]
+    }
+  ]
+}

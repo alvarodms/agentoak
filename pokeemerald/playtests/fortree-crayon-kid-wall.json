@@ -1,0 +1,67 @@
+{
+  "name": "fortree-crayon-kid-wall",
+  "checks": "C344 Fortree crayon kid, 1 page inked (LOTAD): the made-up crayon wall (cloud WAILORD, star TORCHIC); no red ink, not the SKARMORY tier",
+  "scenario": {
+    "map": "MAP_FORTREE_CITY_HOUSE3",
+    "x": 5,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 2,
+        "x": 5,
+        "y": 4
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You've got a notebook too?",
+        "WAILORD that lives",
+        "TORCHIC that's",
+        "None of it's true. I made it all up!"
+      ]
+    },
+    {
+      "expectNoText": [
+        "SKARMORY",
+        "red ink",
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": 2,
+        "x": 5,
+        "y": 4
+      }
+    }
+  ]
+}

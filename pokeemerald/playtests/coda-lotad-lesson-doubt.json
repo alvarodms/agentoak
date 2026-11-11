@@ -1,0 +1,106 @@
+{
+  "name": "coda-lotad-lesson-doubt",
+  "checks": "C342 coda sting: with the Lilycove doubt written, the schoolkid adds page 3, a ? pops over the girl, and he brushes it off: 'I said never. It's in red.' No lead to Lilycove",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 32,
+    "y": 49,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_LILYCOVE_GLIGAR_DOUBT"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_HIDE_ROUTE104_LOTAD_STUDENT": false
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "x": 33,
+        "y": 50,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "down"
+      }
+    },
+    {
+      "screenshot": "class"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Shh! Class is in session.",
+        "Red ink means it's true.",
+        "And page 3. GLIGAR: Water",
+        "than it glides!",
+        "ever glide over the sea.",
+        "I said never.",
+        "It's in red."
+      ]
+    },
+    {
+      "expectNoText": [
+        "LILYCOVE",
+        "You caught a LOTAD?",
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "down"
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "x": 33,
+        "y": 50,
+        "facing": "left"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_LILYCOVE_GLIGAR_DOUBT": true
+      }
+    }
+  ]
+}

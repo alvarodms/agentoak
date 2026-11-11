@@ -1,0 +1,138 @@
+{
+  "name": "birch-postgame-offer-returns-next-visit",
+  "checks": "C358/C359 the postgame red-ink offer is once per lab VISIT: talk (YES, report, quest starts), walk out the lab door to LITTLEROOT TOWN and straight back in (FLAG_TEMP_1 cleared by the real warp, never by hand), talk again: the offer and report come back, then the quest reminder, not the quest hook",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+    "x": 6,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_GAME_CLEAR",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_SYS_NATIONAL_DEX",
+      "FLAG_RESCUED_BIRCH"
+    ],
+    "vars": {
+      "VAR_BIRCH_LAB_STATE": 5,
+      "VAR_PETALBURG_GYM_STATE": 7,
+      "VAR_DEX_UPGRADE_JOHTO_STARTER_STATE": 3,
+      "VAR_LITTLEROOT_INTRO_STATE": 7,
+      "VAR_LITTLEROOT_TOWN_STATE": 4,
+      "VAR_LITTLEROOT_RIVAL_STATE": 4
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "face": "up"
+    },
+    {
+      "talk": {
+        "maxPresses": 600
+      }
+    },
+    {
+      "expectText": [
+        "Are you curious about how your",
+        "I have been waiting for you."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_BIRCH_QUEST_STARTED": true
+      }
+    },
+    {
+      "walk": "down",
+      "tiles": 7
+    },
+    {
+      "comment": "6,12 is an arrow-warp mat: stepping on only shows the arrow, a DOWN press on it takes the exit"
+    },
+    {
+      "press": "DOWN",
+      "hold": 20
+    },
+    {
+      "wait": 180
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN",
+        "x": 7,
+        "y": 17
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "wait": 180
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
+        "x": 6,
+        "y": 12
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_TEMP_1": false
+      }
+    },
+    {
+      "walk": "up",
+      "tiles": 7
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": {
+        "maxPresses": 600
+      }
+    },
+    {
+      "expectText": [
+        "You caught me copying.",
+        "Are you curious about how your",
+        "Oh, and word of your red",
+        "A picnicker on ROUTE 113",
+        "Any order you like."
+      ]
+    },
+    {
+      "expectNoText": [
+        "I have been waiting for you.",
+        "[screen:"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    }
+  ]
+}

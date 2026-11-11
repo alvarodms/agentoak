@@ -1,6 +1,6 @@
 {
   "name": "believer-skeptic-inked",
-  "checks": "C327 skeptic, LOTAD_HOENN caught: same tile, faces right on load; reads the corrected line",
+  "checks": "C327 skeptic, LOTAD_HOENN caught: same tile, faces right on load; reads the corrected line ; no girl before game clear (C342)",
   "scenario": {
     "map": "MAP_ROUTE104",
     "x": 33,
@@ -39,6 +39,12 @@
         "You caught a LOTAD?",
         "PROF. BIRCH never wrote that."
       ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
+        "absent": true
+      }
     }
   ]
 }

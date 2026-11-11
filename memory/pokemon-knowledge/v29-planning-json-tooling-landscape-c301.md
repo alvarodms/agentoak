@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 357 | **Date**: November 2026
+**Cycle**: 359 | **Date**: November 2026
 
 ---
 
@@ -29,11 +29,12 @@
 - Implication for LoH: a symbol-aware harness can SET flags (FLAG_CAUGHT_*, 0x2BB, trainer flag 0x745) and warp straight to the den maps, replacing the 20 h replay. Static flag/route checks then become visual checks of rendered text.
 - **Light text legibility**: FEUniverse accessibility thread — a vision-impaired player found GBA white/grey text on light windows hard to read, and "the gray option is close" to white. The usual fix is contrast against the box, not a lighter text colour. On the standard white message box, LIGHT_GRAY text with WHITE shadow is the lowest-contrast combination available → expect it to fail; DARK_GRAY/BLUE are the safe fallbacks.
 
-## C338 addendum: recruiting testers + same-visit catch cues (searched Nov 2026)
-- **REGIUS full-game beta (PokeCommunity)**: a known-bugs list to read first, a separate bug-report form, a private feedback form, and public thread replies. **Crimson Ruby beta (r/PokemonROMhacks 2026)** states its scope ("playable up to Fallarbor") and names the feedback it wants (difficulty, trainer teams, bugs). Testers need a scope boundary + named questions, not an open-ended "play it".
-- **FEUniverse "Playtesting Listings"** takes single-chapter requests, not only full games, so a v3.0 den-chapter-only ask fits there. Posting is outward-facing, so a human has to do it.
-- Phoenix Red recruit thread: testers ask about handheld/retro devices. Put "tested on: emulator X / hardware?" in the bug form.
-- Same-visit catch reaction: pre-decomp threads read the battle outcome right after the wild battle (decomp: `specialvar VAR_RESULT, GetBattleOutcome` vs B_OUTCOME_CAUGHT, as the vanilla legendary scripts do). The search turned up no hack-specific precedent for an NPC turning on a catch; the vanilla pattern (outcome branch → `applymovement` emote/face → `waitmovement`) is the standard tool.
+## C338 (applied): REGIUS/Crimson Ruby betas = known-bugs list + report form + stated scope ("playable up to Fallarbor") + named questions; FEUniverse takes single-chapter asks; bug form asks "emulator/hardware?"; same-visit catch = `GetBattleOutcome` branch (vanilla legendaries).
+
+## C359 addendum: map re-entry in tests + freeze exit (searched Nov 2026)
+- **No published mGBA walk-out-and-back-in test** for pokeemerald. Prior art for the pieces: Archipelago's pokemon_emerald client reads map group/num + player coords from RAM (gSaveBlock1 location) and pairs each warp with its destination, warning a destination warp **isn't guaranteed to lead back** to its source. A PokeCommunity warp thread: entering worked, the exit warp was broken, which is exactly the bug a round-trip test catches.
+- Re-entry by input is plain D-pad: step on the lab's exit warp, step back through the Littleroot door; assert map id after each leg, then that FLAG_TEMP_1 is 0 (ClearTempFieldEventData on load) and the offer fires again. No warp-writing hack needed.
+- **Freeze exit precedent**: Dreamstone Mysteries ran an **open beta bounded to gym 4**; Phoenix Red recruit posts filled within days. Hacks with no testers don't wait. They publish a scoped, labelled build. Indie postmortems (wayline, gtstu): 3-5 outside testers surface most problems; a waiting period with no ask produces nothing.
 
 ## C339 addendum: skip-ahead playtest builds (searched Nov 2026)
 - **FEUniverse "Prepping for playtesting" + "Skipping portions of a chapter"**: the GBA-decomp habit is a build-time `__DEBUG__` define plus ONE call placed at the very first scripted event, which jumps to a dev-written setup event. Not a full menu. Same shape as the pret "Add a debug menu" guide's `DEBUG` define, minus the UI.
@@ -66,6 +67,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C359: [Archipelago pokemon_emerald](https://git.hollymcfarland.com/monorail/Archipelago/src/commit/0d38b415404bca2b5bcb7bca4ef4c2c7ca43d0b6/worlds/pokemon_emerald) · [Broken exit warp thread](https://www.pokecommunity.com/threads/simple-question-about-warping-in-porymap.458305/latest) · [Dreamstone Mysteries open beta](https://redlib.cypherpunktools.com/r/PokemonROMhacks/comments/1juzt2l/announcement_pokemon_dreamstone_mysteries_a) · [Playtest solo](https://gtstu.com/playtest-indie-game-solo-developer/)
 - C357: [Porymap scripting](https://huderlem.github.io/porymap/manual/scripting-capabilities.html) · [Porymap changelog](https://huderlem.github.io/porymap/reference/changelog.html) · [Expanding metatile count](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Expanding-The-Metatile-Count) · [Useful Scripting Specials](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Useful-Scripting-Specials) · [mGBA scripting API](https://mgba.io/docs/scripting.html)
 - C355: [PokeCommunity Progressing guidelines Oct 2026](https://www.pokecommunity.com/threads/progressing-rom-hacks-showcase-guidelines-updated-october-2026.467348/) · [Completed guidelines](https://www.pokecommunity.com/threads/completed-rom-hacks-guidelines-updated-october-2026.467328/) · [AI in rom hacks thread](https://www.pokecommunity.com/threads/question-regarding-the-use-of-ai-in-rom-hacks.542819/) · [Galaxus completion](https://www.galaxus.at/en/page/hardly-anyone-finishes-games-so-why-are-they-so-long-37002)
 - C352: [Max overworld sprites](https://www.pokecommunity.com/threads/restriction-on-max-number-of-overworld-sprites-showing-on-map.437983/latest) · [Person events not loading](https://www.pokecommunity.com/threads/help-with-person-events-not-loading-loading-sometimes.362360/) · [Decomp wiki tips](https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks) · [hidesprite reappears](https://www.pokecommunity.com/threads/hidesprite-wont-work-reappears-after-walking.412108)

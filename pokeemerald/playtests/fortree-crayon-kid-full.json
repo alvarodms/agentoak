@@ -1,0 +1,74 @@
+{
+  "name": "fortree-crayon-kid-full",
+  "checks": "C344 Fortree crayon kid, pages 1-4 inked: 'You're back! I drew more!', spoon SKARMORY, dizzy SPINDA, he only draws the NOT true stuff; never names a Field Notes species",
+  "scenario": {
+    "map": "MAP_FORTREE_CITY_HOUSE3",
+    "x": 5,
+    "y": 5,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": 2,
+        "x": 5,
+        "y": 4
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You're back! I drew more!",
+        "SKARMORY made of spoons.",
+        "SPINDA that got dizzy",
+        "writes the TRUE stuff in red ink.",
+        "So I only draw the NOT true stuff."
+      ]
+    },
+    {
+      "expectNoText": [
+        "WAILORD",
+        "LOTAD",
+        "SHROOMISH",
+        "GLIGAR",
+        "VULPIX",
+        "[screen:"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": 2,
+        "x": 5,
+        "y": 4
+      }
+    }
+  ]
+}
