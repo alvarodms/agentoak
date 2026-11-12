@@ -1,0 +1,108 @@
+{
+  "name": "first-ink-cue-route102",
+  "checks": "C361 v3.3: first return to Route 102 with LOTAD_HOENN caught plays the pen moment once: emote, open line, only the red ink, SELECT line; SELECT then opens FIELD NOTES; crossing to Oldale and back plays nothing",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 47,
+    "y": 11,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "the cue starts by itself on the first free frame (ON_RESUME arms VAR_TEMP_7, ON_FRAME fires)"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "and took out a pen.",
+        "Electric! Its leaf drinks",
+        "the storm.",
+        "-- SAGE",
+        "SAGE kept FIELD NOTES",
+        "ready on SELECT."
+      ]
+    },
+    {
+      "expectNoText": [
+        "p.1 ROUTE 102",
+        "Hides from storms",
+        "Pages in your ink",
+        "Since then",
+        "KEY ITEMS pocket"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true
+      }
+    },
+    {
+      "comment": "the cue put FIELD NOTES on SELECT; register: false fails unless the game did it"
+    },
+    {
+      "useKeyItem": {
+        "item": "ITEM_FIELD_NOTES",
+        "register": false
+      }
+    },
+    {
+      "expectText": "Pages in your ink: 1 of 4."
+    },
+    {
+      "walk": "right",
+      "tiles": 3
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_OLDALE_TOWN",
+        "x": 0,
+        "y": 11
+      }
+    },
+    {
+      "walk": "left"
+    },
+    {
+      "wait": 60
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE102",
+        "x": 49,
+        "y": 11
+      }
+    },
+    {
+      "walk": "left"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE102",
+        "x": 48,
+        "y": 11
+      }
+    }
+  ]
+}

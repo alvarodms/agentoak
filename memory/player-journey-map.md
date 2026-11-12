@@ -1,13 +1,11 @@
 # Player Journey Map
 
----
-
 ## Hour 0-3: Littleroot → Rustboro (Badges 0-1)
 
 Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181), 4 glimpse events (C144-145), Pikachu in Petalburg Woods (C152). Challenge Mode level caps active from start. Mom's migration send-off (C224): Poké Balls + warm dialogue replacing Running Shoes. **Roxanne now references Bagon_Hoenn near Meteor Falls (C244)** — academic curiosity, "living stone" hide. Team includes Bagon_Hoenn (Dragon/Rock).
 
 **v2.3 shipped (C261-262)**: Lotad_Hoenn (Electric/Grass) on Route 102 at 20% (C346) — first regional form encounter, pre-Badge 1. Shroomish_Hoenn (Poison/Ice) in Petalburg Woods at 10% (C346) — second discovery moment, the "wrong mushroom." Both coexist with vanilla counterparts. **3 trainers carry Hoenn forms (C262)**: Bug Catcher Rick (Route 102, Lotad_Hoenn Lv7), Bug Catcher James (Petalburg Woods, Shroomish_Hoenn Lv8), Lass Haley (Route 104, Lotad_Hoenn Lv9). Dialogue references discovery — NPCs found them too.
-**FIELD NOTES key item (C324, untested)**: given with the Pokédex; first 4 pages (Lotad/Shroomish/Gligar/Vulpix) are open from minute one and gain red ink on catch, so Hours 0-6 have a collection goal. Den pages open on badges 5/6/8.
+**FIELD NOTES key item (C324; playtested C360-361)**: given with the Pokédex; pages 1-4 open from minute one and gain red ink on catch. Den pages open on badges 5/6/8. **C361 pen moment**: first return to the field on Route 102 (Lotad_H) or Petalburg Woods (Shroomish_H) after the catch shows "!" + only that page's red ink and puts FIELD NOTES on SELECT if empty, so the first ink is seen without opening the Bag.
 **Red Ink reachability (C346)**: the payoff gate is 3 of pages 1-4. Casual one-pass estimate (≈8 grass encounters per route, ≈5 on B2F): ≥3 seen ≈46% (was ≈10%); a player hunting from the notebook needs ≈10 encounters per page. Playtest question: what page count did you have at Badge 5?
 
 **Emotional arc**: Curiosity → wonder (Pikachu) → surprise (electric lily pad / frost mushroom) → confidence (first gym)

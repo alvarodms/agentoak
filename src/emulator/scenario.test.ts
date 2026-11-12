@@ -123,6 +123,17 @@ describe("scenarioConstants", () => {
   });
 });
 
+describe("registeredItem", () => {
+  it("is resolved with the other names but left out of the ROM struct (bootScenario writes it)", () => {
+    const withItem: Scenario = { ...SCENARIO, registeredItem: "ITEM_POTION" };
+    expect(scenarioConstants({ map: "MAP_ROUTE104", x: 0, y: 0, registeredItem: "ITEM_MACH_BIKE" })).toEqual([
+      "MAP_ROUTE104",
+      "ITEM_MACH_BIKE",
+    ]);
+    expect(encodeScenario(withItem, CONSTANTS, charmap).equals(encodeScenario(SCENARIO, CONSTANTS, charmap))).toBe(true);
+  });
+});
+
 describe("writeScenarioRom", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "oak-scenario-test-"));
   afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));

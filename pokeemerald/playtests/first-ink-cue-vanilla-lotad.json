@@ -1,0 +1,64 @@
+{
+  "name": "first-ink-cue-vanilla-lotad",
+  "checks": "C361 v3.3: a vanilla SPECIES_LOTAD catch inks nothing, so Route 102 plays no pen moment and the flag stays clear",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 47,
+    "y": 11,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD"
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "walk": "left",
+      "tiles": 2
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE102",
+        "x": 45,
+        "y": 11
+      }
+    },
+    {
+      "comment": "a talk that picks up nothing proves no script ran: the field is free"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 5
+      }
+    },
+    {
+      "expectNoText": [
+        "took out a pen",
+        "ready on SELECT",
+        "KEY ITEMS pocket"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": false
+      }
+    }
+  ]
+}

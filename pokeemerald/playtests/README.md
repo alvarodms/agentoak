@@ -32,8 +32,8 @@ don't match it, and a file must be named after its `name`.
 ```
 
 Scenario fields also include `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
-`defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `name`,
-`gender` and `money`. Every name is a real constant from `include/`; raw
+`defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `registeredItem`
+(`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. Every name is a real constant from `include/`; raw
 numbers are rejected.
 
 The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts`.
@@ -43,11 +43,12 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `face`, `walk` (+`tiles`) | Turn in place, or walk tile by tile; fails if blocked. A step across a map connection or onto a warp counts (check the new map with `expectPlayer`) |
 | `press` (+`hold`, `release`, `times`), `wait` | Raw buttons and frames |
 | `talk` (+`maxPresses`, default 200; `start`; `answers`) | Press A, then keep pressing until the script ends or the field screen is left (a battle), recording every message box. A battle shows as a last entry like `[screen: CB2_OverworldBasic]` (the transition); follow with `waitFor: "battle"`. `{"start": false}` picks up a script that resumes after a battle. `{"answers": ["no"]}` answers the script's YES/NO boxes in order (`"no"` presses B; boxes after the last answer get YES; an unused answer fails the step); each shows in the text as `[answered NO]` |
-| `useKeyItem` (+`read`, default true; `maxPresses`) | Register an item (`"ITEM_FIELD_NOTES"`, must be in the scenario `bag`) and press SELECT, then record its message boxes like `talk`. `"read": false` only starts it, for `press`/`wait`/`screenshot` mid-read |
+| `useKeyItem` (+`read`, default true; `maxPresses`; `register`) | Register an item (`"ITEM_FIELD_NOTES"`, must be in the scenario `bag`) and press SELECT, then record its message boxes like `talk`. `"read": false` only starts it, for `press`/`wait`/`screenshot` mid-read. `"register": false` doesn't register it and fails unless the game already put that item on SELECT |
 | `expectText`, `expectNoText` | Substrings of the last `talk` (line breaks and curly quotes don't matter). Battle messages are never in it |
 | `expectPlayer`, `expectObject` | Tile and facing; objects by `LOCALID_*` or index (+1), with `x`, `y`, `facing`, `visible`, or `"absent": true` (not loaded, i.e. hidden by its flag) |
 | `expectFlag`, `expectVar`, `expectScreen` | Saved flags and vars; `gMain.callback2` by name |
-| `findWildBattle` (+`maxSteps`), `waitFor` (+`maxFrames`) | Walk until a wild battle starts (land only); wait for `battle`, `overworld` or a screen name |
+| `findWildBattle` (+`maxSteps`, `species`), `waitFor` (+`maxFrames`) | Walk until a wild battle starts (land only); wait for `battle`, `overworld` or a screen name. With `"species": "SPECIES_X"` it runs from every other wild Pokémon and keeps walking (give the party a fast, high-level lead so running always works) |
+| `catchWild` (`{"ball": "ITEM_MASTER_BALL"}`) | In a wild battle: BAG, Poké Balls pocket, throw that ball, answer NO to the nickname, close the Pokédex page, and stop once the field is back (free, or a field script such as an ON_FRAME cue has started; follow with `talk: {"start": false}`). Fails if the ball isn't in the bag or the catch fails. Its battle messages ("Gotcha!") are the step's text for `expectText` |
 | `waitForBattleText` (+`maxFrames`, `fresh`) | Tap B through battle messages until one contains a string. `"fresh": true` ignores the message already showing, for the *next* `"What will"` |
 | `expectBattle`, `expectBattleText` | Opponent species and level; the current battle message only (no history) |
 | `expectBattleWeather` | `"none"`, `"rain"`, `"sun"`, `"sandstorm"` or `"hail"` (gBattleWeather), e.g. after `waitForBattleText: "hail"` |

@@ -23,6 +23,9 @@
 //     regional form the inked page is about). Also fails when no species setvar precedes it.
 //     C329: an `EventMacro_DexBelieverPlace SPECIES_X, ...` line counts as a dex check of its
 //     first argument (must be a SPECIES_ constant; same vanilla-twin rule and allowlist).
+//     C361: shared scripts in DEX_CHECK_CALLEES take the species in VAR_0x8004 from their
+//     caller, so their own ScriptCheckPokedexCaught is skipped and each `call <callee>`
+//     is checked against the caller's preceding setvar instead.
 //   Rule D (C335, fails unless allowlisted): each sIngameTrades entry in src/data/trade.h; its
 //     `.species` (what the player receives) and `.requestedSpecies` (what the NPC asks for) must
 //     not be a vanilla SPECIES_X with a SPECIES_X_HOENN twin. Allowlist entries for trades use
@@ -45,6 +48,8 @@ const GIFT_COMMANDS = ['givemon', 'setwildbattle', 'EventMacro_StaticDen'];
 
 // Rule C exceptions, as 'data/maps/Foo/scripts.inc:Label' strings. Starts empty.
 const DEX_CHECK_ALLOWLIST = [];
+// C361: label -> its ScriptCheckPokedexCaught reads the caller's VAR_0x8004 species
+const DEX_CHECK_CALLEES = ['FieldNotes_EventScript_ArmFirstInk'];
 
 // Rule D: parse sIngameTrades out of src/data/trade.h text. Returns { trades, errors, used }
 // where `used` holds the indexes of the trade allowlist entries that matched.
@@ -215,7 +220,10 @@ for (const file of listIncFiles(DATA_DIR).sort()) {
       }
       return;
     }
-    if (/^special(var\s+\w+\s*,)?\s*ScriptCheckPokedexCaught\b/.test(line)) {
+    const calleeCall = /^call\s+(\w+)/.exec(line);
+    const isCalleeCall = calleeCall && DEX_CHECK_CALLEES.includes(calleeCall[1]);
+    if (isCalleeCall || /^special(var\s+\w+\s*,)?\s*ScriptCheckPokedexCaught\b/.test(line)) {
+      if (!isCalleeCall && DEX_CHECK_CALLEES.includes(label)) return; // checked at each call site
       dexChecks++;
       const key = `${rel}:${label}`;
       if (DEX_CHECK_ALLOWLIST.includes(key)) {

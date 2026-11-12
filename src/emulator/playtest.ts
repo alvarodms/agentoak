@@ -19,13 +19,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
+import { SAVEBLOCK1_REGISTERED_ITEM } from "./scenario.js";
 import { BUTTONS, EmulatorSession, type Button, type RomBuild, type StartOptions } from "./session.js";
-import type { Facing } from "./state.js";
+import { SCRIPT_CONTEXT_SHUTDOWN, type Facing } from "./state.js";
+
+export { SAVEBLOCK1_REGISTERED_ITEM };
 
 const ButtonName = z.enum(Object.keys(BUTTONS) as [Button, ...Button[]]);
 const Direction = z.enum(["up", "down", "left", "right"]);
 const Strings = z.union([z.string(), z.array(z.string())]);
 const ItemName = z.string().regex(/^ITEM_[A-Z0-9_]+$/);
+const SpeciesName = z.string().regex(/^SPECIES_[A-Z0-9_]+$/);
 
 const ScenarioSchema = z.strictObject({
   map: z.string(),
@@ -50,6 +54,8 @@ const ScenarioSchema = z.strictObject({
   bag: z.record(z.string(), z.number().int()).optional(),
   caught: z.array(z.string()).optional(),
   defeatedTrainers: z.array(z.string()).optional(),
+  /** ITEM_* already registered to SELECT (it should also be in the bag). */
+  registeredItem: ItemName.optional(),
 });
 
 const StepSchema = z.union([
@@ -64,8 +70,22 @@ const StepSchema = z.union([
   z.strictObject({ walk: Direction, tiles: z.number().int().positive().optional() }),
   z.strictObject({ face: Direction }),
   z.strictObject({
-    /** Walk back and forth (one tile per direction, in order) until a wild battle starts. */
-    findWildBattle: z.strictObject({ directions: z.array(Direction).min(1), maxSteps: z.number().int().positive().optional() }),
+    /**
+     * Walk back and forth (one tile per direction, in order) until a wild battle starts.
+     * species: run from any other wild Pokémon and keep walking (lead must be fast enough to flee).
+     */
+    findWildBattle: z.strictObject({
+      directions: z.array(Direction).min(1),
+      maxSteps: z.number().int().positive().optional(),
+      species: SpeciesName.optional(),
+    }),
+  }),
+  z.strictObject({
+    /**
+     * In a wild battle: BAG, Poké Balls pocket, throw this ball, decline the
+     * nickname and close the Pokédex page. Fails unless the catch succeeds.
+     */
+    catchWild: z.strictObject({ ball: ItemName, nickname: z.literal(false).optional() }),
   }),
   z.strictObject({
     talk: z.union([
@@ -90,6 +110,8 @@ const StepSchema = z.union([
         item: ItemName,
         read: z.boolean().optional(),
         maxPresses: z.number().int().positive().optional(),
+        /** false: don't register it; fail unless the game already put it on SELECT. */
+        register: z.boolean().optional(),
       }),
     ]),
   }),
@@ -309,15 +331,28 @@ async function runStep(
   }
 
   if ("findWildBattle" in step) {
-    const { directions, maxSteps = 100 } = step.findWildBattle;
+    const { directions, maxSteps = 100, species } = step.findWildBattle;
+    const fled: string[] = [];
     for (let i = 0; i < maxSteps; i++) {
       await s.hold(DIR_BUTTON[directions[i % directions.length]]);
       await s.run(16);
       await s.hold([]);
       await s.run(4);
-      if ((await s.callbacks()).callback2 !== "CB2_Overworld") return;
+      if ((await s.callbacks()).callback2 === "CB2_Overworld") continue;
+      if (!species) return;
+      await waitForBattleText(s, "What will", 1800);
+      const foe = (await s.readState()).battle?.[1]?.speciesName ?? "?";
+      if (foe === species) return;
+      fled.push(foe);
+      await fleeWildBattle(s);
     }
-    fail(`no wild battle after ${maxSteps} steps`);
+    const ran = fled.length ? `; ran from ${fled.join(", ")}` : "";
+    fail(`no wild ${species ? `${species} ` : ""}battle after ${maxSteps} steps${ran}`);
+  }
+
+  if ("catchWild" in step) {
+    result.transcripts.push(await catchWild(s, step.catchWild.ball));
+    return;
   }
 
   if ("face" in step) {
@@ -339,7 +374,12 @@ async function runStep(
     const opts = typeof step.useKeyItem === "string" ? { item: step.useKeyItem } : step.useKeyItem;
     const id = s.constant(opts.item);
     const sb1 = await s.deref("gSaveBlock1Ptr");
-    await s.write(sb1 + SAVEBLOCK1_REGISTERED_ITEM, Uint8Array.of(id & 0xff, id >> 8));
+    if (opts.register === false) {
+      const registered = await s.readU16(sb1 + SAVEBLOCK1_REGISTERED_ITEM);
+      if (registered !== id) fail(`useKeyItem ${opts.item}: SELECT holds item ${registered}, not ${opts.item} (${id})`);
+    } else {
+      await s.write(sb1 + SAVEBLOCK1_REGISTERED_ITEM, Uint8Array.of(id & 0xff, id >> 8));
+    }
     await s.write(s.symbols.address("gStringVar4"), Uint8Array.of(0xff)); // forget the previous message
     await s.press("SELECT", { hold: 2, release: 6 });
     let started = !(await s.scriptIdle());
@@ -439,21 +479,9 @@ async function runStep(
   }
 
   if ("waitForBattleText" in step) {
-    // Battle messages wait for a button. B advances them and does nothing
-    // on the action menu, so tapping it while waiting is safe.
-    const want = flatten(step.waitForBattleText);
-    const max = step.maxFrames ?? 1800;
-    const stale = step.fresh ? flatten(await s.readText("gDisplayedStringBattle", 300)) : undefined;
-    let text = "";
-    for (let f = 0; f <= max; f += 30) {
-      text = flatten(await s.readText("gDisplayedStringBattle", 300));
-      if (text.includes(want) && text !== stale) {
-        await s.run(30); // let the menu that follows the message take input
-        return;
-      }
-      await s.press("B", { hold: 2, release: 28 });
-    }
-    fail(`battle text never showed ${JSON.stringify(step.waitForBattleText)} in ${max} frames; last ${JSON.stringify(text)}`);
+    const stale = step.fresh ? await battleText(s) : undefined;
+    await waitForBattleText(s, step.waitForBattleText, step.maxFrames ?? 1800, stale);
+    return;
   }
 
   if ("expectBattle" in step) {
@@ -475,6 +503,140 @@ async function runStep(
   }
 
   if ("screenshot" in step) return shot(step.screenshot);
+}
+
+const battleText = async (s: EmulatorSession) => flatten(await s.readText("gDisplayedStringBattle", 300));
+
+/**
+ * Taps B until the battle message contains `want` (and differs from
+ * `stale`). Battle messages wait for a button; B advances them and does
+ * nothing on the action menu, so tapping it while waiting is safe.
+ */
+async function waitForBattleText(s: EmulatorSession, want: string, max: number, stale?: string): Promise<void> {
+  let text = "";
+  for (let f = 0; f <= max; f += 30) {
+    text = await battleText(s);
+    if (text.includes(flatten(want)) && text !== stale) {
+      await s.run(30); // let the menu that follows the message take input
+      return;
+    }
+    await s.press("B", { hold: 2, release: 28 });
+  }
+  fail(`battle text never showed ${JSON.stringify(want)} in ${max} frames; last ${JSON.stringify(text)}`);
+}
+
+/** Taps B until the battle has handed back to the field, collecting each battle message. */
+async function leaveBattle(s: EmulatorSession, what: string, seen: string[] = []): Promise<string[]> {
+  for (let f = 0; (await s.callbacks()).callback2 !== "CB2_Overworld"; f += 30) {
+    const text = await battleText(s);
+    if (text.trim() && text !== seen.at(-1)) seen.push(text);
+    if (f >= 3600) fail(`${what}: still not back in the field after 3600 frames; battle text ${JSON.stringify(seen)}`);
+    await s.press("B", { hold: 2, release: 28 });
+  }
+  return seen;
+}
+
+/** Waits until the field is free to walk, or a field script (ON_FRAME, a trainer) has taken over. */
+async function settleField(s: EmulatorSession, what: string): Promise<void> {
+  const status = s.symbols.address("sGlobalScriptContextStatus");
+  let idleChecks = 0;
+  for (let f = 0; f < 600; f += 10) {
+    if ((await s.readU8(status)) !== SCRIPT_CONTEXT_SHUTDOWN) return;
+    // Free for two checks in a row: an ON_FRAME script would have started by now.
+    idleChecks = (await s.scriptIdle()) ? idleChecks + 1 : 0;
+    if (idleChecks >= 2) return;
+    await s.run(10);
+  }
+  fail(`${what}: the field never settled after the battle`);
+}
+
+/** From the action menu: RUN (bottom right; RIGHT then DOWN reaches it from any slot). */
+async function fleeWildBattle(s: EmulatorSession): Promise<void> {
+  await s.press("RIGHT");
+  await s.press("DOWN");
+  await s.press("A");
+  await leaveBattle(s, "findWildBattle (running away)");
+  await settleField(s, "findWildBattle (running away)");
+}
+
+/** gBagPosition (include/item_menu.h struct BagPosition): pocket, cursorPosition[5], scrollPosition[5]. */
+export const BAG_POSITION = { pocket: 5, cursorPosition: 8, scrollPosition: 18 } as const;
+/** Offset of bagPocket_PokeBalls in struct SaveBlock1 (include/global.h marks it 0x650; a unit test checks). */
+export const SAVEBLOCK1_POKEBALLS = 0x650;
+const BAG_POKEBALLS_COUNT = 16;
+const BALLS_POCKET = 1;
+const B_OUTCOME_CAUGHT = 7;
+
+/** Index of `itemId` in the Poké Balls pocket list (slots are ItemSlot {u16 id, u16 quantity}), or -1. */
+export function ballListIndex(pocket: Buffer, itemId: number): number {
+  let index = 0;
+  for (let i = 0; i < BAG_POKEBALLS_COUNT; i++) {
+    const id = pocket.readUInt16LE(i * 4);
+    if (id === 0) continue;
+    if (id === itemId) return index;
+    index++;
+  }
+  return -1;
+}
+
+/** catchWild: throw `ball` from the bag and see the catch through to the field. Returns the battle text seen. */
+async function catchWild(s: EmulatorSession, ball: string): Promise<string[]> {
+  const what = `catchWild ${ball}`;
+  const id = s.constant(ball);
+  const sb1 = await s.deref("gSaveBlock1Ptr");
+  const target = ballListIndex(await s.read(sb1 + SAVEBLOCK1_POKEBALLS, BAG_POKEBALLS_COUNT * 4), id);
+  if (target < 0) fail(`${what}: not in the Poké Balls pocket`);
+  if ((await s.callbacks()).callback2 === "CB2_Overworld") fail(`${what}: no battle is running`);
+
+  await waitForBattleText(s, "What will", 1800);
+  // BAG is top right: UP then RIGHT reaches it from any slot.
+  await s.press("UP");
+  await s.press("RIGHT");
+  await s.press("A");
+  try {
+    await s.runUntilScreen("CB2_BagMenuRun", 300);
+  } catch {
+    fail(`${what}: BAG did not open`);
+  }
+  await s.run(60); // the bag fades in before it takes input
+
+  const bag = s.symbols.address("gBagPosition");
+  for (let tries = 0; (await s.readU8(bag + BAG_POSITION.pocket)) !== BALLS_POCKET; tries++) {
+    if (tries >= 6) fail(`${what}: could not reach the Poké Balls pocket`);
+    const pocket = await s.readU8(bag + BAG_POSITION.pocket);
+    await s.press(pocket > BALLS_POCKET ? "LEFT" : "RIGHT", { hold: 2, release: 30 });
+  }
+  const position = async () =>
+    (await s.readU16(bag + BAG_POSITION.cursorPosition + BALLS_POCKET * 2)) +
+    (await s.readU16(bag + BAG_POSITION.scrollPosition + BALLS_POCKET * 2));
+  for (let tries = 0; (await position()) !== target; tries++) {
+    if (tries >= BAG_POKEBALLS_COUNT * 2) fail(`${what}: could not move the bag cursor to it`);
+    await s.press((await position()) < target ? "DOWN" : "UP", { hold: 2, release: 12 });
+  }
+  await s.press("A", { hold: 2, release: 20 }); // context menu: USE / CANCEL
+  await s.press("A", { hold: 2, release: 20 }); // USE
+  try {
+    await s.runUntilScreen("BattleMainCB2", 300);
+  } catch {
+    fail(`${what}: the bag did not hand the ball back to the battle`);
+  }
+
+  // B advances "Gotcha!" and the Pokédex messages, closes the new Pokédex
+  // page and answers NO to the nickname box. If the ball misses, the action
+  // menu comes back instead.
+  const seen: string[] = [];
+  for (let f = 0; (await s.callbacks()).callback2 !== "CB2_Overworld"; f += 30) {
+    const text = await battleText(s);
+    if (text.trim() && text !== seen.at(-1)) seen.push(text);
+    if (seen.length > 1 && text.includes("What will")) fail(`${what}: the ball did not catch it; battle text ${JSON.stringify(seen)}`);
+    if (f >= 3600) fail(`${what}: still not back in the field after 3600 frames; battle text ${JSON.stringify(seen)}`);
+    await s.press("B", { hold: 2, release: 28 });
+  }
+  const outcome = await s.readU8(s.symbols.address("gBattleOutcome"));
+  if (outcome !== B_OUTCOME_CAUGHT) fail(`${what}: battle ended with outcome ${outcome}, not a catch; battle text ${JSON.stringify(seen)}`);
+  await s.write(s.symbols.address("gStringVar4"), Uint8Array.of(0xff)); // a following talk records only field text
+  await settleField(s, what);
+  return seen;
 }
 
 /**
@@ -535,8 +697,6 @@ async function talk(
   fail(`talk: script still running after ${maxPresses} presses; text so far ${JSON.stringify(boxes)}`);
 }
 
-/** Offset of registeredItem in struct SaveBlock1 (include/global.h marks it 0x496; a unit test checks). */
-export const SAVEBLOCK1_REGISTERED_ITEM = 0x496;
 
 const NUM_TASKS = 16;
 /** sizeof(struct Task): func (4), isActive/prev/next/priority (4), data[16] (32). */

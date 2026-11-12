@@ -1,0 +1,69 @@
+{
+  "name": "first-ink-cue-woods-registered",
+  "checks": "C361 v3.3: first return to Petalburg Woods with SHROOMISH_HOENN caught plays page 2 red ink only; with the MACH BIKE already on SELECT the notebook goes back to KEY ITEMS and SELECT keeps the bike",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 16,
+    "y": 36,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MACH_BIKE": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN"
+    ],
+    "registeredItem": "ITEM_MACH_BIKE"
+  },
+  "steps": [
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Frost on its cap. Poison",
+        "and Ice!",
+        "-- SAGE",
+        "SAGE put FIELD NOTES back",
+        "in the KEY ITEMS pocket."
+      ]
+    },
+    {
+      "expectNoText": [
+        "SHROOMISH never grow cold",
+        "p.2 PETALBURG WOODS",
+        "Electric!",
+        "ready on SELECT"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_PETALBURG_WOODS",
+        "x": 16,
+        "y": 35
+      }
+    }
+  ]
+}

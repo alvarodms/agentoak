@@ -9,11 +9,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: 40-132 actions before first edit. C307: first edit at action 40/89 (45%) — Agent subagent used once (action 11). No path errors this cycle but still slow start.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
-## "File Modified Since Read" on Rapid Sequential Edits (Cycle 147)
-
-**Symptom**: ~15 "File has been modified since read" errors on rapid sequential edits to large files.
-**Resolution**: Use a **node.js script** to apply all changes in one pass.
-
 ## "File Has Not Been Read Yet" on Edit Calls (C256-C307) — 35+ wasted actions total
 
 **Symptom**: Edit tool rejected calls with "File has not been read yet." C307: 0 wasted (improvement).
@@ -71,6 +66,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 **Symptom**: The C279 Changed Three gift gave SPECIES_MUDKIP instead of MUDKIP_HOENN (showmonpic, bufferspeciesname, VAR_TEMP_TRANSFERRED_SPECIES, givemon), and nobody noticed for 40 cycles. The text described the titan Mudkip, and the other two balls were correct. Validators don't check what a script gives.
 **Resolution**: When a script's text describes a custom form, grep its givemon/showmonpic species: `grep -n "SPECIES_" <scripts.inc>`.
+
+## Raw press/wait Screenshots Lag One Box (C361)
+first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 frames a letter, so a 2-line box was still printing and each `press A` only finished the current box: every screenshot showed the box before the one it was named for. Fix: `wait 240` per box (README tip says "a few hundred frames"); read the PNGs before trusting a screenshot test, since a lagging one still passes. Also: bootScenario's 60 settle frames already cover an ON_FRAME emote, so screenshot a boot cue with `wait 1`.
 
 ## Anticipated Pitfalls
 

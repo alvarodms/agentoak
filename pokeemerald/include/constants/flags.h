@@ -63,7 +63,7 @@
 #define FLAG_HIDE_GRANITE_CAVE_B1F_HIKER    0x31 // C348 v3.1 Beat A: hides the B1F hiker once he has left for the sea (B1F OnTransition owns it)
 #define FLAG_HIDE_ROUTE119_STORM_CHASER    0x32 // v3.1 Beat B (C349): postgame Parasol Lady TESSA on Route 119's riverbank (Route119 OnTransition owns it)
 #define FLAG_HIDE_ROUTE113_ASH_CAMPER    0x33 // v3.1 Beat C (C350): postgame Camper ELLIS in the Route 113 ash facing the picnicker (Route113 OnTransition owns it)
-#define FLAG_UNUSED_0x034    0x34 // Unused Flag
+#define FLAG_FIELD_NOTES_FIRST_INK  0x34 // C361 v3.3: the one-time first-ink pen moment has played
 #define FLAG_UNUSED_0x035    0x35 // Unused Flag
 #define FLAG_UNUSED_0x036    0x36 // Unused Flag
 #define FLAG_UNUSED_0x037    0x37 // Unused Flag

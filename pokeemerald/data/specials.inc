@@ -544,5 +544,7 @@ gSpecials::
 	def_special IsBirchFieldNoteActive
 	def_special BufferFieldNotesPage
 	def_special CountInkedFieldNotePages
+	def_special BufferFieldNotesInk
+	def_special TryRegisterFieldNotesToSelect
 	def_special BufferBirchRedInkReport
 	def_special ScriptCheckPokedexCaught

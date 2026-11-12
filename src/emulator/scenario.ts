@@ -43,7 +43,17 @@ export interface Scenario {
   caught?: string[];
   /** TRAINER_* already beaten (their trainer flag, TRAINER_FLAGS_START + id, is set). */
   defeatedTrainers?: string[];
+  /**
+   * ITEM_* registered to SELECT. Not part of the ROM struct: bootScenario
+   * writes it into gSaveBlock1Ptr->registeredItem as soon as the overworld
+   * runs, before any field script can wait on A. A map's ON_RESUME has run by
+   * then but its script cannot have read the slot yet.
+   */
+  registeredItem?: string;
 }
+
+/** Offset of registeredItem in struct SaveBlock1 (include/global.h marks it 0x496; a unit test checks). */
+export const SAVEBLOCK1_REGISTERED_ITEM = 0x496;
 
 /* Mirrors include/playtest.h. Keep in sync; bump LAYOUT_VERSION together. */
 export const PLAYTEST_MAGIC_INACTIVE = 0x584b414f;
@@ -97,6 +107,7 @@ export function scenarioConstants(s: Scenario): string[] {
     ...Object.keys(s.bag ?? {}),
     ...(s.caught ?? []),
     ...(s.defeatedTrainers?.length ? ["TRAINER_FLAGS_START", ...s.defeatedTrainers] : []),
+    ...(s.registeredItem ? [s.registeredItem] : []),
   ];
 }
 

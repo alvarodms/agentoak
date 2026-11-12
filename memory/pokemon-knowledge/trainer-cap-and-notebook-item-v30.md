@@ -1,8 +1,15 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 358 | **Date**: November 2026
+**Cycle**: 361 | **Date**: November 2026
 
 ---
+
+## C361 — First-ink cue: how games signal "your journal changed" (searched Nov 2026; mixed strength)
+- **Legends: Arceus**: a catch does NOT finish an entry on its own. Progress shows up later as a Progress Report page (tasks done, dex data updated, points) at a fixed check-in, not mid-field. The update is shown *to* the player at a known moment (Upcomer, Looper, Bulbapedia).
+- **Majora's Mask**: the 3DS remake swapped the notebook's get-jingle from the generic item tune to the Mask tune (TCRF). Nintendo spent a distinct *sound* to mark the notebook as special. Weak, but on point.
+- Journal-popup anecdotes (itch.io dev threads, Half-Life "featureful" journal docs): a popup that doesn't say *where* the journal is reads as noise ("journal updated… where?"); the better pattern puts the open key in the notice. Repeated notices annoy, so make it a one-time cue.
+- Vanilla Emerald hook: a first catch already auto-opens the Pokédex entry ("registered data"). The player is already looking at a "record" screen. A cue placed right after it rides an existing beat instead of adding a new one.
+- Applied: a one-time line after the first page-1 ink that names FIELD NOTES *and* how to open it (SELECT/Bag), fired once (flag or VAR), plus an existing SE; then playtest that the next useKeyItem shows red.
 
 ## C358 — Postgame mentor: payoff line vs. quest hook (talk order; searched Nov 2026)
 - **Hades (filmstories / Kasavin interviews)**: dialogue is a queue of nuggets with priority + unlock conditions; a fresh story beat (e.g. first Meg win) pre-empts small talk on the NEXT talk, then is spent. Kasavin: hitting repeated dialogue is "disappointing". Payoff first, once; routine lines after.
@@ -27,15 +34,7 @@
 - Vanilla precedent: Steven already talks to the player through a note left behind. After the Hall of Fame, his Mossdeep house has a note on the desk next to a Poké Ball holding Beldum, "my favorite Pokémon" (Bulbapedia Steven/Quotes; guides). A short signed note from an offscreen Steven is canon voice, not a new invention.
 - Reach risk: vanilla B1F_2R is the **dead-end back room behind Surf + Waterfall** (TM02 Dragon Claw, Bagon). Once the TM and the den are taken, nothing brings the player back. Fixes: re-fire on any warp out/in; page-7 ink hints at the wall; Birch's Field Notes names it.
 
-## C335 — Trade believer (Shoal Cave sailor): trade + locale checks
-- Hacks that redo NPC trades frame them as "useful mons/items right when you need them" (USUM hack changelogs; a revamped R/B hack where nothing is trade-locked). No praise for trades as flavour alone. The received mon has to be worth using.
-- Outsider rules (Bulbapedia Name Rater/Obedience): a traded mon with a foreign OT can't be renamed by the Name Rater (TIDEMARK is permanent), gets boosted EXP, and obeys up to a badge cap (Gen 3: 6 badges = Lv70), so it's safe at the Shoal Cave gate.
-- Vanilla locale (pokeemerald `ShoalCave_LowTideEntranceRoom_EventScript_ShellBellExpert`): an old man in the same cave trades 4 Shoal Salt + 4 Shoal Shell for a Shell Bell, and `checkitem` counts the BAG only, so a held Shoal Shell doesn't count until the player takes it off. Players already link "old man at Shoal Cave" to a swap.
-- Vanilla Emerald trades (DOTS/PLUSES/SEASOR/MEOWOW) include no Corsola, so TIDEMARK doesn't collide with one.
-
-## C334 — Battle believer (Mt. Pyre mourner): status-stack and lore checks
-- Confusion is a volatile status and **stacks with burn** (Gen 3 rules; old GameFAQs/forum discussions of the Confuse Ray-vs-Will-O-Wisp choice point this out). A 3-mon team with W-o-W on all three plus Confuse Ray on two can lock a physical starter in burn+confusion for the whole fight, with no counterplay. Hard Emerald hacks (Run & Bun trainer lists) use W-o-W at most once per mon, paired with damage moves, not as a team-wide gimmick. No community thread praising status-spam trainers was found; searches turned up nothing either way (weak evidence).
-- Vanilla lore (Bulbapedia/ORAS): Mt. Pyre Hex Maniacs are "seekers" ("…No, you're not the one"), which fits a mourner who searches for one soul. Vanilla summit Ghost trainers use Shuppet/Duskull/Sableye, so Dusclops + Banette stay on-place.
+## C334-C335 (applied): trades must give a usable mon (TIDEMARK: foreign OT, no rename, obeys to Lv70 at 6 badges; Shoal Cave Shell Bell man = "swap" precedent); burn + confusion stack, so W-o-W at most once per mon; Mt. Pyre Hex Maniacs are "seekers".
 
 ## C333 — Flag reclamation (applied): `FLAG_UNUSED_0x*` = pret's sanctioned spares; pret wiki "Reuse filler save space for Variables and Flags" (`gAdditionalSaveData` in sector padding, IDs from 0xF000) is the route to hundreds more flags if the pool runs out. Exclude whole engine-wiped/computed ranges, not just grep names.
 
@@ -59,5 +58,6 @@
 ## Sources
 - https://www.gamespot.com/reviews/pentiment-review/1900-6417998/ , https://primagames.com/gaming/pentiment-final-mural-endings-guide , https://bobsthoughtcloud.substack.com/p/pentiments-third-act-emphasizes-the , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity (C343)
 - https://filmstories.co.uk/?p=83249 , https://unapologeticnerd.com/tag/mystery-genre/ , https://www.giantbomb.com/wd/3015-191/ , https://www.pressreader.com/australia/edge/20190620/282278141843961 , https://www.tomsguide.com/reviews/outer-wilds , https://steamcommunity.com/sharedfiles/filedetails/?id=3500382207 (C340)
+- https://upcomer.com/how-pokedex-research-tasks-work-in-pokemon-legends-arceus , https://www.looper.com/756095/research-tasks-in-pokemon-legend-arceus-explained , https://tcrf.net/Majora%27s_Mask_3D , https://freeslave.github.io/halflife-featureful/docs/configuration/journal , https://itch.io/post/8931839 (C361)
 - https://filmstories.co.uk/?p=83138 , https://www.strayspark.studio/blog/designing-dialogue-trees-branching-narrative , https://bulbapedia.bulbagarden.net/wiki/Professor_Birch (C358)
 - Older sources (C326-C336, all applied): see git history.

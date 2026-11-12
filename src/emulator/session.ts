@@ -14,7 +14,7 @@ import { POKEEMERALD_DIR } from "../utils/paths.js";
 import { decodeGameText, loadCharmap, type Charmap } from "./charmap.js";
 import { ConstantNames, resolveConstants } from "./constants.js";
 import { MgbaDriver, driverBinary } from "./driver.js";
-import { LAYOUT_VERSION, resolveScenario, writeScenarioRom, type Scenario } from "./scenario.js";
+import { LAYOUT_VERSION, SAVEBLOCK1_REGISTERED_ITEM, resolveScenario, writeScenarioRom, type Scenario } from "./scenario.js";
 import {
   LAYOUT_COUNT,
   MAP_OFFSET,
@@ -179,6 +179,12 @@ export class EmulatorSession {
       session = await EmulatorSession.start({ ...build, rom }, { ...opts, symbols });
       session.cleanup.push(tmp);
       await session.runUntilScreen("CB2_Overworld", opts.maxFrames ?? 1800);
+      if (scenario.registeredItem) {
+        // The field is still fading in, so no script has read the SELECT slot yet.
+        const id = session.constant(scenario.registeredItem);
+        const sb1 = await session.deref("gSaveBlock1Ptr");
+        await session.write(sb1 + SAVEBLOCK1_REGISTERED_ITEM, Uint8Array.of(id & 0xff, id >> 8));
+      }
       await session.run(opts.settleFrames ?? 60);
       return session;
     } catch (err) {

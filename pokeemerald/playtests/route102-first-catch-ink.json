@@ -1,0 +1,81 @@
+{
+  "name": "route102-first-catch-ink",
+  "checks": "C361 v3.3: the real path: walk the Route 102 grass (run from anything else), catch the first LOTAD_HOENN with a MASTER BALL, decline the nickname, and the pen moment plays on return to the field with page 1 red ink and the SELECT line",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 22,
+    "y": 8,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MASTER_BALL": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "comment": "22,8-23,8 is tall grass clear of trainer sightlines (Allen 19,4 looks down column 19)"
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_LOTAD_HOENN",
+        "maxSteps": 600
+      }
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_LOTAD_HOENN"
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Electric! Its leaf drinks",
+        "-- SAGE",
+        "ready on SELECT."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Hides from storms",
+        "Pages in your ink"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true
+      }
+    },
+    {
+      "screenshot": "after-catch-field"
+    }
+  ]
+}

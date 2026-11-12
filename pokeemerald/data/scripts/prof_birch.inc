@@ -168,3 +168,53 @@ FieldNotes_EventScript_ShowPage::
 	playse SE_DEX_PAGE
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	return
+
+@ C361 v3.3 First Ink: armed from ON_RESUME (VAR_0x8004 = page species), shown from ON_FRAME
+@ (map_script_2 VAR_TEMP_7, 1). Route102 (page 1) and PetalburgWoods (page 2) scripts.inc hook it.
+FieldNotes_EventScript_ArmFirstInk::
+	goto_if_set FLAG_FIELD_NOTES_FIRST_INK, Common_EventScript_NopReturn
+	goto_if_unset FLAG_RECEIVED_FIELD_NOTES, Common_EventScript_NopReturn
+	specialvar VAR_RESULT, ScriptCheckPokedexCaught
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
+	setvar VAR_TEMP_7, 1
+	return
+
+@ VAR_0x8004 = page id (1 or 2). The flag is set first, so the cue can never repeat.
+@ msgbox <label> expands into gStringVar4, so the ink is buffered after the open line.
+FieldNotes_EventScript_FirstInk::
+	lockall
+	setflag FLAG_FIELD_NOTES_FIRST_INK
+	setvar VAR_TEMP_7, 0
+	copyvar VAR_0x8005, VAR_0x8004
+	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
+	waitmovement 0
+	msgbox FieldNotes_Text_FirstInkOpen, MSGBOX_DEFAULT
+	copyvar VAR_0x8004, VAR_0x8005
+	specialvar VAR_RESULT, BufferFieldNotesInk
+	playse SE_DEX_PAGE
+	msgbox gStringVar4, MSGBOX_DEFAULT
+	specialvar VAR_RESULT, TryRegisterFieldNotesToSelect
+	call_if_eq VAR_RESULT, TRUE, FieldNotes_EventScript_FirstInkSelect
+	call_if_eq VAR_RESULT, FALSE, FieldNotes_EventScript_FirstInkPocket
+	releaseall
+	end
+
+FieldNotes_EventScript_FirstInkSelect::
+	msgbox FieldNotes_Text_FirstInkSelect, MSGBOX_DEFAULT
+	return
+
+FieldNotes_EventScript_FirstInkPocket::
+	msgbox FieldNotes_Text_FirstInkPocket, MSGBOX_DEFAULT
+	return
+
+FieldNotes_Text_FirstInkOpen::
+	.string "{PLAYER} opened FIELD NOTES\n"
+	.string "and took out a pen.$"
+
+FieldNotes_Text_FirstInkSelect::
+	.string "{PLAYER} kept FIELD NOTES\n"
+	.string "ready on SELECT.$"
+
+FieldNotes_Text_FirstInkPocket::
+	.string "{PLAYER} put FIELD NOTES back\n"
+	.string "in the KEY ITEMS pocket.$"

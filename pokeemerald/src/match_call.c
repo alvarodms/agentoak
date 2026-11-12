@@ -7,6 +7,7 @@
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
+#include "item.h"
 #include "main.h"
 #include "match_call.h"
 #include "menu.h"
@@ -29,6 +30,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_frontier.h"
 #include "constants/event_objects.h"
+#include "constants/items.h"
 #include "constants/region_map_sections.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
@@ -2391,6 +2393,32 @@ u16 BufferFieldNotesPage(void)
                 return FALSE;
         }
         StringExpandPlaceholders(gStringVar4, gFieldNotesText_LastPage);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// C361 v3.3 first-ink cue: VAR_0x8004 = page id 1-7. Writes only the page's red ink to gStringVar4; FALSE if not inked
+u16 BufferFieldNotesInk(void)
+{
+    u16 pageId = gSpecialVar_0x8004;
+    u8 i;
+
+    if (pageId < 1 || pageId > FIELD_NOTES_PAGE_COUNT)
+        return FALSE;
+    i = pageId - 1;
+    if (!IsFieldNotesPageInked(i))
+        return FALSE;
+    StringExpandPlaceholders(gStringVar4, sFieldNotesPages[i].inkText);
+    return TRUE;
+}
+
+// C361: put FIELD NOTES on SELECT only if nothing is registered. TRUE if it registered
+u16 TryRegisterFieldNotesToSelect(void)
+{
+    if (gSaveBlock1Ptr->registeredItem == ITEM_NONE && CheckBagHasItem(ITEM_FIELD_NOTES, 1))
+    {
+        gSaveBlock1Ptr->registeredItem = ITEM_FIELD_NOTES;
         return TRUE;
     }
     return FALSE;

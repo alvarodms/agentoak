@@ -3,7 +3,10 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  BAG_POSITION,
+  SAVEBLOCK1_POKEBALLS,
   SAVEBLOCK1_REGISTERED_ITEM,
+  ballListIndex,
   battleWeatherName,
   loadPlaytestFiles,
   loadPlaytests,
@@ -65,6 +68,28 @@ describe("parsePlaytest", () => {
     expect(() => parsePlaytest({ ...MINIMAL, steps: [{ useKeyItem: { item: 377 } }] })).toThrow();
   });
 
+  it("accepts useKeyItem register: false (SELECT must already hold it)", () => {
+    const step = { useKeyItem: { item: "ITEM_FIELD_NOTES", register: false } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [step] }).steps[0]).toEqual(step);
+  });
+
+  it("accepts a species filter on findWildBattle and a catchWild ball", () => {
+    const find = { findWildBattle: { directions: ["left", "right"], maxSteps: 600, species: "SPECIES_LOTAD_HOENN" } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [find] }).steps[0]).toEqual(find);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ findWildBattle: { directions: ["left"], species: "LOTAD" } }] })).toThrow();
+    const catchStep = { catchWild: { ball: "ITEM_MASTER_BALL" } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [catchStep] }).steps[0]).toEqual(catchStep);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ catchWild: { ball: "ITEM_MASTER_BALL", nickname: false } }] })).not.toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ catchWild: { ball: "ITEM_MASTER_BALL", nickname: true } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ catchWild: { ball: "MASTER_BALL" } }] })).toThrow();
+  });
+
+  it("accepts a registered SELECT item in the scenario", () => {
+    const scenario = { ...MINIMAL.scenario, registeredItem: "ITEM_MACH_BIKE" };
+    expect(parsePlaytest({ ...MINIMAL, scenario }).scenario.registeredItem).toBe("ITEM_MACH_BIKE");
+    expect(() => parsePlaytest({ ...MINIMAL, scenario: { ...scenario, registeredItem: "MACH_BIKE" } })).toThrow();
+  });
+
   it("rejects names that cannot be screenshot directories", () => {
     expect(() => parsePlaytest({ ...MINIMAL, name: "has spaces" })).toThrow();
   });
@@ -124,6 +149,46 @@ describe("SAVEBLOCK1_REGISTERED_ITEM", () => {
     const offset = line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1];
     expect(offset, "registeredItem line with a /*0x...*/ offset").toBeDefined();
     expect(Number(offset)).toBe(SAVEBLOCK1_REGISTERED_ITEM);
+  });
+});
+
+describe("SAVEBLOCK1_POKEBALLS", () => {
+  it.skipIf(!fs.existsSync(GLOBAL_H))("matches bagPocket_PokeBalls's offset in include/global.h", () => {
+    const line = fs.readFileSync(GLOBAL_H, "utf8").split("\n").find((l) => /\bbagPocket_PokeBalls\[/.test(l));
+    const offset = line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1];
+    expect(offset, "bagPocket_PokeBalls line with a /*0x...*/ offset").toBeDefined();
+    expect(Number(offset)).toBe(SAVEBLOCK1_POKEBALLS);
+  });
+});
+
+const ITEM_MENU_H = path.join(path.dirname(PLAYTESTS_DIR), "include", "item_menu.h");
+
+describe("BAG_POSITION", () => {
+  it.skipIf(!fs.existsSync(ITEM_MENU_H))("matches struct BagPosition's field order in include/item_menu.h", () => {
+    const body = fs.readFileSync(ITEM_MENU_H, "utf8").match(/struct BagPosition\s*\{([^}]*)\}/)?.[1] ?? "";
+    const fields = body.split(";").map((f) => f.trim().replace(/\s+/g, " ")).filter(Boolean);
+    // 4-byte callback, u8 location, u8 pocket, u16 arrow, u16[5] cursor, u16[5] scroll
+    expect(fields).toEqual([
+      "MainCallback exitCallback",
+      "u8 location",
+      "u8 pocket",
+      "u16 pocketSwitchArrowPos",
+      "u16 cursorPosition[POCKETS_COUNT]",
+      "u16 scrollPosition[POCKETS_COUNT]",
+    ]);
+    expect(BAG_POSITION).toEqual({ pocket: 5, cursorPosition: 8, scrollPosition: 8 + 5 * 2 });
+  });
+});
+
+describe("ballListIndex", () => {
+  it("counts only filled slots, in bag order", () => {
+    const pocket = Buffer.alloc(16 * 4);
+    pocket.writeUInt16LE(4, 0); // POKE_BALL
+    pocket.writeUInt16LE(3, 4); // GREAT_BALL
+    pocket.writeUInt16LE(1, 12); // MASTER_BALL after an empty slot
+    expect(ballListIndex(pocket, 4)).toBe(0);
+    expect(ballListIndex(pocket, 1)).toBe(2);
+    expect(ballListIndex(pocket, 2)).toBe(-1);
   });
 });
 

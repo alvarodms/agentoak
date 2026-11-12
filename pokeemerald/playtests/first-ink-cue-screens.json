@@ -1,0 +1,92 @@
+{
+  "name": "first-ink-cue-screens",
+  "checks": "C361 v3.3: the pen moment frame by frame: \"!\" over the player, the open line (1 box), the red ink (2 boxes: one \\l), the SELECT line (1 box), then the field is free. Red is checked by eye in the screenshots",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 47,
+    "y": 11,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "bootScenario already ran 60 frames: the \"!\" is up and the open line has started printing. Text prints at ~3 frames a letter, so each box gets 240 frames"
+    },
+    {
+      "wait": 1
+    },
+    {
+      "screenshot": "emote"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "open-line"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "red-ink"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "red-ink-signed"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "select-line"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitFor": "overworld"
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true
+      }
+    },
+    {
+      "walk": "left"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE102",
+        "x": 46,
+        "y": 11
+      }
+    }
+  ]
+}
