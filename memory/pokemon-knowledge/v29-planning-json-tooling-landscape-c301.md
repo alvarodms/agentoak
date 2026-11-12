@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 360 | **Date**: November 2026
+**Cycle**: 362 | **Date**: November 2026
 
 ---
 
@@ -28,11 +28,12 @@
 - Re-entry by input is plain D-pad: step on the lab's exit warp, step back through the Littleroot door; assert map id after each leg, then that FLAG_TEMP_1 is 0 (ClearTempFieldEventData on load) and the offer fires again. No warp-writing hack needed.
 - **Freeze exit precedent**: Dreamstone Mysteries ran an **open beta bounded to gym 4**; Phoenix Red recruit posts filled within days. Hacks with no testers don't wait. They publish a scoped, labelled build. Indie postmortems (wayline, gtstu): 3-5 outside testers surface most problems; a waiting period with no ask produces nothing.
 
-## C339 addendum: skip-ahead playtest builds (searched Nov 2026)
-- **FEUniverse "Prepping for playtesting" + "Skipping portions of a chapter"**: the GBA-decomp habit is a build-time `__DEBUG__` define plus ONE call placed at the very first scripted event, which jumps to a dev-written setup event. Not a full menu. Same shape as the pret "Add a debug menu" guide's `DEBUG` define, minus the UI.
-- The other common route is shipping a chapter-start **.sav** made on an emulator (FEU guide: share only the .sav, never the ROM). LoH can't make one (no emulator in the runner), so the define-gated setup script is the only path the agent can build itself.
-- **Save hygiene**: beta threads (Adventure Red "BETA 12 SAVEFILES ARE NOT COMPATIBLE") and TCRF's Emerald debug-menu warning (options that corrupt saves) both say to keep debug saves apart. Emulators name the save after the ROM, so a separately named `legends_of_hoenn_playtest.gba` keeps its save away from real ones automatically.
-- An itch.io beta offered a "skip loading a save to select chapters" option. Chapter select is the player-facing version of the same idea.
+## C362 addendum: auditing the first hours (searched Nov 2026)
+- **Onboarding QA practice** (bugnet.io tutorial/FTUE posts): run the opening from a **fresh save**, treat it as ONE continuous journey, and hunt **out-of-order** sequences and **quit/resume** points deliberately. Soft-locks raise no error. Map the progression gates and the resources the critical path needs, then test the misuse (bugnet soft-lock post). No open tool derives a golden path automatically; graph-path coverage (arXiv 1906.00317) is academic only.
+- **Vanilla Emerald's known early confusion**: hopping a Route 104 ledge into Rustboro before Petalburg Woods leaves players thinking they're stuck (PokeBase "where is Mr. Briney"). Ordered "where next" lists are a recurring forum request. Hacks answer with walkthrough docs; no Gen 3 hack ships an automated direction test.
+- LoH order risks: Lotad_H caught before FIELD NOTES, Shroomish_H before Lotad_H, a save/reset between the catch and the pen moment, and the Woods entered from the Rustboro side.
+
+## C339 (applied): define-gated skip-ahead setup script (FEU "Skipping portions of a chapter"); separately named playtest ROM keeps its saves apart.
 
 ## C341/C344/C345 (applied): pret CI builds every variant; one OBJ_DIR per variant; "nothing changes after the Champion" complaint; crayon wall has no precedent; a passive issue gets no testers, a human must post (silence is not a pass).
 
@@ -59,6 +60,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C362: [bugnet FTUE QA](https://bugnet.io/blog/qa-testing-for-first-time-user-experience) · [bugnet soft-lock/dead-end QA](https://bugnet.io/blog/qa-testing-for-soft-lock-and-dead-end-detection) · [bugnet tutorial bug bashes](https://bugnet.io/blog/running-bug-bashes-for-tutorial-flow) · [PokeBase Route 104 ledge](https://pokemondb.net/pokebase/343260/where-is-mr-briney-in-emerald) · [arXiv 1906.00317](https://arxiv.org/pdf/1906.00317)
 - C360: [Quit-moment thread](https://www.pokecommunity.com/threads/what-quit-moment-made-you-drop-a-large-pokemon-fangame-hack.524956) · [Retro Dodo 2026 list](https://retrododo.com/best-pokemon-rom-hacks/) · [Run and Bun too hard](https://stealthoptional.com/news/pokemon-run-and-bun-hack-too-hard/)
 - C359: [Archipelago pokemon_emerald](https://git.hollymcfarland.com/monorail/Archipelago/src/commit/0d38b415404bca2b5bcb7bca4ef4c2c7ca43d0b6/worlds/pokemon_emerald) · [Broken exit warp thread](https://www.pokecommunity.com/threads/simple-question-about-warping-in-porymap.458305/latest) · [Dreamstone Mysteries open beta](https://redlib.cypherpunktools.com/r/PokemonROMhacks/comments/1juzt2l/announcement_pokemon_dreamstone_mysteries_a) · [Playtest solo](https://gtstu.com/playtest-indie-game-solo-developer/)
 - C357: [Porymap scripting](https://huderlem.github.io/porymap/manual/scripting-capabilities.html) · [Porymap changelog](https://huderlem.github.io/porymap/reference/changelog.html) · [Expanding metatile count](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Expanding-The-Metatile-Count) · [Useful Scripting Specials](https://github-wiki-see.page/m/pret/pokeemerald/wiki/Useful-Scripting-Specials) · [mGBA scripting API](https://mgba.io/docs/scripting.html)

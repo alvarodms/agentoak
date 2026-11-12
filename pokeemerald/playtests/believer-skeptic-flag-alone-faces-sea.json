@@ -1,0 +1,46 @@
+{
+  "name": "believer-skeptic-flag-alone-faces-sea",
+  "checks": "C362 control: FLAG_ROUTE104_SKEPTIC_TURNED set but no LOTAD_HOENN in the dex (unreachable in play: only the shown-LOTAD talk sets the flag). The flag drives the facing (east on load), the dex drives the dialogue (the old BIRCH belief plays)",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "right"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Hides from storms.",
+        "Storm's coming"
+      ]
+    },
+    {
+      "expectNoText": "You caught a LOTAD?"
+    }
+  ]
+}

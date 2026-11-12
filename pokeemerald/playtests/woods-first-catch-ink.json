@@ -1,0 +1,74 @@
+{
+  "name": "woods-first-catch-ink",
+  "checks": "C362 audit: the real Petalburg Woods path: catch the first SHROOMISH_HOENN in the grass, the pen moment plays page 2 red ink; the forager is still at her old tile 18,34 for the rest of the visit (known same-visit gap, input for C363)",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 22,
+    "y": 33,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "vars": {
+      "VAR_PETALBURG_WOODS_STATE": 1
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MASTER_BALL": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "comment": "22,33-23,33 is tall grass in view of the forager (18,34), so she is loaded; south of the Devon/Aqua scene (26-27,23, also done via VAR_PETALBURG_WOODS_STATE 1), off Lyle's row 32 (7,32 looks left/right) and far from James (4,14)"
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_SHROOMISH_HOENN",
+        "maxSteps": 900
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Frost on its cap. Poison",
+        "and Ice!"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34
+      }
+    },
+    {
+      "screenshot": "woods-after-catch"
+    }
+  ]
+}

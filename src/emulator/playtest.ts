@@ -71,6 +71,13 @@ const StepSchema = z.union([
   z.strictObject({ face: Direction }),
   z.strictObject({
     /**
+     * Jump to a tile on another map mid-test, like walking there off-screen:
+     * the map loads fresh, so its ON_TRANSITION and ON_LOAD scripts run.
+     */
+    warp: z.strictObject({ map: z.string().regex(/^MAP_[A-Z0-9_]+$/), x: z.number().int(), y: z.number().int() }),
+  }),
+  z.strictObject({
+    /**
      * Walk back and forth (one tile per direction, in order) until a wild battle starts.
      * species: run from any other wild Pokémon and keep walking (lead must be fast enough to flee).
      */
@@ -330,6 +337,11 @@ async function runStep(
     return;
   }
 
+  if ("warp" in step) {
+    await warp(s, step.warp.map, step.warp.x, step.warp.y);
+    return;
+  }
+
   if ("findWildBattle" in step) {
     const { directions, maxSteps = 100, species } = step.findWildBattle;
     const fled: string[] = [];
@@ -557,6 +569,60 @@ async function fleeWildBattle(s: EmulatorSession): Promise<void> {
   await s.press("A");
   await leaveBattle(s, "findWildBattle (running away)");
   await settleField(s, "findWildBattle (running away)");
+}
+
+/** Offsets of pos and location in struct SaveBlock1 (include/global.h marks them; a unit test checks). */
+export const SAVEBLOCK1_POS = 0x00;
+export const SAVEBLOCK1_LOCATION = 0x04;
+/** Offset of gMain.state (include/main.h marks it 0x438; a unit test checks). */
+export const MAIN_STATE = 0x438;
+const MAIN_CALLBACK2 = 0x04;
+const WARP_ID_NONE = -1;
+
+/** struct WarpData (include/global.h): s8 mapGroup, mapNum, warpId, pad, s16 x, y. `map` as MAP_* resolves: num | group << 8. */
+export function encodeWarpData(map: number, x: number, y: number): Buffer {
+  const buf = Buffer.alloc(8);
+  buf.writeInt8(map >> 8, 0);
+  buf.writeInt8(map & 0xff, 1);
+  buf.writeInt8(WARP_ID_NONE, 2);
+  buf.writeInt16LE(x, 4);
+  buf.writeInt16LE(y, 6);
+  return buf;
+}
+
+/**
+ * Warps the player to `map` x,y the way the game does after a warp tile's
+ * fade (WarpIntoMap, then CB2_LoadMap in Task_WarpAndLoadMap), so the new
+ * map runs its ON_TRANSITION / ON_LOAD scripts and spawns objects fresh.
+ */
+async function warp(s: EmulatorSession, map: string, x: number, y: number): Promise<void> {
+  if (!(await s.scriptIdle())) fail(`warp ${map}: a field script is still running (finish it with talk first)`);
+  const sb1 = await s.deref("gSaveBlock1Ptr");
+  const dest = encodeWarpData(s.constant(map), x, y);
+  // WarpIntoMap(): remember where we were, apply the destination, put the player on its tile.
+  await s.write(s.symbols.address("gLastUsedWarp"), await s.read(sb1 + SAVEBLOCK1_LOCATION, 8));
+  await s.write(s.symbols.address("sWarpDestination"), dest);
+  await s.write(sb1 + SAVEBLOCK1_LOCATION, dest);
+  const pos = Buffer.alloc(4);
+  pos.writeInt16LE(x, 0);
+  pos.writeInt16LE(y, 2);
+  await s.write(sb1 + SAVEBLOCK1_POS, pos);
+  // SetMainCallback2(CB2_LoadMap): gMain.state drives DoMapLoadLoop, so it starts at 0.
+  const main = s.symbols.address("gMain");
+  await s.write(main + MAIN_STATE, Uint8Array.of(0));
+  const cb = Buffer.alloc(4);
+  cb.writeUInt32LE((s.symbols.address("CB2_LoadMap") | 1) >>> 0); // Thumb
+  await s.write(main + MAIN_CALLBACK2, cb);
+  await s.run(10);
+  try {
+    await s.runUntilScreen("CB2_Overworld", 1800);
+  } catch (err) {
+    fail(`warp ${map}: ${(err as Error).message}`);
+  }
+  await s.run(60); // the map fades in, like bootScenario
+  for (let f = 0; f < 300 && !(await s.scriptIdle()); f += 10) await s.run(10);
+  const st = await s.readState();
+  if (st.map !== map || st.x !== x || st.y !== y) fail(`warp: player is on ${st.map} ${st.x},${st.y}, expected ${map} ${x},${y}`);
 }
 
 /** gBagPosition (include/item_menu.h struct BagPosition): pocket, cursorPosition[5], scrollPosition[5]. */

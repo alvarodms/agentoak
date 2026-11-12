@@ -1,6 +1,6 @@
 {
   "name": "believer-skeptic-inked",
-  "checks": "C327 skeptic, LOTAD_HOENN caught: same tile, faces right on load; reads the corrected line ; no girl before game clear (C342)",
+  "checks": "C362 skeptic, LOTAD_HOENN caught, never shown: still faces the sea on load; first talk recites BIRCH, breaks off, reads the ink, turns east and sets FLAG_ROUTE104_SKEPTIC_TURNED; no girl before game clear",
   "scenario": {
     "map": "MAP_ROUTE104",
     "x": 33,
@@ -25,7 +25,7 @@
         "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
         "x": 33,
         "y": 49,
-        "facing": "right"
+        "facing": "left"
       }
     },
     {
@@ -36,15 +36,35 @@
     },
     {
       "expectText": [
+        "Hides from st",
         "You caught a LOTAD?",
         "PROF. BIRCH never wrote that."
       ]
+    },
+    {
+      "expectNoText": "Storm's coming"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "right"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_ROUTE104_SKEPTIC_TURNED": true
+      }
     },
     {
       "expectObject": {
         "id": "LOCALID_ROUTE104_LOTAD_STUDENT",
         "absent": true
       }
+    },
+    {
+      "screenshot": "skeptic-turned"
     }
   ]
 }

@@ -4,10 +4,14 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   BAG_POSITION,
+  MAIN_STATE,
+  SAVEBLOCK1_LOCATION,
+  SAVEBLOCK1_POS,
   SAVEBLOCK1_POKEBALLS,
   SAVEBLOCK1_REGISTERED_ITEM,
   ballListIndex,
   battleWeatherName,
+  encodeWarpData,
   loadPlaytestFiles,
   loadPlaytests,
   parsePlaytest,
@@ -161,6 +165,7 @@ describe("SAVEBLOCK1_POKEBALLS", () => {
   });
 });
 
+const MAIN_H = path.join(path.dirname(PLAYTESTS_DIR), "include", "main.h");
 const ITEM_MENU_H = path.join(path.dirname(PLAYTESTS_DIR), "include", "item_menu.h");
 
 describe("BAG_POSITION", () => {
@@ -202,5 +207,34 @@ describe("battleWeatherName", () => {
     expect(battleWeatherName(1 << 5)).toBe("sun");
     expect(battleWeatherName(1 << 6)).toBe("sun");
     expect(battleWeatherName(1 << 7)).toBe("hail");
+  });
+});
+
+describe("warp step", () => {
+  it("parses a warp to a MAP_* tile and rejects a bare map name", () => {
+    const step = { warp: { map: "MAP_ROUTE104", x: 33, y: 50 } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [step] }).steps[0]).toEqual(step);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ warp: { map: "ROUTE104", x: 33, y: 50 } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ warp: { map: "MAP_ROUTE104" } }] })).toThrow();
+  });
+
+  it("encodes struct WarpData: group, num, WARP_ID_NONE, pad, s16 x, s16 y", () => {
+    // MAP_ROUTE104 = (19 | (0 << 8)); MAP_PETALBURG_WOODS = (11 | (24 << 8))
+    expect([...encodeWarpData(19, 33, 50)]).toEqual([0, 19, 0xff, 0, 33, 0, 50, 0]);
+    expect([...encodeWarpData(11 | (24 << 8), 300, 2)]).toEqual([24, 11, 0xff, 0, 0x2c, 0x01, 2, 0]);
+  });
+
+  it.skipIf(!fs.existsSync(GLOBAL_H))("matches pos and location offsets in include/global.h", () => {
+    const lines = fs.readFileSync(GLOBAL_H, "utf8").split("\n");
+    const offsetOf = (re: RegExp) => Number(lines.find((l) => re.test(l))?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1]);
+    expect(offsetOf(/struct Coords16 pos;/)).toBe(SAVEBLOCK1_POS);
+    expect(offsetOf(/struct WarpData location;/)).toBe(SAVEBLOCK1_LOCATION);
+    const warpData = fs.readFileSync(GLOBAL_H, "utf8").match(/struct WarpData\s*\{([^}]*)\}/)?.[1] ?? "";
+    expect(warpData.replace(/\/\/.*$/gm, "").replace(/\s+/g, " ").trim()).toBe("s8 mapGroup; s8 mapNum; s8 warpId; s16 x, y;");
+  });
+
+  it.skipIf(!fs.existsSync(MAIN_H))("matches gMain.state's offset in include/main.h", () => {
+    const line = fs.readFileSync(MAIN_H, "utf8").split("\n").find((l) => /\bu8 state;/.test(l));
+    expect(Number(line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1])).toBe(MAIN_STATE);
   });
 });

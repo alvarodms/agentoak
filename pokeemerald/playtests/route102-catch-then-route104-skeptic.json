@@ -1,0 +1,110 @@
+{
+  "name": "route102-catch-then-route104-skeptic",
+  "checks": "C362 v3.3 out-of-order path: catch the first LOTAD_HOENN in the Route 102 grass (pen moment plays), then go to Route 104: the schoolkid still faces the sea, recites BIRCH, breaks off, reads the ink and turns east in front of the player",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 22,
+    "y": 8,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MASTER_BALL": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "comment": "22,8-23,8 is tall grass clear of trainer sightlines (Allen 19,4 looks down column 19)"
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_LOTAD_HOENN",
+        "maxSteps": 600
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Electric! Its leaf drinks",
+        "ready on SELECT."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_ROUTE104_SKEPTIC_TURNED": false
+      }
+    },
+    {
+      "comment": "Petalburg and the walk south are covered elsewhere; land below the schoolkid as if walked in"
+    },
+    {
+      "warp": {
+        "map": "MAP_ROUTE104",
+        "x": 33,
+        "y": 50
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "left"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Hides from st",
+        "You caught a LOTAD?"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "facing": "right"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_ROUTE104_SKEPTIC_TURNED": true
+      }
+    },
+    {
+      "screenshot": "after-catch-skeptic-turns"
+    }
+  ]
+}

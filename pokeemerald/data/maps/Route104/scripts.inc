@@ -16,12 +16,17 @@ Route104_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Route104_EventScript_TrySetRivalPos
 	call Route104_EventScript_ShowOrHideWhiteHerbFlorist
-	@ C327 Red Ink: he faces the sea (west) while he trusts BIRCH's page, and turns east
-	@ toward PETALBURG / ROUTE 102 once the player has caught LOTAD_HOENN (same truth as the inked page).
-	EventMacro_DexBelieverPlace SPECIES_LOTAD_HOENN, LOCALID_ROUTE104_LOTAD_SKEPTIC, 33, 49, MOVEMENT_TYPE_FACE_RIGHT
+	@ C327/C362 Red Ink: he faces the sea (west) while he trusts BIRCH's page. He turns east toward
+	@ PETALBURG / ROUTE 102 only after the player has shown him LOTAD_HOENN in person (C362), so every
+	@ player sees the belief before the turn.
+	call_if_set FLAG_ROUTE104_SKEPTIC_TURNED, Route104_EventScript_SkepticFacesEast
 	@ C342 Red Ink coda: after game clear the schoolkid teaches a little girl who faces the sea where he once stood.
 	call Route104_EventScript_SetupLotadLesson
 	end
+
+Route104_EventScript_SkepticFacesEast::
+	setobjectmovementtype LOCALID_ROUTE104_LOTAD_SKEPTIC, MOVEMENT_TYPE_FACE_RIGHT
+	return
 
 Route104_EventScript_ShowOrHideWhiteHerbFlorist::
 	goto_if_unset FLAG_MET_PRETTY_PETAL_SHOP_OWNER, Route104_EventScript_HideWhiteHerbFlorist
@@ -373,6 +378,13 @@ Route104_EventScript_LotadSkepticCorrected::
 	goto_if_set FLAG_HIDE_ROUTE104_LOTAD_STUDENT, Route104_EventScript_LotadSkepticPenLine
 	goto_if_set FLAG_SYS_GAME_CLEAR, Route104_EventScript_LotadLesson
 Route104_EventScript_LotadSkepticPenLine::
+	@ C362: the first time he sees the LOTAD he starts reciting BIRCH, breaks off, and turns east.
+	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, Route104_EventScript_LotadSkepticPenLineAgain
+	msgbox Route104_Text_LotadSkepticRecites, MSGBOX_DEFAULT
+	applymovement LOCALID_ROUTE104_LOTAD_SKEPTIC, Common_Movement_ExclamationMark
+	waitmovement 0
+	setflag FLAG_ROUTE104_SKEPTIC_TURNED
+Route104_EventScript_LotadSkepticPenLineAgain::
 	msgbox Route104_Text_LotadSkepticCorrected, MSGBOX_DEFAULT
 	applymovement LOCALID_ROUTE104_LOTAD_SKEPTIC, Common_Movement_FaceRight
 	waitmovement 0
@@ -1298,6 +1310,12 @@ Route104_Text_LotadSkepticBelief:
 	.string "her LOTAD throws sparks. Ha!\p"
 	.string "Storm's coming. I'm watching\n"
 	.string "the sea for where they hide.$"
+
+Route104_Text_LotadSkepticRecites:
+	.string "I copied this straight out of\n"
+	.string "PROF. BIRCH's notes. Listen.\p"
+	.string "LOTAD: Water and Grass.\n"
+	.string "Hides from st...$"
 
 Route104_Text_LotadSkepticCorrected:
 	.string "You caught a LOTAD? Let me see.\p"
