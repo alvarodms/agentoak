@@ -1,0 +1,38 @@
+{
+  "name": "route104-ivan-rain-no-lotad",
+  "checks": "C364: the rain is ungated; with no Lotad_H caught or in the party the same talk sets rain and the battle opens in rain.",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 28,
+    "y": 8,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET"],
+    "vars": { "VAR_REPEL_STEP_COUNT": 200 },
+    "party": [{ "species": "SPECIES_MUDKIP", "level": 100, "moves": ["MOVE_TACKLE"] }]
+  },
+  "steps": [
+    { "comment": "29,9 south of IVAN is pond water, so talk from 28,8 facing right" },
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": ["LOTAD keep stealing my bait.", "LOTAD hide from storms.", "No LOTAD in this rain."] },
+    { "waitFor": "battle" },
+    { "expectBattle": { "opponent": "SPECIES_MAGIKARP", "level": 10 } },
+    { "waitForBattleText": "What will" },
+    { "expectBattleWeather": "rain" },
+    { "press": "A" },
+    { "press": "A" },
+    { "waitForBattleText": "MUDKIP used" },
+    { "waitForBattleText": "What will" },
+    { "expectBattle": { "opponent": "SPECIES_TENTACOOL", "level": 10 } },
+    { "press": "A" },
+    { "press": "A" },
+    { "waitForBattleText": "MUDKIP used" },
+    { "waitForBattleText": "What will" },
+    { "expectBattle": { "opponent": "SPECIES_WINGULL", "level": 12 } },
+    { "press": "A" },
+    { "press": "A" },
+    { "waitForBattleText": "MUDKIP used" },
+    { "waitForBattleText": "The rain should've helped" },
+    { "talk": { "start": false } },
+    { "expectText": "Everyone says so." }
+  ]
+}

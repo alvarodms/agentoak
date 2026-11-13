@@ -16,7 +16,7 @@
 
 #define PLAYTEST_MAGIC_INACTIVE 0x584B414F // "OAKX"
 #define PLAYTEST_MAGIC_ACTIVE   0x504B414F // "OAKP"
-#define PLAYTEST_LAYOUT_VERSION 2
+#define PLAYTEST_LAYOUT_VERSION 3
 
 #define PLAYTEST_MAX_FLAGS 64
 #define PLAYTEST_MAX_VARS  32
@@ -30,7 +30,7 @@ struct PlaytestMon
 {
     /*0x00*/ u16 species;
     /*0x02*/ u8 level;
-    /*0x03*/ u8 padding;
+    /*0x03*/ u8 abilityNum; // 0 = CreateMon's pick, 1 = first ability, 2 = second
     /*0x04*/ u16 heldItem;
     /*0x06*/ u16 moves[MAX_MON_MOVES]; // all MOVE_NONE = level-up default moveset
     /*0x0E*/ u16 padding2; // agbcc pads structs to 4 bytes; make it explicit

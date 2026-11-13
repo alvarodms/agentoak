@@ -48,7 +48,7 @@ const SCENARIO: Scenario = {
   vars: { VAR_STARTER_MON: 1 },
   party: [
     { species: "SPECIES_BAGON", level: 12, item: "ITEM_ORAN_BERRY" },
-    { species: "SPECIES_LOTAD_HOENN", level: 9, moves: ["MOVE_ABSORB", "MOVE_GROWL"] },
+    { species: "SPECIES_LOTAD_HOENN", level: 9, moves: ["MOVE_ABSORB", "MOVE_GROWL"], ability: 2 },
   ],
   bag: { ITEM_POTION: 5 },
   caught: ["SPECIES_LOTAD_HOENN"],
@@ -80,6 +80,8 @@ describe("encodeScenario", () => {
     expect([buf.readUInt16LE(0x11c), buf.readUInt8(0x11e), buf.readUInt16LE(0x120), buf.readUInt16LE(0x122)]).toEqual([395, 12, 139, 0]);
     // mon 1 starts 0x10 later (agbcc pads PlaytestMon to 16 bytes)
     expect([buf.readUInt16LE(0x12c), buf.readUInt8(0x12e), buf.readUInt16LE(0x132), buf.readUInt16LE(0x134)]).toEqual([434, 9, 71, 45]);
+    // byte 3 is the ability slot: 0 = CreateMon's pick (mon 0), 2 = second ability (mon 1)
+    expect([buf.readUInt8(0x11f), buf.readUInt8(0x12f)]).toEqual([0, 2]);
     expect([buf.readUInt16LE(0x17c), buf.readUInt16LE(0x17e)]).toEqual([13, 5]);
     expect(buf.readUInt16LE(0x1bc)).toBe(434);
   });
@@ -108,6 +110,7 @@ describe("encodeScenario", () => {
     expect(bad({ x: 200 })).toThrow(/x must be 0-127/);
     expect(bad({ party: [{ species: "SPECIES_BAGON", level: 0 }] })).toThrow(/level/);
     expect(bad({ party: [{ species: "SPECIES_NONE", level: 5 }] })).toThrow(/not a real species/);
+    expect(bad({ party: [{ species: "SPECIES_BAGON", level: 5, ability: 3 as 1 }] })).toThrow(/ability must be 1 or 2/);
     expect(bad({ caught: ["SPECIES_NONE"] })).toThrow(/not a real species/);
     expect(bad({ name: "OAKOAKOA" })).toThrow(/name/);
     expect(bad({ name: "Z" })).toThrow(/not in the charmap/);

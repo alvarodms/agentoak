@@ -1,6 +1,6 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 356 | **Date**: November 2026
+**Cycle**: 364 | **Date**: November 2026
 
 ---
 
@@ -43,13 +43,12 @@
 - **Environmental storytelling**: players read meaning into placed objects and often invent more than the designer meant (Game Developer, "Environmental storytelling"). The roost works best seen BEFORE the one line of text. Don't add a sign or second box.
 - Sources: https://github.com/pret/pokered/wiki/Edit-the-wild-encounters , https://www.pokecommunity.com/threads/firered-safari-zone-enounters-not-showing-up-in-porymap.496361/latest , https://www.gamebrew.org/wiki/Pokemon_Radical_Red_GBA , https://www.gamedeveloper.com/design/environmental-storytelling
 
-## C347 — What hacks do with weather / timed field events (searched Nov 2026; player-reception evidence thin)
-- **Gen III already joins the field to the battle**: overworld weather carries into battle from turn 1 (Bulbapedia Weather; Polished Crystal docs map field rain/hail/sand to battle weather). Vanilla Emerald has fixed weather routes (R119/R120 rain, R111 desert sand, R113 ash), plus `setweather`/`doweather` scripting. A weather beat is cheap in pokeemerald: no new engine.
-- **Weather-gated encounters are a known request, rarely shipped in GBA decomp hacks**: pokeemerald-expansion fork issue "Area archetypes: model encounter conditions (time of day, season, weather, swarms)" (trey-gonsoulin #6) is still a design ticket. Pokémon Essentials' "Weather Encounters" plugin (PokéCommunity 429803) uses an *override chance*: weather rows replace the normal table some % of the time, never fully. That is the pattern to copy if v3.1 makes weather spawn things.
-- **Weather Mayhem** (pokeemerald-expansion Emerald hack, PokéCommunity 535675, skaternutko/weather-mayhem) builds the whole hack around weather, but changes *battles*, not encounters. Shows the niche exists; no review data found.
-- **Random scripted weather** (PokéCommunity 497707 `SetWeather` + saved weather): the Mirage Tower sandstorm persisting after you leave is the vanilla precedent for "the place stays changed".
-- **Legends: Arceus space-time distortions / outbreaks**: random, short-lived field events with rare spawns and items. Guides say arrival "might feel a little underwhelming"; outbreaks get read as shiny-farming tools. Lesson: a *random* event becomes a grind loop; a *scripted, once-told* event is remembered. Distortions also don't spawn in intense weather (events stack badly).
-- **pokeemerald downpour "canonical effects" thread** (PokéCommunity 444136): community argues about what heavy rain should do in battle. If v3.1 adds a weather effect, write the rule in one player-facing line (sign/NPC); players can't guess it.
-- Implication for v3.1: a physical beat (weather changes on a route the player already walks, carried into battle) fits the hack's "every reaction changes something visible" rule. Keep it scripted and flag-driven (one per route), not RNG. Use an override %, not a full table swap, if it changes wild slots.
+## C347 — Weather / timed field events (condensed C364)
+- Gen III field weather carries into battle from turn 1; `setweather` makes a weather beat cheap. Weather-gated spawns: copy the Essentials "Weather Encounters" override %, never a table swap. Mirage Tower sandstorm = vanilla "place stays changed". Legends: Arceus random distortions read as grind loops, while a scripted, once-told event is the one players remember. State any weather rule in one player-facing line.
+- Sources: Bulbapedia Weather; PokéCommunity 429803, 497707, 444136; skaternutko/weather-mayhem.
 
-- C347 sources: Bulbapedia Weather; polishedcrystal Overworld-Weather wiki; trey-gonsoulin/pokeemerald-expansion#6; PokéCommunity 429803, 535675, 497707, 444136; skaternutko/weather-mayhem; dualshockers/gfinity Space-time distortion guides.
+## C364 — v3.3 "First Ink" 4-5: early fight / place register (searched Nov 2026; thin)
+- **No hack found where an early gym fight or dialogue reacts to the player's caught mons / discoveries** (searches: PokéCommunity, Romhacking.net, r/PokemonROMhacks). Early-gym hacks change rosters, levels and status gimmicks (Emerald Encore, Limited Emerald, carsonic status mod), never what the player *knows*. LoH would be ahead of the documented scene, but there is no reception data to lean on.
+- **Vanilla precedent already in the target map**: Emerald's Dewford Gym is pitch-black; the light radius widens with each trainer beaten and the whole gym lights when Brawly falls (Bulbapedia / Serebii / Thonky). That is a vanilla "a fight changes the place" beat in the Hours 3-6 window. A v3.3 fight beat can echo this grammar: the result shows in the room, not in a speech.
+- Boss-design writing (Game Developer "3 elements", gamedesign blogs): a boss works as a *test of what the player already learned*, ideally with visible clues earlier; a fight "plopped down from nowhere" reads as arbitrary. For LoH: the fight should test something the red ink taught (e.g. the Changed form's real type), and the clue is the inked page itself.
+- Sources: https://bulbapedia.bulbagarden.net/wiki/Dewford_Gym , https://www.serebii.net/emerald/gym.shtml , https://www.gamedeveloper.com/design/3-elements-that-every-great-boss-fight-needs , https://www.pokeharbor.com/?p=15379

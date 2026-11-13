@@ -20,6 +20,8 @@ export interface ScenarioMon {
   item?: string;
   /** Up to 4 MOVE_* names. Omit for the level-up moveset. */
   moves?: string[];
+  /** 1 = species' first ability, 2 = second; omit for the random pick. */
+  ability?: 1 | 2;
 }
 
 export interface Scenario {
@@ -58,7 +60,7 @@ export const SAVEBLOCK1_REGISTERED_ITEM = 0x496;
 /* Mirrors include/playtest.h. Keep in sync; bump LAYOUT_VERSION together. */
 export const PLAYTEST_MAGIC_INACTIVE = 0x584b414f;
 export const PLAYTEST_MAGIC_ACTIVE = 0x504b414f;
-export const LAYOUT_VERSION = 2;
+export const LAYOUT_VERSION = 3;
 export const SCENARIO_SIZE = 0x1fc;
 const LIMITS = { flags: 64, vars: 32, party: 6, items: 16, dex: 32, name: 7 } as const;
 const FLAG_CLEAR = 0x8000;
@@ -171,8 +173,10 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
     check(Number.isInteger(mon.level) && mon.level >= 1 && mon.level <= 100, `${mon.species} level must be 1-100`);
     check((mon.moves ?? []).length <= 4, `${mon.species} has more than 4 moves`);
     check(value(mon.species) > 0, `party species ${mon.species} is not a real species`);
+    check(mon.ability === undefined || mon.ability === 1 || mon.ability === 2, `${mon.species} ability must be 1 or 2`);
     buf.writeUInt16LE(u16(value(mon.species), mon.species), base);
     buf.writeUInt8(mon.level, base + 2);
+    buf.writeUInt8(mon.ability ?? 0, base + 3);
     buf.writeUInt16LE(mon.item ? value(mon.item) : 0, base + 4);
     (mon.moves ?? []).forEach((move, j) => buf.writeUInt16LE(u16(value(move), move), base + 6 + j * 2));
   });

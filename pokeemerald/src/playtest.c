@@ -84,6 +84,11 @@ static void GivePlaytestMon(u8 slot, const struct PlaytestMon *src)
     CreateMon(mon, src->species, src->level, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
     if (src->heldItem != ITEM_NONE)
         SetMonData(mon, MON_DATA_HELD_ITEM, &src->heldItem);
+    if (src->abilityNum != 0)
+    {
+        u8 abilityNum = src->abilityNum - 1;
+        SetMonData(mon, MON_DATA_ABILITY_NUM, &abilityNum);
+    }
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {

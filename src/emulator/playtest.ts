@@ -48,6 +48,7 @@ const ScenarioSchema = z.strictObject({
         level: z.number().int(),
         item: z.string().optional(),
         moves: z.array(z.string()).optional(),
+        ability: z.union([z.literal(1), z.literal(2)]).optional(),
       }),
     )
     .optional(),

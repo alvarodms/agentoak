@@ -71,3 +71,7 @@ overrides any preset warp, and it takes the first branch of the
   `playtest.c` pin the sizes.
 - Code that runs after `NewGameInitData` in `CB2_NewGame` also runs for
   playtests, before the warp to the scenario tile.
+
+## C364: party `ability`
+
+`struct PlaytestMon` byte 0x03 (was `padding`) is `abilityNum`: 0 = CreateMon's pick, 1 = first ability, 2 = second. `GivePlaytestMon` sets MON_DATA_ABILITY_NUM to `abilityNum - 1` after the held item. PLAYTEST_LAYOUT_VERSION 2 → 3 (scenario.ts LAYOUT_VERSION 3, writes `mon.ability ?? 0` at base + 3).

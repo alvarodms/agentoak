@@ -33,7 +33,9 @@ don't match it, and a file must be named after its `name`.
 
 Scenario fields also include `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
 `defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `registeredItem`
-(`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. Every name is a real constant from `include/`; raw
+(`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. A party mon takes `species`, `level`, optional
+`item`, `moves` (up to 4 `MOVE_X`) and `ability` (`1` = the species' first ability, `2` = its second; omit it
+and the game picks at random, so pin it when a test depends on the ability). Every name is a real constant from `include/`; raw
 numbers are rejected.
 
 The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts`.

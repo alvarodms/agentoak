@@ -913,9 +913,28 @@ Route104_Movement_BrineyExitBoat:
 	walk_in_place_faster_left
 	step_end
 
+@ C364 First Ink 4: IVAN believes Birch's PRINTED page 1 ("LOTAD hide from storms") and calls the rain
+@ before he battles. Ungated. No weather restore: the battle copies GetCurrentWeather() and the rain
+@ lasts until the next map load, as with the Route 119 storm-chaser.
 Route104_EventScript_Ivan::
-	trainerbattle_single TRAINER_IVAN, Route104_Text_IvanIntro, Route104_Text_IvanDefeat
-	msgbox Route104_Text_IvanPostBattle, MSGBOX_AUTOCLOSE
+	lock
+	goto_if_defeated TRAINER_IVAN, Route104_EventScript_IvanDone
+	faceplayer
+	msgbox Route104_Text_IvanStorms, MSGBOX_DEFAULT
+	closemessage
+	setweather WEATHER_RAIN
+	doweather
+	delay 90
+	faceplayer
+	msgbox Route104_Text_IvanRule, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_IVAN, Route104_Text_IvanDefeat
+	goto Route104_EventScript_IvanDone
+	end
+
+Route104_EventScript_IvanDone::
+	faceplayer
+	msgbox Route104_Text_IvanPostBattle, MSGBOX_DEFAULT
+	release
 	end
 
 Route104_EventScript_Billy::
@@ -1352,3 +1371,13 @@ Route104_Text_LotadStudent:
 	.string "storms. A trainer wrote it.\p"
 	.string "Storm's coming. I'm watching\n"
 	.string "the sea for where they dance.$"
+
+Route104_Text_IvanStorms:
+	.string "I fish for WATER POKéMON.\n"
+	.string "LOTAD keep stealing my bait.\p"
+	.string "But PROF. BIRCH wrote it:\n"
+	.string "LOTAD hide from storms.$"
+
+Route104_Text_IvanRule:
+	.string "There. No LOTAD in this rain.\n"
+	.string "Rain powers up WATER moves!$"

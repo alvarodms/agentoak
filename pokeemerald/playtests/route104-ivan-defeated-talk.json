@@ -1,0 +1,21 @@
+{
+  "name": "route104-ivan-defeated-talk",
+  "checks": "C364: once Ivan is beaten, talking gives only the post-battle line, no rain cue, no battle.",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 28,
+    "y": 8,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET"],
+    "vars": { "VAR_REPEL_STEP_COUNT": 200 },
+    "party": [{ "species": "SPECIES_MUDKIP", "level": 100, "moves": ["MOVE_TACKLE"] }],
+    "defeatedTrainers": ["TRAINER_IVAN"]
+  },
+  "steps": [
+    { "comment": "29,9 south of IVAN is pond water, so talk from 28,8 facing right" },
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": "Everyone says so." },
+    { "expectNoText": ["LOTAD hide from storms.", "No LOTAD in this rain.", "[screen:"] },
+    { "expectScreen": "CB2_Overworld" }
+  ]
+}

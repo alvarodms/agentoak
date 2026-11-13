@@ -1,0 +1,181 @@
+{
+  "name": "route104-ivan-rain-lotad-wins",
+  "checks": "C364 First Ink 4: Ivan quotes Birch's page 1, sets rain before battle; battle opens in rain; a Lv15 RAIN DISH Lotad_H beats his whole Water team and RAIN DISH heals it; post-battle line.",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 28,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "party": [
+      {
+        "species": "SPECIES_LOTAD_HOENN",
+        "level": 15,
+        "ability": 2,
+        "moves": [
+          "MOVE_THUNDER_SHOCK",
+          "MOVE_ABSORB",
+          "MOVE_CHARGE",
+          "MOVE_GROWL"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "29,9 south of IVAN is pond water, so talk from 28,8 facing right"
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "LOTAD keep stealing my bait.",
+        "LOTAD hide from storms.",
+        "No LOTAD in this rain."
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_MAGIKARP",
+        "level": 10
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectBattleWeather": "rain"
+    },
+    {
+      "comment": "MAGIKARP uses SPLASH; one THUNDERSHOCK knocks it out"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TENTACOOL",
+        "level": 10
+      }
+    },
+    {
+      "comment": "on this seed TENTACOOL's SUPERSONIC misses turn 1; it takes two THUNDERSHOCKs"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TENTACOOL",
+        "level": 10
+      }
+    },
+    {
+      "comment": "turn 2: TENTACOOL's POISON STING poisons LOTAD before the second THUNDERSHOCK knocks it out"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "TENTACOOL used POISON STING"
+    },
+    {
+      "waitForBattleText": "LOTAD was poisoned"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "TENTACOOL fainted"
+    },
+    {
+      "comment": "WINGULL comes out; at the end of the turn the rain is still up and RAIN DISH heals the poisoned LOTAD"
+    },
+    {
+      "waitForBattleText": "Rain continues to fall"
+    },
+    {
+      "expectBattleWeather": "rain"
+    },
+    {
+      "waitForBattleText": "LOTAD's RAIN DISH restored its HP a little"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_WINGULL",
+        "level": 12
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "comment": "WINGULL (Water/Flying) goes down to one THUNDERSHOCK"
+    },
+    {
+      "waitForBattleText": "The rain should've helped"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "Everyone says so."
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "screenshot": "ivan-rain-after"
+    }
+  ]
+}
