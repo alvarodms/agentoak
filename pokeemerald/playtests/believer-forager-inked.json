@@ -1,13 +1,15 @@
 {
   "name": "believer-forager-inked",
-  "checks": "C328 forager, SHROOMISH_HOENN + LOTAD_HOENN caught: moved to 11,24 facing up; Corrected then WhatElse",
+  "checks": "C328/C363 forager after her walk (0x35 + 0x36 set, SHROOMISH_HOENN + LOTAD_HOENN caught): in the cold patch at 11,24 facing up; reads only the cold-patch line, never the first-sight speech again",
   "scenario": {
     "map": "MAP_PETALBURG_WOODS",
     "x": 11,
     "y": 25,
     "flags": [
       "FLAG_SYS_POKEMON_GET",
-      "FLAG_SYS_POKEDEX_GET"
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED",
+      "FLAG_PETALBURG_WOODS_FORAGER_MOVED"
     ],
     "party": [
       {
@@ -37,9 +39,20 @@
     },
     {
       "expectText": [
-        "You caught a SHROOMISH?",
-        "That boy stopped reading his"
+        "Cold out here.",
+        "Just not where I stood."
       ]
+    },
+    {
+      "expectNoText": "You caught a SHROOMISH?"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
     }
   ]
 }

@@ -65,7 +65,7 @@
 #define FLAG_HIDE_ROUTE113_ASH_CAMPER    0x33 // v3.1 Beat C (C350): postgame Camper ELLIS in the Route 113 ash facing the picnicker (Route113 OnTransition owns it)
 #define FLAG_FIELD_NOTES_FIRST_INK  0x34 // C361 v3.3: the one-time first-ink pen moment has played
 #define FLAG_ROUTE104_SKEPTIC_TURNED  0x35 // C362 v3.3: the Route 104 schoolkid read the player's LOTAD ink and turned east
-#define FLAG_UNUSED_0x036    0x36 // Unused Flag
+#define FLAG_PETALBURG_WOODS_FORAGER_MOVED  0x36 // C363 v3.3: the forager saw the player's frost SHROOMISH and walked to the cold patch
 #define FLAG_UNUSED_0x037    0x37 // Unused Flag
 #define FLAG_UNUSED_0x038    0x38 // Unused Flag
 #define FLAG_UNUSED_0x039    0x39 // Unused Flag

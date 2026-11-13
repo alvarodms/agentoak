@@ -39,13 +39,10 @@ GraniteCave_B1F_EventScript_CaveHiker::
 	release
 	end
 
+@ C363: he only repeats news the player caused in person (the boy turned, the lady walked off).
 GraniteCave_B1F_EventScript_HikerMock::
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	call_if_eq VAR_RESULT, TRUE, GraniteCave_B1F_EventScript_HikerMockSchoolkid
-	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	call_if_eq VAR_RESULT, TRUE, GraniteCave_B1F_EventScript_HikerMockForager
+	call_if_set FLAG_ROUTE104_SKEPTIC_TURNED, GraniteCave_B1F_EventScript_HikerMockSchoolkid
+	call_if_set FLAG_PETALBURG_WOODS_FORAGER_MOVED, GraniteCave_B1F_EventScript_HikerMockForager
 	return
 
 GraniteCave_B1F_EventScript_HikerMockSchoolkid::
@@ -83,12 +80,9 @@ GraniteCave_B1F_EventScript_HikerCorrected::
 	end
 
 GraniteCave_B1F_EventScript_HikerTryThreePages::
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	goto_if_ne VAR_RESULT, TRUE, GraniteCave_B1F_EventScript_HikerTryThreePagesEnd
-	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	goto_if_ne VAR_RESULT, TRUE, GraniteCave_B1F_EventScript_HikerTryThreePagesEnd
+	@ C363: the line names the people's changes (kid, lady), not the pages, so it waits for their in-person flags.
+	goto_if_unset FLAG_ROUTE104_SKEPTIC_TURNED, GraniteCave_B1F_EventScript_HikerTryThreePagesEnd
+	goto_if_unset FLAG_PETALBURG_WOODS_FORAGER_MOVED, GraniteCave_B1F_EventScript_HikerTryThreePagesEnd
 	msgbox GraniteCave_B1F_Text_HikerThreePages, MSGBOX_DEFAULT
 GraniteCave_B1F_EventScript_HikerTryThreePagesEnd::
 	return

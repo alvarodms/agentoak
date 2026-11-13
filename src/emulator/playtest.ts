@@ -71,6 +71,13 @@ const StepSchema = z.union([
   z.strictObject({ face: Direction }),
   z.strictObject({
     /**
+     * Walk to a tile on this map: along the row first (x), then the column (y), or the column
+     * first with yFirst. For a start tile that isn't fixed, e.g. after findWildBattle. Fails if blocked.
+     */
+    walkTo: z.strictObject({ x: z.number().int(), y: z.number().int(), yFirst: z.boolean().optional() }),
+  }),
+  z.strictObject({
+    /**
      * Jump to a tile on another map mid-test, like walking there off-screen:
      * the map loads fresh, so its ON_TRANSITION and ON_LOAD scripts run.
      */
@@ -145,6 +152,8 @@ const StepSchema = z.union([
   }),
   z.strictObject({ expectFlag: z.record(z.string(), z.boolean()) }),
   z.strictObject({ expectVar: z.record(z.string(), z.number().int()) }),
+  /** Set saved VAR_*s mid-test, e.g. VAR_REPEL_STEP_COUNT after a catch so the walk back meets no wild battle. */
+  z.strictObject({ setVar: z.record(z.string().regex(/^VAR_[A-Z0-9_]+$/), z.number().int().min(0).max(0xffff)) }),
   z.strictObject({ expectScreen: z.string() }),
   z.strictObject({
     /** "battle", "overworld" (field script finished too), or a gMain.callback2 name like "CB2_BagMenuRun". */
@@ -319,21 +328,23 @@ async function runStep(
 
   if ("walk" in step) {
     for (let i = 0; i < (step.tiles ?? 1); i++) {
-      const before = await s.readState();
-      const [dx, dy] = DELTA[step.walk];
-      await s.hold(DIR_BUTTON[step.walk]);
-      let moved = false;
-      for (let f = 0; f < 40 && !moved; f += 2) {
-        await s.run(2);
-        const now = await s.readState();
-        // Crossing a map connection or stepping onto a warp changes the map,
-        // and with it the coordinate system: that counts as a step taken.
-        moved = now.map !== before.map || (now.x === before.x + dx && now.y === before.y + dy);
-      }
-      await s.hold([]);
-      await s.run(8);
-      if (!moved) fail(`walk ${step.walk}: blocked at ${before.x},${before.y} (tile ${i + 1} of ${step.tiles ?? 1})`);
+      await walkOneTile(s, step.walk, `walk ${step.walk}`, `tile ${i + 1} of ${step.tiles ?? 1}`);
     }
+    return;
+  }
+
+  if ("walkTo" in step) {
+    const { x, y, yFirst } = step.walkTo;
+    const from = await s.readState();
+    const dirs = walkToDirections(from.x, from.y, x, y, yFirst ?? false);
+    for (const [i, dir] of dirs.entries()) {
+      await walkOneTile(s, dir, `walkTo ${x},${y}`, `step ${i + 1} of ${dirs.length}, going ${dir}`);
+    }
+    return;
+  }
+
+  if ("setVar" in step) {
+    for (const [name, value] of Object.entries(step.setVar)) await s.setVar(name, value);
     return;
   }
 
@@ -546,6 +557,31 @@ async function leaveBattle(s: EmulatorSession, what: string, seen: string[] = []
     await s.press("B", { hold: 2, release: 28 });
   }
   return seen;
+}
+
+/** Walks one tile; fails with `label: blocked at x,y (detail)` if the player didn't move. */
+async function walkOneTile(s: EmulatorSession, dir: z.infer<typeof Direction>, label: string, detail: string): Promise<void> {
+  const before = await s.readState();
+  const [dx, dy] = DELTA[dir];
+  await s.hold(DIR_BUTTON[dir]);
+  let moved = false;
+  for (let f = 0; f < 40 && !moved; f += 2) {
+    await s.run(2);
+    const now = await s.readState();
+    // Crossing a map connection or stepping onto a warp changes the map,
+    // and with it the coordinate system: that counts as a step taken.
+    moved = now.map !== before.map || (now.x === before.x + dx && now.y === before.y + dy);
+  }
+  await s.hold([]);
+  await s.run(8);
+  if (!moved) fail(`${label}: blocked at ${before.x},${before.y} (${detail})`);
+}
+
+/** The walkTo route: one direction per tile, the row (x) first unless yFirst. */
+export function walkToDirections(fromX: number, fromY: number, toX: number, toY: number, yFirst: boolean): z.infer<typeof Direction>[] {
+  const across = Array<z.infer<typeof Direction>>(Math.abs(toX - fromX)).fill(toX < fromX ? "left" : "right");
+  const along = Array<z.infer<typeof Direction>>(Math.abs(toY - fromY)).fill(toY < fromY ? "up" : "down");
+  return yFirst ? [...along, ...across] : [...across, ...along];
 }
 
 /** Waits until the field is free to walk, or a field script (ON_FRAME, a trainer) has taken over. */

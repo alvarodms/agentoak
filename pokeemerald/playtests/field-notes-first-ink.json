@@ -1,6 +1,6 @@
 {
   "name": "field-notes-first-ink",
-  "checks": "C324/C331 the first red ink: after a LOTAD_HOENN catch, page 1 shows Birch's line, then the player's red correction signed SAGE, then the Route 104 margin; the cover still reads 1 of 4 with no name",
+  "checks": "C324/C331 the first red ink: after a LOTAD_HOENN catch, page 1 shows Birch's line, then the player's red correction signed SAGE, then the Route 104 margin; the cover still reads 1 of 4 with no name (C363: the Route 104 margin needs the schoolkid's in-person turn, 0x35)",
   "scenario": {
     "map": "MAP_ROUTE104",
     "x": 33,
@@ -9,7 +9,8 @@
     "flags": [
       "FLAG_SYS_POKEMON_GET",
       "FLAG_SYS_POKEDEX_GET",
-      "FLAG_RECEIVED_FIELD_NOTES"
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
     ],
     "bag": {
       "ITEM_FIELD_NOTES": 1

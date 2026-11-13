@@ -1,8 +1,13 @@
 # v3.0 Opener — Trainer Cap Raise & In-Game Notebook Key Items
 
-**Cycle**: 361 | **Date**: November 2026
+**Cycle**: 363 | **Date**: November 2026
 
 ---
+
+## C363 — Watched NPC walk (forager 18,34 → 11,24; searched Nov 2026; thin, mostly forum craft)
+- Cutscene craft (Fable / Half-Life 2 cited; "design sins" critiques): a lock is accepted when brief and purposeful; complaints come from locks held past the story moment. Keep the locked walk short and give the player control back fast.
+- Gen III forum craft (PokeCommunity threads): object movement off-screen is unreliable (movesprite fails on unloaded NPCs; advice is to keep walkers within ~1 tile of the view edge). Vanilla-style fix for a long walk = `special SpawnCameraObject` + applymovement OBJ_EVENT_ID_CAMERA + `RemoveCameraObject` (pret wiki "Keep the Camera from Making Waves" notes camera ground-effect quirks).
+- GBA view = 15×10 tiles (player ~7 tiles each side, ~4-5 up/down). A 17-step walk (7 W + 10 N) leaves the screen after ~5 N steps: the player "watches" an empty frame. Options: walk only the on-screen leg + `setobjectxyperm` for the rest; camera pan; or she walks out of view on purpose (exit = grief beat) and is found at 11,24 later.
 
 ## C361 — First-ink cue: how games signal "your journal changed" (searched Nov 2026; mixed strength)
 - **Legends: Arceus**: a catch does NOT finish an entry on its own. Progress shows up later as a Progress Report page (tasks done, dex data updated, points) at a fixed check-in, not mid-field. The update is shown *to* the player at a known moment (Upcomer, Looper, Bulbapedia).
@@ -34,20 +39,14 @@
 - Vanilla precedent: Steven already talks to the player through a note left behind. After the Hall of Fame, his Mossdeep house has a note on the desk next to a Poké Ball holding Beldum, "my favorite Pokémon" (Bulbapedia Steven/Quotes; guides). A short signed note from an offscreen Steven is canon voice, not a new invention.
 - Reach risk: vanilla B1F_2R is the **dead-end back room behind Surf + Waterfall** (TM02 Dragon Claw, Bagon). Once the TM and the den are taken, nothing brings the player back. Fixes: re-fire on any warp out/in; page-7 ink hints at the wall; Birch's Field Notes names it.
 
-## C334-C335 (applied): trades must give a usable mon (TIDEMARK: foreign OT, no rename, obeys to Lv70 at 6 badges; Shoal Cave Shell Bell man = "swap" precedent); burn + confusion stack, so W-o-W at most once per mon; Mt. Pyre Hex Maniacs are "seekers".
-
-## C333 — Flag reclamation (applied): `FLAG_UNUSED_0x*` = pret's sanctioned spares; pret wiki "Reuse filler save space for Variables and Flags" (`gAdditionalSaveData` in sector padding, IDs from 0xF000) is the route to hundreds more flags if the pool runs out. Exclude whole engine-wiped/computed ranges, not just grep names.
+## C333-C335 (applied): trades give a usable mon; burn + confusion stack; if the flag pool runs out, pret wiki "Reuse filler save space" (`gAdditionalSaveData`, IDs from 0xF000).
 
 ## C331 — Mentor payoff: phone call vs. in-person
 - HGSS/GSC phone (Bulbagarden fan threads): players call the phone "annoying over time"; Bill's automated calls were "useless". Elm's *story* calls (e.g. after a badge) are remembered, not hated. Fans resent calls that interrupt without new content, not calls in general.
 - Emerald Match Call: Birch is one of the few non-trainer entries. Rematch calls roll on step/minute counters + chance (`TryStartMatchCall`: step counter → minutes → chance → map allows → trainer select), so they can't be predicted. Vanilla one-shot story calls (Wally/Scott/Steven style) are a separate step-triggered path; verify in field code before reuse.
 - Applied: the ≥3-pages beat should be ONE player-initiated or guaranteed-once beat. Best fit: in-person `ProfBirch_EventScript_FieldNotes` + the existing dex-rating Match Call (both already read `GetActiveFieldNote`). No random unprompted call. A forced call needs a flag (0x2BB is the last one free).
 
-## C330 — Multi-page payoff: count thresholds, not one completion prize
-- **Oak's aides (FRLG/Gen III)**: aides stand at fixed spots on roads the player already walks and check a *count* (Itemfinder at 30, Exp. Share at 50 on the Route 15 gate 2F). Several small rewards at thresholds, not one at 100%. Guides disagree on which item goes with which count, so players can't hold the exact numbers in their heads. Only the "talk to the aide, get a thing" loop sticks.
-- **Bombers' Notebook**: guides say there is NO single reward for completing it. The payoff is in each entry, and finishing it all counts toward 100% and (some claim) a better ending. One source contradicts the other here, so it's weak evidence. Lesson: the per-NPC beats ARE the reward. The multi-page beat should be a small narrative acknowledgement, not a loot prize.
-- Applied: `CountInkedFieldNotePages` should drive tiers (e.g. 3+ = believers "talk to each other", 7 = last page). Pages 5-7 are badge-gated, so an all-pages gate can't be reached until late. Pages 1-4 can all be inked by Route 113, so a ≥3 beat lands mid-game.
-- Route 113 locale (Bulbapedia): Glass Workshop (NW) turns ash into glass furniture; its owner gives the Soot Sack, and ash grass collects soot per step. Two Ninja Boys hide under fake ash piles. Existing route verbs for a believer to use: sweeping/collecting ash, glass-making, hiding.
+## C330 (applied): count thresholds, not one completion prize (Oak's aides check counts at fixed road spots; Bombers' Notebook's payoff is per entry). Route 113 verbs: ash collecting (Soot Sack), glass-making, Ninja Boys hiding.
 
 ## C328-C329 (applied): believers read dex-caught (passive; party checks cost a box trip); Bombers' Notebook stamps *who* was helped → margins; one line per deed. Unbound's Mission Log is praised for organization, not prose.
 
@@ -56,6 +55,7 @@
 - Writing guidance (game-writing guides): a few specific reactive lines beat many generic ones; the NPC must name the player's actual deed.
 - A dialogue-only skeptic does NOT need a trainer slot. C326 (applied): reclaim zero-ref IDs only, keeping constant/party names (pret wiki link placeholders); a MAX_TRAINERS_COUNT bump shifts system flags.
 ## Sources
+- https://www.nomadsreviews.co.uk/post/design-sins-taking-control-away-from-the-player , https://tropedia.fandom.com/wiki/Cutscene , https://www.pokecommunity.com/threads/movesprite-command.371236 , https://www.pokecommunity.com/threads/camera-movement.441483 , https://github.com/pret/pokeemerald/wiki/Keep-the-Camera-from-Making-Waves (C363)
 - https://www.gamespot.com/reviews/pentiment-review/1900-6417998/ , https://primagames.com/gaming/pentiment-final-mural-endings-guide , https://bobsthoughtcloud.substack.com/p/pentiments-third-act-emphasizes-the , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity (C343)
 - https://filmstories.co.uk/?p=83249 , https://unapologeticnerd.com/tag/mystery-genre/ , https://www.giantbomb.com/wd/3015-191/ , https://www.pressreader.com/australia/edge/20190620/282278141843961 , https://www.tomsguide.com/reviews/outer-wilds , https://steamcommunity.com/sharedfiles/filedetails/?id=3500382207 (C340)
 - https://upcomer.com/how-pokedex-research-tasks-work-in-pokemon-legends-arceus , https://www.looper.com/756095/research-tasks-in-pokemon-legend-arceus-explained , https://tcrf.net/Majora%27s_Mask_3D , https://freeslave.github.io/halflife-featureful/docs/configuration/journal , https://itch.io/post/8931839 (C361)

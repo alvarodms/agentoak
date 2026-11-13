@@ -1,0 +1,56 @@
+{
+  "name": "believer-forager-north-approach",
+  "checks": "C363 forager scene from the north (player on 18,33 blocks her step up): she takes the around-player route west along row 34 and still ends at 11,24 facing up",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 18,
+    "y": 33,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "You caught a SHROOMISH?"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_PETALBURG_WOODS_FORAGER_MOVED": true
+      }
+    }
+  ]
+}

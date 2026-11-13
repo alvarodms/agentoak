@@ -1,0 +1,39 @@
+{
+  "name": "believer-forager-lotad-not-shown",
+  "checks": "C363 forager, LOTAD_HOENN caught but never shown to the schoolkid (0x35 clear): she still tells of the boy reading BIRCH aloud, not that he stopped",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 18,
+    "y": 35,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "PROF. BIRCH wrote it plain.",
+        "There's a boy by the sea who"
+      ]
+    },
+    {
+      "expectNoText": "That boy by the sea stopped"
+    }
+  ]
+}

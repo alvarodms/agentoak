@@ -406,6 +406,17 @@ export class EmulatorSession {
     return this.readU16(sb1 + layout.saveBlock1Vars + (id - layout.varsStart) * 2);
   }
 
+  /** Writes a VAR_* in the save block (not the special 0x8000+ vars). */
+  async setVar(name: string, value: number): Promise<void> {
+    const layout = await this.getLayout();
+    const id = this.constant(name);
+    if (id < layout.varsStart || id >= layout.varsStart + layout.varsCount) {
+      throw new Error(`${name} (0x${id.toString(16)}) is not a saved var`);
+    }
+    const sb1 = await this.deref("gSaveBlock1Ptr");
+    await this.write(sb1 + layout.saveBlock1Vars + (id - layout.varsStart) * 2, Uint8Array.of(value & 0xff, value >> 8));
+  }
+
   async close(): Promise<void> {
     try {
       await this.driver.close();

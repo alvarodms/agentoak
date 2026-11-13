@@ -1,6 +1,6 @@
 {
   "name": "field-notes-cover-yours",
-  "checks": "C331 Red Ink payoff in the notebook: 3+ pages inked puts the player's name on the cover in red; all four pages carry red ink and their margin lines; no doubt line without the Lilycove flag",
+  "checks": "C331 Red Ink payoff in the notebook: 3+ pages inked puts the player's name on the cover in red; all four pages carry red ink and their margin lines; no doubt line without the Lilycove flag (C363: the P1/P2 margins need the in-person flags 0x35/0x36)",
   "scenario": {
     "map": "MAP_ROUTE104",
     "x": 33,
@@ -9,7 +9,9 @@
     "flags": [
       "FLAG_SYS_POKEMON_GET",
       "FLAG_SYS_POKEDEX_GET",
-      "FLAG_RECEIVED_FIELD_NOTES"
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_ROUTE104_SKEPTIC_TURNED",
+      "FLAG_PETALBURG_WOODS_FORAGER_MOVED"
     ],
     "bag": {
       "ITEM_FIELD_NOTES": 1

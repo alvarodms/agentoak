@@ -41,6 +41,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | Step | Does |
 |---|---|
 | `face`, `walk` (+`tiles`) | Turn in place, or walk tile by tile; fails if blocked. A step across a map connection or onto a warp counts (check the new map with `expectPlayer`) |
+| `walkTo` (`{"x": 19, "y": 34}`, +`yFirst`) | Walk to a tile on this map, along the row first (or the column first with `"yFirst": true`); fails if blocked. For a start tile that varies, e.g. wherever `findWildBattle` stopped |
 | `warp` (`{"map": "MAP_ROUTE104", "x": 33, "y": 50}`) | Jump to a tile on another map, as if the player had walked in: the map loads fresh, so its ON_TRANSITION/ON_LOAD scripts run and objects respawn. Use it to skip a long walk between two scenes of one playtest (needs no field script running). Fails if the player does not land on that tile |
 | `press` (+`hold`, `release`, `times`), `wait` | Raw buttons and frames |
 | `talk` (+`maxPresses`, default 200; `start`; `answers`) | Press A, then keep pressing until the script ends or the field screen is left (a battle), recording every message box. A battle shows as a last entry like `[screen: CB2_OverworldBasic]` (the transition); follow with `waitFor: "battle"`. `{"start": false}` picks up a script that resumes after a battle. `{"answers": ["no"]}` answers the script's YES/NO boxes in order (`"no"` presses B; boxes after the last answer get YES; an unused answer fails the step); each shows in the text as `[answered NO]` |
@@ -48,6 +49,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `expectText`, `expectNoText` | Substrings of the last `talk` (line breaks and curly quotes don't matter). Battle messages are never in it |
 | `expectPlayer`, `expectObject` | Tile and facing; objects by `LOCALID_*` or index (+1), with `x`, `y`, `facing`, `visible`, or `"absent": true` (not loaded, i.e. hidden by its flag) |
 | `expectFlag`, `expectVar`, `expectScreen` | Saved flags and vars; `gMain.callback2` by name |
+| `setVar` (`{"VAR_REPEL_STEP_COUNT": 250}`) | Set saved vars mid-test. A repel count after a catch keeps the walk back through grass free of wild battles (lead level above the wild ones) |
 | `findWildBattle` (+`maxSteps`, `species`), `waitFor` (+`maxFrames`) | Walk until a wild battle starts (land only); wait for `battle`, `overworld` or a screen name. With `"species": "SPECIES_X"` it runs from every other wild Pokémon and keeps walking (give the party a fast, high-level lead so running always works) |
 | `catchWild` (`{"ball": "ITEM_MASTER_BALL"}`) | In a wild battle: BAG, Poké Balls pocket, throw that ball, answer NO to the nickname, close the Pokédex page, and stop once the field is back (free, or a field script such as an ON_FRAME cue has started; follow with `talk: {"start": false}`). Fails if the ball isn't in the bag or the catch fails. Its battle messages ("Gotcha!") are the step's text for `expectText` |
 | `waitForBattleText` (+`maxFrames`, `fresh`) | Tap B through battle messages until one contains a string. `"fresh": true` ignores the message already showing, for the *next* `"What will"` |

@@ -15,6 +15,7 @@ import {
   loadPlaytestFiles,
   loadPlaytests,
   parsePlaytest,
+  walkToDirections,
   type PlaytestResult,
 } from "./playtest.js";
 import { PLAYTESTS_DIR, formatReport, preflight } from "./run-playtests.js";
@@ -236,5 +237,22 @@ describe("warp step", () => {
   it.skipIf(!fs.existsSync(MAIN_H))("matches gMain.state's offset in include/main.h", () => {
     const line = fs.readFileSync(MAIN_H, "utf8").split("\n").find((l) => /\bu8 state;/.test(l));
     expect(Number(line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1])).toBe(MAIN_STATE);
+  });
+});
+
+describe("walkTo and setVar steps", () => {
+  it("parses walkTo with an optional yFirst and setVar on VAR_ names only", () => {
+    const steps = [{ walkTo: { x: 19, y: 34 } }, { walkTo: { x: 19, y: 34, yFirst: true } }, { setVar: { VAR_REPEL_STEP_COUNT: 250 } }];
+    expect(parsePlaytest({ ...MINIMAL, steps }).steps).toEqual(steps);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ walkTo: { x: 19 } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ setVar: { FLAG_X: 1 } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ setVar: { VAR_X: 0x10000 } }] })).toThrow();
+  });
+
+  it("walks the row first, or the column first with yFirst", () => {
+    expect(walkToDirections(23, 33, 19, 34, false)).toEqual(["left", "left", "left", "left", "down"]);
+    expect(walkToDirections(22, 33, 19, 34, true)).toEqual(["down", "left", "left", "left"]);
+    expect(walkToDirections(5, 5, 6, 3, false)).toEqual(["right", "up", "up"]);
+    expect(walkToDirections(5, 5, 5, 5, false)).toEqual([]);
   });
 });

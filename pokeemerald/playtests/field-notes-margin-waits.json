@@ -1,0 +1,45 @@
+{
+  "name": "field-notes-margin-waits",
+  "checks": "C363 FIELD NOTES page 1 with LOTAD_HOENN caught but the schoolkid not yet shown (0x35 clear): the red ink is there, the 'Since then' margin is not",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 33,
+    "y": 50,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "Pages in your ink: 1 of 4.",
+        "Electric! Its leaf drinks",
+        "-- SAGE"
+      ]
+    },
+    {
+      "expectNoText": [
+        "stopped watching the sea.",
+        "Since then"
+      ]
+    }
+  ]
+}

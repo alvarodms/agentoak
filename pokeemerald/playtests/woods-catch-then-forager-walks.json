@@ -1,0 +1,150 @@
+{
+  "name": "woods-catch-then-forager-walks",
+  "checks": "C363 v3.3 real chain on one visit: catch the first SHROOMISH_HOENN in the Petalburg Woods grass (pen moment plays), walk on foot to the forager and show her: she reads the frost, goes quiet and walks off west out of view (sets FLAG_PETALBURG_WOODS_FORAGER_MOVED); she is then found in the cold patch at 11,24 with the cold-patch line. No boy line (the schoolkid never turned)",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 22,
+    "y": 33,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "vars": {
+      "VAR_PETALBURG_WOODS_STATE": 1
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MASTER_BALL": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "comment": "22,33-23,33 is tall grass in view of the forager (18,34), so she is loaded; south of the Devon/Aqua scene (26-27,23, also done via VAR_PETALBURG_WOODS_STATE 1), off Lyle's row 32 (7,32 looks left/right) and far from James (4,14)"
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_SHROOMISH_HOENN",
+        "maxSteps": 900
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Frost on its cap. Poison",
+        "and Ice!"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34,
+        "facing": "down"
+      }
+    },
+    {
+      "comment": "repel so the walk back through the grass (21,33 is tall grass) meets no wild battle; Salamence lv50 outlevels everything here"
+    },
+    {
+      "setVar": {
+        "VAR_REPEL_STEP_COUNT": 250
+      }
+    },
+    {
+      "comment": "findWildBattle stops on 22,33 or 23,33; walk west along row 33 (map_scan: 19-21,33 walkable, no events) then down to 19,34, beside her"
+    },
+    {
+      "walkTo": {
+        "x": 19,
+        "y": 34
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught a SHROOMISH?",
+        "...I'll need a warmer coat."
+      ]
+    },
+    {
+      "expectNoText": "That boy stopped reading his"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_PETALBURG_WOODS_FORAGER_MOVED": true
+      }
+    },
+    {
+      "screenshot": "forager-left-warm-spot"
+    },
+    {
+      "warp": {
+        "map": "MAP_PETALBURG_WOODS",
+        "x": 11,
+        "y": 25
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Cold out here.",
+        "Just not where I stood."
+      ]
+    },
+    {
+      "expectNoText": "You caught a SHROOMISH?"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "believer-forager-shown-scene",
+  "checks": "C363 forager scene, deterministic: SHROOMISH_HOENN + LOTAD_HOENN caught and the schoolkid turned (0x35): she still waits at 18,34 facing the light; talking plays Corrected + WhatElse, she walks off and is placed at 11,24 facing up (0x36 set); re-entering keeps her there",
+  "scenario": {
+    "map": "MAP_PETALBURG_WOODS",
+    "x": 18,
+    "y": 35,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 18,
+        "y": 34,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught a SHROOMISH?",
+        "That boy stopped reading his"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_PETALBURG_WOODS_FORAGER_MOVED": true
+      }
+    },
+    {
+      "warp": {
+        "map": "MAP_PETALBURG_WOODS",
+        "x": 11,
+        "y": 25
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    }
+  ]
+}

@@ -1,13 +1,15 @@
 {
   "name": "believer-hiker-fresh",
-  "checks": "C329 hiker (at 26,20 since C339), fresh save (LOTAD+SHROOMISH caught): faces up and does NOT turn when talked to; Refuse + both mock lines",
+  "checks": "C329 hiker (at 26,20 since C339), fresh save (LOTAD+SHROOMISH caught): faces up and does NOT turn when talked to; Refuse + both mock lines (C363: both believers changed in person, 0x35 + 0x36)",
   "scenario": {
     "map": "MAP_GRANITE_CAVE_B1F",
     "x": 26,
     "y": 21,
     "flags": [
       "FLAG_SYS_POKEMON_GET",
-      "FLAG_SYS_POKEDEX_GET"
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED",
+      "FLAG_PETALBURG_WOODS_FORAGER_MOVED"
     ],
     "party": [
       {

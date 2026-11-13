@@ -2243,14 +2243,18 @@ static bool8 IsFieldNotesPageInked(u8 i)
     }
 }
 
-// C334: a page's red margin needs its believer's beat as well as the ink. P1-P4 margins follow
-// the ink; each den page waits for its believer (Mt. Pyre mourner beaten, Shoal trade, Steven chalk)
+// C334: a page's red margin needs its believer's beat as well as the ink. Since C362/C363 the
+// P1/P2 margins wait for the in-person beat (schoolkid turned east, forager walked to the cold
+// patch); P3/P4 believers still move on the catch, so their margins follow the ink. Each den page
+// waits for its believer (Mt. Pyre mourner beaten, Shoal trade, Steven chalk)
 static bool8 IsFieldNotesMarginEarned(u8 i)
 {
     switch (i)
     {
     case FIELD_NOTES_LOTAD:
+        return FlagGet(FLAG_ROUTE104_SKEPTIC_TURNED);
     case FIELD_NOTES_SHROOMISH:
+        return FlagGet(FLAG_PETALBURG_WOODS_FORAGER_MOVED);
     case FIELD_NOTES_GLIGAR:
     case FIELD_NOTES_VULPIX:
         return TRUE;

@@ -20,11 +20,16 @@ PetalburgWoods_EventScript_FirstInk::
 
 PetalburgWoods_OnTransition::
 	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS
-	@ C328 Red Ink page 2: she waits in the warm south clearing (faces the entrance light) while
-	@ she trusts BIRCH's page; once SHROOMISH_HOENN is caught she stands in the cold patch by the
-	@ frost bug catcher, facing the dark.
-	EventMacro_DexBelieverPlace SPECIES_SHROOMISH_HOENN, LOCALID_PETALBURG_WOODS_FORAGER, 11, 24, MOVEMENT_TYPE_FACE_UP
+	@ C328/C363 Red Ink page 2: she waits in the warm south clearing (faces the entrance light)
+	@ until the player shows her SHROOMISH_HOENN in person (ForagerCorrected walks her out, C363).
+	@ After that she stands in the cold patch by the frost bug catcher, facing the dark.
+	call_if_set FLAG_PETALBURG_WOODS_FORAGER_MOVED, PetalburgWoods_EventScript_ForagerInColdPatch
 	end
+
+PetalburgWoods_EventScript_ForagerInColdPatch::
+	setobjectxyperm LOCALID_PETALBURG_WOODS_FORAGER, 11, 24
+	setobjectmovementtype LOCALID_PETALBURG_WOODS_FORAGER, MOVEMENT_TYPE_FACE_UP
+	return
 
 PetalburgWoods_EventScript_DevonResearcherLeft::
 	lockall
@@ -578,9 +583,8 @@ PetalburgWoods_EventScript_ShroomishForager::
 	specialvar VAR_RESULT, ScriptCheckPokedexCaught
 	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerCorrected
 	msgbox PetalburgWoods_Text_ForagerBelief, MSGBOX_DEFAULT
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	goto_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerBoyStopped
+	@ C363: news of the boy travels only once he has turned in front of the player (C362).
+	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, PetalburgWoods_EventScript_ForagerBoyStopped
 	msgbox PetalburgWoods_Text_ForagerBoyReads, MSGBOX_DEFAULT
 	release
 	end
@@ -590,11 +594,36 @@ PetalburgWoods_EventScript_ForagerBoyStopped::
 	release
 	end
 
+@ C363 v3.3: the first time she sees the frost SHROOMISH she goes quiet, looks back at the
+@ entrance light and walks off toward the cold patch in front of the player. No emote: grief, not surprise.
 PetalburgWoods_EventScript_ForagerCorrected::
+	goto_if_set FLAG_PETALBURG_WOODS_FORAGER_MOVED, PetalburgWoods_EventScript_ForagerColdPatch
 	msgbox PetalburgWoods_Text_ForagerCorrected, MSGBOX_DEFAULT
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	call_if_eq VAR_RESULT, TRUE, PetalburgWoods_EventScript_ForagerWhatElse
+	call_if_set FLAG_ROUTE104_SKEPTIC_TURNED, PetalburgWoods_EventScript_ForagerWhatElse
+	closemessage
+	delay 48
+	getplayerxy VAR_TEMP_0, VAR_TEMP_1
+	goto_if_ne VAR_TEMP_0, 18, PetalburgWoods_EventScript_ForagerLeaves
+	goto_if_ne VAR_TEMP_1, 33, PetalburgWoods_EventScript_ForagerLeaves
+	applymovement LOCALID_PETALBURG_WOODS_FORAGER, PetalburgWoods_Movement_ForagerLeavesAroundPlayer
+	goto PetalburgWoods_EventScript_ForagerGone
+
+PetalburgWoods_EventScript_ForagerLeaves::
+	applymovement LOCALID_PETALBURG_WOODS_FORAGER, PetalburgWoods_Movement_ForagerLeaves
+PetalburgWoods_EventScript_ForagerGone::
+	waitmovement 0
+	setflag FLAG_PETALBURG_WOODS_FORAGER_MOVED
+	@ She is off-screen when placed: 9,33/9,34 is 8+ tiles west of every talk tile (17,34 18,33
+	@ 18,35 19,34), and 11,24 is 9+ rows north of them, so the jump is never seen.
+	setobjectxy LOCALID_PETALBURG_WOODS_FORAGER, 11, 24
+	setobjectxyperm LOCALID_PETALBURG_WOODS_FORAGER, 11, 24
+	setobjectmovementtype LOCALID_PETALBURG_WOODS_FORAGER, MOVEMENT_TYPE_FACE_UP
+	turnobject LOCALID_PETALBURG_WOODS_FORAGER, DIR_NORTH
+	release
+	end
+
+PetalburgWoods_EventScript_ForagerColdPatch::
+	msgbox PetalburgWoods_Text_ForagerColdPatch, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PETALBURG_WOODS_FORAGER, Common_Movement_FaceUp
 	waitmovement 0
@@ -633,8 +662,56 @@ PetalburgWoods_Text_ForagerCorrected:
 	.string "sun, waiting for them.\p"
 	.string "...I'll need a warmer coat.$"
 
+PetalburgWoods_Text_ForagerColdPatch:
+	.string "Cold out here.\p"
+	.string "They came.\n"
+	.string "Just not where I stood.$"
+
 PetalburgWoods_Text_ForagerWhatElse:
 	.string "That boy stopped reading his\n"
 	.string "page too.\p"
 	.string "What else did BIRCH get wrong?$"
 
+@ C363 forager exit (map_scan C363): the straight walk north is blocked: row 30, columns 16-21,
+@ is a south ledge (MB_JUMP_SOUTH, collision 1), and the only way north from the warm clearing is
+@ the tall grass at columns 5-9 (rows 26-33 walkable, no coord or warp events). So she steps up
+@ and walks west out of view toward that path; ForagerCorrected then places her at 11,24.
+@ Rows 33 and 34, columns 9-17, are walkable with no coord or warp events.
+@ Main path: 18,34 -> 18,33 -> west to 9,33 (talk tiles 18,35 / 17,34 / 19,34).
+PetalburgWoods_Movement_ForagerLeaves:
+	face_down
+	delay_16
+	delay_16
+	delay_16
+	face_up
+	delay_8
+	walk_slow_up
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	step_end
+
+@ North approach (player on 18,33 blocks the step up): 18,34 -> west along row 34 to 9,34.
+PetalburgWoods_Movement_ForagerLeavesAroundPlayer:
+	face_down
+	delay_16
+	delay_16
+	delay_16
+	face_left
+	delay_8
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	walk_slow_left
+	step_end

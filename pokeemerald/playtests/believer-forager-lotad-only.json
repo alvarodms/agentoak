@@ -1,13 +1,14 @@
 {
   "name": "believer-forager-lotad-only",
-  "checks": "C328 forager, only LOTAD_HOENN caught: still at 18,34; BoyStopped replaces BoyReads",
+  "checks": "C328/C363 forager, only LOTAD_HOENN caught and the schoolkid turned in person (0x35): still at 18,34; BoyStopped replaces BoyReads",
   "scenario": {
     "map": "MAP_PETALBURG_WOODS",
     "x": 18,
     "y": 35,
     "flags": [
       "FLAG_SYS_POKEMON_GET",
-      "FLAG_SYS_POKEDEX_GET"
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
     ],
     "party": [
       {

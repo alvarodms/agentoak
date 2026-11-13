@@ -1,6 +1,6 @@
 {
   "name": "woods-first-catch-ink",
-  "checks": "C362 audit: the real Petalburg Woods path: catch the first SHROOMISH_HOENN in the grass, the pen moment plays page 2 red ink; the forager is still at her old tile 18,34 for the rest of the visit (known same-visit gap, input for C363)",
+  "checks": "C362/C363: the real Petalburg Woods path: catch the first SHROOMISH_HOENN in the grass, the pen moment plays page 2 red ink; the forager stays at 18,34 until the player talks to her (C363 design: the walk is played in front of the player)",
   "scenario": {
     "map": "MAP_PETALBURG_WOODS",
     "x": 22,
@@ -65,6 +65,11 @@
         "id": "LOCALID_PETALBURG_WOODS_FORAGER",
         "x": 18,
         "y": 34
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_PETALBURG_WOODS_FORAGER_MOVED": false
       }
     },
     {
