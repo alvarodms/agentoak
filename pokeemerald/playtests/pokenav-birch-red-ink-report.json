@@ -1,0 +1,79 @@
+{
+  "name": "pokenav-birch-red-ink-report",
+  "checks": "C365 Pokénav call reads the Red Ink report (3 pages inked): START → POKéNAV → MATCH CALL → PROF. BIRCH → CALL plays the rating, then names the schoolkid, forager and hiker and hands over the pen; no den line, no 'only you'",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN",
+    "x": 7,
+    "y": 17,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_POKENAV_GET",
+      "FLAG_ADDED_MATCH_CALL_TO_POKENAV",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_RESCUED_BIRCH",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET"
+    ],
+    "vars": {
+      "VAR_LITTLEROOT_INTRO_STATE": 7,
+      "VAR_LITTLEROOT_TOWN_STATE": 4,
+      "VAR_LITTLEROOT_RIVAL_STATE": 4,
+      "VAR_BIRCH_LAB_STATE": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "7,17 is the open square below BIRCH's lab door (town, so calls can be made; no coord event)"
+    },
+    {
+      "pokenavCall": "BIRCH"
+    },
+    {
+      "expectText": [
+        "Are you curious",
+        "Oh, and word of your red",
+        "A schoolkid on ROUTE 104",
+        "A forager in PETALBURG",
+        "A hiker in GRANITE CAVE",
+        "They believed me because I'm",
+        "Keep the pen."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Your ink went deep",
+        "Only you went"
+      ]
+    },
+    {
+      "comment": "the call hung up, the POKéNAV closed and the start menu shut: the player is free on the same tile"
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN",
+        "x": 7,
+        "y": 17
+      }
+    }
+  ]
+}

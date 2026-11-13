@@ -130,6 +130,10 @@ void Playtest_ApplyScenario(void)
     }
     for (i = 0; i < s->varCount && i < PLAYTEST_MAX_VARS; i++)
         VarSet(s->vars[i].id, s->vars[i].value);
+    // The flag alone is not the national dex: IsNationalPokedexEnabled also checks the
+    // save-block magic and VAR_NATIONAL_DEX, which only EnableNationalPokedex sets.
+    if (FlagGet(FLAG_SYS_NATIONAL_DEX))
+        EnableNationalPokedex();
 
     for (i = 0; i < s->partyCount && i < PARTY_SIZE; i++)
         GivePlaytestMon(i, &s->party[i]);

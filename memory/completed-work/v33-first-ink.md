@@ -57,3 +57,14 @@ Files:
 - Harness `ability`: pokeemerald/include/playtest.h (`padding` → `abilityNum`, PLAYTEST_LAYOUT_VERSION 3), pokeemerald/src/playtest.c GivePlaytestMon (SetMonData MON_DATA_ABILITY_NUM = abilityNum - 1, before the moves early-return), src/emulator/scenario.ts (ScenarioMon.ability, byte base+3, 1/2 validation, LAYOUT_VERSION 3), src/emulator/playtest.ts (ScenarioSchema party `ability`), src/emulator/scenario.test.ts, playtests/README.md.
 - Playtests (new): route104-ivan-rain-lotad-wins (Lv15 Lotad_H ability 2 RAIN DISH, real fight: Magikarp Splash → 1 Thundershock; Tentacool Supersonic misses, then Poison Sting poisons Lotad, 2 Thundershocks; end of that turn "Rain continues to fall" + "LOTAD's RAIN DISH restored its HP a little!" + poison; Wingull 1 Thundershock; screenshot ivan-rain-after shows overworld rain), route104-ivan-rain-no-lotad (Lv100 Mudkip, no caught list: rain anyway), route104-ivan-defeated-talk (defeatedTrainers: post line only). Talk tile 28,8 facing right (29,9 is MB_POND_WATER). Suite 79/79.
 - Harness gotcha found: one `waitForBattleText` has an 1800-frame budget (60 B taps); a faint + EXP + switch-in + end-of-turn weather/ability/poison chain can exceed it. Split the wait on an intermediate message.
+
+## C365 — First Ink closed: Pokénav call harness, chain playtest, HALEY cut, retrospective
+
+Files:
+- pokeemerald/data/text/trainers.inc: Route104_Text_HaleyIntro → "Let's battle before the / clouds roll in!", Route104_Text_HaleyDefeat → "Oh! I should have waited / for the rain." (were "acting strange… different from normal!" / "Something is changing in Hoenn… Can you feel it?"). PostBattle, Register1/2 and rematch texts unchanged.
+- pokeemerald/src/playtest.c: Playtest_ApplyScenario calls EnableNationalPokedex() when the scenario set FLAG_SYS_NATIONAL_DEX (see playtest-hook.md).
+- src/emulator/playtest.ts: `pokenavCall` step (`"BIRCH"` or {contact, read, maxPresses}), MATCH_CALL_CONTACTS, START_MENU_ACTION_POKENAV, POKENAV offsets, pokenavView/pokenavReady/pokenavCall helpers. src/emulator/playtest.test.ts: schema test + enum/struct layout checks against include/pokenav.h, src/start_menu.c, src/pokenav.c, src/pokenav_menu_handler.c, src/pokenav_match_call_list.c.
+- pokeemerald/playtests/README.md: `pokenavCall` row; FLAG_SYS_NATIONAL_DEX note.
+- Playtests (new): pokenav-birch-red-ink-report, pokenav-birch-two-pages-no-report, pokenav-birch-worst-case-report (834 B measured), first-ink-chapter-in-order (all four beats on one save), route104-haley-rain-lines.
+- Memory: player-journey-map.md retrospective, strategy-notes.md v3.3 section shrunk + rows 365/366, failure-patterns.md C360/C363 bullets split, codebase-facts.md pokenavCall facts.
+- Suite 84/84 (79 + 5).

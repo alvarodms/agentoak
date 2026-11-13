@@ -1,0 +1,67 @@
+{
+  "name": "pokenav-birch-two-pages-no-report",
+  "checks": "C365 negative control: 2 pages inked, the Pokénav call has the rating but no report",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN",
+    "x": 7,
+    "y": 17,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_POKENAV_GET",
+      "FLAG_ADDED_MATCH_CALL_TO_POKENAV",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_RESCUED_BIRCH",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET"
+    ],
+    "vars": {
+      "VAR_LITTLEROOT_INTRO_STATE": 7,
+      "VAR_LITTLEROOT_TOWN_STATE": 4,
+      "VAR_LITTLEROOT_RIVAL_STATE": 4,
+      "VAR_BIRCH_LAB_STATE": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "pokenavCall": "BIRCH"
+    },
+    {
+      "expectText": "Are you curious"
+    },
+    {
+      "expectNoText": [
+        "Oh, and word of your red",
+        "Keep the pen."
+      ]
+    },
+    {
+      "comment": "the call hung up, the POKéNAV closed and the start menu shut: the player is free on the same tile"
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN",
+        "x": 7,
+        "y": 17
+      }
+    }
+  ]
+}

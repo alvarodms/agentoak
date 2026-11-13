@@ -36,7 +36,8 @@ Scenario fields also include `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
 (`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. A party mon takes `species`, `level`, optional
 `item`, `moves` (up to 4 `MOVE_X`) and `ability` (`1` = the species' first ability, `2` = its second; omit it
 and the game picks at random, so pin it when a test depends on the ability). Every name is a real constant from `include/`; raw
-numbers are rejected.
+numbers are rejected. `FLAG_SYS_NATIONAL_DEX` in `flags` turns on the real national dex (the boot hook calls
+`EnableNationalPokedex`, which also sets the save-block magic and `VAR_NATIONAL_DEX` the flag alone lacks).
 
 The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts`.
 
@@ -48,6 +49,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `press` (+`hold`, `release`, `times`), `wait` | Raw buttons and frames |
 | `talk` (+`maxPresses`, default 200; `start`; `answers`) | Press A, then keep pressing until the script ends or the field screen is left (a battle), recording every message box. A battle shows as a last entry like `[screen: CB2_OverworldBasic]` (the transition); follow with `waitFor: "battle"`. `{"start": false}` picks up a script that resumes after a battle. `{"answers": ["no"]}` answers the script's YES/NO boxes in order (`"no"` presses B; boxes after the last answer get YES; an unused answer fails the step); each shows in the text as `[answered NO]` |
 | `useKeyItem` (+`read`, default true; `maxPresses`; `register`) | Register an item (`"ITEM_FIELD_NOTES"`, must be in the scenario `bag`) and press SELECT, then record its message boxes like `talk`. `"read": false` only starts it, for `press`/`wait`/`screenshot` mid-read. `"register": false` doesn't register it and fails unless the game already put that item on SELECT |
+| `pokenavCall` (`"BIRCH"`, or `{"contact": "BIRCH"}` +`read`, default true; `maxPresses`, default 300) | START → POKéNAV → MATCH CALL → contact → CALL; records the call text from gStringVar4 like `talk` (one entry per page), then hangs up and presses B back to the free field. Fails naming the stage it stuck at (start menu, pokenav main, match call list, call, back to field), or if the call is not that contact's (BIRCH: "Are you curious"). Scenario needs the 4 Pokénav/match-call flags: `FLAG_SYS_POKENAV_GET`, `FLAG_ADDED_MATCH_CALL_TO_POKENAV`, `FLAG_HAS_MATCH_CALL`, `FLAG_ENABLE_PROF_BIRCH_MATCH_CALL`, and a map where calls work (outdoors). `"read": false` stops right after CALL, for `wait`/`screenshot` mid-call (the test can't leave the Pokénav after that) |
 | `expectText`, `expectNoText` | Substrings of the last `talk` (line breaks and curly quotes don't matter). Battle messages are never in it |
 | `expectPlayer`, `expectObject` | Tile and facing; objects by `LOCALID_*` or index (+1), with `x`, `y`, `facing`, `visible`, or `"absent": true` (not loaded, i.e. hidden by its flag) |
 | `expectFlag`, `expectVar`, `expectScreen` | Saved flags and vars; `gMain.callback2` by name |

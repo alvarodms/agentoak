@@ -305,15 +305,12 @@ Route104_Text_BillyPostBattle:
 	.string "disappear quickly…$"
 
 Route104_Text_HaleyIntro:
-	.string "The POKéMON around here\n"
-	.string "have been acting strange...\p"
-	.string "This one I caught is\n"
-	.string "different from normal!$"
+	.string "Let's battle before the\n"
+	.string "clouds roll in!$"
 
 Route104_Text_HaleyDefeat:
-	.string "Something is changing\n"
-	.string "in Hoenn...\p"
-	.string "Can you feel it?$"
+	.string "Oh! I should have waited\n"
+	.string "for the rain.$"
 
 Route104_Text_HaleyPostBattle:
 	.string "My LOTAD looks like any other,\n"

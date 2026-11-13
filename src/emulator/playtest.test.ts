@@ -5,10 +5,13 @@ import { describe, expect, it } from "vitest";
 import {
   BAG_POSITION,
   MAIN_STATE,
+  MATCH_CALL_CONTACTS,
+  POKENAV,
   SAVEBLOCK1_LOCATION,
   SAVEBLOCK1_POS,
   SAVEBLOCK1_POKEBALLS,
   SAVEBLOCK1_REGISTERED_ITEM,
+  START_MENU_ACTION_POKENAV,
   ballListIndex,
   battleWeatherName,
   encodeWarpData,
@@ -254,5 +257,70 @@ describe("walkTo and setVar steps", () => {
     expect(walkToDirections(22, 33, 19, 34, true)).toEqual(["down", "left", "left", "left"]);
     expect(walkToDirections(5, 5, 6, 3, false)).toEqual(["right", "up", "up"]);
     expect(walkToDirections(5, 5, 5, 5, false)).toEqual([]);
+  });
+});
+
+const POKEEMERALD = path.dirname(PLAYTESTS_DIR);
+const source = (file: string) => fs.readFileSync(path.join(POKEEMERALD, file), "utf8");
+/** Index of `name` in the first plain enum (no explicit values) that lists it. */
+const enumIndex = (text: string, name: string) => {
+  const body = [...text.matchAll(/enum\s*\{([^}]*)\}/g)].map((m) => m[1]).find((b) => new RegExp(`\\b${name}\\b`).test(b)) ?? "";
+  const members = body.replace(/\/\/.*$/gm, "").split(",").map((m) => m.trim()).filter(Boolean);
+  return members.findIndex((m) => m === name);
+};
+/** A C struct's fields, flattened to "type name" strings. */
+const structFields = (text: string, struct: string) =>
+  (text.match(new RegExp(`struct ${struct}\\s*\\{([^}]*)\\}`))?.[1] ?? "")
+    .replace(/\/\/.*$/gm, "")
+    .split(";")
+    .map((f) => f.trim().replace(/\s+/g, " "))
+    .filter(Boolean);
+
+describe("pokenavCall step", () => {
+  it("accepts a known contact, alone or with read/maxPresses, and rejects anything else", () => {
+    expect(parsePlaytest({ ...MINIMAL, steps: [{ pokenavCall: "BIRCH" }] }).steps[0]).toEqual({ pokenavCall: "BIRCH" });
+    const full = { pokenavCall: { contact: "BIRCH", read: false, maxPresses: 50 } };
+    expect(parsePlaytest({ ...MINIMAL, steps: [full] }).steps[0]).toEqual(full);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ pokenavCall: "MOM" }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ pokenavCall: "birch" }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ pokenavCall: { read: true } }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ pokenavCall: { contact: "BIRCH", maxPresses: 0 } }] })).toThrow();
+  });
+
+  it.skipIf(!fs.existsSync(path.join(POKEEMERALD, "include", "pokenav.h")))("matches the game's enums and struct layouts", () => {
+    expect(enumIndex(source("include/pokenav.h"), "MC_HEADER_PROF_BIRCH")).toBe(MATCH_CALL_CONTACTS.BIRCH.header);
+    expect(enumIndex(source("src/start_menu.c"), "MENU_ACTION_POKENAV")).toBe(START_MENU_ACTION_POKENAV);
+    // POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START, so the enum index is currentMenuIndex
+    const menus = source("include/pokenav.h").replace("POKENAV_MAIN_MENU = POKENAV_MENU_IDS_START", "POKENAV_MAIN_MENU");
+    expect(enumIndex(menus, "POKENAV_MATCH_CALL")).toBe(POKENAV.matchCallMenuIndex);
+    expect(["POKENAV_MAIN_MENU", "POKENAV_MAIN_MENU_CURSOR_ON_MAP", "POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL", "POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS"].map((m) => enumIndex(menus, m))).toEqual([...POKENAV.mainMenuIndexes]);
+    expect(enumIndex(source("include/pokenav.h"), "POKENAV_SUBSTRUCT_MAIN_MENU_HANDLER")).toBe(POKENAV.substructMainMenuHandler);
+    expect(enumIndex(source("include/pokenav.h"), "POKENAV_SUBSTRUCT_MATCH_CALL_MAIN")).toBe(POKENAV.substructMatchCallMain);
+
+    // 4 + 4 + 2 + 2 + 4 bytes before substructPtrs (16); currentMenuIndex at 4
+    expect(structFields(source("src/pokenav.c"), "PokenavResources")).toEqual([
+      "u32 (*currentMenuCb1)(void)",
+      "u32 currentMenuIndex",
+      "u16 mode",
+      "u16 conditionSearchId",
+      "bool32 hasAnyRibbons",
+      "void *substructPtrs[POKENAV_SUBSTRUCT_COUNT]",
+    ]);
+    expect(structFields(source("src/pokenav_menu_handler.c"), "Pokenav_Menu").slice(0, 2)).toEqual(["u16 menuType", "s16 cursorPos"]);
+    // 2 + 2 + 4 + 2 + 2 + 2 (+2 pad) + 4 + 4 + 4 = 28 bytes before the entries
+    expect(structFields(source("src/pokenav_match_call_list.c"), "Pokenav_MatchCallMenu")).toEqual([
+      "u16 optionCursorPos",
+      "u16 maxOptionId",
+      "const u8 *matchCallOptions",
+      "u16 headerId",
+      "u16 numRegistered",
+      "u16 numSpecialTrainers",
+      "bool32 initFinished",
+      "u32 loopedTaskId",
+      "u32 (*callback)(struct Pokenav_MatchCallMenu *)",
+      "struct PokenavMatchCallEntry matchCallEntries[MAX_REMATCH_ENTRIES - 1]",
+    ]);
+    expect(structFields(source("include/pokenav.h"), "PokenavMatchCallEntry")).toEqual(["bool8 isSpecialTrainer", "mapsec_u8_t mapSec", "u16 headerId"]);
+    expect(POKENAV).toMatchObject({ mcNumRegistered: 10, mcInitFinished: 16, mcCallback: 24, mcEntries: 28, mcEntrySize: 4 });
   });
 });

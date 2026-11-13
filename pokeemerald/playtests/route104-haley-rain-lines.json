@@ -1,0 +1,37 @@
+{
+  "name": "route104-haley-rain-lines",
+  "checks": "C365: Lass HALEY (Route 104, 31,24) no longer tells the player something is changing before the notebook shows it: her intro is about the coming clouds and her defeat line about waiting for the rain; post-battle LOTAD line unchanged",
+  "scenario": {
+    "map": "MAP_ROUTE104",
+    "x": 31,
+    "y": 25,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET"],
+    "vars": { "VAR_REPEL_STEP_COUNT": 200 },
+    "party": [{ "species": "SPECIES_MUDKIP", "level": 100, "moves": ["MOVE_TACKLE"] }]
+  },
+  "steps": [
+    { "comment": "HALEY faces left (sight 7), so 31,25 below her is out of her sight: talk to her facing up" },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": ["Let's battle before the", "clouds roll in!"] },
+    { "expectNoText": ["acting strange", "different from normal"] },
+    { "waitFor": "battle" },
+    { "expectBattle": { "opponent": "SPECIES_LOTAD_HOENN", "level": 9 } },
+    { "waitForBattleText": "What will" },
+    { "press": "A" },
+    { "press": "A" },
+    { "waitForBattleText": "MUDKIP used" },
+    { "waitForBattleText": "What will" },
+    { "expectBattle": { "opponent": "SPECIES_SHROOMISH_HOENN", "level": 10 } },
+    { "press": "A" },
+    { "press": "A" },
+    { "waitForBattleText": "MUDKIP used" },
+    { "waitForBattleText": "I should have waited" },
+    { "expectBattleText": "for the rain." },
+    { "talk": { "start": false } },
+    { "expectNoText": ["Something is changing", "Can you feel it?"] },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "My LOTAD looks like any other," }
+  ]
+}

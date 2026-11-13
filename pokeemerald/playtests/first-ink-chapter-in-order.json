@@ -1,0 +1,233 @@
+{
+  "name": "first-ink-chapter-in-order",
+  "checks": "C365 v3.3 First Ink in story order on one save: Route 102 LOTAD_HOENN catch → pen moment (FLAG_FIELD_NOTES_FIRST_INK) → Route 104 schoolkid turns east → Petalburg Woods SHROOMISH_HOENN catch with no second pen moment → forager hears about the boy and walks to the cold patch → IVAN quotes page 1 and the battle opens in rain. No earlier flag hides a later NPC",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 22,
+    "y": 8,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "vars": {
+      "VAR_PETALBURG_WOODS_STATE": 1
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1,
+      "ITEM_MASTER_BALL": 2
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": []
+  },
+  "steps": [
+    {
+      "comment": "Beat 1, the pen moment (Hour 0-1): first LOTAD_HOENN in the Route 102 grass. 22,8-23,8 is clear of trainer sightlines (Allen 19,4 looks down column 19)"
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_LOTAD_HOENN",
+        "maxSteps": 600
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "Electric! Its leaf drinks",
+        "ready on SELECT."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true,
+        "FLAG_ROUTE104_SKEPTIC_TURNED": false
+      }
+    },
+    {
+      "comment": "Beat 2, the schoolkid turns (Hour 1): Route 104 south, below him, as if walked in through Petalburg"
+    },
+    {
+      "warp": {
+        "map": "MAP_ROUTE104",
+        "x": 33,
+        "y": 50
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "x": 33,
+        "y": 49,
+        "facing": "left"
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Hides from st",
+        "You caught a LOTAD?"
+      ]
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+        "facing": "right"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_ROUTE104_SKEPTIC_TURNED": true
+      }
+    },
+    {
+      "comment": "Beat 3, the forager walks (Hour 1-2): first SHROOMISH_HOENN in Petalburg Woods. 22,33-23,33 is grass in view of the forager (18,34)"
+    },
+    {
+      "warp": {
+        "map": "MAP_PETALBURG_WOODS",
+        "x": 22,
+        "y": 33
+      }
+    },
+    {
+      "findWildBattle": {
+        "directions": [
+          "right",
+          "left"
+        ],
+        "species": "SPECIES_SHROOMISH_HOENN",
+        "maxSteps": 900
+      }
+    },
+    {
+      "catchWild": {
+        "ball": "ITEM_MASTER_BALL"
+      }
+    },
+    {
+      "expectText": "Gotcha!"
+    },
+    {
+      "comment": "only one pen moment per save: a talk that picks up nothing proves no script ran after this catch"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 5
+      }
+    },
+    {
+      "expectNoText": [
+        "opened FIELD NOTES",
+        "took out a pen",
+        "ready on SELECT"
+      ]
+    },
+    {
+      "setVar": {
+        "VAR_REPEL_STEP_COUNT": 250
+      }
+    },
+    {
+      "walkTo": {
+        "x": 19,
+        "y": 34
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "You caught a SHROOMISH?",
+        "That boy stopped reading his",
+        "...I'll need a warmer coat."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_PETALBURG_WOODS_FORAGER_MOVED": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_PETALBURG_WOODS_FORAGER",
+        "x": 11,
+        "y": 24,
+        "facing": "up"
+      }
+    },
+    {
+      "comment": "Beat 4, IVAN's rain (Hour 2): Route 104 north, out of the woods. 29,9 south of IVAN is pond water, so talk from 28,8 facing right"
+    },
+    {
+      "warp": {
+        "map": "MAP_ROUTE104",
+        "x": 28,
+        "y": 8
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "LOTAD keep stealing my bait.",
+        "LOTAD hide from storms.",
+        "No LOTAD in this rain."
+      ]
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_MAGIKARP",
+        "level": 10
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "expectBattleWeather": "rain"
+    },
+    {
+      "comment": "the fight itself is route104-ivan-rain-lotad-wins"
+    }
+  ]
+}

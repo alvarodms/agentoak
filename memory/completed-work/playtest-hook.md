@@ -4,7 +4,6 @@ Added by the runner developers, not by a cycle. It lets the runner's headless
 emulator harness (`src/emulator/` in the agent-oak repo, mGBA via
 `mgba-driver`) boot the ROM straight into a test scenario. The harness is
 not yet wired into cycle phases.
-
 ## What it does
 
 - `gPlaytestScenario` (const, in ROM) is **inert** in every normal build:
@@ -75,3 +74,7 @@ overrides any preset warp, and it takes the first branch of the
 ## C364: party `ability`
 
 `struct PlaytestMon` byte 0x03 (was `padding`) is `abilityNum`: 0 = CreateMon's pick, 1 = first ability, 2 = second. `GivePlaytestMon` sets MON_DATA_ABILITY_NUM to `abilityNum - 1` after the held item. PLAYTEST_LAYOUT_VERSION 2 → 3 (scenario.ts LAYOUT_VERSION 3, writes `mon.ability ?? 0` at base + 3).
+
+## C365: national dex from the scenario flag
+
+`Playtest_ApplyScenario` (src/playtest.c), after the vars: `if (FlagGet(FLAG_SYS_NATIONAL_DEX)) EnableNationalPokedex();`. The flag alone left IsNationalPokedexEnabled FALSE (it also needs `pokedex.nationalMagic == 0xDA` and VAR_NATIONAL_DEX 0x302). No layout change. Existing scenarios with the flag (birch-postgame-*, birch-bookshelf-postgame-greeting) still pass.

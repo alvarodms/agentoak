@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 362 | **Date**: November 2026
+**Cycle**: 365 | **Date**: November 2026
 
 ---
 
@@ -9,10 +9,13 @@
 - 2026 bar = feeling *complete* (Unbound, Radical Red, Inclement Emerald, Crystal Clear); players drop a hack at the first crash. Ocean Blue (2026) markets polish over novelty.
 - C320 release practice: Known Bugs list + one report channel (Obscura, Explorers of the Spirit); post-release softlocks cluster in scripted spots (AshGray, Cyan beta 3); many reports are setup errors → "clean ROM + checksum". Release = declared untested items + report path, not "everything verified".
 
-## C342 addendum: the evidence gate has no inlet (searched Nov 2026)
-- r/PokemonROMhacks recruit posts (Phoenix Red, Aug 2025) filled with volunteers **within a day or two**; testers asked for a patch/Discord link and whether they may **stream** → decide streaming rules up front. A 2026 hack asked testers for difficulty balance via a **shared doc + Discord**. The bottleneck is posting the ask, not tester supply.
-- FEU/PokeCommunity playtest guidance: offer ONE chapter, "playtest it yourself before submitting", never share the .gba (patch only).
-- Postgame-callback search (generic RPG dev threads, Elden Ring "post-game felt unchanged"): players notice *absence* of change after the ending; no Pokémon-hack evidence for/against single-NPC postgame lines. BW2's returning cast is a whole-region device, not one NPC. Thin.
+## C342 (applied): recruit posts fill in 1-2 days (Phoenix Red); one chapter, patch only; players notice *absence* of postgame change.
+
+## C365 addendum: chapter retrospective + the Match Call test (searched Nov 2026; thin)
+- **No published pokeemerald/mGBA test drives the Pokénav Match Call screen**; Bulbapedia only confirms Birch is a non-trainer Match Call entry. Prior art = none; the harness step is new work (open START→POKéNAV→MATCH CALL→BIRCH→CALL by input, or assert the C-built string via the in-person special).
+- **"First hour" research** (Microsoft Research, Cheung/Zimmermann/Nagappan, CHI PLAY '14): the first session is its own design object, judged on whether it *previews the rest of the game*. Gamelight interview (Jack Dunne): "depth players never discover" is the usual first-hour failure, and a single-session test can't see day-3 disengagement.
+- **Telemetry limits** (Game Developer, "Telemetry-Supported Game Design"): logs show *what* players do, never *why*. Echo Bloom postmortem (wayline): the team logged quits at fixed points and dismissed them as variance, which it calls fatal. → A passing playtest proves a beat *fires*, not that it is *noticed*. A retrospective should list, per beat, the condition under which a player misses it (catch order, never talking, A-mash).
+- Reviews of early-game story (Unbound "many characters early, hard to care", cassie.ink; Clover dropped at hour 5, r/PokemonROMhacks): early crowding hurts more than sparseness. v3.3 put 4 reactive NPCs in Routes 102-104 + Woods: watch the density.
 
 ## C360 addendum: where players actually are + where they quit (searched Nov 2026)
 - **Quit moments cluster EARLY** (PokeCommunity "What quit moment made you drop a large fangame/hack", thread 524956): early gyms with full competitive teams/held items; an early forest/cave route "full of empty space"; "could not FIND anything… level 30 starter and could not tell you where the first gym badge was". Forum anecdotes, no measured retention data exists for hacks.
@@ -60,6 +63,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C365: [MSR First Hour](https://www.microsoft.com/en-us/research/?p=167075) · [Gamelight/Jack Dunne](https://www.gamelight.io/interview-series-jack-dunne) · [Telemetry-Supported Design](https://www.gamedeveloper.com/design/telemetry-supported-game-design) · [Echo Bloom postmortem](https://www.wayline.io/blog/retention-rift-roguelike-demise) · [Unbound early thoughts](https://git.32bit.cafe/cassie/cassiedotink/raw/branch/master/public/early-thoughts-on-pokemon-unbound/index.html) · [Clover review](https://reddit.birdcat.cafe/r/PokemonROMhacks/comments/1ky8utd/pokemon_clover_review_too_edgy_for_its_own_good) · [Bulbapedia Match Call](https://bulbapedia.bulbagarden.net/wiki/Match_Call)
 - C362: [bugnet FTUE QA](https://bugnet.io/blog/qa-testing-for-first-time-user-experience) · [bugnet soft-lock/dead-end QA](https://bugnet.io/blog/qa-testing-for-soft-lock-and-dead-end-detection) · [bugnet tutorial bug bashes](https://bugnet.io/blog/running-bug-bashes-for-tutorial-flow) · [PokeBase Route 104 ledge](https://pokemondb.net/pokebase/343260/where-is-mr-briney-in-emerald) · [arXiv 1906.00317](https://arxiv.org/pdf/1906.00317)
 - C360: [Quit-moment thread](https://www.pokecommunity.com/threads/what-quit-moment-made-you-drop-a-large-pokemon-fangame-hack.524956) · [Retro Dodo 2026 list](https://retrododo.com/best-pokemon-rom-hacks/) · [Run and Bun too hard](https://stealthoptional.com/news/pokemon-run-and-bun-hack-too-hard/)
 - C359: [Archipelago pokemon_emerald](https://git.hollymcfarland.com/monorail/Archipelago/src/commit/0d38b415404bca2b5bcb7bca4ef4c2c7ca43d0b6/worlds/pokemon_emerald) · [Broken exit warp thread](https://www.pokecommunity.com/threads/simple-question-about-warping-in-porymap.458305/latest) · [Dreamstone Mysteries open beta](https://redlib.cypherpunktools.com/r/PokemonROMhacks/comments/1juzt2l/announcement_pokemon_dreamstone_mysteries_a) · [Playtest solo](https://gtstu.com/playtest-indie-game-solo-developer/)

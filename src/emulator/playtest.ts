@@ -31,6 +31,15 @@ const Strings = z.union([z.string(), z.array(z.string())]);
 const ItemName = z.string().regex(/^ITEM_[A-Z0-9_]+$/);
 const SpeciesName = z.string().regex(/^SPECIES_[A-Z0-9_]+$/);
 
+/**
+ * Match Call contacts pokenavCall can ring. header: their MC_HEADER_* (include/pokenav.h; a unit
+ * test checks). identity: a line every call from them contains, so a wrong row fails loudly.
+ */
+export const MATCH_CALL_CONTACTS = {
+  BIRCH: { header: 1, identity: "Are you curious" },
+} as const;
+const PokenavContact = z.enum(Object.keys(MATCH_CALL_CONTACTS) as [keyof typeof MATCH_CALL_CONTACTS]);
+
 const ScenarioSchema = z.strictObject({
   map: z.string(),
   x: z.number().int(),
@@ -127,6 +136,20 @@ const StepSchema = z.union([
         maxPresses: z.number().int().positive().optional(),
         /** false: don't register it; fail unless the game already put it on SELECT. */
         register: z.boolean().optional(),
+      }),
+    ]),
+  }),
+  z.strictObject({
+    /**
+     * START → POKéNAV → MATCH CALL → the contact → CALL, then record the call like talk and go back
+     * to the field. read: false stops right after CALL, for wait/screenshot mid-call.
+     */
+    pokenavCall: z.union([
+      PokenavContact,
+      z.strictObject({
+        contact: PokenavContact,
+        read: z.boolean().optional(),
+        maxPresses: z.number().int().positive().optional(),
       }),
     ]),
   }),
@@ -413,6 +436,13 @@ async function runStep(
     }
     if (!started) fail(`useKeyItem ${opts.item}: SELECT started no script (is it in the bag, and is the player free to move?)`);
     if (opts.read ?? true) result.transcripts.push(await talk(s, opts.maxPresses ?? 200, "none"));
+    return;
+  }
+
+  if ("pokenavCall" in step) {
+    const opts = typeof step.pokenavCall === "string" ? { contact: step.pokenavCall } : step.pokenavCall;
+    const boxes = await pokenavCall(s, opts.contact, opts.read ?? true, opts.maxPresses ?? 300);
+    if (boxes) result.transcripts.push(boxes);
     return;
   }
 
@@ -815,6 +845,175 @@ async function yesNoBoxOpen(s: EmulatorSession): Promise<boolean> {
     if (active && func === (handler & ~1)) return true;
   }
   return false;
+}
+
+/** MENU_ACTION_POKENAV in src/start_menu.c's action enum (a unit test checks). */
+export const START_MENU_ACTION_POKENAV = 3;
+/**
+ * Byte offsets the Pokénav path reads (unit tests check the field order in the C structs).
+ * struct PokenavResources (src/pokenav.c): currentMenuCb1, currentMenuIndex, u16 mode, u16 conditionSearchId, hasAnyRibbons, substructPtrs[].
+ * struct Pokenav_Menu (src/pokenav_menu_handler.c): u16 menuType, s16 cursorPos, ...
+ * struct Pokenav_MatchCallMenu (src/pokenav_match_call_list.c): u16 optionCursorPos, u16 maxOptionId,
+ *   matchCallOptions, u16 headerId, u16 numRegistered, u16 numSpecialTrainers, initFinished, loopedTaskId,
+ *   callback, then PokenavMatchCallEntry {u8 isSpecialTrainer, u8 mapSec, u16 headerId}[].
+ */
+export const POKENAV = {
+  currentMenuIndex: 4,
+  substructPtrs: 16,
+  substructMainMenuHandler: 1,
+  substructMatchCallMain: 5,
+  menuType: 0,
+  menuCursorPos: 2,
+  mcOptionCursorPos: 0,
+  mcNumRegistered: 10,
+  mcInitFinished: 16,
+  mcCallback: 24,
+  mcEntries: 28,
+  mcEntrySize: 4,
+  /** currentMenuIndex = POKENAV_* menu id - POKENAV_MENU_IDS_START (include/pokenav.h). */
+  mainMenuIndexes: [0, 1, 4, 5],
+  matchCallMenuIndex: 11,
+  /** POKENAV_MENU_TYPE_UNLOCK_MC and _RIBBONS put MATCH CALL third (sMenuItems). */
+  matchCallCursorPos: 2,
+} as const;
+
+interface PokenavView {
+  /** Task_Pokenav's tState: 3 waits for input, 2 runs a menu animation. */
+  taskState: number;
+  menuIndex: number;
+  resources: number;
+}
+
+/** Reads where the Pokénav is, or null once it has shut down. */
+async function pokenavView(s: EmulatorSession): Promise<PokenavView | null> {
+  const resources = await s.deref("gPokenavResources");
+  const task = s.symbols.address("Task_Pokenav", "src/pokenav.o") & ~1;
+  const tasks = await s.read(s.symbols.address("gTasks"), NUM_TASKS * TASK_SIZE);
+  for (let i = 0; i < NUM_TASKS; i++) {
+    const active = tasks.readUInt8(i * TASK_SIZE + 4) !== 0;
+    if (!active || (tasks.readUInt32LE(i * TASK_SIZE) & ~1) !== task) continue;
+    if (!resources) return null;
+    const taskState = tasks.readInt16LE(i * TASK_SIZE + 8);
+    return { taskState, menuIndex: await s.readU32(resources + POKENAV.currentMenuIndex), resources };
+  }
+  return null;
+}
+
+/** Runs until the Pokénav waits for input on one of `menus`; fails naming `stage`. */
+async function pokenavReady(s: EmulatorSession, menus: readonly number[], stage: string, maxFrames = 600): Promise<PokenavView> {
+  let view: PokenavView | null = null;
+  for (let f = 0; f <= maxFrames; f += 4) {
+    view = await pokenavView(s);
+    if (view && view.taskState === 3 && menus.includes(view.menuIndex)) return view;
+    await s.run(4);
+  }
+  const { callback2 } = await s.callbacks();
+  fail(`pokenavCall (${stage}): not ready after ${maxFrames} frames; screen ${callback2}, pokenav ${JSON.stringify(view)}`);
+}
+
+async function pokenavSubstruct(s: EmulatorSession, view: PokenavView, index: number): Promise<number> {
+  return s.readU32(view.resources + POKENAV.substructPtrs + index * 4);
+}
+
+/**
+ * pokenavCall: rings a Match Call contact through the real menus and returns the call's text
+ * boxes (split at each \p), or null with read: false.
+ */
+async function pokenavCall(
+  s: EmulatorSession,
+  contact: keyof typeof MATCH_CALL_CONTACTS,
+  read: boolean,
+  maxPresses: number,
+): Promise<string[] | null> {
+  const what = `pokenavCall ${contact}`;
+  const { header, identity } = MATCH_CALL_CONTACTS[contact];
+  const buffer = s.symbols.address("gStringVar4");
+  if (!(await s.scriptIdle())) fail(`${what} (start menu): a field script is running; the player must be free to press START`);
+  await s.write(buffer, Uint8Array.of(0xff));
+
+  // Start menu: its action list and cursor are statics in src/start_menu.o.
+  const menuCallback = s.symbols.address("gMenuCallback");
+  const handleInput = s.symbols.address("HandleStartMenuInput", "src/start_menu.o") & ~1;
+  const startMenuOpen = async () => ((await s.readU32(menuCallback)) & ~1) === handleInput;
+  await s.press("START", { hold: 2, release: 8 });
+  for (let f = 0; f < 120 && !(await startMenuOpen()); f += 4) await s.run(4);
+  if (!(await startMenuOpen())) fail(`${what} (start menu): START opened no menu`);
+  const count = await s.readU8(s.symbols.address("sNumStartMenuActions", "src/start_menu.o"));
+  const actions = [...(await s.read(s.symbols.address("sCurrentStartMenuActions", "src/start_menu.o"), count))];
+  const target = actions.indexOf(START_MENU_ACTION_POKENAV);
+  if (target < 0) fail(`${what} (start menu): no POKéNAV entry (FLAG_SYS_POKENAV_GET?); actions ${JSON.stringify(actions)}`);
+  const cursor = s.symbols.address("sStartMenuCursorPos", "src/start_menu.o");
+  for (let tries = 0; (await s.readU8(cursor)) !== target; tries++) {
+    if (tries >= count * 2) fail(`${what} (start menu): could not move the cursor to POKéNAV`);
+    await s.press((await s.readU8(cursor)) < target ? "DOWN" : "UP", { hold: 2, release: 8 });
+  }
+  await s.press("A", { hold: 2, release: 8 });
+
+  // Pokénav main menu: MATCH CALL is the third item once it is unlocked.
+  let view = await pokenavReady(s, POKENAV.mainMenuIndexes, "pokenav main", 900);
+  const menu = await pokenavSubstruct(s, view, POKENAV.substructMainMenuHandler);
+  const menuType = await s.readU16(menu + POKENAV.menuType);
+  if (menuType === 0) fail(`${what} (pokenav main): no MATCH CALL item (FLAG_ADDED_MATCH_CALL_TO_POKENAV?)`);
+  for (let tries = 0; ; tries++) {
+    const pos = (await s.read(menu + POKENAV.menuCursorPos, 2)).readInt16LE(0);
+    if (pos === POKENAV.matchCallCursorPos) break;
+    if (tries >= 8) fail(`${what} (pokenav main): could not move the cursor to MATCH CALL (at ${pos})`);
+    await s.press(pos < POKENAV.matchCallCursorPos ? "DOWN" : "UP", { hold: 2, release: 4 });
+    view = await pokenavReady(s, POKENAV.mainMenuIndexes, "pokenav main");
+  }
+  await s.press("A", { hold: 2, release: 4 });
+
+  // Match Call list: find the contact's row in the entries the list was built from.
+  view = await pokenavReady(s, [POKENAV.matchCallMenuIndex], "match call list", 900);
+  const mc = await pokenavSubstruct(s, view, POKENAV.substructMatchCallMain);
+  if (!(await s.readU32(mc + POKENAV.mcInitFinished))) fail(`${what} (match call list): the list never finished building`);
+  const registered = await s.readU16(mc + POKENAV.mcNumRegistered);
+  const entries = await s.read(mc + POKENAV.mcEntries, registered * POKENAV.mcEntrySize);
+  const rows: string[] = [];
+  let row = -1;
+  for (let i = 0; i < registered; i++) {
+    const special = entries.readUInt8(i * POKENAV.mcEntrySize) !== 0;
+    const id = entries.readUInt16LE(i * POKENAV.mcEntrySize + 2);
+    rows.push(`${special ? "header" : "rematch"} ${id}`);
+    if (special && id === header && row < 0) row = i;
+  }
+  if (row < 0) fail(`${what} (match call list): ${contact} is not registered (its FLAG_ENABLE_*_MATCH_CALL?); rows ${JSON.stringify(rows)}`);
+  for (let i = 0; i < row; i++) {
+    await s.press("DOWN", { hold: 2, release: 4 });
+    view = await pokenavReady(s, [POKENAV.matchCallMenuIndex], "match call list");
+  }
+  const mcCallback = async () => s.symbols.describe(await s.readU32(mc + POKENAV.mcCallback));
+  await s.press("A", { hold: 2, release: 4 }); // the row: CALL / CHECK / CANCEL
+  await pokenavReady(s, [POKENAV.matchCallMenuIndex], "match call list");
+  if (!(await mcCallback()).startsWith("CB2_HandleMatchCallOptionsInput")) {
+    fail(`${what} (match call list): row ${row} opened no CALL menu; handler ${await mcCallback()}`);
+  }
+  if ((await s.readU16(mc + POKENAV.mcOptionCursorPos)) !== 0) fail(`${what} (match call list): option cursor is not on CALL`);
+  await s.write(buffer, Uint8Array.of(0xff)); // the menus print through gStringVar4 too
+  await s.press("A", { hold: 2, release: 4 }); // CALL
+  if (!read) return null;
+
+  // The call: A turns each page until the message is done and the call waits to be hung up.
+  let presses = 0;
+  for (;;) {
+    await s.run(6);
+    const v = await pokenavView(s);
+    if (v && v.taskState === 3 && (await mcCallback()).startsWith("CB2_HandleCallExitInput")) break;
+    if (++presses > maxPresses) fail(`${what} (call): still running after ${maxPresses} presses; text ${JSON.stringify(await s.readText(buffer))}`);
+    await s.press("A", { hold: 2, release: 10 });
+  }
+  if ((await s.readU8(buffer)) === 0xff) fail(`${what} (call): the call wrote nothing to gStringVar4`);
+  const boxes = (await s.readText(buffer)).split("\n\n").filter((b) => b.trim());
+  if (!flatten(boxes.join(" ")).includes(identity)) {
+    fail(`${what} (call): this is not ${contact}'s call (no ${JSON.stringify(identity)}); text ${JSON.stringify(boxes)}`);
+  }
+
+  // Hang up, leave the list, the Pokénav and the start menu: B at each until the field is free.
+  for (let f = 0; !((await s.callbacks()).callback2 === "CB2_Overworld" && (await s.scriptIdle())); f += 24) {
+    if (f >= 2400) fail(`${what} (back to field): still on ${(await s.callbacks()).callback2} after 2400 frames`);
+    await s.press("B", { hold: 2, release: 22 });
+  }
+  return boxes;
 }
 
 /** B_WEATHER_* bits (include/constants/battle.h) as one name. */

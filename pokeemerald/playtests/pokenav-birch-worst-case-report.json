@@ -1,0 +1,102 @@
+{
+  "name": "pokenav-birch-worst-case-report",
+  "checks": "C365 worst case for the gStringVar4 budget (all 7 pages inked, every den margin earned, the Lilycove doubt, all 3 dens caught so the all-found rumour plays, national dex on so the nationwide box plays, a 7-letter name): measured 834 B of gStringVar4 1000 (C365); the static ceiling with the longest rating tier is check_matchcall_len 918 B): the report still fits the Pokénav call and is not dropped; BIRCH never mentions the doubt",
+  "scenario": {
+    "map": "MAP_LITTLEROOT_TOWN",
+    "x": 7,
+    "y": 17,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_POKEDEX_FROM_BIRCH",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_SYS_POKENAV_GET",
+      "FLAG_ADDED_MATCH_CALL_TO_POKENAV",
+      "FLAG_HAS_MATCH_CALL",
+      "FLAG_ENABLE_PROF_BIRCH_MATCH_CALL",
+      "FLAG_RESCUED_BIRCH",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET",
+      "FLAG_SYS_NATIONAL_DEX",
+      "FLAG_CAUGHT_MT_PYRE_STARLIGHT_TORCHIC",
+      "FLAG_CAUGHT_SHOAL_CAVE_TITAN_MUDKIP",
+      "FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO",
+      "FLAG_DEN_SHOAL_TRADE_DONE",
+      "FLAG_DEN_METEOR_STEVEN_CHALK",
+      "FLAG_LILYCOVE_GLIGAR_DOUBT",
+      "FLAG_ROUTE104_SKEPTIC_TURNED",
+      "FLAG_PETALBURG_WOODS_FORAGER_MOVED"
+    ],
+    "vars": {
+      "VAR_LITTLEROOT_INTRO_STATE": 7,
+      "VAR_LITTLEROOT_TOWN_STATE": 4,
+      "VAR_LITTLEROOT_RIVAL_STATE": 4,
+      "VAR_BIRCH_LAB_STATE": 5
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_GLIGAR_HOENN",
+      "SPECIES_VULPIX_HOENN",
+      "SPECIES_TORCHIC_HOENN",
+      "SPECIES_MUDKIP_HOENN",
+      "SPECIES_TREECKO_HOENN"
+    ],
+    "name": "BRENDAN",
+    "defeatedTrainers": [
+      "TRAINER_PYRE_MOURNER"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "den pages ink on their FLAG_CAUGHT_* flags; the den species are caught too so the dex counts are the late-game ones"
+    },
+    {
+      "pokenavCall": "BIRCH"
+    },
+    {
+      "expectText": [
+        "Are you curious",
+        "On a nationwide basis",
+        "Oh, and word of your red",
+        "A picnicker on ROUTE 113",
+        "Word came from the dens too.",
+        "Keep the pen."
+      ]
+    },
+    {
+      "comment": "the doubt is the player's own (FIELD NOTES p.3 only); BIRCH never hears of it"
+    },
+    {
+      "expectNoText": [
+        "Seen in LILYCOVE",
+        "Wrong, or changed again"
+      ]
+    },
+    {
+      "comment": "the call hung up, the POKéNAV closed and the start menu shut: the player is free on the same tile"
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_LITTLEROOT_TOWN",
+        "x": 7,
+        "y": 17
+      }
+    }
+  ]
+}
