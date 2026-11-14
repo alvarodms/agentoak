@@ -32,11 +32,6 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
 **Resolution**: C266 generate_trainer.cjs now auto-detects the correct macro/struct pairing.
 
-## Premature Entries for Unregistered Species (C259->C260 fix)
-
-**Symptom**: Build fails with `undeclared` errors for SPECIES_X constants.
-**Resolution**: NEVER add entries for a species until `generate_species.cjs` has created its SPECIES_ constant.
-
 ## Pokedex categoryName Max Length (C261)
 
 **Symptom**: `warning: excess elements in array initializer` — treated as error.
@@ -69,6 +64,9 @@ Build failures and errors encountered, their causes, and how they were (or could
 
 ## Raw press/wait Screenshots Lag One Box (C361)
 first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 frames a letter, so a 2-line box was still printing and each `press A` only finished the current box: every screenshot showed the box before the one it was named for. Fix: `wait 240` per box (README tip says "a few hundred frames"); read the PNGs before trusting a screenshot test, since a lagging one still passes. Also: bootScenario's 60 settle frames already cover an ON_FRAME emote, so screenshot a boot cue with `wait 1`.
+
+## Boot Test Says a Visible NPC Is Absent (C367)
+`expectObject` reported Mauville's Wally "not on the map (hidden by its flag?)" though no flag hid him: the start tile 18,17 was 10 tiles from him, and objects outside the camera window (~x±7, y-4..y+5) are never spawned. Before blaming a hide flag, check the distance. Fix: keep the boot tile for the "no scene fired" checks, then `warp` next to the NPC (12,10 for Wally at 8,6) and assert there.
 
 ## Anticipated Pitfalls
 

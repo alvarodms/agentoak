@@ -1,0 +1,78 @@
+{
+  "name": "checkpoint-slateport-arrival-boot",
+  "checks": "C367 checkpoint slateport_arrival boots consistent: the player stands on the Route 109 dock tile (21,23) where Briney's Dewford sail ends, no field script runs, Briney (21,24) and his boat (21,26) are shown; Slateport then loads with no forced scene",
+  "scenario": {
+    "checkpoint": "slateport_arrival"
+  },
+  "steps": [
+    {
+      "wait": 300
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE109",
+        "x": 21,
+        "y": 23
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE109_BRINEY",
+        "x": 21,
+        "y": 24,
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE109_BOAT",
+        "x": 21,
+        "y": 26,
+        "visible": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_DELIVERED_DEVON_GOODS": false
+      }
+    },
+    {
+      "expectVar": {
+        "VAR_BRINEY_LOCATION": 3
+      }
+    },
+    {
+      "screenshot": "route109-dock"
+    },
+    {
+      "warp": {
+        "map": "MAP_SLATEPORT_CITY",
+        "x": 20,
+        "y": 24
+      }
+    },
+    {
+      "wait": 120
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_SLATEPORT_CITY",
+        "x": 20,
+        "y": 24
+      }
+    },
+    {
+      "screenshot": "slateport"
+    }
+  ]
+}

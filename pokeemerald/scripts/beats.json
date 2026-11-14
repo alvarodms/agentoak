@@ -1,0 +1,525 @@
+[
+  {
+    "id": "route104-schoolkid",
+    "arc": "v3.0 Red Ink P1 / v3.3 First Ink 2 (C327, C362)",
+    "register": "place",
+    "map": "Route104",
+    "object": "LOCALID_ROUTE104_LOTAD_SKEPTIC",
+    "gate": {
+      "flag": "FLAG_ROUTE104_SKEPTIC_TURNED"
+    },
+    "tiles": [
+      [
+        33,
+        49,
+        "left"
+      ],
+      [
+        33,
+        49,
+        "right"
+      ]
+    ],
+    "labels": [
+      "Route104_EventScript_LotadSkeptic",
+      "Route104_EventScript_SkepticFacesEast"
+    ],
+    "playtests": [
+      "believer-skeptic-fresh",
+      "believer-skeptic-inked",
+      "believer-skeptic-turned-return",
+      "believer-skeptic-flag-alone-faces-sea",
+      "route102-catch-then-route104-skeptic"
+    ],
+    "speaker": "believer"
+  },
+  {
+    "id": "petalburg-woods-forager",
+    "arc": "v3.0 Red Ink P2 / v3.3 First Ink 3 (C328, C363)",
+    "register": "place",
+    "map": "PetalburgWoods",
+    "object": "LOCALID_PETALBURG_WOODS_FORAGER",
+    "gate": {
+      "flag": "FLAG_PETALBURG_WOODS_FORAGER_MOVED"
+    },
+    "tiles": [
+      [
+        18,
+        34,
+        "down"
+      ],
+      [
+        11,
+        24,
+        "up"
+      ]
+    ],
+    "labels": [
+      "PetalburgWoods_OnTransition",
+      "PetalburgWoods_EventScript_ShroomishForager"
+    ],
+    "playtests": [
+      "believer-forager-fresh",
+      "believer-forager-inked",
+      "believer-forager-lotad-not-shown",
+      "believer-forager-lotad-only",
+      "believer-forager-north-approach",
+      "believer-forager-shown-scene",
+      "woods-catch-then-forager-walks"
+    ],
+    "speaker": "believer"
+  },
+  {
+    "id": "granite-cave-hiker",
+    "arc": "v3.0 Red Ink P3 (C329, C339)",
+    "register": "place",
+    "map": "GraniteCave_B1F",
+    "object": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+    "gate": {
+      "caught": "SPECIES_GLIGAR_HOENN"
+    },
+    "tiles": [
+      [
+        26,
+        20,
+        "down"
+      ]
+    ],
+    "labels": [
+      "GraniteCave_B1F_EventScript_CaveHiker",
+      "GraniteCave_B1F_EventScript_SetupHikerLeft"
+    ],
+    "playtests": [
+      "believer-hiker-fresh",
+      "believer-hiker-inked",
+      "believer-hiker-mock-needs-turns"
+    ],
+    "speaker": "believer",
+    "d1Exempt": "legacy (C329, before the C353 D1 no-lead rule): Granite Cave hiker, kept as shipped"
+  },
+  {
+    "id": "route113-ash-picnicker",
+    "arc": "v3.0 Red Ink P4 (C330)",
+    "register": "place",
+    "map": "Route113",
+    "object": "LOCALID_ROUTE113_ASH_PICNICKER",
+    "gate": {
+      "caught": "SPECIES_VULPIX_HOENN"
+    },
+    "tiles": [
+      [
+        38,
+        8,
+        "right"
+      ],
+      [
+        38,
+        6,
+        "up"
+      ]
+    ],
+    "labels": [
+      "Route113_EventScript_AshPicnicker"
+    ],
+    "playtests": [
+      "believer-picnicker-fresh",
+      "believer-picnicker-inked",
+      "believer-picnicker-rumour"
+    ],
+    "speaker": "believer"
+  },
+  {
+    "id": "lilycove-doubt",
+    "arc": "v3.0 Red Ink first doubt (C340)",
+    "register": "place",
+    "map": "LilycoveCity",
+    "object": "LilycoveCity_EventScript_ExpertF",
+    "gate": {
+      "flag": "FLAG_RECEIVED_FIELD_NOTES"
+    },
+    "tiles": [
+      [
+        34,
+        37,
+        "down"
+      ]
+    ],
+    "labels": [
+      "LilycoveCity_EventScript_ExpertF"
+    ],
+    "playtests": [
+      "lilycove-doubt-sets-flag"
+    ],
+    "speaker": "stranger",
+    "d1Exempt": "legacy (C340, before the C353 D1 no-lead rule): Lilycove doubt, kept as shipped",
+    "checklistItem": 5,
+    "preset": "den",
+    "mustRead": {
+      "LilycoveCity_EventScript_ExpertF": [
+        "FLAG_LILYCOVE_GLIGAR_DOUBT",
+        "FLAG_RECEIVED_FIELD_NOTES"
+      ]
+    },
+    "allow": [
+      {
+        "string": "RED INK",
+        "reason": "legacy C340: the doubt answers the player's red ink on the GLIGAR page by design (FIELD NOTES held)"
+      },
+      {
+        "string": "wrote",
+        "reason": "legacy C340: ExpertFPlayerWroteDoubt reports the doubt line the player wrote"
+      },
+      {
+        "string": "{PLAYER}",
+        "reason": "legacy C340: same line names the player who wrote the doubt"
+      }
+    ]
+  },
+  {
+    "id": "meteor-falls-steven-chalk",
+    "arc": "v3.0 Red Ink p.7 (C336)",
+    "register": "trace",
+    "map": "MeteorFalls_B1F_2R",
+    "gate": {
+      "flag": "FLAG_RECEIVED_FIELD_NOTES"
+    },
+    "labels": [
+      "MeteorFalls_B1F_2R_EventScript_ChalkCopied"
+    ],
+    "playtests": [],
+    "speaker": "none",
+    "checklistItem": 1,
+    "preset": "den",
+    "mustRead": {
+      "MeteorFalls_B1F_2R_EventScript_ChalkCopied": [
+        "FLAG_DEN_METEOR_STEVEN_CHALK"
+      ]
+    }
+  },
+  {
+    "id": "route104-lotad-lesson",
+    "arc": "v3.0 Red Ink coda (C342)",
+    "register": "place",
+    "map": "Route104",
+    "object": "LOCALID_ROUTE104_LOTAD_STUDENT",
+    "gate": {
+      "flag": "FLAG_LILYCOVE_GLIGAR_DOUBT"
+    },
+    "tiles": [
+      [
+        33,
+        50,
+        "left"
+      ]
+    ],
+    "labels": [
+      "Route104_EventScript_LotadLesson",
+      "Route104_EventScript_LotadStudent"
+    ],
+    "playtests": [
+      "coda-lotad-lesson-doubt",
+      "coda-lotad-lesson-needs-lotad",
+      "coda-lotad-lesson-no-doubt"
+    ],
+    "speaker": "stranger",
+    "checklistItem": "coda",
+    "preset": "coda",
+    "mustRead": {
+      "Route104_EventScript_LotadLesson": [
+        "FLAG_SYS_GAME_CLEAR",
+        "FLAG_LILYCOVE_GLIGAR_DOUBT",
+        "FLAG_HIDE_ROUTE104_LOTAD_STUDENT"
+      ],
+      "Route104_EventScript_LotadStudent": []
+    },
+    "allow": [
+      {
+        "string": "RED INK",
+        "reason": "legacy C342 postgame coda: the lesson is how far the player's red ink reached"
+      },
+      {
+        "string": "wrote",
+        "reason": "legacy C342: the student says \"A trainer wrote it\", the coda's point"
+      }
+    ]
+  },
+  {
+    "id": "beat-a-tide-hiker",
+    "arc": "v3.1 Beat A (C348, C354)",
+    "register": "place",
+    "map": "Route106",
+    "object": "LOCALID_ROUTE106_TIDE_HIKER",
+    "gate": {
+      "caught": "SPECIES_GLIGAR_HOENN"
+    },
+    "tiles": [
+      [
+        54,
+        15,
+        "up"
+      ]
+    ],
+    "labels": [
+      "Route106_OnTransition",
+      "Route106_EventScript_TideHiker"
+    ],
+    "playtests": [
+      "tide-hiker-beach",
+      "tide-hiker-no-gligar",
+      "tide-hiker-not-yet",
+      "tide-hiker-side",
+      "tide-hiker-sightline"
+    ],
+    "speaker": "stranger",
+    "d1Exempt": "legacy (C348, before the C353 D1 no-lead rule): Beat A on Route 106, kept as shipped",
+    "checklistItem": "coda",
+    "preset": "coda",
+    "mustRead": {
+      "Route106_OnTransition": [
+        "FLAG_SYS_GAME_CLEAR"
+      ],
+      "Route106_EventScript_TideHiker": [
+        "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE"
+      ]
+    }
+  },
+  {
+    "id": "beat-a-empty-b1f-spot",
+    "arc": "v3.1 Beat A (C348)",
+    "register": "trace",
+    "map": "GraniteCave_B1F",
+    "object": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+    "gate": {
+      "caught": "SPECIES_GLIGAR_HOENN"
+    },
+    "tiles": [
+      [
+        26,
+        20
+      ]
+    ],
+    "labels": [
+      "GraniteCave_B1F_EventScript_SetupHikerLeft"
+    ],
+    "playtests": [
+      "tide-hiker-cave-before",
+      "tide-hiker-cave-empty"
+    ],
+    "speaker": "none",
+    "d1Exempt": "legacy (C348, before the C353 D1 no-lead rule): Beat A Granite Cave B1F, kept as shipped",
+    "checklistItem": "coda",
+    "preset": "coda",
+    "mustRead": {
+      "GraniteCave_B1F_EventScript_SetupHikerLeft": [
+        "FLAG_SYS_GAME_CLEAR"
+      ]
+    }
+  },
+  {
+    "id": "beat-b-tessa",
+    "arc": "v3.1 Beat B (C349)",
+    "register": "weather",
+    "map": "Route119",
+    "object": "LOCALID_ROUTE119_STORM_CHASER",
+    "trainer": "TRAINER_ROUTE119_STORM_CHASER",
+    "gate": {
+      "caught": "SPECIES_LOTAD_HOENN"
+    },
+    "tiles": [
+      [
+        20,
+        110,
+        "left"
+      ]
+    ],
+    "labels": [
+      "Route119_EventScript_SetupStormChaser",
+      "Route119_EventScript_StormChaser"
+    ],
+    "playtests": [
+      "tessa-battle",
+      "tessa-after-win",
+      "tessa-lombre-fake-out",
+      "tessa-storm-call"
+    ],
+    "speaker": "stranger",
+    "checklistItem": "coda",
+    "preset": "coda",
+    "mustRead": {
+      "Route119_EventScript_SetupStormChaser": [
+        "FLAG_SYS_GAME_CLEAR"
+      ],
+      "Route119_EventScript_StormChaser": []
+    }
+  },
+  {
+    "id": "beat-c-ellis",
+    "arc": "v3.1 Beat C (C350)",
+    "register": "fight",
+    "map": "Route113",
+    "object": "LOCALID_ROUTE113_ASH_CAMPER",
+    "trainer": "TRAINER_ROUTE113_ASH_CAMPER",
+    "gate": {
+      "caught": "SPECIES_VULPIX_HOENN"
+    },
+    "tiles": [
+      [
+        38,
+        5,
+        "down"
+      ]
+    ],
+    "labels": [
+      "Route113_EventScript_SetupAshCamper",
+      "Route113_EventScript_AshCamper"
+    ],
+    "playtests": [
+      "ash-camper-hidden-before-credits",
+      "ash-camper-hidden-without-vulpix",
+      "ash-pair-face-each-other",
+      "ash-pair-look-out-together-after-win",
+      "ash-pair-still-watching-on-return"
+    ],
+    "speaker": "stranger",
+    "checklistItem": "coda",
+    "preset": "coda",
+    "mustRead": {
+      "Route113_EventScript_SetupAshCamper": [
+        "FLAG_SYS_GAME_CLEAR"
+      ],
+      "Route113_EventScript_AshCamper": []
+    }
+  },
+  {
+    "id": "t1-ring-in-the-ash",
+    "arc": "v3.2 T1 (C356)",
+    "register": "trace",
+    "map": "Route113",
+    "gate": {
+      "trainer": "TRAINER_ROUTE113_ASH_CAMPER"
+    },
+    "metatiles": [
+      {
+        "x": 38,
+        "y": 4,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      },
+      {
+        "x": 37,
+        "y": 5,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      },
+      {
+        "x": 39,
+        "y": 5,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      },
+      {
+        "x": 37,
+        "y": 6,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      },
+      {
+        "x": 39,
+        "y": 6,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      },
+      {
+        "x": 38,
+        "y": 7,
+        "metatile": "METATILE_Fallarbor_NormalGrass",
+        "from": "0x20A"
+      }
+    ],
+    "labels": [
+      "Route113_OnLoad"
+    ],
+    "playtests": [
+      "ring-in-the-ash-before-win",
+      "ring-in-the-ash-after-win"
+    ],
+    "speaker": "none"
+  },
+  {
+    "id": "first-ink-route102",
+    "arc": "v3.3 First Ink 1, pen moment (C361)",
+    "register": "place",
+    "map": "Route102",
+    "gate": {
+      "flag": "FLAG_RECEIVED_FIELD_NOTES"
+    },
+    "labels": [
+      "Route102_OnResume",
+      "Route102_EventScript_FirstInk"
+    ],
+    "playtests": [
+      "first-ink-cue-route102",
+      "first-ink-cue-already-seen",
+      "first-ink-cue-no-notebook",
+      "first-ink-cue-screens",
+      "first-ink-cue-vanilla-lotad",
+      "route102-first-catch-ink",
+      "first-ink-chapter-in-order"
+    ],
+    "speaker": "none"
+  },
+  {
+    "id": "first-ink-petalburg-woods",
+    "arc": "v3.3 First Ink 1, pen moment (C361)",
+    "register": "place",
+    "map": "PetalburgWoods",
+    "gate": {
+      "flag": "FLAG_RECEIVED_FIELD_NOTES"
+    },
+    "labels": [
+      "PetalburgWoods_OnResume",
+      "PetalburgWoods_EventScript_FirstInk"
+    ],
+    "playtests": [
+      "first-ink-cue-woods-registered",
+      "woods-first-catch-ink"
+    ],
+    "speaker": "none"
+  },
+  {
+    "id": "route104-ivan",
+    "arc": "v3.3 First Ink 4, rain (C364)",
+    "register": "weather",
+    "map": "Route104",
+    "trainer": "TRAINER_IVAN",
+    "gate": {
+      "none": true
+    },
+    "tiles": [
+      [
+        29,
+        8,
+        "down"
+      ]
+    ],
+    "labels": [
+      "Route104_EventScript_Ivan"
+    ],
+    "playtests": [
+      "route104-ivan-rain-lotad-wins",
+      "route104-ivan-rain-no-lotad",
+      "route104-ivan-defeated-talk"
+    ],
+    "speaker": "stranger",
+    "allow": [
+      {
+        "string": "BIRCH",
+        "reason": "spec C366: IVAN believes Birch's PRINTED page 1 (\"LOTAD hide from storms\"), the belief the rain answers"
+      },
+      {
+        "string": "wrote",
+        "reason": "legacy C364: same line, \"PROF. BIRCH wrote it\""
+      }
+    ]
+  }
+]

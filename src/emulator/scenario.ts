@@ -13,6 +13,7 @@ import fs from "node:fs";
 import { encodeGameText, type Charmap } from "./charmap.js";
 import { resolveConstants, type ResolveOptions } from "./constants.js";
 import type { SymbolTable } from "./symbols.js";
+import { applyCheckpoint, type CheckpointName } from "./checkpoints.js";
 
 export interface ScenarioMon {
   species: string;
@@ -25,9 +26,16 @@ export interface ScenarioMon {
 }
 
 export interface Scenario {
-  map: string;
-  x: number;
-  y: number;
+  /**
+   * A story save state from checkpoints.ts to start from; its flags, vars and
+   * tile go underneath this scenario's (the scenario wins). map/x/y may then
+   * be left out.
+   */
+  checkpoint?: CheckpointName;
+  /** Required unless `checkpoint` is set. */
+  map?: string;
+  x?: number;
+  y?: number;
   /** Default "OAK". At most 7 characters. */
   name?: string;
   /** Default "male". */
@@ -62,7 +70,7 @@ export const PLAYTEST_MAGIC_INACTIVE = 0x584b414f;
 export const PLAYTEST_MAGIC_ACTIVE = 0x504b414f;
 export const LAYOUT_VERSION = 3;
 export const SCENARIO_SIZE = 0x1fc;
-const LIMITS = { flags: 64, vars: 32, party: 6, items: 16, dex: 32, name: 7 } as const;
+export const LIMITS = { flags: 64, vars: 32, party: 6, items: 16, dex: 32, name: 7 } as const;
 const FLAG_CLEAR = 0x8000;
 const OFFSET = {
   magic: 0x000,
@@ -101,7 +109,7 @@ function u16(value: number, what: string): number {
 /** Every constant name a scenario refers to. */
 export function scenarioConstants(s: Scenario): string[] {
   return [
-    s.map,
+    ...(s.map ? [s.map] : []),
     ...(s.flags ?? []),
     ...(s.clearFlags ?? []),
     ...Object.keys(s.vars ?? {}),
@@ -118,6 +126,8 @@ export function scenarioConstants(s: Scenario): string[] {
  * hold every name from scenarioConstants(); see resolveScenario().
  */
 export function encodeScenario(s: Scenario, constants: Map<string, number>, charmap: Charmap): Buffer {
+  check(!s.checkpoint, "resolve the checkpoint with applyCheckpoint() before encoding");
+  check(s.map !== undefined && s.x !== undefined && s.y !== undefined, "map, x and y are required without a checkpoint");
   const value = (name: string): number => {
     const v = constants.get(name);
     if (v === undefined) throw new Error(`unresolved constant ${name}`);
@@ -132,8 +142,9 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   const caught = s.caught ?? [];
   const name = s.name ?? "OAK";
 
-  check(Number.isInteger(s.x) && s.x >= 0 && s.x <= 127, `x must be 0-127 (got ${s.x})`);
-  check(Number.isInteger(s.y) && s.y >= 0 && s.y <= 127, `y must be 0-127 (got ${s.y})`);
+  const { x, y } = s as { x: number; y: number };
+  check(Number.isInteger(x) && x >= 0 && x <= 127, `x must be 0-127 (got ${x})`);
+  check(Number.isInteger(y) && y >= 0 && y <= 127, `y must be 0-127 (got ${y})`);
   check(flags.length + clearFlags.length + trainerFlags.length <= LIMITS.flags, `at most ${LIMITS.flags} flags (including defeated trainers)`);
   check(vars.length <= LIMITS.vars, `at most ${LIMITS.vars} vars`);
   check(party.length <= LIMITS.party, `at most ${LIMITS.party} party members`);
@@ -145,11 +156,11 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   buf.writeUInt32LE(PLAYTEST_MAGIC_ACTIVE, OFFSET.magic);
   buf.writeUInt16LE(LAYOUT_VERSION, OFFSET.layoutVersion);
 
-  const map = value(s.map);
+  const map = value(s.map!);
   buf.writeInt8(map >> 8, OFFSET.mapGroup);
   buf.writeInt8(map & 0xff, OFFSET.mapNum);
-  buf.writeInt8(s.x, OFFSET.x);
-  buf.writeInt8(s.y, OFFSET.y);
+  buf.writeInt8(x, OFFSET.x);
+  buf.writeInt8(y, OFFSET.y);
   buf.writeUInt8(s.gender === "female" ? 1 : 0, OFFSET.gender);
   buf.writeUInt8(party.length, OFFSET.partyCount);
   buf.writeUInt8(flags.length + trainerFlags.length + clearFlags.length, OFFSET.flagCount);
@@ -192,9 +203,10 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
   return buf;
 }
 
-/** Resolves a scenario's names and encodes it. */
+/** Resolves a scenario's checkpoint and names, and encodes it. */
 export function resolveScenario(s: Scenario, charmap: Charmap, opts: ResolveOptions = {}): Buffer {
-  return encodeScenario(s, resolveConstants(scenarioConstants(s), opts), charmap);
+  const merged = applyCheckpoint(s);
+  return encodeScenario(merged, resolveConstants(scenarioConstants(merged), opts), charmap);
 }
 
 /**

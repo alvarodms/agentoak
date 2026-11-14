@@ -1,6 +1,6 @@
 {
   "name": "route104-ivan-defeated-talk",
-  "checks": "C364: once Ivan is beaten, talking gives only the post-battle line, no rain cue, no battle.",
+  "checks": "C364: once Ivan is beaten, talking gives only the post-battle line, no rain cue, no battle. C367: exactly 1 box (expectBoxCount).",
   "scenario": {
     "map": "MAP_ROUTE104",
     "x": 28,
@@ -15,6 +15,7 @@
     { "face": "right" },
     { "talk": true },
     { "expectText": "Everyone says so." },
+    { "expectBoxCount": 1 },
     { "expectNoText": ["LOTAD hide from storms.", "No LOTAD in this rain.", "[screen:"] },
     { "expectScreen": "CB2_Overworld" }
   ]

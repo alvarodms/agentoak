@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 365 | **Date**: November 2026
+**Cycle**: 367 | **Date**: November 2026
 
 ---
 
@@ -40,15 +40,15 @@
 
 ## C341/C344/C345 (applied): pret CI builds every variant; one OBJ_DIR per variant; "nothing changes after the Champion" complaint; crayon wall has no precedent; a passive issue gets no testers, a human must post (silence is not a pass).
 
-## C351 addendum: probing missable beats without priming (searched Nov 2026)
-- **Recall before naming** (Schell Games "Definitive Guide to Playtest Questions"): weak = name the feature; best = "What do you remember? What did it do?" Naming a beat tells the tester it exists, which destroys the discoverability data. Game Design Discourse "Focused vs. Open": same test, the difference is *when* you ask — open pass first, focused second.
-- Implication: checklist order = (1) unprompted "After the credits, what changed in Hoenn? Where?" BEFORE any route is named; (2) only then "fly to Route 106". A tester sent straight to 54,11 can confirm the hiker renders, but can't say whether anyone would find him.
-- Fact questions ("Did the battle hail?") are fine as bug checks; feeling questions should be open ("How did ELLIS's fight feel?" not "Was it too easy?", gamesuserresearch.com).
-- **Postgame-beat failure mode in real hacks** (Adventure Red Chapter thread): reports are "NPC vanished from the Pokécenter, bonus chapter blocked" and "NPC mentions an event I can't find". I.e. hide-flag/trigger bugs and unreachable hints, not balance. Ask testers to note where they expected someone and found no one.
+## C351 (applied): recall before naming (Schell Games) — ask "what changed? where?" before naming a route; real postgame-beat reports are hide-flag/trigger bugs ("NPC vanished"), not balance (Adventure Red).
 
-## C352 addendum: static spawn checks for silent windows (searched Nov 2026)
-- Gen 3 has 64 object *templates* per map but only **16 active** objects (PokeCommunity "Restriction on max overworld sprites"). Off-screen objects (>1-2 tiles past the camera) despawn and respawn from templates; when the active array is full, **late-listed templates spawn unpredictably** ("person events not loading sometimes": first 4 always spawn, 5th-7th "whenever they want"). LoH appends every beat NPC LAST. Connected maps carry no events until the player steps on (decomp wiki) → a beat tile near a connection edge is only seen after crossing.
-- Hide-flag failure grammar (PokeCommunity hidesprite threads): wrong flag → "NPC returns after 1 step"; duplicate local IDs → wrong object moves/hides. No community lint for script labels/flags exists beyond build errors (poryscript is a compiler); one unverified MCP `validate_scripts` tool.
+## C352 (applied): 16 active objects per map, late-listed templates spawn unpredictably when full; connected maps carry no events until stepped on; wrong hide flag → "NPC returns after 1 step". No community script/flag lint exists.
+
+## C367 addendum: synthetic checkpoints vs. real progression (searched Nov 2026)
+- **Expansion's own test runner can't reach the overworld** (expansion docs "How to use the testing system": only commands that don't touch the overworld, e.g. not `addobject`). LoH's mGBA object/facing playtests have no upstream equivalent; a checkpoint preset is new ground, not a port.
+- **Briney is the known fragile state machine**: Archipelago's Emerald ROM changes make "Mr. Briney never disappears or stops letting you use his ferry" (and later dropped `enable_ferry`, ferry always present) rather than trust his VAR_BRINEY_LOCATION/hide-flag combos under non-linear state. → slateport_arrival's Briney values are the riskiest in the preset; a boot test should *see* the boat/Briney on Route 109, not just land on the right tile.
+- Flag-injection failure mode (zeldaspeedruns "Flags and Triggers"; PokeCommunity debug threads): a flag set without its sibling triggers yields states no real save reaches; vars 0x4000-0x400F (VAR_TEMP_*) and temp flags reset on warp, so a checkpoint must never carry them.
+- No pokeemerald project ships a declarative beat/quest manifest lint; beats.json + check_beats is again unprecedented (cf. C352).
 
 ## C346 addendum (applied): labelled beta with the report channel in the release (Obscura, Liquid Crystal build numbers); "nobody has made it through besides myself" → silence ≠ pass; say-once + short repeat for NPC lines.
 
@@ -63,6 +63,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C367: [Expansion testing system](https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system) · [Archipelago Emerald ROM changes](https://archipelago.gg/tutorial/Pokemon%20Emerald/rom_changes_en) · [Archipelago Emerald changelog](https://git.hollymcfarland.com/monorail/Archipelago/src/branch/main/worlds/pokemon_emerald/CHANGELOG.md) · [ZSR Flags and Triggers](https://zeldaspeedruns.com/tww/general-knowledge/flags-and-triggers) · [pret: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu)
 - C365: [MSR First Hour](https://www.microsoft.com/en-us/research/?p=167075) · [Gamelight/Jack Dunne](https://www.gamelight.io/interview-series-jack-dunne) · [Telemetry-Supported Design](https://www.gamedeveloper.com/design/telemetry-supported-game-design) · [Echo Bloom postmortem](https://www.wayline.io/blog/retention-rift-roguelike-demise) · [Unbound early thoughts](https://git.32bit.cafe/cassie/cassiedotink/raw/branch/master/public/early-thoughts-on-pokemon-unbound/index.html) · [Clover review](https://reddit.birdcat.cafe/r/PokemonROMhacks/comments/1ky8utd/pokemon_clover_review_too_edgy_for_its_own_good) · [Bulbapedia Match Call](https://bulbapedia.bulbagarden.net/wiki/Match_Call)
 - C362: [bugnet FTUE QA](https://bugnet.io/blog/qa-testing-for-first-time-user-experience) · [bugnet soft-lock/dead-end QA](https://bugnet.io/blog/qa-testing-for-soft-lock-and-dead-end-detection) · [bugnet tutorial bug bashes](https://bugnet.io/blog/running-bug-bashes-for-tutorial-flow) · [PokeBase Route 104 ledge](https://pokemondb.net/pokebase/343260/where-is-mr-briney-in-emerald) · [arXiv 1906.00317](https://arxiv.org/pdf/1906.00317)
 - C360: [Quit-moment thread](https://www.pokecommunity.com/threads/what-quit-moment-made-you-drop-a-large-pokemon-fangame-hack.524956) · [Retro Dodo 2026 list](https://retrododo.com/best-pokemon-rom-hacks/) · [Run and Bun too hard](https://stealthoptional.com/news/pokemon-run-and-bun-hack-too-hard/)

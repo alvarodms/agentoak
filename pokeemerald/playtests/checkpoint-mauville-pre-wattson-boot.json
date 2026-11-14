@@ -1,0 +1,72 @@
+{
+  "name": "checkpoint-mauville-pre-wattson-boot",
+  "checks": "C367 checkpoint mauville_pre_wattson boots consistent: the player stands on 18,17 in Mauville (south side, from Route 110) with no field script running; walking in near the gym (warp to 12,10, Wally in view), Wally (8,6) and his uncle (9,6) still wait outside the gym, so his scene is pending",
+  "scenario": {
+    "checkpoint": "mauville_pre_wattson"
+  },
+  "steps": [
+    {
+      "wait": 300
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 18,
+        "y": 17
+      }
+    },
+    {
+      "comment": "Objects spawn only in camera view; 18,17 is 10 tiles from Wally. Re-enter near the gym."
+    },
+    {
+      "warp": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 12,
+        "y": 10
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 12,
+        "y": 10
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_WALLY",
+        "x": 8,
+        "y": 6,
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_WALLYS_UNCLE",
+        "x": 9,
+        "y": 6,
+        "visible": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEFEATED_WALLY_MAUVILLE": false,
+        "FLAG_DELIVERED_DEVON_GOODS": true
+      }
+    },
+    {
+      "screenshot": "mauville"
+    }
+  ]
+}

@@ -19,6 +19,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
+import { CHECKPOINT_NAMES } from "./checkpoints.js";
 import { SAVEBLOCK1_REGISTERED_ITEM } from "./scenario.js";
 import { BUTTONS, EmulatorSession, type Button, type RomBuild, type StartOptions } from "./session.js";
 import { SCRIPT_CONTEXT_SHUTDOWN, type Facing } from "./state.js";
@@ -40,33 +41,43 @@ export const MATCH_CALL_CONTACTS = {
 } as const;
 const PokenavContact = z.enum(Object.keys(MATCH_CALL_CONTACTS) as [keyof typeof MATCH_CALL_CONTACTS]);
 
-const ScenarioSchema = z.strictObject({
-  map: z.string(),
-  x: z.number().int(),
-  y: z.number().int(),
-  name: z.string().optional(),
-  gender: z.enum(["male", "female"]).optional(),
-  money: z.number().int().optional(),
-  flags: z.array(z.string()).optional(),
-  clearFlags: z.array(z.string()).optional(),
-  vars: z.record(z.string(), z.number().int()).optional(),
-  party: z
-    .array(
-      z.strictObject({
-        species: z.string(),
-        level: z.number().int(),
-        item: z.string().optional(),
-        moves: z.array(z.string()).optional(),
-        ability: z.union([z.literal(1), z.literal(2)]).optional(),
-      }),
-    )
-    .optional(),
-  bag: z.record(z.string(), z.number().int()).optional(),
-  caught: z.array(z.string()).optional(),
-  defeatedTrainers: z.array(z.string()).optional(),
-  /** ITEM_* already registered to SELECT (it should also be in the bag). */
-  registeredItem: ItemName.optional(),
-});
+const ScenarioSchema = z
+  .strictObject({
+    /** A story save state from checkpoints.ts; the fields below go on top of it. */
+    checkpoint: z.enum(CHECKPOINT_NAMES).optional(),
+    /** map, x and y: required unless checkpoint is set (then all three or none). */
+    map: z.string().optional(),
+    x: z.number().int().optional(),
+    y: z.number().int().optional(),
+    name: z.string().optional(),
+    gender: z.enum(["male", "female"]).optional(),
+    money: z.number().int().optional(),
+    flags: z.array(z.string()).optional(),
+    clearFlags: z.array(z.string()).optional(),
+    vars: z.record(z.string(), z.number().int()).optional(),
+    party: z
+      .array(
+        z.strictObject({
+          species: z.string(),
+          level: z.number().int(),
+          item: z.string().optional(),
+          moves: z.array(z.string()).optional(),
+          ability: z.union([z.literal(1), z.literal(2)]).optional(),
+        }),
+      )
+      .optional(),
+    bag: z.record(z.string(), z.number().int()).optional(),
+    caught: z.array(z.string()).optional(),
+    defeatedTrainers: z.array(z.string()).optional(),
+    /** ITEM_* already registered to SELECT (it should also be in the bag). */
+    registeredItem: ItemName.optional(),
+  })
+  .refine((s) => (s.map !== undefined && s.x !== undefined && s.y !== undefined) || s.checkpoint !== undefined, {
+    message: "map, x and y are required unless checkpoint is set",
+  })
+  .refine((s) => [s.map, s.x, s.y].every((v) => v === undefined) || [s.map, s.x, s.y].every((v) => v !== undefined), {
+    message: "give all of map, x and y, or none",
+  });
 
 const StepSchema = z.union([
   z.strictObject({ comment: z.string() }),
@@ -154,6 +165,8 @@ const StepSchema = z.union([
     ]),
   }),
   z.strictObject({ expectText: Strings }),
+  /** Field message boxes the last talk showed; its [screen: …] and [answered …] markers don't count. */
+  z.strictObject({ expectBoxCount: z.number().int().min(0) }),
   z.strictObject({ expectNoText: Strings }),
   z.strictObject({ expectBattleText: Strings }),
   z.strictObject({
@@ -280,6 +293,10 @@ const asList = (s: string | string[]) => (typeof s === "string" ? [s] : s);
  */
 const flatten = (s: string) =>
   s.replace(/\s+/g, " ").replace(/[’‘]/g, "'").replace(/[“”]/g, '"');
+
+/** A talk transcript without its `[screen: …]` and `[answered …]` markers: the message boxes alone. */
+export const messageBoxes = (transcript: readonly string[]) =>
+  transcript.filter((b) => !b.startsWith("[screen:") && !b.startsWith("[answered"));
 
 export interface RunOptions extends StartOptions {
   /** Directory for this test's screenshots (created on demand). */
@@ -455,6 +472,16 @@ async function runStep(
     }
     for (const unwanted of asList("expectNoText" in step ? step.expectNoText : [])) {
       if (text.includes(flatten(unwanted))) fail(`text should not include ${JSON.stringify(unwanted)}`);
+    }
+    return;
+  }
+
+  if ("expectBoxCount" in step) {
+    const transcript = result.transcripts.at(-1);
+    if (!transcript) fail("no talk step ran before this box count");
+    const boxes = messageBoxes(transcript);
+    if (boxes.length !== step.expectBoxCount) {
+      fail(`expected ${step.expectBoxCount} box(es), got ${boxes.length}: ${JSON.stringify(boxes)}`);
     }
     return;
   }

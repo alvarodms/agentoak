@@ -17,6 +17,7 @@ import {
   encodeWarpData,
   loadPlaytestFiles,
   loadPlaytests,
+  messageBoxes,
   parsePlaytest,
   walkToDirections,
   type PlaytestResult,
@@ -322,5 +323,37 @@ describe("pokenavCall step", () => {
     ]);
     expect(structFields(source("include/pokenav.h"), "PokenavMatchCallEntry")).toEqual(["bool8 isSpecialTrainer", "mapsec_u8_t mapSec", "u16 headerId"]);
     expect(POKENAV).toMatchObject({ mcNumRegistered: 10, mcInitFinished: 16, mcCallback: 24, mcEntries: 28, mcEntrySize: 4 });
+  });
+});
+
+describe("expectBoxCount step", () => {
+  it("parses a non-negative count", () => {
+    expect(parsePlaytest({ ...MINIMAL, steps: [{ talk: true }, { expectBoxCount: 0 }] }).steps[1]).toEqual({ expectBoxCount: 0 });
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBoxCount: -1 }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBoxCount: 1.5 }] })).toThrow();
+  });
+
+  it("counts message boxes, not the screen-change or YES/NO markers talk adds", () => {
+    expect(messageBoxes([])).toEqual([]);
+    expect(messageBoxes(["Hi!", "Battle me?", "[answered YES]", "Go!", "[screen: CB2_OverworldBasic]"])).toEqual([
+      "Hi!",
+      "Battle me?",
+      "Go!",
+    ]);
+    expect(messageBoxes(["[screen: CB2_OverworldBasic]"])).toHaveLength(0);
+  });
+});
+
+describe("scenario checkpoint", () => {
+  const steps = [{ expectPlayer: { map: "MAP_ROUTE109" } }];
+  it("lets a checkpoint stand in for map/x/y, and requires them without one", () => {
+    expect(parsePlaytest({ name: "c", checks: "x", scenario: { checkpoint: "slateport_arrival" }, steps }).scenario.checkpoint).toBe(
+      "slateport_arrival",
+    );
+    expect(() => parsePlaytest({ name: "c", checks: "x", scenario: { x: 1, y: 2 }, steps })).toThrow(/map, x and y/);
+    expect(() => parsePlaytest({ name: "c", checks: "x", scenario: { checkpoint: "slateport_arrival", x: 1 }, steps })).toThrow(
+      /all of map, x and y/,
+    );
+    expect(() => parsePlaytest({ name: "c", checks: "x", scenario: { checkpoint: "nowhere" }, steps })).toThrow();
   });
 });

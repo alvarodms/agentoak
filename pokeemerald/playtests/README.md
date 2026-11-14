@@ -31,7 +31,7 @@ don't match it, and a file must be named after its `name`.
 }
 ```
 
-Scenario fields also include `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
+Scenario fields also include `checkpoint` (a story save state from `src/emulator/checkpoints.ts`: `"slateport_arrival"` boots on the Route 109 dock at 21,23 after Briney's sail from Dewford, Devon Goods undelivered; `"mauville_pre_wattson"` boots in Mauville at 18,17 after Slateport and the Route 110 rival, Wally's scene still pending. Its flags, vars and tile go underneath the test's own `flags`/`clearFlags`/`vars`, the test wins, and `map`/`x`/`y` may be left out; give all three or none), `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
 `defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `registeredItem`
 (`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. A party mon takes `species`, `level`, optional
 `item`, `moves` (up to 4 `MOVE_X`) and `ability` (`1` = the species' first ability, `2` = its second; omit it
@@ -51,6 +51,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `useKeyItem` (+`read`, default true; `maxPresses`; `register`) | Register an item (`"ITEM_FIELD_NOTES"`, must be in the scenario `bag`) and press SELECT, then record its message boxes like `talk`. `"read": false` only starts it, for `press`/`wait`/`screenshot` mid-read. `"register": false` doesn't register it and fails unless the game already put that item on SELECT |
 | `pokenavCall` (`"BIRCH"`, or `{"contact": "BIRCH"}` +`read`, default true; `maxPresses`, default 300) | START → POKéNAV → MATCH CALL → contact → CALL; records the call text from gStringVar4 like `talk` (one entry per page), then hangs up and presses B back to the free field. Fails naming the stage it stuck at (start menu, pokenav main, match call list, call, back to field), or if the call is not that contact's (BIRCH: "Are you curious"). Scenario needs the 4 Pokénav/match-call flags: `FLAG_SYS_POKENAV_GET`, `FLAG_ADDED_MATCH_CALL_TO_POKENAV`, `FLAG_HAS_MATCH_CALL`, `FLAG_ENABLE_PROF_BIRCH_MATCH_CALL`, and a map where calls work (outdoors). `"read": false` stops right after CALL, for `wait`/`screenshot` mid-call (the test can't leave the Pokénav after that) |
 | `expectText`, `expectNoText` | Substrings of the last `talk` (line breaks and curly quotes don't matter). Battle messages are never in it |
+| `expectBoxCount` (`1`) | Field message boxes shown by the last talk (screen changes and YES/NO answers not counted). One `msgbox` is one box, however many pages it has. Fails listing the boxes it saw |
 | `expectPlayer`, `expectObject` | Tile and facing; objects by `LOCALID_*` or index (+1), with `x`, `y`, `facing`, `visible`, or `"absent": true` (not loaded, i.e. hidden by its flag) |
 | `expectFlag`, `expectVar`, `expectScreen` | Saved flags and vars; `gMain.callback2` by name |
 | `setVar` (`{"VAR_REPEL_STEP_COUNT": 250}`) | Set saved vars mid-test. A repel count after a catch keeps the walk back through grass free of wild battles (lead level above the wild ones) |
