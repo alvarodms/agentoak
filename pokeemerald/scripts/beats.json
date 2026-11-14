@@ -561,5 +561,32 @@
       "route109-storm-watch-defeated"
     ],
     "speaker": "stranger"
+  },
+  {
+    "id": "v34-half-a-fact",
+    "arc": "v3.4 Word Travels 2, half a fact (C369)",
+    "register": "fight",
+    "map": "MauvilleCity",
+    "object": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+    "trainer": "TRAINER_MAUVILLE_GYM_HOPEFUL",
+    "gate": {
+      "none": true
+    },
+    "tiles": [
+      [
+        10,
+        7,
+        "left"
+      ]
+    ],
+    "labels": [
+      "MauvilleCity_EventScript_GymHopeful"
+    ],
+    "playtests": [
+      "mauville-half-a-fact-lotad",
+      "mauville-half-a-fact-no-lotad",
+      "mauville-half-a-fact-wally-unblocked"
+    ],
+    "speaker": "stranger"
   }
 ]

@@ -1,0 +1,223 @@
+{
+  "name": "mauville-half-a-fact-lotad",
+  "checks": "C369 v3.4 Beat 2 'Half a fact' (fight, ungated). Hypothesis 'a half-true fact is worse than none': Youngster DAX (slot 485) waits at Wattson's gym door (10,7, facing left) before any text; talking to him from 11,7 starts the battle with 0 field boxes before it. Against a Lv45 RAIN DISH Lotad_H both halves of his fact show in one fight: THUNDERSHOCK 'doesn't affect' his SANDSHREW 19 (his half, Ground is immune), GIGA DRAIN is 'super effective' on SANDSHREW and on TRAPINCH 20 (the half he missed). The win shows his defeat line 'That was the whole plan.', then his post text; he turns back to the gym. Talking again gives only the post text (1 msgbox, 2 pages), no battle, and he faces left again. Lv45: GIGA DRAIN one-shots both on the minimum roll and Lotad outruns both, so the turns are fixed by the numbers.",
+  "scenario": {
+    "checkpoint": "mauville_pre_wattson",
+    "party": [
+      {
+        "species": "SPECIES_LOTAD_HOENN",
+        "level": 45,
+        "ability": 2,
+        "moves": [
+          "MOVE_THUNDER_SHOCK",
+          "MOVE_GIGA_DRAIN",
+          "MOVE_ABSORB",
+          "MOVE_GROWL"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "comment": "the checkpoint boots at 18,17, out of view of the gym door; re-enter near it"
+    },
+    {
+      "warp": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 12,
+        "y": 9
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "screenshot": "dax-at-the-door"
+    },
+    {
+      "walkTo": {
+        "x": 11,
+        "y": 7
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "comment": "hypothesis measure: no field text box before the battle"
+    },
+    {
+      "expectBoxCount": 0
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_SANDSHREW",
+        "level": 19
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "comment": "turn 1: THUNDERSHOCK (slot 1). His half of the fact: Ground is immune to Electric"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used THUNDERSHOCK"
+    },
+    {
+      "waitForBattleText": "doesn't affect"
+    },
+    {
+      "screenshot": "electric-doesnt-affect"
+    },
+    {
+      "comment": "turn 2: GIGA DRAIN (slot 2). The half he missed: Grass is super effective on Ground"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "RIGHT"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used GIGA DRAIN"
+    },
+    {
+      "waitForBattleText": "super effective"
+    },
+    {
+      "screenshot": "grass-super-effective"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TRAPINCH",
+        "level": 20
+      }
+    },
+    {
+      "comment": "turn 3: the move cursor stays on GIGA DRAIN"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used GIGA DRAIN"
+    },
+    {
+      "waitForBattleText": "super effective"
+    },
+    {
+      "waitForBattleText": "whole plan"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "WATTSON's LOTAD is ELECTRIC.",
+        "is to a LOTAD."
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left"
+      }
+    },
+    {
+      "screenshot": "back-to-the-door"
+    },
+    {
+      "comment": "talk again: post text only (one msgbox, two pages), no battle"
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectBoxCount": 1
+    },
+    {
+      "expectText": "That's all there"
+    },
+    {
+      "expectNoText": [
+        "whole plan",
+        "[screen:"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left"
+      }
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 11,
+        "y": 7
+      }
+    }
+  ]
+}

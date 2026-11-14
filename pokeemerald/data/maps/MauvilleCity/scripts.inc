@@ -223,6 +223,25 @@ MauvilleCity_EventScript_WallyRequestBattleAgain::
 	goto MauvilleCity_EventScript_BattleWallyPrompt
 	end
 
+@ C369 v3.4 Beat 2 "Half a fact": Youngster DAX (slot 485) at the gym door, ungated.
+@ Talk starts the battle at once (no intro box). His state is the trainer flag; no other flag.
+MauvilleCity_EventScript_GymHopeful::
+	lock
+	faceplayer
+	goto_if_defeated TRAINER_MAUVILLE_GYM_HOPEFUL, MauvilleCity_EventScript_GymHopefulDone
+	trainerbattle_no_intro TRAINER_MAUVILLE_GYM_HOPEFUL, MauvilleCity_Text_GymHopefulDefeat
+	goto MauvilleCity_EventScript_GymHopefulDone
+	end
+
+MauvilleCity_EventScript_GymHopefulDone::
+	faceplayer
+	msgbox MauvilleCity_Text_GymHopefulPost, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_MAUVILLE_GYM_HOPEFUL, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
 MauvilleCity_Movement_WallyExitNorth1:
 	walk_left
 	walk_left
@@ -571,6 +590,16 @@ MauvilleCity_Text_ScottYouDidntHoldBack:
 	.string "I idolize TRAINERS like that!\p"
 	.string "… … … … … …\n"
 	.string "I'll be cheering for you!$"
+
+MauvilleCity_Text_GymHopefulDefeat:
+	.string "GROUND beats ELECTRIC.\n"
+	.string "That was the whole plan.$"
+
+MauvilleCity_Text_GymHopefulPost:
+	.string "WATTSON's LOTAD is ELECTRIC.\n"
+	.string "GROUND can't be zapped.\p"
+	.string "So, GROUND. That's all there\n"
+	.string "is to a LOTAD.$"
 
 MauvilleCity_Text_WattsonNeedFavorTakeKey:
 	.string "WATTSON: Oh, {PLAYER}{KUN}!\n"

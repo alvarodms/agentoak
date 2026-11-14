@@ -8108,16 +8108,18 @@ static const struct TrainerMonItemCustomMoves sParty_MiuAndYuki[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_AmyAndLiv3[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_MauvilleGymHopeful[] = {
     {
     .iv = 0,
-    .lvl = 9,
-    .species = SPECIES_PLUSLE,
+    .lvl = 19,
+    .species = SPECIES_SANDSHREW,
+    .moves = {MOVE_SCRATCH, MOVE_DEFENSE_CURL, MOVE_NONE, MOVE_NONE}
     },
     {
     .iv = 0,
-    .lvl = 9,
-    .species = SPECIES_MINUN,
+    .lvl = 20,
+    .species = SPECIES_TRAPINCH,
+    .moves = {MOVE_BITE, MOVE_FAINT_ATTACK, MOVE_NONE, MOVE_NONE}
     }
 };
 

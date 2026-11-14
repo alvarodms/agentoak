@@ -67,7 +67,9 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 move you want first with `moves`). Then wait with `{"waitForBattleText": "What
 will", "fresh": true}` for the next turn, or for a message like `"fainted"`.
 When the foe's mon faints, the game asks whether to switch: `press B` answers
-no. RUN is `RIGHT`, `DOWN`, `A` on the action menu. The opponent's AI and moves
+no. RUN is `RIGHT`, `DOWN`, `A` on the action menu. Move slot 2 is `press A`,
+`press RIGHT`, `press A`; the move cursor stays on the last move used, so the
+next turn's `A`, `A` repeats it (mauville-half-a-fact-lotad). The opponent's AI and moves
 (Protect, priority) change how many turns a fight takes, so use a party that
 wins in one hit when the fight isn't the point.
 

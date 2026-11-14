@@ -1,0 +1,136 @@
+{
+  "name": "mauville-half-a-fact-no-lotad",
+  "checks": "C369 v3.4 Beat 2 'Half a fact' is ungated (gate d): with no Lotad_H caught, FLAG_ROUTE104_SKEPTIC_TURNED explicitly clear and no v3.3/v3.4 state, Youngster DAX still stands at 10,7 facing the gym; talking from 11,7 starts a plain fight at once (0 field boxes) against SANDSHREW 19 then TRAPINCH 20; a Lv45 LINOONE's HEADBUTT one-shots both. His defeat line and post text show, and he turns back to the gym.",
+  "scenario": {
+    "checkpoint": "mauville_pre_wattson",
+    "clearFlags": [
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 45,
+        "moves": [
+          "MOVE_HEADBUTT"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "warp": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 12,
+        "y": 9
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "walkTo": {
+        "x": 11,
+        "y": 7
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectBoxCount": 0
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_SANDSHREW",
+        "level": 19
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LINOONE used HEADBUTT"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TRAPINCH",
+        "level": 20
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LINOONE used HEADBUTT"
+    },
+    {
+      "waitForBattleText": "whole plan"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "GROUND can't be zapped.",
+        "is to a LOTAD."
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left"
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_ROUTE104_SKEPTIC_TURNED": false
+      }
+    },
+    {
+      "screenshot": "after-win"
+    }
+  ]
+}

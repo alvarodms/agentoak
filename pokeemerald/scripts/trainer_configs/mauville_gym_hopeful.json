@@ -1,0 +1,27 @@
+{
+  "_note": "C369 v3.4 Beat 2 'Half a fact': DAX, Youngster at Wattson's gym door in Mauville (10,7 FACE_LEFT; slot 485, reclaimed from never-battled TRAINER_AMY_AND_LIV_3: zero refs outside opponents.h/trainers.h/trainer_parties.h per hand grep C369, and not in the REMATCH_AMY_AND_LIV row of battle_setup.c, which uses _1/_2/_4/_5/_6). Ungated: talk starts the battle at once (trainerbattle_no_intro). He kept only half of what he saw of WATTSON's LOTAD: 'it's ELECTRIC, so GROUND'. Pure-Ground team (no Water/Rock, v3.4 rule 5) at Lv19-20, under Wattson's Lv21: Electric moves 'doesn't affect' his mons (his half), a Grass move is 'super effective' (the half he missed). Move legality hand-checked with rom_species C369: SANDSHREW SCRATCH L1, DEFENSE_CURL L6; TRAPINCH BITE L1, FAINT_ATTACK L17. Omitted on purpose: POISON_STING (poison on Lotad_H muddles the lesson), SAND_ATTACK (accuracy drops make the proof seed-dependent), DIG (the underground turn makes the Grass move miss); no Ground or Rock damage either, so nothing he does is super effective on a Lotad_H. Ability: trainer mons use slot 0 (SAND_VEIL / HYPER_CUTTER, no weather). No held items, no trainer items. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so they are hand-edited into the [TRAINER_MAUVILLE_GYM_HOPEFUL] block (encounterMusic + aiFlags as every vanilla Youngster, e.g. Route 110/117). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/mauville_gym_hopeful.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_MAUVILLE_GYM_HOPEFUL",
+  "partyName": "sParty_MauvilleGymHopeful",
+  "trainerClass": "TRAINER_CLASS_YOUNGSTER",
+  "encounterMusic": "TRAINER_ENCOUNTER_MUSIC_MALE",
+  "trainerPic": "TRAINER_PIC_YOUNGSTER",
+  "trainerName": "DAX",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE"],
+  "party": [
+    {
+      "iv": 0,
+      "lvl": 19,
+      "species": "SPECIES_SANDSHREW",
+      "moves": ["MOVE_SCRATCH", "MOVE_DEFENSE_CURL"]
+    },
+    {
+      "iv": 0,
+      "lvl": 20,
+      "species": "SPECIES_TRAPINCH",
+      "moves": ["MOVE_BITE", "MOVE_FAINT_ATTACK"]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 368 | **Date**: November 2026
+**Cycle**: 369 | **Date**: November 2026
 
 ---
 
@@ -42,11 +42,15 @@
 - **THUNDER_WAVE paralyses Electric types before Gen VI.** The Gen VI immunity isn't in pokeemerald, so TOBY can paralyse Lotad_H even though his damage barely scratches it. That mixes the lesson. Drop Thunder Wave from his moves.
 - Sources: https://pokemondb.net/pokedex/plusle/moves/3 , https://m.bulbapedia.bulbagarden.net/wiki/Minus , https://forums.serebii.net/threads/community-potw-84-special-3.580518/page-4
 
-## C348 — Encounter-odds lint + roost (condensed C368)
-- No public wild_encounters.json validator exists. Slot % comes from the slot index (land 20/20/10/10/10/10/5/5/4/4/1/1), so sum duplicate slots and read the JSON source. Radical Red handles rare finds with DexNav, and LoH's data floors stand in for it. Placed objects work best seen BEFORE the one line of text.
-- Sources: https://github.com/pret/pokered/wiki/Edit-the-wild-encounters , https://www.gamebrew.org/wiki/Pokemon_Radical_Red_GBA , https://www.gamedeveloper.com/design/environmental-storytelling
+## C369 — v3.4 Beat 2 DAX: pure-Ground mons at Lv19-20 (checked Nov 2026)
+- **Sandshrew Lv19 default moves = SCRATCH, DEFENSE_CURL, SAND_ATTACK, POISON_STING** (local level_up_learnsets.h:396-407; no Ground move until SAND_TOMB 45). POISON_STING is 2x on Lotad_H's Grass and can poison it, which muddles "his half is right". SAND_ATTACK can make the player's Grass "super effective" proof miss, a seed-dependent failure like C368's turn count. Hand-set: drop both.
+- **Trapinch Gen III** (pokemondb, verify locally): BITE 1, SAND_ATTACK 9, FAINT_ATTACK 17; no Ground move before SAND_TOMB 25. Abilities HYPER_CUTTER / ARENA_TRAP. Trainer mons always use slot 0 = HYPER_CUTTER, so the player isn't trapped.
+- **Baltoy** is Ground/Psychic with LEVITATE. At Lv19 its default moves include ROCK_TOMB and SELFDESTRUCT. It is not pure Ground, and a self-KO blurs the outcome, so avoid it.
+- No public complaint about Sand-Attack specifically turned up. Radical Red cut Double Team and Minimize (TV Tropes), the clearest sign that big hacks remove accuracy and evasion coin-flips.
+- Sources: https://pokemondb.net/pokedex/sandshrew/moves/3 , https://pokemondb.net/pokedex/trapinch/moves/3 , https://pokemondb.net/pokedex/baltoy/moves/3 , https://www.tvtropes.org/pmwiki/pmwiki.php/VideoGame/PokemonRadicalRed
 
-## C347 — Weather / timed field events (condensed C364)
+## C347/C348 — Weather / timed field events, encounter odds (condensed C369)
+- No public wild_encounters.json validator exists; slot % comes from the slot index (land 20/20/10/10/10/10/5/5/4/4/1/1). Placed objects work best seen BEFORE the one line of text.
 - Gen III field weather carries into battle from turn 1; `setweather` makes a weather beat cheap. Weather-gated spawns: copy the Essentials "Weather Encounters" override %, never a table swap. Mirage Tower sandstorm = vanilla "place stays changed". Legends: Arceus random distortions read as grind loops, while a scripted, once-told event is the one players remember. State any weather rule in one player-facing line.
 - Sources: Bulbapedia Weather; PokéCommunity 429803, 497707, 444136; skaternutko/weather-mayhem.
 

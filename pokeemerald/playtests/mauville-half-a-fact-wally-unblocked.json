@@ -1,0 +1,135 @@
+{
+  "name": "mauville-half-a-fact-wally-unblocked",
+  "checks": "C369 guardrail for v3.4 Beat 2: Youngster DAX at 10,7 blocks nothing in Wally's Mauville scene. With DAX present, talking to Wally from 8,7 (facing up, the DIR_NORTH branch), answering YES and winning (GIGA DRAIN one-shots his Lv16 RALTS) plays the whole exit scene: Wally and his uncle walk off left along rows 6-8, Scott walks up column 12 and left along row 8 to the player, then leaves. No softlock: the field comes back, FLAG_DEFEATED_WALLY_MAUVILLE is set, Wally is gone, DAX is still at 10,7 facing the gym and the player is still on 8,7.",
+  "scenario": {
+    "checkpoint": "mauville_pre_wattson",
+    "party": [
+      {
+        "species": "SPECIES_LOTAD_HOENN",
+        "level": 45,
+        "ability": 2,
+        "moves": [
+          "MOVE_GIGA_DRAIN",
+          "MOVE_THUNDER_SHOCK",
+          "MOVE_ABSORB",
+          "MOVE_GROWL"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "warp": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 9,
+        "y": 9
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "walkTo": {
+        "x": 8,
+        "y": 7
+      }
+    },
+    {
+      "face": "up"
+    },
+    {
+      "comment": "Wally asks 'will you battle me?'; the default answer is YES"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "WALLY"
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_RALTS",
+        "level": 16
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used GIGA DRAIN"
+    },
+    {
+      "comment": "the rest of the scene: Wally and his uncle leave, Scott comes and goes"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 400
+      }
+    },
+    {
+      "expectText": "SCOTT"
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEFEATED_WALLY_MAUVILLE": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_WALLY",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MAUVILLE_GYM_HOPEFUL",
+        "x": 10,
+        "y": 7,
+        "facing": "left"
+      }
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_MAUVILLE_CITY",
+        "x": 8,
+        "y": 7
+      }
+    },
+    {
+      "screenshot": "scene-done-dax-stays"
+    }
+  ]
+}
