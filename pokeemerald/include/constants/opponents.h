@@ -463,7 +463,7 @@
 #define TRAINER_SIENNA                      459
 #define TRAINER_DEBRA                       460
 #define TRAINER_LINDA                       461
-#define TRAINER_KAYLEE                      462
+#define TRAINER_ROUTE109_STORM_WATCHER      462
 #define TRAINER_LAUREL                      463
 #define TRAINER_CARLEE                      464
 #define TRAINER_JENNY_2                     465

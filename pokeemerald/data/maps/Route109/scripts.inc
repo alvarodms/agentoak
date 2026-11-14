@@ -2,7 +2,21 @@
 @  These are labeled in DewfordTown/scripts.inc
 
 Route109_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route109_OnTransition
 	.byte 0
+
+@ C368 v3.4 Beat 1 "Storm watch": once the Route 104 schoolkid has turned (0x35),
+@ a LOTAD DOLL sits on the sand and the sandcastle kids face the open sea.
+@ The doll is hidden with FLAG_TEMP_3 (reset on every map load) otherwise.
+Route109_OnTransition:
+	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, Route109_EventScript_StormWatchKids
+	setflag FLAG_TEMP_3
+	end
+
+Route109_EventScript_StormWatchKids:
+	setobjectmovementtype LOCALID_ROUTE109_SANDCASTLE_BOY, MOVEMENT_TYPE_FACE_DOWN
+	setobjectmovementtype LOCALID_ROUTE109_SOFT_SAND_GIRL, MOVEMENT_TYPE_FACE_DOWN
+	end
 
 Route109_EventScript_StartDepartForDewford::
 	call EventScript_BackupMrBrineyLocation
@@ -317,6 +331,7 @@ Route109_EventScript_SeashoreHouseGirl::
 	end
 
 Route109_EventScript_SandCastleBoy::
+	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, Route109_EventScript_StormWatcher
 	lock
 	faceplayer
 	msgbox Route109_Text_SandCastleTakingLongTime, MSGBOX_DEFAULT
@@ -324,6 +339,29 @@ Route109_EventScript_SandCastleBoy::
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
 	release
+	end
+
+@ C368: TOBY (slot 462). His state is the trainer flag; no other flag.
+Route109_EventScript_StormWatcher::
+	lock
+	faceplayer
+	goto_if_defeated TRAINER_ROUTE109_STORM_WATCHER, Route109_EventScript_StormWatcherDone
+	msgbox Route109_Text_StormWatcherIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_ROUTE109_STORM_WATCHER, Route109_Text_StormWatcherDefeat
+	goto Route109_EventScript_StormWatcherDone
+	end
+
+Route109_EventScript_StormWatcherDone::
+	faceplayer
+	msgbox Route109_Text_StormWatcherPost, MSGBOX_DEFAULT
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+Route109_EventScript_LotadDoll::
+	msgbox Route109_Text_LotadDoll, MSGBOX_SIGN
 	end
 
 Route109_EventScript_SoftSandGirl::
@@ -528,6 +566,22 @@ Route109_Text_LittleKidsDartAround:
 Route109_Text_SandCastleTakingLongTime:
 	.string "Our sand castle's taking a long time\n"
 	.string "to make.$"
+
+Route109_Text_StormWatcherIntro:
+	.string "Shh! We're watching the sky.\n"
+	.string "LOTAD drink up lightning!\p"
+	.string "Battle me while we wait!$"
+
+Route109_Text_StormWatcherDefeat:
+	.string "Heard it from a kid on 104.$"
+
+Route109_Text_StormWatcherPost:
+	.string "If a storm comes, our LOTAD\n"
+	.string "will be ready.$"
+
+Route109_Text_LotadDoll:
+	.string "It's a LOTAD DOLL, set out\n"
+	.string "facing the sea.$"
 
 Route109_Text_YouCanHaveThis:
 	.string "You can have this!$"

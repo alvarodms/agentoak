@@ -1,6 +1,6 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 366 | **Date**: November 2026
+**Cycle**: 368 | **Date**: November 2026
 
 ---
 
@@ -36,12 +36,15 @@
 - No public reviews of a "trainer summons the weather" overworld moment were found; this beat is ahead of the documented scene.
 - Sources: https://bulbapedia.bulbagarden.net/wiki/Lightning_Rod_(Ability) , https://veekun.com/dex/abilities/Lightning%20Rod , https://bulbapedia.bulbagarden.net/wiki/Parasol_Lady_(Trainer_class) , https://www.scribd.com/document/541056040/Battle-Changes
 
-## C348 — Encounter-odds lint + the empty roost (searched Nov 2026; thin)
-- **No public validator for pokeemerald `wild_encounters.json` turned up** (searches: pret wiki, PokéCommunity). `make check_encounter_odds` has no outside model to copy. Two facts from the community for its design: (1) slot % is fixed by slot INDEX in the engine (pret pokered wiki "Edit the wild encounters"; Emerald land = 20/20/10/10/10/10/5/5/4/4/1/1), not stored per entry, so the lint must derive % from index and sum duplicate-species slots; (2) the JSON is regenerated through an Inja template (`wild_encounters.json.txt`, PokéCommunity 496361), so the lint reads the JSON source, not the generated .h.
-- **The per-map `encounter_rate` also counts**: a 10% slot on a map with a low rate still feels rare. Print each floor map's encounter_rate next to the % (informational; don't fail on it).
-- **Big hacks fix rare finds with a tool, not data**: Radical Red's DexNav (register a seen mon, then search it) is how it handles hard-to-find species (GameBrew, SA LP thread). LoH has no DexNav, so data floors are its stand-in. Keep that as the rationale in the lint header.
-- **Environmental storytelling**: players read meaning into placed objects and often invent more than the designer meant (Game Developer, "Environmental storytelling"). The roost works best seen BEFORE the one line of text. Don't add a sign or second box.
-- Sources: https://github.com/pret/pokered/wiki/Edit-the-wild-encounters , https://www.pokecommunity.com/threads/firered-safari-zone-enounters-not-showing-up-in-porymap.496361/latest , https://www.gamebrew.org/wiki/Pokemon_Radical_Red_GBA , https://www.gamedeveloper.com/design/environmental-storytelling
+## C368 — v3.4 Beat 1 TOBY: Plusle/Minun at Lv13-14 (checked Nov 2026)
+- **Default moves carry no Electric damage.** Plusle and Minun at Lv13-14 know GROWL, THUNDER_WAVE, QUICK_ATTACK and HELPING_HAND (local level_up_learnsets.h:4774-4802, which matches the pokemondb Gen 3 table). SPARK comes at Lv19. So a default-move TOBY never shows "not very effective" on Lotad_H, and the beat's proof is gone. The fix is a hand-set moveset with an Electric damaging move (SHOCK_WAVE TM34, Gen III-legal for both; confirm in tmhm_learnsets.h).
+- **Gen III Plus/Minus only work in doubles** (Bulbapedia Minus page: SpA x1.5 only when a Plus partner is out). In a single battle they're flavour. Helping Hand fails in singles too, so it's a dead slot.
+- **THUNDER_WAVE paralyses Electric types before Gen VI.** The Gen VI immunity isn't in pokeemerald, so TOBY can paralyse Lotad_H even though his damage barely scratches it. That mixes the lesson. Drop Thunder Wave from his moves.
+- Sources: https://pokemondb.net/pokedex/plusle/moves/3 , https://m.bulbapedia.bulbagarden.net/wiki/Minus , https://forums.serebii.net/threads/community-potw-84-special-3.580518/page-4
+
+## C348 — Encounter-odds lint + roost (condensed C368)
+- No public wild_encounters.json validator exists. Slot % comes from the slot index (land 20/20/10/10/10/10/5/5/4/4/1/1), so sum duplicate slots and read the JSON source. Radical Red handles rare finds with DexNav, and LoH's data floors stand in for it. Placed objects work best seen BEFORE the one line of text.
+- Sources: https://github.com/pret/pokered/wiki/Edit-the-wild-encounters , https://www.gamebrew.org/wiki/Pokemon_Radical_Red_GBA , https://www.gamedeveloper.com/design/environmental-storytelling
 
 ## C347 — Weather / timed field events (condensed C364)
 - Gen III field weather carries into battle from turn 1; `setweather` makes a weather beat cheap. Weather-gated spawns: copy the Essentials "Weather Encounters" override %, never a table swap. Mirage Tower sandstorm = vanilla "place stays changed". Legends: Arceus random distortions read as grind loops, while a scripted, once-told event is the one players remember. State any weather rule in one player-facing line.

@@ -521,5 +521,45 @@
         "reason": "legacy C364: same line, \"PROF. BIRCH wrote it\""
       }
     ]
+  },
+  {
+    "id": "v34-storm-watch",
+    "arc": "v3.4 Word Travels 1, storm watch (C368)",
+    "register": "place",
+    "map": "Route109",
+    "object": "LOCALID_ROUTE109_LOTAD_DOLL",
+    "trainer": "TRAINER_ROUTE109_STORM_WATCHER",
+    "gate": {
+      "flag": "FLAG_ROUTE104_SKEPTIC_TURNED"
+    },
+    "hideFlag": "FLAG_TEMP_3",
+    "tiles": [
+      [
+        24,
+        19,
+        "down"
+      ],
+      [
+        24,
+        18,
+        "down"
+      ],
+      [
+        25,
+        18,
+        "down"
+      ]
+    ],
+    "labels": [
+      "Route109_EventScript_SandCastleBoy",
+      "Route109_EventScript_StormWatcher",
+      "Route109_EventScript_LotadDoll"
+    ],
+    "playtests": [
+      "route109-storm-watch-turned",
+      "route109-storm-watch-not-turned",
+      "route109-storm-watch-defeated"
+    ],
+    "speaker": "stranger"
   }
 ]

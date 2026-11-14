@@ -1,0 +1,27 @@
+{
+  "_note": "C368 v3.4 Beat 1 'Storm watch': TOBY, Tuber M on Route 109 (slot 462, reclaimed from never-battled TRAINER_KAYLEE, zero refs per check_trainer_slots + hand grep C368). The sandcastle boy (24,18) battles only when FLAG_ROUTE104_SKEPTIC_TURNED is set; levels sit with his neighbours Hailey 13 / Chandler 14, an easy kid fight. The lesson is the doll's: his Electric moves are 'not very effective' on a Lotad_H (Electric/Grass, 0.25x). Move legality hand-checked with rom_species C368: SHOCK_WAVE = TM34 on both PLUSLE and MINUN; GROWL L1. No THUNDER_WAVE on purpose: Gen 3 Electric types are not immune to paralysis, it would paralyze Lotad_H and muddy the lesson. The lead has Shock Wave only so the AI's first move is always the proof. Plus/Minus do nothing in singles. Ability: trainer mons use slot 0 (PLUS / MINUS). No held items, no trainer items. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so hand-edit them into the [TRAINER_ROUTE109_STORM_WATCHER] block (encounterMusic + aiFlags copied from vanilla Route 109 Tuber M TRAINER_CHANDLER). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/route109_storm_watcher.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_ROUTE109_STORM_WATCHER",
+  "partyName": "sParty_Route109StormWatcher",
+  "trainerClass": "TRAINER_CLASS_TUBER_M",
+  "encounterMusic": "TRAINER_ENCOUNTER_MUSIC_GIRL",
+  "trainerPic": "TRAINER_PIC_TUBER_M",
+  "trainerName": "TOBY",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE"],
+  "party": [
+    {
+      "iv": 0,
+      "lvl": 14,
+      "species": "SPECIES_PLUSLE",
+      "moves": ["MOVE_SHOCK_WAVE"]
+    },
+    {
+      "iv": 0,
+      "lvl": 13,
+      "species": "SPECIES_MINUN",
+      "moves": ["MOVE_SHOCK_WAVE", "MOVE_GROWL"]
+    }
+  ]
+}

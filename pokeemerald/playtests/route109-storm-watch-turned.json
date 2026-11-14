@@ -1,0 +1,29 @@
+{
+  "name": "route109-storm-watch-turned",
+  "checks": "C368 v3.4 Beat 1 'Storm watch' (place): with the Route 104 schoolkid turned (FLAG_ROUTE104_SKEPTIC_TURNED), a LOTAD DOLL sits on the sand at 24,19, seen from the Briney landing tile 21,23 before any text; one step north brings the sandcastle kids (24,18 / 25,18) into view, both facing the sea (down) instead of each other. Hypothesis measure: the change is seen before the first field text box (0 boxes). The doll reads as one sign box.",
+  "scenario": {
+    "checkpoint": "slateport_arrival",
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [{ "species": "SPECIES_LOTAD_HOENN", "level": 20, "ability": 2 }],
+    "caught": ["SPECIES_LOTAD_HOENN"]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectPlayer": { "map": "MAP_ROUTE109", "x": 21, "y": 23 } },
+    { "comment": "Before any talk: the doll is loaded on the top visible row of the landing view" },
+    { "expectObject": { "id": "LOCALID_ROUTE109_LOTAD_DOLL", "x": 24, "y": 19, "facing": "down", "visible": true } },
+    { "screenshot": "landing-doll" },
+    { "walk": "up" },
+    { "expectPlayer": { "map": "MAP_ROUTE109", "x": 21, "y": 22 } },
+    { "expectObject": { "id": "LOCALID_ROUTE109_SANDCASTLE_BOY", "x": 24, "y": 18, "facing": "down", "visible": true } },
+    { "expectObject": { "id": "LOCALID_ROUTE109_SOFT_SAND_GIRL", "x": 25, "y": 18, "facing": "down", "visible": true } },
+    { "screenshot": "kids-face-the-sea" },
+    { "walkTo": { "x": 24, "y": 20 } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectBoxCount": 1 },
+    { "expectText": "facing the sea." },
+    { "expectScreen": "CB2_Overworld" }
+  ]
+}

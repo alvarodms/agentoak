@@ -1,0 +1,237 @@
+{
+  "name": "route109-storm-watch-defeated",
+  "checks": "C368 v3.4 Beat 1 'Storm watch' (fight): with FLAG_ROUTE104_SKEPTIC_TURNED, the doll is on the sand before any text (hypothesis measure: change seen before the first field text box); the sandcastle boy is Tuber TOBY (slot 462). Talk from 24,17 (reached by column 21 then row 17, the doll blocks 24,19): his intro, then a battle where PLUSLE's lead SHOCK WAVE is 'not very effective' on a RAIN DISH Lotad_H on turn 1 (Electric/Grass, 0.25x). The win shows the arc's one source line 'Heard it from a kid on 104.', then his post line; talking again gives only the post line (1 box) and he turns back to the sea.",
+  "scenario": {
+    "checkpoint": "slateport_arrival",
+    "flags": [
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_LOTAD_HOENN",
+        "level": 25,
+        "ability": 2,
+        "moves": [
+          "MOVE_MEGA_DRAIN",
+          "MOVE_THUNDER_SHOCK",
+          "MOVE_ABSORB",
+          "MOVE_GROWL"
+        ]
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE109_LOTAD_DOLL",
+        "x": 24,
+        "y": 19,
+        "visible": true
+      }
+    },
+    {
+      "walkTo": {
+        "x": 24,
+        "y": 17,
+        "yFirst": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE109_SANDCASTLE_BOY",
+        "x": 24,
+        "y": 18,
+        "facing": "down"
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "We're watching the sky.",
+        "LOTAD drink up lightning!",
+        "Battle me while we wait!"
+      ]
+    },
+    {
+      "expectBoxCount": 1
+    },
+    {
+      "waitFor": "battle"
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 14
+      }
+    },
+    {
+      "waitForBattleText": "What will"
+    },
+    {
+      "comment": "turn 1: MEGA DRAIN; PLUSLE (faster) has only SHOCK WAVE"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "PLUSLE used SHOCK WAVE"
+    },
+    {
+      "waitForBattleText": "not very effective"
+    },
+    {
+      "screenshot": "shock-wave-not-very-effective"
+    },
+    {
+      "comment": "on this seed MEGA DRAIN takes three turns per mon: PLUSLE goes down on turn 3, MINUN on turn 6"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_MINUN",
+        "level": 13
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "waitForBattleText": "What will",
+      "fresh": true
+    },
+    {
+      "press": "A"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "waitForBattleText": "LOTAD used"
+    },
+    {
+      "comment": "the arc's one source line, in the battle"
+    },
+    {
+      "waitForBattleText": "Heard it from a kid on 104."
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "will be ready."
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "comment": "talk again: post line only, no intro, no battle"
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectBoxCount": 1
+    },
+    {
+      "expectText": "will be ready."
+    },
+    {
+      "expectNoText": [
+        "LOTAD drink up lightning!",
+        "[screen:"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_ROUTE109_SANDCASTLE_BOY",
+        "x": 24,
+        "y": 18,
+        "facing": "down"
+      }
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE109",
+        "x": 24,
+        "y": 17
+      }
+    },
+    {
+      "screenshot": "after-win"
+    }
+  ]
+}

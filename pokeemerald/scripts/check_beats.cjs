@@ -42,8 +42,8 @@ const FLAGS_H = path.join(ROOT, 'include/constants/flags.h');
 const OPPONENTS_H = path.join(ROOT, 'include/constants/opponents.h');
 
 // C323 rule: a floor equal to what shipped, so a parser or merge that drops
-// rows fails loudly. C367 shipped 15 rows (v3.0-v3.3); raise it when a beat lands.
-const MIN_ROWS = 15;
+// rows fails loudly. C367 shipped 15 rows (v3.0-v3.3), C368 16 (v3.4 storm watch); raise it when a beat lands.
+const MIN_ROWS = 16;
 
 const SPEAKERS = ['stranger', 'believer', 'none'];
 const D1_MAP = /^(GraniteCave_|Route106$|LilycoveCity|DewfordTown)/;

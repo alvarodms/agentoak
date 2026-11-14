@@ -1,0 +1,29 @@
+{
+  "name": "route109-storm-watch-not-turned",
+  "checks": "C368 v3.4 Beat 1 'Storm watch' miss path: without FLAG_ROUTE104_SKEPTIC_TURNED, Route 109 is vanilla. No LOTAD DOLL (FLAG_TEMP_3 set on transition), the sandcastle kids face each other (boy right, girl left), the boy says his vanilla sandcastle line and no battle starts. Hypothesis measure (control): nothing changes before or after the first field text box.",
+  "scenario": {
+    "checkpoint": "slateport_arrival",
+    "clearFlags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [{ "species": "SPECIES_LOTAD_HOENN", "level": 20, "ability": 2 }],
+    "caught": ["SPECIES_LOTAD_HOENN"]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectPlayer": { "map": "MAP_ROUTE109", "x": 21, "y": 23 } },
+    { "expectFlag": { "FLAG_ROUTE104_SKEPTIC_TURNED": false } },
+    { "expectObject": { "id": "LOCALID_ROUTE109_LOTAD_DOLL", "absent": true } },
+    { "walk": "up" },
+    { "expectObject": { "id": "LOCALID_ROUTE109_SANDCASTLE_BOY", "x": 24, "y": 18, "facing": "right", "visible": true } },
+    { "expectObject": { "id": "LOCALID_ROUTE109_SOFT_SAND_GIRL", "x": 25, "y": 18, "facing": "left", "visible": true } },
+    { "screenshot": "kids-vanilla" },
+    { "walkTo": { "x": 24, "y": 17, "yFirst": true } },
+    { "face": "down" },
+    { "talk": true },
+    { "expectText": "sand castle's taking a long time" },
+    { "expectBoxCount": 1 },
+    { "expectNoText": ["LOTAD drink up lightning!", "[screen:"] },
+    { "expectScreen": "CB2_Overworld" },
+    { "expectObject": { "id": "LOCALID_ROUTE109_SANDCASTLE_BOY", "x": 24, "y": 18, "facing": "right" } }
+  ]
+}

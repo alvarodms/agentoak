@@ -7760,16 +7760,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Linda[] = {
     }
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_Kaylee[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_Route109StormWatcher[] = {
     {
     .iv = 0,
-    .lvl = 34,
-    .species = SPECIES_LANTURN,
+    .lvl = 14,
+    .species = SPECIES_PLUSLE,
+    .moves = {MOVE_SHOCK_WAVE, MOVE_NONE, MOVE_NONE, MOVE_NONE}
     },
     {
     .iv = 0,
-    .lvl = 34,
-    .species = SPECIES_PELIPPER,
+    .lvl = 13,
+    .species = SPECIES_MINUN,
+    .moves = {MOVE_SHOCK_WAVE, MOVE_GROWL, MOVE_NONE, MOVE_NONE}
     }
 };
 
