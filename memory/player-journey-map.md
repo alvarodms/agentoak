@@ -35,6 +35,9 @@ Measured on the emulator, not estimated. Every row is proven by a playtest; `fir
 
 Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombre→Ludicolo_Hoenn line across 5 tiers, rain at T4-T5) rebuilt C268-271; dialogue subtracted C299 to sensation, not exposition. Meteor Falls Bagon Colony (C153). Route 113: Vulpix_Hoenn (Ice/Fairy) 10% (C346) Lv21-22 + FrostTracker (C208); Jaylen/Madeline carry it (C244). Granite Cave B2F: Gligar_Hoenn 10% (C346) Lv10-13 (C250). **Red Ink believers**: Granite Cave B1F hiker (P3, C329) and Route 113 ash picnicker (P4, C330) — see walkthrough below.
 
+**(planned v3.4) Route 109 "Storm watch" (C368)**: with the Route 104 schoolkid turned (0x35), the sandcastle kids face the sea with a LOTAD DOLL on the sand; Tuber TOBY battles (Plusle/Minun) and loses with "Heard it from a kid on 104." Miss: vanilla sandcastle kids.
+**(planned v3.4) Mauville "Half a fact" (C369)**: ungated Youngster DAX at Wattson's door fights at once with a pure-Ground team built on "WATTSON's LOTAD is ELECTRIC"; Electric fails on him, Grass hits. The stale low point. Miss: a youngster by the gym, normal fight.
+
 **Emotional arc**: Escalation → discovery (Bagon colony, cave creature) → wonder (ice fox in ash)
 
 ---
@@ -89,11 +92,8 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 ## Red Ink believers — static walkthrough (C330)
 
 Built by reading each map.json object and talk script (C330), not from notes. "Caught" = the page's species is Pokédex-caught (`ScriptCheckPokedexCaught`, the same truth as `IsFieldNotesPageInked`). Position/facing changes come from `EventMacro_DexBelieverPlace` in each map's ON_TRANSITION, so they show on the next map load, not in the scene where you catch. Exception (C362): the Route 104 skeptic turns only when shown the LOTAD in person (flag-gated facing).
-
 Per-believer object/tile/label table (C330): git history; the map scripts are the source of truth and every state is now a playtest (believer-*).
-
 Trace result (C330): no bug found. No branch is unreachable (the picnicker's rumour needs 2 *other* pages inked, since her own page is not inked in that branch; reachable from any two of P1-P3, or with den pages). No item can be given twice. Since C334 every believer has an in-scene beat (the skeptic turns FACE_RIGHT right after his Corrected line).
-
 **Emulator coverage (C360)**: all four believers, Lilycove doubt and the coda lesson are covered by passing playtests (pokeemerald/playtests/).
 
 ### Red Ink payoff (C331; emulator-verified C358/C360/C365)

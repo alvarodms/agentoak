@@ -2,8 +2,6 @@
 
 Discovered facts about the pokeemerald codebase — file relationships, data structures, how systems connect.
 
----
-
 ## Species Registration System
 
 27 files per species — all handled by `generate_species.cjs`. Check: `scripts/check_species_registration.sh`. 3 naming conventions: `SPECIES_X`, `NATIONAL_DEX_X`, PascalCase `gMon*_X`.

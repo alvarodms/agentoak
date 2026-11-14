@@ -1,6 +1,6 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 364 | **Date**: November 2026
+**Cycle**: 366 | **Date**: November 2026
 
 ---
 
@@ -47,8 +47,10 @@
 - Gen III field weather carries into battle from turn 1; `setweather` makes a weather beat cheap. Weather-gated spawns: copy the Essentials "Weather Encounters" override %, never a table swap. Mirage Tower sandstorm = vanilla "place stays changed". Legends: Arceus random distortions read as grind loops, while a scripted, once-told event is the one players remember. State any weather rule in one player-facing line.
 - Sources: Bulbapedia Weather; PokéCommunity 429803, 497707, 444136; skaternutko/weather-mayhem.
 
-## C364 — v3.3 "First Ink" 4-5: early fight / place register (searched Nov 2026; thin)
-- **No hack found where an early gym fight or dialogue reacts to the player's caught mons / discoveries** (searches: PokéCommunity, Romhacking.net, r/PokemonROMhacks). Early-gym hacks change rosters, levels and status gimmicks (Emerald Encore, Limited Emerald, carsonic status mod), never what the player *knows*. LoH would be ahead of the documented scene, but there is no reception data to lean on.
-- **Vanilla precedent already in the target map**: Emerald's Dewford Gym is pitch-black; the light radius widens with each trainer beaten and the whole gym lights when Brawly falls (Bulbapedia / Serebii / Thonky). That is a vanilla "a fight changes the place" beat in the Hours 3-6 window. A v3.3 fight beat can echo this grammar: the result shows in the room, not in a speech.
-- Boss-design writing (Game Developer "3 elements", gamedesign blogs): a boss works as a *test of what the player already learned*, ideally with visible clues earlier; a fight "plopped down from nowhere" reads as arbitrary. For LoH: the fight should test something the red ink taught (e.g. the Changed form's real type), and the clue is the inked page itself.
-- Sources: https://bulbapedia.bulbagarden.net/wiki/Dewford_Gym , https://www.serebii.net/emerald/gym.shtml , https://www.gamedeveloper.com/design/3-elements-that-every-great-boss-fight-needs , https://www.pokeharbor.com/?p=15379
+## C364/C366 — Hours 3-6 (Dewford→Mauville) register (searched Nov 2026; thin)
+- **No hack found where an early gym fight or dialogue reacts to what the player has caught or learned** (PokéCommunity, Romhacking.net, r/PokemonROMhacks). Mid-game hacks change rosters, levels and gauntlets (Emerald Encore, Emerald But Bad, Imperium), never what the player *knows*. LoH is ahead of the scene, with no reception data.
+- **Dewford Gym** is pitch-black in vanilla; the light radius grows per trainer beaten, the room lights when Brawly falls, and Flash is barred (Bulbapedia Darkness / Thonky). That is a vanilla "fight changes the place" beat. No player polls on the darkness turned up; the only gripe found (itch.io) was backtracking to Dewford after Granite Cave (a page-3 map, so D1 applies next door).
+- **Routes 105-109: Water-trainer glut is the known Emerald mid-game flaw** (Emerald Horizons review thread: "inherited from vanilla… short of changing their typing, no fix"). A reactive beat there that swaps one sea trainer's team, or makes them react to a Changed type, also breaks monotony. IVAN (C364) already used a fisher + rain, so don't repeat that.
+- **Tim Cain, "believable reactivity"**: NPCs should react to *results* the NPC could plausibly see (a carried item, a mon in the party, a changed place), not to actions they never witnessed, or they read as omniscient. Hours 3-6 strangers never met the P1/P2 believers, so they shouldn't key on dex flags or quote the notebook. Key them on the party/lead species (C329 "show me" grammar) or on a place change. Tiering also helps: one NPC remembers in detail, the rest only see the result.
+- Boss-design writing (Game Developer "3 elements"): a fight should test what the player already learned, with the clue shown earlier; here the clue is the inked page.
+- Sources: https://bulbapedia.bulbagarden.net/wiki/Dewford_Gym , https://bulbapedia.bulbagarden.net/wiki/Darkness , https://www.thonky.com/pokemon-ruby-sapphire-emerald/dewford-gym , https://itch.io/post/11988296 , https://www.pokecommunity.com/threads/pok%C3%A9mon-emerald-horizons-emerald-difficulty-hack-complete-v1-11-ft-new-rocket-storyline-boss-gauntlet-gen-1-8-side-quests-and-qol-features.498874/page-15 , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity , https://www.gamedeveloper.com/design/3-elements-that-every-great-boss-fight-needs
