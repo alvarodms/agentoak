@@ -1,0 +1,47 @@
+{
+  "name": "mauville-half-a-fact-follows-advice",
+  "checks": "C370 v3.4 Beat 2 epilogue: DAX's advice fails where it counts. A pure-Ground SANDSHREW (DAX's own species) Lv50 OHKOs Wattson's MAGNETON with EARTHQUAKE. Vanilla GetMostSuitableMonToSwitchInto then sends LOTAD_HOENN 21 against a Ground mon (the only partner with a super-effective move; asserted, not assumed from slot order). CHECK_BAD_MOVE scores SHOCK_WAVE -10 on Ground, so within a few turns LOTAD uses MEGA DRAIN, 'super effective'. SANDSHREW's EARTHQUAKE on LOTAD shows neither 'super effective' nor 'not very effective': Ground isn't wrong, just not enough. SANDSHREW Lv50 outspeeds and one-shots LOTAD (est. 155 vs ~53 HP).",
+  "scenario": {
+    "checkpoint": "mauville_pre_wattson",
+    "defeatedTrainers": ["TRAINER_KIRK", "TRAINER_SHAWN", "TRAINER_BEN", "TRAINER_VIVIAN", "TRAINER_ANGELO"],
+    "party": [
+      { "species": "SPECIES_SANDSHREW", "level": 50, "ability": 1, "moves": ["MOVE_EARTHQUAKE", "MOVE_DEFENSE_CURL"] }
+    ],
+    "caught": ["SPECIES_SANDSHREW"]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "comment": "5,3 is plain floor (map_scan: MB_NORMAL c0) right below Wattson" },
+    { "warp": { "map": "MAP_MAUVILLE_CITY_GYM", "x": 5, "y": 3 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectObject": { "id": 1, "x": 5, "y": 2, "visible": true } },
+    { "face": "up" },
+    { "talk": true },
+    { "waitFor": "battle" },
+    { "expectBattle": { "opponent": "SPECIES_MAGNETON", "level": 20 } },
+    { "battleTurns": { "move": 1, "until": "MAGNETON fainted", "maxTurns": 2 } },
+    { "comment": "B taps answer a Shift-mode 'change POKeMON?' prompt with NO" },
+    { "waitForBattleText": "What will", "fresh": true },
+    { "comment": "the switch-in choice, asserted: against Ground, JOLTEON (no super-effective move) is passed over for LOTAD" },
+    { "expectBattle": { "opponent": "SPECIES_LOTAD_HOENN", "level": 21 } },
+    { "screenshot": "gym-lotad-out" },
+    { "comment": "DEFENSE CURL (slot 2) waits for Wattson's AI to reach for MEGA DRAIN" },
+    { "battleTurns": { "move": 2, "until": ["used MEGA DRAIN", "super effective"], "maxTurns": 8 } },
+    { "screenshot": "mega-drain-super-effective" },
+    { "waitForBattleText": "What will", "fresh": true },
+    { "comment": "Ground on Electric/Grass is 2x and 0.5x: neutral, no effectiveness line at all" },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": ["used EARTHQUAKE", "LOTAD fainted"],
+        "maxTurns": 1,
+        "forbid": ["super effective", "not very effective"]
+      }
+    },
+    { "screenshot": "ground-just-neutral" },
+    { "waitForBattleText": "What will", "fresh": true },
+    { "expectBattle": { "opponent": "SPECIES_JOLTEON", "level": 24 } },
+    { "comment": "the rest of Wattson's fight is vanilla" }
+  ]
+}

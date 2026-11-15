@@ -57,7 +57,8 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `setVar` (`{"VAR_REPEL_STEP_COUNT": 250}`) | Set saved vars mid-test. A repel count after a catch keeps the walk back through grass free of wild battles (lead level above the wild ones) |
 | `findWildBattle` (+`maxSteps`, `species`), `waitFor` (+`maxFrames`) | Walk until a wild battle starts (land only); wait for `battle`, `overworld` or a screen name. With `"species": "SPECIES_X"` it runs from every other wild Pokémon and keeps walking (give the party a fast, high-level lead so running always works) |
 | `catchWild` (`{"ball": "ITEM_MASTER_BALL"}`) | In a wild battle: BAG, Poké Balls pocket, throw that ball, answer NO to the nickname, close the Pokédex page, and stop once the field is back (free, or a field script such as an ON_FRAME cue has started; follow with `talk: {"start": false}`). Fails if the ball isn't in the bag or the catch fails. Its battle messages ("Gotcha!") are the step's text for `expectText` |
-| `waitForBattleText` (+`maxFrames`, `fresh`) | Tap B through battle messages until one contains a string. `"fresh": true` ignores the message already showing, for the *next* `"What will"` |
+| `waitForBattleText` (+`maxFrames`, `fresh`, `forbid`) | Tap B through battle messages until one contains a string. `"fresh": true` ignores the message already showing, for the *next* `"What will"`. `"forbid": ["super effective"]` fails if a message on the way contains one of them |
+| `battleTurns` (`{"move": 2, "until": ["used MEGA DRAIN", "super effective"], "maxTurns": 8}`, +`forbid`) | Repeat one move slot (1-4) each turn until all `until` strings have shown in the battle messages (across turns); stops right after the message that completes the set, mid-turn. `forbid` fails on a message; it also fails if the battle ends first or after `maxTurns` (default 10), listing what it saw. For fights where the foe AI's move choice or turn order isn't fixed |
 | `expectBattle`, `expectBattleText` | Opponent species and level; the current battle message only (no history) |
 | `expectBattleWeather` | `"none"`, `"rain"`, `"sun"`, `"sandstorm"` or `"hail"` (gBattleWeather), e.g. after `waitForBattleText: "hail"` |
 | `screenshot`, `comment` | Saved under `artifacts/playtests/<name>/`; notes |
@@ -71,7 +72,10 @@ no. RUN is `RIGHT`, `DOWN`, `A` on the action menu. Move slot 2 is `press A`,
 `press RIGHT`, `press A`; the move cursor stays on the last move used, so the
 next turn's `A`, `A` repeats it (mauville-half-a-fact-lotad). The opponent's AI and moves
 (Protect, priority) change how many turns a fight takes, so use a party that
-wins in one hit when the fight isn't the point.
+wins in one hit when the fight isn't the point. When the fight *is* the point and the foe's
+move choice isn't fixed (a leader's AI picking among four moves), use `battleTurns`
+instead of counting turns: it repeats a move until the messages you want have shown
+(mauville-half-a-fact-follows-advice, word-travels-in-order).
 
 Tips from writing the first suite:
 - Approach trainers from outside their line of sight, or they spot you on load.

@@ -558,7 +558,8 @@
     "playtests": [
       "route109-storm-watch-turned",
       "route109-storm-watch-not-turned",
-      "route109-storm-watch-defeated"
+      "route109-storm-watch-defeated",
+      "word-travels-in-order"
     ],
     "speaker": "stranger"
   },
@@ -585,7 +586,9 @@
     "playtests": [
       "mauville-half-a-fact-lotad",
       "mauville-half-a-fact-no-lotad",
-      "mauville-half-a-fact-wally-unblocked"
+      "mauville-half-a-fact-wally-unblocked",
+      "mauville-half-a-fact-follows-advice",
+      "word-travels-in-order"
     ],
     "speaker": "stranger"
   }

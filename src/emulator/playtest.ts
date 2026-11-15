@@ -202,6 +202,21 @@ const StepSchema = z.union([
     maxFrames: z.number().int().positive().optional(),
     /** Ignore the message already showing; wait for a new one (e.g. the next "What will"). */
     fresh: z.boolean().optional(),
+    /** Fail if any message seen while waiting contains one of these. */
+    forbid: Strings.optional(),
+  }),
+  z.strictObject({
+    /**
+     * In a battle: each turn pick FIGHT → move slot `move` (1-4, cursor reset to slot 1 first), then tap B through
+     * the turn's messages, until every `until` string has shown in a battle message (across turns). Fails if a
+     * `forbid` string shows, if the battle ends first, or after `maxTurns` turns (default 10).
+     */
+    battleTurns: z.strictObject({
+      move: z.number().int().min(1).max(4),
+      until: Strings,
+      maxTurns: z.number().int().positive().optional(),
+      forbid: Strings.optional(),
+    }),
   }),
   z.strictObject({
     expectBattle: z.strictObject({ opponent: z.string().optional(), level: z.number().int().optional() }),
@@ -561,14 +576,26 @@ async function runStep(
 
   if ("waitForBattleText" in step) {
     const stale = step.fresh ? await battleText(s) : undefined;
-    await waitForBattleText(s, step.waitForBattleText, step.maxFrames ?? 1800, stale);
+    await waitForBattleText(s, step.waitForBattleText, step.maxFrames ?? 1800, stale, asList(step.forbid ?? []));
+    return;
+  }
+
+  if ("battleTurns" in step) {
+    const { move, until, maxTurns = 10, forbid = [] } = step.battleTurns;
+    await battleTurns(s, move, asList(until), maxTurns, asList(forbid));
     return;
   }
 
   if ("expectBattle" in step) {
-    // gBattleMons fills in a few frames after the battle screen appears.
+    // gBattleMons fills in a few frames after the battle screen appears; until then a second battle
+    // in one test still holds the last battle's mons, so wait for the expected ones too.
+    const { opponent, level } = step.expectBattle;
+    const settled = (b: Awaited<ReturnType<EmulatorSession["readState"]>>["battle"]) => {
+      const foe = b?.[1];
+      return !!foe && foe.species > 0 && (opponent === undefined || foe.speciesName === opponent) && (level === undefined || foe.level === level);
+    };
     let battle = (await s.readState()).battle;
-    for (let f = 0; f < 600 && battle && !(battle[1]?.species > 0); f += 10) {
+    for (let f = 0; f < 600 && battle && !settled(battle); f += 10) {
       await s.run(10);
       battle = (await s.readState()).battle;
     }
@@ -588,15 +615,25 @@ async function runStep(
 
 const battleText = async (s: EmulatorSession) => flatten(await s.readText("gDisplayedStringBattle", 300));
 
+/** The first of `forbid` that `text` contains, if any. */
+const forbidden = (text: string, forbid: readonly string[]) => forbid.find((x) => text.includes(flatten(x)));
+
 /**
  * Taps B until the battle message contains `want` (and differs from
  * `stale`). Battle messages wait for a button; B advances them and does
  * nothing on the action menu, so tapping it while waiting is safe.
+ * Fails if a message seen on the way (not `stale`) contains a `forbid` string.
  */
-async function waitForBattleText(s: EmulatorSession, want: string, max: number, stale?: string): Promise<void> {
+async function waitForBattleText(s: EmulatorSession, want: string, max: number, stale?: string, forbid: readonly string[] = []): Promise<void> {
   let text = "";
+  const seen: string[] = [];
   for (let f = 0; f <= max; f += 30) {
     text = await battleText(s);
+    if (text.trim() && text !== stale && text !== seen.at(-1)) {
+      seen.push(text);
+      const bad = forbidden(text, forbid);
+      if (bad) fail(`waitForBattleText ${JSON.stringify(want)}: a message showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
+    }
     if (text.includes(flatten(want)) && text !== stale) {
       await s.run(30); // let the menu that follows the message take input
       return;
@@ -604,6 +641,60 @@ async function waitForBattleText(s: EmulatorSession, want: string, max: number, 
     await s.press("B", { hold: 2, release: 28 });
   }
   fail(`battle text never showed ${JSON.stringify(want)} in ${max} frames; last ${JSON.stringify(text)}`);
+}
+
+/** Move menu cursor moves from slot 1 (top left) to each slot: 1 2 on top, 3 4 below. */
+const MOVE_SLOT_PATH: Record<number, Button[]> = { 1: [], 2: ["RIGHT"], 3: ["DOWN"], 4: ["DOWN", "RIGHT"] };
+
+/**
+ * battleTurns: each turn FIGHT → move slot `move`, then B through the turn, until every
+ * `until` string has shown in some message. Returns right after the message that completes
+ * the set (mid-turn), so a following waitForBattleText or battleTurns picks up from there.
+ */
+async function battleTurns(s: EmulatorSession, move: number, until: readonly string[], maxTurns: number, forbid: readonly string[]): Promise<void> {
+  const label = `battleTurns move ${move}`;
+  const seen: string[] = [];
+  const missing = () => until.filter((u) => !seen.some((m) => m.includes(flatten(u))));
+  await waitForBattleText(s, "What will", 1800);
+  for (let turn = 1; turn <= maxTurns; turn++) {
+    // FIGHT is top left: UP then LEFT reaches it from any action, and slot 1 from any move.
+    await s.press("UP");
+    await s.press("LEFT");
+    await s.press("A");
+    await s.run(30);
+    await s.press("UP");
+    await s.press("LEFT");
+    for (const b of MOVE_SLOT_PATH[move]) await s.press(b);
+    const menu = await battleText(s);
+    await s.press("A");
+    // B in the move menu would cancel the choice: wait for the turn's first message before tapping it.
+    let text = await battleText(s);
+    for (let f = 0; text.includes("What will") || text === menu; f += 10) {
+      if (f >= 600) fail(`${label}: turn ${turn} never started (is slot ${move} empty, or out of PP?); battle text ${JSON.stringify(text)}`);
+      await s.run(10);
+      text = await battleText(s);
+    }
+    for (let f = 0; ; f += 30) {
+      if ((await s.callbacks()).callback2 !== "BattleMainCB2") {
+        fail(`${label}: battle ended before ${JSON.stringify(missing())} showed; seen ${JSON.stringify(seen)}`);
+      }
+      text = await battleText(s);
+      if (text.includes("What will")) break; // the next turn's action menu
+      if (text.trim() && text !== seen.at(-1)) {
+        seen.push(text);
+        const bad = forbidden(text, forbid);
+        if (bad) fail(`${label}: turn ${turn} showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
+        if (missing().length === 0) {
+          await s.run(30);
+          return;
+        }
+      }
+      if (f >= 3600) fail(`${label}: turn ${turn} still running after 3600 frames; seen ${JSON.stringify(seen.slice(-12))}`);
+      await s.press("B", { hold: 2, release: 28 });
+    }
+    await s.run(30); // let the action menu take input
+  }
+  fail(`${label}: after ${maxTurns} turn(s) still missing ${JSON.stringify(missing())}; last messages ${JSON.stringify(seen.slice(-12))}`);
 }
 
 /** Taps B until the battle has handed back to the field, collecting each battle message. */

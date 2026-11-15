@@ -4076,6 +4076,7 @@ static const struct TrainerMonItemCustomMoves sParty_Brawly1[] = {
     }
 };
 
+// C370 invariant (mauville-half-a-fact-follows-advice): no WATER/GRASS/ICE move on MAGNETON or JOLTEON, so a Ground lead always draws LOTAD_HOENN (GetMostSuitableMonToSwitchInto pass 1).
 static const struct TrainerMonItemCustomMoves sParty_Wattson1[] = {
     {
     .iv = 200,

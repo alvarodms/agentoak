@@ -357,3 +357,29 @@ describe("scenario checkpoint", () => {
     expect(() => parsePlaytest({ name: "c", checks: "x", scenario: { checkpoint: "nowhere" }, steps })).toThrow();
   });
 });
+
+describe("battleTurns step and waitForBattleText forbid", () => {
+  const parse = (step: unknown) => parsePlaytest({ ...MINIMAL, steps: [step] }).steps[0];
+  it("parses battleTurns with and without forbid/maxTurns", () => {
+    expect(parse({ battleTurns: { move: 2, until: ["used MEGA DRAIN", "super effective"], maxTurns: 8 } })).toEqual({
+      battleTurns: { move: 2, until: ["used MEGA DRAIN", "super effective"], maxTurns: 8 },
+    });
+    expect(parse({ battleTurns: { move: 1, until: "fainted" } })).toEqual({ battleTurns: { move: 1, until: "fainted" } });
+    expect(() => parse({ battleTurns: { move: 1, until: "fainted", forbid: ["super effective", "not very effective"] } })).not.toThrow();
+  });
+
+  it("rejects a move slot outside 1-4 and a missing until", () => {
+    expect(() => parse({ battleTurns: { move: 5, until: "fainted" } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 0, until: "fainted" } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1 } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1, until: "x", maxTurns: 0 } })).toThrow();
+  });
+
+  it("accepts forbid on waitForBattleText", () => {
+    expect(parse({ waitForBattleText: "What will", fresh: true, forbid: "super effective" })).toEqual({
+      waitForBattleText: "What will",
+      fresh: true,
+      forbid: "super effective",
+    });
+  });
+});

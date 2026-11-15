@@ -1,8 +1,15 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 369 | **Date**: November 2026
+**Cycle**: 370 | **Date**: November 2026
 
 ---
+
+## C370 — "follows-advice" playtest: how vanilla AI picks Wattson's 2nd mon (searched Nov 2026; web thin, read from pret source)
+- **No public doc of vanilla switch-in choice** (PokéCommunity 536914: vanilla Emerald switching is rarely touched, hacks swap to expansion's AI_FLAG_SMART_MON_CHOICES). The pret code is the source: `GetMostSuitableMonToSwitchInto` (src/battle_ai_switch_items.c:629-790) runs after a faint.
+- **Pass 1 (pret's own "possible bug" comment, :712)**: it picks the live mon that TAKES THE MOST damage from the player's mon's own types. It keeps that pick only if one of its moves is super effective on the player's mon (TypeCalc, :733); otherwise it drops it and tries again. **Pass 2**: most raw damage (AI_CalcDmg).
+- **Pure-Ground player after Magneton faints**: pure-Electric partners take 2x but have no SE move on Ground, so they're dropped. Lotad_H (Electric/Grass) takes 1x and MEGA_DRAIN is SE, so **pass 1 returns Lotad_H whatever its party slot is**, a deterministic send-out. A Water/Grass/Ice move on any Electric partner would steal the pick. Assert the species sent in, don't assume slot order.
+- ShouldSwitch's NOT_VERY_EFFECTIVE branch (1/3 chance) only fires after an NVE hit. A Ground move is 4x on Magneton and neutral on Lotad_H, so no random switch-out happens.
+- Sources: https://www.pokecommunity.com/threads/emerald-patch-for-vanilla-emerald-that-has-trainer-ai-switch-more.536914 , https://expansion-docsite-kildemal.pages.dev/tutorials/ai_flags , https://www.pokecommunity.com/threads/switching-if-choice-locked-into-bad-moves.500018/latest
 
 ## C356 — v3.2 T1 "ring in the ash": silent persistent traces (searched Nov 2026)
 - **Silent worn-path traces mostly go unnoticed.** Death Stranding's player-worn trails (a faint trail becomes a path with use; Sony patent "gradual building of a route") were "a secret feature most players missed" in DS1 (Gfinity, 2025). Even a AAA trace with no text was missed by most players. T1 is a bonus for observant players. Don't count it as proof the arc landed. Measure it only with an open recall question ("did anything on Route 113 look different on your second visit?"), never by naming the ring.
@@ -10,11 +17,7 @@
 - No public pokeemerald doc covers setmetatile persistence. The pret wiki only says metatile changes are "most common during map load" and that `wait*` commands in level scripts hardlock. That confirms the ON_LOAD choice and rules out any waitstate/delay in Route113_OnLoad.
 - Sources: https://www.gfinityesports.com/article/death-stranding-2-brings-back-a-secret-feature-most-players-missed-the-first-game , https://www.videogameschronicle.com/news/sony-has-patented-death-strandings-online-path-building-features , https://www.gdcvault.com/play/1016815/Environmental-Storytelling-Indices-and-the , https://dl.digra.org/index.php/dl/article/download/2943/2927/2986 , https://code.heni.lol/decomp/emerald/wiki/Random-Info,-Tips,-and-Tricks
 
-## C354 — check_beat_visibility lint + "beside the path" placement (searched Nov 2026; thin)
-- **No public pokeemerald event/visibility lint exists.** Closest is Porygon's `validate_scripts` (an MCP skill, not CI): it flags **dangling labels** (map.json `script` names with no `Label::` in scripts.inc) and undefined FLAG_/VAR_/ITEM_ constants, because a typo'd label silently breaks the event while an undefined constant fails the build. Worth folding into check_beat_visibility: each beat object's `script` and each hide-flag OnTransition label must resolve. Poryscript documents adding checks to `.github/workflows/build.yml`; LoH's `check_all` already covers that.
-- **Critical vs golden path** (Angry GM / level-design writing): the critical path is the shortest route; the golden path is the designer's preferred route, which may wander. Off-path content should be "rewarded, not required". A Portsmouth study finds players read the path mainly from **layout and lighting**, so a beat one row off a flat sand walk is seen; one around a rock or behind a trainer's sightline is not. A lint can't measure this. GBA view (240x160 px = 15x10 metatiles, player near centre) means "within ~4 rows / 7 columns of a BFS walk tile" is a cheap static proxy for "on screen while walking past".
-- Silent playtests that log missed content are the standard fix for discoverability. Static lints only stand in for that until a tester runs the game (C355 milestone).
-- Sources: https://skillsmp.com/creators/gregthegreek/porygon/skills-event-scripting , https://github.com/huderlem/poryscript , https://theangrygm.com/pretty-good-dungeon-critical-paths/ , https://researchportal.port.ac.uk/en/publications/critical-path-design-in-story-oriented-digital-games/ , https://mygamedesign-frontend.pages.dev/what-makes-secret-areas-feel-discovered-vs-obvious
+## C354 — placement (condensed C370): no public pokeemerald visibility lint exists (Porygon `validate_scripts` flags dangling labels only). Players read the path from layout and lighting; "within ~4 rows / 7 columns of a walk tile" is the static on-screen proxy (GBA view 15x10 metatiles).
 
 ## C353 — Post-v3.1 planning: leaving the "…?" open, luring players to a quiet beat (searched Nov 2026; opinion-grade)
 - **Ambiguity holds up only when it's optional and the player still gets a payoff.** Game Developer's Dear Esther piece: the open story was praised, but players who *invested in interpreting* it were "frustrated or offended" to find there was no answer. Wayline: unresolved ambiguity that "seems arbitrary" reads as being cheated. The Witness (Blow): hidden layers reward only the players who dig, and the core stays complete. Rule for the page-3 "…?": keep it open (C347), but never make the doubt look like it asks for an action, e.g. a new lead, item or location. An open doubt that sends the player searching becomes Dear Esther's "no solution" trap.
@@ -38,8 +41,7 @@
 
 ## C368 — v3.4 Beat 1 TOBY: Plusle/Minun at Lv13-14 (checked Nov 2026)
 - **Default moves carry no Electric damage.** Plusle and Minun at Lv13-14 know GROWL, THUNDER_WAVE, QUICK_ATTACK and HELPING_HAND (local level_up_learnsets.h:4774-4802, which matches the pokemondb Gen 3 table). SPARK comes at Lv19. So a default-move TOBY never shows "not very effective" on Lotad_H, and the beat's proof is gone. The fix is a hand-set moveset with an Electric damaging move (SHOCK_WAVE TM34, Gen III-legal for both; confirm in tmhm_learnsets.h).
-- **Gen III Plus/Minus only work in doubles** (Bulbapedia Minus page: SpA x1.5 only when a Plus partner is out). In a single battle they're flavour. Helping Hand fails in singles too, so it's a dead slot.
-- **THUNDER_WAVE paralyses Electric types before Gen VI.** The Gen VI immunity isn't in pokeemerald, so TOBY can paralyse Lotad_H even though his damage barely scratches it. That mixes the lesson. Drop Thunder Wave from his moves.
+- **Gen III Plus/Minus and Helping Hand are doubles-only** (Bulbapedia Minus). **THUNDER_WAVE paralyses Electric types before Gen VI**, so it would mix the lesson; dropped.
 - Sources: https://pokemondb.net/pokedex/plusle/moves/3 , https://m.bulbapedia.bulbagarden.net/wiki/Minus , https://forums.serebii.net/threads/community-potw-84-special-3.580518/page-4
 
 ## C369 — v3.4 Beat 2 DAX: pure-Ground mons at Lv19-20 (checked Nov 2026)

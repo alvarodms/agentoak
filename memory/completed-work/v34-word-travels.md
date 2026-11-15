@@ -2,26 +2,7 @@
 
 Design: memory/strategy-notes.md, v3.4 section.
 
-## C367 — groundwork (refactor, no player-visible ROM change)
-
-No data/maps, src/ or include/ file touched.
-
-| File | Change |
-|---|---|
-| src/emulator/checkpoints.ts (new) | `CHECKPOINTS` (slateport_arrival: Route 109 21,23, Briney + boat shown, Devon Goods undelivered; mauville_pre_wattson: Mauville 18,17, post-Slateport/Route 110, Wally pending) with a file:line comment per value; `applyCheckpoint()` (test wins; temp-key guard) |
-| src/emulator/checkpoints.test.ts (new) | merge order, partial tile, FLAG_TEMP_/VAR_TEMP_ guard, limits with 20 flags spare, every name defined in flags.h/vars.h |
-| src/emulator/scenario.ts | `checkpoint?` field; map/x/y optional (encodeScenario requires them); `resolveScenario` applies the checkpoint first; `LIMITS` exported |
-| src/emulator/playtest.ts | ScenarioSchema `checkpoint` + refines (map/x/y all-or-none, required without checkpoint); `expectBoxCount` step + exported `messageBoxes()` |
-| src/emulator/playtest.test.ts | expectBoxCount parse + counting/exclusions; checkpoint schema |
-| pokeemerald/playtests/checkpoint-slateport-arrival-boot.json (new) | boot, idle, 21,23 on Route 109, Briney 21,24 + boat 21,26 visible, warp Slateport 20,24 |
-| pokeemerald/playtests/checkpoint-mauville-pre-wattson-boot.json (new) | boot, idle, 18,17; warp 12,10, Wally 8,6 + uncle 9,6 present |
-| pokeemerald/playtests/route104-ivan-defeated-talk.json | + `expectBoxCount: 1` |
-| pokeemerald/playtests/README.md | `checkpoint` scenario field, `expectBoxCount` row |
-| pokeemerald/scripts/beats.json (new) | 15 shipped beat rows (v3.0-v3.3), 7 allow entries |
-| pokeemerald/scripts/check_beats.cjs (new) | B0-B4 + `--selftest` (planted failure per rule), `walkLabels()` |
-| pokeemerald/Makefile | `check_beats` target, .PHONY, check_all after check_beat_visibility |
-
-Suite 86/86. Lint migration of check_playtest / check_beat_visibility / check_object_tiles onto beats.json moved to C370 (parity baseline in strategy-notes C367 spec).
+## C367 — groundwork (refactor): src/emulator/checkpoints.ts(+test), scenario.ts `checkpoint`, playtest.ts `expectBoxCount`, 2 checkpoint boot playtests, scripts/beats.json (15 rows) + check_beats.cjs + Makefile target. Suite 86/86. See git history C367.
 
 ## C368 — Beat 1 "Storm watch" (Route 109) SHIPPED
 
@@ -65,3 +46,18 @@ Ungated (gate d). 0 new flags (DAX = trainer flag of slot 485). No map script ad
 | playtests/README.md | "Fighting a battle": move slot 2 = A, RIGHT, A; the cursor stays on the last move used next turn |
 
 Verify (C369): all 3 new playtests passed on the first run (lotad 6152 frames, no-lotad 4185, wally-unblocked 8481); suite 92/92; `make check_all` exit 0 (check_beats 17 rows / 8 strangers text-walked; check_trainer_slots 8 reclaimed; check_object_tiles 177 destinations, 209 start tiles, 0 errors, 13 warnings; check_text_width widest new line 151px; check_flag_pairs 95 flags, unchanged); audit_boss_species --strict 0 collisions; npm build:check + npm test (480) pass. Plan deviation: the re-talk asserts `expectBoxCount: 1`, not 2 (one msgbox with a \p is one box).
+
+## C370 — story-level proof (harness + 2 playtests, no ROM gameplay change)
+
+| File | Change |
+|---|---|
+| src/emulator/playtest.ts | `battleTurns` step ({move 1-4, until, maxTurns=10, forbid}; FIGHT/slot reset UP+LEFT each turn, waits for the turn's first message before tapping B, returns mid-turn once all `until` strings showed; fails on forbid, battle end (callback2 ≠ BattleMainCB2) or maxTurns); `forbid` on `waitForBattleText`; `expectBattle` polls until the expected foe/level (stale gBattleMons from an earlier battle in the same test) |
+| src/emulator/playtest.test.ts | battleTurns parse/reject, waitForBattleText forbid |
+| pokeemerald/playtests/README.md | battleTurns row, waitForBattleText +forbid, "Fighting a battle" pointer |
+| pokeemerald/playtests/mauville-half-a-fact-follows-advice.json (new) | Lv50 SANDSHREW vs Wattson: EQ OHKOs MAGNETON, LOTAD_HOENN 21 switched in, CHARGE x3 then MEGA DRAIN turn 4 super effective (43 dmg), EQ neutral OHKO, JOLTEON next |
+| pokeemerald/playtests/word-travels-in-order.json (new) | one Lv18 Lotad_H save: Route 104 turn → Route 109 doll/kids/TOBY (13 ABSORB turns) → Mauville PC heal → DAX doesn't affect / super effective; screenshots wt-1..wt-3c |
+| pokeemerald/src/data/trainer_parties.h | comment above sParty_Wattson1 (C370 invariant: no Water/Grass/Ice move on MAGNETON/JOLTEON) — generate_trainer.cjs MODIFY replaces from the `static` line, so the comment survives |
+| pokeemerald/scripts/beats.json | v34-half-a-fact +2 playtests, v34-storm-watch +word-travels-in-order |
+
+Suite 94/94.
+
