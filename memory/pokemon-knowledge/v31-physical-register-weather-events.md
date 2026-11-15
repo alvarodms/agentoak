@@ -1,6 +1,6 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 370 | **Date**: November 2026
+**Cycle**: 371 | **Date**: November 2026
 
 ---
 
@@ -39,17 +39,14 @@
 - No public reviews of a "trainer summons the weather" overworld moment were found; this beat is ahead of the documented scene.
 - Sources: https://bulbapedia.bulbagarden.net/wiki/Lightning_Rod_(Ability) , https://veekun.com/dex/abilities/Lightning%20Rod , https://bulbapedia.bulbagarden.net/wiki/Parasol_Lady_(Trainer_class) , https://www.scribd.com/document/541056040/Battle-Changes
 
-## C368 — v3.4 Beat 1 TOBY: Plusle/Minun at Lv13-14 (checked Nov 2026)
-- **Default moves carry no Electric damage.** Plusle and Minun at Lv13-14 know GROWL, THUNDER_WAVE, QUICK_ATTACK and HELPING_HAND (local level_up_learnsets.h:4774-4802, which matches the pokemondb Gen 3 table). SPARK comes at Lv19. So a default-move TOBY never shows "not very effective" on Lotad_H, and the beat's proof is gone. The fix is a hand-set moveset with an Electric damaging move (SHOCK_WAVE TM34, Gen III-legal for both; confirm in tmhm_learnsets.h).
-- **Gen III Plus/Minus and Helping Hand are doubles-only** (Bulbapedia Minus). **THUNDER_WAVE paralyses Electric types before Gen VI**, so it would mix the lesson; dropped.
-- Sources: https://pokemondb.net/pokedex/plusle/moves/3 , https://m.bulbapedia.bulbagarden.net/wiki/Minus , https://forums.serebii.net/threads/community-potw-84-special-3.580518/page-4
+## C371 — v3.5 "loud moment": what the player cannot step around (searched Nov 2026; opinion-grade, no numbers)
+- **Critical path = the only guaranteed audience.** Avowed/BG3 devs (GamesRadar) say outright that most players never see most optional content; bugnet/Game Developer "Hinterlands": the critical path is the route ALL players walk. No reliable % exists (a "70% never see it" claim is unsourced). Pair with C360: most players never reach postgame. A beat gated on optional/den/postgame state is not "unavoidable", whatever its staging.
+- **"Loud" must not mean a long forced cutscene.** PokéCommunity "what quit moment made you drop a hack" names a long unskippable scene; itch.io players took an unskippable opening for a softlock. Unavoidable = it sits on the path (a body in the way, a fight to pass), not a lockall monologue.
+- **Vanilla precedent on the exact map**: Emerald's invisible Kecleon blocks the Fortree Gym door until the Devon Scope (Route 120, Steven): a critical-path obstruction the player physically meets (from game knowledge; the web search found no reception data; verify FortreeCity scripts). Fortree also holds the C344 crayon kid, so a v3.5 Fortree beat must not stack on it.
 
-## C369 — v3.4 Beat 2 DAX: pure-Ground mons at Lv19-20 (checked Nov 2026)
-- **Sandshrew Lv19 default moves = SCRATCH, DEFENSE_CURL, SAND_ATTACK, POISON_STING** (local level_up_learnsets.h:396-407; no Ground move until SAND_TOMB 45). POISON_STING is 2x on Lotad_H's Grass and can poison it, which muddles "his half is right". SAND_ATTACK can make the player's Grass "super effective" proof miss, a seed-dependent failure like C368's turn count. Hand-set: drop both.
-- **Trapinch Gen III** (pokemondb, verify locally): BITE 1, SAND_ATTACK 9, FAINT_ATTACK 17; no Ground move before SAND_TOMB 25. Abilities HYPER_CUTTER / ARENA_TRAP. Trainer mons always use slot 0 = HYPER_CUTTER, so the player isn't trapped.
-- **Baltoy** is Ground/Psychic with LEVITATE. At Lv19 its default moves include ROCK_TOMB and SELFDESTRUCT. It is not pure Ground, and a self-KO blurs the outcome, so avoid it.
-- No public complaint about Sand-Attack specifically turned up. Radical Red cut Double Team and Minimize (TV Tropes), the clearest sign that big hacks remove accuracy and evasion coin-flips.
-- Sources: https://pokemondb.net/pokedex/sandshrew/moves/3 , https://pokemondb.net/pokedex/trapinch/moves/3 , https://pokemondb.net/pokedex/baltoy/moves/3 , https://www.tvtropes.org/pmwiki/pmwiki.php/VideoGame/PokemonRadicalRed
+## C368/C369 — v3.4 trainer movesets (condensed C371)
+- Plusle/Minun Lv13-14 have no Electric damage move (SPARK 19) → hand-set SHOCK_WAVE; Plus/Minus + Helping Hand are doubles-only; Gen III THUNDER_WAVE paralyses Electric types. Sandshrew Lv19 POISON_STING (2x on Lotad_H) / SAND_ATTACK muddle the proof → dropped; Trapinch slot 0 = HYPER_CUTTER (no trap); Baltoy out (Levitate, Selfdestruct). Radical Red cut evasion moves (TV Tropes).
+- Sources: pokemondb Gen 3 move pages (plusle, sandshrew, trapinch, baltoy), Bulbapedia Minus, tvtropes Radical Red.
 
 ## C347/C348 — Weather / timed field events, encounter odds (condensed C369)
 - No public wild_encounters.json validator exists; slot % comes from the slot index (land 20/20/10/10/10/10/5/5/4/4/1/1). Placed objects work best seen BEFORE the one line of text.

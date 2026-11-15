@@ -61,3 +61,9 @@ Verify (C369): all 3 new playtests passed on the first run (lotad 6152 frames, n
 
 Suite 94/94.
 
+
+## Design (C366, archived from strategy-notes C371)
+- Hypothesis: the ink travels farther than the player; a Route 102/104 correction has reached Slateport/Mauville first, read as recognition not congratulation. Measure: visible change before the first field box (target 0). Result C371: 0 boxes in both beats; the TOBY fight (13 turns at Lv18) is the one feel defect, fix C373 (retrospective: player-journey-map.md "v3.4 Word Travels — retrospective (C371)").
+- Rules as shipped: 2 beats (one PLACE→FIGHT gated on 0x35, one ungated FIGHT); allowed maps Routes 105/107-110/117, Slateport, Mauville, Route 111 south (excluded Dewford, Route 106, Granite Cave, Lilycove, Routes 102-104, Petalburg Woods); gates only 0x35 / 0x36 / party species / none; ≤2 boxes per NPC per state; exactly one source line ("Heard it from a kid on 104."); no Water/Rock type on a "half-known" trainer, no HIKER sprite for a stranger; 0 new flags (FLAG_TEMP_3 + trainer flags), slots 462/485; no ON_RESUME/ON_FRAME.
+- Believability chains: Beat 1 = Briney's boat sails from the Route 104 beach where the schoolkid turned to the Route 109 dock; Beat 2 = Wattson battles with a LOTAD and a challenger at his door kept only "ELECTRIC".
+- Texts verbatim in Route109/scripts.inc (StormWatcher*, LotadDoll) and MauvilleCity/scripts.inc (GymHopeful*); team reasons in scripts/trainer_configs/route109_storm_watcher.json and mauville_gym_hopeful.json.

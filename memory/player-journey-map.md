@@ -12,22 +12,9 @@ Dense migration foreshadowing: Birch dialogue (C180), difficulty selection (C181
 
 ### v3.3 First Ink — retrospective (C365)
 
-Measured on the emulator, not estimated. Every row is proven by a playtest; `first-ink-chapter-in-order` runs the four field beats on one save in story order (Route 102 catch → Route 104 schoolkid → Woods catch → forager → IVAN) and shows no earlier flag hides a later NPC.
-
-| Beat | What the player sees change before anyone explains it | Playtest that proves it | How a player misses it |
-|---|---|---|---|
-| Pen moment (C361) | Back in the field after the first LOTAD_HOENN / SHROOMISH_HOENN catch: "!" over the player, page-turn sound, only their own red ink line, then FIELD NOTES sits on SELECT | route102-first-catch-ink, woods-first-catch-ink, first-ink-chapter-in-order | Only one per save (one flag for both pages): whichever page-1/2 map comes first. The second catch is silent (chain asserts it) |
-| Schoolkid turn (C362) | The boy facing the sea breaks off mid-recital ("Hides from st..."), "!", turns east toward Petalburg and stays turned | route102-catch-then-route104-skeptic, first-ink-chapter-in-order | Never talks to him after the catch; facing the sea he reads as scenery |
-| Forager walk (C363) | She goes quiet, looks back at the light and walks west out of view; later found in the cold patch (11,24). With the boy turned first she adds "That boy stopped reading his page too." | woods-catch-then-forager-walks, first-ink-chapter-in-order | Never talks to her with Shroomish_H caught (10% in the woods) |
-| IVAN's rain (C364) | He quotes Birch's printed page 1, the sky turns to rain, then his Water team is walled by a Lotad_H | route104-ivan-rain-lotad-wins, -rain-no-lotad, first-ink-chapter-in-order | Sight 0: must be talked to. The heal needs RAIN DISH; a LIGHTNING_ROD Lotad_H sees no heal (the wall still shows); no Lotad_H in the party = rain but no wall |
-| Pokénav report (C331, first verified C365) | Birch's rating call runs on into the names of the people the player changed, then "Keep the pen." | pokenav-birch-red-ink-report, -two-pages-no-report, -worst-case-report | Needs 3 inked pages, so Gligar_H (Granite B2F, 10%) at the earliest: around Hour 5+. Only if the player calls Birch; nothing prompts it |
-
-- **Boxes before the first red ink** (chain transcript): 5 battle messages (appeared, MASTER BALL, Gotcha, Pokédex data, nickname), then 1 field page ("SAGE opened FIELD NOTES and took out a pen."); the ink is the 2nd field page. The C360 notebook read had it on the 5th.
-- **Pages mentioning LOTAD from the catch to IVAN**: 4 battle messages + 5 field pages (schoolkid 2, IVAN 3; pen moment and forager 0), out of 18 field pages on the whole chain (pen 3, schoolkid 6, forager 6, IVAN 3).
-- **First beat a player without Lotad_H can see**: IVAN's rain (ungated).
-- **Pokénav budget**: worst case (7 pages, every den margin, the doubt, all-found rumour, national dex, 7-letter name) measured 834 B of gStringVar4's 1000; the report is kept. Static ceiling (longest rating tier) is check_matchcall_len 918 B.
-- **Haley cut (C365)**: her intro "acting strange... different from normal" and defeat "Something is changing in Hoenn... Can you feel it?" told the player the theme before the notebook showed it, on the same route as the schoolkid and IVAN. Now "Let's battle before the clouds roll in!" / "Oh! I should have waited for the rain." (route104-haley-rain-lines).
-- **Verdict**: Hours 0-2 are full. v3.4 adds nothing to Routes 102-104 or Petalburg Woods; it goes to Hours 3-6 (Dewford, Brawly, Routes 105-110, Slateport, Mauville), within the D1 no-lead rule.
+Measured on the emulator (`first-ink-chapter-in-order`). Pen moment / schoolkid turn / forager walk / IVAN's rain / Pokénav report all emulator-proven; full per-beat table in git history (C365 version of this file).
+- 5 battle boxes before the first red ink; first beat visible without Lotad_H = IVAN's rain; Pokénav worst case 834 B of 1000.
+- Haley's "something is changing" lines cut (told before showing). **Verdict**: Hours 0-2 are full; no new beats on Routes 102-104 / Petalburg Woods.
 
 ---
 
@@ -35,8 +22,26 @@ Measured on the emulator, not estimated. Every row is proven by a playtest; `fir
 
 Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombre→Ludicolo_Hoenn line across 5 tiers, rain at T4-T5) rebuilt C268-271; dialogue subtracted C299 to sensation, not exposition. Meteor Falls Bagon Colony (C153). Route 113: Vulpix_Hoenn (Ice/Fairy) 10% (C346) Lv21-22 + FrostTracker (C208); Jaylen/Madeline carry it (C244). Granite Cave B2F: Gligar_Hoenn 10% (C346) Lv10-13 (C250). **Red Ink believers**: Granite Cave B1F hiker (P3, C329) and Route 113 ash picnicker (P4, C330) — see walkthrough below.
 
-**(planned v3.4) Route 109 "Storm watch" (C368)**: with the Route 104 schoolkid turned (0x35), the sandcastle kids face the sea with a LOTAD DOLL on the sand; Tuber TOBY battles (Plusle/Minun) and loses with "Heard it from a kid on 104." Miss: vanilla sandcastle kids.
-**(shipped C369) Mauville "Half a fact"**: ungated Youngster DAX stands at Wattson's door (10,7, facing the gym); talking from 11,7 starts the fight at once (0 boxes) with SANDSHREW 19 / TRAPINCH 20, built on "WATTSON's LOTAD is ELECTRIC". Electric "doesn't affect" him, Grass is "super effective" (both shown in one fight with a Lotad_H, playtest mauville-half-a-fact-lotad). Defeat: "GROUND beats ELECTRIC. That was the whole plan."; post: "…So, GROUND. That's all there is to a LOTAD." He never learns the other half. The stale low point. Miss: a youngster by the gym, a normal Ground fight just before Wattson. Does not block Wally's scene.
+**v3.4 Word Travels (C366-C370)** adds two Hours 3-6 beats (Route 109 Storm watch, Mauville Half a fact); see the retrospective below.
+
+### v3.4 Word Travels — retrospective (C371)
+
+Measured on the emulator, not estimated. `word-travels-in-order` runs the chain on one save with one Lv18 LOTAD_HOENN (schoolkid → Route 109 → TOBY → heal → DAX), and `mauville-half-a-fact-follows-advice` follows DAX's advice into Wattson's gym.
+
+| Beat | What the player sees change before anyone explains it | Playtest that proves it | How a player misses it |
+|---|---|---|---|
+| Storm watch, PLACE (C368) | Off Briney's boat (landing 21,23) a LOTAD DOLL sits at 24,19 facing down, on the top visible row (y-4); one step north (21,22) brings the two sandcastle kids (24,18 / 25,18) fully into view, both facing the sea. 0 boxes before the change | route109-storm-watch-turned, word-travels-in-order (wt-2) | 0x35 unset (never talked to the Route 104 schoolkid with Lotad_H caught): no doll, kids face each other, vanilla sandcastle line (route109-storm-watch-not-turned) |
+| Storm watch, FIGHT (C368) | TOBY's SHOCK WAVE "not very effective" on turn 1 (Lotad_H 42→39 HP); ABSORB wins in 13 turns (PLUSLE 5, MINUN 8), then "Heard it from a kid on 104." | word-travels-in-order (wt-2b), route109-storm-watch-defeated (Lv25 MEGA DRAIN: 6 turns) | Sight 0: he must be talked to. Without a Lotad_H in the party SHOCK WAVE is ordinary damage, so the lesson doesn't show |
+| Half a fact (C369) | DAX at Wattson's door (10,7, facing the gym) starts the battle with 0 boxes; THUNDERSHOCK "doesn't affect" SANDSHREW 19; ABSORB "super effective" | mauville-half-a-fact-lotad, -no-lotad, -wally-unblocked, word-travels-in-order (wt-3, wt-3b, wt-3c) | Never talks to him: a youngster by the gym. No Grass move: only the Electric immunity shows, a normal Ground fight before Wattson |
+| Half a fact, followed (C370) | A Lv50 SANDSHREW's EARTHQUAKE OHKOs MAGNETON; Wattson's LOTAD_HOENN 21 uses CHARGE ×3, then MEGA DRAIN "super effective" for 43 dmg (110→67); EARTHQUAKE back is neutral (no effectiveness line) | mauville-half-a-fact-follows-advice | Only a player who actually brings Ground to Wattson tests the advice; one who KOs LOTAD in the first 3 turns (CHARGE turns) never sees MEGA DRAIN |
+
+- **Hypothesis check.** "Recognised within ~3 s of landing": PASS, but only just (the doll is on the top row, y-4). "Lesson proven in ~5 turns": FAIL. TOBY took 13 turns. That is the arc's one feel defect: by turn 9 the fight is a grind, not a recognition. Fix target: ≤6 ABSORB turns total for a Lv18 Lotad_H. Scheduled for C373, re-measured with word-travels-in-order.
+- **Boxes before the visible change:** 0 in both beats (target met).
+- **Lines naming a source:** exactly 1 ("Heard it from a kid on 104.").
+- **First v3.4 beat a player without Lotad_H can see:** DAX (ungated).
+- **Stale low point lands:** DAX's advice is measurably half wrong at the gym (43-damage super-effective MEGA DRAIN against his own species).
+- **Contact sheet:** screenshots not re-opened in C371; numbers from the C370 transcript (artifacts/playtests/word-travels-in-order/wt-1..wt-3c are runner output, not in the repo).
+- **Verdict:** "Every v3.4 beat so far is talk-to-trigger (sight 0). The ink has never come up to the player unasked. v3.5 changes that." (v3.5 "Taken North", Fortree, strategy-notes.)
 
 **Emotional arc**: Escalation → discovery (Bagon colony, cave creature) → wonder (ice fox in ash)
 
@@ -45,7 +50,7 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 ## Hour 6-10: Fortree → Mossdeep (Badges 4-7)
 
 **Flannery references Pinsir on Route 112 (C244)** — fire-breathing adaptation, grandpa legacy. Team includes Pinsir_Hoenn (Bug/Fire). **Route 112 trainers (Bryant, Brice) carry Pinsir_Hoenn (C244)**. Route 119 thunderstorm (C149). **Rival Route 119 now carries Stantler_Hoenn (C244)** — Ghost/Grass disruptor with Hypnosis+Leech Seed. Weather omens: sandstorm R111, thunderstorm R119, rain R120, hail R125 (C159-160). Route 112: Pinsir_Hoenn (Bug/Fire) 5% Lv21-22 (C230). Route 119: Stantler_Hoenn (Ghost/Grass) 4% Lv26-28 (C231). Mt. Pyre "Restless Dead" + Corsola_Hoenn 4% Lv26-28 (C154, C207). **Mt. Pyre starlight Torchic (C312)**: a visible Torchic stands in the summit fog at Exterior (22,13). It is a one-time static Torchic_Hoenn Lv30 holding a Star Piece, If the player runs or knocks it out, it fades and comes back the next time they enter the map; only a catch removes it for good (true since the C315 den fix: before that, a KO or flee hid it permanently). Two optional cue signs point to it: a cold scorch mark at (11,31) in the sunny lower half and glowing frost prints at (27,21) by the fog line. Route identity NPCs (C162). **Norman's team now includes Farigiraf (Normal/Psychic, C268)** — replaces Kangaskhan in initial fight, Vigoroth/Linoone in rematches. Calm Mind+Psychic+Shadow Ball core forces the player to rethink pure-Normal counter strategies. **Norman dialogue rewritten (C269)**: intro references Farigiraf teaching him "NORMAL isn't as simple as I thought," defeat has dual-layer Psychic foresight ("both sensed your strength") + father who knew his child would surpass him. Norman/Winona/Tate & Liza expanded. **Echo dialogue layer (C232)**: R112 Hiker (Pinsir+Stantler), R113 FrostTracker extended (Vulpix+Pinsir), R119 Ecologist (all 4 forms→Hartley), WeatherInstitute Hartley badge-gated evolution, Fortree ChangedTrainer (player palette).
-
+**v3.5 "Taken North" (planned C371, build C373-C376)**: on the first walk into Fortree from Route 119, a Picnicker charm-keeper (3,7, sight 4) spots every player crossing the entrance meadow and battles them unasked, the first sighted trainer of the Red Ink arc; with the Route 104 schoolkid turned (0x35), three LOTAD DOLLs (1,7 / 2,7 / 4,7) stand with her facing back down Route 119, "storm charms", and her post line is the arc's one unease ("So they keep it off. Right?"). Design: strategy-notes v3.5.
 **Pacing**: Strongest stretch — weather omens + narrative events + NPC perspectives.
 
 ---
@@ -79,22 +84,16 @@ Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombr
 **Postgame Rival Battle (C280)**: Rival appears in Littleroot Town with full 6-mon team including Changed Three form matching their starter. Lv70-73, IV 200. Narrative capstone — rival traveled Hoenn too and raised what the migration brought.
 **Juan Duet (C322)**: after game clear, Juan (Sootopolis Gym 9,2) offers one Double Battle: Luvdisc/Ludicolo then Vaporeon/Gorebyss (Lv66-72, rain/Helping Hand). Win → Mystic Water, and Wallace says "You still lead, you know." A teacher-student closing beat, not a power spike.
 **Changed Three Gift (C279, reactive C319)**: Birch offers the Changed Three starters postgame. Before the offer he reacts to each den: "You found the starlight TORCHIC on MT. PYRE before I did!" if it's caught, or "Something still glitters in the fog atop MT. PYRE" if not. The same goes for Meteor Falls Treecko and Shoal Cave Mudkip. Then he says the three "hatched here at the lab, from eggs the migration left behind." C319 fix: the Mudkip ball now really gives SPECIES_MUDKIP_HOENN. From C279 to C318 it showed and gave vanilla Mudkip.
-
 **v3.1 "Taken at Their Word" (designed C347, all three shipped C348-C350, all covered by playtests since C357-C360; playtest steps 44-46)**: postgame + page species caught. A (C348, shipped) Route 106 cave mouth: Granite hiker alone at the tide line 54,15 (moved from 54,11 in C354, one row above the cave path), back to the land, "They'll come"; B1F empty (P3). B (C349, shipped) Route 119 20,110: storm-chaser brings the rain, Ludicolo_H/Thunder team (P1). C (C350, shipped) Route 113 38,5: Camper ELLIS quotes page 4 ("Cold fur in the falling ash. It's in red.") facing the ash picnicker, Vulpix_H 54 / Ninetales_H 56 with Hail as one move of four (may never be used), no weather change; once beaten both stand side by side facing east (P4). Page 2 gets no beat.
-
 **Postgame: loud vs quiet beats (C352).** LOUD (fight/legendary/gift): legendary saga, v1.8 quests, Deoxys, Resonance, Reckonings, postgame rival, Juan duet, Changed Three gift, TESSA, ELLIS. QUIET (someone standing somewhere): Route 106 tide hiker (no other postgame draw to that beach), ex-Magma grunt, Exhale ocean NPCs, Route 104 coda lesson (reached via the Lilycove doubt).
-
-**What the player should see first (before any text box):** A = a hiker on Route 106 sand facing the sea, the Granite B1F spot empty; B = a parasol lady on Route 119 turns up, the sky darkens and flashes before the battle; C = camper and picnicker facing each other in the ash, both face east after the win; T1 = six trodden tiles ring the pair and never regrow ash (checklist 46b).
- ELLIS: Hail is an AI flourish only (battle_ai_scripts.s:2261-2276); on the suite seed he never set it in 3 turns (C360), and turn 1 has no battle weather (playtest).
+**What the player should see first (before any text box):** A = a hiker on Route 106 sand facing the sea, the Granite B1F spot empty; B = a parasol lady on Route 119 turns up, the sky darkens and flashes before the battle; C = camper and picnicker facing each other in the ash, both face east after the win; T1 = six trodden tiles ring the pair and never regrow ash (checklist 46b). ELLIS: Hail is an AI flourish only (battle_ai_scripts.s:2261-2276); on the suite seed he never set it in 3 turns (C360), and turn 1 has no battle weather (playtest).
 
 ---
 
 ## Red Ink believers — static walkthrough (C330)
 
 Built by reading each map.json object and talk script (C330), not from notes. "Caught" = the page's species is Pokédex-caught (`ScriptCheckPokedexCaught`, the same truth as `IsFieldNotesPageInked`). Position/facing changes come from `EventMacro_DexBelieverPlace` in each map's ON_TRANSITION, so they show on the next map load, not in the scene where you catch. Exception (C362): the Route 104 skeptic turns only when shown the LOTAD in person (flag-gated facing).
-Per-believer object/tile/label table (C330): git history; the map scripts are the source of truth and every state is now a playtest (believer-*).
-Trace result (C330): no bug found. No branch is unreachable (the picnicker's rumour needs 2 *other* pages inked, since her own page is not inked in that branch; reachable from any two of P1-P3, or with den pages). No item can be given twice. Since C334 every believer has an in-scene beat (the skeptic turns FACE_RIGHT right after his Corrected line).
-**Emulator coverage (C360)**: all four believers, Lilycove doubt and the coda lesson are covered by passing playtests (pokeemerald/playtests/).
+Per-believer table: git history (map scripts + believer-* playtests are the truth). Trace result (C330): no bug found. No branch is unreachable (the picnicker's rumour needs 2 *other* pages inked, since her own page is not inked in that branch; reachable from any two of P1-P3, or with den pages). No item can be given twice. Since C334 every believer has an in-scene beat (the skeptic turns FACE_RIGHT right after his Corrected line). **Emulator coverage (C360)**: all four believers, Lilycove doubt and the coda lesson are covered by passing playtests (pokeemerald/playtests/).
 
 ### Red Ink payoff (C331; emulator-verified C358/C360/C365)
 Report fires at CountInkedFieldNotePages() ≥ 3 (cover turns to CoverYours at the same count). States (2 pages: no report; 3+: Open → names → Believed → Close; dens only: OnlyYou; Champion's Room never reports; postgame lab offer once per visit via FLAG_TEMP_1) are proven by field-notes-*, birch-bookshelf-*, birch-postgame-offer-* and pokenav-birch-* playtests. Pokénav worst case measured 834 B / 1000 (static ceiling 918 B). Old static table: git history C331.
