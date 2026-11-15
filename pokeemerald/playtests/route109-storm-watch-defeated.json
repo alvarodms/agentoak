@@ -1,6 +1,6 @@
 {
   "name": "route109-storm-watch-defeated",
-  "checks": "C368 v3.4 Beat 1 'Storm watch' (fight): with FLAG_ROUTE104_SKEPTIC_TURNED, the doll is on the sand before any text (hypothesis measure: change seen before the first field text box); the sandcastle boy is Tuber TOBY (slot 462). Talk from 24,17 (reached by column 21 then row 17, the doll blocks 24,19): his intro, then a battle where PLUSLE's lead SHOCK WAVE is 'not very effective' on a RAIN DISH Lotad_H on turn 1 (Electric/Grass, 0.25x). The win shows the arc's one source line 'Heard it from a kid on 104.', then his post line; talking again gives only the post line (1 box) and he turns back to the sea.",
+  "checks": "C368 v3.4 Beat 1 'Storm watch' (fight): with FLAG_ROUTE104_SKEPTIC_TURNED, the doll is on the sand before any text (hypothesis measure: change seen before the first field text box); the sandcastle boy is Tuber TOBY (slot 462). Talk from 24,17 (reached by column 21 then row 17, the doll blocks 24,19): his intro, then a battle where PLUSLE's lead SHOCK WAVE is 'not very effective' on a RAIN DISH Lotad_H on turn 1 (Electric/Grass, 0.25x). The win shows the arc's one source line 'Heard it from a kid on 104.', then his post line; talking again gives only the post line (1 box) and he turns back to the sea. C372 retune: TOBY is one Lv10 PLUSLE; MEGA DRAIN finishes it by turn 2 (battleTurns maxTurns 2).",
   "scenario": {
     "checkpoint": "slateport_arrival",
     "flags": [
@@ -76,14 +76,14 @@
     {
       "expectBattle": {
         "opponent": "SPECIES_PLUSLE",
-        "level": 14
+        "level": 10
       }
     },
     {
       "waitForBattleText": "What will"
     },
     {
-      "comment": "turn 1: MEGA DRAIN; PLUSLE (faster) has only SHOCK WAVE"
+      "comment": "turn 1: MEGA DRAIN; PLUSLE has only SHOCK WAVE and survives turn 1 (MEGA DRAIN max 31 of its 32 HP); a fast Lotad may move first"
     },
     {
       "press": "A"
@@ -101,84 +101,17 @@
       "screenshot": "shock-wave-not-very-effective"
     },
     {
-      "comment": "on this seed MEGA DRAIN takes three turns per mon: PLUSLE goes down on turn 3, MINUN on turn 6"
-    },
-    {
-      "waitForBattleText": "What will",
-      "fresh": true
-    },
-    {
-      "press": "A"
-    },
-    {
-      "press": "A"
-    },
-    {
-      "waitForBattleText": "LOTAD used"
-    },
-    {
-      "waitForBattleText": "What will",
-      "fresh": true
-    },
-    {
-      "press": "A"
-    },
-    {
-      "press": "A"
-    },
-    {
-      "waitForBattleText": "LOTAD used"
-    },
-    {
-      "waitForBattleText": "What will",
-      "fresh": true
-    },
-    {
-      "expectBattle": {
-        "opponent": "SPECIES_MINUN",
-        "level": 13
-      }
-    },
-    {
-      "press": "A"
-    },
-    {
-      "press": "A"
-    },
-    {
-      "waitForBattleText": "LOTAD used"
-    },
-    {
-      "waitForBattleText": "What will",
-      "fresh": true
-    },
-    {
-      "press": "A"
-    },
-    {
-      "press": "A"
-    },
-    {
-      "waitForBattleText": "LOTAD used"
-    },
-    {
-      "waitForBattleText": "What will",
-      "fresh": true
-    },
-    {
-      "press": "A"
-    },
-    {
-      "press": "A"
-    },
-    {
-      "waitForBattleText": "LOTAD used"
+      "comment": "C372: one Lv10 PLUSLE (32 HP); MEGA DRAIN does 17-31, so it falls on turn 2"
     },
     {
       "comment": "the arc's one source line, in the battle"
     },
     {
-      "waitForBattleText": "Heard it from a kid on 104."
+      "battleTurns": {
+        "move": 1,
+        "until": "Heard it from a kid on 104.",
+        "maxTurns": 2
+      }
     },
     {
       "talk": {

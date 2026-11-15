@@ -1,5 +1,5 @@
 {
-  "_note": "C368 v3.4 Beat 1 'Storm watch': TOBY, Tuber M on Route 109 (slot 462, reclaimed from never-battled TRAINER_KAYLEE, zero refs per check_trainer_slots + hand grep C368). The sandcastle boy (24,18) battles only when FLAG_ROUTE104_SKEPTIC_TURNED is set; levels sit with his neighbours Hailey 13 / Chandler 14, an easy kid fight. The lesson is the doll's: his Electric moves are 'not very effective' on a Lotad_H (Electric/Grass, 0.25x). Move legality hand-checked with rom_species C368: SHOCK_WAVE = TM34 on both PLUSLE and MINUN; GROWL L1. No THUNDER_WAVE on purpose: Gen 3 Electric types are not immune to paralysis, it would paralyze Lotad_H and muddy the lesson. The lead has Shock Wave only so the AI's first move is always the proof. Plus/Minus do nothing in singles. Ability: trainer mons use slot 0 (PLUS / MINUS). No held items, no trainer items. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so hand-edit them into the [TRAINER_ROUTE109_STORM_WATCHER] block (encounterMusic + aiFlags copied from vanilla Route 109 Tuber M TRAINER_CHANDLER). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/route109_storm_watcher.json",
+  "_note": "C368 v3.4 Beat 1 'Storm watch': TOBY, Tuber M on Route 109 (slot 462, reclaimed from never-battled TRAINER_KAYLEE, zero refs per check_trainer_slots + hand grep C368). The sandcastle boy (24,18) battles only when FLAG_ROUTE104_SKEPTIC_TURNED is set. The lesson is the doll's: his Electric move is 'not very effective' on a Lotad_H (Electric/Grass, 0.25x). C372 retune (v3.4 retrospective defect, 13 ABSORB turns): the team is now ONE Lv10 PLUSLE (32 HP, SpD 20 at iv 0). MINUN is gone: GROWL never slowed a Special ABSORB; the turns were HP (78 total). Turn math, Gen 3 formula, Lv18 Lotad_H ABSORB 20 BP + STAB, no crit: SpA>=23 (any neutral/+SpA nature) does 7-9 a hit -> 4-5 turns even on min rolls; SpA 20-22 (-SpA nature, IV<17) does 5-7 -> 6 turns typical, 7 only if 5 of 6 rolls are the minimum. Lv25 MEGA DRAIN: 17-31 a hit vs 32 HP -> exactly 2 turns. SpD 20 is the breakpoint: Lv11+ or MINUN pushes min-roll turns to 7-8. PLUSLE's nature (personality from name hash 'TOBY'+'PLUSLE') is ADAMANT, or SERIOUS if the female bit is set; both are neutral for SpD and Speed, so Speed is 24 and it always moves before a Lv18 Lotad_H (max 23). Move legality hand-checked with rom_species C368: SHOCK_WAVE = TM34 on PLUSLE. No THUNDER_WAVE on purpose: Gen 3 Electric types are not immune to paralysis, it would paralyze Lotad_H and muddy the lesson. The lead has Shock Wave only so the AI's first move is always the proof. Ability: trainer mons use slot 0 (PLUS, inert in singles). No held items, no trainer items. trainerClass/encounterMusic/trainerPic/trainerName/items/doubleBattle/aiFlags are documentation: modify mode does NOT write them, so hand-edit them into the [TRAINER_ROUTE109_STORM_WATCHER] block (encounterMusic + aiFlags copied from vanilla Route 109 Tuber M TRAINER_CHANDLER). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/route109_storm_watcher.json",
   "mode": "modify",
   "trainerId": "TRAINER_ROUTE109_STORM_WATCHER",
   "partyName": "sParty_Route109StormWatcher",
@@ -13,15 +13,9 @@
   "party": [
     {
       "iv": 0,
-      "lvl": 14,
+      "lvl": 10,
       "species": "SPECIES_PLUSLE",
       "moves": ["MOVE_SHOCK_WAVE"]
-    },
-    {
-      "iv": 0,
-      "lvl": 13,
-      "species": "SPECIES_MINUN",
-      "moves": ["MOVE_SHOCK_WAVE", "MOVE_GROWL"]
     }
   ]
 }

@@ -31,7 +31,7 @@ don't match it, and a file must be named after its `name`.
 }
 ```
 
-Scenario fields also include `checkpoint` (a story save state from `src/emulator/checkpoints.ts`: `"slateport_arrival"` boots on the Route 109 dock at 21,23 after Briney's sail from Dewford, Devon Goods undelivered; `"mauville_pre_wattson"` boots in Mauville at 18,17 after Slateport and the Route 110 rival, Wally's scene still pending. Its flags, vars and tile go underneath the test's own `flags`/`clearFlags`/`vars`, the test wins, and `map`/`x`/`y` may be left out; give all three or none), `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
+Scenario fields also include `checkpoint` (a story save state from `src/emulator/checkpoints.ts`: `"slateport_arrival"` boots on the Route 109 dock at 21,23 after Briney's sail from Dewford, Devon Goods undelivered; `"mauville_pre_wattson"` boots in Mauville at 18,17 after Slateport and the Route 110 rival, Wally's scene still pending; `"fortree_arrival"` boots on Fortree's west edge at 0,8 (the Route 119 arrival) with badges 1-5, the Kecleon still blocking the gym. Its flags, vars and tile go underneath the test's own `flags`/`clearFlags`/`vars`, the test wins, and `map`/`x`/`y` may be left out; give all three or none), `clearFlags`, `vars`, `bag` (`{"ITEM_X": qty}`),
 `defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `registeredItem`
 (`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. A party mon takes `species`, `level`, optional
 `item`, `moves` (up to 4 `MOVE_X`) and `ability` (`1` = the species' first ability, `2` = its second; omit it

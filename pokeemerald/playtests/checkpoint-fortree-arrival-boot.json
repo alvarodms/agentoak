@@ -1,0 +1,28 @@
+{
+  "name": "checkpoint-fortree-arrival-boot",
+  "checks": "C372 fortree_arrival checkpoint: boots on Fortree's west edge 0,8 (the Route 119 arrival), OnTransition runs (FLAG_VISITED_FORTREE_CITY), the Kecleon still blocks the gym (FLAG_KECLEON_FLED_FORTREE clear) and no scene fires. Foundation for v3.5 Taken North (C374-C376).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "party": [
+      {
+        "species": "SPECIES_MARSHTOMP",
+        "level": 30,
+        "moves": ["MOVE_WATER_GUN", "MOVE_MUD_SHOT"]
+      }
+    ]
+  },
+  "steps": [
+    { "wait": 300 },
+    { "comment": "no scene: waitFor overworld needs the field script finished, and a locked player could not take the step below" },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectPlayer": { "map": "MAP_FORTREE_CITY", "x": 0, "y": 8 } },
+    { "expectScreen": "CB2_Overworld" },
+    { "expectFlag": { "FLAG_VISITED_FORTREE_CITY": true, "FLAG_KECLEON_FLED_FORTREE": false } },
+    { "expectVar": { "VAR_ROUTE119_STATE": 1, "VAR_WEATHER_INSTITUTE_STATE": 2 } },
+    { "comment": "the meadow is walkable and nothing locks the player" },
+    { "walk": "right" },
+    { "expectPlayer": { "map": "MAP_FORTREE_CITY", "x": 1, "y": 8 } },
+    { "comment": "C375 reference frame for doll readability on the meadow" },
+    { "screenshot": "fortree-arrival-meadow" }
+  ]
+}

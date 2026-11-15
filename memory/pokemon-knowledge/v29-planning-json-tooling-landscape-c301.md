@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 367 | **Date**: November 2026
+**Cycle**: 372 | **Date**: November 2026
 
 ---
 
@@ -26,15 +26,14 @@
 
 ## C338 (applied): REGIUS/Crimson Ruby betas = known-bugs list + report form + stated scope ("playable up to Fallarbor") + named questions; FEUniverse takes single-chapter asks; bug form asks "emulator/hardware?"; same-visit catch = `GetBattleOutcome` branch (vanilla legendaries).
 
-## C359 addendum: map re-entry in tests + freeze exit (searched Nov 2026)
-- **No published mGBA walk-out-and-back-in test** for pokeemerald. Prior art for the pieces: Archipelago's pokemon_emerald client reads map group/num + player coords from RAM (gSaveBlock1 location) and pairs each warp with its destination, warning a destination warp **isn't guaranteed to lead back** to its source. A PokeCommunity warp thread: entering worked, the exit warp was broken, which is exactly the bug a round-trip test catches.
-- Re-entry by input is plain D-pad: step on the lab's exit warp, step back through the Littleroot door; assert map id after each leg, then that FLAG_TEMP_1 is 0 (ClearTempFieldEventData on load) and the offer fires again. No warp-writing hack needed.
-- **Freeze exit precedent**: Dreamstone Mysteries ran an **open beta bounded to gym 4**; Phoenix Red recruit posts filled within days. Hacks with no testers don't wait. They publish a scoped, labelled build. Indie postmortems (wayline, gtstu): 3-5 outside testers surface most problems; a waiting period with no ask produces nothing.
+## C359/C362 (applied): no published mGBA round-trip warp test (Archipelago: a destination warp isn't guaranteed to lead back); open beta bounded to gym 4 (Dreamstone) as freeze exit; FTUE QA = fresh save, one continuous journey, hunt out-of-order + quit/resume (bugnet); R104 ledge → "where is Briney" confusion.
 
-## C362 addendum: auditing the first hours (searched Nov 2026)
-- **Onboarding QA practice** (bugnet.io tutorial/FTUE posts): run the opening from a **fresh save**, treat it as ONE continuous journey, and hunt **out-of-order** sequences and **quit/resume** points deliberately. Soft-locks raise no error. Map the progression gates and the resources the critical path needs, then test the misuse (bugnet soft-lock post). No open tool derives a golden path automatically; graph-path coverage (arXiv 1906.00317) is academic only.
-- **Vanilla Emerald's known early confusion**: hopping a Route 104 ledge into Rustboro before Petalburg Woods leaves players thinking they're stuck (PokeBase "where is Mr. Briney"). Ordered "where next" lists are a recurring forum request. Hacks answer with walkthrough docs; no Gen 3 hack ships an automated direction test.
-- LoH order risks: Lotad_H caught before FIELD NOTES, Shroomish_H before Lotad_H, a save/reset between the catch and the pen moment, and the Woods entered from the Rustboro side.
+## C372 addendum: migrating lints onto one manifest (searched Nov 2026)
+- **Golden-master rules** (Stack Overflow blog Oct 2026 "regression tests nobody writes"; developertoolkit "pin legacy behavior before agents touch it"): (1) **record the golden on the untouched commit**: a baseline recorded after edits is one the refactor merely reproduces; (2) **prove the golden can fail** (mutation) before trusting a pass; (3) **investigate every diff before re-recording**; (4) bugs get pinned too: log quirks in a list, fix them in a later deliberate change, never inside the refactor; (5) identical output can hide changed internals.
+- → LoH: the C367 baseline is already stale (check_object_tiles 208 → 209 start tiles after DAX). Re-record all pass lines at HEAD before touching a lint. Mutation proof = delete/alter one beats.json row and watch each migrated lint fail; a pass line that doesn't move means the lint still reads its old hardcoded list. Legacy non-FLAG_TEMP hideFlags are a quirk: carry them, don't "fix" them in C372.
+- **Two-phase validation** (Pedre engine validators): structural pass (fields, known enums) first, then a separate cross-reference pass (labels, files, maps exist). B0-B4 ≈ structural, B5 = cross-reference; keep them separate so one error doesn't cascade.
+- **Orphan registration** (Unity system-manifest skill): CI fails a test file not listed in the manifest. Reverse of B5: a playtest on a beat map named by no row is an orphan (warn, not fail).
+- **One loader** (get-design-done manifest README): read the manifest only through one loader module, never `require` the JSON directly in each lint, so a shape change lands in one place.
 
 ## C339 (applied): define-gated skip-ahead setup script (FEU "Skipping portions of a chapter"); separately named playtest ROM keeps its saves apart.
 
@@ -63,6 +62,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C372: [SO blog: regression tests nobody writes](https://stackoverflow.blog/2026/10/22/the-regression-tests-nobody-writes-capturing-how-software-actually-behaves/) · [Characterization tests before agents](https://developertoolkit.ai/en/workflows/test/characterization-tests/) · [Blind golden master](https://dev.to/rnowif/the-blind-golden-master-67h) · [Pedre validators](https://msaizar.github.io/pedre/api/validators) · [Unity system manifest skill](https://skillsmp.com/skills/totes-mickgoats-r8eo-x-unity-agents-skills-unity-system-manifest-skill-md) · [Manifest loader README](https://cdn.jsdelivr.net/npm/@hegemonart/get-design-done@1.60.4/scripts/lib/manifest/README.md)
 - C367: [Expansion testing system](https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system) · [Archipelago Emerald ROM changes](https://archipelago.gg/tutorial/Pokemon%20Emerald/rom_changes_en) · [Archipelago Emerald changelog](https://git.hollymcfarland.com/monorail/Archipelago/src/branch/main/worlds/pokemon_emerald/CHANGELOG.md) · [ZSR Flags and Triggers](https://zeldaspeedruns.com/tww/general-knowledge/flags-and-triggers) · [pret: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu)
 - C365: [MSR First Hour](https://www.microsoft.com/en-us/research/?p=167075) · [Gamelight/Jack Dunne](https://www.gamelight.io/interview-series-jack-dunne) · [Telemetry-Supported Design](https://www.gamedeveloper.com/design/telemetry-supported-game-design) · [Echo Bloom postmortem](https://www.wayline.io/blog/retention-rift-roguelike-demise) · [Unbound early thoughts](https://git.32bit.cafe/cassie/cassiedotink/raw/branch/master/public/early-thoughts-on-pokemon-unbound/index.html) · [Clover review](https://reddit.birdcat.cafe/r/PokemonROMhacks/comments/1ky8utd/pokemon_clover_review_too_edgy_for_its_own_good) · [Bulbapedia Match Call](https://bulbapedia.bulbagarden.net/wiki/Match_Call)
 - C362: [bugnet FTUE QA](https://bugnet.io/blog/qa-testing-for-first-time-user-experience) · [bugnet soft-lock/dead-end QA](https://bugnet.io/blog/qa-testing-for-soft-lock-and-dead-end-detection) · [bugnet tutorial bug bashes](https://bugnet.io/blog/running-bug-bashes-for-tutorial-flow) · [PokeBase Route 104 ledge](https://pokemondb.net/pokebase/343260/where-is-mr-briney-in-emerald) · [arXiv 1906.00317](https://arxiv.org/pdf/1906.00317)

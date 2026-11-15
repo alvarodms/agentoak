@@ -21,7 +21,7 @@ export interface Checkpoint {
   y: number;
 }
 
-export const CHECKPOINT_NAMES = ["slateport_arrival", "mauville_pre_wattson"] as const;
+export const CHECKPOINT_NAMES = ["slateport_arrival", "mauville_pre_wattson", "fortree_arrival"] as const;
 export type CheckpointName = (typeof CHECKPOINT_NAMES)[number];
 
 /* Paths below are under pokeemerald/. Defaults not listed come from data/scripts/new_game.inc. */
@@ -138,9 +138,65 @@ const MAUVILLE_PRE_WATTSON: Checkpoint = {
   y: 17,
 };
 
+/*
+ * Standalone on purpose (C371 spec, built C372): mauville_pre_wattson already uses 44 of the 64 flag slots, so this one
+ * carries only the system and badge flags plus what a Fortree / Fortree PC / Route 119 north / Route 120 west script reads.
+ * Left at new-game defaults on purpose, so the gym is still blocked: FLAG_KECLEON_FLED_FORTREE (set only at
+ * data/maps/FortreeCity/scripts.inc:109) and FLAG_HIDE_FORTREE_CITY_KECLEON (set by the removeobject at :108), FLAG_RECEIVED_DEVON_SCOPE
+ * (data/maps/Route120/scripts.inc:227), Route 120 Steven (removeobject :236, object flag FLAG_HIDE_ROUTE_120_STEVEN), the Route 120
+ * bridge Kecleon and its shadow (:215-216), FLAG_BADGE06_GET. The Route 119 rival/Scott hide flags are set by new_game.inc:196-197,234.
+ * Dropped (read only on other maps): FLAG_DEFEATED_*_GYM, FLAG_RECEIVED_HM_FLY, FLAG_VISITED_* for other towns (Fly needs badge 6),
+ * the Weather Institute worker hides (interior only; a test entering the Institute adds them), and the Briney/Devon/Slateport/
+ * Route 110/Mauville chain.
+ */
+const FORTREE_ARRIVAL: Checkpoint = {
+  flags: [
+    // Starter and Pokédex: data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:596 (FIELD NOTES), :621 (ADVENTURE_STARTED)
+    "FLAG_SYS_POKEMON_GET",
+    "FLAG_SYS_POKEDEX_GET",
+    "FLAG_ADVENTURE_STARTED",
+    "FLAG_RECEIVED_FIELD_NOTES",
+    // PokéNav: data/maps/RustboroCity_DevonCorp_3F/scripts.inc:55-56; match call data/maps/RustboroCity/scripts.inc:52,77
+    "FLAG_SYS_POKENAV_GET",
+    "FLAG_RECEIVED_POKENAV",
+    "FLAG_HAS_MATCH_CALL",
+    "FLAG_ADDED_MATCH_CALL_TO_POKENAV",
+    // Badges 1-5: RustboroCity_Gym/scripts.inc:19, DewfordTown_Gym:151, MauvilleCity_Gym:94, LavaridgeTown_Gym_1F:62, PetalburgCity_Gym:379
+    "FLAG_BADGE01_GET",
+    "FLAG_BADGE02_GET",
+    "FLAG_BADGE03_GET",
+    "FLAG_BADGE04_GET",
+    "FLAG_BADGE05_GET",
+    // Weather Institute cleared: data/maps/Route119_WeatherInstitute_2F/scripts.inc:66
+    "FLAG_HIDE_ROUTE_119_TEAM_AQUA",
+    // Inferred, not proven, that every real save has these two (a test needing the "not seen" state clears them):
+    // the Route 119 migration sighting, data/maps/Route119/scripts.inc:786 (its coord events 27-28,26 then end at once, :758);
+    // 27-28,26 is the only land gap, but a surfer may skirt it up the river x16-20.
+    "FLAG_ROUTE119_MIGRATION_EVENT",
+    // Second Wave, data/maps/Route118/scripts.inc:129; read by the Fortree old man 8,10 (data/maps/FortreeCity/scripts.inc:56),
+    // Route 119/120 objects and src/wild_encounter.c:330. Route 118's Steven triggers 43-45,11 are the only land path north,
+    // but not every Route 118 entry was traced.
+    "FLAG_SECOND_WAVE",
+    // Set by FortreeCity_OnTransition anyway (data/maps/FortreeCity/scripts.inc:7)
+    "FLAG_VISITED_FORTREE_CITY",
+  ],
+  vars: {
+    // VAR_ROUTE119_STATE=1: rival battle done (data/maps/Route119/scripts.inc:200); the rival coord events 25,31/26,31 want 0
+    VAR_ROUTE119_STATE: 1,
+    // VAR_WEATHER_INSTITUTE_STATE=2: 2F sets 1 (data/maps/Route119_WeatherInstitute_2F/scripts.inc:62), Route119_OnTransition 1->2 (Route119/scripts.inc:19,36)
+    VAR_WEATHER_INSTITUTE_STATE: 2,
+  },
+  // Tile 0,8: General_Grass c0 e3, the middle of rows 6-10 where a player walks in from Route 119 (`node scripts/map_scan.cjs
+  // FortreeCity 0-5 6-12`, C371). FortreeCity has no coord events; the Kecleon at 25,8 waits for a talk with the Devon Scope.
+  map: "MAP_FORTREE_CITY",
+  x: 0,
+  y: 8,
+};
+
 export const CHECKPOINTS: Record<CheckpointName, Checkpoint> = {
   slateport_arrival: SLATEPORT_ARRIVAL,
   mauville_pre_wattson: MAUVILLE_PRE_WATTSON,
+  fortree_arrival: FORTREE_ARRIVAL,
 };
 
 const union = (a: readonly string[], b: readonly string[]) => [...new Set([...a, ...b])];
