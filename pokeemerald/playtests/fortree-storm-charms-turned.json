@@ -1,0 +1,29 @@
+{
+  "name": "fortree-storm-charms-turned",
+  "checks": "C375 v3.5 Taken North Beat 1 'Storm charms' (place): with FLAG_ROUTE104_SKEPTIC_TURNED, arriving from Route 119 at 0,8 shows three LOTAD DOLLs on 1,7 / 2,7 / 4,7 facing left (back down Route 119, toward the storms) and the turned charm-keeper twin on 3,7 facing down, before any text; the plain keeper twin is hidden (FLAG_TEMP_6). Stepping to 1,8 and reading the doll above gives one sign box ending 'facing the storms.'",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "comment": "the change is visible on arrival, before any text" },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "x": 1, "y": 7, "facing": "left", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "x": 2, "y": 7, "facing": "left", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "x": 4, "y": 7, "facing": "left", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER", "absent": true } },
+    { "screenshot": "storm-charms-arrival" },
+    { "walk": "right" },
+    { "expectPlayer": { "map": "MAP_FORTREE_CITY", "x": 1, "y": 8 } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "facing the storms." },
+    { "expectBoxCount": 1 },
+    { "expectScreen": "CB2_Overworld" }
+  ]
+}

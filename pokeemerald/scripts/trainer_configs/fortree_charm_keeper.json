@@ -1,0 +1,27 @@
+{
+  "_note": "C375 v3.5 Beat 2 'The charm-keeper': WREN, Picnicker at Fortree 3,7 (sight 4, twin objects). Slot 486 reclaimed from never-battled GINA_AND_MIA_2: zero refs outside opponents.h/trainers.h/trainer_parties.h (hand grep C375), not in battle_setup.c's REMATCH_GINA_AND_MIA row. Recipe as C369: hand-rename the defines and party, then this file in modify mode (modify mode does NOT write class/pic/name/music/ai: those fields are hand-edited in trainers.h and listed here as documentation). Band floor 27-28 (Route 119/120 neighbours run Lv27-34), iv 0, singles (486 was a Twins slot, the C369 doubleBattle trap), no set-up or sweep moves, no Water/Rock (D1). CHIMECHO is the wind chime she thinks keeps storms off; LOMBRE_HOENN (Electric/Grass) is the page-1 line. Move legality checked with rom_species C375: CHIMECHO ASTONISH L9, CONFUSION L14, TAKE_DOWN L17; LOMBRE_HOENN THUNDER_SHOCK L1, ABSORB L7, FAKE_OUT L19 (SHOCK_WAVE is L31: illegal at 28, dropped). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/fortree_charm_keeper.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_FORTREE_CHARM_KEEPER",
+  "partyName": "sParty_FortreeCharmKeeper",
+  "trainerClass": "TRAINER_CLASS_PICNICKER",
+  "encounterMusic": "TRAINER_ENCOUNTER_MUSIC_GIRL",
+  "trainerPic": "TRAINER_PIC_PICNICKER",
+  "trainerName": "WREN",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE"],
+  "party": [
+    {
+      "iv": 0,
+      "lvl": 27,
+      "species": "SPECIES_CHIMECHO",
+      "moves": ["MOVE_ASTONISH", "MOVE_CONFUSION", "MOVE_TAKE_DOWN"]
+    },
+    {
+      "iv": 0,
+      "lvl": 28,
+      "species": "SPECIES_LOMBRE_HOENN",
+      "moves": ["MOVE_THUNDER_SHOCK", "MOVE_ABSORB", "MOVE_FAKE_OUT"]
+    }
+  ]
+}

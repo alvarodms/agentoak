@@ -1,0 +1,34 @@
+{
+  "name": "fortree-charm-keeper-ungated",
+  "checks": "C375 v3.5 Taken North Beat 2 'The charm-keeper' is ungated: with FLAG_ROUTE104_SKEPTIC_TURNED clear, the plain WREN twin on 3,7 still spots the player on 3,9 with her plain intro 'without a battle in the wind!', battles CHIMECHO 27 / LOMBRE_HOENN 28, then gives 'Lucky you.'. On re-entry she faces left; no dolls appear.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "clearFlags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "walkTo": { "x": 3, "y": 9, "yFirst": true } },
+    { "talk": { "start": false } },
+    { "expectText": "without a battle in the wind!" },
+    { "expectBoxCount": 1 },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "expectBattle": { "opponent": "SPECIES_CHIMECHO", "level": 27 } },
+    { "battleTurns": { "move": 1, "until": "That counts for something.", "maxTurns": 8 } },
+    { "talk": { "start": false } },
+    { "expectScreen": "CB2_Overworld" },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "Lucky you." },
+    { "warp": { "map": "MAP_FORTREE_CITY", "x": 0, "y": 8 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER", "x": 3, "y": 7, "facing": "left", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "absent": true } }
+  ]
+}

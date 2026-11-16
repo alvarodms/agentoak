@@ -33,7 +33,7 @@ const CHECKPOINTS_TS = path.join(ROOT, '../src/emulator/checkpoints.ts');
 
 // C323 rule: a floor equal to what shipped, so a parser or merge that drops rows
 // fails loudly. C367 shipped 15 rows (v3.0-v3.3), C368 16, C369 17; raise it when a beat lands.
-const MIN_ROWS = 17;
+const MIN_ROWS = 19;
 
 const REGISTERS = ['place', 'fight', 'weather', 'trace'];
 const FACINGS = ['up', 'down', 'left', 'right'];

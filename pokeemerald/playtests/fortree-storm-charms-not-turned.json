@@ -1,0 +1,21 @@
+{
+  "name": "fortree-storm-charms-not-turned",
+  "checks": "C375 v3.5 Taken North Beat 1 'Storm charms' gate: with FLAG_ROUTE104_SKEPTIC_TURNED clear, the Fortree meadow has no LOTAD DOLLs and no turned keeper twin (FLAG_TEMP_5); the plain charm-keeper still stands on 3,7 facing down (Beat 2 is ungated). Its screenshot pairs with fortree-storm-charms-turned's as the contact sheet.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "clearFlags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "screenshot": "storm-charms-arrival-ungated" }
+  ]
+}

@@ -8118,18 +8118,18 @@ static const struct TrainerMonNoItemCustomMoves sParty_MauvilleGymHopeful[] = {
     }
 };
 
-static const struct TrainerMonNoItemCustomMoves sParty_GinaAndMia2[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_FortreeCharmKeeper[] = {
     {
     .iv = 0,
-    .lvl = 10,
-    .species = SPECIES_DUSKULL,
-    .moves = {MOVE_NIGHT_SHADE, MOVE_DISABLE, MOVE_NONE, MOVE_NONE}
+    .lvl = 27,
+    .species = SPECIES_CHIMECHO,
+    .moves = {MOVE_ASTONISH, MOVE_CONFUSION, MOVE_TAKE_DOWN, MOVE_NONE}
     },
     {
     .iv = 0,
-    .lvl = 10,
-    .species = SPECIES_SHROOMISH,
-    .moves = {MOVE_ABSORB, MOVE_LEECH_SEED, MOVE_NONE, MOVE_NONE}
+    .lvl = 28,
+    .species = SPECIES_LOMBRE_HOENN,
+    .moves = {MOVE_THUNDER_SHOCK, MOVE_ABSORB, MOVE_FAKE_OUT, MOVE_NONE}
     }
 };
 

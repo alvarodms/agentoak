@@ -1,0 +1,29 @@
+{
+  "name": "fortree-kecleon-unblocked",
+  "checks": "C375 v3.5 Taken North Beat 2 must not block the story: with WREN already beaten (defeatedTrainers), crossing column 3 below her spots no one (she faces left, toward the storms), and the DEVON SCOPE still clears the gym-blocking KECLEON at 25,8 (FLAG_KECLEON_FLED_FORTREE set).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED", "FLAG_RECEIVED_DEVON_SCOPE"],
+    "defeatedTrainers": ["TRAINER_FORTREE_CHARM_KEEPER"],
+    "bag": { "ITEM_DEVON_SCOPE": 1 },
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "left", "visible": true } },
+    { "comment": "6,9 is a wall; 4,9 crosses column 3 on row 9, inside her old sight line" },
+    { "walkTo": { "x": 4, "y": 9, "yFirst": true } },
+    { "expectPlayer": { "map": "MAP_FORTREE_CITY", "x": 4, "y": 9 } },
+    { "expectScreen": "CB2_Overworld" },
+    { "comment": "KECLEON (object 7) at 25,8; 24,8 is a wall, so read it from 25,9" },
+    { "warp": { "map": "MAP_FORTREE_CITY", "x": 25, "y": 9 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "face": "up" },
+    { "talk": { "answers": ["yes"] } },
+    { "expectFlag": { "FLAG_KECLEON_FLED_FORTREE": true } },
+    { "expectScreen": "CB2_Overworld" }
+  ]
+}

@@ -647,5 +647,72 @@
     ],
     "speaker": "stranger",
     "seeFirst": "A YOUNGSTER waits outside the GYM by WALLY, facing the door like he's next."
+  },
+  {
+    "id": "v35-storm-charms",
+    "arc": "v3.5 Taken North 1, storm charms (C375)",
+    "register": "place",
+    "map": "FortreeCity",
+    "object": "LOCALID_FORTREE_LOTAD_DOLL_1",
+    "gate": {
+      "flag": "FLAG_ROUTE104_SKEPTIC_TURNED"
+    },
+    "hideFlag": "FLAG_TEMP_5",
+    "tiles": [
+      [
+        1,
+        7,
+        "left"
+      ],
+      [
+        2,
+        7,
+        "left"
+      ],
+      [
+        4,
+        7,
+        "left"
+      ]
+    ],
+    "labels": [
+      "FortreeCity_OnTransition",
+      "FortreeCity_EventScript_LotadDoll"
+    ],
+    "playtests": [
+      "fortree-storm-charms-turned",
+      "fortree-storm-charms-not-turned"
+    ],
+    "speaker": "none",
+    "seeFirst": "Three LOTAD DOLLs stand in the meadow facing back down Route 119 toward the storms, a woman among them."
+  },
+  {
+    "id": "v35-charm-keeper",
+    "arc": "v3.5 Taken North 2, the charm-keeper (C375)",
+    "register": "fight",
+    "map": "FortreeCity",
+    "object": "LOCALID_FORTREE_CHARM_KEEPER",
+    "trainer": "TRAINER_FORTREE_CHARM_KEEPER",
+    "gate": {
+      "none": true
+    },
+    "tiles": [
+      [
+        3,
+        7,
+        "down"
+      ]
+    ],
+    "labels": [
+      "FortreeCity_EventScript_CharmKeeper",
+      "FortreeCity_EventScript_CharmKeeperTurned"
+    ],
+    "playtests": [
+      "fortree-charm-keeper-spots-player",
+      "fortree-charm-keeper-ungated",
+      "fortree-kecleon-unblocked"
+    ],
+    "speaker": "believer",
+    "seeFirst": "Three LOTAD DOLLs face the storm; the woman standing among them sees you pass them and comes for you."
   }
 ]

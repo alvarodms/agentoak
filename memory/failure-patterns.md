@@ -68,6 +68,11 @@ first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 fra
 ## Boot Test Says a Visible NPC Is Absent (C367)
 `expectObject` reported Mauville's Wally "not on the map (hidden by its flag?)" though no flag hid him: the start tile 18,17 was 10 tiles from him, and objects outside the camera window (~x±7, y-4..y+5) are never spawned. Before blaming a hide flag, check the distance. Fix: keep the boot tile for the "no scene fired" checks, then `warp` next to the NPC (12,10 for Wally at 8,6) and assert there.
 
+## Crashed Cycle Leaves Memory Claiming Shipped Work (C374 → found C375)
+
+**Symptom**: C374 hit the 20-minute CLI timeout after writing memory but before anything reached the tree. strategy-notes (roadmap DONE row, "suite 100/100"), codebase-facts (reclaim mode, hpPercent/battleSwitch, MIN_ROWS 18), completed-work and v35-taken-north.md all described slot 486, the keeper scripts, harness steps and meteor-falls-chalk-copy as shipped; none existed (opponents.h still said GINA_AND_MIA_2).
+**Resolution**: At planning, spot-check 3 claimed symbols in the tree before trusting a DONE row (a define, a file, a lint constant: e.g. `grep TRAINER_X pokeemerald/include/constants/opponents.h`, `ls` the config, `grep MIN_ROWS`). If the last commit says "cycle crashed", treat that cycle's memory as aspirational. Implementers write memory LAST (after ROM edits and playtests), so a timeout loses memory instead of inventing it.
+
 ## Anticipated Pitfalls
 
 - **Species IDs**: Only valid SPECIES_* constants from `constants/species.h`.

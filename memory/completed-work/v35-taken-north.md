@@ -1,32 +1,35 @@
-# v3.5 "Taken North" (C371 design, build C374-C376)
+# v3.5 "Taken North" (C371 design, Beats 1+2 built C375, worn-party C376, chain C377)
 
 Design: memory/strategy-notes.md, "v3.5 Taken North" + "v3.5 evidence (C371)".
 
-## C374 — Beat 2 "The charm-keeper" (Fortree City) SHIPPED
+## C374 — LOST
 
-Ungated core, sighted (first Red Ink arc trainer with sight > 0). 0 new flags: twins use FLAG_TEMP_5 / FLAG_TEMP_6, the battle uses the trainer flag of slot 486.
+CLI timeout at 20 minutes; nothing reached the tree. Earlier memory said C374 shipped generate_trainer.cjs reclaim mode, harness `hpPercent`/`battleSwitch`, fortree-charm-keeper-worn-party and meteor-falls-chalk-copy. **None of these exist.** C375 rebuilt the keeper without them (failure-patterns: "Crashed cycle leaves memory claiming shipped work").
+
+## C375 — Beats 1 "Storm charms" + 2 "The charm-keeper" (Fortree City) SHIPPED
+
+0 new flags: dolls + turned twin use FLAG_TEMP_5, the plain twin FLAG_TEMP_6, the battle uses the trainer flag of slot 486.
 
 | File | Change |
 |---|---|
-| scripts/generate_trainer.cjs | new `"mode": "reclaim"` (tech-debt 369): fromId → trainerId in opponents.h (same number, old column), whole [fromId] block of trainers.h rewritten (class, music\|gender, pic, name, items, doubleBattle, aiFlags, party macro), old party array (auto-detected) replaced under partyName, trainerId appended to check_trainer_slots RECLAIMED with a "486 ex-GINA_AND_MIA_2 (WREN)" note; refuses, writing nothing, if fromId appears in src/include/data/asm outside the 3 trainer files (tested on TRAINER_LUCAS_1 → names Route114/scripts.inc:88). `--dry-run` now prints -/+ diffs of each file's changed span for every mode |
-| scripts/trainer_configs/fortree_charm_keeper.json (new) | reclaim config + `_note` (slot provenance, move legality, every left-out move and why) |
-| include/constants/opponents.h | 486 TRAINER_GINA_AND_MIA_2 → TRAINER_FORTREE_CHARM_KEEPER (TRAINERS_COUNT unchanged 891) |
-| src/data/trainers.h | [TRAINER_FORTREE_CHARM_KEEPER]: TRAINER_CLASS_PICNICKER, F_TRAINER_FEMALE \| TRAINER_ENCOUNTER_MUSIC_GIRL, TRAINER_PIC_PICNICKER, "WREN", items {}, doubleBattle FALSE (was a Twins TRUE slot), AI_SCRIPT_CHECK_BAD_MOVE, NO_ITEM_CUSTOM_MOVES(sParty_FortreeCharmKeeper) |
-| src/data/trainer_parties.h | sParty_GinaAndMia2 → sParty_FortreeCharmKeeper: CHIMECHO 27 [CONFUSION, ASTONISH, TAKE_DOWN], LOMBRE_HOENN 28 [SHOCK_WAVE, THUNDER_SHOCK], iv 0 |
-| scripts/check_trainer_slots.cjs | RECLAIMED + TRAINER_FORTREE_CHARM_KEEPER (9 reclaimed; written by the tool) |
-| data/maps/FortreeCity/map.json | 2 new last objects (11, 12) on 3,7 elev 3, OBJ_EVENT_GFX_PICNICKER, FACE_DOWN, TRAINER_TYPE_NORMAL sight 4: LOCALID_FORTREE_CHARM_KEEPER (script CharmKeeper, flag FLAG_TEMP_6), LOCALID_FORTREE_CHARM_KEEPER_TURNED (script CharmKeeperTurned, flag FLAG_TEMP_5) |
-| data/maps/FortreeCity/scripts.inc | FortreeCity_OnTransition: after setflag FLAG_VISITED_FORTREE_CITY, `call_if_set`/`call_if_unset FLAG_ROUTE104_SKEPTIC_TURNED` → ShowTurnedKeeper (setflag FLAG_TEMP_6) / ShowPlainKeeper (setflag FLAG_TEMP_5); `call_if_defeated TRAINER_FORTREE_CHARM_KEEPER` → KeeperFacesStorms (both twins MOVEMENT_TYPE_FACE_LEFT). OnResume untouched. New section at file end: CharmKeeper / CharmKeeperTurned (trainerbattle_single + post msgbox MSGBOX_AUTOCLOSE) and the 5 texts verbatim from the plan (check_text_width widest 160px, nothing shortened) |
-| scripts/beats.json | row v35-charm-keeper (fight, believer, gate none, tile [3,7,down], 4 playtests, seeFirst "A woman standing at the meadow's edge sees you pass and walks over to you before a word is spoken."). Stretch: meteor-falls-steven-chalk playtests [meteor-falls-chalk-copy], b5Exempt removed |
-| scripts/lib/beats.cjs | MIN_ROWS 17 → 18 |
-| src/emulator/scenario.ts | ScenarioMon `hpPercent` + exported `partyHp(maxHp, pct)` (floor, min 1; rejects outside 1-100) |
-| src/emulator/session.ts | bootScenario → `applyPartyHp` writes gPlayerParty[i].hp once CB2_Overworld appears |
-| src/emulator/playtest.ts | schema party `hpPercent`; new step `battleSwitch: N` + `battleSwitch()` + exported PARTY_MENU_SLOT_ID 9 |
-| src/emulator/scenario.test.ts, playtest.test.ts | hpPercent rounding/range/not-in-struct; battleSwitch schema + struct PartyMenu field order |
-| playtests/README.md | party `hpPercent` sentence; `battleSwitch` row |
-| playtests/fortree-charm-keeper-spots-player.json (new) | 0x35 set: turned twin present, plain absent; walkTo 3,9 yFirst (no talk); intro "You walked right past the charms!" = 1 box; SALAMENCE 50 wins; she stands on 3,8; re-talk = 1 box "So they keep it off. Right?"; warp back: on 3,7 facing left (screenshot keeper-faces-the-storms, keeper alone; C375 retakes it with dolls); the same walk is then free |
-| playtests/fortree-charm-keeper-ungated.json (new) | 0x35 clear: plain twin; intro "Stop! Nobody climbs to Fortree" (no "charms"); post "The wind's calm today." (no LOTAD); faces left on re-entry |
-| playtests/fortree-charm-keeper-worn-party.json (new, MUST PASS) | MIGHTYENA 28 (INTIMIDATE) + SHELGON 30, both hpPercent 50, empty bag: BITE until "Will OAK change", battleSwitch 2, HEADBUTT until "not very effective" + defeat line, forbid any faint. Measured: MIGHTYENA took 0 (38/77), SHELGON ends 22/82 from 41 |
-| playtests/fortree-kecleon-unblocked.json (new) | keeper beaten (defeatedTrainers) faces left and spots no one; walk 0,8 → 10,8 (crosses 3,8) → ladder to 10,4; warp 25,4 (row 4 is blocked at 15,4 by the C267 elder, not by C374), down to 25,7, Devon Scope YES: Kecleon flees, FLAG_KECLEON_FLED_FORTREE set, object 7 gone, 25,9 reachable |
-| playtests/meteor-falls-chalk-copy.json (new, tech-debt 374) | Treecko den caught + FIELD NOTES: 7,3 facing the chalk (8,3): answer + "You copy it down." (2 boxes), FLAG_DEN_METEOR_STEVEN_CHALK set; re-read = ChalkCopied, 1 box, no copy line |
+| include/constants/opponents.h | 486 TRAINER_GINA_AND_MIA_2 → TRAINER_FORTREE_CHARM_KEEPER, renamed by hand (TRAINERS_COUNT unchanged 891) |
+| src/data/trainers.h | [TRAINER_FORTREE_CHARM_KEEPER] hand-edited: TRAINER_CLASS_PICNICKER, F_TRAINER_FEMALE \| TRAINER_ENCOUNTER_MUSIC_GIRL (as vanilla AUTUMN), TRAINER_PIC_PICNICKER, "WREN", items {}, doubleBattle FALSE (was a Twins TRUE slot), AI_SCRIPT_CHECK_BAD_MOVE, NO_ITEM_CUSTOM_MOVES(sParty_FortreeCharmKeeper) |
+| src/data/trainer_parties.h | sParty_GinaAndMia2 renamed → sParty_FortreeCharmKeeper, then written by modify mode: CHIMECHO 27 [ASTONISH, CONFUSION, TAKE_DOWN], LOMBRE_HOENN 28 [THUNDER_SHOCK, ABSORB, FAKE_OUT], iv 0 |
+| scripts/trainer_configs/fortree_charm_keeper.json (new) | modify-mode config (C369 recipe) + `_note` (slot provenance, band, move legality: SHOCK_WAVE L31 dropped) |
+| scripts/check_trainer_slots.cjs | RECLAIMED + TRAINER_FORTREE_CHARM_KEEPER (9 reclaimed) |
+| data/maps/FortreeCity/map.json | 5 new last objects, elev 3: 11-13 LOCALID_FORTREE_LOTAD_DOLL_1/2/3 (LOTAD_DOLL, 1,7 / 2,7 / 4,7, FACE_LEFT, script LotadDoll, FLAG_TEMP_5); 14 LOCALID_FORTREE_CHARM_KEEPER (PICNICKER 3,7 FACE_DOWN, TRAINER_TYPE_NORMAL sight 4, script CharmKeeper, FLAG_TEMP_6); 15 LOCALID_FORTREE_CHARM_KEEPER_TURNED (same tile/sight, script CharmKeeperTurned, FLAG_TEMP_5) |
+| data/maps/FortreeCity/scripts.inc | FortreeCity_OnTransition: setflag VISITED, `call_if_defeated` → KeeperFacesStorms (both twins FACE_LEFT), `goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED` → StormCharmsOut (setflag FLAG_TEMP_6), else setflag FLAG_TEMP_5. OnResume untouched. New end section: CharmKeeper / CharmKeeperTurned (trainerbattle_single + MSGBOX_AUTOCLOSE post), LotadDoll (MSGBOX_SIGN), 6 texts (widest 162px) |
+| scripts/beats.json | rows v35-storm-charms (place, speaker none, hideFlag FLAG_TEMP_5, tiles 1,7/2,7/4,7 left) + v35-charm-keeper (fight, believer, gate none, tile 3,7 down) |
+| scripts/lib/beats.cjs | MIN_ROWS 17 → 19 |
+| playtests/fortree-storm-charms-turned.json (new) | 0x35 set: 3 dolls + turned twin present, plain twin absent before any text; screenshot storm-charms-arrival; doll sign from 1,8 facing up = 1 box |
+| playtests/fortree-storm-charms-not-turned.json (new) | 0x35 clear: dolls + turned twin absent, plain twin on 3,7 down; screenshot storm-charms-arrival-ungated |
+| playtests/fortree-charm-keeper-spots-player.json (new) | walkTo 3,9 yFirst, no talk; `talk {start:false}` reads the intro (1 box); CHIMECHO 27; battleTurns DRAGON_CLAW until the defeat line; she stands on 3,8, re-talk from 3,9 facing up = "Right?"; warp back: turned twin 3,7 facing left + dolls; screenshot keeper-faces-the-storms |
+| playtests/fortree-charm-keeper-ungated.json (new) | 0x35 clear: same walk, plain intro, "Lucky you.", faces left on re-entry, dolls absent |
+| playtests/fortree-kecleon-unblocked.json (new) | keeper beaten (defeatedTrainers) faces left; walkTo 4,9 crosses column 3 with no sighting; warp 25,9, face up, Devon Scope YES → FLAG_KECLEON_FLED_FORTREE set |
 
-Verify (C374): check_trainer_slots OK (9 reclaimed), check_doubles OK, check_flags 95 custom flags OK, check_object_tiles 0 errors (twins on one tile accepted, no allowlist), check_beats OK (18 rows; "RM pending: v3.5 has 1 row"; B5 0 whole-row exemptions) + selftest 26 plants, check_beat_visibility, check_playtest, check_text_width, check_bosses 0 collisions, check_flag_values, check_scripts, check_trainers; `npm run build:check`, `npm test` 491/491; full make OK; suite 100/100. W-ORPHAN now 14 (checkpoint-fortree-arrival-boot boots on a beat map; warning only).
+Verify (C375): full make OK; the 5 new playtests + checkpoint-fortree-arrival-boot pass run one at a time (runner then ran the whole suite: 100/100); check_beats OK (19 rows, "RM OK v3.5: 1 fight, 1 place|trace") + selftest 26 plants; check_trainer_slots OK (9 reclaimed); check_object_tiles 0 errors, no Fortree warning; check_flag_pairs 95 OK; check_flag_values OK; audit_boss_species --strict 0 collisions; check_playtest OK; check_text_width; check_all_quick.
+
+Screenshot decision (C375): at 1× the arrival frame shows three green dolls and the orange-haired Picnicker clearly apart → kept 3 dolls, 2-doll fallback not used.
+
+Open: C376 harness `hpPercent` + `battleSwitch` + fortree-charm-keeper-worn-party; C377 taken-north-in-order; tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
+Reflection C375: the C374 loss cost one cycle, not the arc; the rebuilt beats needed zero harness steps. Open design question for C378: does the ungated player read WREN as a story beat or just another Picnicker?

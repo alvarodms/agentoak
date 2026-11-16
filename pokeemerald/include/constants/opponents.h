@@ -487,7 +487,7 @@
 #define TRAINER_GINA_AND_MIA_1              483
 #define TRAINER_MIU_AND_YUKI                484
 #define TRAINER_MAUVILLE_GYM_HOPEFUL        485
-#define TRAINER_GINA_AND_MIA_2              486
+#define TRAINER_FORTREE_CHARM_KEEPER        486  // C375: reclaimed from never-battled GINA_AND_MIA_2; Picnicker WREN, Fortree entrance meadow (v3.5 Taken North)
 #define TRAINER_AMY_AND_LIV_4               487
 #define TRAINER_AMY_AND_LIV_5               488
 #define TRAINER_AMY_AND_LIV_6               489

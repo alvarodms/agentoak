@@ -1,0 +1,37 @@
+{
+  "name": "fortree-charm-keeper-spots-player",
+  "checks": "C375 v3.5 Taken North Beat 2 'The charm-keeper' (fight, turned): with FLAG_ROUTE104_SKEPTIC_TURNED, Picnicker WREN (slot 486, the _TURNED twin on 3,7 facing down, sight 4) spots the player walking down column 3 to 3,9 with no talk: one intro box 'You walked right past the charms!', then a singles battle vs CHIMECHO 27 then LOMBRE_HOENN 28 that a Lv70 SALAMENCE's DRAGON CLAW wins (FAKE_OUT may flinch a turn). Her defeat line 'That counts for something.' shows; talking again gives the post line; on re-entry she faces left with the dolls, toward the storms.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "comment": "down to row 9 first, then right: column 3 is entered only on 3,9, inside her sight" },
+    { "walkTo": { "x": 3, "y": 9, "yFirst": true } },
+    { "talk": { "start": false } },
+    { "expectText": "You walked right past the" },
+    { "expectBoxCount": 1 },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "expectBattle": { "opponent": "SPECIES_CHIMECHO", "level": 27 } },
+    { "battleTurns": { "move": 1, "until": "That counts for something.", "maxTurns": 8 } },
+    { "talk": { "start": false } },
+    { "expectScreen": "CB2_Overworld" },
+    { "comment": "she walked to 3,8 to battle; talk to her from 3,9" },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "So they keep it off. Right?" },
+    { "expectBoxCount": 1 },
+    { "warp": { "map": "MAP_FORTREE_CITY", "x": 0, "y": 8 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "left", "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "x": 1, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "x": 4, "y": 7, "visible": true } },
+    { "screenshot": "keeper-faces-the-storms" }
+  ]
+}

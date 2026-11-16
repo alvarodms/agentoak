@@ -6073,16 +6073,16 @@ const struct Trainer gTrainers[] = {
         .party = NO_ITEM_CUSTOM_MOVES(sParty_MauvilleGymHopeful),
     },
 
-    [TRAINER_GINA_AND_MIA_2] =
+    [TRAINER_FORTREE_CHARM_KEEPER] =
     {
-        .trainerClass = TRAINER_CLASS_TWINS,
-        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_TWINS,
-        .trainerPic = TRAINER_PIC_TWINS,
-        .trainerName = _("GINA & MIA"),
+        .trainerClass = TRAINER_CLASS_PICNICKER,
+        .encounterMusic_gender = F_TRAINER_FEMALE | TRAINER_ENCOUNTER_MUSIC_GIRL,
+        .trainerPic = TRAINER_PIC_PICNICKER,
+        .trainerName = _("WREN"),
         .items = {},
-        .doubleBattle = TRUE,
+        .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
-        .party = NO_ITEM_CUSTOM_MOVES(sParty_GinaAndMia2),
+        .party = NO_ITEM_CUSTOM_MOVES(sParty_FortreeCharmKeeper),
     },
 
     [TRAINER_AMY_AND_LIV_4] =

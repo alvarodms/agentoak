@@ -3,9 +3,27 @@ FortreeCity_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_OnResume
 	.byte 0
 
+@ C375 v3.5 "Taken North": once the Route 104 schoolkid has turned (0x35), three
+@ LOTAD DOLLs face back down Route 119 and the charm-keeper stands among them
+@ (the _TURNED twin). Otherwise the dolls and that twin are hidden (FLAG_TEMP_5)
+@ and the plain twin stands alone (FLAG_TEMP_6 hides it when 0x35 is set).
+@ Sighted trainer scripts must start with trainerbattle (src/trainer_see.c),
+@ hence two keeper objects on 3,7. Once beaten she faces the storms too.
 FortreeCity_OnTransition:
 	setflag FLAG_VISITED_FORTREE_CITY
+	call_if_defeated TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_EventScript_KeeperFacesStorms
+	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, FortreeCity_EventScript_StormCharmsOut
+	setflag FLAG_TEMP_5
 	end
+
+FortreeCity_EventScript_StormCharmsOut:
+	setflag FLAG_TEMP_6
+	end
+
+FortreeCity_EventScript_KeeperFacesStorms:
+	setobjectmovementtype LOCALID_FORTREE_CHARM_KEEPER, MOVEMENT_TYPE_FACE_LEFT
+	setobjectmovementtype LOCALID_FORTREE_CHARM_KEEPER_TURNED, MOVEMENT_TYPE_FACE_LEFT
+	return
 
 FortreeCity_OnResume:
 	setstepcallback STEP_CB_FORTREE_BRIDGE
@@ -306,3 +324,45 @@ FortreeCity_Text_NinetalesElder:
 	.string "not fire.\p"
 	.string "HOENN is rewriting what we\n"
 	.string "thought we knew.$"
+
+@ =============================================
+@ v3.5 Taken North Beats 1-2: storm charms + the charm-keeper (C375)
+@ =============================================
+
+FortreeCity_EventScript_CharmKeeper::
+	trainerbattle_single TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_Text_CharmKeeperIntro, FortreeCity_Text_CharmKeeperDefeat
+	msgbox FortreeCity_Text_CharmKeeperPost, MSGBOX_AUTOCLOSE
+	end
+
+FortreeCity_EventScript_CharmKeeperTurned::
+	trainerbattle_single TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_Text_CharmKeeperIntroTurned, FortreeCity_Text_CharmKeeperDefeat
+	msgbox FortreeCity_Text_CharmKeeperPostTurned, MSGBOX_AUTOCLOSE
+	end
+
+FortreeCity_EventScript_LotadDoll::
+	msgbox FortreeCity_Text_LotadDoll, MSGBOX_SIGN
+	end
+
+FortreeCity_Text_CharmKeeperIntroTurned:
+	.string "You walked right past the\n"
+	.string "charms! The storms will come!$"
+
+FortreeCity_Text_CharmKeeperIntro:
+	.string "Stop! Nobody climbs to FORTREE\n"
+	.string "without a battle in the wind!$"
+
+FortreeCity_Text_CharmKeeperDefeat:
+	.string "Charms still face the storm.\n"
+	.string "That counts for something.$"
+
+FortreeCity_Text_CharmKeeperPostTurned:
+	.string "LOTAD don't mind lightning.\n"
+	.string "So they keep it off. Right?$"
+
+FortreeCity_Text_CharmKeeperPost:
+	.string "The wind's calm today.\n"
+	.string "Lucky you.$"
+
+FortreeCity_Text_LotadDoll:
+	.string "It's a LOTAD DOLL, set out\n"
+	.string "facing the storms.$"
