@@ -173,6 +173,9 @@
         "string": "{PLAYER}",
         "reason": "legacy C340: same line names the player who wrote the doubt"
       }
+    ],
+    "mustReadScripts": [
+      "LilycoveCity_EventScript_ExpertF"
     ]
   },
   {
@@ -194,6 +197,9 @@
       "MeteorFalls_B1F_2R_EventScript_ChalkCopied": [
         "FLAG_DEN_METEOR_STEVEN_CHALK"
       ]
+    },
+    "b5Exempt": {
+      "*": "legacy C336: no playtests/*.json covers the chalk copy; check_playtest R5 (den preset) keeps its flag read live"
     }
   },
   {
@@ -241,6 +247,9 @@
         "string": "wrote",
         "reason": "legacy C342: the student says \"A trainer wrote it\", the coda's point"
       }
+    ],
+    "mustReadScripts": [
+      "Route104_EventScript_LotadStudent"
     ]
   },
   {
@@ -281,6 +290,20 @@
       "Route106_EventScript_TideHiker": [
         "FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE"
       ]
+    },
+    "visibility": {
+      "name": "A tide hiker",
+      "localid": "LOCALID_ROUTE106_TIDE_HIKER",
+      "hideFlag": "FLAG_HIDE_ROUTE106_TIDE_HIKER",
+      "setup": "Route106_OnTransition",
+      "species": "SPECIES_GLIGAR_HOENN",
+      "shows": true
+    },
+    "mustReadScripts": [
+      "Route106_EventScript_TideHiker"
+    ],
+    "b5Exempt": {
+      "tide-hiker-sightline": "legacy C348/C354: boots in Dewford Town (4,0) and walks in across the Route 106 connection (expectPlayer MAP_ROUTE106 64,19); no warp step"
     }
   },
   {
@@ -313,6 +336,14 @@
       "GraniteCave_B1F_EventScript_SetupHikerLeft": [
         "FLAG_SYS_GAME_CLEAR"
       ]
+    },
+    "visibility": {
+      "name": "A empty B1F spot",
+      "localid": "LOCALID_GRANITE_CAVE_B1F_HIKER",
+      "hideFlag": "FLAG_HIDE_GRANITE_CAVE_B1F_HIKER",
+      "setup": "GraniteCave_B1F_EventScript_SetupHikerLeft",
+      "species": "SPECIES_GLIGAR_HOENN",
+      "shows": false
     }
   },
   {
@@ -350,7 +381,18 @@
         "FLAG_SYS_GAME_CLEAR"
       ],
       "Route119_EventScript_StormChaser": []
-    }
+    },
+    "visibility": {
+      "name": "B TESSA",
+      "localid": "LOCALID_ROUTE119_STORM_CHASER",
+      "hideFlag": "FLAG_HIDE_ROUTE119_STORM_CHASER",
+      "setup": "Route119_EventScript_SetupStormChaser",
+      "species": "SPECIES_LOTAD_HOENN",
+      "shows": true
+    },
+    "mustReadScripts": [
+      "Route119_EventScript_StormChaser"
+    ]
   },
   {
     "id": "beat-c-ellis",
@@ -388,7 +430,18 @@
         "FLAG_SYS_GAME_CLEAR"
       ],
       "Route113_EventScript_AshCamper": []
-    }
+    },
+    "visibility": {
+      "name": "C ELLIS",
+      "localid": "LOCALID_ROUTE113_ASH_CAMPER",
+      "hideFlag": "FLAG_HIDE_ROUTE113_ASH_CAMPER",
+      "setup": "Route113_EventScript_SetupAshCamper",
+      "species": "SPECIES_VULPIX_HOENN",
+      "shows": true
+    },
+    "mustReadScripts": [
+      "Route113_EventScript_AshCamper"
+    ]
   },
   {
     "id": "t1-ring-in-the-ash",
@@ -443,7 +496,8 @@
       "ring-in-the-ash-before-win",
       "ring-in-the-ash-after-win"
     ],
-    "speaker": "none"
+    "speaker": "none",
+    "traceName": "T1 ring in the ash"
   },
   {
     "id": "first-ink-route102",
@@ -561,7 +615,8 @@
       "route109-storm-watch-defeated",
       "word-travels-in-order"
     ],
-    "speaker": "stranger"
+    "speaker": "stranger",
+    "seeFirst": "A LOTAD DOLL sits by the sandcastle, and both kids beside it stare out to sea."
   },
   {
     "id": "v34-half-a-fact",
@@ -590,6 +645,7 @@
       "mauville-half-a-fact-follows-advice",
       "word-travels-in-order"
     ],
-    "speaker": "stranger"
+    "speaker": "stranger",
+    "seeFirst": "A YOUNGSTER waits outside the GYM by WALLY, facing the door like he's next."
   }
 ]

@@ -5,11 +5,15 @@
 //
 // scripts/beats.json lists every shipped discovery beat once: its map, object
 // or trainer, gate, labels, playtests and who speaks (see memory/strategy-notes.md
-// "C367 refactor spec"). Rows land with their beat; there are no planned rows.
-// check_playtest / check_beat_visibility / check_object_tiles still keep their
-// own tables until C370 moves them onto this file.
+// "beats.json tooling (C373)"). Rows land with their beat; there are no planned rows.
+// Every reader goes through scripts/lib/beats.cjs (loadBeats validates the SH-*
+// shapes and the MIN_ROWS floor); check_playtest R5 and check_beat_visibility
+// derive their tables from it. check_object_tiles needs none (it parses the
+// believer place scripts).
 //
 // Fails (exit 1) when:
+//   SH-*. scripts/lib/beats.cjs rejects a row shape (register, tiles, mustRead,
+//       visibility, b5Exempt; see that file);
 //   B0. the manifest has fewer than MIN_ROWS rows, a row lacks id/arc/map/labels/
 //       playtests/speaker, an id repeats, or speaker is not stranger|believer|none;
 //   B1. a `playtests` name has no playtests/<name>.json;
@@ -28,6 +32,24 @@
 //       so new text never slips past unread. Text labels defined outside the
 //       map (data/text/*.inc, gText_*) are not read.
 //
+// Cross-reference pass, after B0-B4 (C373):
+//   B5a. a row has no playtests (legacy rows may carry b5Exempt {"*": reason});
+//   B5b. a named playtest has no playtests/<name>.json, or neither boots on the
+//       row's map (scenario.map, or scenario.checkpoint resolved through
+//       src/emulator/checkpoints.ts) nor has a `warp` step to it, unless the
+//       row's b5Exempt names it (legacy rows only, each with a reason);
+//   B5c. checkpoints.ts does not parse: a CHECKPOINT_NAMES entry has no
+//       `const <NAME>: Checkpoint = {` block with a map, or fewer than 3 resolve
+//       (B5b is skipped: it cannot be trusted without the checkpoint maps);
+//   RM.  register mix, per version (v3.4, v3.5, ...) from v3.4 on: no row may be
+//       register weather, and a version with >= 2 rows needs >= 1 fight and
+//       >= 1 place|trace (a version with 1 row prints "RM pending" and passes);
+//   SF.  a v3.4+ row has no seeFirst (one plain sentence: what the player sees
+//       change before any text);
+//   SFV. a seeFirst uses a speech verb (says|tells|explains|reads).
+// Warns (exit stays 0):
+//   W-ORPHAN. a playtest boots on a beat row's map but no row names it.
+//
 // Usage: node scripts/check_beats.cjs [--selftest]
 //        (run by `make check_beats`, part of `make check_all`)
 
@@ -35,15 +57,13 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const MANIFEST = path.join(__dirname, 'beats.json');
 const MAPS_DIR = path.join(ROOT, 'data/maps');
 const PLAYTESTS_DIR = path.join(ROOT, 'playtests');
 const FLAGS_H = path.join(ROOT, 'include/constants/flags.h');
 const OPPONENTS_H = path.join(ROOT, 'include/constants/opponents.h');
+const CHECKPOINTS_TS = path.join(ROOT, '../src/emulator/checkpoints.ts');
 
-// C323 rule: a floor equal to what shipped, so a parser or merge that drops
-// rows fails loudly. C367 shipped 15 rows (v3.0-v3.3), C368 16 (v3.4 storm watch); raise it when a beat lands.
-const MIN_ROWS = 17;
+const { MIN_ROWS, loadBeats, validateRows, mapId, arcVersion, versionLess, checkpointMaps } = require('./lib/beats.cjs');
 
 const SPEAKERS = ['stranger', 'believer', 'none'];
 const D1_MAP = /^(GraniteCave_|Route106$|LilycoveCity|DewfordTown)/;
@@ -221,6 +241,111 @@ function check(rows, env) {
   return errors;
 }
 
+// ---- cross-reference pass: B5, RM, SF, SFV, W-ORPHAN (C373) ----------------------
+
+const SPEECH_VERB = /\b(says|tells|explains|reads)\b/i;
+// Every id this pass or the loader's validateRows can fire; the selftest plants each one.
+const NEW_RULES = ['SH-REG', 'SH-TILE', 'SH-MUSTREAD', 'SH-VIS', 'SH-B5X', 'B5a', 'B5b', 'B5c', 'RM', 'SF', 'SFV', 'W-ORPHAN'];
+
+// Pure. env: { checkpointsTs: text of checkpoints.ts, mapId(folder) -> MAP_* | null,
+// playtest(name) -> parsed playtests/<name>.json | null, playtestNames() -> [name] }.
+// Returns { errors, warnings, stats }; errors/warnings are [{ id, row, msg }].
+function crossCheck(rows, env) {
+  const errors = [];
+  const warnings = [];
+  const add = (list, id, row, msg) => list.push({ id, row, msg });
+  const stats = { reached: 0, exemptPlaytests: 0, exemptRows: 0, rm: [], seeFirst: 0, orphans: 0 };
+
+  // B5
+  let checkpoints = null;
+  try {
+    checkpoints = checkpointMaps(env.checkpointsTs);
+  } catch (e) {
+    if (e.id !== 'B5c') throw e;
+    add(errors, 'B5c', 'checkpoints.ts', `${e.message.replace(/^beats: B5c: checkpoints\.ts: /, '')}; B5b skipped`);
+  }
+  const bootMap = (pt) => {
+    const s = pt.scenario || {};
+    return s.map || checkpoints[s.checkpoint] || null;
+  };
+  for (const r of rows) {
+    const exempt = r.b5Exempt || {};
+    if (exempt['*']) {
+      stats.exemptRows++;
+      continue;
+    }
+    if (!(r.playtests || []).length) {
+      add(errors, 'B5a', r.id, `no playtests: name one that boots on or warps to ${r.map}`);
+      continue;
+    }
+    if (!checkpoints) continue;
+    const target = env.mapId(r.map);
+    for (const name of r.playtests) {
+      if (exempt[name]) {
+        stats.exemptPlaytests++;
+        continue;
+      }
+      const pt = env.playtest(name);
+      if (!pt) {
+        add(errors, 'B5b', r.id, `playtest ${name} has no playtests/${name}.json`);
+        continue;
+      }
+      const boot = bootMap(pt);
+      const warps = (pt.steps || []).some((st) => st && st.warp && st.warp.map === target);
+      if (target && (boot === target || warps)) stats.reached++;
+      else add(errors, 'B5b', r.id, `playtest ${name} boots on ${boot || '(no map)'} and has no warp step to ${target || `${r.map} (no map.json id)`}`);
+    }
+  }
+
+  // W-ORPHAN
+  if (checkpoints) {
+    const named = new Set(rows.flatMap((r) => r.playtests || []));
+    const rowMaps = new Set(rows.map((r) => env.mapId(r.map)).filter(Boolean));
+    for (const name of env.playtestNames()) {
+      if (named.has(name)) continue;
+      const pt = env.playtest(name);
+      const boot = pt && bootMap(pt);
+      if (boot && rowMaps.has(boot)) add(warnings, 'W-ORPHAN', name, `boots on ${boot}, a beat map, but no beats.json row names it`);
+    }
+    stats.orphans = warnings.length;
+  }
+
+  // RM
+  const groups = new Map();
+  for (const r of rows) {
+    const v = arcVersion(r);
+    if (!v || versionLess(v, [3, 4])) continue;
+    const key = `v${v[0]}.${v[1]}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(r);
+  }
+  for (const [key, group] of groups) {
+    for (const r of group.filter((g) => g.register === 'weather'))
+      add(errors, 'RM', r.id, `${key} row is register weather (no weather beats from v3.4 on)`);
+    if (group.length === 1) {
+      stats.rm.push(`RM pending: ${key} has 1 row`);
+      continue;
+    }
+    const fights = group.filter((g) => g.register === 'fight').length;
+    const places = group.filter((g) => g.register === 'place' || g.register === 'trace').length;
+    if (!fights || !places) add(errors, 'RM', key, `${group.length} rows with ${fights} fight and ${places} place|trace; a version needs >= 1 of each`);
+    else stats.rm.push(`RM OK ${key}: ${fights} fight, ${places} place|trace`);
+  }
+
+  // SF, SFV
+  for (const r of rows) {
+    const v = arcVersion(r);
+    const sf = r.seeFirst;
+    if (v && !versionLess(v, [3, 4])) {
+      if (typeof sf !== 'string' || !sf.trim()) add(errors, 'SF', r.id, 'v3.4+ row needs seeFirst: one plain sentence of what the player sees change before any text');
+      else stats.seeFirst++;
+    }
+    const verb = typeof sf === 'string' && SPEECH_VERB.exec(sf);
+    if (verb) add(errors, 'SFV', r.id, `seeFirst uses the speech verb "${verb[1]}": describe what is seen, not said: "${sf}"`);
+  }
+  return { errors, warnings, stats };
+}
+
 // ---- I/O ------------------------------------------------------------------------
 
 function defines(file, prefix) {
@@ -230,6 +355,8 @@ function defines(file, prefix) {
 }
 
 function realEnv() {
+  const playtestCache = new Map();
+  const mapIdCache = new Map();
   return {
     flags: defines(FLAGS_H, 'FLAG_'),
     trainers: defines(OPPONENTS_H, 'TRAINER_'),
@@ -241,10 +368,22 @@ function realEnv() {
       const text = path.join(dir, 'text.inc');
       return { scripts: fs.readFileSync(scripts, 'utf8'), text: fs.existsSync(text) ? fs.readFileSync(text, 'utf8') : null };
     },
+    // crossCheck
+    checkpointsTs: fs.readFileSync(CHECKPOINTS_TS, 'utf8'),
+    mapId: (folder) => {
+      if (!mapIdCache.has(folder)) mapIdCache.set(folder, mapId(folder));
+      return mapIdCache.get(folder);
+    },
+    playtest: (name) => {
+      if (!playtestCache.has(name)) {
+        const file = path.join(PLAYTESTS_DIR, `${name}.json`);
+        playtestCache.set(name, fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null);
+      }
+      return playtestCache.get(name);
+    },
+    playtestNames: () => fs.readdirSync(PLAYTESTS_DIR).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort(),
   };
 }
-
-const loadManifest = () => JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
 
 // ---- selftest ---------------------------------------------------------------------
 
@@ -253,10 +392,13 @@ function selftest() {
     console.error(`check_beats: selftest FAILED: ${msg}`);
     process.exit(1);
   };
+  let plants = 0;
   const env = realEnv();
-  const rows = loadManifest();
+  const rows = loadBeats();
   const clean = check(rows, env);
   if (clean.length) fail(`the real manifest should pass:\n  ${clean.join('\n  ')}`);
+  const realCross = crossCheck(rows, env);
+  if (realCross.errors.length) fail(`the real manifest should pass B5/RM/SF/SFV:\n  ${realCross.errors.map((e) => `${e.id} ${e.row}: ${e.msg}`).join('\n  ')}`);
 
   // A fake stranger map: reached text through goto/call/trainerbattle, plus one unreached label
   // whose forbidden word must NOT count (proves the walk, not a whole-file regex).
@@ -298,6 +440,7 @@ function selftest() {
   if (withFake(FAKE).length) fail(`the fake stranger should pass (its BIRCH line is unreached): ${withFake(FAKE).join('; ')}`);
 
   const expectRule = (rule, errors, what) => {
+    plants++;
     if (!errors.some((e) => e.startsWith(`${rule} `))) fail(`planted ${what} was not caught as ${rule}; got ${JSON.stringify(errors)}`);
   };
   const clone = () => JSON.parse(JSON.stringify(rows));
@@ -339,12 +482,115 @@ function selftest() {
   if (allowed.length) fail(`an allow entry should silence its string: ${allowed.join('; ')}`);
   if (walkLabels(FAKE, ['Fake_EventScript_Unreached']).textLabels.size !== 1) fail('walkLabels from a second start label');
 
-  console.log('check_beats selftest: OK');
+  // ---- C373: shapes, B5, RM, SF, SFV, W-ORPHAN on in-memory fixtures ----
+  // The two v3.5 draft rows (memory/strategy-notes.md) must pass as written. Their
+  // labels, flags, trainer and playtests do not exist yet, so B1-B4 (file lookups,
+  // the B4 text walk) cannot see them: they go through validateRows + crossCheck
+  // (B5, RM, SF, SFV) with a fake env, as does every plant below.
+  const STORM_CHARMS = {"id":"v35-storm-charms","arc":"v3.5 Taken North 1, storm charms (C375)","register":"place","map":"FortreeCity","object":"LOCALID_FORTREE_LOTAD_DOLL_1","gate":{"flag":"FLAG_ROUTE104_SKEPTIC_TURNED"},"hideFlag":"FLAG_TEMP_5","tiles":[[1,7,"left"],[2,7,"left"],[4,7,"left"]],"labels":["FortreeCity_OnTransition","FortreeCity_EventScript_LotadDoll"],"playtests":["fortree-storm-charms-turned","fortree-storm-charms-not-turned","taken-north-in-order"],"speaker":"none","seeFirst":"Three LOTAD DOLLs stand in the meadow facing back down Route 119 toward the storms, a woman among them."};
+  const CHARM_KEEPER = {"id":"v35-charm-keeper","arc":"v3.5 Taken North 2, the charm-keeper (C374)","register":"fight","map":"FortreeCity","object":"LOCALID_FORTREE_CHARM_KEEPER","trainer":"TRAINER_FORTREE_CHARM_KEEPER","gate":{"none":true},"tiles":[[3,7,"down"]],"labels":["FortreeCity_EventScript_CharmKeeper","FortreeCity_EventScript_CharmKeeperTurned"],"playtests":["fortree-charm-keeper-spots-player","fortree-charm-keeper-ungated","fortree-kecleon-unblocked","taken-north-in-order"],"speaker":"believer","seeFirst":"Three LOTAD DOLLs face the storm; the woman standing among them sees you pass them and comes for you."};
+  // A legacy row carrying every optional shape, so the SH-* plants have something to break.
+  const LEGACY = {
+    id: 'fixture-legacy', arc: 'v3.1 selftest legacy', register: 'place', map: 'Route104', speaker: 'none',
+    tiles: [[1, 2], [3, 4, 'up']], labels: ['Fixture_EventScript_Legacy'], playtests: ['legacy-on-map'],
+    mustRead: { Fixture_EventScript_Legacy: ['FLAG_FIXTURE'] }, mustReadScripts: ['Fixture_EventScript_Legacy'],
+    visibility: { name: 'fixture', localid: 'LOCALID_FIXTURE', hideFlag: 'FLAG_HIDE_FIXTURE', setup: 'Fixture_OnTransition', species: 'SPECIES_FIXTURE', shows: true },
+  };
+  const CHECKPOINTS_FIXTURE = [
+    'export const CHECKPOINT_NAMES = ["slateport_arrival", "mauville_pre_wattson", "fortree_arrival"] as const;',
+    'const SLATEPORT_ARRIVAL: Checkpoint = {', '  flags: [],', '  map: "MAP_ROUTE109",', '};',
+    'const MAUVILLE_PRE_WATTSON: Checkpoint = {', '  map: "MAP_MAUVILLE_CITY",', '};',
+    'const FORTREE_ARRIVAL: Checkpoint = {', '  vars: { VAR_X: 1 },', '  map: "MAP_FORTREE_CITY",', '};',
+    'const union = (a, b) => a;',
+  ].join('\n');
+  const FIXTURE_PLAYTESTS = {
+    'legacy-on-map': { scenario: { map: 'MAP_ROUTE104' }, steps: [] },
+    'boots-elsewhere': { scenario: { map: 'MAP_DEWFORD_TOWN' }, steps: [{ walk: 'up' }, { warp: { map: 'MAP_ROUTE106', x: 1, y: 1 } }] },
+    'fortree-orphan': { scenario: { checkpoint: 'fortree_arrival' }, steps: [] },
+  };
+  for (const name of new Set([...STORM_CHARMS.playtests, ...CHARM_KEEPER.playtests]))
+    FIXTURE_PLAYTESTS[name] = { scenario: { checkpoint: 'fortree_arrival' }, steps: [] };
+  const FIXTURE_MAPS = { FortreeCity: 'MAP_FORTREE_CITY', Route104: 'MAP_ROUTE104', GraniteCave_B1F: 'MAP_GRANITE_CAVE_B1F' };
+  // opts.checkpointsTs replaces the checkpoints.ts fixture; opts.extraPlaytests are on "disk" but named by no row.
+  const fixtureEnv = (opts = {}) => ({
+    checkpointsTs: opts.checkpointsTs || CHECKPOINTS_FIXTURE,
+    mapId: (folder) => FIXTURE_MAPS[folder] || null,
+    playtest: (name) => FIXTURE_PLAYTESTS[name] || null,
+    playtestNames: () => ['legacy-on-map', 'boots-elsewhere', ...STORM_CHARMS.playtests, ...CHARM_KEEPER.playtests, ...(opts.extraPlaytests || [])],
+  });
+  const runNew = (fixtureRows, opts) => {
+    const cross = crossCheck(fixtureRows, fixtureEnv(opts));
+    return { errors: [...validateRows(fixtureRows), ...cross.errors], warnings: cross.warnings, stats: cross.stats };
+  };
+  const show = (list) => list.map((e) => `${e.id} ${e.row}: ${e.msg}`).join(' | ') || 'none';
+  const expectClean = (what, r) => {
+    if (r.errors.length || r.warnings.length) fail(`${what} should pass: ${show([...r.errors, ...r.warnings])}`);
+  };
+
+  expectClean('the v3.5 draft rows', runNew([STORM_CHARMS, CHARM_KEEPER]));
+  const base = () => JSON.parse(JSON.stringify([LEGACY, STORM_CHARMS, CHARM_KEEPER]));
+  expectClean('the base fixture (legacy + v3.5 rows)', runNew(base()));
+  // Alone, the keeper row leaves the storm-charms playtests orphaned (W-ORPHAN): only errors count here.
+  const keeperOnly = runNew([CHARM_KEEPER]);
+  if (keeperOnly.errors.length) fail(`one v3.5 row alone should pass as RM pending: ${show(keeperOnly.errors)}`);
+  if (!keeperOnly.stats.rm.includes('RM pending: v3.5 has 1 row')) fail(`a 1-row version should print "RM pending: v3.5 has 1 row", got ${keeperOnly.stats.rm}`);
+
+  // Each plant: [name, rule id, mutate(base rows), env opts]. The ids it fires
+  // (errors and warnings) must be exactly { rule id }.
+  const PLANTS = [
+    ['SH-REG', 'SH-REG', (r) => { r[0].register = 'smell'; }],
+    ['SH-TILE', 'SH-TILE', (r) => { r[0].tiles.push([5, 6, 'north']); }],
+    ['SH-MUSTREAD', 'SH-MUSTREAD', (r) => { r[0].mustRead.Fixture_EventScript_Legacy = 'FLAG_FIXTURE'; }],
+    ['SH-VIS', 'SH-VIS', (r) => { delete r[0].visibility.shows; }],
+    ['SH-B5X', 'SH-B5X', (r) => { r[2].b5Exempt = { '*': 'a v3.5 row may not be exempt' }; }],
+    ['B5a', 'B5a', (r) => { r.push({ ...r[0], id: 'fixture-no-playtests', map: 'GraniteCave_B1F', playtests: [] }); }],
+    ['B5b', 'B5b', (r) => { r[0].playtests.push('boots-elsewhere'); }],
+    ['B5c', 'B5c', () => {}, { checkpointsTs: CHECKPOINTS_FIXTURE.replace('"mauville_pre_wattson", ', '') }],
+    ['RM-weather', 'RM', (r) => { r[1].register = 'weather'; }],
+    ['RM-mix', 'RM', (r) => { r.push({ ...r[2], id: 'v39-a', arc: 'v3.9 selftest A' }, { ...r[2], id: 'v39-b', arc: 'v3.9 selftest B' }); }],
+    ['SF', 'SF', (r) => { r[2].seeFirst = '  '; }],
+    ['SFV', 'SFV', (r) => { r[2].seeFirst = 'A woman by the dolls says the storms are coming.'; }],
+    ['W-ORPHAN', 'W-ORPHAN', () => {}, { extraPlaytests: ['fortree-orphan'] }],
+  ];
+  const seenFixtures = new Set();
+  let ran = 0;
+  for (const [name, id, mutate, opts] of PLANTS) {
+    const fixture = base();
+    mutate(fixture);
+    const key = JSON.stringify([fixture, opts || {}]);
+    if (seenFixtures.has(key)) fail(`plant ${name} duplicates another plant's fixture`);
+    seenFixtures.add(key);
+    const r = runNew(fixture, opts);
+    const fired = [...new Set([...r.errors, ...r.warnings].map((e) => e.id))].sort();
+    if (fired.join() !== id) fail(`plant ${name}: expected exactly {${id}}, got {${fired.join(', ')}}: ${show([...r.errors, ...r.warnings])}`);
+    if (id === 'W-ORPHAN' && r.errors.length) fail('plant W-ORPHAN must warn, not fail');
+    ran++;
+  }
+  // .only guard: every plant ran, and the plants cover NEW_RULES exactly.
+  if (ran !== PLANTS.length) fail(`ran ${ran} of ${PLANTS.length} plants`);
+  const planted = new Set(PLANTS.map((p) => p[1]));
+  const unplanted = NEW_RULES.filter((id) => !planted.has(id));
+  const unknown = [...planted].filter((id) => !NEW_RULES.includes(id));
+  if (unplanted.length || unknown.length) fail(`plants must cover NEW_RULES exactly: unplanted ${unplanted.join(', ') || '-'}; unknown ${unknown.join(', ') || '-'}`);
+  plants += ran;
+
+  console.log(`check_beats selftest: OK (${plants} plants)`);
 }
 
 function main() {
-  const rows = loadManifest();
-  const errors = check(rows, realEnv());
+  let rows;
+  try {
+    rows = loadBeats();
+  } catch (e) {
+    console.error(`check_beats: ${e.message}`);
+    for (const p of (e.problems || []).slice(1)) console.error(`check_beats: ${p.id} ${p.row}: ${p.msg}`);
+    console.error('check_beats: FAILED (scripts/lib/beats.cjs rejected beats.json)');
+    process.exit(1);
+  }
+  const env = realEnv();
+  const errors = check(rows, env);
+  const cross = crossCheck(rows, env);
+  errors.push(...cross.errors.map((e) => `${e.id} ${e.row}: ${e.msg}`));
   if (errors.length) {
     for (const e of errors) console.error(`check_beats: ${e}`);
     console.error(`check_beats: FAILED (${errors.length} problem(s))`);
@@ -353,6 +599,12 @@ function main() {
   const strangers = rows.filter((r) => r.speaker === 'stranger');
   const allows = rows.reduce((n, r) => n + (r.allow || []).length, 0);
   console.log(`check_beats: OK (${rows.length} rows, ${strangers.length} strangers text-walked, ${allows} allow entries)`);
+  const s = cross.stats;
+  console.log(`check_beats: B5 OK (${s.reached} playtest(s) reach their row's map; legacy b5Exempt: ${s.exemptRows} whole row(s), ${s.exemptPlaytests} playtest(s))`);
+  for (const line of s.rm) console.log(`check_beats: ${line}`);
+  console.log(`check_beats: SF OK (${s.seeFirst} v3.4+ row(s) with seeFirst, no speech verbs)`);
+  for (const w of cross.warnings) console.log(`check_beats: W-ORPHAN ${w.row}: ${w.msg}`);
+  console.log(`check_beats: W-ORPHAN ${s.orphans} orphan playtest(s) (warning only)`);
 }
 
 if (require.main === module) {
@@ -360,4 +612,4 @@ if (require.main === module) {
   else main();
 }
 
-module.exports = { walkLabels, readString, check, MIN_ROWS };
+module.exports = { walkLabels, readString, check, crossCheck, MIN_ROWS };

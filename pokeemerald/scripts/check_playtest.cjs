@@ -28,9 +28,10 @@
 //   R4. the preset sets a den's caught flag, gives a den species (both derived
 //       from every EventMacro_StaticDen line; both presets), or sets one of its
 //       neverSet flags / any FLAG_TEMP_*;
-//   R5. a BEATS row is dead: its object script is not on the map, its label is
+//   R5. a beat is dead: its object script is not on the map, its label is
 //       missing, or it never reads its flag on a goto/call_if_set/unset line
-//       (the C320 dead-script trap);
+//       (the C320 dead-script trap). Beats come from scripts/beats.json rows with
+//       mustRead (scripts/lib/beats.cjs mustReadEntries); fewer than MIN_BEATS fails;
 //   R6. on a route map (the preset's routeMaps prefixes/exact), a `removeobject` hides an
 //       object whose FLAG_HIDE_* is neither set by the preset, nor set by
 //       EventScript_ResetAllMapFlags (data/scripts/new_game.inc, which
@@ -45,6 +46,8 @@
 
 const fs = require('fs');
 const path = require('path');
+
+const { mustReadEntries } = require('./lib/beats.cjs');
 
 const ROOT = path.join(__dirname, '..');
 const MAPS_DIR = path.join(ROOT, 'data/maps');
@@ -162,24 +165,11 @@ const PRESETS = [
 ];
 const MIN_DENS = 3;
 
-// R5: beats that must be live in the map data (shared by every preset).
-const BEATS = [
-  { item: 5, map: 'LilycoveCity', script: 'LilycoveCity_EventScript_ExpertF', mustRead: ['FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_RECEIVED_FIELD_NOTES'] },
-  { item: 1, map: 'MeteorFalls_B1F_2R', label: 'MeteorFalls_B1F_2R_EventScript_ChalkCopied', mustRead: ['FLAG_DEN_METEOR_STEVEN_CHALK'] },
-  // C342 Red Ink coda (postgame): reachable via `make playtest_coda` (C343), not from the den tour.
-  { item: 'coda', map: 'Route104', label: 'Route104_EventScript_LotadLesson', mustRead: ['FLAG_SYS_GAME_CLEAR', 'FLAG_LILYCOVE_GLIGAR_DOUBT', 'FLAG_HIDE_ROUTE104_LOTAD_STUDENT'] },
-  { item: 'coda', map: 'Route104', script: 'Route104_EventScript_LotadStudent', mustRead: [] },
-  // C348 v3.1 Beat A (postgame): reachable via make playtest_coda (GAME_CLEAR + GLIGAR_HOENN) (C351: preset sets VISITED_DEWFORD_TOWN, R3).
-  { item: 'coda', map: 'Route106', label: 'Route106_OnTransition', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
-  { item: 'coda', map: 'Route106', script: 'Route106_EventScript_TideHiker', mustRead: ['FLAG_RECEIVED_GRANITE_HIKER_HARD_STONE'] },
-  { item: 'coda', map: 'GraniteCave_B1F', label: 'GraniteCave_B1F_EventScript_SetupHikerLeft', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
-  // C349 v3.1 Beat B (postgame): reachable via make playtest_coda (GAME_CLEAR + LOTAD_HOENN) (C351: preset sets VISITED_MAUVILLE_CITY + VISITED_FORTREE_CITY, R3).
-  { item: 'coda', map: 'Route119', label: 'Route119_EventScript_SetupStormChaser', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
-  { item: 'coda', map: 'Route119', script: 'Route119_EventScript_StormChaser', mustRead: [] },
-  // C350 v3.1 Beat C (postgame): reachable via make playtest_coda (GAME_CLEAR + VULPIX_HOENN) (C351: preset sets VISITED_FALLARBOR_TOWN, R3).
-  { item: 'coda', map: 'Route113', label: 'Route113_EventScript_SetupAshCamper', mustRead: ['FLAG_SYS_GAME_CLEAR'] },
-  { item: 'coda', map: 'Route113', script: 'Route113_EventScript_AshCamper', mustRead: [] },
-];
+// R5: beats that must be live in the map data (shared by every preset), one entry per
+// mustRead key of a scripts/beats.json row: { item, map, script | label, mustRead }.
+// `script` (the key is in the row's mustReadScripts) must also be an object_event script.
+// C373: 11 entries (Lilycove doubt, Meteor chalk, coda lesson x2, Beats A x3, B x2, C x2).
+const MIN_BEATS = 11;
 const READ_RE = /^(goto_if_set|goto_if_unset|call_if_set|call_if_unset)\s+(\w+)/;
 
 function stripComment(line) {
@@ -341,8 +331,9 @@ function flagsRead(text) {
   return read;
 }
 
-function checkBeats(errors) {
-  for (const b of BEATS) {
+function checkBeats(beats, errors) {
+  if (beats.length < MIN_BEATS) errors.push(`R5: fewer than ${MIN_BEATS} beat entries (got ${beats.length}); did a beats.json row lose its mustRead?`);
+  for (const b of beats) {
     const where = `R5 item ${b.item} (${b.map})`;
     const text = readScripts(b.map);
     if (text === null) {
@@ -521,9 +512,16 @@ function main() {
     if (text !== null) dens.push(...parseDens(text));
   }
 
+  let beats;
+  try {
+    beats = mustReadEntries();
+  } catch (e) {
+    console.error(`check_playtest: ${e.message}`);
+    process.exit(1);
+  }
   const errors = [];
   const beatErrors = [];
-  checkBeats(beatErrors);
+  checkBeats(beats, beatErrors);
   errors.push(...beatErrors.map((e) => `[beats] ${e}`));
   const oks = [];
   for (const preset of PRESETS) {
@@ -551,7 +549,7 @@ function main() {
     process.exit(1);
   }
   for (const line of oks) console.log(line);
-  console.log(`check_playtest: OK (${PRESETS.length} presets, ${BEATS.length} beats)`);
+  console.log(`check_playtest: OK (${PRESETS.length} presets, ${beats.length} beats)`);
 }
 
 if (require.main === module) {

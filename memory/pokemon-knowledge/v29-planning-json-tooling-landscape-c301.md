@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling & Maturity Landscape
 
-**Cycle**: 372 | **Date**: November 2026
+**Cycle**: 373 | **Date**: November 2026
 
 ---
 
@@ -34,6 +34,7 @@
 - **Two-phase validation** (Pedre engine validators): structural pass (fields, known enums) first, then a separate cross-reference pass (labels, files, maps exist). B0-B4 ≈ structural, B5 = cross-reference; keep them separate so one error doesn't cascade.
 - **Orphan registration** (Unity system-manifest skill): CI fails a test file not listed in the manifest. Reverse of B5: a playtest on a beat map named by no row is an orphan (warn, not fail).
 - **One loader** (get-design-done manifest README): read the manifest only through one loader module, never `require` the JSON directly in each lint, so a shape change lands in one place.
+- **C373: planted failures must name the rule** (typescript-eslint RuleTester: "invalid tests must always specify the expected errors", each as a `messageId` from the rule's `meta.messages`, optionally line/column; ESLint test-lint rules also flag duplicate cases + committed `.only`). A selftest that only checks "exit ≠ 0" passes when the WRONG rule fires (a planted B5 fixture that also breaks B2 shape). → each `--selftest` plant asserts its rule id (B5a/B5b/RM/SF...) and that no other rule fired; one fixture per rule half. Still no pokeemerald/Porymap map.json schema or CI lint found (searched C373): beats.json tooling remains without precedent.
 
 ## C339 (applied): define-gated skip-ahead setup script (FEU "Skipping portions of a chapter"); separately named playtest ROM keeps its saves apart.
 
@@ -62,6 +63,7 @@
 - **Object facing in tests**: pret wiki "Useful Scripting Specials" reads facing from `gObjectEvents[GetObjectEventIdByLocalId(localId, mapNum, mapGroup)]`. The active-array slot ≠ the template index (16 active cap, C352) → a playtest must resolve by localId+map, then check `active`/`invisible` + `facingDirection`. No community harness does this; assemble from the ELF symbol map.
 
 ## Sources
+- C373: [typescript-eslint RuleTester test cases](https://tessl.io/registry/tessl/npm-typescript-eslint--rule-tester/files/docs/test-cases.md) · [Rule_Tester.mdx](https://redirect.github.com/typescript-eslint/typescript-eslint/blob/af11858a1b0ba14dc13fe2ee5de59695994e5d16/docs/architecture/Rule_Tester.mdx) · [eslint-plugin test-linting](https://tessl.io/registry/tessl/npm-eslint-plugin-eslint-plugin/7.0.0/files/docs/test-linting.md)
 - C372: [SO blog: regression tests nobody writes](https://stackoverflow.blog/2026/10/22/the-regression-tests-nobody-writes-capturing-how-software-actually-behaves/) · [Characterization tests before agents](https://developertoolkit.ai/en/workflows/test/characterization-tests/) · [Blind golden master](https://dev.to/rnowif/the-blind-golden-master-67h) · [Pedre validators](https://msaizar.github.io/pedre/api/validators) · [Unity system manifest skill](https://skillsmp.com/skills/totes-mickgoats-r8eo-x-unity-agents-skills-unity-system-manifest-skill-md) · [Manifest loader README](https://cdn.jsdelivr.net/npm/@hegemonart/get-design-done@1.60.4/scripts/lib/manifest/README.md)
 - C367: [Expansion testing system](https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system) · [Archipelago Emerald ROM changes](https://archipelago.gg/tutorial/Pokemon%20Emerald/rom_changes_en) · [Archipelago Emerald changelog](https://git.hollymcfarland.com/monorail/Archipelago/src/branch/main/worlds/pokemon_emerald/CHANGELOG.md) · [ZSR Flags and Triggers](https://zeldaspeedruns.com/tww/general-knowledge/flags-and-triggers) · [pret: Add a debug menu](https://github.com/pret/pokeemerald/wiki/Add-a-debug-menu)
 - C365: [MSR First Hour](https://www.microsoft.com/en-us/research/?p=167075) · [Gamelight/Jack Dunne](https://www.gamelight.io/interview-series-jack-dunne) · [Telemetry-Supported Design](https://www.gamedeveloper.com/design/telemetry-supported-game-design) · [Echo Bloom postmortem](https://www.wayline.io/blog/retention-rift-roguelike-demise) · [Unbound early thoughts](https://git.32bit.cafe/cassie/cassiedotink/raw/branch/master/public/early-thoughts-on-pokemon-unbound/index.html) · [Clover review](https://reddit.birdcat.cafe/r/PokemonROMhacks/comments/1ky8utd/pokemon_clover_review_too_edgy_for_its_own_good) · [Bulbapedia Match Call](https://bulbapedia.bulbagarden.net/wiki/Match_Call)

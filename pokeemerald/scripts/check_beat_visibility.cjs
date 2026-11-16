@@ -48,6 +48,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { visibilityEntries, traceEntries } = require('./lib/beats.cjs');
+
 const ROOT = path.join(__dirname, '..');
 const MAPS_DIR = path.join(ROOT, 'data/maps');
 const WILD_JSON = path.join(ROOT, 'src/data/wild_encounters.json');
@@ -55,21 +57,15 @@ const WILD_GROUP = 'gWildMonHeaders';
 const WILD_TABLES = ['land_mons', 'water_mons', 'rock_smash_mons', 'fishing_mons'];
 const MIN_WILD_MAPS = 100; // C354: 119 maps; fewer means the parser broke
 
-// shows: true = the setup CLEARS the flag under the condition; false = it SETS it.
-// The v3.0 Route 104 coda is not listed: check_playtest R5 covers it.
-const BEATS = [
-  { beat: 'A tide hiker',     map: 'Route106',        localid: 'LOCALID_ROUTE106_TIDE_HIKER',    hideFlag: 'FLAG_HIDE_ROUTE106_TIDE_HIKER',    setup: 'Route106_OnTransition',                       species: 'SPECIES_GLIGAR_HOENN', shows: true },
-  { beat: 'A empty B1F spot', map: 'GraniteCave_B1F', localid: 'LOCALID_GRANITE_CAVE_B1F_HIKER', hideFlag: 'FLAG_HIDE_GRANITE_CAVE_B1F_HIKER', setup: 'GraniteCave_B1F_EventScript_SetupHikerLeft', species: 'SPECIES_GLIGAR_HOENN', shows: false },
-  { beat: 'B TESSA',          map: 'Route119',        localid: 'LOCALID_ROUTE119_STORM_CHASER',  hideFlag: 'FLAG_HIDE_ROUTE119_STORM_CHASER',  setup: 'Route119_EventScript_SetupStormChaser',       species: 'SPECIES_LOTAD_HOENN',  shows: true },
-  { beat: 'C ELLIS',          map: 'Route113',        localid: 'LOCALID_ROUTE113_ASH_CAMPER',    hideFlag: 'FLAG_HIDE_ROUTE113_ASH_CAMPER',    setup: 'Route113_EventScript_SetupAshCamper',         species: 'SPECIES_VULPIX_HOENN', shows: true },
-];
-
-// C356 v3.2 traces: literal setmetatile changes made on map load after a beat.
-const TRACES = [
-  { map: 'Route113', label: 'Route113_OnLoad', name: 'T1 ring in the ash',
-    metatile: 'METATILE_Fallarbor_NormalGrass', from: 0x20A,
-    tiles: [[38, 4], [37, 5], [39, 5], [37, 6], [39, 6], [38, 7]] },
-];
+// Beats and traces come from scripts/beats.json through scripts/lib/beats.cjs (C373):
+//   visibilityEntries() -> { beat, map, localid, hideFlag, setup, species, shows } per row
+//     with `visibility`; shows: true = the setup CLEARS the flag under the condition,
+//     false = it SETS it. The v3.0 Route 104 coda has none: check_playtest R5 covers it.
+//   traceEntries() -> { map, label, name, metatile, from, tiles } per row with `metatiles`
+//     (v3.2 traces: literal setmetatile changes made on map load after a beat).
+// C373 floors (what shipped): 4 beats (A tide hiker, A empty B1F spot, B TESSA, C ELLIS), 1 trace (T1).
+const MIN_BEATS = 4;
+const MIN_TRACES = 1;
 
 // '<Map>:<localid>': why a same-map catch may change the beat only on re-entry (V2).
 const ALLOWLIST = {
@@ -272,12 +268,21 @@ function loadWild() {
 }
 
 function main() {
+  let beats;
+  let traces;
+  try {
+    beats = visibilityEntries();
+    traces = traceEntries();
+  } catch (e) {
+    console.error(`ERROR: ${e.message}`);
+    process.exit(1);
+  }
   const tiles = require('./check_object_tiles.cjs');
   const layouts = tiles.loadLayouts();
   const attrs = tiles.loadTilesetAttrPaths();
   const names = tiles.loadBehaviorNames();
   const maps = {};
-  for (const name of new Set([...BEATS.map((b) => b.map), ...TRACES.map((t) => t.map)])) {
+  for (const name of new Set([...beats.map((b) => b.map), ...traces.map((t) => t.map)])) {
     const dir = path.join(MAPS_DIR, name);
     maps[name] = {
       json: JSON.parse(fs.readFileSync(path.join(dir, 'map.json'), 'utf8')),
@@ -288,8 +293,10 @@ function main() {
   const tileLookup = (map, x, y, elev) => tiles.tileProblems(tileOf(map, x, y), elev, names);
 
   const wild = loadWild();
-  const { errors, allowUsed } = check(BEATS, maps, wild, ALLOWLIST, tileLookup);
-  errors.push(...checkTraces(TRACES, maps, tileOf));
+  const { errors, allowUsed } = check(beats, maps, wild, ALLOWLIST, tileLookup);
+  errors.push(...checkTraces(traces, maps, tileOf));
+  if (beats.length < MIN_BEATS) errors.push(`only ${beats.length} beats.json rows with visibility (MIN_BEATS ${MIN_BEATS}; did a row lose it?)`);
+  if (traces.length < MIN_TRACES) errors.push(`only ${traces.length} beats.json rows with metatiles (MIN_TRACES ${MIN_TRACES}; did a row lose it?)`);
   const wildMaps = Object.keys(wild).length;
   if (wildMaps < MIN_WILD_MAPS)
     errors.push(`only ${wildMaps} wild encounter maps parsed (MIN_WILD_MAPS ${MIN_WILD_MAPS}; parser broke?)`);
@@ -300,13 +307,13 @@ function main() {
     for (const e of errors) console.error(`ERROR: ${e}`);
     process.exit(1);
   }
-  console.log(`check_beat_visibility: OK (${BEATS.length} beats, ${allowUsed.size} allowlisted, ${TRACES.length} traces)`);
-  for (const b of BEATS) {
+  console.log(`check_beat_visibility: OK (${beats.length} beats, ${allowUsed.size} allowlisted, ${traces.length} traces)`);
+  for (const b of beats) {
     const o = maps[b.map].json.object_events.find((e) => e.local_id === b.localid);
     const t = tileOf(b.map, Number(o.x), Number(o.y));
     console.log(`  ${b.beat} ${b.map} ${o.x},${o.y} metatile 0x${t.metatile.toString(16).toUpperCase()} clean`);
   }
-  for (const t of TRACES)
+  for (const t of traces)
     console.log(`  ${t.name} ${t.map} ${t.label}: ${t.tiles.length} tiles ${hex(t.from)} -> ${t.metatile}`);
 }
 
@@ -392,7 +399,7 @@ function selftest() {
   console.log('check_beat_visibility: selftest OK (20 cases)');
 }
 
-module.exports = { check, checkTraces, BEATS, ALLOWLIST, TRACES };
+module.exports = { check, checkTraces, ALLOWLIST };
 
 if (require.main === module) {
   if (process.argv.includes('--selftest')) selftest();
