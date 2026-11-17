@@ -35,7 +35,7 @@ Scenario fields also include `checkpoint` (a story save state from `src/emulator
 `defeatedTrainers` (`["TRAINER_X"]`, sets their trainer flag), `registeredItem`
 (`"ITEM_X"` already on SELECT), `name`, `gender` and `money`. A party mon takes `species`, `level`, optional
 `item`, `moves` (up to 4 `MOVE_X`) and `ability` (`1` = the species' first ability, `2` = its second; omit it
-and the game picks at random, so pin it when a test depends on the ability). Every name is a real constant from `include/`; raw
+and the game picks at random, so pin it when a test depends on the ability), and `hpPercent` (`1`-`100`, current HP as a percent of max, set right after boot; e.g. `"hpPercent": 50` for a tired arrival; omit for full HP). Every name is a real constant from `include/`; raw
 numbers are rejected. `FLAG_SYS_NATIONAL_DEX` in `flags` turns on the real national dex (the boot hook calls
 `EnableNationalPokedex`, which also sets the save-block magic and `VAR_NATIONAL_DEX` the flag alone lacks).
 
@@ -59,6 +59,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `catchWild` (`{"ball": "ITEM_MASTER_BALL"}`) | In a wild battle: BAG, Poké Balls pocket, throw that ball, answer NO to the nickname, close the Pokédex page, and stop once the field is back (free, or a field script such as an ON_FRAME cue has started; follow with `talk: {"start": false}`). Fails if the ball isn't in the bag or the catch fails. Its battle messages ("Gotcha!") are the step's text for `expectText` |
 | `waitForBattleText` (+`maxFrames`, `fresh`, `forbid`) | Tap B through battle messages until one contains a string. `"fresh": true` ignores the message already showing, for the *next* `"What will"`. `"forbid": ["super effective"]` fails if a message on the way contains one of them |
 | `battleTurns` (`{"move": 2, "until": ["used MEGA DRAIN", "super effective"], "maxTurns": 8}`, +`forbid`) | Repeat one move slot (1-4) each turn until all `until` strings have shown in the battle messages (across turns); stops right after the message that completes the set, mid-turn. `forbid` fails on a message; it also fails if the battle ends first or after `maxTurns` (default 10), listing what it saw. For fights where the foe AI's move choice or turn order isn't fixed |
+| `battleSwitch` (`{"slot": 3}`, +`forbid`) | At the next "What will" pick POKéMON, then party slot 2-6 (1-based, like the scenario party) and SHIFT, then tap B through the turn to the next "What will". `forbid` fails on a message; it also fails if the party menu never closes or the battle ends during the turn. Pair with `battleTurns` to switch to a resist mid-fight |
 | `expectBattle`, `expectBattleText` | Opponent species and level; the current battle message only (no history) |
 | `expectBattleWeather` | `"none"`, `"rain"`, `"sun"`, `"sandstorm"` or `"hail"` (gBattleWeather), e.g. after `waitForBattleText: "hail"` |
 | `screenshot`, `comment` | Saved under `artifacts/playtests/<name>/`; notes |

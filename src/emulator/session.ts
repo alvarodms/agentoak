@@ -185,6 +185,20 @@ export class EmulatorSession {
         const sb1 = await session.deref("gSaveBlock1Ptr");
         await session.write(sb1 + SAVEBLOCK1_REGISTERED_ITEM, Uint8Array.of(id & 0xff, id >> 8));
       }
+      if (scenario.party?.some((mon) => mon.hpPercent !== undefined)) {
+        // Checkpoints never define a party, so scenario.party is the booted party.
+        // hp/maxHP are party-only fields outside the encrypted, checksummed
+        // BoxPokemon, so a raw write is safe.
+        const layout = await session.getLayout();
+        const partyBase = session.symbols.address("gPlayerParty");
+        for (const [i, mon] of scenario.party.entries()) {
+          if (mon.hpPercent === undefined) continue;
+          const base = partyBase + i * layout.pokemonSize;
+          const maxHp = (await session.read(base + layout.pokemonMaxHp, 2)).readUInt16LE(0);
+          const hp = Math.max(1, Math.floor((maxHp * mon.hpPercent) / 100));
+          await session.write(base + layout.pokemonHp, Uint8Array.of(hp & 0xff, hp >> 8));
+        }
+      }
       await session.run(opts.settleFrames ?? 60);
       return session;
     } catch (err) {

@@ -99,6 +99,23 @@ describe("parsePlaytest", () => {
     expect(() => parsePlaytest({ ...MINIMAL, scenario: { ...scenario, registeredItem: "MACH_BIKE" } })).toThrow();
   });
 
+  it("accepts a party hpPercent of 1-100 only", () => {
+    const withHp = (hpPercent: number) => ({
+      ...MINIMAL,
+      scenario: { ...MINIMAL.scenario, party: [{ species: "SPECIES_BAGON", level: 5, hpPercent }] },
+    });
+    expect(() => parsePlaytest(withHp(50))).not.toThrow();
+    expect(() => parsePlaytest(withHp(0))).toThrow();
+  });
+
+  it("accepts battleSwitch to party slots 2-6 with an optional forbid", () => {
+    const step = (battleSwitch: unknown) => ({ ...MINIMAL, steps: [{ battleSwitch }] });
+    expect(() => parsePlaytest(step({ slot: 3 }))).not.toThrow();
+    expect(() => parsePlaytest(step({ slot: 3, forbid: "fainted" }))).not.toThrow();
+    expect(() => parsePlaytest(step({ slot: 1 }))).toThrow();
+    expect(() => parsePlaytest(step({ slot: 7 }))).toThrow();
+  });
+
   it("rejects names that cannot be screenshot directories", () => {
     expect(() => parsePlaytest({ ...MINIMAL, name: "has spaces" })).toThrow();
   });
@@ -158,6 +175,21 @@ describe("SAVEBLOCK1_REGISTERED_ITEM", () => {
     const offset = line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1];
     expect(offset, "registeredItem line with a /*0x...*/ offset").toBeDefined();
     expect(Number(offset)).toBe(SAVEBLOCK1_REGISTERED_ITEM);
+  });
+});
+
+const POKEMON_H = path.join(path.dirname(PLAYTESTS_DIR), "include", "pokemon.h");
+const PLAYTEST_C = path.join(path.dirname(PLAYTESTS_DIR), "src", "playtest.c");
+
+describe("party hp fields (hpPercent writes layout.pokemonHp)", () => {
+  it.skipIf(!fs.existsSync(POKEMON_H) || !fs.existsSync(PLAYTEST_C))("sit at hp 0x56 / maxHP 0x58 of struct Pokemon, outside BoxPokemon", () => {
+    const body = fs.readFileSync(POKEMON_H, "utf8").match(/struct Pokemon\s*\{([^}]*)\}/)?.[1] ?? "";
+    const fields = body.split(";").map((f) => f.trim().replace(/\s+/g, " ")).filter(Boolean);
+    // 80-byte BoxPokemon + u32 status + u8 level + u8 mail = 0x56
+    expect(fields.slice(0, 6)).toEqual(["struct BoxPokemon box", "u32 status", "u8 level", "u8 mail", "u16 hp", "u16 maxHP"]);
+    const c = fs.readFileSync(PLAYTEST_C, "utf8");
+    expect(c).toMatch(/\[PLAYTEST_LAYOUT_POKEMON_HP\]\s*=\s*offsetof\(struct Pokemon, hp\)/);
+    expect(c).toMatch(/\[PLAYTEST_LAYOUT_POKEMON_MAX_HP\]\s*=\s*offsetof\(struct Pokemon, maxHP\)/);
   });
 });
 

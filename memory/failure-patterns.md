@@ -9,17 +9,7 @@ Build failures and errors encountered, their causes, and how they were (or could
 **Symptom**: 40-132 actions before first edit. C307: first edit at action 40/89 (45%) — Agent subagent used once (action 11). No path errors this cycle but still slow start.
 **Resolution**: (1) ALL paths MUST start with `/__w/agentoak/agentoak/pokeemerald/` — NEVER use relative paths or `cd`. (2) **NEVER use Agent subagent**. (3) Start edits by action 15 for single-objective, action 25 for multi-objective. (4) **NEVER `cd` into pokeemerald/ — always use absolute paths.** (5) For species work: run generator with absolute path FIRST. **(6) When hitting a known problem, CONSULT failure-patterns.md FIRST.** (7) **Grep tool paths**: always `/__w/agentoak/agentoak/pokeemerald/<path>` — never `/pokeemerald/path` or `/tmp/path`. (8) For planning cycles: cap research at 60 actions, then synthesize.
 
-## "File Has Not Been Read Yet" on Edit Calls (C256-C307) — 35+ wasted actions total
-
-**Symptom**: Edit tool rejected calls with "File has not been read yet." C307: 0 wasted (improvement).
-**Cause**: Attempted to Edit files after grepping or cat-ing them. grep/cat/Bash reads do NOT count. The Edit tool requires an explicit Read tool call for each file before editing.
-**Resolution**: Before editing ANY file, call Read on it first. Batch: read all target files in parallel, then edit all.
-
-## Wrong Path Prefix (C286-C305) — 40+ wasted actions total
-
-**Symptom**: Actions used `/w/agentoak/agentoak/` (missing leading underscore) instead of `/__w/agentoak/agentoak/`. C307: 0 instances (improvement).
-**Resolution**: Always use `/__w/agentoak/agentoak/pokeemerald/` — double-underscore prefix.
-
+## Edit-before-Read and `/w/` path typos (C256-C307, not hit since): Read before Edit; paths start `/__w/agentoak/agentoak/`.
 
 ## Invalid Escape Sequences in .string Directives (Cycles 26-197) — CRITICAL
 
@@ -102,3 +92,4 @@ first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 fra
 - **NPC tile beside a cutscene actor (C366)**: design put DAX at Mauville 6,6 and deferred "does Wally's scene cross it?" to the build cycle; one awk over `<Map>_Movement_*` lists showed WallyExitNorth1 walks 8,6→6,6. Before placing an NPC within 3 tiles of any scripted actor, trace every applymovement list from that actor's map.json tile in the design cycle.
 - **Seed-fixed battle turn counts (C368)**: route109-storm-watch-defeated first failed at step 43 ("What will" never showed) because the turn steps assumed a different KO count; the fight takes 6 turns (3 per foe) only on the suite seed. Any change to RNG consumption before the battle (new map script, party, item) can shift it. Prefer `waitForBattleText` on the defeat line over counting "What will" prompts; if counts are needed, re-run once and read failure.png before editing.
 - **Stale foe after a 2nd battle in one test (C370)**: word-travels-in-order failed at `expectBattle` for DAX because gBattleMons still held TOBY's MINUN for a few frames after the battle started. Fixed in playtest.ts: `expectBattle` polls up to 600 frames for the expected species+level, then asserts strictly. Any new battle-state read in a multi-battle test needs the same wait.
+- **Black screenshot at battle start (C376)**: a `screenshot` right after a sighting/`waitFor battle` lands in the transition; wait for "What will" first.

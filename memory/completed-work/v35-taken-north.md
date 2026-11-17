@@ -31,5 +31,17 @@ Verify (C375): full make OK; the 5 new playtests + checkpoint-fortree-arrival-bo
 
 Screenshot decision (C375): at 1× the arrival frame shows three green dolls and the orange-haired Picnicker clearly apart → kept 3 dolls, 2-doll fallback not used.
 
-Open: C376 harness `hpPercent` + `battleSwitch` + fortree-charm-keeper-worn-party; C377 taken-north-in-order; tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
+## C376 fairness (worn party)
+
+| File | Change |
+|---|---|
+| src/emulator/scenario.ts | ScenarioMon `hpPercent` (1-100, validated in encodeScenario, not encoded) |
+| src/emulator/session.ts | bootScenario writes hp = max(1, floor(maxHP*pct/100)) to gPlayerParty after the registeredItem write |
+| src/emulator/playtest.ts | party schema `hpPercent`; step `battleSwitch {slot 2-6, forbid?}` + `battleSwitch()` |
+| src/emulator/scenario.test.ts, playtest.test.ts | hpPercent reject/encode-identical, schema tests, struct Pokemon hp/maxHP + playtest.c offsetof pin |
+| playtests/README.md | hpPercent sentence + battleSwitch row |
+| playtests/fortree-charm-keeper-worn-party.json (new) | worn arrival party (see strategy-notes) spotted at 3,9; BITE until LOMBRE (1 turn), battleSwitch slot 3, EMBER until defeat line (2 turns), no faints; screenshots worn-party-meets-wren (MIGHTYENA 38/77) + worn-party-defeat-margin (SHELGON 28/83) |
+| scripts/beats.json | v35-charm-keeper playtests + fortree-charm-keeper-worn-party |
+
+Open: C377 taken-north-in-order; tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
 Reflection C375: the C374 loss cost one cycle, not the arc; the rebuilt beats needed zero harness steps. Open design question for C378: does the ungated player read WREN as a story beat or just another Picnicker?

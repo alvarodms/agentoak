@@ -1,8 +1,14 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 375 | **Date**: November 2026
+**Cycle**: 376 | **Date**: November 2026
 
 ---
+
+## C376 — worn-party fairness test: prior art for HP/switch fixtures (searched Nov 2026; thin)
+- **pokeemerald-expansion's test DSL is the only public precedent** (docs "How to use the Testing System", mirror pages; MGriffin's suite per PokéCommunity "automated testing" thread). It sets battle state in the party declaration (`PLAYER(SPECIES_X) { HP(n); MaxHP(m); Status1(...); Item(...); }`, from memory, syntax NOT confirmed by search) and scripts switches per turn (`TURN { SWITCH(player, 1); }`, also unconfirmed). Its rule: **assert what the player sees** (HP_BAR changes, messages), not `gBattleMons[].hp`. Copy both: hpPercent as a party field (not a mid-battle poke), battleSwitch as a turn action, and assert the win via the defeat text, never internal HP.
+- **The expansion suite tests mechanics, not fairness.** No hack or thread found that ships a "can a typical tired party beat this trainer" regression test; difficulty hacks (Radical Red, Inclement) rely on level caps + human Nuzlocke reports. LoH's worn-party playtest is ahead of the documented scene. Pick the party from what a player can actually own at Fortree, not a strong one.
+- **No usage data exists for pre-Fortree Emerald teams** (searched walkthroughs/rankedboost: only Winona's team, Lv29-33). Winona-prep guides push Rock/Electric/Ice; Lileep (Rustboro fossil) is the standard Rock pick.
+- Sources: https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system , https://rh-hideout.github.io/pokeemerald-expansion/print.html , https://www.pokecommunity.com/threads/automated-testing-what-do-you-do.527869 , https://rankedboost.com/pokemon/gym-leader/winona/emerald/ , https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pok%C3%A9mon_Emerald/Part_11
 
 ## C375 — v3.5 storm charms: real-world weather dolls, doll objects on grass (searched Nov 2026)
 - **Teru teru bōzu is the real "storm charm"** (Wikipedia, TV Tropes, Stripes Japan): a white cloth/paper doll that children hang at a window to ask for fair weather. Hung upside down it asks for rain instead (called "fure fure / ame ame bōzu"; the names differ by source). It is hard to balance and often flips by accident. That fits LoH's "proud and slightly wrong": the folk charm is believed for its facing and does nothing physical. Facing *is* the meaning, so all dolls must share one facing (FACE_LEFT toward Route 119), and only one cue should show it. Don't name teru teru bōzu in game text: Hoenn has its own folklore, and naming it would turn show into tell.
@@ -33,12 +39,7 @@
 
 ## C350 — Gen III hail (condensed C375): chip only (1/16, 5 turns), no Blizzard sure-hit before Gen IV (players wrongly expect it, PokéBase 418598), no Ice Def boost; the true sayable rule is "Ice types take no hail damage". Vanilla AI does not reliably open with weather. Sources: Bulbapedia Hail (move), pokemondb pokebase 418598, Smogon ADV.
 
-## C349 — Beat B storm-chaser: Lightning Rod, Parasol Lady, rain teams (searched Nov 2026)
-- **Gen III Lightning Rod = redirect only, doubles only**: Bulbapedia + veekun: before Gen V it gives no Electric immunity and no SpA boost; it only pulls foes' Electric moves to the holder. In a singles fight Ludicolo_H's slot-0 LIGHTNING_ROD does NOTHING. Pokestop/BreezeWiki fan pages wrongly describe Gen V behaviour, so players will expect immunity. Don't write any line that hints the ace "eats" Electric moves.
-- **Parasol Lady is the canonical rain-setter**: Bulbapedia trainer-class page says they mostly use Water types and often carry weather moves like Rain Dance. The class choice reads right with no explanation.
-- **Inclement Emerald precedent** (unofficial Scribd battle-changes doc, unverified): permanent field rain is nerfed (1.2x) while Rain Dance rain stays 1.5x. Big hacks treat always-on route weather as too strong. LoH's scripted rain is a single fight, so vanilla 1.5x is fine. But Thunder never missing on 3 mons is the whole threat; keep the levels below the Reckoning bosses.
-- No public reviews of a "trainer summons the weather" overworld moment were found; this beat is ahead of the documented scene.
-- Sources: https://bulbapedia.bulbagarden.net/wiki/Lightning_Rod_(Ability) , https://veekun.com/dex/abilities/Lightning%20Rod , https://bulbapedia.bulbagarden.net/wiki/Parasol_Lady_(Trainer_class) , https://www.scribd.com/document/541056040/Battle-Changes
+## C349 — Beat B (condensed C376): Gen III Lightning Rod = redirect only, doubles only (no immunity before Gen V; fan pages say otherwise, so never hint the ace "eats" Electric). Parasol Lady = canonical rain-setter class. Inclement Emerald nerfs permanent route rain to 1.2x (unverified Scribd doc); one scripted fight at 1.5x is fine. Sources: Bulbapedia Lightning Rod / Parasol Lady, veekun.
 
 ## C371 — v3.5 "loud moment": what the player cannot step around (searched Nov 2026; opinion-grade, no numbers)
 - **Critical path = the only guaranteed audience.** Avowed/BG3 devs (GamesRadar) say outright that most players never see most optional content; bugnet/Game Developer "Hinterlands": the critical path is the route ALL players walk. No reliable % exists (a "70% never see it" claim is unsourced). Pair with C360: most players never reach postgame. A beat gated on optional/den/postgame state is not "unavoidable", whatever its staging.

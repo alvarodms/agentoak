@@ -710,6 +710,7 @@
     "playtests": [
       "fortree-charm-keeper-spots-player",
       "fortree-charm-keeper-ungated",
+      "fortree-charm-keeper-worn-party",
       "fortree-kecleon-unblocked"
     ],
     "speaker": "believer",

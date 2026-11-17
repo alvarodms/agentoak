@@ -63,6 +63,8 @@ const ScenarioSchema = z
           item: z.string().optional(),
           moves: z.array(z.string()).optional(),
           ability: z.union([z.literal(1), z.literal(2)]).optional(),
+          /** Current HP as a percent of max (1-100), set right after boot. */
+          hpPercent: z.number().int().min(1).max(100).optional(),
         }),
       )
       .optional(),
@@ -215,6 +217,17 @@ const StepSchema = z.union([
       move: z.number().int().min(1).max(4),
       until: Strings,
       maxTurns: z.number().int().positive().optional(),
+      forbid: Strings.optional(),
+    }),
+  }),
+  z.strictObject({
+    /**
+     * In a battle: at the next "What will" pick POKéMON, then the party member in `slot` (2-6, party position
+     * like the scenario's party array) and SHIFT, then tap B through the turn to the next "What will".
+     * Fails if a `forbid` string shows or the battle ends during the turn.
+     */
+    battleSwitch: z.strictObject({
+      slot: z.number().int().min(2).max(6),
       forbid: Strings.optional(),
     }),
   }),
@@ -586,6 +599,11 @@ async function runStep(
     return;
   }
 
+  if ("battleSwitch" in step) {
+    await battleSwitch(s, step.battleSwitch.slot, asList(step.battleSwitch.forbid ?? []));
+    return;
+  }
+
   if ("expectBattle" in step) {
     // gBattleMons fills in a few frames after the battle screen appears; until then a second battle
     // in one test still holds the last battle's mons, so wait for the expected ones too.
@@ -695,6 +713,56 @@ async function battleTurns(s: EmulatorSession, move: number, until: readonly str
     await s.run(30); // let the action menu take input
   }
   fail(`${label}: after ${maxTurns} turn(s) still missing ${JSON.stringify(missing())}; last messages ${JSON.stringify(seen.slice(-12))}`);
+}
+
+/**
+ * battleSwitch: at the next "What will" action menu pick POKéMON (bottom left of
+ * FIGHT / BAG / POKéMON / RUN), move the party menu cursor from slot 1 down to
+ * `slot` (party position, 1-based), choose SHIFT, then tap B through the turn until
+ * the next "What will" (returns there). Fails if the party menu never opens or closes,
+ * if the battle ends during the turn, or if a message shows a `forbid` string.
+ */
+async function battleSwitch(s: EmulatorSession, slot: number, forbid: readonly string[]): Promise<void> {
+  const label = `battleSwitch slot ${slot}`;
+  await waitForBattleText(s, "What will", 1800);
+  await s.press("DOWN");
+  await s.press("LEFT");
+  await s.press("A");
+  let cb = (await s.callbacks()).callback2;
+  for (let f = 0; cb === "BattleMainCB2"; f += 10) {
+    if (f >= 300) fail(`${label}: the party menu never opened (callback2 ${cb}; battle text ${JSON.stringify(await battleText(s))})`);
+    await s.run(10);
+    cb = (await s.callbacks()).callback2;
+  }
+  await s.run(60); // let the party menu fade in and take input
+  for (let i = 1; i < slot; i++) await s.press("DOWN");
+  await s.press("A"); // opens SHIFT / SUMMARY / CANCEL, SHIFT first
+  await s.run(20);
+  await s.press("A");
+  for (let f = 0; cb !== "BattleMainCB2"; f += 10) {
+    if (f >= 600) fail(`${label}: never returned to battle (callback2 ${cb}); is slot ${slot} empty, fainted or already out?`);
+    await s.run(10);
+    cb = (await s.callbacks()).callback2;
+  }
+  const seen: string[] = [];
+  let text = await battleText(s);
+  // The action menu's "What will" may still be the displayed string until the switch message prints.
+  const stale = text;
+  for (let f = 0; ; f += 30) {
+    if ((await s.callbacks()).callback2 !== "BattleMainCB2") fail(`battleSwitch: battle ended during the switch turn; seen ${JSON.stringify(seen)}`);
+    text = await battleText(s);
+    if (text.includes("What will") && text !== stale) {
+      await s.run(30); // let the action menu take input
+      return;
+    }
+    if (text.trim() && text !== stale && text !== seen.at(-1)) {
+      seen.push(text);
+      const bad = forbidden(text, forbid);
+      if (bad) fail(`${label}: the switch turn showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
+    }
+    if (f >= 3600) fail(`${label}: switch turn still running after 3600 frames; seen ${JSON.stringify(seen.slice(-12))}`);
+    await s.press("B", { hold: 2, release: 28 });
+  }
 }
 
 /** Taps B until the battle has handed back to the field, collecting each battle message. */

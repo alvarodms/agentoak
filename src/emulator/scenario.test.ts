@@ -137,6 +137,21 @@ describe("registeredItem", () => {
   });
 });
 
+describe("hpPercent", () => {
+  const withHp = (hpPercent: number): Scenario => ({ ...SCENARIO, party: [{ species: "SPECIES_BAGON", level: 5, hpPercent }] });
+
+  it("rejects values outside 1-100 and fractions", () => {
+    for (const bad of [0, 101, 1.5]) {
+      expect(() => encodeScenario(withHp(bad), CONSTANTS, charmap)).toThrow(/hpPercent must be 1-100/);
+    }
+  });
+
+  it("is left out of the ROM struct (bootScenario writes it)", () => {
+    const full: Scenario = { ...SCENARIO, party: [{ species: "SPECIES_BAGON", level: 5 }] };
+    expect(encodeScenario(withHp(50), CONSTANTS, charmap).equals(encodeScenario(full, CONSTANTS, charmap))).toBe(true);
+  });
+});
+
 describe("writeScenarioRom", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "oak-scenario-test-"));
   afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));

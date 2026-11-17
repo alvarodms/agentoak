@@ -23,6 +23,8 @@ export interface ScenarioMon {
   moves?: string[];
   /** 1 = species' first ability, 2 = second; omit for the random pick. */
   ability?: 1 | 2;
+  /** 1-100: current HP as a percent of max, applied right after boot (not part of the ROM struct). Omit for full HP. */
+  hpPercent?: number;
 }
 
 export interface Scenario {
@@ -185,6 +187,10 @@ export function encodeScenario(s: Scenario, constants: Map<string, number>, char
     check((mon.moves ?? []).length <= 4, `${mon.species} has more than 4 moves`);
     check(value(mon.species) > 0, `party species ${mon.species} is not a real species`);
     check(mon.ability === undefined || mon.ability === 1 || mon.ability === 2, `${mon.species} ability must be 1 or 2`);
+    check(
+      mon.hpPercent === undefined || (Number.isInteger(mon.hpPercent) && mon.hpPercent >= 1 && mon.hpPercent <= 100),
+      `${mon.species} hpPercent must be 1-100`,
+    );
     buf.writeUInt16LE(u16(value(mon.species), mon.species), base);
     buf.writeUInt8(mon.level, base + 2);
     buf.writeUInt8(mon.ability ?? 0, base + 3);
