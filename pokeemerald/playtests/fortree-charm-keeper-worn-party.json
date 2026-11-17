@@ -1,6 +1,6 @@
 {
   "name": "fortree-charm-keeper-worn-party",
-  "checks": "C376 v3.5 Taken North Beat 2 fairness: a tired arrival from Route 119 (half-HP, no items in the bag) MIGHTYENA 28 / PELIPPER 28 / SHELGON 30 walks into Fortree at 0,8 and is spotted by the turned WREN on 3,7 with no talk. It leads with MIGHTYENA's BITE on CHIMECHO 27. When LOMBRE_HOENN 28 comes out it switches to SHELGON (Dragon resists Electric and Grass) and wins with EMBER. Nobody faints. Pass = her defeat line 'That counts for something.' The two screenshots give C378 the margin.",
+  "checks": "C376 v3.5 Taken North Beat 2 fairness: a tired arrival from Route 119 (half-HP, no items in the bag) MIGHTYENA 28 / PELIPPER 28 / SHELGON 30 walks into Fortree at 0,8 and is spotted by the turned WREN on 3,7 with no talk. It leads with MIGHTYENA's BITE on CHIMECHO 27. When LOMBRE_HOENN 28 comes out it switches to SHELGON (Dragon resists Electric and Grass) and wins with EMBER. Nobody faints. Pass = her defeat line 'So they keep it off. Right?' The two screenshots give C378 the margin.",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
@@ -25,7 +25,7 @@
     { "battleTurns": { "move": 1, "until": "LOMBRE", "maxTurns": 8, "forbid": ["MIGHTYENA fainted", "PELIPPER fainted", "SHELGON fainted"] } },
     { "comment": "B answers NO to 'Will OAK change POKéMON?'; the player switches from the action menu instead" },
     { "battleSwitch": { "slot": 3, "forbid": ["MIGHTYENA fainted", "PELIPPER fainted", "SHELGON fainted"] } },
-    { "battleTurns": { "move": 1, "until": "That counts for something.", "maxTurns": 8, "forbid": ["MIGHTYENA fainted", "PELIPPER fainted", "SHELGON fainted"] } },
+    { "battleTurns": { "move": 1, "until": "So they keep it off. Right?", "maxTurns": 8, "forbid": ["MIGHTYENA fainted", "PELIPPER fainted", "SHELGON fainted"] } },
     { "screenshot": "worn-party-defeat-margin" },
     { "talk": { "start": false } },
     { "expectScreen": "CB2_Overworld" }

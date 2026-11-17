@@ -327,6 +327,8 @@ FortreeCity_Text_NinetalesElder:
 
 @ =============================================
 @ v3.5 Taken North Beats 1-2: storm charms + the charm-keeper (C375)
+@ C378: the _TURNED twin's defeat text carries the unease line;
+@ re-talk gives the shared pride line.
 @ =============================================
 
 FortreeCity_EventScript_CharmKeeper::
@@ -335,8 +337,8 @@ FortreeCity_EventScript_CharmKeeper::
 	end
 
 FortreeCity_EventScript_CharmKeeperTurned::
-	trainerbattle_single TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_Text_CharmKeeperIntroTurned, FortreeCity_Text_CharmKeeperDefeat
-	msgbox FortreeCity_Text_CharmKeeperPostTurned, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_Text_CharmKeeperIntroTurned, FortreeCity_Text_CharmKeeperDefeatTurned
+	msgbox FortreeCity_Text_CharmKeeperDefeat, MSGBOX_AUTOCLOSE
 	end
 
 FortreeCity_EventScript_LotadDoll::
@@ -355,7 +357,7 @@ FortreeCity_Text_CharmKeeperDefeat:
 	.string "Charms still face the storm.\n"
 	.string "That counts for something.$"
 
-FortreeCity_Text_CharmKeeperPostTurned:
+FortreeCity_Text_CharmKeeperDefeatTurned:
 	.string "LOTAD don't mind lightning.\n"
 	.string "So they keep it off. Right?$"
 

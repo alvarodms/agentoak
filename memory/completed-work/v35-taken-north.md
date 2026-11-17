@@ -1,4 +1,4 @@
-# v3.5 "Taken North" (C371 design, Beats 1+2 built C375, worn-party C376, chain C377)
+# v3.5 "Taken North" (C371 design, Beats 1+2 built C375, worn-party C376, chain C377, doubt swap + close C378)
 
 Design: memory/strategy-notes.md, "v3.5 Taken North" + "v3.5 evidence (C371)".
 
@@ -45,16 +45,28 @@ Screenshot decision (C375): at 1× the arrival frame shows three green dolls and
 
 ## C377 chain playtest
 
-**Runner rolled back all 3 src/emulator rows below** (its vitest gate failed on the unrelated infra test src/repo/game-tree.test.ts:284). So the README row documents a step that does not exist, and taken-north-in-order is INVALID (steps[32]/[49] = expectTrainerDefeated); suite 101/102. Redo in C378.
+**Runner rolled back all 3 src/emulator rows below** (its vitest gate failed on the unrelated infra test src/repo/game-tree.test.ts:284). **C378 resolution**: the two expectTrainerDefeated steps and the README row were deleted; no harness step was added (see C378 below). The struck rows are history only.
 
 | File | Change |
 |---|---|
-| src/emulator/session.ts | `flag()` now delegates to private `flagById(id, name)`; new `trainerFlag(name)` = TRAINER_FLAGS_START + id |
-| src/emulator/playtest.ts | step `expectTrainerDefeated {TRAINER_X: bool}` (fails "X is defeated, expected not defeated") |
-| src/emulator/playtest.test.ts | parses + rejects a non-boolean |
-| playtests/README.md | expectTrainerDefeated row |
+| ~~src/emulator/session.ts~~ (rolled back) | `flag()` now delegates to private `flagById(id, name)`; new `trainerFlag(name)` = TRAINER_FLAGS_START + id |
+| ~~src/emulator/playtest.ts~~ (rolled back) | step `expectTrainerDefeated {TRAINER_X: bool}` (fails "X is defeated, expected not defeated") |
+| ~~src/emulator/playtest.test.ts~~ (rolled back) | parses + rejects a non-boolean |
+| ~~playtests/README.md~~ (deleted C378) | expectTrainerDefeated row |
 | playtests/taken-north-in-order.json (new) | Route 104 turn by script → warp Route119 36,8 → walk 4 right to Fortree 0,8 → talk at empty tile = 0 boxes → dolls/_TURNED/twin absent → spot at 3,8 → worn party wins, no faints, SHELGON 23/83 → re-talk unease line → out to Route119 32,10 (she unloads) and back: she faces left. Screenshots tn-0, tn-1a, tn-1, tn-2, tn-3, tn-5 |
 | scripts/beats.json | taken-north-in-order in v35-storm-charms and v35-charm-keeper |
+
+## C378 fix #225 + doubt-line swap
+
+| File | Change |
+|---|---|
+| playtests/taken-north-in-order.json | deleted both `expectTrainerDefeated` steps (tn-2 comment: intro box + CHIMECHO battle prove the flag was clear); tn-3 until "So they keep it off. Right?", `wait 240` then screenshot tn-3-defeat-doubt (full 2-line box, fits with room); tn-4 re-talk expects "That counts for something."; checks text |
+| playtests/README.md | removed the expectTrainerDefeated row |
+| data/maps/FortreeCity/scripts.inc | label FortreeCity_Text_CharmKeeperPostTurned → FortreeCity_Text_CharmKeeperDefeatTurned (same string); CharmKeeperTurned = trainerbattle_single …IntroTurned, …DefeatTurned + msgbox FortreeCity_Text_CharmKeeperDefeat (re-talk = shared pride line); section comment. Ungated twin unchanged |
+| playtests/fortree-charm-keeper-spots-player.json | until = the doubt line; re-talk expects "That counts for something."; checks |
+| playtests/fortree-charm-keeper-worn-party.json | until = the doubt line (forbid kept); checks |
+
+fortree-charm-keeper-ungated unchanged (ungated twin still says "That counts for something."). beats.json asserts no strings: unchanged.
 
 Open: tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
 Reflection C375: the C374 loss cost one cycle, not the arc; the rebuilt beats needed zero harness steps. Open design question for C378: does the ungated player read WREN as a story beat or just another Picnicker?
