@@ -43,5 +43,18 @@ Screenshot decision (C375): at 1× the arrival frame shows three green dolls and
 | playtests/fortree-charm-keeper-worn-party.json (new) | worn arrival party (see strategy-notes) spotted at 3,9; BITE until LOMBRE (1 turn), battleSwitch slot 3, EMBER until defeat line (2 turns), no faints; screenshots worn-party-meets-wren (MIGHTYENA 38/77) + worn-party-defeat-margin (SHELGON 28/83) |
 | scripts/beats.json | v35-charm-keeper playtests + fortree-charm-keeper-worn-party |
 
-Open: C377 taken-north-in-order; tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
+## C377 chain playtest
+
+**Runner rolled back all 3 src/emulator rows below** (its vitest gate failed on the unrelated infra test src/repo/game-tree.test.ts:284). So the README row documents a step that does not exist, and taken-north-in-order is INVALID (steps[32]/[49] = expectTrainerDefeated); suite 101/102. Redo in C378.
+
+| File | Change |
+|---|---|
+| src/emulator/session.ts | `flag()` now delegates to private `flagById(id, name)`; new `trainerFlag(name)` = TRAINER_FLAGS_START + id |
+| src/emulator/playtest.ts | step `expectTrainerDefeated {TRAINER_X: bool}` (fails "X is defeated, expected not defeated") |
+| src/emulator/playtest.test.ts | parses + rejects a non-boolean |
+| playtests/README.md | expectTrainerDefeated row |
+| playtests/taken-north-in-order.json (new) | Route 104 turn by script → warp Route119 36,8 → walk 4 right to Fortree 0,8 → talk at empty tile = 0 boxes → dolls/_TURNED/twin absent → spot at 3,8 → worn party wins, no faints, SHELGON 23/83 → re-talk unease line → out to Route119 32,10 (she unloads) and back: she faces left. Screenshots tn-0, tn-1a, tn-1, tn-2, tn-3, tn-5 |
+| scripts/beats.json | taken-north-in-order in v35-storm-charms and v35-charm-keeper |
+
+Open: tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
 Reflection C375: the C374 loss cost one cycle, not the arc; the rebuilt beats needed zero harness steps. Open design question for C378: does the ungated player read WREN as a story beat or just another Picnicker?

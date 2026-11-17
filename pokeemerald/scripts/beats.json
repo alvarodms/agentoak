@@ -681,7 +681,8 @@
     ],
     "playtests": [
       "fortree-storm-charms-turned",
-      "fortree-storm-charms-not-turned"
+      "fortree-storm-charms-not-turned",
+      "taken-north-in-order"
     ],
     "speaker": "none",
     "seeFirst": "Three LOTAD DOLLs stand in the meadow facing back down Route 119 toward the storms, a woman among them."
@@ -711,7 +712,8 @@
       "fortree-charm-keeper-spots-player",
       "fortree-charm-keeper-ungated",
       "fortree-charm-keeper-worn-party",
-      "fortree-kecleon-unblocked"
+      "fortree-kecleon-unblocked",
+      "taken-north-in-order"
     ],
     "speaker": "believer",
     "seeFirst": "Three LOTAD DOLLs face the storm; the woman standing among them sees you pass them and comes for you."
