@@ -43,3 +43,6 @@ Recolored all Brendan/May clothing from vanilla blue/grey to sea-glass teal, and
 | `graphics/intro/scene_2/brendan_credits.png` | Headband (2) — palette generates .gbapal for credits |
 | `graphics/intro/scene_2/may.png` | Clothing (1) + bandanna (4) — cosmetic |
 | `graphics/intro/scene_2/may_credits.png` | Clothing (1) + bandanna (4) — palette generates .gbapal for credits |
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **228** · **Files**: 16 .pal + 6 PNG = 22 files

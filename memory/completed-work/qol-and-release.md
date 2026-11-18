@@ -53,3 +53,6 @@ Quality-of-life improvements and release artifacts.
 | `pokeemerald/graphics/types/physical.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
 | `pokeemerald/graphics/types/special.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
 | `pokeemerald/graphics/types/status.png` | Re-created placeholder (copy of normal.png) | 107 | Recurring missing-asset fix — must be committed |
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: 22, 23, 37, 38, 75, 105, 107, **158**, **214**, **229**, **297** · **Files**: 31

@@ -70,3 +70,6 @@ Each move = 6 files: moves.h, battle_moves.h, move_names.h, move_descriptions.h,
 
 - **C288 Tier 2 pass** (`species_info.h` only): Corsola_H Levitate, Bagon_H Sturdy, Pinsir_H Guts, Gligar/Gliscor_H Swift Swim, Stantler_H Effect Spore, Vulpix/Ninetales_H Natural Cure.
 - **C289 build fix**: removed orphan Mudkip_Hoenn line species_info entries lacking SPECIES_ constants (later properly registered C292).
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: 43–46, 52, 129, 181, 182, **207**, **210**, **241**, **288**, **289**, **290**, **293**, **294**, **297**, **300**, **310**, **311**, **325** · **Files**: 19 (+21 modified; C325 Challenge BAG lock: battle_main.c, battle_main.h, battle_ai_switch_items.c, battle_string_ids.h, battle_message.c, battle_scripts_1.s, battle_scripts.h, BirchLab scripts.inc; C310 Fey Flame + C311 Undertow: abilities.h, text/abilities.h, pokemon.c, battle_string_ids.h, battle_message.c, battle_scripts_1.s, battle_scripts.h, battle_util.c, species_info.h, trainer_parties.h (C310 only), scripts/check_species_registration.sh (C310 only), scripts/{mudkip,marshtomp,swampert}_hoenn.json (C311))

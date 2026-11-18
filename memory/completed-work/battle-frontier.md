@@ -11,3 +11,6 @@
 **Also fixed (Cycle 85 build prerequisite):**
 - Created `graphics/types/fairy.png`, `physical.png`, `special.png`, `status.png` (placeholder type icons)
 - Created 6 cry WAV placeholders for new species (Lucario, Weavile, Riolu, Gible, Gabite, Garchomp)
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **78**, 80, **85** · **Files**: 3

@@ -5,7 +5,6 @@ emulator harness (`src/emulator/` in the agent-oak repo, mGBA via
 `mgba-driver`) boot the ROM straight into a test scenario. The harness is
 not yet wired into cycle phases.
 ## What it does
-
 - `gPlaytestScenario` (const, in ROM) is **inert** in every normal build:
   magic `PLAYTEST_MAGIC_INACTIVE`, so the game boots exactly as before.
 - The harness copies the ROM, overwrites that struct with a scenario (map,
@@ -21,7 +20,6 @@ not yet wired into cycle phases.
   automatically.
 
 ## Files
-
 | File | Change |
 |---|---|
 | `include/playtest.h` | Scenario struct (byte layout is a contract with `src/emulator/scenario.ts`), layout enum |
@@ -31,7 +29,6 @@ not yet wired into cycle phases.
 | `ld_script.ld` | `src/playtest.o(.text)` / `(.rodata)` after `new_game.o` |
 
 ## Playtest suite
-
 `pokeemerald/playtests/*.json` (format: `pokeemerald/playtests/README.md`),
 run with `npm run playtest`. The first 20 cover the v2.9/v3.0 emulator
 checklists and all pass on the C331 tree:
@@ -53,7 +50,6 @@ Meteor Falls Steven, the Archie Reckoning (on water), Bag lock (d) AI
 Full Restore, the Shoal Cave tide cue, and whiteout mid-den.
 
 ## Not the same as `make playtest`
-
 The C339/C343 preset ROMs (`make playtest` / `make playtest_coda`, compile-time
 `PLAYTEST` macro in `include/config.h`, presets in `new_game.c`) are a separate
 mechanism for human playtesters. Both can coexist in `CB2_NewGame`: a harness
@@ -62,7 +58,6 @@ overrides any preset warp, and it takes the first branch of the
 `gFieldCallback` choice.
 
 ## Rules for cycles
-
 - Keep the two hook lines when editing `CB2_InitCopyrightScreenAfterBootup` or
   `CB2_NewGame`, and keep the `playtest.o` lines in `ld_script.ld`.
 - Do not change `struct PlaytestScenario` or `enum PlaytestLayoutField`. The
@@ -72,9 +67,10 @@ overrides any preset warp, and it takes the first branch of the
   playtests, before the warp to the scenario tile.
 
 ## C364: party `ability`
-
 `struct PlaytestMon` byte 0x03 (was `padding`) is `abilityNum`: 0 = CreateMon's pick, 1 = first ability, 2 = second. `GivePlaytestMon` sets MON_DATA_ABILITY_NUM to `abilityNum - 1` after the held item. PLAYTEST_LAYOUT_VERSION 2 → 3 (scenario.ts LAYOUT_VERSION 3, writes `mon.ability ?? 0` at base + 3).
 
 ## C365: national dex from the scenario flag
-
 `Playtest_ApplyScenario` (src/playtest.c), after the vars: `if (FlagGet(FLAG_SYS_NATIONAL_DEX)) EnableNationalPokedex();`. The flag alone left IsNationalPokedexEnabled FALSE (it also needs `pokedex.nationalMagic == 0xDA` and VAR_NATIONAL_DEX 0x302). No layout change. Existing scenarios with the flag (birch-postgame-*, birch-bookshelf-postgame-greeting) still pass.
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **364** (playtest.h PlaytestMon byte 0x03 `abilityNum` + layout v3, playtest.c GivePlaytestMon sets MON_DATA_ABILITY_NUM), **365** (playtest.c: FLAG_SYS_NATIONAL_DEX → EnableNationalPokedex) · **Files**: 5 (playtest.h, playtest.c, intro.c + overworld.c hook lines, ld_script.ld)

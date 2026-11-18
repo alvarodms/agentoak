@@ -13,3 +13,6 @@ No ROM change: only `pokeemerald/scripts/**` and `memory/**` touched. Spec: memo
 ## Proofs (C373)
 - Parity vs a HEAD baseline (/tmp/c373-baseline): check_playtest, check_beat_visibility, check_object_tiles real + --selftest output byte-identical; check_beats only gained lines (B5/RM/SF/W-ORPHAN).
 - BEATS_JSON mutations: tessa mustRead deleted → loader SH-MUSTREAD (mustReadScripts orphaned), and with mustReadScripts also deleted → "R5: fewer than 11 beat entries (got 9)"; tessa visibility deleted → "only 3 ... (MIN_BEATS 4)"; t1 metatiles deleted → "only 0 ... (MIN_TRACES 1)"; route104-ivan row deleted → loader "only 16 rows" in all three lints.
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **373** (refactor, no ROM change: scripts/lib/beats.cjs (new), scripts/beats.json fields seeFirst/visibility/traceName/mustReadScripts/b5Exempt, check_beats.cjs crossCheck + selftest plants, check_playtest.cjs R5 via mustReadEntries, check_beat_visibility.cjs via visibilityEntries/traceEntries; check_object_tiles.cjs unchanged) · **Files**: 5 scripts (1 new)

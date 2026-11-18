@@ -15,3 +15,6 @@
 ## Key Files
 
 BirchLab/scripts.inc, CaveOfOrigin maps, TerraCave_End, SeafloorCavern_Room9, Lavaridge/Dewford/FieryPath/Slateport/Route111/Pacifidlog scripts+map.json, include/constants/flags.h, trainer_parties.h, opponents.h, trainers.h
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: 115, 116, 118, 120, 121, 122, 123, 124, 125, **126** · **Files**: BirchLab, CaveOfOrigin, 3 city scripts, flags.h, 6 NPC scripts+maps, TerraCave+SeafloorCavern scripts+maps, remnant trainers+parties, Groudon+Kyogre encounters, world reaction

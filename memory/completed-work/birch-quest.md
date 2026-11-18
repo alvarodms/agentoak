@@ -59,3 +59,6 @@
 - New NPCs (Hiker, Researcher) use flag "0" — always visible, dialogue gated in script
 - Stages 1-3 are non-linear; Stage 4 requires all three; Stage 5 requires Stage 4
 - Reckoning check is at the VERY TOP of BirchQuestCheck, before Johto starter and all other checks
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **84**, **96** · **Files**: 12 (flags + 6 scripts + 2 map.json + birch_pc.c + specials.inc)

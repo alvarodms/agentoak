@@ -35,3 +35,6 @@ Modified files related to wild Pokémon encounter tables.
 | `src/data/wild_encounters.json` | Mt. Pyre Exterior: slot 9 (4%) WINGULL Lv27 → TORCHIC_HOENN Lv27-30 | **279** | Changed Three wild placement — starlight bird on sacred mountain |
 | `src/data/wild_encounters.json` | Shoal Cave Low Tide Inner Room: slot 8 (4%) GEODUDE Lv26-29 → MUDKIP_HOENN Lv28-32 | **279** | Changed Three wild placement — titan tadpole in tidal cave |
 | `src/data/wild_encounters.json` | Route 118 land_mons slot 8 (5%): MIGHTYENA Lv26-28 → GROWLITHE_HOENN Lv26-28 | **298** | Mid-game regional form gap fill — Water-type Growlithe near river crossing. First form since Pinsir_Hoenn (R112). #181 partial. |
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: 3, 4, 9, 14, 21, 47, 49, 52, 63, 68, 86, 91, 92, 98, 99, 100, 121, 136, 165, 166, 167, **207**, **208**, **219**, **230**, **237**, **250**, **256**, **257**, **261**, **264**, **265**, **267**, **279**, **294**, **298**, **310** (regenerated .h synced to JSON) · **Files**: 3 (JSON + C + flags)

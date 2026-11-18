@@ -37,3 +37,6 @@
 | Ralts | ITEM_ORAN_BERRY | ITEM_TWISTED_SPOON | TWISTED_SPOON/TWISTED_SPOON |
 | Gible | ITEM_NONE | ITEM_DRAGON_FANG | NONE/NONE |
 | Bagon | ITEM_NONE | ITEM_DRAGON_FANG | DRAGON_FANG/LEFTOVERS |
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: **93** · **Files**: 1 (species_info.h — 19 species)

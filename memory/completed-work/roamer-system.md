@@ -20,3 +20,6 @@ All components delivered:
 - Script layer (C112): Birch trigger, Lati gating, 2 NPC sighting dialogues
 - Sighting NPCs expanded (C113): 4 new beast-specific conditional NPCs (Mauville, Lilycove, Route 121, Mossdeep) — total 6 sighting NPCs across Hoenn
 - Dialogue checker: `pokeemerald/scripts/check_dialogue.sh` committed C112
+
+## Index row (moved verbatim from completed-work.md C380)
+- **Cycles**: 109, 111, 112, **142** · **Files**: 10 (roamer.c, roamer.h, flags.h, battle_main.c, battle_ai_scripts.s, specials.inc, BirchLab/scripts.inc, tv.inc, Route118/scripts.inc, FortreeCity/scripts.inc) + 6 sighting NPC fixes

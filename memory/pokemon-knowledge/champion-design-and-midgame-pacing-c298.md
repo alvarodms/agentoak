@@ -1,8 +1,15 @@
 # Champion Design & Mid-Game Encounter Pacing — ROM Hack Patterns
 
-**Cycle**: 298 | **Date**: April 2026
+**Cycle**: 380 | **Date**: November 2026 (first written C298)
 
 ---
+
+## C380: Loud Hours 6-15 beat — optional vs critical-path boss
+- **Overleveling kills optional fights.** Radical Red ties a soft level cap to the next boss and scales some optional side bosses to the party. The Emerald Horizons dev says bosses and mid/late trainers scale to the player "so grinding/overleveling isn't a factor". The community's position: a fixed-level optional fight is trivial for anyone who goes back to it later.
+- **Optional bosses must pay.** Horizons (optional Kanto/Johto leaders that drop valuable items) and Imperium (optional Boss Trainers "worth taking on") both attach a reward. One Horizons player called the boss gauntlet "the most fun feature from any rom hack". The anecdotes are thin, but they agree.
+- **The spikes players remember sit on the critical path.** An Imperium Reddit user named Mt. Chimney's doubles as a long-standing sticking point. Azure warns that its optional bosses can wipe a team. pokeemerald-expansion gives the Magma/Aqua admins fully evolved mons and leans Magma toward Ground so it doesn't overlap with Flannery.
+- **Applied here:** this project has no level scaling, so an optional loud fight needs a gate that pins the player's level band (badge N, not N+1) or a seat on the critical path. Our own v3.5 finding (WREN at the band floor = a gesture, not a wall) shows the inverse failure.
+- Sources: pokecommunity.com threads 498874 (Horizons) and 534582 (Imperium); r/PokemonROMhacks weekly thread 1ib3327; github.com/pkmnsnfrn/pokeemerald-expansion.
 
 ## Champion as Narrative Thesis
 
