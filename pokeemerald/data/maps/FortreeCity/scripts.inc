@@ -9,15 +9,22 @@ FortreeCity_MapScripts::
 @ and the plain twin stands alone (FLAG_TEMP_6 hides it when 0x35 is set).
 @ Sighted trainer scripts must start with trainerbattle (src/trainer_see.c),
 @ hence two keeper objects on 3,7. Once beaten she faces the storms too.
+@ C379 v3.6 "The ink has a price" Beat 1: once she is beaten and Badge 6 is held,
+@ DOLL_2 (2,7, FLAG_TEMP_7) is gone for good; the peg next to her stays empty.
 FortreeCity_OnTransition:
 	setflag FLAG_VISITED_FORTREE_CITY
 	call_if_defeated TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_EventScript_KeeperFacesStorms
 	goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED, FortreeCity_EventScript_StormCharmsOut
 	setflag FLAG_TEMP_5
+	setflag FLAG_TEMP_7
 	end
 
 FortreeCity_EventScript_StormCharmsOut:
 	setflag FLAG_TEMP_6
+	goto_if_unset FLAG_BADGE06_GET, FortreeCity_EventScript_StormCharmsEnd
+	goto_if_not_defeated TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_EventScript_StormCharmsEnd
+	setflag FLAG_TEMP_7
+FortreeCity_EventScript_StormCharmsEnd:
 	end
 
 FortreeCity_EventScript_KeeperFacesStorms:
@@ -338,7 +345,12 @@ FortreeCity_EventScript_CharmKeeper::
 
 FortreeCity_EventScript_CharmKeeperTurned::
 	trainerbattle_single TRAINER_FORTREE_CHARM_KEEPER, FortreeCity_Text_CharmKeeperIntroTurned, FortreeCity_Text_CharmKeeperDefeatTurned
+	goto_if_set FLAG_BADGE06_GET, FortreeCity_EventScript_CharmKeeperEmptyPeg
 	msgbox FortreeCity_Text_CharmKeeperDefeat, MSGBOX_AUTOCLOSE
+	end
+
+FortreeCity_EventScript_CharmKeeperEmptyPeg:
+	msgbox FortreeCity_Text_CharmKeeperEmptyPeg, MSGBOX_AUTOCLOSE
 	end
 
 FortreeCity_EventScript_LotadDoll::
@@ -360,6 +372,10 @@ FortreeCity_Text_CharmKeeperDefeat:
 FortreeCity_Text_CharmKeeperDefeatTurned:
 	.string "LOTAD don't mind lightning.\n"
 	.string "So they keep it off. Right?$"
+
+FortreeCity_Text_CharmKeeperEmptyPeg:
+	.string "One of them went into the storm.\n"
+	.string "I'll set it out again tomorrow.$"
 
 FortreeCity_Text_CharmKeeperPost:
 	.string "The wind's calm today.\n"

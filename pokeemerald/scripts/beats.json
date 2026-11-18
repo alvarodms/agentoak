@@ -717,5 +717,35 @@
     ],
     "speaker": "believer",
     "seeFirst": "Three LOTAD DOLLs face the storm; the woman standing among them sees you pass them and comes for you."
+  },
+  {
+    "id": "v36-empty-peg",
+    "arc": "v3.6 The ink has a price 1, the empty peg (C379; also needs FLAG_ROUTE104_SKEPTIC_TURNED)",
+    "register": "place",
+    "map": "FortreeCity",
+    "object": "LOCALID_FORTREE_LOTAD_DOLL_2",
+    "gate": {
+      "flag": "FLAG_BADGE06_GET",
+      "trainer": "TRAINER_FORTREE_CHARM_KEEPER"
+    },
+    "hideFlag": "FLAG_TEMP_7",
+    "tiles": [
+      [
+        2,
+        7,
+        "left"
+      ]
+    ],
+    "labels": [
+      "FortreeCity_OnTransition",
+      "FortreeCity_EventScript_CharmKeeperTurned"
+    ],
+    "playtests": [
+      "fortree-empty-peg-badge",
+      "fortree-empty-peg-no-badge",
+      "fortree-empty-peg-not-turned"
+    ],
+    "speaker": "none",
+    "seeFirst": "From the POKéMON CENTER door, the doll row has a gap between the first LOTAD DOLL and WREN, facing the storms."
   }
 ]

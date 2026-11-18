@@ -1,0 +1,24 @@
+{
+  "name": "fortree-empty-peg-not-turned",
+  "checks": "C379 v3.6 Beat 1 'The empty peg' control: without 0x35, Badge 6 changes nothing. From the heal point 5,7 there are no LOTAD DOLLs and no _TURNED twin (FLAG_TEMP_5 / FLAG_TEMP_7); the plain WREN stands on 3,7 facing down, unbattled (5,7 is outside her column-3 sight).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "flags": ["FLAG_BADGE06_GET"],
+    "clearFlags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "warp": { "map": "MAP_FORTREE_CITY", "x": 5, "y": 7 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "screenshot": "not-turned-badge6" }
+  ]
+}

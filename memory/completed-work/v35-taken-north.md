@@ -10,22 +10,7 @@ CLI timeout at 20 minutes; nothing reached the tree. Earlier memory said C374 sh
 
 0 new flags: dolls + turned twin use FLAG_TEMP_5, the plain twin FLAG_TEMP_6, the battle uses the trainer flag of slot 486.
 
-| File | Change |
-|---|---|
-| include/constants/opponents.h | 486 TRAINER_GINA_AND_MIA_2 → TRAINER_FORTREE_CHARM_KEEPER, renamed by hand (TRAINERS_COUNT unchanged 891) |
-| src/data/trainers.h | [TRAINER_FORTREE_CHARM_KEEPER] hand-edited: TRAINER_CLASS_PICNICKER, F_TRAINER_FEMALE \| TRAINER_ENCOUNTER_MUSIC_GIRL (as vanilla AUTUMN), TRAINER_PIC_PICNICKER, "WREN", items {}, doubleBattle FALSE (was a Twins TRUE slot), AI_SCRIPT_CHECK_BAD_MOVE, NO_ITEM_CUSTOM_MOVES(sParty_FortreeCharmKeeper) |
-| src/data/trainer_parties.h | sParty_GinaAndMia2 renamed → sParty_FortreeCharmKeeper, then written by modify mode: CHIMECHO 27 [ASTONISH, CONFUSION, TAKE_DOWN], LOMBRE_HOENN 28 [THUNDER_SHOCK, ABSORB, FAKE_OUT], iv 0 |
-| scripts/trainer_configs/fortree_charm_keeper.json (new) | modify-mode config (C369 recipe) + `_note` (slot provenance, band, move legality: SHOCK_WAVE L31 dropped) |
-| scripts/check_trainer_slots.cjs | RECLAIMED + TRAINER_FORTREE_CHARM_KEEPER (9 reclaimed) |
-| data/maps/FortreeCity/map.json | 5 new last objects, elev 3: 11-13 LOCALID_FORTREE_LOTAD_DOLL_1/2/3 (LOTAD_DOLL, 1,7 / 2,7 / 4,7, FACE_LEFT, script LotadDoll, FLAG_TEMP_5); 14 LOCALID_FORTREE_CHARM_KEEPER (PICNICKER 3,7 FACE_DOWN, TRAINER_TYPE_NORMAL sight 4, script CharmKeeper, FLAG_TEMP_6); 15 LOCALID_FORTREE_CHARM_KEEPER_TURNED (same tile/sight, script CharmKeeperTurned, FLAG_TEMP_5) |
-| data/maps/FortreeCity/scripts.inc | FortreeCity_OnTransition: setflag VISITED, `call_if_defeated` → KeeperFacesStorms (both twins FACE_LEFT), `goto_if_set FLAG_ROUTE104_SKEPTIC_TURNED` → StormCharmsOut (setflag FLAG_TEMP_6), else setflag FLAG_TEMP_5. OnResume untouched. New end section: CharmKeeper / CharmKeeperTurned (trainerbattle_single + MSGBOX_AUTOCLOSE post), LotadDoll (MSGBOX_SIGN), 6 texts (widest 162px) |
-| scripts/beats.json | rows v35-storm-charms (place, speaker none, hideFlag FLAG_TEMP_5, tiles 1,7/2,7/4,7 left) + v35-charm-keeper (fight, believer, gate none, tile 3,7 down) |
-| scripts/lib/beats.cjs | MIN_ROWS 17 → 19 |
-| playtests/fortree-storm-charms-turned.json (new) | 0x35 set: 3 dolls + turned twin present, plain twin absent before any text; screenshot storm-charms-arrival; doll sign from 1,8 facing up = 1 box |
-| playtests/fortree-storm-charms-not-turned.json (new) | 0x35 clear: dolls + turned twin absent, plain twin on 3,7 down; screenshot storm-charms-arrival-ungated |
-| playtests/fortree-charm-keeper-spots-player.json (new) | walkTo 3,9 yFirst, no talk; `talk {start:false}` reads the intro (1 box); CHIMECHO 27; battleTurns DRAGON_CLAW until the defeat line; she stands on 3,8, re-talk from 3,9 facing up = "Right?"; warp back: turned twin 3,7 facing left + dolls; screenshot keeper-faces-the-storms |
-| playtests/fortree-charm-keeper-ungated.json (new) | 0x35 clear: same walk, plain intro, "Lucky you.", faces left on re-entry, dolls absent |
-| playtests/fortree-kecleon-unblocked.json (new) | keeper beaten (defeatedTrainers) faces left; walkTo 4,9 crosses column 3 with no sighting; warp 25,9, face up, Devon Scope YES → FLAG_KECLEON_FLED_FORTREE set |
+Files (C375, detail in git history at 6d670d3): opponents.h + trainers.h + trainer_parties.h slot 486 hand rename → WREN (CHIMECHO 27 + LOMBRE_HOENN 28, iv 0); scripts/trainer_configs/fortree_charm_keeper.json; check_trainer_slots RECLAIMED; FortreeCity map.json objects 11-15 (dolls 1,7/2,7/4,7, keeper twins 3,7 sight 4); FortreeCity scripts.inc OnTransition + CharmKeeper/CharmKeeperTurned/LotadDoll + 6 texts; beats.json v35-storm-charms + v35-charm-keeper; playtests fortree-storm-charms-turned/-not-turned, fortree-charm-keeper-spots-player/-ungated, fortree-kecleon-unblocked.
 
 Verify (C375): full make OK; the 5 new playtests + checkpoint-fortree-arrival-boot pass run one at a time (runner then ran the whole suite: 100/100); check_beats OK (19 rows, "RM OK v3.5: 1 fight, 1 place|trace") + selftest 26 plants; check_trainer_slots OK (9 reclaimed); check_object_tiles 0 errors, no Fortree warning; check_flag_pairs 95 OK; check_flag_values OK; audit_boss_species --strict 0 collisions; check_playtest OK; check_text_width; check_all_quick.
 
@@ -70,3 +55,19 @@ fortree-charm-keeper-ungated unchanged (ungated twin still says "That counts for
 
 Open: tech-debt 369 (reclaim mode) and 374 (meteor chalk-copy playtest) still open.
 Reflection C375: the C374 loss cost one cycle, not the arc; the rebuilt beats needed zero harness steps. Open design question for C378: does the ungated player read WREN as a story beat or just another Picnicker?
+
+## C379 v3.6 "The ink has a price" Beat 1 "The empty peg" (gap only; v3.6 closed at this beat)
+
+FortreeCity temp flags now: **FLAG_TEMP_5** = DOLL_1 (1,7) + DOLL_3 (4,7) + the _TURNED twin; **FLAG_TEMP_6** = the ungated twin; **FLAG_TEMP_7** = DOLL_2 (2,7), set when not turned OR (turned + Badge 6 + TRAINER_FORTREE_CHARM_KEEPER beaten). Temp flags reset on every warp-in, so the gap is re-derived by OnTransition each load (no flag spent).
+
+| File | Change |
+|---|---|
+| data/maps/FortreeCity/map.json | LOCALID_FORTREE_LOTAD_DOLL_2 flag FLAG_TEMP_5 → FLAG_TEMP_7 (nothing else) |
+| data/maps/FortreeCity/scripts.inc | OnTransition: not-turned path also sets FLAG_TEMP_7; StormCharmsOut: after FLAG_TEMP_6, `goto_if_unset FLAG_BADGE06_GET` / `goto_if_not_defeated` → StormCharmsEnd, else setflag FLAG_TEMP_7. CharmKeeperTurned (still starts with trainerbattle_single): `goto_if_set FLAG_BADGE06_GET` → CharmKeeperEmptyPeg ("One of them went into the storm.\nI'll set it out again tomorrow.$", 168px, lint OK). Ungated twin unchanged |
+| scripts/beats.json | row v36-empty-peg (place, gate {flag FLAG_BADGE06_GET, trainer TRAINER_FORTREE_CHARM_KEEPER}; gate has one flag only, so 0x35 is named in `arc`), hideFlag FLAG_TEMP_7, tile [2,7,left] |
+| scripts/lib/beats.cjs | MIN_ROWS 19 → 20 |
+| playtests/fortree-empty-peg-badge.json (new) | 0x35 + Badge 6: 3 dolls pre-battle → spotted at 3,9 → 2-turn win → warp 5,7 → A facing down = 0 boxes, DOLL_2 absent, DOLL_1/3 + _TURNED facing left → walk 3,8 → re-talk 1 box empty-peg line → warp again, still absent |
+| playtests/fortree-empty-peg-no-badge.json (new) | 0x35, no Badge 6: same battle → warp 5,7 → all 3 dolls → re-talk "That counts for something." (expectNoText the peg line) |
+| playtests/fortree-empty-peg-not-turned.json (new) | Badge 6, no 0x35: warp 5,7 → no dolls, no _TURNED, plain WREN 3,7 facing down; no battle |
+
+**Measured C379** (built ROM, suite 105/105): from the heal point 5,7 the camera shows columns -2..12, so the gap at 2,7 is on screen three tiles left of the player (upscaled screenshot: grass where DOLL_2 stands in the no-badge shot). Lv70 SALAMENCE DRAGON CLAW beats WREN in **2 turns** (one per mon; maxTurns 1 fails after CHIMECHO faints).

@@ -1,0 +1,40 @@
+{
+  "name": "fortree-empty-peg-no-badge",
+  "checks": "C379 v3.6 Beat 1 'The empty peg' negative: with 0x35 and WREN beaten but no Badge 6, all three LOTAD DOLLs (1,7 / 2,7 / 4,7) still stand from the heal point 5,7 with WREN facing left among them, and her re-talk is the C378 pride line 'That counts for something.', not the empty-peg line.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "clearFlags": ["FLAG_BADGE06_GET"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "down", "visible": true } },
+    { "comment": "down to row 9 first, then right: column 3 is entered only on 3,9, inside her sight" },
+    { "walkTo": { "x": 3, "y": 9, "yFirst": true } },
+    { "talk": { "start": false } },
+    { "expectText": "You walked right past the" },
+    { "expectBoxCount": 1 },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "expectBattle": { "opponent": "SPECIES_CHIMECHO", "level": 27 } },
+    { "battleTurns": { "move": 1, "until": "So they keep it off. Right?", "maxTurns": 8 } },
+    { "talk": { "start": false } },
+    { "expectScreen": "CB2_Overworld" },
+    { "warp": { "map": "MAP_FORTREE_CITY", "x": 5, "y": 7 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "x": 1, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "x": 2, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "x": 4, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "left", "visible": true } },
+    { "screenshot": "full-row-no-badge" },
+    { "walkTo": { "x": 3, "y": 8, "yFirst": true } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "That counts for something." },
+    { "expectNoText": "went into the storm" },
+    { "expectBoxCount": 1 }
+  ]
+}

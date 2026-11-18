@@ -1,8 +1,14 @@
 # v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters
 
-**Cycle**: 378 | **Date**: November 2026
+**Cycle**: 379 | **Date**: November 2026
 
 ---
+
+## C379 — empty peg vs scorched doll: noticing an absence (searched Nov 2026; thin)
+- **Removal is the easiest change to detect** (VR/AR change-blindness study, arXiv 2308.12476): people spot a removed object more often than one whose colour or size changed. **But only under focal attention**: changes away from where the player looks are missed (change-blindness / inattentional-blindness literature). The Fortree gap sits on the arrival row where WREN's sighting already pulls the eye, which makes it the best case. A gap off that row would go unnoticed (cf. C356).
+- **No source found for "lost object turns up elsewhere, no reward"**. Nearest pattern: placement implies the event (Giant Bomb "A Garden of Bodies": items lying on bodies tell what happened; Fernández-Vara indices: a trace reads only when tied to a remembered cause). A scorched doll works only if the player has already seen the gap, so it must sit on the path *out* of Fortree toward Route 119, not before it.
+- A bg_event is opt-in (A press on a tile). It adds a "found it" moment but no lost service, so it does not meet the C378 "cost must touch play" test either. Treat it as optional atmosphere, not the cost.
+- Sources: https://arxiv.org/pdf/2308.12476.pdf , https://pure.hud.ac.uk/en/publications/broad-environmental-change-blindness-in-virtual-environments-and-/ , https://giantbomb.com/articles/guest-column-a-garden-of-bodies/1100-5428/ , https://gdcvault.com/play/1016566/Environmental-Storytelling-Indices-and-the
 
 ## C378 — next arc "acting on the ink costs someone something visible" (searched Nov 2026; opinion-grade)
 - **No game found where the player's *true* record, over-extended by others, harms NPCs**; no Pokémon hack either (PokéCommunity "moral choices" thread asks for such hacks and gets few answers; StunningSteel = rival-relationship choices → 3 endings). LoH would be ahead of the scene again; no reception data.
@@ -58,10 +64,4 @@
 - Gen III field weather carries into battle from turn 1; `setweather` makes a weather beat cheap. Weather-gated spawns: copy the Essentials "Weather Encounters" override %, never a table swap. Mirage Tower sandstorm = vanilla "place stays changed". Legends: Arceus random distortions read as grind loops, while a scripted, once-told event is the one players remember. State any weather rule in one player-facing line.
 - Sources: Bulbapedia Weather; PokéCommunity 429803, 497707, 444136; skaternutko/weather-mayhem.
 
-## C364/C366 — Hours 3-6 (Dewford→Mauville) register (searched Nov 2026; thin)
-- **No hack found where an early gym fight or dialogue reacts to what the player has caught or learned** (PokéCommunity, Romhacking.net, r/PokemonROMhacks). Mid-game hacks change rosters, levels and gauntlets (Emerald Encore, Emerald But Bad, Imperium), never what the player *knows*. LoH is ahead of the scene, with no reception data.
-- **Dewford Gym** is pitch-black in vanilla; the light radius grows per trainer beaten, the room lights when Brawly falls, and Flash is barred (Bulbapedia Darkness / Thonky). That is a vanilla "fight changes the place" beat. No player polls on the darkness turned up; the only gripe found (itch.io) was backtracking to Dewford after Granite Cave (a page-3 map, so D1 applies next door).
-- **Routes 105-109: Water-trainer glut is the known Emerald mid-game flaw** (Emerald Horizons review thread: "inherited from vanilla… short of changing their typing, no fix"). A reactive beat there that swaps one sea trainer's team, or makes them react to a Changed type, also breaks monotony. IVAN (C364) already used a fisher + rain, so don't repeat that.
-- **Tim Cain, "believable reactivity"**: NPCs should react to *results* the NPC could plausibly see (a carried item, a mon in the party, a changed place), not to actions they never witnessed, or they read as omniscient. Hours 3-6 strangers never met the P1/P2 believers, so they shouldn't key on dex flags or quote the notebook. Key them on the party/lead species (C329 "show me" grammar) or on a place change. Tiering also helps: one NPC remembers in detail, the rest only see the result.
-- Boss-design writing (Game Developer "3 elements"): a fight should test what the player already learned, with the clue shown earlier; here the clue is the inked page.
-- Sources: https://bulbapedia.bulbagarden.net/wiki/Dewford_Gym , https://bulbapedia.bulbagarden.net/wiki/Darkness , https://www.thonky.com/pokemon-ruby-sapphire-emerald/dewford-gym , https://itch.io/post/11988296 , https://www.pokecommunity.com/threads/pok%C3%A9mon-emerald-horizons-emerald-difficulty-hack-complete-v1-11-ft-new-rocket-storyline-boss-gauntlet-gen-1-8-side-quests-and-qol-features.498874/page-15 , https://turbo-wiki.pages.dev/tim-cain/narrative-design/believable-reactivity , https://www.gamedeveloper.com/design/3-elements-that-every-great-boss-fight-needs
+## C364/C366 — Hours 3-6 register (condensed C379): no hack reacts to what the player *knows* (only rosters/levels change). Dewford Gym darkness = vanilla "fight changes the place". Routes 105-109 Water-trainer glut is Emerald's known mid-game flaw. Tim Cain: NPCs react to results they could see (party, item, changed place), never to unwitnessed acts; tier it (one remembers in detail, the rest see the result). Sources: Bulbapedia Dewford_Gym/Darkness, PokéCommunity Emerald Horizons 498874 p15, turbo-wiki Tim Cain believable-reactivity.
