@@ -63,6 +63,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `expectBattle`, `expectBattleText` | Opponent species and level; the current battle message only (no history) |
 | `expectBattleWeather` | `"none"`, `"rain"`, `"sun"`, `"sandstorm"` or `"hail"` (gBattleWeather), e.g. after `waitForBattleText: "hail"` |
 | `expectFieldWeather` (`"WEATHER_RAIN"` or a number) | The saved field weather (`gSaveBlock1Ptr->weather`, what a map's `setweather` writes; names from include/constants/weather.h). Pair it with a screenshot, which shows whether the weather actually draws |
+| `expectBattleSummary` (`{"outcome": "win", "maxPlayerFaints": 2}`, +`battle`, `minTurns`, `maxTurns`, `minPlayerFaints`) | Checks one battle's summary, counted from `battleLog`: outcome (`win` on a "defeated" message, `loss` on "whited out"; otherwise `unknown`), turns (each "What will … do?" `battleTurns` answered), faints per side ("Foe X fainted!" / "Wild X fainted!" are the opponent's), and party HP % when the last `battleTurns` returned. `battle` is the 0-based battle index, default the last one; a new battle starts at the first prompt after a win or loss. Fails printing the actual summary. Every summary is in report.json `battleSummaries`. Use it to turn a fight's design hypothesis into a regression test |
 | `screenshot`, `comment` | Saved under `artifacts/playtests/<name>/`; notes |
 
 **Fighting a battle.** From the action menu (`waitForBattleText: "What will"`):

@@ -15,12 +15,15 @@ import {
   START_MENU_ACTION_POKENAV,
   ballListIndex,
   battleWeatherName,
+  checkBattleSummary,
   checkFieldWeather,
   encodeWarpData,
   loadPlaytestFiles,
   loadPlaytests,
   messageBoxes,
   parsePlaytest,
+  summarizeBattle,
+  summarizeBattles,
   walkToDirections,
   type PlaytestResult,
 } from "./playtest.js";
@@ -270,6 +273,55 @@ describe("expectFieldWeather step", () => {
     const sb1 = fs.readFileSync(GLOBAL_H, "utf8").match(/struct SaveBlock1\s*\{([^}]*)\}/)?.[1] ?? "";
     const line = sb1.split("\n").find((l) => /\bu8 weather;/.test(l));
     expect(Number(line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1])).toBe(SAVEBLOCK1_WEATHER);
+  });
+});
+
+describe("battle summaries (expectBattleSummary)", () => {
+  // Trimmed from C381's wi-shelly-full-party / wi-shelly-worn-party battleLog in report.json.
+  const WIN = [
+    "What will MIGHTYENA do?",
+    "MIGHTYENA used BITE!",
+    "Foe CARVANHA fainted! ",
+    "What will MIGHTYENA do?",
+    "Foe QWILFISH used WATER GUN!",
+    "MIGHTYENA fainted! ",
+    "[sent out party menu slot 2]",
+    "What will PELIPPER do?",
+    "Foe QWILFISH fainted! ",
+    "Player defeated AQUA ADMIN SHELLY! ",
+    "Ahahahaha! You're disgustingly strong!",
+    "[party hp% 0,62,100]",
+  ];
+  const LOSS = [
+    "What will MIGHTYENA do?",
+    "Foe CARVANHA fainted! ",
+    "Foe CARVANHA's ROUGH SKIN hurt MIGHTYENA!",
+    "MIGHTYENA fainted! ",
+    "What will PELIPPER do?",
+    "PELIPPER fainted! ",
+    "OAK is out of usable POKéMON! ",
+    "OAK whited out!",
+  ];
+
+  it("summarizes a win and a loss from their battle messages", () => {
+    expect(summarizeBattle(WIN)).toEqual({ index: 0, outcome: "win", turns: 3, playerFaints: 1, opponentFaints: 2, playerEndHpPercent: [0, 62, 100] });
+    expect(summarizeBattle(LOSS)).toEqual({ index: 0, outcome: "loss", turns: 2, playerFaints: 2, opponentFaints: 1 });
+    expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "])).toMatchObject({ outcome: "unknown", opponentFaints: 1 });
+  });
+
+  it("splits a log into battles at the first prompt after an outcome", () => {
+    const got = summarizeBattles([...WIN, ...LOSS]);
+    expect(got.map((b) => [b.index, b.outcome, b.turns])).toEqual([[0, "win", 3], [1, "loss", 2]]);
+  });
+
+  it("passes inside the bounds and fails with the summary outside them (planted: 2 faints, max 0)", () => {
+    const summaries = summarizeBattles(LOSS);
+    expect(() => checkBattleSummary(summaries, { outcome: "loss", minPlayerFaints: 1, maxTurns: 2 })).not.toThrow();
+    expect(() => checkBattleSummary(summaries, { maxPlayerFaints: 0 })).toThrow(/2 player faints > max 0; summary \{"index":0,"outcome":"loss"/);
+    expect(() => checkBattleSummary(summarizeBattles(WIN), { outcome: "loss" })).toThrow(/outcome win, expected loss/);
+    expect(() => checkBattleSummary([], {})).toThrow(/no battle/);
+    expect(parsePlaytest({ ...MINIMAL, steps: [{ expectBattleSummary: { outcome: "win", maxPlayerFaints: 2 } }] }).steps).toHaveLength(1);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleSummary: { outcome: "draw" } }] })).toThrow();
   });
 });
 

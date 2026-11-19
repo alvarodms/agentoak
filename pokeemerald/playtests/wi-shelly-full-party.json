@@ -1,6 +1,6 @@
 {
   "name": "wi-shelly-full-party",
-  "checks": "C381 v3.7 Rain indoors, FAIL-hard guard: the C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30, no bag (SHELGON's moves reordered so HEADBUTT is slot 1: the Designer's scripted line is BITE / WATER_GUN / HEADBUTT, and battleTurns repeats one slot) at full HP walks to SHELLY on 4,6 with the grunts beaten. Her intro ends on the one new line 'It's on our side, not yours.'; the fight is in rain from turn 1. Each Pokémon spams its first move, B answers NO to 'change POKéMON?', and after a faint the next healthy one goes in. Must win: her defeat line 'You're disgustingly strong!'. Turns and faints are in report.json battleLog.",
+  "checks": "C381 v3.7 Rain indoors, FAIL-hard guard: the C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30, no bag (SHELGON's moves reordered so HEADBUTT is slot 1: the Designer's scripted line is BITE / WATER_GUN / HEADBUTT, and battleTurns repeats one slot) at full HP walks to SHELLY on 4,6 with the grunts beaten. Her intro ends on the one new line 'It's on our side, not yours.'; the fight is in rain from turn 1. Each Pokémon spams its first move, B answers NO to 'change POKéMON?', and after a faint the next healthy one goes in. Must win: her defeat line 'You're disgustingly strong!'. C382: expectBattleSummary asserts the win with at most 2 faints (C381 measured 2 faints, 11 turns), so a roster or engine change that flips it fails the suite.",
   "scenario": {
     "checkpoint": "weather_institute_2f",
     "defeatedTrainers": [
@@ -115,6 +115,12 @@
         "forbid": "whited out",
         "replace": true,
         "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win",
+        "maxPlayerFaints": 2
       }
     },
     {

@@ -1,6 +1,6 @@
 {
   "name": "wi-shelly-worn-party",
-  "checks": "C381 v3.7 Rain indoors, the design hypothesis: the C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30, no bag (SHELGON's moves reordered so HEADBUTT is slot 1: the Designer's scripted line is BITE / WATER_GUN / HEADBUTT, and battleTurns repeats one slot) at hpPercent 50 (a tired arrival) fights SHELLY in the rain the same way as wi-shelly-full-party. PASS for the beat = this party loses at least one Pokémon; the playtest itself passes on a win ('disgustingly strong') or a loss ('whited out'). The outcome, turns and faints are in report.json battleLog and the C381 journal.",
+  "checks": "C381 v3.7 Rain indoors, the design hypothesis: the C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30, no bag (SHELGON's moves reordered so HEADBUTT is slot 1: the Designer's scripted line is BITE / WATER_GUN / HEADBUTT, and battleTurns repeats one slot) at hpPercent 50 (a tired arrival) fights SHELLY in the rain the same way as wi-shelly-full-party. PASS for the beat = this party loses at least one Pokémon; the playtest itself passes on a win ('disgustingly strong') or a loss ('whited out'). C382: expectBattleSummary asserts at least one faint, win or loss (C381 measured a loss, 3 faints, 7 turns); the numbers are in report.json battleSummaries.",
   "scenario": {
     "checkpoint": "weather_institute_2f",
     "defeatedTrainers": [
@@ -118,6 +118,11 @@
         "any": true,
         "replace": true,
         "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleSummary": {
+        "minPlayerFaints": 1
       }
     },
     {

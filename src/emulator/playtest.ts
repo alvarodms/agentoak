@@ -242,6 +242,20 @@ const StepSchema = z.union([
   z.strictObject({ expectBattleWeather: z.enum(["none", "rain", "sun", "sandstorm", "hail"]) }),
   /** The saved field weather (gSaveBlock1Ptr->weather, what setweather writes), as a WEATHER_* name or number. */
   z.strictObject({ expectFieldWeather: z.union([z.string().regex(/^WEATHER_[A-Z0-9_]+$/), z.number().int().min(0).max(255)]) }),
+  z.strictObject({
+    /**
+     * Checks a battle's summary (battleSummaries in report.json): `battle` is its 0-based index (default: the last
+     * battle so far). Fails with the actual summary.
+     */
+    expectBattleSummary: z.strictObject({
+      battle: z.number().int().min(0).optional(),
+      outcome: z.enum(["win", "loss"]).optional(),
+      minTurns: z.number().int().min(0).optional(),
+      maxTurns: z.number().int().min(0).optional(),
+      minPlayerFaints: z.number().int().min(0).optional(),
+      maxPlayerFaints: z.number().int().min(0).optional(),
+    }),
+  }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
 ]);
 
@@ -308,6 +322,8 @@ export interface PlaytestResult {
   transcripts: string[][];
   /** Every battle message battleTurns saw, in order (for counting turns and faints in report.json). */
   battleLog?: string[];
+  /** One summary per battle in battleLog (summarizeBattles), refreshed after every battleTurns step. */
+  battleSummaries?: BattleSummary[];
   screenshots: string[];
   frames: number;
   ms: number;
@@ -611,6 +627,14 @@ async function runStep(
     const { move, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
     result.battleLog ??= [];
     await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, log: result.battleLog });
+    const hp = (await s.readState()).party.map((mon) => (mon.maxHp ? Math.round((100 * mon.hp) / mon.maxHp) : 0));
+    result.battleLog.push(`${PARTY_HP_MARK}${hp.join(",")}]`);
+    result.battleSummaries = summarizeBattles(result.battleLog);
+    return;
+  }
+
+  if ("expectBattleSummary" in step) {
+    checkBattleSummary(result.battleSummaries ?? [], step.expectBattleSummary);
     return;
   }
 
@@ -700,6 +724,7 @@ async function battleTurns(
   };
   await waitForBattleText(s, "What will", 1800);
   for (let turn = 1; turn <= maxTurns; turn++) {
+    opts.log?.push(await battleText(s)); // the "What will … do?" prompt: summarizeBattle counts these as turns
     // FIGHT is top left: UP then LEFT reaches it from any action, and slot 1 from any move.
     await s.press("UP");
     await s.press("LEFT");
@@ -879,6 +904,65 @@ async function fleeWildBattle(s: EmulatorSession): Promise<void> {
   await s.press("A");
   await leaveBattle(s, "findWildBattle (running away)");
   await settleField(s, "findWildBattle (running away)");
+}
+
+export interface BattleSummary {
+  index: number;
+  outcome: "win" | "loss" | "unknown";
+  /** "What will … do?" prompts battleTurns answered. */
+  turns: number;
+  /** "X fainted!" for the player; "Foe X fainted!" / "Wild X fainted!" for the opponent. */
+  playerFaints: number;
+  opponentFaints: number;
+  /** Party HP % (party order) read when the battle's last battleTurns step returned. */
+  playerEndHpPercent?: number[];
+}
+
+/** battleLog marker battleTurns appends with the party's HP % when it returns. */
+const PARTY_HP_MARK = "[party hp% ";
+const isWin = (m: string) => /\bdefeated\b/.test(m);
+const isLoss = (m: string) => m.includes("whited out") || m.includes("out of usable");
+
+/** Counts one battle's turns, faints and outcome from its battleLog messages. */
+export function summarizeBattle(log: readonly string[], index = 0): BattleSummary {
+  const fainted = log.map((m) => m.trim()).filter((m) => m.endsWith("fainted!"));
+  const opponentFaints = fainted.filter((m) => /^(Foe|Wild) /.test(m)).length;
+  const hp = log.filter((m) => m.startsWith(PARTY_HP_MARK)).at(-1);
+  return {
+    index,
+    outcome: log.some(isLoss) ? "loss" : log.some(isWin) ? "win" : "unknown",
+    turns: log.filter((m) => m.includes("What will")).length,
+    playerFaints: fainted.length - opponentFaints,
+    opponentFaints,
+    ...(hp && { playerEndHpPercent: hp.slice(PARTY_HP_MARK.length, -1).split(",").map(Number) }),
+  };
+}
+
+/** Splits battleLog into battles: a new one starts at the first "What will" prompt after a win or loss message. */
+export function summarizeBattles(log: readonly string[]): BattleSummary[] {
+  const battles: string[][] = [[]];
+  for (const m of log) {
+    const cur = battles.at(-1)!;
+    if (m.includes("What will") && cur.some((x) => isWin(x) || isLoss(x))) battles.push([m]);
+    else cur.push(m);
+  }
+  return battles.filter((b) => b.length).map((b, i) => summarizeBattle(b, i));
+}
+
+type SummaryBounds = { battle?: number; outcome?: "win" | "loss"; minTurns?: number; maxTurns?: number; minPlayerFaints?: number; maxPlayerFaints?: number };
+
+/** expectBattleSummary: fails, printing the summary, unless the chosen battle (default: the last) meets every bound. */
+export function checkBattleSummary(summaries: readonly BattleSummary[], want: SummaryBounds): void {
+  const got = summaries[want.battle ?? summaries.length - 1];
+  if (!got) fail(`expectBattleSummary: no battle ${want.battle ?? "(last)"}; battleTurns logged ${summaries.length} battle(s)`);
+  const bad = [
+    want.outcome !== undefined && got.outcome !== want.outcome && `outcome ${got.outcome}, expected ${want.outcome}`,
+    want.minTurns !== undefined && got.turns < want.minTurns && `${got.turns} turns < minTurns ${want.minTurns}`,
+    want.maxTurns !== undefined && got.turns > want.maxTurns && `${got.turns} turns > maxTurns ${want.maxTurns}`,
+    want.minPlayerFaints !== undefined && got.playerFaints < want.minPlayerFaints && `${got.playerFaints} player faints < min ${want.minPlayerFaints}`,
+    want.maxPlayerFaints !== undefined && got.playerFaints > want.maxPlayerFaints && `${got.playerFaints} player faints > max ${want.maxPlayerFaints}`,
+  ].filter(Boolean);
+  if (bad.length) fail(`expectBattleSummary: ${bad.join("; ")}; summary ${JSON.stringify(got)}`);
 }
 
 /** Offsets of pos and location in struct SaveBlock1 (include/global.h marks them; a unit test checks). */
