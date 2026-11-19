@@ -1,8 +1,14 @@
 # Champion Design & Mid-Game Encounter Pacing — ROM Hack Patterns
 
-**Cycle**: 380 | **Date**: November 2026 (first written C298)
+**Cycle**: 381 | **Date**: November 2026 (first written C298)
 
 ---
+
+## C381: Weather Institute Shelly in other hacks (v3.7 "Rain indoors")
+- **Emerald Kaizo keeps Shelly off-theme and puts the rain on a grunt.** Her Kaizo team is 6 mons, Lv47-49 (Milotic, Hypno, Shuckle, Medicham, Dragonite, Lapras; cap 49). The Institute's Huntail (Lv47, King's Rock, Rain Dance) belongs to Grunt #5. So "the grunts teach the rain, then the boss" is a pattern seen elsewhere, and it matches spec (e). Our idea of a rain-themed *admin* in rain the machines set has no precedent we could find: no hack we found ties a boss's weather to the map's story.
+- **Swift Swim in permanent rain is the known wall.** Inclement Emerald's weather rework says it aims to "reign in Swift Swim and its clones a bit". Weather Mayhem left Swift Swim working in rain. In Gen 3, rain carried into battle from the overworld has no turn limit, so a 50%-HP team can't stall it out. A doubled-speed Huntail ace is the most likely FAIL-hard source.
+- **Search gap**: there were no community threads about worn-party or "spend a resource" tuning for this fight specifically. The Reborn "can't beat Shelly" threads are about a different Shelly.
+- Sources: nuzlockeredux.com/guides/emerald-kaizo; emulatorhacks.com Emerald Kaizo walkthrough (DecaPod); pokecommunity.com threads 457039 (Inclement Emerald) and 535675 (Weather Mayhem); Bulbapedia "Weather Institute".
 
 ## C380: Loud Hours 6-15 beat — optional vs critical-path boss
 - **Overleveling kills optional fights.** Radical Red ties a soft level cap to the next boss and scales some optional side bosses to the party. The Emerald Horizons dev says bosses and mid/late trainers scale to the player "so grinding/overleveling isn't a factor". The community's position: a fixed-level optional fight is trivial for anyone who goes back to it later.

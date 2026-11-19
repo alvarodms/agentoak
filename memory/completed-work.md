@@ -24,7 +24,8 @@
 | v3.3 First Ink (Hours 0-6) | 361-365 | Route102/104, PetalburgWoods, match_call.c, harness + playtests | [v33-first-ink.md](completed-work/v33-first-ink.md) |
 | v3.4 Word Travels (Slateport/Mauville) | 367-372 | Route109, MauvilleCity, checkpoints.ts, trainer configs, playtests | [v34-word-travels.md](completed-work/v34-word-travels.md) |
 | v3.5 Taken North + v3.6 empty peg (Fortree) | 374 LOST, 375-379 | FortreeCity, slot 486 trainer data, fortree_charm_keeper.json, playtests | [v35-taken-north.md](completed-work/v35-taken-north.md) |
-| beats.json tooling | 373 | scripts/lib/beats.cjs, beats.json, check_beats.cjs | [beats-tooling.md](completed-work/beats-tooling.md) |
+| v3.7 Rain indoors (Weather Institute 2F) | 381 | Route119_WeatherInstitute_2F/scripts.inc, villain_shelly_weather_institute.json, trainer_parties.h, beats.json, checkpoints.ts + playtest.ts, 6 playtests | [v37-rain-indoors.md](completed-work/v37-rain-indoors.md) |
+| beats.json tooling | 373, 381 | scripts/lib/beats.cjs, beats.json, check_beats.cjs | [beats-tooling.md](completed-work/beats-tooling.md) |
 | Playtest Hook (runner infrastructure) | 364-365 | playtest.h/.c, intro.c, overworld.c hooks | [playtest-hook.md](completed-work/playtest-hook.md) |
 | Memory-only cycles | 380 | memory/ only (codebase-facts split into codebase-facts/*.md) | — |
 

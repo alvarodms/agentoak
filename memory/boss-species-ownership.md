@@ -14,7 +14,7 @@ metadata:
 | Camerupt (ace), Weezing line, Rhydon line, Nidoking line | **Maxie** (Magma = land) | Ace last slot every tier. Off Flannery C317 |
 | Houndoom (ace), Muk line, Magmar, Sandslash | **Tabitha** | Off Flannery C317 (Houndour stays a wild migration species) |
 | Sharpedo (ace), Crobat, Wailord, Gliscor_Hoenn | **Archie** (Aqua = sea) | Gliscor_H also Brawly4/5 rematch (accepted) |
-| Huntail (ace), Octillery, Qwilfish, Carvanha (WI), Corsola_Hoenn | **Shelly** | Corsola_H also Phoebe R1 (accepted, Aqua adopted migrant) |
+| Huntail (ace), Octillery, Qwilfish, Carvanha (WI), Corsola_Hoenn | **Shelly** (C381 WI party = Carvanha/Qwilfish/Huntail; Octillery kept on the row for later fights) | Corsola_H also Phoebe R1 (accepted, Aqua adopted migrant) |
 | Poliwrath (ace), Kingler, Quagsire, Tentacruel | **Matt** | |
 | Crawdaunt, Mightyena | **Sidney** | No villain boss fields either |
 | Honchkrow | **Sidney** (all 5 tiers) | Winona removed C314 |
