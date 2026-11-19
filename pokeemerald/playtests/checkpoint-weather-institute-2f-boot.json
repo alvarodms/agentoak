@@ -1,0 +1,28 @@
+{
+  "name": "checkpoint-weather-institute-2f-boot",
+  "checks": "C381 weather_institute_2f checkpoint: boots on 17,2 just below the 2F stairs with Team Aqua still inside (VAR_WEATHER_INSTITUTE_STATE 0). OnTransition runs: the Aqua grunt on 15,6 is in place (FLAG_HIDE_ROUTE_119_TEAM_AQUA clear). No grunt sees the start tile and no scene fires. Foundation for v3.7 Rain indoors.",
+  "scenario": {
+    "checkpoint": "weather_institute_2f",
+    "party": [
+      {
+        "species": "SPECIES_MARSHTOMP",
+        "level": 30,
+        "moves": ["MOVE_WATER_GUN", "MOVE_MUD_SHOT"]
+      }
+    ]
+  },
+  "steps": [
+    { "wait": 300 },
+    { "comment": "no scene: waitFor overworld needs the field script finished" },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectPlayer": { "map": "MAP_ROUTE119_WEATHER_INSTITUTE_2F", "x": 17, "y": 2 } },
+    { "expectScreen": "CB2_Overworld" },
+    { "expectVar": { "VAR_WEATHER_INSTITUTE_STATE": 0 } },
+    { "expectFlag": { "FLAG_HIDE_ROUTE_119_TEAM_AQUA": false, "FLAG_BADGE05_GET": true, "FLAG_BADGE06_GET": false } },
+    { "comment": "Shelly (4,6) and the scientist are off camera, so not loaded yet; the grunt on 15,6 is in view" },
+    { "expectObject": { "id": "LOCALID_WEATHER_INSTITUTE_2F_GRUNT_1", "x": 15, "y": 6, "visible": true } },
+    { "comment": "the floor is walkable and nothing locks the player" },
+    { "walk": "left" },
+    { "expectPlayer": { "map": "MAP_ROUTE119_WEATHER_INSTITUTE_2F", "x": 16, "y": 2 } }
+  ]
+}

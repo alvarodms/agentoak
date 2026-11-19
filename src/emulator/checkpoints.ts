@@ -21,7 +21,7 @@ export interface Checkpoint {
   y: number;
 }
 
-export const CHECKPOINT_NAMES = ["slateport_arrival", "mauville_pre_wattson", "fortree_arrival"] as const;
+export const CHECKPOINT_NAMES = ["slateport_arrival", "mauville_pre_wattson", "fortree_arrival", "weather_institute_2f"] as const;
 export type CheckpointName = (typeof CHECKPOINT_NAMES)[number];
 
 /* Paths below are under pokeemerald/. Defaults not listed come from data/scripts/new_game.inc. */
@@ -193,10 +193,55 @@ const FORTREE_ARRIVAL: Checkpoint = {
   y: 8,
 };
 
+/*
+ * C381 (v3.7 Rain indoors): fortree_arrival one scene earlier, at the top of the Weather Institute stairs with Team Aqua
+ * still inside. Differences from fortree_arrival: VAR_WEATHER_INSTITUTE_STATE 0 (2F's OnTransition places the Aqua-era
+ * scientist and turns the storm machines on); FLAG_HIDE_ROUTE_119_TEAM_AQUA dropped (set only by ShellyDefeated,
+ * data/maps/Route119_WeatherInstitute_2F/scripts.inc); FLAG_ROUTE119_MIGRATION_EVENT dropped (its Route 119 coord events
+ * 27-28,26 want state 2, i.e. after the Institute); FLAG_VISITED_FORTREE_CITY dropped. FLAG_SECOND_WAVE kept: Route 118
+ * (scripts.inc:129) is south of the Institute. Institute hide flags stay at new_game.inc defaults (the 2F workers and the
+ * spare grunt FLAG_HIDE_WEATHER_INSTITUTE_2F_AQUA_GRUNT_M are hidden there).
+ */
+const WEATHER_INSTITUTE_2F: Checkpoint = {
+  flags: [
+    // Starter and Pokédex: data/maps/LittlerootTown_ProfessorBirchsLab/scripts.inc:596 (FIELD NOTES), :621 (ADVENTURE_STARTED)
+    "FLAG_SYS_POKEMON_GET",
+    "FLAG_SYS_POKEDEX_GET",
+    "FLAG_ADVENTURE_STARTED",
+    "FLAG_RECEIVED_FIELD_NOTES",
+    // PokéNav: data/maps/RustboroCity_DevonCorp_3F/scripts.inc:55-56; match call data/maps/RustboroCity/scripts.inc:52,77
+    "FLAG_SYS_POKENAV_GET",
+    "FLAG_RECEIVED_POKENAV",
+    "FLAG_HAS_MATCH_CALL",
+    "FLAG_ADDED_MATCH_CALL_TO_POKENAV",
+    // Badges 1-5: RustboroCity_Gym/scripts.inc:19, DewfordTown_Gym:151, MauvilleCity_Gym:94, LavaridgeTown_Gym_1F:62, PetalburgCity_Gym:379
+    "FLAG_BADGE01_GET",
+    "FLAG_BADGE02_GET",
+    "FLAG_BADGE03_GET",
+    "FLAG_BADGE04_GET",
+    "FLAG_BADGE05_GET",
+    // Second Wave, data/maps/Route118/scripts.inc:129 (Route 118 is walked before Route 119)
+    "FLAG_SECOND_WAVE",
+  ],
+  vars: {
+    // VAR_ROUTE119_STATE=1: rival battle done (data/maps/Route119/scripts.inc:200), south of the Institute door 6,32
+    VAR_ROUTE119_STATE: 1,
+    // VAR_WEATHER_INSTITUTE_STATE=0: Aqua inside; ShellyDefeated sets 1 (data/maps/Route119_WeatherInstitute_2F/scripts.inc)
+    VAR_WEATHER_INSTITUTE_STATE: 0,
+  },
+  // Tile 17,2: MB_NORMAL c0 e3 just below the 2F stairs warp 17,1 (`node scripts/map_scan.cjs Route119_WeatherInstitute_2F
+  // 0-19 0-10 --walkable`, C381), where a player arrives from 1F. No grunt sees it: GRUNT_1 15,6 looks right along row 6,
+  // GRUNT_4 19,6 left along row 6, GRUNT_2 10,8 up/down column 10. 2F has no coord events.
+  map: "MAP_ROUTE119_WEATHER_INSTITUTE_2F",
+  x: 17,
+  y: 2,
+};
+
 export const CHECKPOINTS: Record<CheckpointName, Checkpoint> = {
   slateport_arrival: SLATEPORT_ARRIVAL,
   mauville_pre_wattson: MAUVILLE_PRE_WATTSON,
   fortree_arrival: FORTREE_ARRIVAL,
+  weather_institute_2f: WEATHER_INSTITUTE_2F,
 };
 
 const union = (a: readonly string[], b: readonly string[]) => [...new Set([...a, ...b])];
