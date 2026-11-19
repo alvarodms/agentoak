@@ -25,6 +25,6 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Double Battle Boss Design (Juan doubles, slot 568) | 322 | [doubles-boss-design.md](pokemon-knowledge/doubles-boss-design.md) |
 | Steven Rematch Design & the Regi Question (#194, + C321 Meteor Falls scene) | 321 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 | v3.0 Opener — Trainer Cap Raise, ID Reclaim, Notebook Key Items (+ believer NPC research) | 363 | [trainer-cap-and-notebook-item-v30.md](pokemon-knowledge/trainer-cap-and-notebook-item-v30.md) |
-| v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters | 379 | [v31-physical-register-weather-events.md](pokemon-knowledge/v31-physical-register-weather-events.md) |
+| v3.1 Physical Register — Weather, Overworld Events, Place-Driven Encounters (+ C383 Route 119 weather cycle: vanilla SUNNY coord tiles already stop rain near Fortree; stage 0 = no rain) | 383 | [v31-physical-register-weather-events.md](pokemon-knowledge/v31-physical-register-weather-events.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.

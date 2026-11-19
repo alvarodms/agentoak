@@ -17,7 +17,8 @@
 **v3.2 "Worn In"** (designed C353): consequence without witnesses; at most 2 metatile traces, no new text. T1 ring in the ash (Route 113) SHIPPED C356; T2 dropped (backlog 359 proposes a candle trace for the slot). The C356-C359 content freeze is lifted (see "Verification" below). Design below.
 
 **v3.7 "Rain indoors"** (designed C380, built C381, closed C382 PASS): the first loud Hours 6-15 beat, not about the ink: Aqua makes it rain inside Weather Institute 2F and Shelly fights in it (design below).
-**v3.8 "Above the storm"** (premise C382, build C384): Winona's sun fight.
+**v3.7 coda "Storm tail"** (C383, backlog 373): Route 119 holds light rain from Shelly until the first Fortree visit; the vanilla SUNNY edge tiles clear it over the dolls (completed-work/route119-storm-tail.md).
+**v3.8 "Above the storm"** (premise C382, build C384): Winona's sun fight. Weather texture of Hours 6-10 is now: rain indoors (Shelly) → rain held on Route 119 → clear sky at Fortree → harsh sun in Winona's gym. The C384 sun must feel like the far side of that rain, not a repeat of the Fortree clear (no new Fortree overworld weather).
 ---
 
 # v3.1 "Taken at Their Word" (designed C347, shipped C348-350; compacted C380, full text in git history; detail in completed-work/v31-taken-at-their-word.md, the map scripts and playtest-checklist steps 44-46)
@@ -139,6 +140,7 @@ Turn count note (C382): C381's completed-work said the worn run took 7 turns; th
 **Emotion**: awe, then a puzzle the player solves mid-battle.
 **Draft hypothesis**: a player who brought a Water answer to Fortree finds it blunted when the sun comes out and must read the field to win. PASS = worn yardstick (Fortree band) loses >=1, full-HP wins; measured with expectBattleSummary.
 **Constraints**: config only (scripts/trainer_configs/winona_gym_1.json + generate_trainer.cjs); one-owner rule (check_bosses); no Swift Swim / rain mechanic on her team; at most one new intro line, <=30 chars per line; her PELIPPER (SURF in sun = anti-synergy) is the first thing the C384 Gameplay Designer re-examines; current top level ALTARIA 33 vs the 5-badge Challenge cap 38. Why not Tate & Liza: they are already a double battle (trainers.h .doubleBattle TRUE, Claydol EARTHQUAKE), so "first doubles" was false (C382 research); their Levitate plan is creative backlog.
+**C383 side effect to re-check**: the Route 119 rival battle normally comes after Shelly and is now always in storm-tail rain (accepted C383, same as a vanilla rain day); no playtest measures that fight yet, so if the rival leads with a Fire or Swift Swim mon the C384 designer should glance at it.
 
 
 ## beats.json tooling (C373)
@@ -153,7 +155,7 @@ Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C3
 | 380 | **DONE**: memory budget pass + v3.7 design (codebase-facts split into an index + 9 topic files; tech-debt rows 369-373/374 corrected to pending). Known v3.6 edge (accepted): a player who first beats WREN while already holding Badge 6 hears the empty-peg line while DOLL_2 still stands until the next load; unreachable on the normal path | — |
 | 381 | **DONE**: v3.7 built (completed-work/v37-rain-indoors.md); suite 111/111; journal lost to a CLI timeout, measurements kept in completed-work | — |
 | 382 | **DONE**: v3.7 retrospective PASS (no retune); tech-debt 377 expectBattleSummary + battleSummaries in report.json; Shelly playtests now assert the hypothesis | — |
-| 383 | **earned quiet beat**: backlog 373, Route 119 rain giving way at Fortree (moved up from 384: it lands right after the rain the player saw stop) | — |
+| 383 | **DONE**: earned quiet beat "storm tail" (backlog 373): Route 119 holds light rain from Shelly until the first Fortree visit, cleared by the vanilla SUNNY edge tiles (completed-work/route119-storm-tail.md); suite 114/114 | — |
 | 384 | **v3.8 "Above the storm"**: Winona's sun fight, build with the Gameplay Designer from the premise below | — |
 | 385 | **refactor**: generate_trainer.cjs reclaim mode (tech-debt 369-373) and/or the memory claims checker (tech-debt 375) | — |
 | 390 | **next 10th-cycle maintenance** (memory budget pass; trim pokemon-knowledge trainer-cap-and-notebook-item-v30 / v29-planning-json-tooling-landscape-c301 / v31-physical-register-weather-events, 66-87 lines vs 60, left over C380) | — |

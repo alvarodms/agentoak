@@ -880,6 +880,114 @@
       "y": 13,
       "elevation": 3,
       "weather": "COORD_EVENT_WEATHER_ROUTE119_CYCLE"
+    },
+    {
+      "type": "trigger",
+      "x": 29,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 13,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 133,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 132,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 131,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 130,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 131,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 132,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 133,
+      "elevation": 3,
+      "var": "0",
+      "var_value": "0",
+      "script": "Route119_EventScript_StormTailStep"
     }
   ],
   "bg_events": [

@@ -4,6 +4,8 @@ Moved verbatim from memory/codebase-facts.md in C380 (index: [../codebase-facts.
 
 **FortreeCity temp flags (C379)**: FLAG_TEMP_5 = dolls 1/3 + turned twin; 6 = ungated twin; 7 = DOLL_2 (not-turned OR badge6+beaten). FLAG_TEMP_1-4 and 8+ are unused in FortreeCity (C379 grep).
 
+**Route 119/123 weather cycle + coord weather (C383)**: `SetSavedWeather`/`setweather` translate WEATHER_ROUTE119_CYCLE through `TranslateWeatherNum` (field_weather_effect.c) into `sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage]` = SUNNY, RAIN, RAIN_THUNDERSTORM, RAIN (stage advanced by UpdateWeatherPerDay on RTC days), so the saved weather (`expectFieldWeather`) holds the real weather, never the CYCLE id. A fresh harness save sits on weatherCycleStage 0 (Route 119 = SUNNY; route119-storm-tail-before-shelly). The Route119 map header weather is WEATHER_SUNNY; `special SetRoute119Weather` only applies the cycle when the last warp came from a non-outdoor map. Coord events on one tile all run in array order (GetCoordEventScriptAtPosition): a weather event calls DoCoordEventWeather and continues, and an immediate trigger (`"var": "0"`, TRIGGER_RUN_IMMEDIATELY) runs via RunScriptImmediately (no lock, no waits allowed) and continues, so a trigger listed AFTER a weather event on the same tile overrides it (C383 Route119_EventScript_StormTailStep; Route102 MigrationGlimpse is the other immediate trigger).
+
 ## Wild Encounter JSON Rules
 
 **File**: `src/data/wild_encounters.json`. Land: 12 slots (20/20/10/10/10/10/5/5/4/4/1/1%). Water: 5. Fishing: 10.

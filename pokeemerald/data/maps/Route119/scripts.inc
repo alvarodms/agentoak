@@ -22,6 +22,7 @@ Route119_OnTransition:
 	call Route119_EventScript_SetupStormChaser
 	goto_if_set FLAG_BADGE06_GET, Route119_EventScript_SetOmenWeather
 	special SetRoute119Weather
+	call Route119_EventScript_TrySetStormTail
 	end
 
 Route119_EventScript_SetOmenWeather::
@@ -35,6 +36,27 @@ Route119_EventScript_MoveInstituteWorkersDownstairs::
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
 	setvar VAR_WEATHER_INSTITUTE_STATE, 2
 	return
+
+@ C383 storm tail (creative backlog 373): from Shelly's defeat (VAR_WEATHER_INSTITUTE_STATE >= 1) until the first
+@ Fortree visit, Route 119 holds light rain whatever the RTC cycle says (stage 0 = SUNNY, a fresh save included).
+@ The vanilla SUNNY coord events 35-36,6-9 clear it at the Fortree edge. No text: the clear sky is the whole beat.
+@ Global (::) so check_playtest R5 can find the labels.
+Route119_EventScript_TrySetStormTail::
+	goto_if_set FLAG_VISITED_FORTREE_CITY, Route119_EventScript_TrySetStormTailEnd
+	goto_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_EventScript_TrySetStormTailEnd
+	setweather WEATHER_RAIN
+Route119_EventScript_TrySetStormTailEnd:
+	return
+
+@ Immediate coord trigger on every ROUTE119_CYCLE tile, listed after its weather event in map.json so it runs
+@ second and holds the rain while the storm tail is open. No waits: RunScriptImmediately must not block.
+Route119_EventScript_StormTailStep::
+	goto_if_set FLAG_VISITED_FORTREE_CITY, Route119_EventScript_StormTailStepEnd
+	goto_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_EventScript_StormTailStepEnd
+	setweather WEATHER_RAIN
+	doweather
+Route119_EventScript_StormTailStepEnd:
+	end
 
 @ C349 v3.1 Beat B: after the credits, once LOTAD_HOENN is caught, TESSA (Parasol Lady) has left Route 102 for
 @ Route 119's storms "because it's in red". She calls the thunderstorm down herself before she battles.
@@ -778,8 +800,9 @@ Route119_EventScript_MigrationSighting::
 	waitmovement 0
 	removeobject LOCALID_ROUTE119_HARTLEY
 	setflag FLAG_HIDE_ROUTE119_HARTLEY_EVENT
-	@ Restore normal cycling weather
+	@ Restore normal cycling weather (C383: or the storm tail's light rain, if Fortree is still unvisited)
 	setweather WEATHER_ROUTE119_CYCLE
+	call Route119_EventScript_TrySetStormTail
 	doweather
 	delay 20
 	@ Mark event complete

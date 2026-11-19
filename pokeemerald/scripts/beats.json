@@ -786,5 +786,45 @@
       }
     ],
     "seeFirst": "Rain is falling inside the Weather Institute's upper floor."
+  },
+  {
+    "id": "v37-storm-tail",
+    "arc": "v3.7 Rain indoors coda, storm tail (C383, creative backlog 373; gate is VAR_WEATHER_INSTITUTE_STATE >= 1 with FLAG_VISITED_FORTREE_CITY clear)",
+    "register": "place",
+    "map": "Route119",
+    "gate": {
+      "var": "VAR_WEATHER_INSTITUTE_STATE",
+      "atLeast": 1,
+      "unsetFlag": "FLAG_VISITED_FORTREE_CITY"
+    },
+    "tiles": [
+      [
+        35,
+        8
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        36,
+        6
+      ],
+      [
+        36,
+        7
+      ]
+    ],
+    "labels": [
+      "Route119_EventScript_TrySetStormTail",
+      "Route119_EventScript_StormTailStep"
+    ],
+    "playtests": [
+      "route119-storm-tail-in-order",
+      "route119-storm-tail-before-shelly",
+      "route119-storm-tail-hartley"
+    ],
+    "speaker": "none",
+    "seeFirst": "Light rain keeps falling over Route 119 after Shelly, and the sky clears at the edge of Fortree where the LOTAD DOLLs stand."
   }
 ]

@@ -1,0 +1,31 @@
+{
+  "name": "route119-storm-tail-hartley",
+  "checks": "C383 migration seam: Hartley's thunderstorm (Route119_EventScript_MigrationSighting, 27,26) ends in the storm tail's light rain, not the stage-0 SUNNY cycle, while Fortree is unvisited. His four existing boxes, no new text.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_ROUTE119",
+    "x": 27,
+    "y": 27,
+    "clearFlags": ["FLAG_VISITED_FORTREE_CITY", "FLAG_ROUTE119_MIGRATION_EVENT"],
+    "party": [
+      { "species": "SPECIES_MIGHTYENA", "level": 28, "moves": ["MOVE_BITE", "MOVE_TACKLE", "MOVE_SAND_ATTACK", "MOVE_SWAGGER"] }
+    ]
+  },
+  "steps": [
+    { "comment": "Boots on 27,27 (Route 119, not Fortree, so FLAG_VISITED_FORTREE_CITY stays clear), directly south of the migration trigger 27,26" },
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectFieldWeather": "WEATHER_RAIN" },
+    { "walk": "up" },
+    { "expectPlayer": { "map": "MAP_ROUTE119", "x": 27, "y": 26 } },
+    { "talk": { "start": false } },
+    { "expectText": "This is no ordinary storm!" },
+    { "expectBoxCount": 4 },
+    { "wait": 60 },
+    { "expectScreen": "CB2_Overworld" },
+    { "expectFlag": { "FLAG_ROUTE119_MIGRATION_EVENT": true } },
+    { "expectFieldWeather": "WEATHER_RAIN" },
+    { "wait": 60 },
+    { "screenshot": "st-hartley-eases-to-rain" }
+  ]
+}

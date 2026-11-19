@@ -1,0 +1,23 @@
+{
+  "name": "route119-storm-tail-before-shelly",
+  "checks": "C383 control: before Shelly (VAR_WEATHER_INSTITUTE_STATE 0) Route 119 weather is the vanilla cycle; the storm tail does not force rain. A fresh harness save sits on weatherCycleStage 0, whose Route 119 cycle weather is WEATHER_SUNNY, both after the warp out of the Institute (SetRoute119Weather) and on the y=13 cycle line, where the C383 StormTailStep trigger runs but must do nothing.",
+  "scenario": {
+    "checkpoint": "weather_institute_2f",
+    "party": [
+      { "species": "SPECIES_MIGHTYENA", "level": 28, "moves": ["MOVE_BITE", "MOVE_TACKLE", "MOVE_SAND_ATTACK", "MOVE_SWAGGER"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "comment": "out of the Institute (an indoor map) onto 31,14, just south of the y=13 cycle line. FABIAN (32,15) looks left along row 15 and YASU (28,14) down column 28: neither sees 31,13-14" },
+    { "warp": { "map": "MAP_ROUTE119", "x": 31, "y": 14 } },
+    { "waitFor": "overworld", "maxFrames": 120 },
+    { "expectFieldWeather": "WEATHER_SUNNY" },
+    { "walk": "up" },
+    { "expectPlayer": { "map": "MAP_ROUTE119", "x": 31, "y": 13 } },
+    { "expectFieldWeather": "WEATHER_SUNNY" },
+    { "wait": 60 },
+    { "screenshot": "st-control-sunny-before-shelly" }
+  ]
+}

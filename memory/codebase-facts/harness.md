@@ -28,7 +28,7 @@ Moved verbatim from memory/codebase-facts.md in C380 (index: [../codebase-facts.
 
 ## Cross-references (C380)
 
-- **Boot runs ON_TRANSITION** (C372): a playtest boot (scenario map or checkpoint) runs the map's ON_TRANSITION, so checkpoint tests need no warp to set up conditional objects.
+- **Boot runs ON_TRANSITION** (C372): a playtest boot (scenario map or checkpoint) runs the map's ON_TRANSITION, so checkpoint tests need no warp to set up conditional objects. A checkpoint booted on Fortree 0,8 therefore has FLAG_VISITED_FORTREE_CITY set even with it in clearFlags (FortreeCity_OnTransition sets it); a "Fortree not yet visited" test must boot on Route 119 via scenario map/x/y (C383 route119-storm-tail-*).
 - **Warp round-trip recipe** (C359): a door is a walk; an indoor exit mat (MB_SOUTH_ARROW_WARP) is walk on + press DOWN. Detail: failure-patterns.md "Playtest exit mats need a press, not a step".
 - **Sighted-trainer playtest recipe** (C375): `walkTo` ending ON the spotting tile, `talk {start: false}`, `waitFor battle`. Detail: trainers-and-slots.md "Sighted trainer with a gated intro".
 - **Harness edits can be rolled back** (C377): the runner's vitest gate reverts every src/emulator/ change of a cycle if `npm test`/`build:check` fails, even on runner-owned tests; never let a committed playtest depend on a step added in the same cycle without a fallback.
