@@ -1,0 +1,177 @@
+{
+  "name": "wi-rain-stops",
+  "checks": "C381 v3.7 Rain indoors: after the full-party win over SHELLY (same flow as wi-shelly-full-party) the storm machines power down with SE_PC_OFF and the rain stops with no text box (setweather WEATHER_NONE + doweather + delay 90 before her post-battle line). Field weather is WEATHER_NONE, wi-rain-stopped is the first rain-free frame, then the scene runs on to the scientist's 'Thanks to you, we're safe!' and the Castform gift (NO to the nickname). VAR_WEATHER_INSTITUTE_STATE ends 1.",
+  "scenario": {
+    "checkpoint": "weather_institute_2f",
+    "defeatedTrainers": [
+      "TRAINER_GRUNT_WEATHER_INST_2",
+      "TRAINER_GRUNT_WEATHER_INST_3",
+      "TRAINER_GRUNT_WEATHER_INST_5"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_MIGHTYENA",
+        "level": 28,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_TACKLE",
+          "MOVE_SAND_ATTACK",
+          "MOVE_SWAGGER"
+        ]
+      },
+      {
+        "species": "SPECIES_PELIPPER",
+        "level": 28,
+        "moves": [
+          "MOVE_WATER_GUN",
+          "MOVE_WING_ATTACK",
+          "MOVE_SUPERSONIC",
+          "MOVE_MIST"
+        ]
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 30,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_EMBER",
+          "MOVE_PROTECT",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "expectFieldWeather": "WEATHER_RAIN"
+    },
+    {
+      "comment": "the three 2F grunts are already beaten, so the way to Shelly is clear: down column 17, west along row 10, up column 5"
+    },
+    {
+      "walkTo": {
+        "x": 17,
+        "y": 10,
+        "yFirst": true
+      }
+    },
+    {
+      "walkTo": {
+        "x": 5,
+        "y": 10
+      }
+    },
+    {
+      "walkTo": {
+        "x": 5,
+        "y": 6,
+        "yFirst": true
+      }
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": {}
+    },
+    {
+      "expectText": [
+        "I'll put you down, kiddy!",
+        "Like the rain in here?",
+        "It's on our side, not yours."
+      ]
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_CARVANHA",
+        "level": 27
+      }
+    },
+    {
+      "expectBattleWeather": "rain"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": "disgustingly strong",
+        "forbid": "whited out",
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "waitForBattleText": "for winning",
+      "maxFrames": 1800
+    },
+    {
+      "press": "B",
+      "times": 3,
+      "release": 28
+    },
+    {
+      "comment": "the field is back while the script still runs: SE_PC_OFF + waitse, then the rain stops inside the delay 90 before any box"
+    },
+    {
+      "waitFor": "CB2_Overworld",
+      "maxFrames": 600
+    },
+    {
+      "wait": 70
+    },
+    {
+      "screenshot": "wi-rain-stopping"
+    },
+    {
+      "wait": 45
+    },
+    {
+      "screenshot": "wi-rain-stopped"
+    },
+    {
+      "expectFieldWeather": "WEATHER_NONE"
+    },
+    {
+      "talk": {
+        "start": false,
+        "answers": [
+          "no"
+        ]
+      }
+    },
+    {
+      "expectText": [
+        "It's bad enough to have TEAM MAGMA",
+        "Thanks to you, we're safe!"
+      ]
+    },
+    {
+      "expectNoText": "It's on our side"
+    },
+    {
+      "screenshot": "wi-castform-gift"
+    },
+    {
+      "expectVar": {
+        "VAR_WEATHER_INSTITUTE_STATE": 1
+      }
+    },
+    {
+      "expectFieldWeather": "WEATHER_NONE"
+    }
+  ]
+}

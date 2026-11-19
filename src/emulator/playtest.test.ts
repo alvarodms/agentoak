@@ -426,6 +426,12 @@ describe("battleTurns step and waitForBattleText forbid", () => {
     expect(() => parse({ battleTurns: { move: 1, until: "fainted", forbid: ["super effective", "not very effective"] } })).not.toThrow();
   });
 
+  it("parses battleTurns any and replace (a fight that may be won or lost, with forced send-outs)", () => {
+    const step = { battleTurns: { move: 1, until: ["disgustingly strong", "whited out"], any: true, replace: true, maxTurns: 30 } };
+    expect(parse(step)).toEqual(step);
+    expect(() => parse({ battleTurns: { move: 1, until: "x", replace: "yes" } })).toThrow();
+  });
+
   it("rejects a move slot outside 1-4 and a missing until", () => {
     expect(() => parse({ battleTurns: { move: 5, until: "fainted" } })).toThrow();
     expect(() => parse({ battleTurns: { move: 0, until: "fainted" } })).toThrow();

@@ -1,0 +1,30 @@
+{
+  "name": "wi-rain-indoors",
+  "checks": "C381 v3.7 Rain indoors: with Team Aqua still inside (VAR_WEATHER_INSTITUTE_STATE 0), Weather Institute 2F loads in rain before any text box (show before tell): the saved field weather is WEATHER_RAIN and the first frame is saved as wi-rain-indoors-first-frame. The nearest grunt (15,6, TRAINER_GRUNT_WEATHER_INST_2), talked to from 15,5, fights in that rain: gBattleWeather is rain at the first action menu.",
+  "scenario": {
+    "checkpoint": "weather_institute_2f",
+    "party": [
+      { "species": "SPECIES_MIGHTYENA", "level": 28, "moves": ["MOVE_BITE", "MOVE_TACKLE", "MOVE_SAND_ATTACK", "MOVE_SWAGGER"] },
+      { "species": "SPECIES_PELIPPER", "level": 28, "moves": ["MOVE_WATER_GUN", "MOVE_WING_ATTACK", "MOVE_SUPERSONIC", "MOVE_MIST"] },
+      { "species": "SPECIES_SHELGON", "level": 30, "moves": ["MOVE_EMBER", "MOVE_HEADBUTT", "MOVE_PROTECT", "MOVE_FOCUS_ENERGY"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectPlayer": { "map": "MAP_ROUTE119_WEATHER_INSTITUTE_2F", "x": 17, "y": 2 } },
+    { "comment": "no box has opened yet: the rain is the first thing the floor says" },
+    { "screenshot": "wi-rain-indoors-first-frame" },
+    { "expectFieldWeather": "WEATHER_RAIN" },
+    { "comment": "to 15,5, above the grunt on 15,6; row 5 is outside every grunt's sightline" },
+    { "walkTo": { "x": 15, "y": 5 } },
+    { "face": "down" },
+    { "screenshot": "wi-rain-indoors-grunt" },
+    { "talk": {} },
+    { "expectText": "We're here to take them!" },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "waitForBattleText": "What will", "maxFrames": 1800 },
+    { "expectBattleWeather": "rain" },
+    { "screenshot": "wi-rain-indoors-battle" }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "name": "wi-no-rain-after",
+  "checks": "C381 v3.7 Rain indoors: once Shelly is beaten (VAR_WEATHER_INSTITUTE_STATE 1) the storm machines stay off. Re-entering 2F fresh (warp, so ON_TRANSITION runs) leaves the field weather at the map's WEATHER_NONE; screenshot wi-no-rain-after shows a dry floor.",
+  "scenario": {
+    "checkpoint": "weather_institute_2f",
+    "vars": {
+      "VAR_WEATHER_INSTITUTE_STATE": 1
+    },
+    "flags": [
+      "FLAG_HIDE_ROUTE_119_TEAM_AQUA"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_MARSHTOMP",
+        "level": 30,
+        "moves": [
+          "MOVE_WATER_GUN",
+          "MOVE_MUD_SHOT"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "expectFieldWeather": "WEATHER_NONE"
+    },
+    {
+      "comment": "leave and come back up the stairs so 2F's ON_TRANSITION runs again with state 1"
+    },
+    {
+      "warp": {
+        "map": "MAP_ROUTE119_WEATHER_INSTITUTE_1F",
+        "x": 17,
+        "y": 2
+      }
+    },
+    {
+      "warp": {
+        "map": "MAP_ROUTE119_WEATHER_INSTITUTE_2F",
+        "x": 17,
+        "y": 2
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE119_WEATHER_INSTITUTE_2F",
+        "x": 17,
+        "y": 2
+      }
+    },
+    {
+      "expectFieldWeather": "WEATHER_NONE"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_WEATHER_INSTITUTE_2F_GRUNT_1",
+        "absent": true
+      }
+    },
+    {
+      "wait": 60
+    },
+    {
+      "screenshot": "wi-no-rain-after"
+    }
+  ]
+}

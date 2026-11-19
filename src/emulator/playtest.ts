@@ -212,12 +212,16 @@ const StepSchema = z.union([
      * In a battle: each turn pick FIGHT → move slot `move` (1-4, cursor reset to slot 1 first), then tap B through
      * the turn's messages, until every `until` string has shown in a battle message (across turns). Fails if a
      * `forbid` string shows, if the battle ends first, or after `maxTurns` turns (default 10).
+     * `any`: stop at the first `until` string instead of waiting for all (e.g. a win line or "whited out").
+     * `replace`: when a fainted Pokémon's party menu opens, send out the first healthy one in that menu's order.
      */
     battleTurns: z.strictObject({
       move: z.number().int().min(1).max(4),
       until: Strings,
       maxTurns: z.number().int().positive().optional(),
       forbid: Strings.optional(),
+      any: z.boolean().optional(),
+      replace: z.boolean().optional(),
     }),
   }),
   z.strictObject({
@@ -302,6 +306,8 @@ export interface PlaytestResult {
   error?: string;
   /** Each talk step's text boxes, in order. */
   transcripts: string[][];
+  /** Every battle message battleTurns saw, in order (for counting turns and faints in report.json). */
+  battleLog?: string[];
   screenshots: string[];
   frames: number;
   ms: number;
@@ -602,8 +608,9 @@ async function runStep(
   }
 
   if ("battleTurns" in step) {
-    const { move, until, maxTurns = 10, forbid = [] } = step.battleTurns;
-    await battleTurns(s, move, asList(until), maxTurns, asList(forbid));
+    const { move, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
+    result.battleLog ??= [];
+    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, log: result.battleLog });
     return;
   }
 
@@ -677,10 +684,20 @@ const MOVE_SLOT_PATH: Record<number, Button[]> = { 1: [], 2: ["RIGHT"], 3: ["DOW
  * `until` string has shown in some message. Returns right after the message that completes
  * the set (mid-turn), so a following waitForBattleText or battleTurns picks up from there.
  */
-async function battleTurns(s: EmulatorSession, move: number, until: readonly string[], maxTurns: number, forbid: readonly string[]): Promise<void> {
+async function battleTurns(
+  s: EmulatorSession,
+  move: number,
+  until: readonly string[],
+  maxTurns: number,
+  forbid: readonly string[],
+  opts: { any?: boolean; replace?: boolean; log?: string[] } = {},
+): Promise<void> {
   const label = `battleTurns move ${move}`;
   const seen: string[] = [];
-  const missing = () => until.filter((u) => !seen.some((m) => m.includes(flatten(u))));
+  const missing = () => {
+    const left = until.filter((u) => !seen.some((m) => m.includes(flatten(u))));
+    return opts.any && left.length < until.length ? [] : left;
+  };
   await waitForBattleText(s, "What will", 1800);
   for (let turn = 1; turn <= maxTurns; turn++) {
     // FIGHT is top left: UP then LEFT reaches it from any action, and slot 1 from any move.
@@ -701,13 +718,21 @@ async function battleTurns(s: EmulatorSession, move: number, until: readonly str
       text = await battleText(s);
     }
     for (let f = 0; ; f += 30) {
-      if ((await s.callbacks()).callback2 !== "BattleMainCB2") {
+      const cb = (await s.callbacks()).callback2;
+      if (cb !== "BattleMainCB2" && opts.replace && cb !== "CB2_Overworld") {
+        const sent = await sendOutNext(s, label);
+        seen.push(`[sent out party menu slot ${sent}]`);
+        opts.log?.push(seen.at(-1)!);
+        continue;
+      }
+      if (cb !== "BattleMainCB2") {
         fail(`${label}: battle ended before ${JSON.stringify(missing())} showed; seen ${JSON.stringify(seen)}`);
       }
       text = await battleText(s);
       if (text.includes("What will")) break; // the next turn's action menu
       if (text.trim() && text !== seen.at(-1)) {
         seen.push(text);
+        opts.log?.push(text);
         const bad = forbidden(text, forbid);
         if (bad) fail(`${label}: turn ${turn} showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
         if (missing().length === 0) {
@@ -721,6 +746,30 @@ async function battleTurns(s: EmulatorSession, move: number, until: readonly str
     await s.run(30); // let the action menu take input
   }
   fail(`${label}: after ${maxTurns} turn(s) still missing ${JSON.stringify(missing())}; last messages ${JSON.stringify(seen.slice(-12))}`);
+}
+
+/**
+ * After a faint the game opens the party menu itself (B can't close it). While it is open gPlayerParty is in the
+ * menu's order (UpdatePartyToBattleOrder), with the fainted Pokémon on slot 1. Picks the first healthy one below it,
+ * then SEND OUT, and waits for the battle. Returns the 1-based menu slot it sent out.
+ */
+async function sendOutNext(s: EmulatorSession, label: string): Promise<number> {
+  for (let f = 0; !(await s.callbacks()).callback2.startsWith("CB2_UpdatePartyMenu"); f += 10) {
+    if (f >= 600) fail(`${label}: left the battle screen but no party menu opened (callback2 ${(await s.callbacks()).callback2})`);
+    await s.run(10);
+  }
+  await s.run(60); // let the party menu fade in and take input
+  const index = (await s.readState()).party.findIndex((mon, i) => i > 0 && mon.hp > 0);
+  if (index < 0) fail(`${label}: the send-out party menu opened with no healthy Pokémon to pick`);
+  for (let i = 0; i < index; i++) await s.press("DOWN");
+  await s.press("A"); // opens SEND OUT / SUMMARY / CANCEL, SEND OUT first
+  await s.run(20);
+  await s.press("A");
+  for (let f = 0; (await s.callbacks()).callback2 !== "BattleMainCB2"; f += 10) {
+    if (f >= 600) fail(`${label}: never returned to battle after sending out menu slot ${index + 1}`);
+    await s.run(10);
+  }
+  return index + 1;
 }
 
 /**
