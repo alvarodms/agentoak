@@ -9,7 +9,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Topic | Cycle | File |
 |---|---|---|
 | (collapsed) C265-C297 (incl. repel QoL c296, battle animation c297): trainer tooling, rival arcs, Changed Three design/registration, custom abilities/moves, polish-pass patterns, v2.4-v2.8 direction — applied; files remain in `pokemon-knowledge/` | 265-295 | grep by topic |
-| Champion Design & Mid-Game Encounter Pacing Patterns (+ C380 loud mid-game boss: overlevel kills optional fights / optional must pay / remembered spikes are critical-path; C381 Kaizo/Inclement Shelly + Swift Swim wall) | 381 | [champion-design-and-midgame-pacing-c298.md](pokemon-knowledge/champion-design-and-midgame-pacing-c298.md) |
+| Champion Design & Mid-Game Encounter Pacing Patterns (+ C380 loud mid-game boss: overlevel kills optional fights / optional must pay / remembered spikes are critical-path; C381 Kaizo/Inclement Shelly + Swift Swim wall; C382 Tate&Liza already doubles in vanilla, Winona a remembered spike) | 382 | [champion-design-and-midgame-pacing-c298.md](pokemon-knowledge/champion-design-and-midgame-pacing-c298.md) |
 | Gym Leader Dialogue & Capstone Feature Patterns | 299 | [gym-dialogue-and-capstone-patterns-c299.md](pokemon-knowledge/gym-dialogue-and-capstone-patterns-c299.md) |
 | Custom Ability Design — Crit + Changed Three Parity (Blaziken_H, Swampert_H) | 311 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
 | v2.9 Planning — JSON Tooling, Maturity, Release-Stage Practice | 377 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |

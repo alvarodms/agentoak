@@ -1,8 +1,14 @@
 # Champion Design & Mid-Game Encounter Pacing — ROM Hack Patterns
 
-**Cycle**: 381 | **Date**: November 2026 (first written C298)
+**Cycle**: 382 | **Date**: November 2026 (first written C298)
 
 ---
+
+## C382: Badge 6 vs Badge 7 for the second loud beat
+- **Vanilla Emerald's Tate & Liza fight is already a Double Battle** (RankedBoost "Gym 7 · Mossdeep City · Double Battle"; Dittobase: Claydol 41 / Xatu 41 / Lunatone 42 / Solrock 42, cap 42). A "first real doubles at Badge 7" pitch is only new if it means a team *built* for doubles (ally combos, spread moves), not the format. Check `doubleBattle` in the LoH Tate & Liza config before you pitch it.
+- **Winona is a remembered difficulty spike in difficulty hacks.** One Inclement Emerald (v1.13 thread) player named Winona and a Team Flare doubles fight as the hardest of the run, at 15+ attempts each. Emerald Kaizo swaps Salamence for Flygon to cover her Rock weakness. So players do hit her as a wall, not a pushover. Vanilla: Swablu 29 → Altaria 33 ace.
+- **No hack we found ties Winona's team to weather**, as with Shelly in C381. The niche is open, but there's no precedent to copy.
+- Sources: rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald; dittobase.com Emerald gym pages; pokecommunity.com thread 457039 page 23; pokecommunity.com thread 395830 (Emerald Kaizo).
 
 ## C381: Weather Institute Shelly in other hacks (v3.7 "Rain indoors")
 - **Emerald Kaizo keeps Shelly off-theme and puts the rain on a grunt.** Her Kaizo team is 6 mons, Lv47-49 (Milotic, Hypno, Shuckle, Medicham, Dragonite, Lapras; cap 49). The Institute's Huntail (Lv47, King's Rock, Rain Dance) belongs to Grunt #5. So "the grunts teach the rain, then the boss" is a pattern seen elsewhere, and it matches spec (e). Our idea of a rain-themed *admin* in rain the machines set has no precedent we could find: no hack we found ties a boss's weather to the map's story.

@@ -16,7 +16,8 @@
 **v3.1 "Taken at Their Word"** (C347-): Hoenn acts on the red ink as fact; three postgame beats (place / fight / weather), zero new notebook text. Design below.
 **v3.2 "Worn In"** (designed C353): consequence without witnesses; at most 2 metatile traces, no new text. T1 ring in the ash (Route 113) SHIPPED C356; T2 dropped (backlog 359 proposes a candle trace for the slot). The C356-C359 content freeze is lifted (see "Verification" below). Design below.
 
-**v3.7 "Rain indoors"** (designed C380, build C381): the first loud Hours 6-15 beat, not about the ink: Aqua makes it rain inside Weather Institute 2F and Shelly fights in it (design below).
+**v3.7 "Rain indoors"** (designed C380, built C381, closed C382 PASS): the first loud Hours 6-15 beat, not about the ink: Aqua makes it rain inside Weather Institute 2F and Shelly fights in it (design below).
+**v3.8 "Above the storm"** (premise C382, build C384): Winona's sun fight.
 ---
 
 # v3.1 "Taken at Their Word" (designed C347, shipped C348-350; compacted C380, full text in git history; detail in completed-work/v31-taken-at-their-word.md, the map scripts and playtest-checklist steps 44-46)
@@ -92,7 +93,7 @@ Open (no tester yet): can an ungated player tell WREN from a Route 119 Picnicker
 No other text. Optional atmosphere: backlog 373 (Route 119 rain giving way as the player enters) frames the gap.
 **Open question → answered C379**: gap-only (the scorched Route 119 doll is creative backlog 379). Build notes and playtest spec as built: see **As built** and the retrospective above (design text in git history before C380).
 
-# v3.7 "Rain indoors" (designed C380; build C381)
+# v3.7 "Rain indoors" (designed C380; built C381; CLOSED C382)
 
 **Premise**: "The first loud beat of Hours 6-15, and the first in 15 cycles that is NOT about the ink. Team Aqua has switched the Weather Institute's storm machines on: rain falls INSIDE 2F. Shelly fights in that rain with a team built for it. When she falls, the machines spin down and the rain stops before anyone speaks. The Castform gift follows."
 
@@ -113,34 +114,7 @@ No other text. Optional atmosphere: backlog 373 (Route 119 rain giving way as th
 6. Battle content goes only through scripts/trainer_configs/villain_shelly_*.json (the Weather Institute config) + generate_trainer.cjs. There are no new C systems and no new trainer slot.
 7. Gate = VAR_WEATHER_INSTITUTE_STATE == 0 only. There is no new flag.
 
-**Build spec (C381)**:
-- (a) data/maps/Route119_WeatherInstitute_2F/scripts.inc, Route119_WeatherInstitute_2F_OnTransition: add `call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_StormMachinesOn` before `end`. The new global label (`::`) does `setweather WEATHER_RAIN` / `return`. Add the same doweather handling the vanilla Route119_OnTransition omen branch uses, if one is needed for an OnTransition weather change. Check this against Route119_EventScript_SetOmenWeather, which uses setweather + doweather.
-  - *Verified C380*: Route119_EventScript_SetOmenWeather is reached by `goto_if_set` from Route119_OnTransition and does `setweather` + `doweather` + `end`. But MtPyre_Exterior_EventScript_EnterFromSummit (also an OnTransition path) does `setweather WEATHER_FOG_HORIZONTAL` / `return` with NO doweather, and the weather still shows: LoadMapFromWarp (src/overworld.c ~828-873) calls SetSavedWeatherFromCurrMapHeader() BEFORE RunOnTransitionMapScript(), so OnTransition's setweather overwrites the saved weather and the field starts it on load. Start with setweather alone; add doweather only if the wi-rain-indoors screenshot shows no rain. 2F is MAP_TYPE_INDOOR with map.json weather WEATHER_NONE; no map-type check on field weather was found in overworld.c (grep "indoor"), but the screenshot is the proof.
-- (b) At the very top of Route119_WeatherInstitute_2F_EventScript_ShellyDefeated, before its first msgbox: `setweather WEATHER_NONE` / `doweather` / `delay 60`. Leaving 2F already resets the weather from the map headers (WEATHER_NONE), and re-entering while the state is still 0 (after a whiteout) brings the rain back. Both are intended.
-  - *Verified C380*: ShellyDefeated is the 4th argument of Shelly's `trainerbattle_single` (runs once after the win) and starts with `msgbox Route119_WeatherInstitute_2F_Text_ShellyPostBattle, MSGBOX_DEFAULT`; it later sets VAR_WEATHER_INSTITUTE_STATE 1 and ends in `goto Route119_WeatherInstitute_2F_EventScript_ReceiveCastform`.
-- (c) Shelly's threat line goes at the end of her existing intro (Route119_WeatherInstitute_2F_Text_ShellyIntro) as a new `\p` paragraph. Keep the C316 ace-naming line. The line, verbatim: `Like the rain in here?\nIt's on our side, not yours.$`. Both lines must be ≤ 30 characters (run check_text_width).
-  - *Verified C380*: the intro (scripts.inc ~258-265) is still vanilla and has NO ace-naming line ("Ahahahaha!" … "I'll put you down, kiddy!$"); C316 changed her party only. So: change the last line to `"I'll put you down, kiddy!\p"` and append the two new lines. Lengths: 22 and 28 chars.
-- (d) Shelly's roster comes from the C381 Gameplay Designer under these constraints:
-  - species only from her ownership row (Huntail ace, Octillery, Qwilfish, Carvanha; see memory/boss-species-ownership.md); run audit_boss_species.cjs --strict afterwards;
-  - Huntail is the last slot, with SWIFT_SWIM in the rain the field already sets;
-  - 3-4 mons, levels within the Badge-5 band. The player arrives at about Lv 28-30 and the Challenge cap with 5 badges is in v16-challenge-mode.md;
-  - moves hand-checked against level_up_learnsets.h and tmhm_learnsets.h;
-  - it must meet the hypothesis's PASS line against the worn yardstick.
-  - *Verified C380*: current villain_shelly_weather_institute.json = CARVANHA 27 [CRUNCH, WATERFALL, ICY_WIND, TAUNT] iv150 / OCTILLERY 28 [OCTAZOOKA, AURORA_BEAM, PSYBEAM, FLAMETHROWER] iv150 / HUNTAIL 29 @MYSTIC_WATER [RAIN_DANCE, SURF, BITE, ICE_BEAM] iv200. Huntail's only ability is SWIFT_SWIM (species_info.h; trainer mons get slot 0, which is it). Class TRAINER_CLASS_AQUA_ADMIN, `.items = {}`. Challenge cap with 5 badges = **38** (GetChallengeLevelCap 18/20/24/30/34/**38**/42/48/55; index = badge count). With rain on the field from the start, Huntail's RAIN_DANCE slot is dead weight: the Designer should trade it. Rain also boosts the yardstick's PELIPPER WATER_GUN and halves SHELGON's EMBER: count that in the PASS estimate.
-- (e) The 2F grunts (TRAINER_GRUNT_WEATHER_INST_2/3/5) also fight in the rain. They are left unchanged; they teach that the rain matters.
-
-**Playtests (C381)**: use a new checkpoint `weather_institute_2f` in src/emulator/checkpoints.ts (badges 1-5, the flags the fortree_arrival checkpoint uses that are valid before the Institute, VAR_WEATHER_INSTITUTE_STATE 0, start on the 2F stairs tile) plus a boot playtest. Then:
-1. `wi-rain-indoors`: a screenshot on the first frame shows rain, with 0 boxes; `expectBattleWeather rain` in the first grunt fight.
-2. `wi-shelly-worn-party`: hypothesis measurement, with `hpPercent 50` and no bag. The playtest itself must pass on a win OR a loss, and the journal records the outcome.
-3. `wi-shelly-full-party`: must win.
-4. `wi-rain-stops`: after the win, a screenshot with no rain, then the Castform text (ThanksPleaseTakePokemon).
-5. `wi-no-rain-after`: state 1 → no rain.
-
-If a field-weather assertion is needed, add a tiny `expectFieldWeather` step, with a screenshot fallback, in its own commit. The C377 runner gate can roll harness edits back, so no playtest may become invalid without that step. Wait on defeat text with `waitForBattleText`, never on turn counts (C368).
-- *Verified C380*: the 2F only warp is 17,1 (→ MAP_ROUTE119_WEATHER_INSTITUTE_1F warp 2), so the checkpoint starts on or just below 17,1 (check walkability with map_scan). fortree_arrival sets VAR_WEATHER_INSTITUTE_STATE 2 and FLAG_HIDE_ROUTE_119_TEAM_AQUA (both written by ShellyDefeated): the new checkpoint uses state 0 and drops FLAG_HIDE_ROUTE_119_TEAM_AQUA; check FLAG_ROUTE119_MIGRATION_EVENT and FLAG_SECOND_WAVE against where they are set before keeping them. Leave the Institute hide flags at their new_game.inc defaults (FLAG_HIDE_WEATHER_INSTITUTE_2F_AQUA_GRUNT_M is already set there, new_game.inc:243). No `expectFieldWeather` step exists yet (grep src/emulator/playtest.ts C380). Adding the checkpoint is a src/emulator/ change too: keep it in the same commit as its boot playtest, and expect the C377 gate risk.
-
-**beats.json (C381)**: row `v37-rain-indoors`, register "fight" (check_beats RM forbids weather rows from v3.4), seeFirst "Rain is falling inside the Weather Institute's upper floor.", raise MIN_ROWS to 21.
-- One-row arc: RM prints "pending" for v3.7, accepted as v3.6 was.
+**Build spec, playtests, beats row (C380 design, as built C381)**: compacted C382; the as-built record is completed-work/v37-rain-indoors.md, the full spec is in git history of this file before C382. Live facts: OnTransition `setweather` alone draws rain on a MAP_TYPE_INDOOR map (no doweather; LoadMapFromWarp runs SetSavedWeatherFromCurrMapHeader before OnTransition); a mid-script stop needs `setweather` + `doweather`; checkpoint `weather_institute_2f` starts 2F 17,2; machine counts in report.json battleSummaries, never hand counts.
 
 **Capacity (verified C380 by grep; all match the expected values)**:
 - Free trainer slots: **633 TRAINER_LUCAS_2, 634 TRAINER_MIKE_1, 853 TRAINER_MAY_PLACEHOLDER** (`node scripts/check_trainer_slots.cjs`: 3 candidates, 9 reclaimed OK; all three defined in opponents.h). v3.7 uses none.
@@ -149,8 +123,26 @@ If a field-weather assertion is needed, add a tiny `expectFieldWeather` step, wi
 - Next STRINGID: **385** (BATTLESTRINGS_COUNT 385, battle_string_ids.h:386).
 - Next move id: **381** (MOVES_COUNT 381, MOVE_IRON_LEAF 380).
 
+## v3.7 retrospective (C382; closed)
+Verdict: **PASS** (C381 data, re-measured C382: full HP WIN 11 turns / 2 faints; worn LOSS 8 turns / 3 faints). Huntail moved first every turn in both runs (Swift Swim): the "oh no" lands.
+| # | Finding | Decision |
+|---|---|---|
+| 1 | Worn yardstick is wiped, harsher than "wins after spending something" | KEEP: the 1F bed (Route119_WeatherInstitute_1F_EventScript_Bed) is one staircase down, so the wipe teaches "stop and prepare", which is the hypothesis. Yardstick spams slot 1, 3 mons, no bag: pessimistic |
+| 2 | Full-HP margin is thin (2 of 3 faint) | KEEP, guarded: wi-shelly-full-party asserts win + maxPlayerFaints 2 (expectBattleSummary, C382). Any future roster or engine change that flips it fails the suite |
+| 3 | MIGHTYENA dies to Rough Skin recoil on the turn it KOs CARVANHA | ACCEPTED: Rough Skin is the contact-punishing identity the design asked for |
+| 4 | "Forced switch" cannot be measured (battleTurns replace:true auto-sends) | Faints are the only PASS metric from now on |
+
+Turn count note (C382): C381's completed-work said the worn run took 7 turns; the battle log is message-for-message the same in C382, and summarizeBattle counts 8 "What will" prompts (2 MIGHTYENA, 3 PELIPPER, 3 SHELGON). The C381 figure was a hand miscount. Machine counts (report.json battleSummaries) are the source from now on.
+
+# v3.8 "Above the storm" (premise C382; build C384)
+**Premise**: Shelly's rain was a machine inside a building. Winona fights where the storm can't reach: above it. Her gym battle turns to harsh sunlight (Tropius already carries SUNNY_DAY + SOLAR_BEAM), so the lesson the rain just taught flips: Water is halved, Fire and Solar Beam hit full. Loud beat #2 of Hours 6-15, with the opposite texture to v3.7, and the quiet Route 119 beat (C383) between them.
+**Emotion**: awe, then a puzzle the player solves mid-battle.
+**Draft hypothesis**: a player who brought a Water answer to Fortree finds it blunted when the sun comes out and must read the field to win. PASS = worn yardstick (Fortree band) loses >=1, full-HP wins; measured with expectBattleSummary.
+**Constraints**: config only (scripts/trainer_configs/winona_gym_1.json + generate_trainer.cjs); one-owner rule (check_bosses); no Swift Swim / rain mechanic on her team; at most one new intro line, <=30 chars per line; her PELIPPER (SURF in sun = anti-synergy) is the first thing the C384 Gameplay Designer re-examines; current top level ALTARIA 33 vs the 5-badge Challenge cap 38. Why not Tate & Liza: they are already a double battle (trainers.h .doubleBattle TRUE, Claydol EARTHQUAKE), so "first doubles" was false (C382 research); their Levitate plan is creative backlog.
+
+
 ## beats.json tooling (C373)
-Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C380 to [codebase-facts/lints.md](codebase-facts/lints.md) "beats.json tooling". Still true: MIN_ROWS 20 (raise to 21 with v37-rain-indoors); meteor-falls-steven-chalk keeps b5Exempt "*" (tech-debt 374 pending).
+Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C380 to [codebase-facts/lints.md](codebase-facts/lints.md) "beats.json tooling". Still true: MIN_ROWS 21 (since v37-rain-indoors, C381); meteor-falls-steven-chalk keeps b5Exempt "*" (tech-debt 374 pending).
 
 ## Roadmap
 
@@ -159,10 +151,10 @@ Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C3
 | 302-365 | **ALL DONE.** v2.9 "The Last Witness" (C302-323; completed-work/v29-last-witness.md), v3.0 "Red Ink" + v3.1 Beats A/B/C + D1/D3 (C324-353; discovery-beats.md, v31-taken-at-their-word.md), Beat A tile + check_beat_visibility, T1 ring, v3.3 "First Ink" (C354-365; v33-first-ink.md); harness steps registeredItem, findWildBattle.species, catchWild, warp, walkTo, setVar, party ability, pokenavCall. Suite 84/84 at C365 | #180 #182 #190 #192-#194 #201 #163 closed |
 | 366-379 | **DONE**: v3.4, v3.5, v3.6 (detail in completed-work/v34-word-travels.md, completed-work/v35-taken-north.md, the v3.6 section). C373 beats.json lint migration; C374 LOST (CLI timeout, its DONE claims for reclaim mode and the chalk-copy playtest were false, corrected C380); C376 hpPercent/battleSwitch; C377-378 taken-north-in-order + #225; C379 empty peg. Suite 105/105 | #225 closed |
 | 380 | **DONE**: memory budget pass + v3.7 design (codebase-facts split into an index + 9 topic files; tech-debt rows 369-373/374 corrected to pending). Known v3.6 edge (accepted): a player who first beats WREN while already holding Badge 6 hears the empty-peg line while DOLL_2 still stands until the next load; unreachable on the normal path | — |
-| 381 | **build v3.7 "Rain indoors"** (Gameplay Designer for Shelly's roster): spec (a)-(e), checkpoint `weather_institute_2f` + boot test, playtests wi-rain-indoors / wi-shelly-worn-party / wi-shelly-full-party / wi-rain-stops / wi-no-rain-after, beats.json v37-rain-indoors (MIN_ROWS 21). Journal: faints + turns of the worn and full runs | — |
-| 382 | **v3.7 retrospective** against the hypothesis (PASS / FAIL-soft / FAIL-hard); retune Shelly if FAIL; choose the next loud beat: Tate & Liza first real doubles at Badge 7, or Winona's storm team at Badge 6 | — |
-| 383 | **second loud beat build** (the one chosen in C382) | — |
-| 384 | **earned quiet beat**: backlog 373, Route 119 rain giving way at Fortree (now has a cause the player saw in v3.7) | — |
+| 381 | **DONE**: v3.7 built (completed-work/v37-rain-indoors.md); suite 111/111; journal lost to a CLI timeout, measurements kept in completed-work | — |
+| 382 | **DONE**: v3.7 retrospective PASS (no retune); tech-debt 377 expectBattleSummary + battleSummaries in report.json; Shelly playtests now assert the hypothesis | — |
+| 383 | **earned quiet beat**: backlog 373, Route 119 rain giving way at Fortree (moved up from 384: it lands right after the rain the player saw stop) | — |
+| 384 | **v3.8 "Above the storm"**: Winona's sun fight, build with the Gameplay Designer from the premise below | — |
 | 385 | **refactor**: generate_trainer.cjs reclaim mode (tech-debt 369-373) and/or the memory claims checker (tech-debt 375) | — |
 | 390 | **next 10th-cycle maintenance** (memory budget pass; trim pokemon-knowledge trainer-cap-and-notebook-item-v30 / v29-planning-json-tooling-landscape-c301 / v31-physical-register-weather-events, 66-87 lines vs 60, left over C380) | — |
 
