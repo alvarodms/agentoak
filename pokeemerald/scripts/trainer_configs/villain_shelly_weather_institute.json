@@ -1,5 +1,5 @@
 {
-  "_note": "Huntail ace sets its own rain (Swift Swim). C316 (#193 final pass): source of truth for this villain boss party -- ownership table in memory/strategy-notes.md (Magma = land, Aqua = sea; one unique ace, last slot). Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_shelly_weather_institute.json",
+  "_note": "C381 v3.7 Rain indoors: 2F rain is set by the map (WEATHER_RAIN, permanent in battle), so no RAIN_DANCE. Teeth (Rough Skin), spines (Poison Point + Spikes), and the eel (Swift Swim ace, last slot). No Ice, Grass or Electric attacks: a Dragon or a non-contact Water Gun is the player's answer. Source of truth for this villain boss party -- ownership table in memory/boss-species-ownership.md. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/villain_shelly_weather_institute.json",
   "mode": "modify",
   "trainerId": "TRAINER_SHELLY_WEATHER_INSTITUTE",
   "partyName": "sParty_ShellyWeatherInstitute",
@@ -10,34 +10,34 @@
       "species": "SPECIES_CARVANHA",
       "heldItem": "ITEM_NONE",
       "moves": [
-        "MOVE_CRUNCH",
         "MOVE_WATERFALL",
-        "MOVE_ICY_WIND",
+        "MOVE_CRUNCH",
+        "MOVE_SCARY_FACE",
         "MOVE_TAUNT"
       ]
     },
     {
       "iv": 150,
       "lvl": 28,
-      "species": "SPECIES_OCTILLERY",
+      "species": "SPECIES_QWILFISH",
       "heldItem": "ITEM_NONE",
       "moves": [
-        "MOVE_OCTAZOOKA",
-        "MOVE_AURORA_BEAM",
-        "MOVE_PSYBEAM",
-        "MOVE_FLAMETHROWER"
+        "MOVE_SPIKES",
+        "MOVE_WATER_GUN",
+        "MOVE_PIN_MISSILE",
+        "MOVE_POISON_STING"
       ]
     },
     {
-      "iv": 200,
-      "lvl": 29,
+      "iv": 150,
+      "lvl": 28,
       "species": "SPECIES_HUNTAIL",
-      "heldItem": "ITEM_MYSTIC_WATER",
+      "heldItem": "ITEM_NONE",
       "moves": [
-        "MOVE_RAIN_DANCE",
-        "MOVE_SURF",
+        "MOVE_WATERFALL",
         "MOVE_BITE",
-        "MOVE_ICE_BEAM"
+        "MOVE_ROCK_TOMB",
+        "MOVE_WHIRLPOOL"
       ]
     }
   ]

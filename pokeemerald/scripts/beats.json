@@ -747,5 +747,44 @@
     ],
     "speaker": "none",
     "seeFirst": "From the POKéMON CENTER door, the doll row has a gap between the first LOTAD DOLL and WREN, facing the storms."
+  },
+  {
+    "id": "v37-rain-indoors",
+    "arc": "v3.7 Rain indoors, Team Aqua's storm machines (C381; gate is the vanilla story var VAR_WEATHER_INSTITUTE_STATE == 0)",
+    "register": "fight",
+    "map": "Route119_WeatherInstitute_2F",
+    "object": "LOCALID_WEATHER_INSTITUTE_2F_SHELLY",
+    "trainer": "TRAINER_SHELLY_WEATHER_INSTITUTE",
+    "gate": {
+      "var": "VAR_WEATHER_INSTITUTE_STATE",
+      "equals": 0
+    },
+    "tiles": [
+      [
+        4,
+        6,
+        "right"
+      ]
+    ],
+    "labels": [
+      "Route119_WeatherInstitute_2F_OnTransition",
+      "Route119_WeatherInstitute_2F_EventScript_Shelly"
+    ],
+    "playtests": [
+      "checkpoint-weather-institute-2f-boot",
+      "wi-rain-indoors",
+      "wi-shelly-full-party",
+      "wi-shelly-worn-party",
+      "wi-rain-stops",
+      "wi-no-rain-after"
+    ],
+    "speaker": "stranger",
+    "allow": [
+      {
+        "string": "{PLAYER}",
+        "reason": "vanilla gift line '{PLAYER} received CASTFORM!' after Shelly (ReceiveCastform), the standard receive fanfare; v3.7 adds no text naming the player"
+      }
+    ],
+    "seeFirst": "Rain is falling inside the Weather Institute's upper floor."
   }
 ]

@@ -3,10 +3,16 @@ Route119_WeatherInstitute_2F_MapScripts::
 	.byte 0
 
 Route119_WeatherInstitute_2F_OnTransition:
+	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_StormMachinesOn
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0, Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaHere
 	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaGone
 	call_if_set FLAG_SYS_GAME_CLEAR, Route119_WeatherInstitute_2F_EventScript_SetScientistPosGameClear
 	end
+
+@ v3.7 Rain indoors (C381): Aqua's storm machines rain on 2F until Shelly falls
+Route119_WeatherInstitute_2F_EventScript_StormMachinesOn::
+	setweather WEATHER_RAIN
+	return
 
 Route119_WeatherInstitute_2F_EventScript_SetScientistPosAquaHere::
 	setobjectxyperm LOCALID_WEATHER_INSTITUTE_2F_SCIENTIST, 1, 6
@@ -44,6 +50,11 @@ Route119_WeatherInstitute_2F_EventScript_Shelly::
 	end
 
 Route119_WeatherInstitute_2F_EventScript_ShellyDefeated::
+	playse SE_PC_OFF
+	waitse
+	setweather WEATHER_NONE
+	doweather
+	delay 90
 	msgbox Route119_WeatherInstitute_2F_Text_ShellyPostBattle, MSGBOX_DEFAULT
 	closemessage
 	addobject LOCALID_WEATHER_INSTITUTE_2F_GRUNT_3
@@ -262,7 +273,9 @@ Route119_WeatherInstitute_2F_Text_ShellyIntro:
 	.string "You're either absolutely fearless,\n"
 	.string "simply ignorant, or both!\p"
 	.string "You're so cute, you're disgusting!\n"
-	.string "I'll put you down, kiddy!$"
+	.string "I'll put you down, kiddy!\p"
+	.string "Like the rain in here?\n"
+	.string "It's on our side, not yours.$"
 
 Route119_WeatherInstitute_2F_Text_ShellyDefeat:
 	.string "Ahahahaha!\n"

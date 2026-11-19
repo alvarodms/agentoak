@@ -486,21 +486,21 @@ static const struct TrainerMonItemCustomMoves sParty_ShellyWeatherInstitute[] = 
     .lvl = 27,
     .species = SPECIES_CARVANHA,
     .heldItem = ITEM_NONE,
-    .moves = {MOVE_CRUNCH, MOVE_WATERFALL, MOVE_ICY_WIND, MOVE_TAUNT}
+    .moves = {MOVE_WATERFALL, MOVE_CRUNCH, MOVE_SCARY_FACE, MOVE_TAUNT}
     },
     {
     .iv = 150,
     .lvl = 28,
-    .species = SPECIES_OCTILLERY,
+    .species = SPECIES_QWILFISH,
     .heldItem = ITEM_NONE,
-    .moves = {MOVE_OCTAZOOKA, MOVE_AURORA_BEAM, MOVE_PSYBEAM, MOVE_FLAMETHROWER}
+    .moves = {MOVE_SPIKES, MOVE_WATER_GUN, MOVE_PIN_MISSILE, MOVE_POISON_STING}
     },
     {
-    .iv = 200,
-    .lvl = 29,
+    .iv = 150,
+    .lvl = 28,
     .species = SPECIES_HUNTAIL,
-    .heldItem = ITEM_MYSTIC_WATER,
-    .moves = {MOVE_RAIN_DANCE, MOVE_SURF, MOVE_BITE, MOVE_ICE_BEAM}
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_WATERFALL, MOVE_BITE, MOVE_ROCK_TOMB, MOVE_WHIRLPOOL}
     }
 };
 
