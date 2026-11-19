@@ -11,9 +11,11 @@ import {
   SAVEBLOCK1_POS,
   SAVEBLOCK1_POKEBALLS,
   SAVEBLOCK1_REGISTERED_ITEM,
+  SAVEBLOCK1_WEATHER,
   START_MENU_ACTION_POKENAV,
   ballListIndex,
   battleWeatherName,
+  checkFieldWeather,
   encodeWarpData,
   loadPlaytestFiles,
   loadPlaytests,
@@ -244,6 +246,30 @@ describe("battleWeatherName", () => {
     expect(battleWeatherName(1 << 5)).toBe("sun");
     expect(battleWeatherName(1 << 6)).toBe("sun");
     expect(battleWeatherName(1 << 7)).toBe("hail");
+  });
+});
+
+describe("expectFieldWeather step", () => {
+  const WEATHER = { WEATHER_NONE: 0, WEATHER_RAIN: 3 } as Record<string, number>;
+  const resolve = (name: string) => WEATHER[name];
+
+  it("parses a WEATHER_* name or a number and rejects anything else", () => {
+    const steps = [{ expectFieldWeather: "WEATHER_RAIN" }, { expectFieldWeather: 0 }];
+    expect(parsePlaytest({ ...MINIMAL, steps }).steps).toEqual(steps);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectFieldWeather: "rain" }] })).toThrow();
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectFieldWeather: 256 }] })).toThrow();
+  });
+
+  it("passes on a match and fails on a mismatch (planted: rain saved, none expected)", () => {
+    expect(() => checkFieldWeather(3, "WEATHER_RAIN", resolve)).not.toThrow();
+    expect(() => checkFieldWeather(0, 0, resolve)).not.toThrow();
+    expect(() => checkFieldWeather(3, "WEATHER_NONE", resolve)).toThrow(/field weather is 3, expected WEATHER_NONE \(0\)/);
+  });
+
+  it.skipIf(!fs.existsSync(GLOBAL_H))("matches u8 weather's offset in struct SaveBlock1 (include/global.h)", () => {
+    const sb1 = fs.readFileSync(GLOBAL_H, "utf8").match(/struct SaveBlock1\s*\{([^}]*)\}/)?.[1] ?? "";
+    const line = sb1.split("\n").find((l) => /\bu8 weather;/.test(l));
+    expect(Number(line?.match(/\/\*(0x[0-9A-Fa-f]+)\*\//)?.[1])).toBe(SAVEBLOCK1_WEATHER);
   });
 });
 

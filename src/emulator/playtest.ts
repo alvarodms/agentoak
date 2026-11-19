@@ -236,6 +236,8 @@ const StepSchema = z.union([
   }),
   /** The battle's current weather (gBattleWeather), e.g. after the foe uses Hail. */
   z.strictObject({ expectBattleWeather: z.enum(["none", "rain", "sun", "sandstorm", "hail"]) }),
+  /** The saved field weather (gSaveBlock1Ptr->weather, what setweather writes), as a WEATHER_* name or number. */
+  z.strictObject({ expectFieldWeather: z.union([z.string().regex(/^WEATHER_[A-Z0-9_]+$/), z.number().int().min(0).max(255)]) }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
 ]);
 
@@ -517,6 +519,12 @@ async function runStep(
   if ("expectBattleWeather" in step) {
     const got = battleWeatherName(await s.readU16(s.symbols.address("gBattleWeather")));
     if (got !== step.expectBattleWeather) fail(`battle weather is ${got}, expected ${step.expectBattleWeather}`);
+    return;
+  }
+
+  if ("expectFieldWeather" in step) {
+    const sb1 = await s.deref("gSaveBlock1Ptr");
+    checkFieldWeather(await s.readU8(sb1 + SAVEBLOCK1_WEATHER), step.expectFieldWeather, (name) => s.constant(name));
     return;
   }
 
@@ -827,6 +835,14 @@ async function fleeWildBattle(s: EmulatorSession): Promise<void> {
 /** Offsets of pos and location in struct SaveBlock1 (include/global.h marks them; a unit test checks). */
 export const SAVEBLOCK1_POS = 0x00;
 export const SAVEBLOCK1_LOCATION = 0x04;
+/** Offset of u8 weather in struct SaveBlock1 (include/global.h marks it 0x2E; a unit test checks). */
+export const SAVEBLOCK1_WEATHER = 0x2e;
+
+/** expectFieldWeather: fails unless the saved weather id `got` is `want` (a number, or a WEATHER_* name for `resolve`). */
+export function checkFieldWeather(got: number, want: string | number, resolve: (name: string) => number): void {
+  const id = typeof want === "number" ? want : resolve(want);
+  if (got !== id) fail(`field weather is ${got}, expected ${want} (${id})`);
+}
 /** Offset of gMain.state (include/main.h marks it 0x438; a unit test checks). */
 export const MAIN_STATE = 0x438;
 const MAIN_CALLBACK2 = 0x04;

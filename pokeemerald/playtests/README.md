@@ -62,6 +62,7 @@ The full schema, with every option, is `StepSchema` in `src/emulator/playtest.ts
 | `battleSwitch` (`{"slot": 3}`, +`forbid`) | At the next "What will" pick POKéMON, then party slot 2-6 (1-based, like the scenario party) and SHIFT, then tap B through the turn to the next "What will". `forbid` fails on a message; it also fails if the party menu never closes or the battle ends during the turn. Pair with `battleTurns` to switch to a resist mid-fight |
 | `expectBattle`, `expectBattleText` | Opponent species and level; the current battle message only (no history) |
 | `expectBattleWeather` | `"none"`, `"rain"`, `"sun"`, `"sandstorm"` or `"hail"` (gBattleWeather), e.g. after `waitForBattleText: "hail"` |
+| `expectFieldWeather` (`"WEATHER_RAIN"` or a number) | The saved field weather (`gSaveBlock1Ptr->weather`, what a map's `setweather` writes; names from include/constants/weather.h). Pair it with a screenshot, which shows whether the weather actually draws |
 | `screenshot`, `comment` | Saved under `artifacts/playtests/<name>/`; notes |
 
 **Fighting a battle.** From the action menu (`waitForBattleText: "What will"`):
