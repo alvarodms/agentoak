@@ -15,9 +15,15 @@ const ROOT = path.join(__dirname, '..');
 const MAPS_DIR = path.join(ROOT, 'data/maps');
 const FLAGS_H = path.join(ROOT, 'include/constants/flags.h');
 
-// Maps allowed to share a FLAG_TEMP_* across several objects (genuine vanilla
-// patterns only, each with a reason). Empty unless a vanilla map needs it.
-const TEMP_FLAG_SHARE_ALLOWLIST = {};
+// Maps allowed to share a FLAG_TEMP_* across several objects (non-den maps whose
+// objects deliberately hide together, each with a reason).
+const TEMP_FLAG_SHARE_ALLOWLIST = {
+  // C385: shared on purpose since C375 (v3.5 storm charms); FortreeCity is not a den map.
+  FortreeCity: {
+    flags: ['FLAG_TEMP_5'],
+    reason: 'LOTAD DOLL_1 (1,7), DOLL_3 (4,7) and the _TURNED keeper twin hide together: FortreeCity_OnTransition setflag FLAG_TEMP_5',
+  },
+};
 
 function stripComment(line) {
   const at = line.indexOf('@');

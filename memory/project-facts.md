@@ -7,7 +7,7 @@ General project information — build system details, tool versions, configurati
 ## Trainer System Constraints
 
 - **Trainer flags** 0x500-0x87A, TRAINERS_COUNT = MAX_TRAINERS_COUNT = 891. Never bump it (shifts SYSTEM_FLAGS, breaks saves).
-- **Free slots**: `make check_trainer_slots` / `node scripts/check_trainer_slots.cjs` is the source of truth: **633, 634, 853** at C380 (9 reclaimed: 117, 173, 462, 485, 486, 568, 581, 851, 852). Hand-verify before use and add each reclaimed ID to RECLAIMED. Reclaim is by hand (no generate_trainer.cjs reclaim mode, verified C380).
+- **Free slots**: `make check_trainer_slots` / `node scripts/check_trainer_slots.cjs` is the source of truth: **633/634 free; 853 MAY_PLACEHOLDER data-only (pret wiki: never rename)** at C385 (9 reclaimed: 117, 173, 462, 485, 486, 568, 581, 851, 852). Hand-verify before use. Reclaim with `node scripts/generate_trainer.cjs <cfg> --dry-run` then without (`"mode": "reclaim"`, C385); it appends RECLAIMED.
 
 ## Emulator tooling
 

@@ -13,7 +13,7 @@
 | QoL Changes & Release | 22-297 | 31 files | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | 60-318 | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
 | Protagonist Palette Recolor | 228 | 16 .pal + 6 PNG | [protagonist-palette.md](completed-work/protagonist-palette.md) |
-| Engineering Validation (lints, generators, PLAYTEST presets) | 112-361 | Makefile + scripts/*.cjs/*.sh | [engineering-validation.md](completed-work/engineering-validation.md) |
+| Engineering Validation (lints, generators, PLAYTEST presets; C385 check_battle_weather, generate_trainer reclaim mode, check_trainer_slots DATA_ONLY, check_dens allowlist, playtest route119-rival-rain-worn-party) | 112-385 | Makefile + scripts/*.cjs/*.sh (check_battle_weather.cjs, generate_trainer.cjs, check_trainer_slots.cjs, check_dens.cjs) | [engineering-validation.md](completed-work/engineering-validation.md) |
 | Battle Frontier Fixes | 78-85 | 3 files | [battle-frontier.md](completed-work/battle-frontier.md) |
 | Birch Postgame Quest + Migration Tracker | 84, 96 | 12 files (birch_pc.c, specials.inc, scripts) | [birch-quest.md](completed-work/birch-quest.md) |
 | Wild Held Items | 93 | species_info.h | [wild-held-items.md](completed-work/wild-held-items.md) |

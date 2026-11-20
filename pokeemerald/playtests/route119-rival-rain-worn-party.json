@@ -1,0 +1,78 @@
+{
+  "name": "route119-rival-rain-worn-party",
+  "checks": "C385 measurement (Game Designer hypothesis): the storm-tail Route 119 rival fight should be the quiet beat between Shelly and Winona. The worn yardstick (wi-shelly-worn-party party, 50% HP, no bag) meets the rival's SWAMPERT 31 + MYSTIC WATER team (player picked Torchic, VAR_STARTER_MON 1) in the held rain. Asserts the battle weather is rain. Outcome, turns and faints are recorded in report.json battleSummaries, not asserted. Pass for the design = win with at most 1 faint.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_ROUTE119",
+    "x": 26,
+    "y": 33,
+    "gender": "male",
+    "clearFlags": ["FLAG_VISITED_FORTREE_CITY"],
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED"],
+    "party": [
+      {
+        "species": "SPECIES_MIGHTYENA",
+        "level": 28,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_TACKLE",
+          "MOVE_SAND_ATTACK",
+          "MOVE_SWAGGER"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_PELIPPER",
+        "level": 28,
+        "moves": [
+          "MOVE_WATER_GUN",
+          "MOVE_WING_ATTACK",
+          "MOVE_SUPERSONIC",
+          "MOVE_MIST"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 30,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_EMBER",
+          "MOVE_PROTECT",
+          "MOVE_FOCUS_ENERGY"
+        ],
+        "hpPercent": 50
+      }
+    ]
+  },
+  "steps": [
+    { "comment": "Boots on 26,33 (sand, c0 e3; `node scripts/map_scan.cjs Route119 22-30 29-35`), two tiles south of RivalTrigger2 at 26,31. No trainer nearby; the bike rival rides in along row 33 and up to 26,32 after the player has moved on. fortree_arrival holds VAR_WEATHER_INSTITUTE_STATE 2, so with FLAG_VISITED_FORTREE_CITY cleared the storm tail (C383) holds light rain." },
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "setVar": { "VAR_ROUTE119_STATE": 0 } },
+    { "setVar": { "VAR_STARTER_MON": 1 } },
+    { "setVar": { "VAR_REPEL_STEP_COUNT": 250 } },
+    { "expectVar": { "VAR_WEATHER_INSTITUTE_STATE": 2 } },
+    { "expectFieldWeather": "WEATHER_RAIN" },
+    { "walk": "up", "tiles": 2 },
+    { "talk": { "start": false } },
+    { "expectText": "I was hoping to run into you." },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "waitForBattleText": "What will", "maxFrames": 1800 },
+    { "expectBattle": { "opponent": "SPECIES_SHELGON", "level": 28 } },
+    { "expectBattleWeather": "rain" },
+    { "comment": "the same policy as wi-shelly-worn-party: repeat slot 1 (BITE / WATER_GUN / HEADBUTT), sending in the next healthy Pokémon on a faint" },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": ["You're still ahead of me", "whited out"],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    { "comment": "report only: the outcome, turns, faints and end HP are in report.json battleSummaries" },
+    { "expectBattleSummary": {} },
+    { "screenshot": "route119-rival-rain-worn-party-end" }
+  ]
+}

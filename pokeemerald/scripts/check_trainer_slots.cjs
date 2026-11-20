@@ -9,7 +9,8 @@
 // references across src/, include/, data/ and asm/ (.c/.h/.inc/.s/.json), skipping
 // opponents.h, trainers.h, trainer_parties.h, build/ and comment-only lines
 // (first non-space chars `@` or `//`). IDs with zero references are printed as
-// candidate free slots. Computed or offset IDs (e.g. `TRAINER_X + i`, rematch
+// candidate free slots, except DATA_ONLY link-battle placeholders, which are listed
+// separately and never renamed (C385). Computed or offset IDs (e.g. `TRAINER_X + i`, rematch
 // tables walked by index) are invisible to this scan, so verify each by hand.
 //
 // Fails (exit 1) when:
@@ -34,6 +35,10 @@ const SKIP_NAMES = new Set(['TRAINERS_COUNT', 'MAX_TRAINERS_COUNT', 'TRAINER_NON
 
 // IDs reclaimed from unused vanilla trainers; each must stay battled by a map script.
 const RECLAIMED = ['TRAINER_JUAN_DUET', 'TRAINER_MAXIE_RECKONING', 'TRAINER_ARCHIE_RECKONING', 'TRAINER_PYRE_MOURNER', 'TRAINER_ROUTE119_STORM_CHASER', 'TRAINER_ROUTE113_ASH_CAMPER', 'TRAINER_ROUTE109_STORM_WATCHER', 'TRAINER_MAUVILLE_GYM_HOPEFUL', 'TRAINER_FORTREE_CHARM_KEEPER'];  // C368: 462 ex-KAYLEE (v3.4 Beat 1 TOBY); C369: 485 ex-AMY_AND_LIV_3 (v3.4 Beat 2 DAX); C375: 486 ex-GINA_AND_MIA_2 (v3.5 Beat 2 WREN)
+
+// Link-battle placeholders (pret wiki 'Repurposing the Link Battle placeholders'):
+// keep the define and party names, edit data only. Never rename (C385).
+const DATA_ONLY = /^TRAINER_(\w+_PLACEHOLDER|RED|LEAF)$/;
 
 const DEFINE_RE = /^#define\s+(TRAINER_\w+)\s+(\d+)/;
 const COUNT_RE = /^#define\s+TRAINERS_COUNT\s+(\d+)/m;
@@ -75,6 +80,15 @@ function countRefs(text, counts) {
   }
 }
 
+// Unreferenced IDs split into renamable free slots and DATA_ONLY placeholders.
+function splitUnreferenced(ids, counts) {
+  const unused = ids.filter((e) => counts.get(e.name) === 0);
+  return {
+    free: unused.filter((e) => !DATA_ONLY.test(e.name)),
+    dataOnly: unused.filter((e) => DATA_ONLY.test(e.name)),
+  };
+}
+
 function newCounts(ids) {
   return new Map(ids.map((e) => [e.name, 0]));
 }
@@ -106,8 +120,9 @@ function selftest() {
     '#define TRAINER_NONE 0',
     '#define TRAINER_FAKE_USED 1',
     '#define TRAINER_FAKE_FREE 2  // C327: trailing comment',
+    '#define TRAINER_FAKE_PLACEHOLDER 3',
     '#define TRAINER_FAKE_HIGH 9',
-    '#define TRAINERS_COUNT 3  // Count of trainer IDs',
+    '#define TRAINERS_COUNT 4  // Count of trainer IDs',
   ].join('\n');
   const trainers = [
     '    [TRAINER_FAKE_FREE] =  // comment',
@@ -124,12 +139,15 @@ function selftest() {
 
   const ids = parseIds(opponents);
   const names = ids.map((e) => e.name).join(',');
-  if (names !== 'TRAINER_FAKE_USED,TRAINER_FAKE_FREE') fail(`parsed IDs ${names}`);
+  if (names !== 'TRAINER_FAKE_USED,TRAINER_FAKE_FREE,TRAINER_FAKE_PLACEHOLDER') fail(`parsed IDs ${names}`);
   const trainerNames = parseNames(trainers);
   if (trainerNames.get('TRAINER_FAKE_FREE') !== 'FREEBIE') fail('[TRAINER_X] =  // comment entry did not parse');
   const counts = newCounts(ids);
   countRefs(source, counts);
-  const free = ids.filter((e) => counts.get(e.name) === 0).map((e) => e.name);
+  const { free: freeIds, dataOnly } = splitUnreferenced(ids, counts);
+  const free = freeIds.map((e) => e.name);
+  if (free.includes('TRAINER_FAKE_PLACEHOLDER')) fail('TRAINER_FAKE_PLACEHOLDER counted as a free slot');
+  if (!dataOnly.some((e) => e.name === 'TRAINER_FAKE_PLACEHOLDER')) fail('TRAINER_FAKE_PLACEHOLDER not listed as data-only');
   if (!free.includes('TRAINER_FAKE_FREE')) fail('unreferenced TRAINER_FAKE_FREE not reported');
   if (free.includes('TRAINER_FAKE_USED')) fail('referenced TRAINER_FAKE_USED reported as free');
   console.log('check_trainer_slots: selftest ok');
@@ -156,12 +174,15 @@ function main() {
     }
   }
 
-  const free = ids.filter((e) => counts.get(e.name) === 0);
+  const { free, dataOnly } = splitUnreferenced(ids, counts);
+  const row = (e) => `${String(e.id).padEnd(4)} ${e.name.padEnd(36)} ${trainerNames.get(e.name) ?? '-'}`;
   console.log('ID   NAME                                 trainers.h name');
-  for (const e of free) {
-    console.log(`${String(e.id).padEnd(4)} ${e.name.padEnd(36)} ${trainerNames.get(e.name) ?? '-'}`);
-  }
+  for (const e of free) console.log(row(e));
   console.log(`${free.length} candidate free slots (verify each by hand: computed/offset IDs are invisible to this scan)`);
+  if (dataOnly.length) {
+    console.log('data-only placeholder slots (do not rename):');
+    for (const e of dataOnly) console.log(row(e));
+  }
   console.log(`${ids.length} trainer IDs scanned across ${files} files`);
 
   const errors = [];
@@ -177,5 +198,9 @@ function main() {
   console.log(`check_trainer_slots: OK (${RECLAIMED.length} reclaimed slots battled in map scripts)`);
 }
 
-if (process.argv.includes('--selftest')) selftest();
-else main();
+module.exports = { DATA_ONLY, parseIds, parseNames, countRefs, newCounts, walk, SCAN_DIRS, EXCLUDE, RECLAIMED };
+
+if (require.main === module) {
+  if (process.argv.includes('--selftest')) selftest();
+  else main();
+}

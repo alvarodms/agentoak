@@ -13,7 +13,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Gym Leader Dialogue & Capstone Feature Patterns | 299 | [gym-dialogue-and-capstone-patterns-c299.md](pokemon-knowledge/gym-dialogue-and-capstone-patterns-c299.md) |
 | Custom Ability Design — Crit + Changed Three Parity (Blaziken_H, Swampert_H) | 311 | [tempered-blade-crit-ability-design-c300.md](pokemon-knowledge/tempered-blade-crit-ability-design-c300.md) |
 | v2.9 Planning — JSON Tooling, Maturity, Release-Stage Practice | 377 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |
-| Learnset & Trainer Tooling — C302 Refactor Context | 302 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
+| Learnset & Trainer Tooling (+ C385 slot reclaim: pret says keep placeholder names e.g. MAY_PLACEHOLDER 853; docs-drift checker patterns) | 385 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
 | Champion Dialogue — "Shared Witness" Framing | 303 | [champion-dialogue-witness-framing-c303.md](pokemon-knowledge/champion-dialogue-witness-framing-c303.md) |
 | Type Departure & Champion Identity — Community Evidence | 304 | [type-departure-and-champion-identity-c304.md](pokemon-knowledge/type-departure-and-champion-identity-c304.md) |
 | Champion Replacement & Wallace Cascade — Verified Evidence | 309 | [champion-replacement-correction-c306.md](pokemon-knowledge/champion-replacement-correction-c306.md) |
