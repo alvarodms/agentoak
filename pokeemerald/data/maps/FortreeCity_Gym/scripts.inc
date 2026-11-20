@@ -239,6 +239,7 @@ FortreeCity_Gym_Text_WinonaIntro:
 	.string "toward the ELITE FOUR.\p"
 	.string "My birds stayed.\n"
 	.string "HOENN's own wings.\p"
+	.string "Storms never climb this high.\n"
 	.string "Let me show you how they've grown!$"
 
 FortreeCity_Gym_Text_WinonaDefeat:

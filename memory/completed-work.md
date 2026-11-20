@@ -8,7 +8,7 @@
 | Wild Encounters | 3-310 | wild_encounters.json + C + flags | [wild-encounters.md](completed-work/wild-encounters.md) |
 | Trainer Parties | 6-334 | trainer_parties.h, trainers.h, opponents.h, battle_setup, trainer_configs/*.json | [trainer-parties.md](completed-work/trainer-parties.md) |
 | NPC Dialogue (all regions + narrative) | 15-326 | ~90 map scripts.inc | [npc-dialogue.md](completed-work/npc-dialogue.md) |
-| Battle Engine (P/S, Fairy, Gen4/5 moves, difficulty, abilities, signature moves, animations, Bag lock) | 43-325 | battle_*.c/.s, abilities, moves, anims | [battle-engine.md](completed-work/battle-engine.md) |
+| Battle Engine (P/S, Fairy, Gen4/5 moves, difficulty, abilities, signature moves, animations, Bag lock, per-trainer battle weather C384 → v38-above-the-storm.md) | 43-325, 384 | battle_*.c/.s, abilities, moves, anims | [battle-engine.md](completed-work/battle-engine.md) |
 | Discovery Beats (statics, cue signs, Field Notes, FIELD NOTES item, believers, dens) | 312-345 | flags.h, event_macros.inc, match_call.c, prof_birch.inc, den + believer maps | [discovery-beats.md](completed-work/discovery-beats.md) |
 | QoL Changes & Release | 22-297 | 31 files | [qol-and-release.md](completed-work/qol-and-release.md) |
 | New Species | 60-318 | 29 source + 30+ assets | [new-species.md](completed-work/new-species.md) |
@@ -26,6 +26,7 @@
 | v3.5 Taken North + v3.6 empty peg (Fortree) | 374 LOST, 375-379 | FortreeCity, slot 486 trainer data, fortree_charm_keeper.json, playtests | [v35-taken-north.md](completed-work/v35-taken-north.md) |
 | v3.7 Rain indoors (Weather Institute 2F) | 381-382 | Route119_WeatherInstitute_2F/scripts.inc, villain_shelly_weather_institute.json, trainer_parties.h, beats.json, checkpoints.ts + playtest.ts + playtest.test.ts (C382 expectBattleSummary), playtests/README.md, 6 playtests | [v37-rain-indoors.md](completed-work/v37-rain-indoors.md) |
 | v3.7 coda Storm tail (Route 119 rain until Fortree) | 383 | Route119/scripts.inc, Route119/map.json (12 storm-tail triggers), beats.json, lib/beats.cjs, 3 route119-storm-tail-* playtests | [route119-storm-tail.md](completed-work/route119-storm-tail.md) |
+| v3.8 Above the storm (Winona's gym battle in permanent sun) | 384 | include/trainer_battle_weather.h (new: sTrainerBattleWeather), src/battle_util.c (GetBattleStartWeather), scripts/trainer_configs/winona_gym_1.json + trainer_parties.h sParty_Winona1, FortreeCity_Gym/scripts.inc (WinonaIntro), playtests winona-sun-worn-party / winona-sun-full-party / winona-sun-rock-lead / fortree-gym-trainer-no-sun / winona-win-to-empty-peg | [v38-above-the-storm.md](completed-work/v38-above-the-storm.md) |
 | beats.json tooling | 373, 381 | scripts/lib/beats.cjs, beats.json, check_beats.cjs | [beats-tooling.md](completed-work/beats-tooling.md) |
 | Playtest Hook (runner infrastructure) | 364-365 | playtest.h/.c, intro.c, overworld.c hooks | [playtest-hook.md](completed-work/playtest-hook.md) |
 | Memory-only cycles | 380 | memory/ only (codebase-facts split into codebase-facts/*.md) | — |

@@ -1,0 +1,124 @@
+{
+  "name": "winona-sun-rock-lead",
+  "checks": "C384 v3.8 Above the storm, 'the field did that': a Rock lead (PUPITAR 33, then HOUNDOOM 31 / MANECTRIC 31, full HP) meets WINONA's TROPIUS in harsh sun. Chlorophyll doubles its speed and SOLARBEAM needs no charge turn, so 'Foe TROPIUS used SOLARBEAM!' lands and PUPITAR faints within the first 2 turns (the Designer predicts turn 1, an OHKO). The fight is then played out; the outcome is recorded in report.json battleSummaries, not asserted (PUPITAR's faint is counted).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_FORTREE_CITY_GYM",
+    "x": 15,
+    "y": 3,
+    "defeatedTrainers": [
+      "TRAINER_JARED",
+      "TRAINER_FLINT",
+      "TRAINER_ASHLEY",
+      "TRAINER_EDWARDO",
+      "TRAINER_HUMBERTO",
+      "TRAINER_DARIUS"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_PUPITAR",
+        "level": 33,
+        "ability": 1,
+        "moves": [
+          "MOVE_ROCK_SLIDE",
+          "MOVE_THRASH",
+          "MOVE_BITE",
+          "MOVE_SCREECH"
+        ]
+      },
+      {
+        "species": "SPECIES_HOUNDOOM",
+        "level": 31,
+        "ability": 1,
+        "moves": [
+          "MOVE_OVERHEAT",
+          "MOVE_BITE",
+          "MOVE_EMBER",
+          "MOVE_ROAR"
+        ]
+      },
+      {
+        "species": "SPECIES_MANECTRIC",
+        "level": 31,
+        "ability": 2,
+        "moves": [
+          "MOVE_SHOCK_WAVE",
+          "MOVE_SPARK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_ROAR"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": {}
+    },
+    {
+      "expectText": [
+        "Let me show you how they've grown!",
+        "Storms never climb this high."
+      ]
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TROPIUS",
+        "level": 31
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "SOLARBEAM",
+          "PUPITAR fainted",
+          "Go! HOUNDOOM"
+        ],
+        "replace": true,
+        "maxTurns": 2
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "Never before have I seen a TRAINER",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "screenshot": "winona-sun-rock-lead-end"
+    }
+  ]
+}

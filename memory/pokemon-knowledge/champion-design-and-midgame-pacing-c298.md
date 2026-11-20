@@ -1,8 +1,15 @@
 # Champion Design & Mid-Game Encounter Pacing — ROM Hack Patterns
 
-**Cycle**: 382 | **Date**: November 2026 (first written C298)
+**Cycle**: 384 | **Date**: November 2026 (first written C298)
 
 ---
+
+## C384: Winona in sun (v3.8 "Above the storm")
+- **Vanilla already contains the sun plan.** Gym Tropius Lv29 has Chlorophyll + SUNNY_DAY / AERIAL_ACE / SOLAR_BEAM / SYNTHESIS (Serebii, RankedBoost). The rematch swaps Synthesis for EARTHQUAKE. In Gen 3, Chlorophyll is Tropius's only ability, so slot 0 = Chlorophyll.
+- **Chlorophyll is to sun what Swift Swim is to rain.** If the sun comes from the map rather than SUNNY_DAY, it lasts the whole fight (Gen 3 overworld weather has no turn limit). Then Tropius moves at double speed, Synthesis heals 2/3, and SOLAR_BEAM has no charge turn. That's the same permanent-speed wall the C381 Huntail created. The "no Swift Swim" constraint doesn't catch it.
+- **Inclement Emerald nerfed endless weather.** It restored endless Drought/Drizzle weather but cut the sun/rain damage bonus to 20%, because permanent weather was too strong. That's indirect evidence that permanent weather from the map is the riskiest version.
+- **There's still no precedent for a sun-themed Winona** in Kaizo, Imperium or Inclement (C382 and C384 searches).
+- Sources: serebii.net/emerald/entrycall/winona.shtml; rankedboost.com/pokemon/tropius/emerald; pokecommunity.com thread 457039.
 
 ## C382: Badge 6 vs Badge 7 for the second loud beat
 - **Vanilla Emerald's Tate & Liza fight is already a Double Battle** (RankedBoost "Gym 7 · Mossdeep City · Double Battle"; Dittobase: Claydol 41 / Xatu 41 / Lunatone 42 / Solrock 42, cap 42). A "first real doubles at Badge 7" pitch is only new if it means a team *built* for doubles (ally combos, spread moves), not the format. Check `doubleBattle` in the LoH Tate & Liza config before you pitch it.

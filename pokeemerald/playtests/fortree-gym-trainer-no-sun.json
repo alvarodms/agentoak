@@ -1,0 +1,69 @@
+{
+  "name": "fortree-gym-trainer-no-sun",
+  "checks": "C384 v3.8 Above the storm, control: the sun belongs to WINONA alone. An ordinary Fortree Gym trainer (JARED, who spots the player on 4,15) fights under the gym's clear sky: battle weather none (GetBattleStartWeather falls back to the overworld for trainers not in sTrainerBattleWeather).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_FORTREE_CITY_GYM",
+    "x": 4,
+    "y": 15,
+    "defeatedTrainers": [
+      "TRAINER_FLINT",
+      "TRAINER_ASHLEY",
+      "TRAINER_EDWARDO",
+      "TRAINER_HUMBERTO",
+      "TRAINER_DARIUS"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 70,
+        "moves": [
+          "MOVE_DRAGON_CLAW"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "comment": "JARED faces down at 4,14 and sees 4,15 at once: a sight battle, so the intro is read from the running script"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": "Behold the elegant battle style of"
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_DODUO",
+        "level": 27
+      }
+    },
+    {
+      "expectBattleWeather": "none"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": "You're strong",
+        "maxTurns": 6
+      }
+    },
+    {
+      "expectBattleWeather": "none"
+    }
+  ]
+}

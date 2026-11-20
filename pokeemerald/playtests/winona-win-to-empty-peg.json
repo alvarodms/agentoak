@@ -1,0 +1,140 @@
+{
+  "name": "winona-win-to-empty-peg",
+  "checks": "C384 v3.8 Above the storm, in order: with the Route 104 schoolkid turned (0x35) and WREN beaten but no Badge 6, the player beats WINONA in harsh sun, gets the FEATHER BADGE from the win (FLAG_BADGE06_GET set by the script, not the scenario), and on the next visit to Fortree the peg next to WREN is empty: DOLL_2 absent, DOLL_1 and DOLL_3 still standing (C379 v3.6 Beat 1).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_FORTREE_CITY_GYM",
+    "x": 15,
+    "y": 3,
+    "defeatedTrainers": [
+      "TRAINER_JARED",
+      "TRAINER_FLINT",
+      "TRAINER_ASHLEY",
+      "TRAINER_EDWARDO",
+      "TRAINER_HUMBERTO",
+      "TRAINER_DARIUS",
+      "TRAINER_FORTREE_CHARM_KEEPER"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 70,
+        "moves": [
+          "MOVE_DRAGON_CLAW"
+        ]
+      }
+    ],
+    "flags": [
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": {}
+    },
+    {
+      "expectText": [
+        "Let me show you how they've grown!",
+        "Storms never climb this high."
+      ]
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TROPIUS",
+        "level": 31
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "expectFlag": {
+        "FLAG_BADGE06_GET": false
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": "Never before have I seen a TRAINER",
+        "maxTurns": 10
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "received the FEATHER BADGE",
+        "TM40 contains AERIAL ACE.",
+        "Registered GYM LEADER WINONA"
+      ]
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectFlag": {
+        "FLAG_BADGE06_GET": true
+      }
+    },
+    {
+      "warp": {
+        "map": "MAP_FORTREE_CITY",
+        "x": 5,
+        "y": 7
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_FORTREE_LOTAD_DOLL_2",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_FORTREE_LOTAD_DOLL_1",
+        "x": 1,
+        "y": 7,
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_FORTREE_LOTAD_DOLL_3",
+        "x": 4,
+        "y": 7,
+        "visible": true
+      }
+    },
+    {
+      "screenshot": "empty-peg-after-winona"
+    }
+  ]
+}

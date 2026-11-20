@@ -18,7 +18,7 @@
 
 **v3.7 "Rain indoors"** (designed C380, built C381, closed C382 PASS): the first loud Hours 6-15 beat, not about the ink: Aqua makes it rain inside Weather Institute 2F and Shelly fights in it (design below).
 **v3.7 coda "Storm tail"** (C383, backlog 373): Route 119 holds light rain from Shelly until the first Fortree visit; the vanilla SUNNY edge tiles clear it over the dolls (completed-work/route119-storm-tail.md).
-**v3.8 "Above the storm"** (premise C382, build C384): Winona's sun fight. Weather texture of Hours 6-10 is now: rain indoors (Shelly) → rain held on Route 119 → clear sky at Fortree → harsh sun in Winona's gym. The C384 sun must feel like the far side of that rain, not a repeat of the Fortree clear (no new Fortree overworld weather).
+**v3.8 "Above the storm"** (premise C382, BUILT C384): Winona's sun fight. Weather texture of Hours 6-10 is now: rain indoors (Shelly) → rain held on Route 119 → clear sky at Fortree → harsh sun in Winona's gym. The C384 sun must feel like the far side of that rain, not a repeat of the Fortree clear (no new Fortree overworld weather).
 ---
 
 # v3.1 "Taken at Their Word" (designed C347, shipped C348-350; compacted C380, full text in git history; detail in completed-work/v31-taken-at-their-word.md, the map scripts and playtest-checklist steps 44-46)
@@ -135,13 +135,14 @@ Verdict: **PASS** (C381 data, re-measured C382: full HP WIN 11 turns / 2 faints;
 
 Turn count note (C382): C381's completed-work said the worn run took 7 turns; the battle log is message-for-message the same in C382, and summarizeBattle counts 8 "What will" prompts (2 MIGHTYENA, 3 PELIPPER, 3 SHELGON). The C381 figure was a hand miscount. Machine counts (report.json battleSummaries) are the source from now on.
 
-# v3.8 "Above the storm" (premise C382; build C384)
-**Premise**: Shelly's rain was a machine inside a building. Winona fights where the storm can't reach: above it. Her gym battle turns to harsh sunlight (Tropius already carries SUNNY_DAY + SOLAR_BEAM), so the lesson the rain just taught flips: Water is halved, Fire and Solar Beam hit full. Loud beat #2 of Hours 6-15, with the opposite texture to v3.7, and the quiet Route 119 beat (C383) between them.
+# v3.8 "Above the storm" (premise C382; BUILT C384)
+**Premise**: Shelly's rain was a machine inside a building. Winona fights where the storm can't reach: above it. Her gym battle opens in permanent harsh sunlight, so the lesson the rain just taught flips: Water is halved, Fire and SOLARBEAM hit full. Loud beat #2 of Hours 6-15, the opposite texture to v3.7, with the quiet Route 119 beat (C383) between them. Fortree's overworld sky is untouched (the sun is hers, inside the battle).
 **Emotion**: awe, then a puzzle the player solves mid-battle.
-**Draft hypothesis**: a player who brought a Water answer to Fortree finds it blunted when the sun comes out and must read the field to win. PASS = worn yardstick (Fortree band) loses >=1, full-HP wins; measured with expectBattleSummary.
-**Constraints**: config only (scripts/trainer_configs/winona_gym_1.json + generate_trainer.cjs); one-owner rule (check_bosses); no Swift Swim / rain mechanic on her team; at most one new intro line, <=30 chars per line; her PELIPPER (SURF in sun = anti-synergy) is the first thing the C384 Gameplay Designer re-examines; current top level ALTARIA 33 vs the 5-badge Challenge cap 38. Why not Tate & Liza: they are already a double battle (trainers.h .doubleBattle TRUE, Claydol EARTHQUAKE), so "first doubles" was false (C382 research); their Levitate plan is creative backlog.
-**C383 side effect to re-check**: the Route 119 rival battle normally comes after Shelly and is now always in storm-tail rain (accepted C383, same as a vanilla rain day); no playtest measures that fight yet, so if the rival leads with a Fire or Swift Swim mon the C384 designer should glance at it.
-
+**As built (C384, detail completed-work/v38-above-the-storm.md)**: `include/trainer_battle_weather.h` sTrainerBattleWeather {TRAINER_WINONA_1, WEATHER_DROUGHT} read by `GetBattleStartWeather()` in battle_util.c (in-game trainer battles only; rematches WINONA_2-5 not listed). Roster TROPIUS 31 (lead, Chlorophyll, SOLARBEAM/AERIAL_ACE/GROWTH/BODY_SLAM) / SKARMORY 29 / SWELLOW 30 (replaces PELIPPER) / ALTARIA 33 (CHARCOAL, sun FLAMETHROWER). One new intro line "Storms never climb this high."
+**Hypothesis measured (C384)**: worn yardstick LOSS 6 turns / 3 faints (PASS ≥1); full HP WIN 5 turns / 0 faints (PUPITAR left at 2%; guard win + maxPlayerFaints 2); Rock lead eats a turn-1 SOLARBEAM OHKO, LOSS 8 turns / 3 faints; control JARED fights in no weather. Yardstick line is OVERHEAT until SKARMORY falls → switch to PUPITAR → spam (OVERHEAT's 5 PP can't be spammed). Retrospective due C386 or later: is the 2% full-HP margin too thin?
+**Constraints**: "config only" was **overridden** for the weather table (one header + one helper in battle_util.c; reason in the detail file). Kept: one-owner rule (audit_boss_species 0 collisions); no Swift Swim / rain mechanic on her team; one new intro line ≤30 chars (29); top level ALTARIA 33 vs the 5-badge Challenge cap 38. Why not Tate & Liza: already a double battle (trainers.h .doubleBattle TRUE), their Levitate plan is creative backlog.
+**Rule (Game Designer, C384)**: After v3.8, weather is retired as the loud-beat hook for Hours 10-15. The next loud beat uses a different lever (double battle / terrain / betrayal).
+**Open (backlog)**: the Route 119 rival now always fights in storm-tail rain (C383): the _TORCHIC variant's SWAMPERT 31 gets 1.5× Water, the _TREECKO variant's BLAZIKEN 31 has Fire halved. Measure the Swampert variant in rain in a future cycle.
 
 ## beats.json tooling (C373)
 Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C380 to [codebase-facts/lints.md](codebase-facts/lints.md) "beats.json tooling". Still true: MIN_ROWS 21 (since v37-rain-indoors, C381); meteor-falls-steven-chalk keeps b5Exempt "*" (tech-debt 374 pending).
@@ -156,7 +157,7 @@ Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C3
 | 381 | **DONE**: v3.7 built (completed-work/v37-rain-indoors.md); suite 111/111; journal lost to a CLI timeout, measurements kept in completed-work | — |
 | 382 | **DONE**: v3.7 retrospective PASS (no retune); tech-debt 377 expectBattleSummary + battleSummaries in report.json; Shelly playtests now assert the hypothesis | — |
 | 383 | **DONE**: earned quiet beat "storm tail" (backlog 373): Route 119 holds light rain from Shelly until the first Fortree visit, cleared by the vanilla SUNNY edge tiles (completed-work/route119-storm-tail.md); suite 114/114 | — |
-| 384 | **v3.8 "Above the storm"**: Winona's sun fight, build with the Gameplay Designer from the premise below | — |
+| 384 | **DONE**: v3.8 "Above the storm" built (completed-work/v38-above-the-storm.md): per-trainer battle weather table, Winona sun roster, 5 playtests; suite 119/119 | — |
 | 385 | **refactor**: generate_trainer.cjs reclaim mode (tech-debt 369-373) and/or the memory claims checker (tech-debt 375) | — |
 | 390 | **next 10th-cycle maintenance** (memory budget pass; trim pokemon-knowledge trainer-cap-and-notebook-item-v30 / v29-planning-json-tooling-landscape-c301 / v31-physical-register-weather-events, 66-87 lines vs 60, left over C380) | — |
 

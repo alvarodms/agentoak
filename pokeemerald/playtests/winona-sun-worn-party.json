@@ -1,0 +1,133 @@
+{
+  "name": "winona-sun-worn-party",
+  "checks": "C384 v3.8 Above the storm, the design hypothesis (worn): the Designer's yardstick HOUNDOOM 31 / PUPITAR 33 / MANECTRIC 31 at hpPercent 50, no bag, fights WINONA on a fixed line (OVERHEAT until SKARMORY falls, switch to PUPITAR, then slot 1; OVERHEAT's 5 PP can't be spammed) (TRAINER_WINONA_1). Her intro has the new line 'Storms never climb this high.'; the battle opens in harsh sun (include/trainer_battle_weather.h, GetBattleStartWeather) with TROPIUS 31 in front, and the sun is still up when the fight ends (permanent). PASS for the beat = the worn party loses at least one Pokémon (expectBattleSummary minPlayerFaints 1); the numbers are in report.json battleSummaries.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_FORTREE_CITY_GYM",
+    "x": 15,
+    "y": 3,
+    "defeatedTrainers": [
+      "TRAINER_JARED",
+      "TRAINER_FLINT",
+      "TRAINER_ASHLEY",
+      "TRAINER_EDWARDO",
+      "TRAINER_HUMBERTO",
+      "TRAINER_DARIUS"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_HOUNDOOM",
+        "level": 31,
+        "ability": 1,
+        "moves": [
+          "MOVE_OVERHEAT",
+          "MOVE_BITE",
+          "MOVE_EMBER",
+          "MOVE_ROAR"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_PUPITAR",
+        "level": 33,
+        "ability": 1,
+        "moves": [
+          "MOVE_ROCK_SLIDE",
+          "MOVE_THRASH",
+          "MOVE_BITE",
+          "MOVE_SCREECH"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_MANECTRIC",
+        "level": 31,
+        "ability": 2,
+        "moves": [
+          "MOVE_SHOCK_WAVE",
+          "MOVE_SPARK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_ROAR"
+        ],
+        "hpPercent": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "wait": 120
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 60
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": {}
+    },
+    {
+      "expectText": [
+        "Let me show you how they've grown!",
+        "Storms never climb this high."
+      ]
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_TROPIUS",
+        "level": 31
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "comment": "the yardstick's line: OVERHEAT (5 PP) until SKARMORY falls, then switch the spent HOUNDOOM (SP. ATK -4) out for PUPITAR, as a player would; then spam slot 1"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": "Foe SKARMORY fainted",
+        "replace": true,
+        "maxTurns": 5
+      }
+    },
+    {
+      "battleSwitch": {
+        "slot": 2
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "Never before have I seen a TRAINER",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleWeather": "sun"
+    },
+    {
+      "expectBattleSummary": {
+        "minPlayerFaints": 1
+      }
+    },
+    {
+      "screenshot": "winona-sun-worn-party-end"
+    }
+  ]
+}

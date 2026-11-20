@@ -4,6 +4,7 @@
 #include "battle_arena.h"
 #include "battle_pyramid.h"
 #include "battle_util.h"
+#include "battle_setup.h"
 #include "pokemon.h"
 #include "international_string_util.h"
 #include "item.h"
@@ -24,6 +25,7 @@
 #include "event_data.h"
 #include "link.h"
 #include "field_weather.h"
+#include "trainer_battle_weather.h"
 #include "constants/abilities.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_move_effects.h"
@@ -2428,6 +2430,27 @@ u8 CastformDataTypeChange(u8 battler)
     return formChange;
 }
 
+// The weather a battle opens in: a trainer listed in sTrainerBattleWeather
+// (trainer_battle_weather.h) brings their own, else the overworld's (C384).
+// Frontier, secret base, e-Reader and link opponents reuse the TRAINER_* id
+// space, so only in-game trainer battles consult the table.
+static u8 GetBattleStartWeather(void)
+{
+    u32 i;
+
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_SECRET_BASE
+                             | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_RECORDED)))
+    {
+        for (i = 0; i < ARRAY_COUNT(sTrainerBattleWeather); i++)
+        {
+            if (sTrainerBattleWeather[i].trainerId == gTrainerBattleOpponent_A)
+                return sTrainerBattleWeather[i].weather;
+        }
+    }
+    return GetCurrentWeather();
+}
+
 u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveArg)
 {
     u8 effect = 0;
@@ -2490,7 +2513,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
             case ABILITYEFFECT_SWITCH_IN_WEATHER:
                 if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
                 {
-                    switch (GetCurrentWeather())
+                    switch (GetBattleStartWeather())
                     {
                     case WEATHER_RAIN:
                     case WEATHER_RAIN_THUNDERSTORM:
@@ -2525,7 +2548,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 }
                 if (effect != 0)
                 {
-                    gBattleCommunication[MULTISTRING_CHOOSER] = GetCurrentWeather();
+                    gBattleCommunication[MULTISTRING_CHOOSER] = GetBattleStartWeather();
                     BattleScriptPushCursorAndCallback(BattleScript_OverworldWeatherStarts);
                 }
                 break;

@@ -4165,32 +4165,32 @@ static const struct TrainerMonItemCustomMoves sParty_Norman1[] = {
 
 static const struct TrainerMonItemCustomMoves sParty_Winona1[] = {
     {
+    .iv = 220,
+    .lvl = 31,
+    .species = SPECIES_TROPIUS,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_SOLAR_BEAM, MOVE_AERIAL_ACE, MOVE_GROWTH, MOVE_BODY_SLAM}
+    },
+    {
     .iv = 210,
     .lvl = 29,
     .species = SPECIES_SKARMORY,
     .heldItem = ITEM_LEFTOVERS,
-    .moves = {MOVE_STEEL_WING, MOVE_AERIAL_ACE, MOVE_SPIKES, MOVE_TOXIC}
+    .moves = {MOVE_STEEL_WING, MOVE_AERIAL_ACE, MOVE_TOXIC, MOVE_ROAR}
     },
     {
     .iv = 220,
     .lvl = 30,
-    .species = SPECIES_TROPIUS,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_AERIAL_ACE, MOVE_SOLAR_BEAM, MOVE_EARTHQUAKE, MOVE_SUNNY_DAY}
-    },
-    {
-    .iv = 220,
-    .lvl = 32,
-    .species = SPECIES_PELIPPER,
-    .heldItem = ITEM_MYSTIC_WATER,
-    .moves = {MOVE_SURF, MOVE_ICE_BEAM, MOVE_PROTECT, MOVE_TOXIC}
+    .species = SPECIES_SWELLOW,
+    .heldItem = ITEM_SHARP_BEAK,
+    .moves = {MOVE_AERIAL_ACE, MOVE_FACADE, MOVE_QUICK_ATTACK, MOVE_WING_ATTACK}
     },
     {
     .iv = 255,
     .lvl = 33,
     .species = SPECIES_ALTARIA,
-    .heldItem = ITEM_SITRUS_BERRY,
-    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_FLAMETHROWER}
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_DRAGON_CLAW, MOVE_FLAMETHROWER, MOVE_AERIAL_ACE, MOVE_SAFEGUARD}
     }
 };
 
