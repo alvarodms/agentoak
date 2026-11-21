@@ -1,0 +1,122 @@
+{
+  "name": "tate-liza-y7-float",
+  "checks": "C388 v3.9 Y7-FLOAT: as Y7-GROUND but slot 2 = SWELLOW 40 (Flying, floats over EARTHQUAKE). Turn 1 EARTHQUAKE still fires (SHELGON is grounded) and doesn't affect XATU; the yardstick predicts a WIN with at most 2 player faints. Measured C388: baseline LOSS 6t 4/1; LUNATONE 41 LOSS 7t 4/3; after the one tuning step (LUNATONE 39, ESPEON 40) LOSS 8t 4/3. EQ fired turns 1 and 3, hitting only SHELGON/WHISCASH; XATU PSYCHIC took SHELGON and SWELLOW. PASS needs a WIN with <=2 faints: open FAIL for C389, report-only.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_GYM",
+    "x": 23,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 41,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ]
+      },
+      {
+        "species": "SPECIES_SWELLOW",
+        "level": 40,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_AERIAL_ACE",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_WING_ATTACK"
+        ]
+      },
+      {
+        "species": "SPECIES_WHISCASH",
+        "level": 40,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_ROCK_TOMB",
+          "MOVE_AMNESIA",
+          "MOVE_REST"
+        ]
+      },
+      {
+        "species": "SPECIES_GOLDUCK",
+        "level": 40,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_CONFUSION",
+          "MOVE_SCREECH",
+          "MOVE_PSYCH_UP"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 23,8 (MB_NORMAL c0; `node scripts/map_scan.cjs MossdeepCity_Gym 21-25 6-10`), right below TATE (object 1, 23,7, MossdeepCity_Gym_EventScript_TateAndLiza). Every battleTurns uses slot 1 for both battlers; single-target moves go to opponent-left (else the remaining foe); SURF has no target prompt."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_CLAYDOL",
+        "level": 38
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "used EARTHQUAKE",
+          "doesn't affect Foe XATU"
+        ],
+        "maxTurns": 1,
+        "replace": true
+      }
+    },
+    {
+      "screenshot": "tate-liza-y7-float-eq"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "We don't feel",
+          "You felt what we were",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "comment": "C388: report-only. PASS (spec) = GROUND {outcome loss}, FLOAT {outcome win, maxPlayerFaints 2}; not met after the one tuning step, so no guard yet (C389 decides)."
+    },
+    {
+      "expectBattleSummary": {}
+    },
+    {
+      "screenshot": "tate-liza-y7-float-end"
+    }
+  ]
+}

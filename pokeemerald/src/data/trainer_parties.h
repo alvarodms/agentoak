@@ -4211,14 +4211,14 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza1[] = {
     },
     {
     .iv = 200,
-    .lvl = 41,
-    .species = SPECIES_ALAKAZAM,
+    .lvl = 39,
+    .species = SPECIES_LUNATONE,
     .heldItem = ITEM_TWISTED_SPOON,
-    .moves = {MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_RECOVER, MOVE_THUNDER_WAVE}
+    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_ROCK_TOMB, MOVE_CALM_MIND}
     },
     {
     .iv = 200,
-    .lvl = 42,
+    .lvl = 40,
     .species = SPECIES_ESPEON,
     .heldItem = ITEM_SITRUS_BERRY,
     .moves = {MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_REFLECT}

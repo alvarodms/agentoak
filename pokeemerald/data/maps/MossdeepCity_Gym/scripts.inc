@@ -557,10 +557,9 @@ MossdeepCity_Gym_Text_TateAndLizaIntro:
 	.string "empathy looks like in battle!$"
 
 MossdeepCity_Gym_Text_TateAndLizaDefeat:
-	.string "TATE: You felt what we were\n"
-	.string "thinking --\n"
-	.string "LIZA: -- before we thought it.\p"
-	.string "TATE: That's how ESPEON fights too.$"
+	.string "TATE: We don't feel\n"
+	.string "the ground…\p"
+	.string "LIZA: …and you do.$"
 
 MossdeepCity_Gym_Text_ReceivedMindBadge:
 	.string "{PLAYER} received the MIND BADGE\n"

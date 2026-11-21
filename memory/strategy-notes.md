@@ -91,46 +91,24 @@ Old C386 playtests at Lv26 (slot-1, report-only, lead level now 26): Torchic ful
 **Reading for C388/C389**: one step only was allowed and it is spent (26 stays). The common decider in every variant is now **STANTLER_HOENN** (Ghost/Grass, SPELL_TAG, Intimidate, HYPNOSIS + LEECH_SEED + SHADOW_BALL): HYPNOSIS + LEECH_SEED turn PELIPPER (SURF only 0.5x into it) into free turns, and SHADOW_BALL finishes the party. Candidate fix for the retrospective (not done): drop HYPNOSIS from the three Route 119 STANTLER_HOENN movesets (one dial, all variants), then re-run the coverage tests. "Too easy" is not a risk at 26: every run still ends 0/0/0 HP.
 **Reflection C387 (decision rule for C389, binding)**: three cycles (C385-C387) have gone into one quiet-beat rival. C389 gets exactly ONE more dial: remove HYPNOSIS from all six Route 119 STANTLER_HOENN movesets (May+Brendan), re-run the three coverage playtests. Any variant that then WINS gets a guard (win + maxPlayerFaints 2); any that still loses is ACCEPTED as a hard rival (report-only, recorded as such) and the thread closes. No further level, roster or yardstick changes. Also weigh: the yardstick is 3 mons, no bag, vs a 4-mon rival; a real Badge-6 player has more of both, so a narrow yardstick loss is not a player wall.
 
-# v3.9 "Ground that doesn't touch them" (premise C386; spec C387; build C388)
-**Premise**: Weather taught 'read the field'; Tate & Liza teach 'read the partnership'. Their Mossdeep gym double battle (TRAINER_TATE_AND_LIZA_1, trainers.h:3256, .doubleBattle TRUE; no new trainer slot, no new C system) is rebuilt around a field-wide EARTHQUAKE that their Levitate/Flying Pokémon float above. Turn 1: the screen shakes, the player's side takes damage, the twins' side doesn't. No hint NPC, no gym-trainer foreshadowing.
-**Emotion**: confusion, then the click of understanding.
+# v3.9 "Ground that doesn't touch them" (premise C386; spec C387; built C388; detail completed-work/v39-ground.md)
+**Premise**: Weather taught 'read the field'; Tate & Liza teach 'read the partnership'. Their Mossdeep gym double battle (TRAINER_TATE_AND_LIZA_1, .doubleBattle TRUE) turns on a field-wide EARTHQUAKE that their Levitate/Flying Pokémon float above. Turn 1: the player's side takes damage, the twins' side doesn't. No hint NPC. **Emotion**: confusion, then the click of understanding.
 
-### Roster (sParty_TateAndLiza1, ITEM_CUSTOM_MOVES; C388 edits trainer_parties.h ~4200, no trainer config exists for TATE_AND_LIZA_1)
-| # | Species | Lv | iv | Item | Moves | Change |
-|---|---|---|---|---|---|---|
-| 1 (lead L) | CLAYDOL | 38 | 200 | LEFTOVERS | EARTHQUAKE, PSYCHIC, LIGHT_SCREEN, ANCIENT_POWER | unchanged |
-| 2 (lead R) | XATU | 39 | 200 | LUM_BERRY | PSYCHIC, SHADOW_BALL, CONFUSE_RAY, AERIAL_ACE | unchanged |
-| 3 | **LUNATONE** | 41 | 200 | TWISTED_SPOON | PSYCHIC, SHADOW_BALL, ROCK_TOMB, CALM_MIND | **replaces ALAKAZAM** (PSYCHIC/THUNDERBOLT/RECOVER/THUNDER_WAVE) |
-| 4 | ESPEON | 42 | 200 | SITRUS_BERRY | CALM_MIND, PSYCHIC, SHADOW_BALL, REFLECT | unchanged |
-trainers.h flags/items/doubleBattle unchanged (aiFlags CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY; 4 HYPER_POTION). Why Lunatone: owned by Tate&Liza (boss-species-ownership.md row "Lunatone", already on TATE_AND_LIZA_2-5), keeps CLAYDOL's EQ partner bonus after XATU falls, and avoids Alakazam's THUNDERBOLT OHKO on the Flying answer. No HYPNOSIS (seed fragility). Top level 42 = Challenge cap at 6 badges (GetChallengeLevelCap ...38/**42**/48), Leader +3 → ESPEON 45 (already true today). Solrock has no owner row (unused). Run `make check_bosses` (expect 0 collisions) and `make check_doubles`.
+### As built (C388)
+- Roster sParty_TateAndLiza1: CLAYDOL 38 (EQ/PSYCHIC/LIGHT_SCREEN/ANCIENT_POWER, LEFTOVERS) · XATU 39 (PSYCHIC/SHADOW_BALL/CONFUSE_RAY/AERIAL_ACE, LUM) · **LUNATONE 39** (PSYCHIC/SHADOW_BALL/ROCK_TOMB/CALM_MIND, TWISTED_SPOON; replaced ALAKAZAM) · **ESPEON 40** (was 42). Levels 39/40 are the spec's ONE tuning step ("both lose"), already spent. trainers.h unchanged; **never add** AI SETUP_FIRST_TURN / PREFER_POWER_EXTREMES / RISKY / HP_AWARE (they break the deterministic turn-1 EQ; why: codebase-facts/battle-engine.md "Doubles AI and Ground moves").
+- Defeat text: "TATE: We don't feel\nthe ground…\pLIZA: …and you do." Intro and rematch text unchanged.
+- The player's three answers (design): (a) float: Flying/Levitate, so EQ hits only the grounded partner; (b) hit the stone: SURF 2x into CLAYDOL and LUNATONE; (c) break the pair: KO XATU so grounded ESPEON stands beside CLAYDOL and EQ drops to −3.
 
-### Why turn-1 EQ is deterministic (verified C387; detail codebase-facts/battle-engine.md "Doubles AI and Ground moves")
-- Against a grounded player battler: EQ 100 (CheckBadMove) → TryToFaint −1 only if not most powerful (it is the most powerful) → `AI_DoubleBattleAllHittingGroundMove` +2 (partner XATU is Flying) ⇒ **≥102**; +4 more if it can KO. PSYCHIC / ANCIENT_POWER ≤100 (+4 only on a KO); LIGHT_SCREEN max 100 (`AI_CV_LightScreen` has only −2 branches). EQ wins unless PSYCHIC/ANCIENT_POWER can KO a full-HP player mon (yardstick parties avoid this).
-- Against a Flying/Levitate player battler EQ scores ~90 (−10). One grounded player mon is enough: the AI keeps the best (target, move) over all targets and EQ hits the whole field for full damage (FOES_AND_ALLY isn't halved). Two floaters ⇒ Claydol picks PSYCHIC/ANCIENT_POWER/LIGHT_SCREEN.
-- After XATU faints: LUNATONE in ⇒ +2 continues; ESPEON in ⇒ −3, EQ 96-97 < PSYCHIC 99-100, so EQ stops except when it can KO (+4 ⇒ 101, hitting Espeon too). Replacement = `GetMostSuitableMonToSwitchInto`, measured not assumed.
-- Ability history is per battler and cleared on switch-in and faint (SwitchInClearSetData / FaintClearSetData), so the FRLG "seen one Levitate" bug does not apply.
-- **Never add** AI_SCRIPT_SETUP_FIRST_TURN (LIGHT_SCREEN +2 turn 1), PREFER_POWER_EXTREMES, RISKY, HP_AWARE.
-
-### The player's three answers
-(a) **Float**: Flying/Levitate (SWELLOW, PELIPPER, ALTARIA, SKARMORY, TROPIUS, XATU, CHIMECHO, VIBRAVA, CLAYDOL); EQ then hits only the grounded partner; two floaters stop it. Cost: LUNATONE's ROCK_TOMB/PSYCHIC. (b) **Hit the stone**: SURF is 2x into both CLAYDOL and LUNATONE; also Grass/Bug/Dark/Ghost (and Ice into Claydol). (c) **Break the pair**: KO XATU (and LUNATONE) so grounded ESPEON stands beside CLAYDOL; EQ is then −3 and mostly stops.
-
-### Badge-7 yardstick (C388 needs battleTurns doubles targeting first)
-Common rules: full HP, no bag, every player battler slot 1 each turn, target opponent-LEFT (else the remaining foe; SURF has no target prompt), `replace: true`, maxTurns 40.
-- **Y7-GROUND**: SHELGON 41 BITE/DRAGON_BREATH/HEADBUTT/PROTECT, LINOONE 40 FACADE/SHADOW_BALL/HEADBUTT/FURY_SWIPES, WHISCASH 40 SURF/ROCK_TOMB/AMNESIA/REST, GOLDUCK 40 SURF/CONFUSION/SCREECH/PSYCH_UP.
-- **Y7-FLOAT**: as GROUND but slot 2 = SWELLOW 40 FACADE/AERIAL_ACE/QUICK_ATTACK/WING_ATTACK.
-- **Y7-LEVITATE** (report-only): as GROUND but slot 2 = CHIMECHO 40 SHADOW_BALL/DOUBLE_EDGE/CONFUSION/PROTECT.
-Preconditions: no Fake Out/flinch, no Fighting/Poison (no PSYCHIC KO +4 at full HP; Claydol PSYCHIC ≤ ~64 of SWELLOW's 104), no Dark, nothing KOs Claydol before it moves. Expected: GROUND ~2 EQs KO LINOONE; FLOAT SWELLOW+SHELGON usually drop Claydol after one EQ (~200 HP / 1 faint swing).
-
-### PASS criteria (C388 measures, C389 retrospective)
-1. All three runs: turn-1 log shows "CLAYDOL used EARTHQUAKE"; foe side takes no EQ damage (XATU "doesn't affect", Claydol not hit).
-2. **Y7-GROUND LOSES** (guard expectBattleSummary outcome loss).
-3. **Y7-FLOAT WINS** with maxPlayerFaints 2.
-4. Y7-LEVITATE report-only: did EQ fire on turn 1, and when.
-One tuning step only: both win → CLAYDOL 38→40; both lose or FLOAT 3 faints → LUNATONE 41→39 + ESPEON 42→40; GROUND wins and FLOAT loses → hypothesis false, stop. Still failing after the step → keep it, report-only, open FAIL for C389.
-
-### Dialogue (C388, verbatim)
-- Intro (MossdeepCity_Gym_Text_TateAndLizaIntro) unchanged.
-- MossdeepCity_Gym_Text_TateAndLizaDefeat (MossdeepCity_Gym/scripts.inc:559, the defeat arg of `trainerbattle_double TRAINER_TATE_AND_LIZA_1` at :52) is replaced wholesale. Current text (already non-vanilla, earlier cycle): "TATE: You felt what we were\nthinking --\nLIZA: -- before we thought it.\pTATE: That's how ESPEON fights too.$". New text exactly: `"TATE: We don't feel\nthe ground…\pLIZA: …and you do."` (19/11/18 chars; `…` one glyph; `make check_text_width` must pass). The rematch defeat text (:108) is unchanged.
+### Results (C388, playtests tate-liza-y7-*, report-only)
+Yardstick: full HP, no bag, slot 1 for both battlers, target opponent-left, replace. GROUND = SHELGON 41 / LINOONE / WHISCASH / GOLDUCK 40; FLOAT = slot 2 SWELLOW; LEVITATE = slot 2 CHIMECHO.
+| | baseline ALAKAZAM | LUNATONE 41 | as built (39/40) |
+|---|---|---|---|
+| GROUND | LOSS 5t 4/1 | LOSS 6t 4/2 | LOSS 7t 4/2 |
+| FLOAT | LOSS 6t 4/1 | LOSS 7t 4/3 | LOSS 8t 4/3 |
+| LEVITATE | LOSS 7t 4/1 | LOSS 7t 4/1 | LOSS 8t 4/1 |
+- PASS 1 (turn-1 EQ, foe side untouched): **met 9/9**. PASS 2 GROUND loses: met. PASS 3 FLOAT wins ≤2 faints: **FAIL** (open for C389).
+- **The finding**: EQ is the theme but not the threat. It caused 1 of 12 player faints (a crit); XATU's PSYCHIC caused 5 of 12, and the yardstick never hits XATU (opponent-left = CLAYDOL). FLOAT's SWELLOW is KO'd by XATU, not by the ground. So "float" alone isn't an answer; "break the pair" (target XATU) is the untested one.
+- **Reflection C388 (decision rule for C389, binding)**: two fights in a row (Route 119 rival C385-C387, now Tate & Liza) failed a narrow fixed yardstick, and both times the decider was a side threat, not the themed mechanic. The yardstick (4 mons, no bag, slot 1) is weaker than a real Badge-7 player (6 mons, Hyper Potions, player-chosen targets). C389 runs Y7-ADAPT ONCE; if it still loses, prefer a theme-preserving move swap on XATU (PSYCHIC → a weaker or non-Psychic move, e.g. NIGHT_SHADE) over another level change, measure once, then guard what wins and ACCEPT what loses. The thread closes in C389 either way; no C390 tuning (C390 is maintenance).
 
 ## beats.json tooling (C373)
 Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C380 to [codebase-facts/lints.md](codebase-facts/lints.md) "beats.json tooling". Still true: MIN_ROWS 21 (since v37-rain-indoors, C381); meteor-falls-steven-chalk keeps b5Exempt "*" (tech-debt 374 pending).
@@ -144,8 +122,8 @@ Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C3
 | 380-385 | **DONE**: memory pass + v3.7 design (C380), v3.7 built (C381) + PASS retrospective (C382), storm tail (C383), v3.8 built (C384), workshop: check_battle_weather, reclaim mode, check_dens fix (C385). Suite 120/120 | — |
 | 386 | **DONE**: v3.8 retrospective closed; suite 123/123 (3 full-HP rival playtests); rival Torchic variant FAIL after F1+F2 (kept; C387 to decide levels or roster); Winona guard maxPlayerFaints 1; v3.9 lever = Tate & Liza double battle | — |
 | 387 | **DONE**: `battleTurns moveFor` (per-foe slot); Route 119 rival coverage yardstick + all six May/Brendan Route119 non-aces 28→26; all three variants still LOSE at Lv26 (Torchic 15t/3, Treecko 9t/3 with 3 foe faints, Mudkip 13t/3 with 3 foe faints; STANTLER_HOENN decides) so no guards, open FAIL for C389; v3.9 Tate & Liza spec written (above). Suite 126 | — |
-| 388 | **Doubles harness + v3.9 build**: battleTurns `target` for two player battlers (src/emulator/), proven on a vanilla double battle with a planted failure on a faint-and-replace turn; then the v3.9 roster + defeat text + Y7 playtests per the spec | — |
-| 389 | **v3.9 retrospective** + close the Route 119 rival thread with its ONE last dial (drop STANTLER_HOENN HYPNOSIS; guard winners, accept losers; see "Reflection C387") | — |
+| 388 | **DONE**: battleTurns plays doubles (partner prompt, target prompt + `target`, doubles send-out, finishTurn for a turn left mid-way), proven by two planted "Go! WHISCASH" failures after `[sent out party menu slot 3]`; v3.9 built (LUNATONE replaces ALAKAZAM, defeat text); Y7: turn-1 EQ 9/9, GROUND LOSS 7t 4/2, FLOAT LOSS 8t 4/3 after the one step (LUNATONE 39, ESPEON 40) so FAIL, report-only; EQ 1 of 12 faints, XATU PSYCHIC 5 of 12. Suite 129/129 | — |
+| 389 | **v3.9 retrospective**. FIRST measurement **Y7-ADAPT**: GROUND party + 5th mon SWELLOW; after turn 1 switch the RIGHT battler to SWELLOW (needs battleSwitch for one doubles battler: choose which battler's action menu gets POKéMON); PASS = win, or loss with ≥2 foe faints. A C388 probe of Y7-FLOAT with `target: "opponentRight"` (hit XATU first) still LOST 11t 4/3 (XATU down turn 4), so targeting alone is not the answer either. Decide whether XATU's PSYCHIC (5/12 faints) or the yardstick is wrong; the level dial is spent. Then close the Route 119 rival thread with its ONE last dial (drop STANTLER_HOENN HYPNOSIS; guard winners, accept losers; see "Reflection C387") | — |
 | 390 | **next 10th-cycle maintenance** (memory budget pass; trim pokemon-knowledge trainer-cap-and-notebook-item-v30 / v29-planning-json-tooling-landscape-c301 / v31-physical-register-weather-events, 66-87 lines vs 60, left over C380) | — |
 
 ## v3.0 Den Chapter: Red Ink pages 5-7 (designed C333, shipped C334-C336, playtested C358)

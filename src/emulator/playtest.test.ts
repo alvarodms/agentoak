@@ -22,7 +22,10 @@ import {
   loadPlaytests,
   messageBoxes,
   parsePlaytest,
+  PARTY_MENU_SLOT_ID,
   pickMoveSlot,
+  pickSendOutIndex,
+  pickTargetBattler,
   summarizeBattle,
   summarizeBattles,
   walkToDirections,
@@ -499,6 +502,55 @@ describe("battleTurns step and waitForBattleText forbid", () => {
     expect(pickMoveSlot(moveFor, "SPECIES_DRAGONAIR", 1)).toBe(1);
     expect(pickMoveSlot(moveFor, undefined, 4)).toBe(4);
     expect(pickMoveSlot(undefined, "SPECIES_BRELOOM", 2)).toBe(2);
+  });
+
+  it("parses battleTurns target (doubles) and rejects other targets", () => {
+    for (const target of ["opponentLeft", "opponentRight"]) {
+      const step = { battleTurns: { move: 1, target, until: "x" } };
+      expect(parse(step)).toEqual(step);
+    }
+    expect(() => parse({ battleTurns: { move: 1, target: "ally", until: "x" } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1, target: "OPPONENT_LEFT", until: "x" } })).toThrow();
+  });
+
+  it("pickSendOutIndex skips the battlers on the field (one in singles, two in doubles)", () => {
+    expect(pickSendOutIndex([0, 50, 80], true)).toBe(2);
+    expect(pickSendOutIndex([0, 50], false)).toBe(1);
+    expect(pickSendOutIndex([0, 50], true)).toBe(-1);
+    expect(pickSendOutIndex([0, 0, 0, 0], false)).toBe(-1);
+    expect(pickSendOutIndex([0, 0, 40, 30], true, 2)).toBe(3); // the second menu after a double faint
+    expect(pickSendOutIndex([0, 0, 40, 0], true, 2)).toBe(-1);
+  });
+
+  it("pickTargetBattler (moveFor in doubles) uses opponent-right when opponent-left is down", () => {
+    expect(pickTargetBattler([100, 80, 100, 90])).toBe(1);
+    expect(pickTargetBattler([100, 0, 100, 90])).toBe(3);
+    expect(pickTargetBattler([100, 0, 100, 90], "opponentLeft")).toBe(3);
+    expect(pickTargetBattler([100, 80, 100, 90], "opponentRight")).toBe(3);
+    expect(pickTargetBattler([100, 80, 100, 0], "opponentRight")).toBe(1);
+    expect(pickTargetBattler([100, 80])).toBe(1);
+  });
+
+  it("summarizeBattle counts a doubles turn once: the partner prompt is logged as [partner X]", () => {
+    const log = [
+      "What will SHELGON do?",
+      "[partner LINOONE]",
+      "Foe CLAYDOL used EARTHQUAKE!",
+      "It doesn't affect Foe XATU…",
+      "LINOONE fainted!",
+      "[sent out party menu slot 3]",
+      "What will SHELGON do?",
+      "[partner WHISCASH]",
+      "Foe XATU fainted!",
+    ];
+    expect(summarizeBattle(log)).toMatchObject({ turns: 2, playerFaints: 1, opponentFaints: 1 });
+  });
+
+  it("PARTY_MENU_SLOT_ID is slotId in struct PartyMenu (include/party_menu.h)", () => {
+    const header = fs.readFileSync(path.join(PLAYTESTS_DIR, "..", "include", "party_menu.h"), "utf8");
+    const fields = /struct PartyMenu\s*\{([^}]*)\}/.exec(header)![1];
+    expect(fields).toMatch(/MainCallback exitCallback;\s*TaskFunc task;\s*u8 menuType:4;\s*u8 layout:2;\s*s8 slotId;/);
+    expect(PARTY_MENU_SLOT_ID).toBe(4 + 4 + 1);
   });
 
   it("rejects a move slot outside 1-4 and a missing until", () => {

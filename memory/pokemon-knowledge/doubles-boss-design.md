@@ -1,8 +1,12 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 387 | **Date**: November 2026
+**Cycle**: 388 | **Date**: November 2026
 
 ---
+
+## C388: harness naming + "is the beat already vanilla?"
+- **Players already know this fight.** Strategy guides (rankedboost Emerald T&L page) describe vanilla Emerald's T&L as using Earthquake with Claydol while their Flying/Levitate partners stay unharmed; vanilla R/S advice is "Ground moves fail, bring Water/Grass/Bug/Ghost", which is v3.9's answers (b). The LoH spec keeps Claydol's EQ moveset "unchanged", so the turn-1 EQ may already fire in the current ROM. Measure the Y7 yardsticks on the pre-edit roster first (baseline), then after the Lunatone swap, so the diff shows what v3.9 actually adds.
+- **Harness API precedent**: the pokeemerald-expansion test system (DOUBLE_BATTLE_TEST) names the battlers `playerLeft / playerRight / opponentLeft / opponentRight`, gives targets explicitly only when needed (`target:`), and specifies the AI's actions with EXPECT_MOVE / EXPECT_SEND_OUT / EXPECT_SWITCH. Copy those names for `battleTurns target`, and treat a send-out after a faint as its own step. Inclement's doubles softlocks (below) were on the faint/replace path.
 
 ## C387: Tate & Liza "ground that doesn't touch them"
 - **Vanilla Emerald team is already 4/4 EQ-immune** (Bulbapedia): Claydol 41 (Levitate), Xatu 41 (Flying), Lunatone 42 + Solrock 42 (Levitate); Tate always leads Solrock, Liza Lunatone. So v3.9's premise is mostly *move choice + timing*, not a new roster. Check trainer_parties.h to see whether vanilla Claydol already carries EARTHQUAKE.
@@ -29,4 +33,6 @@
 - https://www.smogon.com/forums/threads/kingdra-uber-analysis.80474
 - https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581
 - https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
+- https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system
+- https://rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald/
 - https://docs.google.com/document/u/0/d/13E61Jj4KwhIy3ZKgLjPY-_uWKWklfBR_zUlhZHUZqik/mobilebasic (Gen 3 partner AI notes)

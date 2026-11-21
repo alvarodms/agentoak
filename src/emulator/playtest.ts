@@ -31,6 +31,8 @@ const Direction = z.enum(["up", "down", "left", "right"]);
 const Strings = z.union([z.string(), z.array(z.string())]);
 const ItemName = z.string().regex(/^ITEM_[A-Z0-9_]+$/);
 const SpeciesName = z.string().regex(/^SPECIES_[A-Z0-9_]+$/);
+const BattleTarget = z.enum(["opponentLeft", "opponentRight"]);
+type BattleTarget = z.infer<typeof BattleTarget>;
 
 /**
  * Match Call contacts pokenavCall can ring. header: their MC_HEADER_* (include/pokenav.h; a unit
@@ -217,10 +219,14 @@ const StepSchema = z.union([
      * `moveFor`: per-foe slot override, keyed by the foe's species constant as expectBattle reads it
      * (e.g. {"SPECIES_STANTLER_HOENN": 2}); each turn uses `moveFor[foe] ?? move`. Line the party's moves
      * up by role (e.g. slot 2 = the anti-Grass move on every mon) so one slot fits whoever is out.
+     * Double battles are detected: both of the player's battlers pick FIGHT → the same slot, and a
+     * single-target move's target prompt is answered with `target` (default "opponentLeft"; the other
+     * foe when that one is gone). Spread moves (SURF, EARTHQUAKE) have no prompt.
      */
     battleTurns: z.strictObject({
       move: z.number().int().min(1).max(4),
       moveFor: z.record(z.string(), z.number().int().min(1).max(4)).optional(),
+      target: BattleTarget.optional(),
       until: Strings,
       maxTurns: z.number().int().positive().optional(),
       forbid: Strings.optional(),
@@ -628,9 +634,9 @@ async function runStep(
   }
 
   if ("battleTurns" in step) {
-    const { move, moveFor, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
+    const { move, moveFor, target, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
     result.battleLog ??= [];
-    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, moveFor, log: result.battleLog });
+    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, moveFor, target, log: result.battleLog });
     const hp = (await s.readState()).party.map((mon) => (mon.maxHp ? Math.round((100 * mon.hp) / mon.maxHp) : 0));
     result.battleLog.push(`${PARTY_HP_MARK}${hp.join(",")}]`);
     result.battleSummaries = summarizeBattles(result.battleLog);
@@ -712,10 +718,104 @@ export function pickMoveSlot(moveFor: Readonly<Record<string, number>> | undefin
   return (speciesName !== undefined ? moveFor?.[speciesName] : undefined) ?? move;
 }
 
+/** gBattleTypeFlags bit for a double battle (include/constants/battle.h). */
+const BATTLE_TYPE_DOUBLE = 1 << 0;
+/** Battler ids in a double battle (B_POSITION_*): the player's 0 (left) and 2 (right), the foe's 1 (left) and 3 (right). */
+const OPPONENT_LEFT = 1;
+const OPPONENT_RIGHT = 3;
+/** Offset of s8 slotId in struct PartyMenu (include/party_menu.h: two pointers, a bitfield byte, then slotId). */
+export const PARTY_MENU_SLOT_ID = 9;
+
+/**
+ * Doubles: the foe battler a single-target move will hit, from gBattleMons HP in battler order.
+ * `target`'s side when that foe is standing, else the other foe (the game's own fallback).
+ */
+export function pickTargetBattler(battleHp: readonly (number | undefined)[], target: BattleTarget = "opponentLeft"): number {
+  const [want, other] = target === "opponentRight" ? [OPPONENT_RIGHT, OPPONENT_LEFT] : [OPPONENT_LEFT, OPPONENT_RIGHT];
+  return (battleHp[want] ?? 0) <= 0 && (battleHp[other] ?? 0) > 0 ? other : want;
+}
+
+/**
+ * The send-out party menu's pick: the first healthy Pokémon after the ones on the field (index 1 in singles,
+ * where index 0 is the fainted one; index 2 in doubles, where indexes 0-1 are both battlers) and after `after`.
+ * -1 when there is none.
+ */
+export function pickSendOutIndex(partyHp: readonly number[], doubles: boolean, after = -1): number {
+  const first = Math.max(doubles ? 2 : 1, after + 1);
+  for (let i = first; i < partyHp.length; i++) if (partyHp[i] > 0) return i;
+  return -1;
+}
+
+/** "What will LINOONE do?" → "LINOONE" (the battleLog partner marker must not repeat "What will"). */
+const promptName = (text: string) => /What will (.*?) do\?/.exec(text)?.[1] ?? text.replace("What will", "").trim();
+
+const isDoubleBattle = async (s: EmulatorSession) => ((await s.readU32(s.symbols.address("gBattleTypeFlags"))) & BATTLE_TYPE_DOUBLE) !== 0;
+
+/** True if one of the player's battlers (0, 2) runs battle_controller_player.c's `fn` right now. */
+async function playerControllerIs(s: EmulatorSession, fn: string): Promise<boolean> {
+  const want = (s.symbols.address(fn, "src/battle_controller_player.o") & ~1) >>> 0;
+  const funcs = await s.read(s.symbols.address("gBattlerControllerFuncs"), 4 * 4);
+  return [0, 2].some((b) => ((funcs.readUInt32LE(b * 4) & ~1) >>> 0) === want);
+}
+
+/**
+ * Doubles, right after A on a move: if the game opened the target prompt (HandleInputChooseTarget; it prints no
+ * text), answer it. The cursor starts on opponent-left, or opponent-right when the left is gone; for
+ * "opponentRight" LEFT moves it there (sTargetIdentities order), checked with gMultiUsePlayerCursor.
+ */
+async function answerTargetPrompt(s: EmulatorSession, target: BattleTarget, label: string, log?: string[]): Promise<void> {
+  if (!(await playerControllerIs(s, "HandleInputChooseTarget"))) return; // spread or self move, or one foe left
+  const cursor = s.symbols.address("gMultiUsePlayerCursor");
+  if (target === "opponentRight") {
+    const battle = (await s.readState()).battle;
+    if ((battle?.[OPPONENT_RIGHT]?.hp ?? 0) > 0) {
+      if ((await s.readU8(cursor)) !== OPPONENT_RIGHT) await s.press("LEFT");
+      const got = await s.readU8(cursor);
+      if (got !== OPPONENT_RIGHT) fail(`${label}: target prompt cursor is on battler ${got} after LEFT, expected opponent-right (${OPPONENT_RIGHT})`);
+      log?.push("[target opponentRight]");
+    }
+  }
+  await s.press("A");
+}
+
+/**
+ * battleTurns' start: taps B to the next "What will" like waitForBattleText, logging the messages on the way
+ * (the rest of a turn an earlier battleTurns stopped in) and checking `forbid`. With `replace`, a faint in that
+ * rest of the turn gets its send-out instead of stalling on the party menu.
+ */
+async function finishTurn(s: EmulatorSession, label: string, doubles: boolean, replace: boolean, forbid: readonly string[], log?: string[]): Promise<void> {
+  let text = "";
+  // The message an earlier battleTurns stopped on is still showing and already logged.
+  const seen = [...(log ?? []).filter((m) => !m.startsWith("[")).slice(-1)];
+  const stale = seen.length;
+  for (let f = 0; f <= 3600; f += 30) {
+    const cb = (await s.callbacks()).callback2;
+    if (replace && cb !== "BattleMainCB2" && cb !== "CB2_Overworld") {
+      log?.push(`[sent out party menu slot ${await sendOutNext(s, label, doubles)}]`);
+      continue;
+    }
+    text = await battleText(s);
+    if (text.includes("What will")) {
+      await s.run(30); // let the menu that follows the message take input
+      return;
+    }
+    if (text.trim() && text !== seen.at(-1)) {
+      seen.push(text);
+      log?.push(text);
+      const bad = forbidden(text, forbid);
+      if (bad) fail(`${label}: the turn it started in showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen.slice(stale))}`);
+    }
+    await s.press("B", { hold: 2, release: 28 });
+  }
+  fail(`${label}: battle text never showed "What will" in 3600 frames; last ${JSON.stringify(text)}`);
+}
+
 /**
  * battleTurns: each turn FIGHT → move slot `move`, then B through the turn, until every
  * `until` string has shown in some message. Returns right after the message that completes
  * the set (mid-turn), so a following waitForBattleText or battleTurns picks up from there.
+ * In a double battle the second battler's action menu (a new "What will … do?") gets the same
+ * choice, logged as `[partner NAME]` so the turn is counted once, and target prompts are answered.
  */
 async function battleTurns(
   s: EmulatorSession,
@@ -723,7 +823,7 @@ async function battleTurns(
   until: readonly string[],
   maxTurns: number,
   forbid: readonly string[],
-  opts: { any?: boolean; replace?: boolean; moveFor?: Record<string, number>; log?: string[] } = {},
+  opts: { any?: boolean; replace?: boolean; moveFor?: Record<string, number>; target?: BattleTarget; log?: string[] } = {},
 ): Promise<void> {
   const label = `battleTurns move ${move}`;
   const seen: string[] = [];
@@ -731,12 +831,15 @@ async function battleTurns(
     const left = until.filter((u) => !seen.some((m) => m.includes(flatten(u))));
     return opts.any && left.length < until.length ? [] : left;
   };
-  await waitForBattleText(s, "What will", 1800);
-  for (let turn = 1; turn <= maxTurns; turn++) {
-    opts.log?.push(await battleText(s)); // the "What will … do?" prompt: summarizeBattle counts these as turns
+  const doubles = await isDoubleBattle(s);
+  await finishTurn(s, label, doubles, opts.replace ?? false, forbid, opts.log);
+  const target = opts.target ?? "opponentLeft";
+  /** FIGHT → this turn's slot for the battler whose action menu is open; returns the move menu's text. */
+  const fight = async (): Promise<{ slot: number; menu: string }> => {
     let slot = move;
     if (opts.moveFor) {
-      const foe = (await s.readState()).battle?.[1]?.speciesName;
+      const battle = (await s.readState()).battle;
+      const foe = battle?.[doubles ? pickTargetBattler(battle.map((m) => m.hp), target) : 1]?.speciesName;
       slot = pickMoveSlot(opts.moveFor, foe, move);
       opts.log?.push(`[moveFor ${foe} → slot ${slot}]`);
     }
@@ -750,17 +853,38 @@ async function battleTurns(
     for (const b of MOVE_SLOT_PATH[slot]) await s.press(b);
     const menu = await battleText(s);
     await s.press("A");
+    if (doubles) await answerTargetPrompt(s, target, label, opts.log);
+    return { slot, menu };
+  };
+  for (let turn = 1; turn <= maxTurns; turn++) {
+    const prompt = await battleText(s);
+    opts.log?.push(prompt); // the "What will … do?" prompt: summarizeBattle counts these as turns
+    let { slot, menu } = await fight();
+    let partnerDone = !doubles;
     // B in the move menu would cancel the choice: wait for the turn's first message before tapping it.
     let text = await battleText(s);
     for (let f = 0; text.includes("What will") || text === menu; f += 10) {
-      if (f >= 600) fail(`${label}: turn ${turn} never started (is slot ${slot} empty, or out of PP?); battle text ${JSON.stringify(text)}`);
+      if (!partnerDone && text.includes("What will") && text !== prompt) {
+        // Doubles: the second battler's action menu.
+        partnerDone = true;
+        opts.log?.push(`[partner ${promptName(text)}]`);
+        await s.run(30); // let the action menu take input
+        ({ slot, menu } = await fight());
+        f = -10;
+        text = await battleText(s);
+        continue;
+      }
+      if (f >= 600) {
+        const twin = doubles && !partnerDone ? " In a double battle this also happens when both of your battlers share a display name." : "";
+        fail(`${label}: turn ${turn} never started (is slot ${slot} empty, or out of PP?); battle text ${JSON.stringify(text)}.${twin}`);
+      }
       await s.run(10);
       text = await battleText(s);
     }
     for (let f = 0; ; f += 30) {
       const cb = (await s.callbacks()).callback2;
       if (cb !== "BattleMainCB2" && opts.replace && cb !== "CB2_Overworld") {
-        const sent = await sendOutNext(s, label);
+        const sent = await sendOutNext(s, label, doubles);
         seen.push(`[sent out party menu slot ${sent}]`);
         opts.log?.push(seen.at(-1)!);
         continue;
@@ -792,24 +916,60 @@ async function battleTurns(
  * After a faint the game opens the party menu itself (B can't close it). While it is open gPlayerParty is in the
  * menu's order (UpdatePartyToBattleOrder), with the fainted Pokémon on slot 1. Picks the first healthy one below it,
  * then SEND OUT, and waits for the battle. Returns the 1-based menu slot it sent out.
+ * Doubles: slots 1-2 are both battlers, so it picks from slot 3 on, moving the cursor until gPartyMenu.slotId is
+ * there. When two of yours faint in one turn the second menu refuses the first one's pick ("already been
+ * selected"); it then dismisses the message and takes the next healthy one.
  */
-async function sendOutNext(s: EmulatorSession, label: string): Promise<number> {
+async function sendOutNext(s: EmulatorSession, label: string, doubles = false): Promise<number> {
   for (let f = 0; !(await s.callbacks()).callback2.startsWith("CB2_UpdatePartyMenu"); f += 10) {
     if (f >= 600) fail(`${label}: left the battle screen but no party menu opened (callback2 ${(await s.callbacks()).callback2})`);
     await s.run(10);
   }
   await s.run(60); // let the party menu fade in and take input
-  const index = (await s.readState()).party.findIndex((mon, i) => i > 0 && mon.hp > 0);
+  const partyHp = (await s.readState()).party.map((mon) => mon.hp);
+  let index = pickSendOutIndex(partyHp, doubles);
   if (index < 0) fail(`${label}: the send-out party menu opened with no healthy Pokémon to pick`);
-  for (let i = 0; i < index; i++) await s.press("DOWN");
-  await s.press("A"); // opens SEND OUT / SUMMARY / CANCEL, SEND OUT first
-  await s.run(20);
-  await s.press("A");
-  for (let f = 0; (await s.callbacks()).callback2 !== "BattleMainCB2"; f += 10) {
-    if (f >= 600) fail(`${label}: never returned to battle after sending out menu slot ${index + 1}`);
-    await s.run(10);
+  if (!doubles) {
+    for (let i = 0; i < index; i++) await s.press("DOWN");
+    await s.press("A"); // opens SEND OUT / SUMMARY / CANCEL, SEND OUT first
+    await s.run(20);
+    await s.press("A");
+    for (let f = 0; (await s.callbacks()).callback2 !== "BattleMainCB2"; f += 10) {
+      if (f >= 600) fail(`${label}: never returned to battle after sending out menu slot ${index + 1}`);
+      await s.run(10);
+    }
+    return index + 1;
   }
-  return index + 1;
+  const slotId = s.symbols.address("gPartyMenu") + PARTY_MENU_SLOT_ID;
+  const message = s.symbols.address("gStringVar4");
+  for (;;) {
+    for (let i = 0; ; i++) {
+      const at = await s.readU8(slotId);
+      if (at === index) break;
+      if (i >= 12) fail(`${label}: the doubles party menu cursor is on slot ${at + 1}, not ${index + 1}, after ${i} presses`);
+      await s.press(at < index || at > 5 ? "DOWN" : "UP");
+    }
+    await s.write(message, Uint8Array.of(0xff)); // a refusal prints into gStringVar4
+    await s.press("A"); // opens SEND OUT / SUMMARY / CANCEL, SEND OUT first
+    await s.run(20);
+    await s.press("A");
+    let refused = false;
+    for (let f = 0; (await s.callbacks()).callback2 !== "BattleMainCB2"; f += 10) {
+      if (f >= 600) fail(`${label}: never returned to battle after sending out menu slot ${index + 1}`);
+      if (f >= 60 && (await s.readText(message, 60)).trim()) {
+        refused = true;
+        break;
+      }
+      await s.run(10);
+    }
+    if (!refused) return index + 1;
+    const why = flatten(await s.readText(message, 60));
+    await s.press("B", { hold: 2, release: 28 }); // dismiss the message; the menu is back on the party list
+    await s.run(30);
+    const next = pickSendOutIndex(partyHp, true, index);
+    if (next < 0) fail(`${label}: the send-out menu refused slot ${index + 1} (${JSON.stringify(why)}) and no other healthy Pokémon is left`);
+    index = next;
+  }
 }
 
 /**
