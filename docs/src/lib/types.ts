@@ -96,13 +96,48 @@ export interface StarterEntry {
   types: string[];
 }
 
+export interface GymRematch {
+  name: string;
+  gym: number;
+  type: string;
+  location: string;
+  tier: number;
+  doubleBattle?: boolean;
+  party: PartyMember[];
+}
+
+export interface E4Rematch {
+  name: string;
+  type: string;
+  tier: number;
+  party: PartyMember[];
+}
+
+export interface ChampionRematch {
+  name: string;
+  tier: number;
+  party: PartyMember[];
+}
+
+export interface RouteTrainer {
+  trainerId: string;
+  name: string;
+  trainerClass: string;
+  doubleBattle?: boolean;
+  party: PartyMember[];
+}
+
 export interface GuideData {
   starters: StarterEntry[];
   gymLeaders: GymLeader[];
+  gymRematches: GymRematch[];
   eliteFour: EliteFourMember[];
+  e4Rematches: E4Rematch[];
   champion: Champion | null;
+  championRematches: ChampionRematch[];
   rivals: RivalBattle[];
   bossFights: BossBattle[];
+  routeTrainers: Record<string, RouteTrainer[]>;
   routes: Record<string, RouteData>;
 }
 
