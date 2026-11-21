@@ -38,5 +38,19 @@ Common setup: checkpoint fortree_arrival, MAP_FORTREE_CITY_GYM 15,3 (below Winon
 - Verdict for the C385+ retrospective: PASS on both hypothesis legs; the Designer predicted 1 faint at full HP, measured 0.
 - Unchanged by the C change (same suite run): wi-shelly-full-party WIN 11 turns / 2 faints; wi-shelly-worn-party LOSS 8 turns / 3 faints (= C382).
 
+## C386 retrospective (closed; decisions in strategy-notes "v3.8 retrospective")
+- **`playtests/winona-sun-full-party.json`**: guard tightened to `{outcome: win, maxPlayerFaints: 1}`, checks text updated (re-measured WIN 5 turns / 0 faints / PUPITAR 2%). No steps changed.
+- **New report-only rival playtests** (copies of route119-rival-rain-worn-party with every `hpPercent: 50` removed; male player → MAY; rain asserted; mapping verified in Route119/scripts.inc `switch VAR_STARTER_MON` 0/1/2 → _TREECKO/_TORCHIC/_MUDKIP):
+  | Playtest | VAR_STARTER_MON → lead | Baseline | After F1 | After F1+F2 |
+  |---|---|---|---|---|
+  | route119-rival-rain-full-party | 1 → SHELGON 28 (SWAMPERT 31) | LOSS 13t / 3 faints / 2 foe | LOSS 11t / 3 / 2 | LOSS 12t / 3 / 2 |
+  | route119-rival-rain-full-party-treecko | 0 → DRAGONAIR 28 (BLAZIKEN 31) | LOSS 13t / 3 / 0 | same | same |
+  | route119-rival-rain-full-party-mudkip | 2 → PUPITAR 28 (SCEPTILE 31) | LOSS 10t / 3 / 2 | same | same |
+  | route119-rival-rain-worn-party (C385) | 1 → SHELGON 28 | LOSS 10t / 3 / 1 | LOSS 11t / 3 / 2 | LOSS 10t / 3 / 1 |
+  End HP 0/0/0 in every run. The Torchic full-HP file stays report-only (FAIL after F2); its checks text records the three results.
+- **`src/data/trainer_parties.h`** (rule-bound fix, both sParty_MayRoute119Torchic and sParty_BrendanRoute119Torchic, MANECTRIC entry only): F1 `.heldItem` ITEM_MAGNET → ITEM_ORAN_BERRY; F2 MOVE_THUNDERBOLT → MOVE_SHOCK_WAVE (moves now SHOCK_WAVE, BITE, QUICK_ATTACK, THUNDER_WAVE). Kept despite FAIL (plan rule). Treecko/Mudkip parties untouched.
+- Why it still loses: baseline, MIGHTYENA's BITE KOs MANECTRIC and STANTLER_HOENN (SPELL_TAG, Intimidate) then sweeps, since slot-1 HEADBUTT can't hit a Ghost. After F1+F2, the ORAN BERRY and THUNDER WAVE let MANECTRIC take all three. Treecko: BRELOOM SPORE/LEECH SEED/MACH PUNCH, 0 foe faints. Mudkip: HARIYAMA ROCK SLIDE.
+- Suite 123/123 at C386; `make -k check_all` green.
+
 ## Index row
-| v3.8 Above the storm (Winona's sun) | 384 | include/trainer_battle_weather.h (new), src/battle_util.c, winona_gym_1.json, trainer_parties.h, FortreeCity_Gym/scripts.inc, 5 playtests | this file |
+| v3.8 Above the storm (Winona's sun) | 384, 386 | include/trainer_battle_weather.h (new), src/battle_util.c, winona_gym_1.json, trainer_parties.h, FortreeCity_Gym/scripts.inc, 5 playtests | this file |

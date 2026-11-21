@@ -8849,8 +8849,8 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Torchic[] = 
     .iv = 100,
     .lvl = 28,
     .species = SPECIES_MANECTRIC,
-    .heldItem = ITEM_MAGNET,
-    .moves = {MOVE_THUNDERBOLT, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_SHOCK_WAVE, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 100,
@@ -9038,8 +9038,8 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Torchic[] = {
     .iv = 100,
     .lvl = 28,
     .species = SPECIES_MANECTRIC,
-    .heldItem = ITEM_MAGNET,
-    .moves = {MOVE_THUNDERBOLT, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_SHOCK_WAVE, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 100,

@@ -1,8 +1,15 @@
 # Champion Design & Mid-Game Encounter Pacing — ROM Hack Patterns
 
-**Cycle**: 384 | **Date**: November 2026 (first written C298)
+**Cycle**: 386 | **Date**: November 2026 (first written C298)
 
 ---
+
+## C386: Route 119 rival + the Hours 10-15 lever
+- **Vanilla Route 119 rival is the level-cap marker (31)** and guides call it "challenging". The vanilla team (Mudkip-player case: Slugma 29 / Lombre 29 / Pelipper 29 / Grovyle 31) has no Electric attacker; it *carries* a Pelipper (4x Electric weak). LoH's MANECTRIC (MAGNET) inverts that: the rival now punishes the commonest mid-game Water/Flying pick. A design choice, not vanilla.
+- **Rival fights are a known complaint point**: Emerald Kaizo's changelog had to fix "weird movesets in Rival Battles near Trick House and Mauville". Players read rival fights as fair/unfair by moveset, not level.
+- **Tag/multi battles are engine-fragile in Gen 3.** The Mossdeep Space Center Steven tag battle is the only one and is hard-coded; Kaizo "fixed that Tag Team battle with a compromise". Decomp threads report freezes when swapping a partner's mons and partners that do nothing. No hack found with a partner who betrays the player mid-battle.
+- Applied: the double-battle lever is safest as a vanilla two-trainer doubles (C322 rules); "betrayal" belongs in the script, not a custom multi-battle.
+- Sources: rankedboost.com/pokemon/location/emerald/route-119; pokecommunity.com threads 395830 (Kaizo), 438120 + 438354 (tag battles), 425516.
 
 ## C384: Winona in sun (v3.8 "Above the storm")
 - **Vanilla already contains the sun plan.** Gym Tropius Lv29 has Chlorophyll + SUNNY_DAY / AERIAL_ACE / SOLAR_BEAM / SYNTHESIS (Serebii, RankedBoost). The rematch swaps Synthesis for EARTHQUAKE. In Gen 3, Chlorophyll is Tropius's only ability, so slot 0 = Chlorophyll.
@@ -30,25 +37,6 @@
 - **Applied here:** this project has no level scaling, so an optional loud fight needs a gate that pins the player's level band (badge N, not N+1) or a seat on the critical path. Our own v3.5 finding (WREN at the band floor = a gesture, not a wall) shows the inverse failure.
 - Sources: pokecommunity.com threads 498874 (Horizons) and 534582 (Imperium); r/PokemonROMhacks weekly thread 1ib3327; github.com/pkmnsnfrn/pokeemerald-expansion.
 
-## Champion as Narrative Thesis
-
-Issue #182 claims top hacks create original champions that embody their hack's identity. Evidence is mixed:
-
-- **Unbound**: Champion is **Jax, the rival** — NOT an original thematic character. The narrative payoff comes from the personal rivalry arc, not from a bespoke "thesis statement" champion. Jax uses a diverse team (double battle format) rather than a themed one. The emotional weight comes from the relationship, not the roster.
-- **Reborn** (19 gyms, 200+ hours): Final fights involve the player character's arc and the game's environmental collapse theme. The champion equivalent IS narrative — but Reborn is a full fangame with 5+ years of writing, not a ROM hack.
-- **Radical Red**: Champion is Lance with competitive-tier teams (Garchomp, Dragonite, Primal Dialga on Insane). No narrative payoff — it's a difficulty hack. The "thesis" is "can you beat this?"
-- **Ephemerald**: Uses vanilla structure with all-regional-form teams. No new champion character.
-
-**Takeaway**: Creating a fully original champion character is rare even among top-tier hacks. Unbound — widely considered the best Emerald hack — uses the rival. The more proven pattern is giving an existing character a team and dialogue that reflects the hack's theme.
-
-## Mid-Game Regional Form Pacing
-
-- **Ephemerald** (382 Sapphosian Forms): Every catchable Pokémon is a regional form, every route has them. The "gap" problem literally cannot exist.
-- **PokéCommunity advice** (regional form hack thread): Developers are warned that regional forms need consistent distribution or players lose the "discovery loop." Forms appearing, vanishing for several routes, then reappearing feels like an unfinished hack.
-- **3-Point Acknowledgment rule** (from C267 research, validated here): Forms without route NPC + trainer + distant echo feel like "encounter table bloat." A mid-game gap is the inverse problem: no forms at all = players forget the mechanic exists.
-
-## Sources
-- [Unbound Elite Four & Champion Wiki](https://unboundwiki.com/elite-four/)
-- [Unbound Pokémon League Walkthrough](https://unboundwiki.com/walkthrough/part-39/)
-- [Ephemerald PokéCommunity Thread](https://www.pokecommunity.com/threads/pokémon-ephemerald-a-full-regional-forme-romhack-v1-0-release.472780/)
-- [PokéCommunity — Regional Form Hack Advice](https://www.pokecommunity.com/threads/rom-hack-ideas-feedback-and-advice-regional-forms.455914/)
+## Older (C298, applied)
+- Champion: original thesis champions are rare; Unbound uses the rival (Jax), Radical Red uses Lance. Proven pattern = existing character + themed team/dialogue (unboundwiki.com/elite-four).
+- Regional-form pacing: forms must appear steadily (PokeCommunity thread 455914); route NPC + trainer + distant echo or they read as table bloat.

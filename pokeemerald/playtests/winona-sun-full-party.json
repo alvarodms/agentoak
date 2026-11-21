@@ -1,6 +1,6 @@
 {
   "name": "winona-sun-full-party",
-  "checks": "C384 v3.8 Above the storm, the design hypothesis (full HP): the same yardstick HOUNDOOM 31 / PUPITAR 33 / MANECTRIC 31 at full HP, no bag, on the same line as winona-sun-worn-party, beats WINONA in permanent harsh sun losing at most 2 Pokémon. FAIL-hard guard: any roster or engine change that flips this fails the suite (expectBattleSummary outcome win, maxPlayerFaints 2).",
+  "checks": "C384 v3.8 Above the storm, the design hypothesis (full HP): the same yardstick HOUNDOOM 31 / PUPITAR 33 / MANECTRIC 31 at full HP, no bag, on the same line as winona-sun-worn-party, beats WINONA in permanent harsh sun losing at most 1 Pokémon. FAIL-hard guard: any roster or engine change that flips this fails the suite (expectBattleSummary outcome win, maxPlayerFaints 1; tightened C386, measured 0 faints / PUPITAR 2%).",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "map": "MAP_FORTREE_CITY_GYM",
@@ -121,7 +121,7 @@
     {
       "expectBattleSummary": {
         "outcome": "win",
-        "maxPlayerFaints": 2
+        "maxPlayerFaints": 1
       }
     },
     {

@@ -25,5 +25,8 @@ From Shelly's defeat until the first Fortree visit, Route 119 holds light rain w
 - `route119-storm-tail-hartley`: boots 27,27 with FLAG_VISITED_FORTREE_CITY and FLAG_ROUTE119_MIGRATION_EVENT clear, walks onto 27,26: Hartley's 4 existing boxes ("This is no ordinary storm!"), flag set, then RAIN.
 - Suite 114/114 at C383 (npm test 499/499, build:check clean).
 
+## C386: rival in the storm tail
+Full-HP rival measurements for all three starter variants and the Torchic-variant MANECTRIC F1+F2 edit in trainer_parties.h (sParty_MayRoute119Torchic / sParty_BrendanRoute119Torchic): see [v38-above-the-storm.md](v38-above-the-storm.md) "C386 retrospective". Rain was never the decider.
+
 ## Index row
 | v3.7 coda Storm tail (Route 119 rain until Fortree) | 383 | Route119/scripts.inc, Route119/map.json, beats.json, lib/beats.cjs, 3 playtests | this file |
