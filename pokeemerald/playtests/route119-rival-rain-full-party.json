@@ -1,6 +1,6 @@
 {
   "name": "route119-rival-rain-full-party",
-  "checks": "C386 decision test (Game Designer hypothesis: Hours 6-10 read loud → breath → loud). The C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30 at FULL HP, no bag, slot-1 spam, meets the rival's SWAMPERT 31 team (VAR_STARTER_MON 1) in the held storm-tail rain. PASS = win with at most 1 player faint. C386 result: FAIL at baseline (LOSS 13t/3 faints), after F1 MANECTRIC ORAN_BERRY (LOSS 11t/3) and after F1+F2 SHOCK_WAVE (LOSS 12t/3); F1+F2 kept, stays report-only, C387 to decide (levels or roster).",
+  "checks": "C386 decision test (Game Designer hypothesis: Hours 6-10 read loud → breath → loud). The C376 yardstick MIGHTYENA 28 / PELIPPER 28 / SHELGON 30 at FULL HP, no bag, slot-1 spam, meets the rival's SWAMPERT 31 team (VAR_STARTER_MON 1) in the held storm-tail rain. PASS = win with at most 1 player faint. C386 result: FAIL at baseline (LOSS 13t/3 faints), after F1 MANECTRIC ORAN_BERRY (LOSS 11t/3) and after F1+F2 SHOCK_WAVE (LOSS 12t/3); F1+F2 kept, stays report-only, C387 to decide (levels or roster). C387: rival non-aces 28→26 (lead expectBattle level 26).",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "map": "MAP_ROUTE119",
@@ -56,7 +56,7 @@
     { "expectText": "I was hoping to run into you." },
     { "waitFor": "battle", "maxFrames": 1200 },
     { "waitForBattleText": "What will", "maxFrames": 1800 },
-    { "expectBattle": { "opponent": "SPECIES_SHELGON", "level": 28 } },
+    { "expectBattle": { "opponent": "SPECIES_SHELGON", "level": 26 } },
     { "expectBattleWeather": "rain" },
     { "comment": "the same policy as wi-shelly-worn-party: repeat slot 1 (BITE / WATER_GUN / HEADBUTT), sending in the next healthy Pokémon on a faint" },
     {

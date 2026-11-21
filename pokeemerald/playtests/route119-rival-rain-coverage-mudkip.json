@@ -1,0 +1,71 @@
+{
+  "name": "route119-rival-rain-coverage-mudkip",
+  "checks": "C387: coverage yardstick (moveFor) vs the rival's SCEPTILE team in storm-tail rain; guard win + maxPlayerFaints 2. Measured C387: Lv28 LOSS 9t/3/2; Lv26 LOSS 13t/3/3 (STANTLER_HOENN down, SCEPTILE last); non-aces kept at 26 (one step only), so this stays report-only as an open FAIL for C388 (STANTLER_HOENN HYPNOSIS/LEECH_SEED/SHADOW_BALL decides it).",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_ROUTE119",
+    "x": 26,
+    "y": 33,
+    "gender": "male",
+    "clearFlags": [
+      "FLAG_VISITED_FORTREE_CITY"
+    ],
+    "flags": [
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_MIGHTYENA",
+        "level": 28,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_STRENGTH",
+          "MOVE_FACADE",
+          "MOVE_SWAGGER"
+        ]
+      },
+      {
+        "species": "SPECIES_PELIPPER",
+        "level": 28,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_WING_ATTACK",
+          "MOVE_WATER_GUN",
+          "MOVE_PROTECT"
+        ]
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 30,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_STRENGTH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    { "comment": "Boots on 26,33 (sand, c0 e3; `node scripts/map_scan.cjs Route119 22-30 29-35`), two tiles south of RivalTrigger2 at 26,31. No trainer nearby; the bike rival rides in along row 33 and up to 26,32 after the player has moved on. fortree_arrival holds VAR_WEATHER_INSTITUTE_STATE 2, so with FLAG_VISITED_FORTREE_CITY cleared the storm tail (C383) holds light rain." },
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "setVar": { "VAR_ROUTE119_STATE": 0 } },
+    { "setVar": { "VAR_STARTER_MON": 2 } },
+    { "setVar": { "VAR_REPEL_STEP_COUNT": 250 } },
+    { "expectVar": { "VAR_WEATHER_INSTITUTE_STATE": 2 } },
+    { "expectFieldWeather": "WEATHER_RAIN" },
+    { "walk": "up", "tiles": 2 },
+    { "talk": { "start": false } },
+    { "expectText": "I was hoping to run into you." },
+    { "waitFor": "battle", "maxFrames": 1200 },
+    { "waitForBattleText": "What will", "maxFrames": 1800 },
+    { "expectBattle": { "opponent": "SPECIES_PUPITAR", "level": 26 } },
+    { "expectBattleWeather": "rain" },
+    { "comment": "moves lined up by role: slot 1 BITE/SURF/BITE (hits the Ghost STANTLER_HOENN), slot 2 STRENGTH/WING_ATTACK/STRENGTH (anti-Grass/Fighting), slot 3 FACADE/WATER_GUN/HEADBUTT (anti-Fire); moveFor picks the slot for whichever foe is out" },
+    { "battleTurns": { "move": 1, "moveFor": { "SPECIES_PUPITAR": 1, "SPECIES_HARIYAMA": 2, "SPECIES_STANTLER_HOENN": 1, "SPECIES_SCEPTILE": 2 }, "until": ["You're still ahead of me", "whited out"], "any": true, "replace": true, "maxTurns": 40 } },
+    { "comment": "C387: report only until the variant wins at full HP; then expectBattleSummary {outcome win, maxPlayerFaints 2}" },
+    { "expectBattleSummary": { } },
+    { "screenshot": "route119-rival-rain-coverage-mudkip-end" }
+  ]
+}

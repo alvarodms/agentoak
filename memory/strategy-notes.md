@@ -54,76 +54,19 @@ Step numbers for each beat: memory/playtest-checklist.md (human-tester route; op
 # v3.4 "Word Travels" (planned C366; built C367-C370; closed C371)
 Two Hours 3-6 beats, both emulator-verified: Route 109 "Storm watch" (gate 0x35; LOTAD DOLL 24,19 + kids face the sea; Tuber TOBY slot 462, one PLUSLE 10 SHOCK_WAVE since C372) and Mauville "Half a fact" (ungated; Youngster DAX slot 485 at 10,7, SANDSHREW 19/TRAPINCH 20). Retrospective: player-journey-map.md "v3.4 Word Travels — retrospective (C371)". Design, rules, chains: completed-work/v34-word-travels.md. **Rules that outlive v3.4**: exactly one line per arc names a source; no Water/Rock type on a "half-known fact" trainer (Gligar_H is Water/Rock); no HIKER sprite for a stranger; gates only 0x35 / 0x36 / party species / none (never a dex check or notebook flag alone); visible change before the first field box (0). **Fixed C372**: TOBY ≤6 ABSORB turns (one Lv10 PLUSLE, SHOCK_WAVE only; measured 4 for the Lv18 Lotad_H).
 
-# v3.5 "Taken North" (planned C371; checkpoint C372; Beats 1+2 SHIPPED C375; C374 LOST; closed C378, retrospective below)
-
-**Premise**: "In Slateport they heard it. In Fortree they believe it. The player's page-1 correction (LOTAD is ELECTRIC/GRASS; lightning barely touches it) has become a storm charm in Fortree: LOTAD DOLLs set out on the walkways facing Route 119, where the storms come from. It is proud and slightly wrong: a LOTAD isn't hurt by lightning, but it doesn't keep lightning away. And for the first time in the arc, someone who acts on the ink comes to the player: a sighted trainer on the path the player has to walk."
-
-**Compacted C378** (full C371 design, evidence scans (i)-(iv), dialogue and playtest specs: git history of this file at 9682ab2). Kept live facts for v3.6:
-- **Geometry**: Route 119 joins Fortree's WEST edge (connection `left`), so "facing the storms" = FACE_LEFT. Both beats sit in the entrance meadow (x0-4, rows 7-11); column 3 rows 7-11 is the whole crossing (rows 6/12 c1), so a sight-4 FACE_DOWN trainer on 3,7 spots every first arrival. Row-4 walkway is blocked at 15,4 by the Ninetales elder (object 10).
-- **Objects**: FortreeCity 11-13 LOTAD DOLLs 1,7/2,7/4,7 FACE_LEFT (FLAG_TEMP_5), 14 keeper WREN ungated (FLAG_TEMP_6), 15 keeper _TURNED (FLAG_TEMP_5), both 3,7 sight 4. 15 templates, ≤15 spawned (OBJECT_EVENTS_COUNT 16). OnTransition picks the twin by 0x35 and sets both FACE_LEFT once TRAINER_FORTREE_CHARM_KEEPER is beaten. ON_RESUME untouched (STEP_CB_FORTREE_BRIDGE).
-- **Engine fact (trainer_see.c:257-290, battle_setup.c:1215)**: a sighted trainer's object script must START with `trainerbattle`; any state branch goes after it (hence the twins).
-- **Scripts**: turned = IntroTurned / DefeatTurned ("So they keep it off. Right?") / re-talk CharmKeeperDefeat; ungated = Intro / CharmKeeperDefeat / CharmKeeperPost.
-- **WREN** (slot 486, Picnicker, singles): CHIMECHO 27 [ASTONISH, CONFUSION, TAKE_DOWN] + LOMBRE_HOENN 28 [THUNDER_SHOCK, ABSORB, FAKE_OUT], iv 0 (fortree_charm_keeper.json, modify mode).
-- **Worn arrival party (fairness yardstick)**: MIGHTYENA 28 [BITE, TACKLE, SAND_ATTACK, SWAGGER] / PELIPPER 28 [WATER_GUN, WING_ATTACK, SUPERSONIC, MIST] / SHELGON 30 [EMBER, HEADBUTT, PROTECT, FOCUS_ENERGY], `hpPercent: 50`, no bag, from fortree_arrival. Fair = wins with no faints.
-- **Checkpoint `fortree_arrival`** (src/emulator/checkpoints.ts): standalone, 17 flags (badges 1-5, Pokénav/match call, FIELD NOTES, SECOND_WAVE, ROUTE119_MIGRATION_EVENT, HIDE_ROUTE_119_TEAM_AQUA, VISITED_FORTREE), vars VAR_ROUTE119_STATE 1 / VAR_WEATHER_INSTITUTE_STATE 2, start 0,8. Kecleon/Devon Scope/Badge 6 left at defaults. Boot runs ON_TRANSITION.
-- **Playtests**: fortree-storm-charms-turned/-not-turned, fortree-charm-keeper-spots-player/-ungated/-worn-party, fortree-kecleon-unblocked (warps to 25,9), taken-north-in-order, checkpoint-fortree-arrival-boot. beats.json rows v35-storm-charms / v35-charm-keeper.
-
-## v3.5 retrospective (C378; closed)
-**Shipped (C375-C378)**: Route 104 schoolkid turn → Fortree LOTAD DOLLs + the _TURNED WREN on the first frame (0 boxes) → sighted fight on the arrival row → the doubt line as her defeat text → re-entry: she faces the storms. Verified on one save by `taken-north-in-order` (plus the 6 single-beat playtests). Hypothesis "Hoenn comes to the player": **met** (dolls before any text, battle from a walk with no talk, 1 box before the battle).
-
-| # | Finding | Evidence | Decision |
-|---|---|---|---|
-| 1 | WREN is a proud-gesture fight, not a wall | worn party (half-HP, no items) wins with no faints; CHIMECHO lands nothing (MIGHTYENA 38/77 when LOMBRE comes out); SHELGON ends 23-28/83 | KEEP at the band floor 27-28, no roster change. Her fight is the gesture, the dolls are the content |
-| 2 | The unease line was hidden behind an optional re-talk | C377: "So they keep it off. Right?" only on a second A press after the battle | FIXED C378: it is now the _TURNED twin's defeat text (every turned player sees it); re-talk = the shared pride line |
-| 3 | On the arrival row she spots the player at 3,8 and walks 0 tiles | C377 measurement | ACCEPTED: the visible change there is the "!" plus the box |
-| 4 | One tile out and back, she still faces the player | she never unloads (object bound), so OnTransition FACE_LEFT never reaches her | ACCEPTED as intended: "the believer keeps watching the person whose ink she trusts." Do not fix; ON_RESUME does not fire on a connection crossing |
-
-Open (no tester yet): can an ungated player tell WREN from a Route 119 Picnicker? Her ungated intro names the wind, not the charms; accepted as the miss path's cost.
+# v3.5 "Taken North" (C371-C378; CLOSED; compacted C387, full text in git history at 08078eb; as-built completed-work/v35-taken-north.md)
+**Premise**: the page-1 correction became a Fortree storm charm (LOTAD DOLLs facing Route 119, proud and slightly wrong) and the first sighted believer, WREN (slot 486), comes to the player. Retrospective C378: hypothesis "Hoenn comes to the player" MET; WREN is a proud-gesture fight (worn party wins, no faints), kept at Lv27-28; the doubt line is her _TURNED defeat text.
+**Live facts**: Route 119 joins Fortree's WEST edge (FACE_LEFT = facing the storms); column 3 rows 7-11 is the whole crossing; FortreeCity objects 11-13 dolls (FLAG_TEMP_5), 14/15 WREN twins (FLAG_TEMP_6/5) at 3,7 sight 4. A sighted trainer's object script must START with `trainerbattle` (trainer_see.c:257-290), hence the twins. She never unloads one tile out and back, so she keeps facing the player (accepted as intended). Checkpoint `fortree_arrival` (checkpoints.ts) = badges 1-5, VAR_ROUTE119_STATE 1, VAR_WEATHER_INSTITUTE_STATE 2, start 0,8.
 
 # v3.6 "The ink has a price" (designed C378; Beat 1 "The empty peg" built C379; CLOSED; compacted C386, full text in git history)
 **As built**: gate FLAG_ROUTE104_SKEPTIC_TURNED + TRAINER_FORTREE_CHARM_KEEPER beaten + FLAG_BADGE06_GET → FortreeCity_OnTransition hides DOLL_2 (2,7, FLAG_TEMP_7); WREN re-talk CharmKeeperTurned → CharmKeeperEmptyPeg: "One of them went into the storm.\nI'll set it out again tomorrow." Playtests fortree-empty-peg-badge/-no-badge/-not-turned; beats.json v36-empty-peg. Scorched Route 119 doll = creative backlog 379.
 **Rules that outlive v3.6**: no line names the player, BIRCH, the notebook or ink (react to outcomes, not causes); frame cost as the believer's over-reach, never the player being wrong; the cost is not undone (no fetch-quest).
 
-# v3.7 "Rain indoors" (designed C380; built C381; CLOSED C382)
-
-**Premise**: "The first loud beat of Hours 6-15, and the first in 15 cycles that is NOT about the ink. Team Aqua has switched the Weather Institute's storm machines on: rain falls INSIDE 2F. Shelly fights in that rain with a team built for it. When she falls, the machines spin down and the rain stops before anyone speaks. The Castform gift follows."
-
-**Emotion**: threat, then relief. It also re-earns the quiet: the next quiet beat (backlog 373, Route 119 rain giving way at Fortree) now has a cause the player saw.
-
-**Design hypothesis (Game Designer C380)**: if Hours 6-15 get one fight the player can lose, the player will stop and change their team before it. A worn party should win only after spending something: a faint, a healing item or a forced switch.
-- PASS = the worn yardstick (MIGHTYENA 28 [BITE, TACKLE, SAND_ATTACK, SWAGGER] / PELIPPER 28 [WATER_GUN, WING_ATTACK, SUPERSONIC, MIST] / SHELGON 30 [EMBER, HEADBUTT, PROTECT, FOCUS_ENERGY], hpPercent 50, no bag) loses at least one Pokémon or is forced to switch, AND the same party at full HP (still with no bag) wins.
-- FAIL-soft = the worn party wins with no faint and no forced switch.
-- FAIL-hard = the full-HP party loses.
-- Record faints and turns for each run in the C381 journal.
-
-**Rules**:
-1. No line names the player, BIRCH, a notebook, ink or LOTAD. It is D1-clean: the Institute is not a page-3 map.
-2. Show before tell: the rain is on screen when 2F loads, before any text box.
-3. Exactly one new line of text in the whole beat: Shelly's threat line (below). No other new dialogue.
-4. No Fortree text box changes.
-5. The rain stop has no text box.
-6. Battle content goes only through scripts/trainer_configs/villain_shelly_*.json (the Weather Institute config) + generate_trainer.cjs. There are no new C systems and no new trainer slot.
-7. Gate = VAR_WEATHER_INSTITUTE_STATE == 0 only. There is no new flag.
-
-**Build spec, playtests, beats row (C380 design, as built C381)**: compacted C382; the as-built record is completed-work/v37-rain-indoors.md, the full spec is in git history of this file before C382. Live facts: OnTransition `setweather` alone draws rain on a MAP_TYPE_INDOOR map (no doweather; LoadMapFromWarp runs SetSavedWeatherFromCurrMapHeader before OnTransition); a mid-script stop needs `setweather` + `doweather`; checkpoint `weather_institute_2f` starts 2F 17,2; machine counts in report.json battleSummaries, never hand counts.
-
-**Capacity (verified C380 by grep; all match the expected values)**:
-- Free trainer slots: **633/634 free; 853 MAY_PLACEHOLDER data-only (pret wiki: never rename)** (`node scripts/check_trainer_slots.cjs` C385: 2 candidates + 1 data-only, 9 reclaimed OK). Reclaim with `generate_trainer.cjs` `"mode": "reclaim"` (C385). v3.7 uses none.
-- Next free flag: **FLAG_UNUSED_0x037** (flags.h:69). v3.7 uses none.
-- FortreeCity free FLAG_TEMP_*: **1-4 and 8+** (only 5/6/7 appear in FortreeCity map.json + scripts.inc).
-- Next STRINGID: **385** (BATTLESTRINGS_COUNT 385, battle_string_ids.h:386).
-- Next move id: **381** (MOVES_COUNT 381, MOVE_IRON_LEAF 380).
-
-## v3.7 retrospective (C382; closed)
-Verdict: **PASS** (C381 data, re-measured C382: full HP WIN 11 turns / 2 faints; worn LOSS 8 turns / 3 faints). Huntail moved first every turn in both runs (Swift Swim): the "oh no" lands.
-| # | Finding | Decision |
-|---|---|---|
-| 1 | Worn yardstick is wiped, harsher than "wins after spending something" | KEEP: the 1F bed (Route119_WeatherInstitute_1F_EventScript_Bed) is one staircase down, so the wipe teaches "stop and prepare", which is the hypothesis. Yardstick spams slot 1, 3 mons, no bag: pessimistic |
-| 2 | Full-HP margin is thin (2 of 3 faint) | KEEP, guarded: wi-shelly-full-party asserts win + maxPlayerFaints 2 (expectBattleSummary, C382). Any future roster or engine change that flips it fails the suite |
-| 3 | MIGHTYENA dies to Rough Skin recoil on the turn it KOs CARVANHA | ACCEPTED: Rough Skin is the contact-punishing identity the design asked for |
-| 4 | "Forced switch" cannot be measured (battleTurns replace:true auto-sends) | Faints are the only PASS metric from now on |
-
-Turn count note (C382): C381's completed-work said the worn run took 7 turns; the battle log is message-for-message the same in C382, and summarizeBattle counts 8 "What will" prompts (2 MIGHTYENA, 3 PELIPPER, 3 SHELGON). The C381 figure was a hand miscount. Machine counts (report.json battleSummaries) are the source from now on.
+# v3.7 "Rain indoors" (C380-C382; CLOSED PASS; compacted C387, full text in git history at 08078eb; as-built completed-work/v37-rain-indoors.md)
+**Premise**: Aqua makes it rain inside Weather Institute 2F; Shelly fights in it (Swift Swim HUNTAIL first every turn); the rain stops with no text box. Gate VAR_WEATHER_INSTITUTE_STATE == 0, no new flag, one new line.
+**Verdict C382**: full HP WIN 11t / 2 faints (guard wi-shelly-full-party maxPlayerFaints 2), worn LOSS 8t / 3 (kept: the 1F bed is one staircase down). Faints are the only PASS metric ("forced switch" is unmeasurable); machine counts (report.json battleSummaries), never hand counts.
+**Live facts**: OnTransition `setweather` alone draws rain on a MAP_TYPE_INDOOR map; a mid-script stop needs `setweather` + `doweather`; checkpoint `weather_institute_2f` starts 2F 17,2.
+**Capacity (C385)**: next flag FLAG_UNUSED_0x037; FortreeCity free FLAG_TEMP_* 1-4 and 8+; next STRINGID 385; next move id 381; trainer slots per check_trainer_slots.cjs (reclaim mode in generate_trainer.cjs).
 
 # v3.8 "Above the storm" (premise C382; BUILT C384)
 **Premise**: Shelly's rain was a machine inside a building. Winona fights where the storm can't reach: above it. Her gym battle opens in permanent harsh sunlight, so the lesson the rain just taught flips: Water is halved, Fire and SOLARBEAM hit full. Loud beat #2 of Hours 6-15, the opposite texture to v3.7, with the quiet Route 119 beat (C383) between them. Fortree's overworld sky is untouched (the sun is hers, inside the battle).
@@ -134,23 +77,60 @@ Turn count note (C382): C381's completed-work said the worn run took 7 turns; th
 **Rule (Game Designer, C384)**: After v3.8, weather is retired as the loud-beat hook for Hours 10-15. The next loud beat uses a different lever (double battle / terrain / betrayal).
 **Open (backlog)**: the Route 119 rival now always fights in storm-tail rain (C383): the _TORCHIC variant's SWAMPERT 31 gets 1.5× Water, the _TREECKO variant's BLAZIKEN 31 has Fire halved. Measure the Swampert variant in rain in a future cycle. → measured C385, below.
 
-## v3.8 retrospective (C386; closed)
-Verdict: **Winona PASS (kept, guard tightened); Route 119 rival FAIL at full HP in all three starter variants. The rule-bound MANECTRIC fix (F1+F2) did not flip it, so C387 decides levels or roster.**
-| # | Finding | Decision |
-|---|---|---|
-| 1 | Winona full-HP margin (WIN 5 turns / 0 faints, PUPITAR 2%; re-measured C386, identical) | KEEP: it is the clutch finish a gym ace should give. Guard tightened to maxPlayerFaints 1 (winona-sun-full-party) |
-| 2 | Route 119 rival, Torchic variant (TRAINER_MAY_ROUTE_119_TORCHIC, SWAMPERT 31) at FULL HP (route119-rival-rain-full-party, yardstick, no bag, slot-1 spam, rain) | **FAIL → F1 → F2 → still FAIL.** Baseline LOSS 13 turns / 3 faints / 2 foe faints; F1 (MANECTRIC MAGNET→ORAN_BERRY) LOSS 11t / 3 / 2; F1+F2 (THUNDERBOLT→SHOCK_WAVE) LOSS 12t / 3 / 2; end HP 0/0/0 every run. F1+F2 kept in both MAY and BRENDAN _TORCHIC parties; playtest stays report-only. **At full HP MANECTRIC is not the decider**: at baseline MIGHTYENA's BITE KOs it in 2 turns; STANTLER_HOENN 28 (SPELL_TAG, Intimidate, SHADOW_BALL/HYPNOSIS/LEECH_SEED) then sweeps, because SHELGON's slot-1 HEADBUTT cannot touch a Ghost. After F1+F2 MANECTRIC lives longer (ORAN BERRY, THUNDER WAVE paralysis) and takes all three; SWAMPERT never comes out. Worn run after F1+F2: LOSS 10t / 3 / 1 |
-| 3 | Treecko variant (BLAZIKEN 31; lead DRAGONAIR 28) full HP, report-only | LOSS 13 turns / 3 faints / **0 foe faints**: DRAGONAIR THUNDER WAVE, then BRELOOM 28 (BLACK_BELT) SPORE + LEECH SEED + MACH PUNCH sweeps |
-| 4 | Mudkip variant (SCEPTILE 31; lead PUPITAR 28) full HP, report-only | LOSS 10 turns / 3 faints / 2 foe faints: HARIYAMA 28 ROCK SLIDE takes MIGHTYENA and PELIPPER, SCEPTILE DRAGON CLAW finishes SHELGON |
-| 5 | Yardstick caveat | PELIPPER is 4x weak to Electric, and vanilla's Route 119 rival has no Electric attacker (Researcher C386), so the yardstick partly measures its own build. Also: slot-1 spam gives SHELGON only HEADBUTT (no answer to a Ghost) and no bag. C387 should weigh the yardstick, not only the roster |
+## v3.8 retrospective (C386; closed; full table in git history at 08078eb)
+Winona PASS, KEPT (full HP WIN 5t / 0 faints, PUPITAR 2%; guard winona-sun-full-party maxPlayerFaints 1). Route 119 rival FAIL at full HP in all three variants on the slot-1 yardstick: Torchic LOSS 12t/3 after F1+F2 (MANECTRIC ORAN_BERRY + SHOCK_WAVE, kept in both _TORCHIC parties), Treecko LOSS 13t/3/0 foe faints (DRAGONAIR THUNDER WAVE, BRELOOM SPORE), Mudkip LOSS 10t/3 (HARIYAMA ROCK SLIDE). Yardstick caveat: PELIPPER 4x weak to Electric, slot-1 SHELGON HEADBUTT can't touch a Ghost, so C387 changed the yardstick too.
 
-Cross-variant reading: three different slot-2/3 threats (STANTLER Ghost wall, BRELOOM SPORE, HARIYAMA ROCK SLIDE) all wipe the same yardstick, so the "quiet beat" is a wall in every variant. The cause is the shared 28/28/28/31 roster level and status moves, not the rain or the ace.
+## v3.8 retrospective addendum (C387): Route 119 rival, coverage yardstick
+Yardstick changed, not just levels: MIGHTYENA 28 BITE/STRENGTH/FACADE/SWAGGER, PELIPPER 28 SURF/WING_ATTACK/WATER_GUN/PROTECT, SHELGON 30 BITE/STRENGTH/HEADBUTT/PROTECT (slots aligned by role: 1 = hits Ghosts, 2 = anti-Grass/Fighting, 3 = anti-Fire), full HP, no bag, storm-tail rain, `battleTurns moveFor` picks the slot per foe (playtests route119-rival-rain-coverage-torchic/-treecko/-mudkip).
+| Variant | Lv28 (coverage) | Level action | Lv26 (coverage) | Final guard |
+|---|---|---|---|---|
+| Torchic (SWAMPERT 31) | LOSS 13t / 3 faints / 2 foe faints (3 "is paralyzed") | 28→26 (May+Brendan) | LOSS 15t / 3 / 2 (5 "fast asleep", 2 seeded): STANTLER_HOENN sweeps PELIPPER + SHELGON with HYPNOSIS/LEECH_SEED/SHADOW_BALL | **none: open FAIL**, report-only |
+| Treecko (BLAZIKEN 31) | LOSS 11t / 3 / 1 (1 asleep, 1 seeded, 2 paralyzed) | 28→26 | LOSS 9t / 3 / **3** (BLAZIKEN down to 2 WATER_GUNs; STANTLER last, MEGA_DRAIN/SHADOW_BALL) | **none: open FAIL**, report-only |
+| Mudkip (SCEPTILE 31) | LOSS 9t / 3 / 2 (no disruption) | 28→26 | LOSS 13t / 3 / **3** (STANTLER down after sleeping PELIPPER; SCEPTILE crit DRAGON_CLAW ends it) | **none: open FAIL**, report-only |
+Old C386 playtests at Lv26 (slot-1, report-only, lead level now 26): Torchic full LOSS 16t/3/2, Treecko full LOSS 11t/3/2, Mudkip full LOSS 9t/3/2, worn LOSS 10t/3/1.
+**Reading for C388/C389**: one step only was allowed and it is spent (26 stays). The common decider in every variant is now **STANTLER_HOENN** (Ghost/Grass, SPELL_TAG, Intimidate, HYPNOSIS + LEECH_SEED + SHADOW_BALL): HYPNOSIS + LEECH_SEED turn PELIPPER (SURF only 0.5x into it) into free turns, and SHADOW_BALL finishes the party. Candidate fix for the retrospective (not done): drop HYPNOSIS from the three Route 119 STANTLER_HOENN movesets (one dial, all variants), then re-run the coverage tests. "Too easy" is not a risk at 26: every run still ends 0/0/0 HP.
+**Reflection C387 (decision rule for C389, binding)**: three cycles (C385-C387) have gone into one quiet-beat rival. C389 gets exactly ONE more dial: remove HYPNOSIS from all six Route 119 STANTLER_HOENN movesets (May+Brendan), re-run the three coverage playtests. Any variant that then WINS gets a guard (win + maxPlayerFaints 2); any that still loses is ACCEPTED as a hard rival (report-only, recorded as such) and the thread closes. No further level, roster or yardstick changes. Also weigh: the yardstick is 3 mons, no bag, vs a 4-mon rival; a real Badge-6 player has more of both, so a narrow yardstick loss is not a player wall.
 
-# v3.9 "Ground that doesn't touch them" (premise C386; lever = double battle)
-**Premise**: Weather taught 'read the field'; Tate & Liza teach 'read the partnership'. Their existing Mossdeep gym double battle (no new trainer slot, no new C system) is rebuilt around a field-wide EARTHQUAKE that both twins' Levitate Pokémon float above. Turn 1: the screen shakes, the player's side takes damage, both twin sprites stay still. Only then the split line: Tate "We don't feel the ground…" / Liza "…and you do." No hint NPC, no gym-trainer foreshadowing.
+# v3.9 "Ground that doesn't touch them" (premise C386; spec C387; build C388)
+**Premise**: Weather taught 'read the field'; Tate & Liza teach 'read the partnership'. Their Mossdeep gym double battle (TRAINER_TATE_AND_LIZA_1, trainers.h:3256, .doubleBattle TRUE; no new trainer slot, no new C system) is rebuilt around a field-wide EARTHQUAKE that their Levitate/Flying Pokémon float above. Turn 1: the screen shakes, the player's side takes damage, the twins' side doesn't. No hint NPC, no gym-trainer foreshadowing.
 **Emotion**: confusion, then the click of understanding.
-**Why this lever**: doubles need no new engine system (check_doubles exists). Terrain needs a new system. Betrayal needs story setup Hours 10-15 lack, and Gen 3 tag/partner battles are fragile (Researcher C386: Steven tag battle freezes, idle partners).
-**Prerequisites (C387)**: battleTurns doubles targeting in src/emulator/, proven on an existing vanilla double battle; Solrock/Lunatone one-owner check (memory/boss-species-ownership.md, make check_bosses); a Badge-7 worn yardstick party. Lines ≤30 chars.
+
+### Roster (sParty_TateAndLiza1, ITEM_CUSTOM_MOVES; C388 edits trainer_parties.h ~4200, no trainer config exists for TATE_AND_LIZA_1)
+| # | Species | Lv | iv | Item | Moves | Change |
+|---|---|---|---|---|---|---|
+| 1 (lead L) | CLAYDOL | 38 | 200 | LEFTOVERS | EARTHQUAKE, PSYCHIC, LIGHT_SCREEN, ANCIENT_POWER | unchanged |
+| 2 (lead R) | XATU | 39 | 200 | LUM_BERRY | PSYCHIC, SHADOW_BALL, CONFUSE_RAY, AERIAL_ACE | unchanged |
+| 3 | **LUNATONE** | 41 | 200 | TWISTED_SPOON | PSYCHIC, SHADOW_BALL, ROCK_TOMB, CALM_MIND | **replaces ALAKAZAM** (PSYCHIC/THUNDERBOLT/RECOVER/THUNDER_WAVE) |
+| 4 | ESPEON | 42 | 200 | SITRUS_BERRY | CALM_MIND, PSYCHIC, SHADOW_BALL, REFLECT | unchanged |
+trainers.h flags/items/doubleBattle unchanged (aiFlags CHECK_BAD_MOVE | TRY_TO_FAINT | CHECK_VIABILITY; 4 HYPER_POTION). Why Lunatone: owned by Tate&Liza (boss-species-ownership.md row "Lunatone", already on TATE_AND_LIZA_2-5), keeps CLAYDOL's EQ partner bonus after XATU falls, and avoids Alakazam's THUNDERBOLT OHKO on the Flying answer. No HYPNOSIS (seed fragility). Top level 42 = Challenge cap at 6 badges (GetChallengeLevelCap ...38/**42**/48), Leader +3 → ESPEON 45 (already true today). Solrock has no owner row (unused). Run `make check_bosses` (expect 0 collisions) and `make check_doubles`.
+
+### Why turn-1 EQ is deterministic (verified C387; detail codebase-facts/battle-engine.md "Doubles AI and Ground moves")
+- Against a grounded player battler: EQ 100 (CheckBadMove) → TryToFaint −1 only if not most powerful (it is the most powerful) → `AI_DoubleBattleAllHittingGroundMove` +2 (partner XATU is Flying) ⇒ **≥102**; +4 more if it can KO. PSYCHIC / ANCIENT_POWER ≤100 (+4 only on a KO); LIGHT_SCREEN max 100 (`AI_CV_LightScreen` has only −2 branches). EQ wins unless PSYCHIC/ANCIENT_POWER can KO a full-HP player mon (yardstick parties avoid this).
+- Against a Flying/Levitate player battler EQ scores ~90 (−10). One grounded player mon is enough: the AI keeps the best (target, move) over all targets and EQ hits the whole field for full damage (FOES_AND_ALLY isn't halved). Two floaters ⇒ Claydol picks PSYCHIC/ANCIENT_POWER/LIGHT_SCREEN.
+- After XATU faints: LUNATONE in ⇒ +2 continues; ESPEON in ⇒ −3, EQ 96-97 < PSYCHIC 99-100, so EQ stops except when it can KO (+4 ⇒ 101, hitting Espeon too). Replacement = `GetMostSuitableMonToSwitchInto`, measured not assumed.
+- Ability history is per battler and cleared on switch-in and faint (SwitchInClearSetData / FaintClearSetData), so the FRLG "seen one Levitate" bug does not apply.
+- **Never add** AI_SCRIPT_SETUP_FIRST_TURN (LIGHT_SCREEN +2 turn 1), PREFER_POWER_EXTREMES, RISKY, HP_AWARE.
+
+### The player's three answers
+(a) **Float**: Flying/Levitate (SWELLOW, PELIPPER, ALTARIA, SKARMORY, TROPIUS, XATU, CHIMECHO, VIBRAVA, CLAYDOL); EQ then hits only the grounded partner; two floaters stop it. Cost: LUNATONE's ROCK_TOMB/PSYCHIC. (b) **Hit the stone**: SURF is 2x into both CLAYDOL and LUNATONE; also Grass/Bug/Dark/Ghost (and Ice into Claydol). (c) **Break the pair**: KO XATU (and LUNATONE) so grounded ESPEON stands beside CLAYDOL; EQ is then −3 and mostly stops.
+
+### Badge-7 yardstick (C388 needs battleTurns doubles targeting first)
+Common rules: full HP, no bag, every player battler slot 1 each turn, target opponent-LEFT (else the remaining foe; SURF has no target prompt), `replace: true`, maxTurns 40.
+- **Y7-GROUND**: SHELGON 41 BITE/DRAGON_BREATH/HEADBUTT/PROTECT, LINOONE 40 FACADE/SHADOW_BALL/HEADBUTT/FURY_SWIPES, WHISCASH 40 SURF/ROCK_TOMB/AMNESIA/REST, GOLDUCK 40 SURF/CONFUSION/SCREECH/PSYCH_UP.
+- **Y7-FLOAT**: as GROUND but slot 2 = SWELLOW 40 FACADE/AERIAL_ACE/QUICK_ATTACK/WING_ATTACK.
+- **Y7-LEVITATE** (report-only): as GROUND but slot 2 = CHIMECHO 40 SHADOW_BALL/DOUBLE_EDGE/CONFUSION/PROTECT.
+Preconditions: no Fake Out/flinch, no Fighting/Poison (no PSYCHIC KO +4 at full HP; Claydol PSYCHIC ≤ ~64 of SWELLOW's 104), no Dark, nothing KOs Claydol before it moves. Expected: GROUND ~2 EQs KO LINOONE; FLOAT SWELLOW+SHELGON usually drop Claydol after one EQ (~200 HP / 1 faint swing).
+
+### PASS criteria (C388 measures, C389 retrospective)
+1. All three runs: turn-1 log shows "CLAYDOL used EARTHQUAKE"; foe side takes no EQ damage (XATU "doesn't affect", Claydol not hit).
+2. **Y7-GROUND LOSES** (guard expectBattleSummary outcome loss).
+3. **Y7-FLOAT WINS** with maxPlayerFaints 2.
+4. Y7-LEVITATE report-only: did EQ fire on turn 1, and when.
+One tuning step only: both win → CLAYDOL 38→40; both lose or FLOAT 3 faints → LUNATONE 41→39 + ESPEON 42→40; GROUND wins and FLOAT loses → hypothesis false, stop. Still failing after the step → keep it, report-only, open FAIL for C389.
+
+### Dialogue (C388, verbatim)
+- Intro (MossdeepCity_Gym_Text_TateAndLizaIntro) unchanged.
+- MossdeepCity_Gym_Text_TateAndLizaDefeat (MossdeepCity_Gym/scripts.inc:559, the defeat arg of `trainerbattle_double TRAINER_TATE_AND_LIZA_1` at :52) is replaced wholesale. Current text (already non-vanilla, earlier cycle): "TATE: You felt what we were\nthinking --\nLIZA: -- before we thought it.\pTATE: That's how ESPEON fights too.$". New text exactly: `"TATE: We don't feel\nthe ground…\pLIZA: …and you do."` (19/11/18 chars; `…` one glyph; `make check_text_width` must pass). The rematch defeat text (:108) is unchanged.
 
 ## beats.json tooling (C373)
 Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C380 to [codebase-facts/lints.md](codebase-facts/lints.md) "beats.json tooling". Still true: MIN_ROWS 21 (since v37-rain-indoors, C381); meteor-falls-steven-chalk keeps b5Exempt "*" (tech-debt 374 pending).
@@ -163,8 +143,9 @@ Loader API, shape ids, check_beats rules, b5Exempt rows and row fields: moved C3
 | 366-379 | **DONE**: v3.4, v3.5, v3.6 (detail in completed-work/v34-word-travels.md, completed-work/v35-taken-north.md, the v3.6 section). C373 beats.json lint migration; C374 LOST (CLI timeout, its DONE claims for reclaim mode and the chalk-copy playtest were false, corrected C380); C376 hpPercent/battleSwitch; C377-378 taken-north-in-order + #225; C379 empty peg. Suite 105/105 | #225 closed |
 | 380-385 | **DONE**: memory pass + v3.7 design (C380), v3.7 built (C381) + PASS retrospective (C382), storm tail (C383), v3.8 built (C384), workshop: check_battle_weather, reclaim mode, check_dens fix (C385). Suite 120/120 | — |
 | 386 | **DONE**: v3.8 retrospective closed; suite 123/123 (3 full-HP rival playtests); rival Torchic variant FAIL after F1+F2 (kept; C387 to decide levels or roster); Winona guard maxPlayerFaints 1; v3.9 lever = Tate & Liza double battle | — |
-| 387 | **Doubles harness + v3.9 design**: battleTurns doubles targeting (src/emulator/, proven by a report-only playtest on an existing vanilla double, plus a planted-failure check), Solrock/Lunatone ownership check, Badge-7 yardstick, full v3.9 spec (roster via trainer configs, dialogue placement). Also decide the Route 119 rival (levels or roster; v3.8 retrospective row 2) Rival call (Reflection C386 recommendation, do it FIRST, it is small): drop the three non-ace slots 28→26 in all six _TORCHIC/_TREECKO/_MUDKIP May+Brendan parties and give the full-HP yardstick one coverage move per mon (not slot-1 HEADBUTT vs a Ghost); guard = full-HP WIN maxPlayerFaints 2 in all three variants. If C387 runs long, the rival ships before the v3.9 spec | — |
-| 388 | **v3.9 build** | — |
+| 387 | **DONE**: `battleTurns moveFor` (per-foe slot); Route 119 rival coverage yardstick + all six May/Brendan Route119 non-aces 28→26; all three variants still LOSE at Lv26 (Torchic 15t/3, Treecko 9t/3 with 3 foe faints, Mudkip 13t/3 with 3 foe faints; STANTLER_HOENN decides) so no guards, open FAIL for C389; v3.9 Tate & Liza spec written (above). Suite 126 | — |
+| 388 | **Doubles harness + v3.9 build**: battleTurns `target` for two player battlers (src/emulator/), proven on a vanilla double battle with a planted failure on a faint-and-replace turn; then the v3.9 roster + defeat text + Y7 playtests per the spec | — |
+| 389 | **v3.9 retrospective** + close the Route 119 rival thread with its ONE last dial (drop STANTLER_HOENN HYPNOSIS; guard winners, accept losers; see "Reflection C387") | — |
 | 390 | **next 10th-cycle maintenance** (memory budget pass; trim pokemon-knowledge trainer-cap-and-notebook-item-v30 / v29-planning-json-tooling-landscape-c301 / v31-physical-register-weather-events, 66-87 lines vs 60, left over C380) | — |
 
 ## v3.0 Den Chapter: Red Ink pages 5-7 (designed C333, shipped C334-C336, playtested C358)

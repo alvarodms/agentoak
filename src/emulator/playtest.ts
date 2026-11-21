@@ -214,9 +214,13 @@ const StepSchema = z.union([
      * `forbid` string shows, if the battle ends first, or after `maxTurns` turns (default 10).
      * `any`: stop at the first `until` string instead of waiting for all (e.g. a win line or "whited out").
      * `replace`: when a fainted Pokémon's party menu opens, send out the first healthy one in that menu's order.
+     * `moveFor`: per-foe slot override, keyed by the foe's species constant as expectBattle reads it
+     * (e.g. {"SPECIES_STANTLER_HOENN": 2}); each turn uses `moveFor[foe] ?? move`. Line the party's moves
+     * up by role (e.g. slot 2 = the anti-Grass move on every mon) so one slot fits whoever is out.
      */
     battleTurns: z.strictObject({
       move: z.number().int().min(1).max(4),
+      moveFor: z.record(z.string(), z.number().int().min(1).max(4)).optional(),
       until: Strings,
       maxTurns: z.number().int().positive().optional(),
       forbid: Strings.optional(),
@@ -624,9 +628,9 @@ async function runStep(
   }
 
   if ("battleTurns" in step) {
-    const { move, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
+    const { move, moveFor, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
     result.battleLog ??= [];
-    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, log: result.battleLog });
+    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, moveFor, log: result.battleLog });
     const hp = (await s.readState()).party.map((mon) => (mon.maxHp ? Math.round((100 * mon.hp) / mon.maxHp) : 0));
     result.battleLog.push(`${PARTY_HP_MARK}${hp.join(",")}]`);
     result.battleSummaries = summarizeBattles(result.battleLog);
@@ -703,6 +707,11 @@ async function waitForBattleText(s: EmulatorSession, want: string, max: number, 
 /** Move menu cursor moves from slot 1 (top left) to each slot: 1 2 on top, 3 4 below. */
 const MOVE_SLOT_PATH: Record<number, Button[]> = { 1: [], 2: ["RIGHT"], 3: ["DOWN"], 4: ["DOWN", "RIGHT"] };
 
+/** battleTurns' move slot for this turn: `moveFor[foe species]` when listed, else the default `move`. */
+export function pickMoveSlot(moveFor: Readonly<Record<string, number>> | undefined, speciesName: string | undefined, move: number): number {
+  return (speciesName !== undefined ? moveFor?.[speciesName] : undefined) ?? move;
+}
+
 /**
  * battleTurns: each turn FIGHT → move slot `move`, then B through the turn, until every
  * `until` string has shown in some message. Returns right after the message that completes
@@ -714,7 +723,7 @@ async function battleTurns(
   until: readonly string[],
   maxTurns: number,
   forbid: readonly string[],
-  opts: { any?: boolean; replace?: boolean; log?: string[] } = {},
+  opts: { any?: boolean; replace?: boolean; moveFor?: Record<string, number>; log?: string[] } = {},
 ): Promise<void> {
   const label = `battleTurns move ${move}`;
   const seen: string[] = [];
@@ -725,6 +734,12 @@ async function battleTurns(
   await waitForBattleText(s, "What will", 1800);
   for (let turn = 1; turn <= maxTurns; turn++) {
     opts.log?.push(await battleText(s)); // the "What will … do?" prompt: summarizeBattle counts these as turns
+    let slot = move;
+    if (opts.moveFor) {
+      const foe = (await s.readState()).battle?.[1]?.speciesName;
+      slot = pickMoveSlot(opts.moveFor, foe, move);
+      opts.log?.push(`[moveFor ${foe} → slot ${slot}]`);
+    }
     // FIGHT is top left: UP then LEFT reaches it from any action, and slot 1 from any move.
     await s.press("UP");
     await s.press("LEFT");
@@ -732,13 +747,13 @@ async function battleTurns(
     await s.run(30);
     await s.press("UP");
     await s.press("LEFT");
-    for (const b of MOVE_SLOT_PATH[move]) await s.press(b);
+    for (const b of MOVE_SLOT_PATH[slot]) await s.press(b);
     const menu = await battleText(s);
     await s.press("A");
     // B in the move menu would cancel the choice: wait for the turn's first message before tapping it.
     let text = await battleText(s);
     for (let f = 0; text.includes("What will") || text === menu; f += 10) {
-      if (f >= 600) fail(`${label}: turn ${turn} never started (is slot ${move} empty, or out of PP?); battle text ${JSON.stringify(text)}`);
+      if (f >= 600) fail(`${label}: turn ${turn} never started (is slot ${slot} empty, or out of PP?); battle text ${JSON.stringify(text)}`);
       await s.run(10);
       text = await battleText(s);
     }

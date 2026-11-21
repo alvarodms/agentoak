@@ -1,8 +1,14 @@
-# Double Battle Boss Design (Juan doubles, slot 568)
+# Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 322 | **Date**: October 2026
+**Cycle**: 387 | **Date**: November 2026
 
 ---
+
+## C387: Tate & Liza "ground that doesn't touch them"
+- **Vanilla Emerald team is already 4/4 EQ-immune** (Bulbapedia): Claydol 41 (Levitate), Xatu 41 (Flying), Lunatone 42 + Solrock 42 (Levitate); Tate always leads Solrock, Liza Lunatone. So v3.9's premise is mostly *move choice + timing*, not a new roster. Check trainer_parties.h to see whether vanilla Claydol already carries EARTHQUAKE.
+- **Gen 3 AI ability-confirmation bug (PokéCommunity thread 528581, FRLG; Bulbapedia notes similar in Gen 5)**: once the player shows a Levitate mon, the AI treats every player mon as Levitate and stops choosing Earthquake (a Groudon picked Body Slam every turn). Emerald's AI code is close to FRLG's. Risk for LoH: a player leading or switching in a Levitate mon (Gengar, Flygon, Claydol, Vibrava, Chimecho...) may never see the EQ beat. Gen 3 AI move choice is also score+RNG, so "turn 1 EQ" is not guaranteed even without the bug.
+- No hack we found builds T&L around their own Levitate + EQ. Hacks such as Run & Bun had to add an explicit doubles EQ rule (partner grounded?) to their AI, which suggests vanilla Gen 3 AI doesn't reason about this well.
+- Design consequence: make the turn-1 EQ deterministic (only damaging move on the lead, or scripted) and playtest a Levitate player lead as the miss path.
 
 ## Facts found
 - **Vanilla Emerald already ran every Juan rematch as a Double Battle** (Bulbapedia / Sootopolis Gym pages). LoH's TRAINER_JUAN_1-5 slots became Wallace in C309 with "doubles unchanged", so **Wallace's Gym rematches are probably doubles already**. Check `doubleBattle` in `wallace_gym_2-5.json` before building Juan's doubles, so the two fights aren't the same format.
@@ -21,3 +27,6 @@
 - https://pokemon.fandom.com/wiki/Sootopolis_Gym
 - https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/page-12
 - https://www.smogon.com/forums/threads/kingdra-uber-analysis.80474
+- https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581
+- https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
+- https://docs.google.com/document/u/0/d/13E61Jj4KwhIy3ZKgLjPY-_uWKWklfBR_zUlhZHUZqik/mobilebasic (Gen 3 partner AI notes)

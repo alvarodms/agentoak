@@ -54,3 +54,8 @@ Common setup: checkpoint fortree_arrival, MAP_FORTREE_CITY_GYM 15,3 (below Winon
 
 ## Index row
 | v3.8 Above the storm (Winona's sun) | 384, 386 | include/trainer_battle_weather.h (new), src/battle_util.c, winona_gym_1.json, trainer_parties.h, FortreeCity_Gym/scripts.inc, 5 playtests | this file |
+
+## C387 rival follow-up
+- `src/emulator/playtest.ts`: battleTurns gains optional `moveFor` (record foe SPECIES_* → slot 1-4); exported `pickMoveSlot(moveFor, speciesName, move)`; reads the foe only when moveFor is set (absent = unchanged behaviour); logs `[moveFor SPECIES_X → slot N]`. Tests in `src/emulator/playtest.test.ts` (schema accepts, rejects 0/5/1.5; pickMoveSlot). README row (battleTurns) documents it.
+- New playtests `route119-rival-rain-coverage-torchic/-treecko/-mudkip.json` (report-only, `expectBattleSummary {}`; would become `{outcome win, maxPlayerFaints 2}` once a variant wins). Old full-party + worn playtests: lead expectBattle level 28→26 and a C387 note in `checks`, steps otherwise unchanged.
+- trainer_parties.h: six Route 119 rival parties non-aces 28→26 (see trainer-parties.md). Results: strategy-notes "v3.8 retrospective addendum (C387)".

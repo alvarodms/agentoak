@@ -1,6 +1,6 @@
 {
   "name": "route119-rival-rain-worn-party",
-  "checks": "C385 measurement (Game Designer hypothesis): the storm-tail Route 119 rival fight should be the quiet beat between Shelly and Winona. The worn yardstick (wi-shelly-worn-party party, 50% HP, no bag) meets the rival's SWAMPERT 31 + MYSTIC WATER team (player picked Torchic, VAR_STARTER_MON 1) in the held rain. Asserts the battle weather is rain. Outcome, turns and faints are recorded in report.json battleSummaries, not asserted. Pass for the design = win with at most 1 faint.",
+  "checks": "C385 measurement (Game Designer hypothesis): the storm-tail Route 119 rival fight should be the quiet beat between Shelly and Winona. The worn yardstick (wi-shelly-worn-party party, 50% HP, no bag) meets the rival's SWAMPERT 31 + MYSTIC WATER team (player picked Torchic, VAR_STARTER_MON 1) in the held rain. Asserts the battle weather is rain. Outcome, turns and faints are recorded in report.json battleSummaries, not asserted. Pass for the design = win with at most 1 faint. C387: rival non-aces 28→26 (lead expectBattle level 26).",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "map": "MAP_ROUTE119",
@@ -59,7 +59,7 @@
     { "expectText": "I was hoping to run into you." },
     { "waitFor": "battle", "maxFrames": 1200 },
     { "waitForBattleText": "What will", "maxFrames": 1800 },
-    { "expectBattle": { "opponent": "SPECIES_SHELGON", "level": 28 } },
+    { "expectBattle": { "opponent": "SPECIES_SHELGON", "level": 26 } },
     { "expectBattleWeather": "rain" },
     { "comment": "the same policy as wi-shelly-worn-party: repeat slot 1 (BITE / WATER_GUN / HEADBUTT), sending in the next healthy Pokémon on a faint" },
     {

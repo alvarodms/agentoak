@@ -8714,21 +8714,21 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute110Mudkip[] = {
 static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Mudkip[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_PUPITAR,
     .heldItem = ITEM_HARD_STONE,
     .moves = {MOVE_ROCK_SLIDE, MOVE_CRUNCH, MOVE_EARTHQUAKE, MOVE_SCARY_FACE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_HARIYAMA,
     .heldItem = ITEM_BLACK_BELT,
     .moves = {MOVE_BRICK_BREAK, MOVE_KNOCK_OFF, MOVE_ROCK_SLIDE, MOVE_FAKE_OUT}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8777,21 +8777,21 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute110Treecko[] = 
 static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Treecko[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_DRAGONAIR,
     .heldItem = ITEM_DRAGON_FANG,
     .moves = {MOVE_DRAGON_BREATH, MOVE_SLAM, MOVE_THUNDER_WAVE, MOVE_ICE_BEAM}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_BRELOOM,
     .heldItem = ITEM_BLACK_BELT,
     .moves = {MOVE_MACH_PUNCH, MOVE_SKY_UPPERCUT, MOVE_LEECH_SEED, MOVE_SPORE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8840,21 +8840,21 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute110Torchic[] = 
 static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Torchic[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_SHELGON,
     .heldItem = ITEM_DRAGON_FANG,
     .moves = {MOVE_DRAGON_CLAW, MOVE_HEADBUTT, MOVE_PROTECT, MOVE_SCARY_FACE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_MANECTRIC,
     .heldItem = ITEM_ORAN_BERRY,
     .moves = {MOVE_SHOCK_WAVE, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8903,21 +8903,21 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute110Mudkip[] = {
 static const struct TrainerMonItemCustomMoves sParty_MayRoute119Mudkip[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_PUPITAR,
     .heldItem = ITEM_HARD_STONE,
     .moves = {MOVE_ROCK_SLIDE, MOVE_CRUNCH, MOVE_EARTHQUAKE, MOVE_SCARY_FACE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_HARIYAMA,
     .heldItem = ITEM_BLACK_BELT,
     .moves = {MOVE_BRICK_BREAK, MOVE_KNOCK_OFF, MOVE_ROCK_SLIDE, MOVE_FAKE_OUT}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -8966,21 +8966,21 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute110Treecko[] = {
 static const struct TrainerMonItemCustomMoves sParty_MayRoute119Treecko[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_DRAGONAIR,
     .heldItem = ITEM_DRAGON_FANG,
     .moves = {MOVE_DRAGON_BREATH, MOVE_SLAM, MOVE_THUNDER_WAVE, MOVE_ICE_BEAM}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_BRELOOM,
     .heldItem = ITEM_BLACK_BELT,
     .moves = {MOVE_MACH_PUNCH, MOVE_SKY_UPPERCUT, MOVE_LEECH_SEED, MOVE_SPORE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
@@ -9029,21 +9029,21 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute110Torchic[] = {
 static const struct TrainerMonItemCustomMoves sParty_MayRoute119Torchic[] = {
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_SHELGON,
     .heldItem = ITEM_DRAGON_FANG,
     .moves = {MOVE_DRAGON_CLAW, MOVE_HEADBUTT, MOVE_PROTECT, MOVE_SCARY_FACE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_MANECTRIC,
     .heldItem = ITEM_ORAN_BERRY,
     .moves = {MOVE_SHOCK_WAVE, MOVE_BITE, MOVE_QUICK_ATTACK, MOVE_THUNDER_WAVE}
     },
     {
     .iv = 100,
-    .lvl = 28,
+    .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
     .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}

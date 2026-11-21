@@ -1,6 +1,6 @@
 {
   "name": "route119-rival-rain-full-party-mudkip",
-  "checks": "C386 report-only: the full-HP yardstick vs the rival's SCEPTILE 31 team (VAR_STARTER_MON 2) in storm-tail rain. Outcome in report.json battleSummaries, not asserted.",
+  "checks": "C386 report-only: the full-HP yardstick vs the rival's SCEPTILE 31 team (VAR_STARTER_MON 2) in storm-tail rain. Outcome in report.json battleSummaries, not asserted. C387: rival non-aces 28→26 (lead expectBattle level 26).",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "map": "MAP_ROUTE119",
@@ -56,7 +56,7 @@
     { "expectText": "I was hoping to run into you." },
     { "waitFor": "battle", "maxFrames": 1200 },
     { "waitForBattleText": "What will", "maxFrames": 1800 },
-    { "expectBattle": { "opponent": "SPECIES_PUPITAR", "level": 28 } },
+    { "expectBattle": { "opponent": "SPECIES_PUPITAR", "level": 26 } },
     { "expectBattleWeather": "rain" },
     { "comment": "the same policy as wi-shelly-worn-party: repeat slot 1 (BITE / WATER_GUN / HEADBUTT), sending in the next healthy Pokémon on a faint" },
     {

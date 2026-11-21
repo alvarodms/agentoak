@@ -22,6 +22,7 @@ import {
   loadPlaytests,
   messageBoxes,
   parsePlaytest,
+  pickMoveSlot,
   summarizeBattle,
   summarizeBattles,
   walkToDirections,
@@ -482,6 +483,22 @@ describe("battleTurns step and waitForBattleText forbid", () => {
     const step = { battleTurns: { move: 1, until: ["disgustingly strong", "whited out"], any: true, replace: true, maxTurns: 30 } };
     expect(parse(step)).toEqual(step);
     expect(() => parse({ battleTurns: { move: 1, until: "x", replace: "yes" } })).toThrow();
+  });
+
+  it("parses battleTurns moveFor (a per-foe move slot) and rejects slots outside 1-4", () => {
+    const step = { battleTurns: { move: 1, moveFor: { SPECIES_BRELOOM: 2, SPECIES_BLAZIKEN: 3 }, until: ["defeated", "whited out"], any: true } };
+    expect(parse(step)).toEqual(step);
+    expect(() => parse({ battleTurns: { move: 1, moveFor: { SPECIES_BRELOOM: 0 }, until: "x" } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1, moveFor: { SPECIES_BRELOOM: 5 }, until: "x" } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1, moveFor: { SPECIES_BRELOOM: 1.5 }, until: "x" } })).toThrow();
+  });
+
+  it("pickMoveSlot uses the foe's moveFor slot, else the default move", () => {
+    const moveFor = { SPECIES_BRELOOM: 2, SPECIES_BLAZIKEN: 3 };
+    expect(pickMoveSlot(moveFor, "SPECIES_BLAZIKEN", 1)).toBe(3);
+    expect(pickMoveSlot(moveFor, "SPECIES_DRAGONAIR", 1)).toBe(1);
+    expect(pickMoveSlot(moveFor, undefined, 4)).toBe(4);
+    expect(pickMoveSlot(undefined, "SPECIES_BRELOOM", 2)).toBe(2);
   });
 
   it("rejects a move slot outside 1-4 and a missing until", () => {
