@@ -28,7 +28,7 @@
 
 ## C370 — vanilla AI switch-in (`GetMostSuitableMonToSwitchInto`, battle_ai_switch_items.c:629-790) picks the mon that takes the most damage from the player's types, if it has an SE move. Assert the species, not the slot order.
 
-## C368/C369 — Lv13-14 Plusle/Minun have no Electric damage move (hand-set SHOCK_WAVE); Plus/Minus + Helping Hand are doubles-only; Gen III Thunder Wave paralyses Electric types; Trapinch slot 0 = Hyper Cutter; Baltoy out (Levitate).
+## C368/C369 — Lv13-14 Plusle/Minun have no Electric damage move (hand-set SHOCK_WAVE); Helping Hand is doubles-only (Plus/Minus is NOT in this engine: see doubles-boss-design.md C390); Gen III Thunder Wave paralyses Electric types; Trapinch slot 0 = Hyper Cutter; Baltoy out (Levitate).
 
 ## C356 — silent traces mostly go unnoticed (Death Stranding trails, "a secret feature most players missed", Gfinity 2025). A trace reads only if it is on screen on arrival and tied to a remembered cause (Fernández-Vara, DiGRA). Measure with an open recall question. ON_LOAD only; `wait*` in level scripts hardlocks.
 

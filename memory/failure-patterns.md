@@ -2,54 +2,11 @@
 
 Build failures and errors encountered, their causes, and how they were (or could be) resolved.
 
----
-
-## Research phase consuming the budget (C110-308, 35 occurrences)
-
-**Rule**: absolute `/__w/agentoak/agentoak/...` paths only (no `cd`), consult this file first on a known problem, start edits by action ~15-25, and cap planning research at ~60 actions before synthesizing.
-
-## Edit-before-Read and `/w/` path typos (C256-C307, not hit since): Read before Edit; paths start `/__w/agentoak/agentoak/`.
-
 ## Invalid Escape Sequences in .string Directives (Cycles 26-197) — CRITICAL
 
 **Symptom**: `error: unknown escape '\e'` (or `\t`, `\r`, etc.) OR `error: unknown character U+XXXX`.
 **Cause**: pokeemerald `.string` only supports `\n`, `\l`, `\p`, `$`. Any other `\X` is fatal.
 **Resolution**: Before `make`, run: `grep -nP '\\\\[^nlp$"\\]' <modified .inc files>` to catch invalid escapes. Em-dashes NOT in charmap — use `--`.
-
-## Trainer Party Macro/Struct Type Mismatch (Cycles 179, 190, 195) — RECURRING
-
-**Symptom**: `warning: initialization from incompatible pointer type` in trainers.h, treated as error.
-**Resolution**: C266 generate_trainer.cjs now auto-detects the correct macro/struct pairing.
-
-## Pokedex categoryName Max Length (C261)
-
-**Symptom**: `warning: excess elements in array initializer` — treated as error.
-**Resolution**: Keep all Pokedex category names to **11 characters max**.
-
-## fetch_pokemon_sprites Missing anim_front.png (C307) — NEW
-
-**Symptom**: MCP `fetch_pokemon_sprites` for Toxapex delivered only 5/7 files (no anim_front.png, no front.png). front.png is auto-cropped from anim_front.png, so both were missing.
-**Resolution**: Always `ls` the sprite directory after download to verify all 7 files. If anim_front.png is missing, copy from a visually similar species (C307 used Tentacruel). Run with `overwrite: true` on retry. Keep a mental list of good fallback species per type.
-
-## Memory State Drifted From Tree (C308) — NEW, HIGH IMPACT
-
-**Symptom**: codebase-facts claimed "39 species ALL registered 27/27"; actual tree had Toxapex 0/27 and 16 others at ~4-6/27 (null sprites/icons, no dex, no evos, no TM rows for Changed Three). Validators (make check_species) passed because they check fewer files than verify_species.sh.
-**Resolution**: At cycle start for any species/trainer work, run `bash /__w/agentoak/agentoak/pokeemerald/scripts/verify_species.sh <NAME>` across all custom species (see [[species-registration]]). Trust the tree, not memory. Repair via `generate_species.cjs <cfg> --fill-missing` (idempotent since C308).
-
-## Silent Sprite Palette Regression (C312)
-
-**Symptom**: Torchic line (C277 violet-gold) and Treecko line (C276 steel-blue) found with vanilla-coloured palettes in C312, while sprite-iterations still described the custom art. Lint passed — it checks noise vs base, not art intent. Likely cause: C308 pipeline repair re-fetched base sprites.
-**Resolution**: After any species re-fetch/repair, preview every touched _hoenn sprite against its sprite-iterations description. **Resolved (verified C352):** Treecko/Grovyle/Sceptile_Hoenn were restored C313 (sprite-iterations.md row "Treecko/Grovyle/Sceptile Hoenn v2, 313, palette restore"); `bash scripts/check_palettes.sh` passes (50 files), each `*_hoenn/normal.pal` differs byte-for-byte from its vanilla dir, and all three dirs are in `scripts/palette_manifest.sha256`. The palette check catches a revert to vanilla, not art drift, so the preview rule above still stands.
-
-## Static Pokémon removeobject Permanently Sets Hide Flag (C312 → fixed C315)
-
-**Symptom**: The C312 Mt. Pyre Torchic was meant to come back after a KO or flee, but it never did. Its faded path ran `Common_EventScript_RemoveStaticPokemon` → `removeobject`, and `RemoveObjectEventByLocalIdAndMap` calls FlagSet on the object's flag (`src/event_object_movement.c:1394`). The object flag was the permanent FLAG_HIDE_*, so the Torchic stayed hidden forever. The build was clean, so nothing caught this.
-**Resolution**: Use a FLAG_TEMP object flag plus a permanent caught flag. The object_event flag = `FLAG_TEMP_11` (cleared on every map load, not on return from battle). A separate permanent `FLAG_CAUGHT_*` is set only on B_OUTCOME_CAUGHT, and ON_TRANSITION re-sets the temp flag when it's set. Use `EventMacro_StaticDen` / `StaticDenTransition` / `StaticDenTryRemove`. Never give an object that the script might `removeobject` a permanent flag unless removal really should be permanent.
-
-## Gift Script Gave the Vanilla Species, Not the Custom Form (C279 → fixed C319)
-
-**Symptom**: The C279 Changed Three gift gave SPECIES_MUDKIP instead of MUDKIP_HOENN (showmonpic, bufferspeciesname, VAR_TEMP_TRANSFERRED_SPECIES, givemon), and nobody noticed for 40 cycles. The text described the titan Mudkip, and the other two balls were correct. Validators don't check what a script gives.
-**Resolution**: When a script's text describes a custom form, grep its givemon/showmonpic species: `grep -n "SPECIES_" <scripts.inc>`.
 
 ## Raw press/wait Screenshots Lag One Box (C361)
 first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 frames a letter, so a 2-line box was still printing and each `press A` only finished the current box: every screenshot showed the box before the one it was named for. Fix: `wait 240` per box (README tip says "a few hundred frames"); read the PNGs before trusting a screenshot test, since a lagging one still passes. Also: bootScenario's 60 settle frames already cover an ON_FRAME emote, so screenshot a boot cue with `wait 1`.
@@ -62,6 +19,23 @@ first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 fra
 **Symptom**: C374 hit the 20-minute CLI timeout after writing memory but before anything reached the tree. strategy-notes (roadmap DONE row, "suite 100/100"), codebase-facts (reclaim mode, hpPercent/battleSwitch, MIN_ROWS 18), completed-work and v35-taken-north.md all described slot 486, the keeper scripts, harness steps and meteor-falls-chalk-copy as shipped; none existed (opponents.h still said GINA_AND_MIA_2).
 **Resolution**: At planning, spot-check 3 claimed symbols in the tree before trusting a DONE row (a define, a file, a lint constant: e.g. `grep TRAINER_X pokeemerald/include/constants/opponents.h`, `ls` the config, `grep MIN_ROWS`). If the last commit says "cycle crashed", treat that cycle's memory as aspirational. Implementers write memory LAST (after ROM edits and playtests), so a timeout loses memory instead of inventing it.
 **Rule**: memory written by a cycle that was later LOST can claim DONE work. Before trusting a DONE row, grep the artifact. **Found again C380**: tech-debt rows 369-373 (generate_trainer.cjs reclaim mode: no "reclaim" in the script) and 374 (playtests/meteor-falls-chalk-copy.json absent) still said DONE; corrected to pending.
+**Automated C390**: `make check_memory` (artifact tags + memory/claims.json + symbol refs) fails on these; add an `<!-- artifact: ... -->` tag to every new DONE row.
+
+
+## Plan facts about vanilla data are guesses until grepped (C390)
+**Symptom**: the C390 plan called Route 110 Pokéfans ISABEL/KALEB "a Lv14 Plusle/Minun double"; the tree has ISABEL_1 Plusle 19 + Minun 19 and KALEB Minun 19, both singles. **Rule**: any plan or spec line that names a vanilla trainer party, level or battle type must cite trainers.h / trainer_parties.h lines grepped that cycle (C391 spec: Space Center Maxie/Tabitha + Steven partner IDs).
+## Archived (C390)
+- Budget: absolute `/__w/agentoak/agentoak/` paths, no `cd`; start edits by action ~15-25; cap planning research ~60 actions (C110-308).
+- Read before Edit; paths start `/__w/agentoak/agentoak/`, never `/w/` (C256-307).
+- Trainer party macro/struct mismatch: use generate_trainer.cjs, which picks the matching macro/struct pair (C266).
+- Pokédex categoryName: 11 characters max, or "excess elements" breaks the build (C261).
+- fetch_pokemon_sprites: `ls` all 7 files after download; copy a similar species if anim_front.png is missing (C307).
+- Species work: run verify_species.sh on every custom species; trust the tree, repair with --fill-missing (C308).
+- After any species re-fetch, preview each touched _hoenn sprite against its sprite-iterations description (C312).
+- Never give a removeobject target a permanent flag: FLAG_TEMP object flag + permanent caught flag (C315).
+- Gift scripts: grep givemon/showmonpic SPECIES_ when text describes a custom form (C319).
+- Harness steps can be rolled back by the runner gate: keep them tiny, plan a fallback (C377).
+Full text: [failure-patterns/archive.md](failure-patterns/archive.md).
 
 ## Anticipated Pitfalls
 
@@ -85,14 +59,12 @@ first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 fra
 - **Line-regex parsers over trainers.h skip entries with trailing comments** (C323 check_doubles): `[TRAINER_MAY_PLACEHOLDER] =  // Available…` broke `=\s*\{`; allow `[^\n{]*\n?` before the brace, and make every new lint fail if it parses suspiciously few records (<100) so a broken parser can't pass silently.
 - **Stale capacity "facts" in memory (C333)**: memory said "0x2BB is the last free flag" for ~10 cycles and a flag-reclamation refactor was queued on it; one grep showed 264 unreferenced `FLAG_UNUSED_0x*` defines (codebase-facts' trainer/system ranges were wrong too). Before planning around a limit (flags, trainer slots, specials, multichoice IDs), re-derive it from source with grep and note the cycle it was verified.
 - **Playtest exit mats need a press, not a step (C359)**: walking onto an indoor exit mat (MB_SOUTH_ARROW_WARP, e.g. Birch lab 6,12) only shows the arrow; the warp fires on a DOWN press while standing on it. First try (`walk down 7`, `wait 180`) left the player on the mat in the lab (failure.png showed the arrow). Fix: `walk` onto the mat, then `{"press": "DOWN", "hold": 20}`, `wait 180`. Door tiles outdoors (Littleroot 7,16) warp on a plain `walk up`.
-
 - **Message boxes per page = A-presses per `\l`/`\p` (C360)**: a FIELD NOTES page with ink is 5+ boxes, not 3 (each `\l` scroll and `\p` wait for A). When a playtest screenshots a specific box, count the line breaks in the .inc text first, then place the screenshot after that many presses.
 - **Planned NPC walk across a ledge (C363)**: the plan had the forager "walk north" from 18,34, but row 30 cols 16-21 is a south ledge; scripted `applymovement` ignores collision, so she would have walked up the cliff with no error. Before writing any NPC route, run `node scripts/map_scan.cjs <Map> <xs> <ys>` over every tile on it, and give a second route for when the player stands on the first tile (getplayerxy).
 - **NPC tile beside a cutscene actor (C366)**: design put DAX at Mauville 6,6 and deferred "does Wally's scene cross it?" to the build cycle; one awk over `<Map>_Movement_*` lists showed WallyExitNorth1 walks 8,6→6,6. Before placing an NPC within 3 tiles of any scripted actor, trace every applymovement list from that actor's map.json tile in the design cycle.
 - **Seed-fixed battle turn counts (C368)**: route109-storm-watch-defeated first failed at step 43 ("What will" never showed) because the turn steps assumed a different KO count; the fight takes 6 turns (3 per foe) only on the suite seed. Any change to RNG consumption before the battle (new map script, party, item) can shift it. Prefer `waitForBattleText` on the defeat line over counting "What will" prompts; if counts are needed, re-run once and read failure.png before editing.
 - **Stale foe after a 2nd battle in one test (C370)**: word-travels-in-order failed at `expectBattle` for DAX because gBattleMons still held TOBY's MINUN for a few frames after the battle started. Fixed in playtest.ts: `expectBattle` polls up to 600 frames for the expected species+level, then asserts strictly. Any new battle-state read in a multi-battle test needs the same wait.
 - **Black screenshot at battle start (C376)**: a `screenshot` right after a sighting/`waitFor battle` lands in the transition; wait for "What will" first.
-- **Harness change rolled back by the runner gate (C377)**: the runner verifies src/emulator edits with the whole-repo `npx vitest run`; an unrelated infra test (src/repo/game-tree.test.ts, temp-git staging) failed there though local npm test passed, so the new step vanished and the playtest using it became an invalid file. Rule: a playtest needing a new harness step must ship a fallback plan, and the step should be as small as possible; when the step only re-checks something the transcript already proves, prefer existing steps (harness edits can be rolled back by unrelated infra tests). **C378: resolved by deletion** (taken-north-in-order's two expectTrainerDefeated steps + README row removed; no harness edit).
 - **Worn-run decider ≠ full-HP decider (C386)**: C385's worn run said MANECTRIC decides the Route 119 rival, so C386 pre-specified a 2-step MANECTRIC nerf; at full HP the wipe came from STANTLER_HOENN (Ghost vs slot-1 HEADBUTT) instead, and the nerf changed nothing. Measure the target condition (full HP) BEFORE choosing which mon to fix, and check the yardstick can answer each foe type.
 - **moveFor needs role-aligned slots (C387)**: `battleTurns` `moveFor` keys on the FOE only (battle[1].speciesName), not on which of your mons is out, so one slot number must mean the same role on every party member (C387 rival yardstick: 1 = hits Ghosts BITE/SURF/BITE, 2 = anti-Grass/Fighting STRENGTH/WING_ATTACK/STRENGTH, 3 = anti-Fire FACADE/WATER_GUN/HEADBUTT). Never put a Normal move in a slot mapped to a Ghost. In doubles battle[1] is only the left foe. Coverage alone did not flip the rival: at full HP sleep + seed (STANTLER_HOENN HYPNOSIS/LEECH_SEED) beats a type-correct yardstick, so check the foe's status moves, not just its type.
 - **battleTurns stopping mid-turn before a faint (C388)**: a battleTurns whose `until` completes mid-turn (e.g. "used EARTHQUAKE") left the rest of the turn to the next step; if a faint followed, the next battleTurns' opening wait hit the party menu and failed ("never showed What will", last ""), and a doubles turn with several EQ animations also outran its 1800 frames. Fixed in the harness: battleTurns now starts with `finishTurn` (3600 frames, logs the remaining messages, does the send-out with `replace`). Use `replace: true` on every battleTurns of a fight that can faint.

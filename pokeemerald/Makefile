@@ -177,7 +177,7 @@ MAKEFLAGS += --no-print-directory
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
 # playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
 RULES_NO_SCAN += playtest playtest_coda check_playtest_build
-.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_species check_evolution check_map_scan check_battle_weather check_generate_trainer check_all check_all_quick
+.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_species check_evolution check_map_scan check_battle_weather check_generate_trainer check_memory check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -291,6 +291,10 @@ check_battle_weather:
 check_generate_trainer:
 	@node scripts/generate_trainer.cjs --selftest
 
+# Memory claim checker (C390): artifact tags, memory/claims.json, symbol refs in strategy-notes/codebase-facts
+check_memory:
+	@node scripts/check_memory_claims.cjs --selftest && node scripts/check_memory_claims.cjs
+
 # Species registration completeness check
 check_species:
 	@echo "Checking species registration..."
@@ -308,7 +312,7 @@ check_evolution:
 	@bash scripts/check_evolution_consistency.sh
 
 # Run all validation checks
-check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_map_scan check_battle_weather check_generate_trainer
+check_all: check_species check_encounters check_e4_rematches check_evolution check_trainers check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_flags check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_map_scan check_battle_weather check_generate_trainer check_memory
 	@echo ""
 	@echo "=== All validation checks passed ==="
 

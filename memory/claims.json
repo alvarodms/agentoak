@@ -1,0 +1,12 @@
+[
+  { "id": "next-free-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_UNUSED_0x037", "why": "strategy-notes: next free flag is 0x37 (FLAG_UNUSED_0x037, verified C380/C390)" },
+  { "id": "forager-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_PETALBURG_WOODS_FORAGER_MOVED", "why": "0x36 spent C363 (v3.3 forager walk)" },
+  { "id": "free-slot-633", "file": "include/constants/opponents.h", "contains": "#define TRAINER_LUCAS_2                     633", "why": "free trainer slot 633 (check_trainer_slots C390); fails once reclaimed, then update memory" },
+  { "id": "free-slot-634", "file": "include/constants/opponents.h", "contains": "#define TRAINER_MIKE_1                      634", "why": "free trainer slot 634 (check_trainer_slots C390); fails once reclaimed, then update memory" },
+  { "id": "winona-sun-row", "file": "include/trainer_battle_weather.h", "contains": "{ TRAINER_WINONA_1, WEATHER_DROUGHT }", "why": "v3.8 Winona fights in permanent sun (C384)" },
+  { "id": "xatu-night-shade", "file": "src/data/trainer_parties.h", "contains": ".moves = {MOVE_NIGHT_SHADE, MOVE_SHADOW_BALL, MOVE_CONFUSE_RAY, MOVE_AERIAL_ACE}", "why": "v3.9 sParty_TateAndLiza1 XATU PSYCHIC -> NIGHT_SHADE (C389)" },
+  { "id": "abilities-count", "file": "include/constants/abilities.h", "contains": "#define ABILITIES_COUNT 84", "why": "strategy-notes: ABILITIES_COUNT=84, next ability 84" },
+  { "id": "moves-count", "file": "include/constants/moves.h", "contains": "#define MOVES_COUNT 381", "why": "strategy-notes: MOVES_COUNT=381, next move 381" },
+  { "id": "faint-causes-harness", "root": "repo", "file": "src/emulator/playtest.ts", "contains": "faintCauses", "why": "C389 harness: battleSummaries faintCauses" },
+  { "id": "chalk-copy-still-missing", "file": "playtests/meteor-falls-chalk-copy.json", "exists": false, "why": "tech-debt 374 pending (C374 LOST); when it ships, delete this claim and drop the beats.json b5Exempt" }
+]

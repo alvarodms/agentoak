@@ -1,8 +1,14 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 389 | **Date**: November 2026
+**Cycle**: 390 | **Date**: November 2026
 
 ---
+
+## C390: Plusle & Minun twin doubles (backlog 388), prior art + engine check
+- **Code-verified quirk**: `CalculateBaseDamage` (src/pokemon.c:3356-3358) boosts Plus/Minus Sp. Atk 1.5x if `ABILITY_ON_FIELD2(ABILITY_MINUS/PLUS)`, which is `ABILITYEFFECT_FIELD_SPORT` default branch (battle_util.c:3217-3226): ANY battler on the field, **either side, no HP check, no doubles check**. So the player's own Minun powers the foe's Plusle (and vice versa), and it fires in singles too. Bulbapedia only states the "ally" rule; nobody documents this. Mainline Gen 3 matches pret, so it is vanilla behaviour.
+- **Vanilla already has the pair**: Route 110 Pokéfans ISABEL (Plusle+Minun, Lv14) and Emerald-only KALEB (Minun+Plusle, Lv14), close enough together to start a sight double (StrategyWiki/Serebii). A Hours 10-15 Plusle/Minun double would repeat a Hour-4 fight unless it does something different.
+- No hack found builds a boss around Plus/Minus or Helping Hand; doubles-everywhere hacks (Emerald Double Edition, Double Up Delevelled) just convert vanilla trainers. Fan threads call Plusle/Minun the obvious doubles theme, but nobody has built it.
+- Helping Hand multiplier not confirmed by search (verify in battle_script_commands/AI scripts before relying on the AI choosing it).
 
 ## C389: is a hard T&L a bug or the expectation?
 - **Vanilla T&L is the community's "hardest Emerald gym"** (Sportskeeda's toughest-gym-per-game list picks T&L for Emerald; PokeCommunity "3rd Gen Gym Leaders" thread puts it tied with Norman). A Nuzlocke post: "there's a reason so many Kaizo hacks make gyms doubles." A Badge-7 loss on a narrow yardstick matches what players expect here; it isn't a defect.

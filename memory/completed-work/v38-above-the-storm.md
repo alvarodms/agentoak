@@ -38,7 +38,7 @@ Common setup: checkpoint fortree_arrival, MAP_FORTREE_CITY_GYM 15,3 (below Winon
 - Verdict for the C385+ retrospective: PASS on both hypothesis legs; the Designer predicted 1 faint at full HP, measured 0.
 - Unchanged by the C change (same suite run): wi-shelly-full-party WIN 11 turns / 2 faints; wi-shelly-worn-party LOSS 8 turns / 3 faints (= C382).
 
-## C386 retrospective (closed; decisions in strategy-notes "v3.8 retrospective")
+## C386 retrospective (closed; decisions in route119-rival-tuning.md, moved from strategy-notes C390)
 - **`playtests/winona-sun-full-party.json`**: guard tightened to `{outcome: win, maxPlayerFaints: 1}`, checks text updated (re-measured WIN 5 turns / 0 faints / PUPITAR 2%). No steps changed.
 - **New report-only rival playtests** (copies of route119-rival-rain-worn-party with every `hpPercent: 50` removed; male player → MAY; rain asserted; mapping verified in Route119/scripts.inc `switch VAR_STARTER_MON` 0/1/2 → _TREECKO/_TORCHIC/_MUDKIP):
   | Playtest | VAR_STARTER_MON → lead | Baseline | After F1 | After F1+F2 |
@@ -58,7 +58,7 @@ Common setup: checkpoint fortree_arrival, MAP_FORTREE_CITY_GYM 15,3 (below Winon
 ## C387 rival follow-up
 - `src/emulator/playtest.ts`: battleTurns gains optional `moveFor` (record foe SPECIES_* → slot 1-4); exported `pickMoveSlot(moveFor, speciesName, move)`; reads the foe only when moveFor is set (absent = unchanged behaviour); logs `[moveFor SPECIES_X → slot N]`. Tests in `src/emulator/playtest.test.ts` (schema accepts, rejects 0/5/1.5; pickMoveSlot). README row (battleTurns) documents it.
 - New playtests `route119-rival-rain-coverage-torchic/-treecko/-mudkip.json` (report-only, `expectBattleSummary {}`; would become `{outcome win, maxPlayerFaints 2}` once a variant wins). Old full-party + worn playtests: lead expectBattle level 28→26 and a C387 note in `checks`, steps otherwise unchanged.
-- trainer_parties.h: six Route 119 rival parties non-aces 28→26 (see trainer-parties.md). Results: strategy-notes "v3.8 retrospective addendum (C387)".
+- trainer_parties.h: six Route 119 rival parties non-aces 28→26 (see trainer-parties.md). Results: route119-rival-tuning.md "v3.8 retrospective addendum (C387)".
 
 ## C389 rival close-out (thread CLOSED)
 - trainer_parties.h: STANTLER_HOENN in all six Lv26 sParty_Brendan/MayRoute119Mudkip/Treecko/Torchic now SHADOW_BALL/ASTONISH/LEECH_SEED/MEGA_DRAIN (HYPNOSIS removed; ASTONISH is its Lv5 level-up move). Lv34/Lv70 STANTLER_HOENN sets untouched.

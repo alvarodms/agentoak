@@ -22,8 +22,35 @@ battleTurns plays double battles (auto-detected from gBattleTypeFlags & 1): `[pa
 
 ## C389 retrospective (CLOSED, branch B)
 - trainer_parties.h sParty_TateAndLiza1 XATU: PSYCHIC → NIGHT_SHADE (the one move dial; nothing else touched). Y7 after: GROUND LOSS 7t 4/2 (XATU + CLAYDOL down), FLOAT LOSS 6t 4/2, LEVITATE LOSS 7t 4/2; turn-1 EQ 3/3; XATU's faintCauses share 7/12 → 4/12 (all SHADOW BALL), EQ 1/12 → 1/12.
-- Playtests: tate-liza-y7-ground guarded `{"outcome": "loss"}`; -float / -levitate stay `{}` with "ACCEPTED (C389)" in checks. Full table: strategy-notes v3.9 "Retrospective (C389)".
+- Playtests: tate-liza-y7-ground guarded `{"outcome": "loss"}`; -float / -levitate stay `{}` with "ACCEPTED (C389)" in checks. Full table: "Measurements (moved C390)" below.
 - Harness (src/emulator/playtest.ts + playtest.test.ts): `BattleSummary.faintCauses` (summarizeBattle, unit test "tallies faint causes by the last foe move"); battleTurns turn timeout 3600 frames per turn → 3600 without a new message, `TURN_FRAME_CAP` 14400 per turn (the NIGHT_SHADE GROUND run's turn 4 outran the old budget while the game sat on an EXP bar). README expectBattleSummary row documents faintCauses.
+
+## Measurements (moved C390)
+Moved verbatim from strategy-notes.md v3.9 in C390.
+
+### Results (C388, playtests tate-liza-y7-*, report-only)
+Yardstick: full HP, no bag, slot 1 for both battlers, target opponent-left, replace. GROUND = SHELGON 41 / LINOONE / WHISCASH / GOLDUCK 40; FLOAT = slot 2 SWELLOW; LEVITATE = slot 2 CHIMECHO.
+| | baseline ALAKAZAM | LUNATONE 41 | as built (39/40) |
+|---|---|---|---|
+| GROUND | LOSS 5t 4/1 | LOSS 6t 4/2 | LOSS 7t 4/2 |
+| FLOAT | LOSS 6t 4/1 | LOSS 7t 4/3 | LOSS 8t 4/3 |
+| LEVITATE | LOSS 7t 4/1 | LOSS 7t 4/1 | LOSS 8t 4/1 |
+- PASS 1 (turn-1 EQ, foe side untouched): **met 9/9**. PASS 2 GROUND loses: met. PASS 3 FLOAT wins ≤2 faints: **FAIL** (open for C389).
+- **The finding**: EQ is the theme but not the threat. It caused 1 of 12 player faints (a crit); XATU's PSYCHIC caused 5 of 12, and the yardstick never hits XATU (opponent-left = CLAYDOL). FLOAT's SWELLOW is KO'd by XATU, not by the ground. So "float" alone isn't an answer; "break the pair" (target XATU) is the untested one.
+- **Reflection C388 (decision rule for C389, binding)**: two fights in a row (Route 119 rival C385-C387, now Tate & Liza) failed a narrow fixed yardstick, and both times the decider was a side threat, not the themed mechanic. The yardstick (4 mons, no bag, slot 1) is weaker than a real Badge-7 player (6 mons, Hyper Potions, player-chosen targets). C389 runs Y7-ADAPT ONCE; if it still loses, prefer a theme-preserving move swap on XATU (PSYCHIC → a weaker or non-Psychic move, e.g. NIGHT_SHADE) over another level change, measure once, then guard what wins and ACCEPT what loses. The thread closes in C389 either way; no C390 tuning (C390 is maintenance).
+
+### Retrospective (C389): CLOSED
+Dial taken: XATU PSYCHIC → **NIGHT_SHADE** (sParty_TateAndLiza1 only; level, item, iv, other mons, rematches, trainers.h untouched). Y7-ADAPT (switch-in) was NOT run: the Producer went straight to the move dial. Yardstick unchanged.
+| | C388 (XATU PSYCHIC) | C389 (XATU NIGHT_SHADE) |
+|---|---|---|
+| GROUND | LOSS 7t 4/2 (CLAYDOL, LUNATONE down) | LOSS 7t 4/2 (**XATU**, CLAYDOL down) |
+| FLOAT | LOSS 8t 4/3 | LOSS 6t 4/2 (CLAYDOL, LUNATONE) |
+| LEVITATE | LOSS 8t 4/1 | LOSS 7t 4/2 (CLAYDOL, LUNATONE) |
+- Turn-1 EQ + "doesn't affect Foe XATU": **3/3** (both runs). EQ turns C389: GROUND 1,2,4; FLOAT 1; LEVITATE 1,3. NIGHT_SHADE used: FLOAT t2, LEVITATE t3+t5.
+- faintCauses (harness tally, last foe move before each faint; C388 hand count said XATU 5/12): C388 XATU 7/12 (PSYCHIC 6, SHADOW BALL 1), ESPEON 4, EQ 1. C389 XATU 4/12 (all SHADOW BALL), ESPEON 5, LUNATONE PSYCHIC 2, EQ 1.
+- **Hypothesis "theme vs threat"**: half true. XATU's share fell 7→4 and its PSYCHIC is gone, but EQ's share did not rise (1/12 both times); the threat moved to ESPEON/LUNATONE Psychic + XATU SHADOW_BALL. EQ remains a tempo move (it chips the grounded side) rather than a killer.
+- **Branch B** (GROUND loses, FLOAT loses): NIGHT_SHADE KEPT (XATU supports instead of sweeping). Guard: tate-liza-y7-ground `{"outcome": "loss"}`. FLOAT/LEVITATE report-only, ACCEPTED: Tate & Liza is Emerald's hardest gym by community consensus; the 4-mon no-bag slot-1 yardstick is weaker than a Badge-7 player. Dialogue unchanged.
+- Harness: `faintCauses` in battleSummaries; battleTurns turn timeout is now 3600 frames without a new message (cap 14400 per turn), because the NIGHT_SHADE GROUND run's turn 4 (two foe faints, four EXP messages, two send-outs) outran the old 3600-per-turn budget.
 
 ## Index row
 v3.9 Ground that doesn't touch them | 388 | trainer_parties.h sParty_TateAndLiza1 (LUNATONE 39 replaces ALAKAZAM, ESPEON 40), MossdeepCity_Gym/scripts.inc (TateAndLizaDefeat), src/emulator/playtest.ts + playtest.test.ts (doubles battleTurns, target, finishTurn, pickSendOutIndex/pickTargetBattler), playtests/README.md, playtests tate-liza-y7-ground / -float / -levitate (new); C389: sParty_TateAndLiza1 XATU NIGHT_SHADE, playtest.ts + playtest.test.ts (faintCauses, turn idle timeout), README, the three Y7 playtests (ground guarded loss)

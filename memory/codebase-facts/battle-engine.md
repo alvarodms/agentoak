@@ -39,3 +39,4 @@ Moved verbatim from memory/codebase-facts.md in C380 (index: [../codebase-facts.
 ## From strategy-notes Technical Reference (moved C380)
 
 - **Custom ability pattern**: Status-inflicting: 4 files (abilities.h, text/abilities.h, battle_util.c, species_info.h). Crit-boosting: 4 files (abilities.h, text/abilities.h, battle_script_commands.c, species_info.h). Damage-multiplier + switch-in message: 9 files (see battle-engine.md Fey Flame / Undertow). ABILITY_NAME_LENGTH=14.
+- **Plus/Minus counts both sides (verified C390)**: `ABILITY_PLUS`/`ABILITY_MINUS` in CalculateBaseDamage (pokemon.c:3356-3358) test ABILITY_ON_FIELD2, the ABILITYEFFECT_FIELD_SPORT default loop (battle_util.c:3217-3225) over every battler, both sides, no HP check: a player's Minun boosts a foe Plusle, also in singles (a fainted doubles battler is not excluded by HP; untested whether its ability slot is cleared).
