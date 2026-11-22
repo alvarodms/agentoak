@@ -1,6 +1,6 @@
 {
   "name": "tate-liza-y7-ground",
-  "checks": "C388 v3.9 Y7-GROUND: Tate & Liza double battle vs four grounded Pokémon (SHELGON 41, LINOONE, WHISCASH, GOLDUCK 40; full HP, no bag, slot 1, target opponent-left). Turn 1 CLAYDOL's EARTHQUAKE fires and doesn't affect XATU; the yardstick predicts a LOSS. Measured C388 (seeded, deterministic): baseline ALAKAZAM 41 LOSS 5t, 4 player / 1 foe faints; LUNATONE 41 LOSS 6t 4/2; after the one tuning step (LUNATONE 39, ESPEON 40) LOSS 7t 4/2. EQ fired turns 1-2; its turn-1 crit KO on SHELGON is the only EQ faint. PASS needs this to LOSE: it does, but FLOAT also loses, so all three stay report-only (open FAIL for C389).",
+  "checks": "C388/C389 v3.9 Y7-GROUND: Tate & Liza double battle vs four grounded Pokémon (SHELGON 41, LINOONE, WHISCASH, GOLDUCK 40; full HP, no bag, slot 1, target opponent-left). Turn 1 CLAYDOL's EARTHQUAKE fires and doesn't affect XATU; the grounded team must LOSE (guard). C388 as built (XATU PSYCHIC): LOSS 7t 4/2, faintCauses CLAYDOL/EARTHQUAKE 1, XATU/PSYCHIC 1, ESPEON/PSYCHIC 1, ESPEON/SHADOW BALL 1. C389 (XATU PSYCHIC -> NIGHT_SHADE, the one move dial): LOSS 7t 4/2 (XATU + CLAYDOL down), EQ turns 1,2,4, faintCauses CLAYDOL/EARTHQUAKE 1, XATU/SHADOW BALL 1, ESPEON/SHADOW BALL 1, LUNATONE/PSYCHIC 1. Closed C389 (branch B).",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_GYM",
     "x": 23,
@@ -110,10 +110,12 @@
       }
     },
     {
-      "comment": "C388: report-only. PASS (spec) = GROUND {outcome loss}, FLOAT {outcome win, maxPlayerFaints 2}; not met after the one tuning step, so no guard yet (C389 decides)."
+      "comment": "C389: closed, see strategy-notes v3.9 retrospective. Guard: the grounded team loses (EQ is meant to punish a grounded pair)."
     },
     {
-      "expectBattleSummary": {}
+      "expectBattleSummary": {
+        "outcome": "loss"
+      }
     },
     {
       "screenshot": "tate-liza-y7-ground-end"

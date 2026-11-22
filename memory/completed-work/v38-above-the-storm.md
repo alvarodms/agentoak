@@ -59,3 +59,7 @@ Common setup: checkpoint fortree_arrival, MAP_FORTREE_CITY_GYM 15,3 (below Winon
 - `src/emulator/playtest.ts`: battleTurns gains optional `moveFor` (record foe SPECIES_* → slot 1-4); exported `pickMoveSlot(moveFor, speciesName, move)`; reads the foe only when moveFor is set (absent = unchanged behaviour); logs `[moveFor SPECIES_X → slot N]`. Tests in `src/emulator/playtest.test.ts` (schema accepts, rejects 0/5/1.5; pickMoveSlot). README row (battleTurns) documents it.
 - New playtests `route119-rival-rain-coverage-torchic/-treecko/-mudkip.json` (report-only, `expectBattleSummary {}`; would become `{outcome win, maxPlayerFaints 2}` once a variant wins). Old full-party + worn playtests: lead expectBattle level 28→26 and a C387 note in `checks`, steps otherwise unchanged.
 - trainer_parties.h: six Route 119 rival parties non-aces 28→26 (see trainer-parties.md). Results: strategy-notes "v3.8 retrospective addendum (C387)".
+
+## C389 rival close-out (thread CLOSED)
+- trainer_parties.h: STANTLER_HOENN in all six Lv26 sParty_Brendan/MayRoute119Mudkip/Treecko/Torchic now SHADOW_BALL/ASTONISH/LEECH_SEED/MEGA_DRAIN (HYPNOSIS removed; ASTONISH is its Lv5 level-up move). Lv34/Lv70 STANTLER_HOENN sets untouched.
+- Guards: route119-rival-rain-coverage-torchic (WIN 15t/2) and -treecko (WIN 8t/2) now `expectBattleSummary {"outcome": "win", "maxPlayerFaints": 2}`; -mudkip (LOSS 12t/3) stays `{}`, ACCEPTED as a hard rival. Table: strategy-notes "v3.8 retrospective addendum", "C389 close-out".

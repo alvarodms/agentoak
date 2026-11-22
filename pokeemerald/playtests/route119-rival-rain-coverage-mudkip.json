@@ -1,6 +1,6 @@
 {
   "name": "route119-rival-rain-coverage-mudkip",
-  "checks": "C387: coverage yardstick (moveFor) vs the rival's SCEPTILE team in storm-tail rain; guard win + maxPlayerFaints 2. Measured C387: Lv28 LOSS 9t/3/2; Lv26 LOSS 13t/3/3 (STANTLER_HOENN down, SCEPTILE last); non-aces kept at 26 (one step only), so this stays report-only as an open FAIL for C388 (STANTLER_HOENN HYPNOSIS/LEECH_SEED/SHADOW_BALL decides it).",
+  "checks": "C387/C389: coverage yardstick (moveFor) vs the rival's SCEPTILE team in storm-tail rain. Measured C387 (STANTLER_HOENN HYPNOSIS): Lv28 LOSS 9t/3/2; Lv26 LOSS 13t/3/3, faintCauses HARIYAMA/BRICK BREAK 1, STANTLER/SHADOW BALL 1, SCEPTILE/DRAGON CLAW 1. C389 one dial (HYPNOSIS -> ASTONISH on all six Lv26 STANTLER_HOENN): LOSS 12t/3/3 (only SCEPTILE left), faintCauses HARIYAMA/BRICK BREAK 1, SCEPTILE/LEAF BLADE 1, SCEPTILE/DRAGON CLAW 1. ACCEPTED (C389): hard rival, report-only; the rival who outgrew you in the rain. Thread closed C389.",
   "scenario": {
     "checkpoint": "fortree_arrival",
     "map": "MAP_ROUTE119",
@@ -64,7 +64,7 @@
     { "expectBattleWeather": "rain" },
     { "comment": "moves lined up by role: slot 1 BITE/SURF/BITE (hits the Ghost STANTLER_HOENN), slot 2 STRENGTH/WING_ATTACK/STRENGTH (anti-Grass/Fighting), slot 3 FACADE/WATER_GUN/HEADBUTT (anti-Fire); moveFor picks the slot for whichever foe is out" },
     { "battleTurns": { "move": 1, "moveFor": { "SPECIES_PUPITAR": 1, "SPECIES_HARIYAMA": 2, "SPECIES_STANTLER_HOENN": 1, "SPECIES_SCEPTILE": 2 }, "until": ["You're still ahead of me", "whited out"], "any": true, "replace": true, "maxTurns": 40 } },
-    { "comment": "C387: report only until the variant wins at full HP; then expectBattleSummary {outcome win, maxPlayerFaints 2}" },
+    { "comment": "C389: closed, see strategy-notes v3.8 addendum 'C389 close-out'. Still a loss after the one dial: ACCEPTED as a hard rival, report-only." },
     { "expectBattleSummary": { } },
     { "screenshot": "route119-rival-rain-coverage-mudkip-end" }
   ]

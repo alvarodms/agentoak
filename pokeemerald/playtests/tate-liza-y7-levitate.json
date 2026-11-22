@@ -1,6 +1,6 @@
 {
   "name": "tate-liza-y7-levitate",
-  "checks": "C388 v3.9 Y7-LEVITATE (report-only): as Y7-GROUND but slot 2 = CHIMECHO 40 (Levitate). Records when CLAYDOL first uses EARTHQUAKE and the outcome. Measured C388: EQ first fired on turn 1 in every run (turns 1,2,4,5,6); baseline LOSS 7t 4/1; LUNATONE 41 LOSS 7t 4/1; after the tuning step LOSS 8t 4/1. XATU PSYCHIC caused 3 of 4 faints.",
+  "checks": "C388/C389 v3.9 Y7-LEVITATE (report-only): as Y7-GROUND but slot 2 = CHIMECHO 40 (Levitate). Records when CLAYDOL first uses EARTHQUAKE and the outcome. C388 as built (XATU PSYCHIC): LOSS 8t 4/1, EQ turns 1,2,4,5,6, faintCauses XATU/PSYCHIC 3, XATU/SHADOW BALL 1. C389 (XATU NIGHT_SHADE): LOSS 7t 4/2 (CLAYDOL + LUNATONE down), EQ turns 1,3, NIGHT SHADE turns 3,5, faintCauses XATU/SHADOW BALL 2, ESPEON/PSYCHIC 2. ACCEPTED (C389): Tate & Liza is Emerald's hardest gym by community consensus; 4-mon no-bag slot-1 yardstick is weaker than a Badge-7 player.",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_GYM",
     "x": 23,
@@ -109,7 +109,7 @@
       }
     },
     {
-      "comment": "C388: report-only. PASS (spec) = GROUND {outcome loss}, FLOAT {outcome win, maxPlayerFaints 2}; not met after the one tuning step, so no guard yet (C389 decides)."
+      "comment": "C389: closed, see strategy-notes v3.9 retrospective. ACCEPTED as a hard gym: report-only."
     },
     {
       "expectBattleSummary": {}

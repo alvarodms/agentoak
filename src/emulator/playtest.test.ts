@@ -308,9 +308,25 @@ describe("battle summaries (expectBattleSummary)", () => {
   ];
 
   it("summarizes a win and a loss from their battle messages", () => {
-    expect(summarizeBattle(WIN)).toEqual({ index: 0, outcome: "win", turns: 3, playerFaints: 1, opponentFaints: 2, playerEndHpPercent: [0, 62, 100] });
-    expect(summarizeBattle(LOSS)).toEqual({ index: 0, outcome: "loss", turns: 2, playerFaints: 2, opponentFaints: 1 });
+    expect(summarizeBattle(WIN)).toEqual({ index: 0, outcome: "win", turns: 3, playerFaints: 1, opponentFaints: 2, playerEndHpPercent: [0, 62, 100], faintCauses: { "QWILFISH/WATER GUN": 1 } });
+    expect(summarizeBattle(LOSS)).toEqual({ index: 0, outcome: "loss", turns: 2, playerFaints: 2, opponentFaints: 1, faintCauses: { "?": 2 } });
     expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "])).toMatchObject({ outcome: "unknown", opponentFaints: 1 });
+  });
+
+  it("summarizeBattle tallies faint causes by the last foe move", () => {
+    const log = [
+      "What will SHELGON do?",
+      "Foe XATU used PSYCHIC!",
+      "SHELGON fainted! ",
+      "Foe CLAYDOL used EARTHQUAKE!",
+      "LINOONE fainted!",
+      "Foe XATU used PSYCHIC!",
+      "WHISCASH fainted!",
+      "Foe CLAYDOL fainted!",
+    ];
+    expect(summarizeBattle(log)).toMatchObject({ playerFaints: 3, opponentFaints: 1 });
+    expect(summarizeBattle(log).faintCauses).toEqual({ "XATU/PSYCHIC": 2, "CLAYDOL/EARTHQUAKE": 1 });
+    expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "])).not.toHaveProperty("faintCauses");
   });
 
   it("splits a log into battles at the first prompt after an outcome", () => {

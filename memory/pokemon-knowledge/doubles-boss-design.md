@@ -1,8 +1,13 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 388 | **Date**: November 2026
+**Cycle**: 389 | **Date**: November 2026
 
 ---
+
+## C389: is a hard T&L a bug or the expectation?
+- **Vanilla T&L is the community's "hardest Emerald gym"** (Sportskeeda's toughest-gym-per-game list picks T&L for Emerald; PokeCommunity "3rd Gen Gym Leaders" thread puts it tied with Norman). A Nuzlocke post: "there's a reason so many Kaizo hacks make gyms doubles." A Badge-7 loss on a narrow yardstick matches what players expect here; it isn't a defect.
+- **Vanilla Xatu already carries PSYCHIC** (Lv41: Psychic / Sunny Day / Confuse Ray / Calm Mind, rankedboost/Bulbapedia). So XATU's PSYCHIC is the threat players already know, and guides counter it by leading a **Dark type** (Psychic can't touch it) + Water. Cutting PSYCHIC makes LoH's Xatu *weaker than vanilla*. Prefer fixing the yardstick: a Dark mon (MIGHTYENA/SHARPEDO/SABLEYE) is the community-standard answer, and our Y7 parties lack one.
+- NIGHT_SHADE (Natu line level-up move) is fixed damage = level (39), so it's predictable but erases the Psychic identity. If a swap is needed, AERIAL_ACE/SHADOW_BALL already cover Xatu; dropping PSYCHIC leaves no Psychic STAB on the Psychic-gym ace pair.
 
 ## C388: harness naming + "is the beat already vanilla?"
 - **Players already know this fight.** Strategy guides (rankedboost Emerald T&L page) describe vanilla Emerald's T&L as using Earthquake with Claydol while their Flying/Levitate partners stay unharmed; vanilla R/S advice is "Ground moves fail, bring Water/Grass/Bug/Ghost", which is v3.9's answers (b). The LoH spec keeps Claydol's EQ moveset "unchanged", so the turn-1 EQ may already fire in the current ROM. Measure the Y7 yardsticks on the pre-edit roster first (baseline), then after the Lunatone swap, so the diff shows what v3.9 actually adds.
@@ -35,4 +40,6 @@
 - https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
 - https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system
 - https://rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald/
+- https://www.sportskeeda.com/pokemon/toughest-gym-battles-pokemon-mainline-game
+- https://www.pokecommunity.com/threads/gym-leaders.319564
 - https://docs.google.com/document/u/0/d/13E61Jj4KwhIy3ZKgLjPY-_uWKWklfBR_zUlhZHUZqik/mobilebasic (Gen 3 partner AI notes)

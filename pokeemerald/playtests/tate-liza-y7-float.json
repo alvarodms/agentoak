@@ -1,6 +1,6 @@
 {
   "name": "tate-liza-y7-float",
-  "checks": "C388 v3.9 Y7-FLOAT: as Y7-GROUND but slot 2 = SWELLOW 40 (Flying, floats over EARTHQUAKE). Turn 1 EARTHQUAKE still fires (SHELGON is grounded) and doesn't affect XATU; the yardstick predicts a WIN with at most 2 player faints. Measured C388: baseline LOSS 6t 4/1; LUNATONE 41 LOSS 7t 4/3; after the one tuning step (LUNATONE 39, ESPEON 40) LOSS 8t 4/3. EQ fired turns 1 and 3, hitting only SHELGON/WHISCASH; XATU PSYCHIC took SHELGON and SWELLOW. PASS needs a WIN with <=2 faints: open FAIL for C389, report-only.",
+  "checks": "C388/C389 v3.9 Y7-FLOAT: as Y7-GROUND but slot 2 = SWELLOW 40 (Flying, floats over EARTHQUAKE). Turn 1 EARTHQUAKE still fires (SHELGON is grounded) and doesn't affect XATU. C388 as built (XATU PSYCHIC): LOSS 8t 4/3, faintCauses XATU/PSYCHIC 2, ESPEON/SHADOW BALL 1, ESPEON/PSYCHIC 1. C389 (XATU NIGHT_SHADE): LOSS 6t 4/2 (CLAYDOL + LUNATONE down), EQ turn 1 only, NIGHT SHADE turn 2, faintCauses XATU/SHADOW BALL 1, LUNATONE/PSYCHIC 1, ESPEON/SHADOW BALL 1, ESPEON/PSYCHIC 1. Spec wanted a WIN with <=2 faints: not met. ACCEPTED (C389): Tate & Liza is Emerald's hardest gym by community consensus; 4-mon no-bag slot-1 yardstick is weaker than a Badge-7 player. Report-only.",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_GYM",
     "x": 23,
@@ -110,7 +110,7 @@
       }
     },
     {
-      "comment": "C388: report-only. PASS (spec) = GROUND {outcome loss}, FLOAT {outcome win, maxPlayerFaints 2}; not met after the one tuning step, so no guard yet (C389 decides)."
+      "comment": "C389: closed, see strategy-notes v3.9 retrospective. ACCEPTED as a hard gym: report-only."
     },
     {
       "expectBattleSummary": {}

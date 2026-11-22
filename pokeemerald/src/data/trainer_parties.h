@@ -4207,7 +4207,7 @@ static const struct TrainerMonItemCustomMoves sParty_TateAndLiza1[] = {
     .lvl = 39,
     .species = SPECIES_XATU,
     .heldItem = ITEM_LUM_BERRY,
-    .moves = {MOVE_PSYCHIC, MOVE_SHADOW_BALL, MOVE_CONFUSE_RAY, MOVE_AERIAL_ACE}
+    .moves = {MOVE_NIGHT_SHADE, MOVE_SHADOW_BALL, MOVE_CONFUSE_RAY, MOVE_AERIAL_ACE}
     },
     {
     .iv = 200,
@@ -8731,7 +8731,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Mudkip[] = {
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,
@@ -8794,7 +8794,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Treecko[] = 
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,
@@ -8857,7 +8857,7 @@ static const struct TrainerMonItemCustomMoves sParty_BrendanRoute119Torchic[] = 
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,
@@ -8920,7 +8920,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Mudkip[] = {
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,
@@ -8983,7 +8983,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Treecko[] = {
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,
@@ -9046,7 +9046,7 @@ static const struct TrainerMonItemCustomMoves sParty_MayRoute119Torchic[] = {
     .lvl = 26,
     .species = SPECIES_STANTLER_HOENN,
     .heldItem = ITEM_SPELL_TAG,
-    .moves = {MOVE_SHADOW_BALL, MOVE_HYPNOSIS, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
+    .moves = {MOVE_SHADOW_BALL, MOVE_ASTONISH, MOVE_LEECH_SEED, MOVE_MEGA_DRAIN}
     },
     {
     .iv = 150,

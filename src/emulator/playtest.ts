@@ -778,6 +778,9 @@ async function answerTargetPrompt(s: EmulatorSession, target: BattleTarget, labe
   await s.press("A");
 }
 
+/** battleTurns: the most frames one turn may take, however many messages it shows. */
+const TURN_FRAME_CAP = 14400;
+
 /**
  * battleTurns' start: taps B to the next "What will" like waitForBattleText, logging the messages on the way
  * (the rest of a turn an earlier battleTurns stopped in) and checking `forbid`. With `replace`, a faint in that
@@ -881,7 +884,9 @@ async function battleTurns(
       await s.run(10);
       text = await battleText(s);
     }
-    for (let f = 0; ; f += 30) {
+    // The stall clock restarts at each new message: a doubles turn with two faints, EXP and send-outs runs past
+    // 3600 frames on its own (C389 Y7-GROUND turn 4); TURN_FRAME_CAP still bounds a turn that never settles.
+    for (let f = 0, idle = 0; ; f += 30, idle += 30) {
       const cb = (await s.callbacks()).callback2;
       if (cb !== "BattleMainCB2" && opts.replace && cb !== "CB2_Overworld") {
         const sent = await sendOutNext(s, label, doubles);
@@ -895,6 +900,7 @@ async function battleTurns(
       text = await battleText(s);
       if (text.includes("What will")) break; // the next turn's action menu
       if (text.trim() && text !== seen.at(-1)) {
+        idle = 0;
         seen.push(text);
         opts.log?.push(text);
         const bad = forbidden(text, forbid);
@@ -904,7 +910,8 @@ async function battleTurns(
           return;
         }
       }
-      if (f >= 3600) fail(`${label}: turn ${turn} still running after 3600 frames; seen ${JSON.stringify(seen.slice(-12))}`);
+      if (idle >= 3600) fail(`${label}: turn ${turn} showed no new message for 3600 frames; seen ${JSON.stringify(seen.slice(-12))}`);
+      if (f >= TURN_FRAME_CAP) fail(`${label}: turn ${turn} still running after ${TURN_FRAME_CAP} frames; seen ${JSON.stringify(seen.slice(-12))}`);
       await s.press("B", { hold: 2, release: 28 });
     }
     await s.run(30); // let the action menu take input
@@ -1091,6 +1098,8 @@ export interface BattleSummary {
   opponentFaints: number;
   /** Party HP % (party order) read when the battle's last battleTurns step returned. */
   playerEndHpPercent?: number[];
+  /** Player faints keyed "FOE/MOVE" by the last "Foe X used MOVE!" before each faint ("?" if none); chip damage (Leech Seed, poison) counts toward that last move. */
+  faintCauses?: Record<string, number>;
 }
 
 /** battleLog marker battleTurns appends with the party's HP % when it returns. */
@@ -1103,13 +1112,22 @@ export function summarizeBattle(log: readonly string[], index = 0): BattleSummar
   const fainted = log.map((m) => m.trim()).filter((m) => m.endsWith("fainted!"));
   const opponentFaints = fainted.filter((m) => /^(Foe|Wild) /.test(m)).length;
   const hp = log.filter((m) => m.startsWith(PARTY_HP_MARK)).at(-1);
+  const faintCauses: Record<string, number> = {};
+  let lastFoeMove: string | undefined;
+  for (const m of log.map((x) => x.trim())) {
+    const used = /^Foe (\S+) used (.+?)!$/.exec(m);
+    if (used) lastFoeMove = `${used[1]}/${used[2]}`;
+    else if (m.endsWith("fainted!") && !/^(Foe|Wild) /.test(m)) faintCauses[lastFoeMove ?? "?"] = (faintCauses[lastFoeMove ?? "?"] ?? 0) + 1;
+  }
+  const playerFaints = fainted.length - opponentFaints;
   return {
     index,
     outcome: log.some(isLoss) ? "loss" : log.some(isWin) ? "win" : "unknown",
     turns: log.filter((m) => m.includes("What will")).length,
-    playerFaints: fainted.length - opponentFaints,
+    playerFaints,
     opponentFaints,
     ...(hp && { playerEndHpPercent: hp.slice(PARTY_HP_MARK.length, -1).split(",").map(Number) }),
+    ...(playerFaints > 0 && { faintCauses }),
   };
 }
 
