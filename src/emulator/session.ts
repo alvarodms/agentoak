@@ -446,7 +446,7 @@ export class EmulatorSession {
     return value;
   }
 
-  private async getLayout(): Promise<Layout> {
+  async getLayout(): Promise<Layout> {
     if (!this.layout) {
       this.layout = parseLayout(await this.readSymbol("gPlaytestLayout", LAYOUT_COUNT * 2), LAYOUT_VERSION);
     }

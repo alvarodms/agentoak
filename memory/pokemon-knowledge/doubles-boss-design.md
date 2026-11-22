@@ -1,8 +1,14 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 390 | **Date**: November 2026
+**Cycle**: 391 | **Date**: November 2026
 
 ---
+
+## C391: Space Center multi battle (v3.10 "Side by side")
+- **Vanilla Emerald partner Steven** (Azurilland/Bulbapedia): METANG 42 / SKARMORY 43 / AGGRON 44, all Steel; the player picks 3 mons; foes Maxie + Tabitha. Bulbapedia's Lv57 Skarmory belongs to the ORAS section, so ignore it.
+- **Bulbapedia quirk**: Steven's Skarmory may use **TOXIC on the player's own mon if it has Guts** (Gen 3 AI scores an ally with Guts as a status target). So vanilla's partner can hurt the player. It cuts against the C390 hypothesis ("partner visibly saves"), so measure a Guts mon in the party (MACHOKE/HERACROSS/TAILLOW line/URSARING) as a miss path.
+- Walkthroughs call the fight a mild spike after the sea routes. Nobody calls it memorable, and no hack we found redesigns it. Community partner-battle complaints are about partners doing **nothing** (PokéCommunity 425516) or being a re-skin (Run & Bun critique), not partners being too strong.
+- Design consequence: a partner "save" has to be *legible*. Vanilla Steven is a 3-Steel wall whose turns blend into the noise. One visible act (Protect-style guard, heal or priority KO) beats raw levels.
 
 ## C390: Plusle & Minun twin doubles (backlog 388), prior art + engine check
 - **Code-verified quirk**: `CalculateBaseDamage` (src/pokemon.c:3356-3358) boosts Plus/Minus Sp. Atk 1.5x if `ABILITY_ON_FIELD2(ABILITY_MINUS/PLUS)`, which is `ABILITYEFFECT_FIELD_SPORT` default branch (battle_util.c:3217-3226): ANY battler on the field, **either side, no HP check, no doubles check**. So the player's own Minun powers the foe's Plusle (and vice versa), and it fires in singles too. Bulbapedia only states the "ally" rule; nobody documents this. Mainline Gen 3 matches pret, so it is vanilla behaviour.
@@ -49,3 +55,4 @@
 - https://www.sportskeeda.com/pokemon/toughest-gym-battles-pokemon-mainline-game
 - https://www.pokecommunity.com/threads/gym-leaders.319564
 - https://docs.google.com/document/u/0/d/13E61Jj4KwhIy3ZKgLjPY-_uWKWklfBR_zUlhZHUZqik/mobilebasic (Gen 3 partner AI notes)
+- https://bulbapedia.bulbagarden.net/wiki/Mossdeep_Space_Center · https://pokemon-archive.fandom.com/wiki/Mossdeep_Space_Center · https://www.pokecommunity.com/threads/partner-trainer-exe-has-stopped-working-apparently.425516/

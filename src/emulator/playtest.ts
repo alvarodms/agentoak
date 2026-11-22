@@ -22,7 +22,7 @@ import { z } from "zod";
 import { CHECKPOINT_NAMES } from "./checkpoints.js";
 import { SAVEBLOCK1_REGISTERED_ITEM } from "./scenario.js";
 import { BUTTONS, EmulatorSession, type Button, type RomBuild, type StartOptions } from "./session.js";
-import { SCRIPT_CONTEXT_SHUTDOWN, type Facing } from "./state.js";
+import { SCRIPT_CONTEXT_SHUTDOWN, decodePartyMon, type Facing } from "./state.js";
 
 export { SAVEBLOCK1_REGISTERED_ITEM };
 
@@ -222,6 +222,8 @@ const StepSchema = z.union([
      * Double battles are detected: both of the player's battlers pick FIGHT → the same slot, and a
      * single-target move's target prompt is answered with `target` (default "opponentLeft"; the other
      * foe when that one is gone). Spread moves (SURF, EARTHQUAKE) have no prompt.
+     * In-game partner battles (Steven): only your left battler is prompted; the partner's AI picks, and the summary
+     * splits faints and foe KOs between you and the partner (see BattleSummary).
      */
     battleTurns: z.strictObject({
       move: z.number().int().min(1).max(4),
@@ -246,6 +248,20 @@ const StepSchema = z.union([
     }),
   }),
   z.strictObject({
+    /**
+     * The "choose 3 for battle" party menu (special ChooseHalfPartyForBattle, e.g. Steven's Space Center multi
+     * battle): for each 1-based party `slots` entry, in order, move the cursor there and pick ENTER; then CONFIRM.
+     * Fails if the menu isn't the choose-half one, an ENTER doesn't register, or the menu doesn't close into a battle.
+     */
+    chooseHalfParty: z.strictObject({
+      slots: z
+        .array(z.number().int().min(1).max(6))
+        .length(3)
+        .refine((s) => new Set(s).size === s.length, { message: "slots must be different" }),
+      maxFrames: z.number().int().positive().optional(),
+    }),
+  }),
+  z.strictObject({
     expectBattle: z.strictObject({ opponent: z.string().optional(), level: z.number().int().optional() }),
   }),
   /** The battle's current weather (gBattleWeather), e.g. after the foe uses Hail. */
@@ -264,6 +280,8 @@ const StepSchema = z.union([
       maxTurns: z.number().int().min(0).optional(),
       minPlayerFaints: z.number().int().min(0).optional(),
       maxPlayerFaints: z.number().int().min(0).optional(),
+      /** true: the battle had an in-game partner (its summary has partnerFaints, foeKOsBy, partnerGuards, partnerHitsAlly). */
+      partner: z.boolean().optional(),
     }),
   }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
@@ -653,6 +671,11 @@ async function runStep(
     return;
   }
 
+  if ("chooseHalfParty" in step) {
+    await chooseHalfParty(s, step.chooseHalfParty.slots, step.chooseHalfParty.maxFrames ?? 1800);
+    return;
+  }
+
   if ("expectBattle" in step) {
     // gBattleMons fills in a few frames after the battle screen appears; until then a second battle
     // in one test still holds the last battle's mons, so wait for the expected ones too.
@@ -737,12 +760,12 @@ export function pickTargetBattler(battleHp: readonly (number | undefined)[], tar
 
 /**
  * The send-out party menu's pick: the first healthy Pokémon after the ones on the field (index 1 in singles,
- * where index 0 is the fainted one; index 2 in doubles, where indexes 0-1 are both battlers) and after `after`.
- * -1 when there is none.
+ * where index 0 is the fainted one; index 2 in doubles, where indexes 0-1 are both battlers) and after `after`,
+ * before index `end` (partner battles: PARTNER_MENU_BENCH_END). -1 when there is none.
  */
-export function pickSendOutIndex(partyHp: readonly number[], doubles: boolean, after = -1): number {
+export function pickSendOutIndex(partyHp: readonly number[], doubles: boolean, after = -1, end = partyHp.length): number {
   const first = Math.max(doubles ? 2 : 1, after + 1);
-  for (let i = first; i < partyHp.length; i++) if (partyHp[i] > 0) return i;
+  for (let i = first; i < Math.min(end, partyHp.length); i++) if (partyHp[i] > 0) return i;
   return -1;
 }
 
@@ -750,6 +773,111 @@ export function pickSendOutIndex(partyHp: readonly number[], doubles: boolean, a
 const promptName = (text: string) => /What will (.*?) do\?/.exec(text)?.[1] ?? text.replace("What will", "").trim();
 
 const isDoubleBattle = async (s: EmulatorSession) => ((await s.readU32(s.symbols.address("gBattleTypeFlags"))) & BATTLE_TYPE_DOUBLE) !== 0;
+
+/** gBattleTypeFlags bit for an AI partner on the player's side (Steven at the Space Center; include/constants/battle.h). */
+export const BATTLE_TYPE_INGAME_PARTNER = 1 << 22;
+/** In such a battle gPlayerParty[0..2] are the player's and [3..5] the partner's (FillPartnerParty, MULTI_PARTY_SIZE). */
+const MULTI_PARTY_SIZE = 3;
+/** gSpeciesNames rows: POKEMON_NAME_LENGTH + 1 bytes (include/constants/global.h). */
+const SPECIES_NAME_SIZE = 11;
+/**
+ * battleLog marker a partner battle's battleTurns writes before its first prompt: who is whose, by the names the
+ * battle text prints (no "Foe" prefix on either). summarizeBattle reads it to split faints and KOs by owner.
+ */
+export const PARTNER_PARTY_MARK = "[in-game partner: ";
+
+const isPartnerBattle = async (s: EmulatorSession) =>
+  ((await s.readU32(s.symbols.address("gBattleTypeFlags"))) & BATTLE_TYPE_INGAME_PARTNER) !== 0;
+
+/** The partner marker: `[in-game partner: METANG,SKARMORY,AGGRON; player: SHELGON,LINOONE,WHISCASH]`. */
+export const partnerPartyMarker = (partner: readonly string[], player: readonly string[]) =>
+  `${PARTNER_PARTY_MARK}${partner.join(",")}; player: ${player.join(",")}]`;
+
+export function parsePartnerPartyMarker(m: string): { partner: string[]; player: string[] } | undefined {
+  if (!m.startsWith(PARTNER_PARTY_MARK)) return undefined;
+  const [partner, player = ""] = m.slice(PARTNER_PARTY_MARK.length, -1).split("; player: ");
+  const names = (s: string) => s.split(",").filter(Boolean);
+  return { partner: names(partner), player: names(player) };
+}
+
+/**
+ * Partner battles: the display names of gPlayerParty[0..2] (the player's) and [3..5] (the partner's), read from
+ * gSpeciesNames as the battle text prints them (no nicknames in playtests). Fails if a name is on both sides,
+ * since the battle text could not tell their faints and moves apart.
+ */
+async function readPartnerSides(s: EmulatorSession, label: string): Promise<{ partner: string[]; player: string[] }> {
+  // All six slots, not readState's gPlayerPartyCount: the partner's three sit after the player's.
+  const layout = await s.getLayout();
+  const raw = await s.read(s.symbols.address("gPlayerParty"), 2 * MULTI_PARTY_SIZE * layout.pokemonSize);
+  const names = s.symbols.address("gSpeciesNames");
+  const player: string[] = [];
+  const partner: string[] = [];
+  for (let i = 0; i < 2 * MULTI_PARTY_SIZE; i++) {
+    const { species } = decodePartyMon(raw.subarray(i * layout.pokemonSize, (i + 1) * layout.pokemonSize), layout);
+    if (!species) continue;
+    (i < MULTI_PARTY_SIZE ? player : partner).push(await s.readText(names + species * SPECIES_NAME_SIZE, SPECIES_NAME_SIZE));
+  }
+  checkPartnerSides(label, { partner, player });
+  return { partner, player };
+}
+
+/** Fails if a display name is on both sides of a partner battle: the battle text could not tell their faints and moves apart. */
+export function checkPartnerSides(label: string, sides: { partner: readonly string[]; player: readonly string[] }): void {
+  const shared = sides.player.filter((n) => sides.partner.includes(n));
+  if (shared.length) fail(`${label}: ${shared.join(", ")} is on both your side and the partner's; the battle text can't tell them apart (pick a different species)`);
+}
+
+/**
+ * Partner battles' send-out menu (PARTY_LAYOUT_MULTI) lists the party in battle order: your battler, the partner's,
+ * your two bench Pokémon (indexes 2-3), the partner's bench (4-5). Picks stop before this index.
+ */
+export const PARTNER_MENU_BENCH_END = 4;
+
+/** True unless the current battle in `log` (after its last win or loss message) already has a partner marker. */
+export function needsPartnerMarker(log: readonly string[]): boolean {
+  let lastEnd = -1;
+  let lastMark = -1;
+  log.forEach((m, i) => {
+    if (isWin(m) || isLoss(m)) lastEnd = i;
+    if (m.startsWith(PARTNER_PARTY_MARK)) lastMark = i;
+  });
+  return lastMark < 0 || lastMark < lastEnd;
+}
+
+/** True if the player's left battler (0) runs battle_controller_player.c's `fn` right now. */
+async function playerLeftControllerIs(s: EmulatorSession, fn: string): Promise<boolean> {
+  const want = (s.symbols.address(fn, "src/battle_controller_player.o") & ~1) >>> 0;
+  return ((await s.readU32(s.symbols.address("gBattlerControllerFuncs"))) & ~1) >>> 0 === want;
+}
+
+/**
+ * Partner battles: FIGHT on the player's action menu, pressed only once the menu takes input
+ * (HandleInputChooseAction) and repeated until the move menu is open (HandleInputChooseMove). The first prompt
+ * after a send-out shows its text before the menu takes input, and a FIGHT pressed then was lost (C391).
+ */
+async function openFightMenu(s: EmulatorSession, label: string): Promise<void> {
+  for (let f = 0; !(await playerLeftControllerIs(s, "HandleInputChooseAction")); f += 10) {
+    if (await playerLeftControllerIs(s, "HandleInputChooseMove")) return;
+    if (f >= 600) fail(`${label}: the action menu never took input; battle text ${JSON.stringify(await battleText(s))}`);
+    await s.run(10);
+  }
+  for (let tries = 0; ; tries++) {
+    // Only on the action menu: an A that lands in the move menu would pick a move.
+    if (await playerLeftControllerIs(s, "HandleInputChooseAction")) {
+      await s.press("UP");
+      await s.press("LEFT");
+      await s.press("A");
+    }
+    for (let f = 0; f < 60; f += 10) {
+      if (await playerLeftControllerIs(s, "HandleInputChooseMove")) {
+        await s.run(10); // let the move menu draw its text
+        return;
+      }
+      await s.run(10);
+    }
+    if (tries >= 5) fail(`${label}: FIGHT never opened the move menu; battle text ${JSON.stringify(await battleText(s))}`);
+  }
+}
 
 /** True if one of the player's battlers (0, 2) runs battle_controller_player.c's `fn` right now. */
 async function playerControllerIs(s: EmulatorSession, fn: string): Promise<boolean> {
@@ -786,7 +914,7 @@ const TURN_FRAME_CAP = 14400;
  * (the rest of a turn an earlier battleTurns stopped in) and checking `forbid`. With `replace`, a faint in that
  * rest of the turn gets its send-out instead of stalling on the party menu.
  */
-async function finishTurn(s: EmulatorSession, label: string, doubles: boolean, replace: boolean, forbid: readonly string[], log?: string[]): Promise<void> {
+async function finishTurn(s: EmulatorSession, label: string, doubles: boolean, replace: boolean, forbid: readonly string[], log?: string[], partner = false): Promise<void> {
   let text = "";
   // The message an earlier battleTurns stopped on is still showing and already logged.
   const seen = [...(log ?? []).filter((m) => !m.startsWith("[")).slice(-1)];
@@ -794,7 +922,7 @@ async function finishTurn(s: EmulatorSession, label: string, doubles: boolean, r
   for (let f = 0; f <= 3600; f += 30) {
     const cb = (await s.callbacks()).callback2;
     if (replace && cb !== "BattleMainCB2" && cb !== "CB2_Overworld") {
-      log?.push(`[sent out party menu slot ${await sendOutNext(s, label, doubles)}]`);
+      log?.push(`[sent out party menu slot ${await sendOutNext(s, label, doubles, partner)}]`);
       continue;
     }
     text = await battleText(s);
@@ -835,7 +963,13 @@ async function battleTurns(
     return opts.any && left.length < until.length ? [] : left;
   };
   const doubles = await isDoubleBattle(s);
-  await finishTurn(s, label, doubles, opts.replace ?? false, forbid, opts.log);
+  // An in-game partner (Steven) is the player's right battler: one player prompt per turn, the AI picks for him.
+  const partner = doubles && (await isPartnerBattle(s));
+  if (partner && opts.log && needsPartnerMarker(opts.log)) {
+    const sides = await readPartnerSides(s, label);
+    opts.log.push(partnerPartyMarker(sides.partner, sides.player));
+  }
+  await finishTurn(s, label, doubles, opts.replace ?? false, forbid, opts.log, partner);
   const target = opts.target ?? "opponentLeft";
   /** FIGHT → this turn's slot for the battler whose action menu is open; returns the move menu's text. */
   const fight = async (): Promise<{ slot: number; menu: string }> => {
@@ -847,10 +981,13 @@ async function battleTurns(
       opts.log?.push(`[moveFor ${foe} → slot ${slot}]`);
     }
     // FIGHT is top left: UP then LEFT reaches it from any action, and slot 1 from any move.
-    await s.press("UP");
-    await s.press("LEFT");
-    await s.press("A");
-    await s.run(30);
+    if (partner) await openFightMenu(s, label);
+    else {
+      await s.press("UP");
+      await s.press("LEFT");
+      await s.press("A");
+      await s.run(30);
+    }
     await s.press("UP");
     await s.press("LEFT");
     for (const b of MOVE_SLOT_PATH[slot]) await s.press(b);
@@ -863,7 +1000,7 @@ async function battleTurns(
     const prompt = await battleText(s);
     opts.log?.push(prompt); // the "What will … do?" prompt: summarizeBattle counts these as turns
     let { slot, menu } = await fight();
-    let partnerDone = !doubles;
+    let partnerDone = !doubles || partner;
     // B in the move menu would cancel the choice: wait for the turn's first message before tapping it.
     let text = await battleText(s);
     for (let f = 0; text.includes("What will") || text === menu; f += 10) {
@@ -889,7 +1026,7 @@ async function battleTurns(
     for (let f = 0, idle = 0; ; f += 30, idle += 30) {
       const cb = (await s.callbacks()).callback2;
       if (cb !== "BattleMainCB2" && opts.replace && cb !== "CB2_Overworld") {
-        const sent = await sendOutNext(s, label, doubles);
+        const sent = await sendOutNext(s, label, doubles, partner);
         seen.push(`[sent out party menu slot ${sent}]`);
         opts.log?.push(seen.at(-1)!);
         continue;
@@ -927,14 +1064,16 @@ async function battleTurns(
  * there. When two of yours faint in one turn the second menu refuses the first one's pick ("already been
  * selected"); it then dismisses the message and takes the next healthy one.
  */
-async function sendOutNext(s: EmulatorSession, label: string, doubles = false): Promise<number> {
+async function sendOutNext(s: EmulatorSession, label: string, doubles = false, partner = false): Promise<number> {
   for (let f = 0; !(await s.callbacks()).callback2.startsWith("CB2_UpdatePartyMenu"); f += 10) {
     if (f >= 600) fail(`${label}: left the battle screen but no party menu opened (callback2 ${(await s.callbacks()).callback2})`);
     await s.run(10);
   }
   await s.run(60); // let the party menu fade in and take input
   const partyHp = (await s.readState()).party.map((mon) => mon.hp);
-  let index = pickSendOutIndex(partyHp, doubles);
+  // Partner battles (PARTY_LAYOUT_MULTI, battle order 0,3,1,2,4,5): menu slots 3-4 are your bench, 2/5-6 the partner's.
+  const end = partner ? PARTNER_MENU_BENCH_END : partyHp.length;
+  let index = pickSendOutIndex(partyHp, doubles, -1, end);
   if (index < 0) fail(`${label}: the send-out party menu opened with no healthy Pokémon to pick`);
   if (!doubles) {
     for (let i = 0; i < index; i++) await s.press("DOWN");
@@ -973,7 +1112,7 @@ async function sendOutNext(s: EmulatorSession, label: string, doubles = false): 
     const why = flatten(await s.readText(message, 60));
     await s.press("B", { hold: 2, release: 28 }); // dismiss the message; the menu is back on the party list
     await s.run(30);
-    const next = pickSendOutIndex(partyHp, true, index);
+    const next = pickSendOutIndex(partyHp, true, index, end);
     if (next < 0) fail(`${label}: the send-out menu refused slot ${index + 1} (${JSON.stringify(why)}) and no other healthy Pokémon is left`);
     index = next;
   }
@@ -1026,6 +1165,67 @@ async function battleSwitch(s: EmulatorSession, slot: number, forbid: readonly s
     }
     if (f >= 3600) fail(`${label}: switch turn still running after 3600 frames; seen ${JSON.stringify(seen.slice(-12))}`);
     await s.press("B", { hold: 2, release: 28 });
+  }
+}
+
+/** Offset of the `menuType:4, layout:2` bitfield byte in struct PartyMenu (include/party_menu.h: two pointers, then it). */
+export const PARTY_MENU_TYPE_BYTE = 8;
+/** PARTY_MENU_TYPE_CHOOSE_HALF (include/constants/party_menu.h; a unit test checks). */
+export const PARTY_MENU_TYPE_CHOOSE_HALF = 4;
+/** gPartyMenu.slotId of CONFIRM in the choose-half menu (PARTY_SIZE; CANCEL is PARTY_SIZE + 1). */
+export const PARTY_MENU_CONFIRM = 6;
+
+/**
+ * Party menu, single layout (src/party_menu.c UpdatePartySelectionSingleLayout): DOWN walks 0 → … → last mon →
+ * CONFIRM (6) → CANCEL (7) → 0, UP walks back, so DOWN reaches a higher slotId and UP a lower one.
+ */
+export const partyCursorButton = (at: number, want: number): Button => (at < want ? "DOWN" : "UP");
+
+/**
+ * chooseHalfParty: in the choose-half party menu, ENTER each 1-based party slot in order (the submenu is
+ * ENTER / SUMMARY / CANCEL, ENTER first; the third ENTER moves the cursor to CONFIRM itself), checking
+ * gSelectedOrderFromParty after each, then CONFIRM and wait for the battle screen.
+ */
+async function chooseHalfParty(s: EmulatorSession, slots: readonly number[], maxFrames: number): Promise<void> {
+  const label = `chooseHalfParty ${slots.join(",")}`;
+  for (let f = 0; !(await s.callbacks()).callback2.startsWith("CB2_UpdatePartyMenu"); f += 10) {
+    if (f >= 600) fail(`${label}: no party menu opened (callback2 ${(await s.callbacks()).callback2}); talk to the partner and answer YES first`);
+    await s.run(10);
+  }
+  await s.run(60); // let the party menu fade in and take input
+  const menu = s.symbols.address("gPartyMenu");
+  const type = (await s.readU8(menu + PARTY_MENU_TYPE_BYTE)) & 0xf;
+  if (type !== PARTY_MENU_TYPE_CHOOSE_HALF) fail(`${label}: the party menu is type ${type}, not the choose-half menu (${PARTY_MENU_TYPE_CHOOSE_HALF})`);
+  const count = await s.readU8(s.symbols.address("gPlayerPartyCount"));
+  const order = s.symbols.address("gSelectedOrderFromParty");
+  const moveTo = async (want: number) => {
+    for (let i = 0; ; i++) {
+      const at = await s.readU8(menu + PARTY_MENU_SLOT_ID);
+      if (at === want) return;
+      if (i >= 12) fail(`${label}: the party menu cursor is on slotId ${at}, not ${want}, after ${i} presses`);
+      await s.press(partyCursorButton(at, want));
+    }
+  };
+  for (const [k, slot] of slots.entries()) {
+    if (slot > count) fail(`${label}: party slot ${slot} is empty (the party has ${count})`);
+    await moveTo(slot - 1);
+    await s.press("A"); // opens ENTER / SUMMARY / CANCEL
+    await s.run(20);
+    await s.press("A"); // ENTER
+    await s.run(20);
+    const picked = [...(await s.read(order, slots.length))];
+    if (picked[k] !== slot) fail(`${label}: ENTER on slot ${slot} did not register (gSelectedOrderFromParty ${JSON.stringify(picked)}); is it fainted or an egg?`);
+  }
+  await moveTo(PARTY_MENU_CONFIRM);
+  await s.press("A");
+  let cb = (await s.callbacks()).callback2;
+  for (let f = 0; cb !== "BattleMainCB2"; f += 10) {
+    if (f >= maxFrames) {
+      const why = cb.startsWith("CB2_UpdatePartyMenu") ? `the menu refused CONFIRM (${JSON.stringify(flatten(await s.readText("gStringVar4", 120)))})` : `callback2 ${cb}`;
+      fail(`${label}: the party menu did not close into a battle within ${maxFrames} frames; ${why}`);
+    }
+    await s.run(10);
+    cb = (await s.callbacks()).callback2;
   }
 }
 
@@ -1100,6 +1300,17 @@ export interface BattleSummary {
   playerEndHpPercent?: number[];
   /** Player faints keyed "FOE/MOVE" by the last "Foe X used MOVE!" before each faint ("?" if none); chip damage (Leech Seed, poison) counts toward that last move. */
   faintCauses?: Record<string, number>;
+  /**
+   * In-game partner battles only (the log has a PARTNER_PARTY_MARK). The partner's faints ("METANG fainted!"), which
+   * playerFaints and faintCauses leave out.
+   */
+  partnerFaints?: number;
+  /** Each "Foe X fainted!" credited to whoever of your side used a move last before it ("unknown" if nobody had yet). */
+  foeKOsBy?: { player: number; partner: number; unknown?: number };
+  /** The partner's REFLECT / LIGHT SCREEN / PROTECT, with the turn (prompts so far) they came in. */
+  partnerGuards?: { turn: number; message: string }[];
+  /** Partner moves followed, before the next move or prompt, by a status or stat drop on one of YOUR Pokémon (e.g. TOXIC → "SHELGON was badly poisoned!"). */
+  partnerHitsAlly?: number;
 }
 
 /** battleLog marker battleTurns appends with the party's HP % when it returns. */
@@ -1107,19 +1318,29 @@ const PARTY_HP_MARK = "[party hp% ";
 const isWin = (m: string) => /\bdefeated\b/.test(m);
 const isLoss = (m: string) => m.includes("whited out") || m.includes("out of usable");
 
+/** The partner moves partnerGuards lists. */
+const PARTNER_GUARD_MOVES = ["REFLECT", "LIGHT SCREEN", "PROTECT"];
+/** Status and stat-drop messages partnerHitsAlly looks for on your Pokémon (battle text, src/battle_message.c). */
+const ALLY_HARM = /(was poisoned|badly poisoned|was burned|is paralyzed|was paralyzed|fell asleep|became confused|was frozen|fell!$)/;
+const isFoe = (m: string) => /^(Foe|Wild) /.test(m);
+
 /** Counts one battle's turns, faints and outcome from its battleLog messages. */
 export function summarizeBattle(log: readonly string[], index = 0): BattleSummary {
+  const sides = log.map(parsePartnerPartyMarker).filter((x) => x !== undefined).at(-1);
+  const partnerNames = new Set(sides?.partner ?? []);
+  const isPartnerFaint = (m: string) => !isFoe(m) && partnerNames.has(/^(.*) fainted!$/.exec(m)?.[1] ?? "");
   const fainted = log.map((m) => m.trim()).filter((m) => m.endsWith("fainted!"));
-  const opponentFaints = fainted.filter((m) => /^(Foe|Wild) /.test(m)).length;
+  const opponentFaints = fainted.filter(isFoe).length;
+  const partnerFaints = fainted.filter(isPartnerFaint).length;
   const hp = log.filter((m) => m.startsWith(PARTY_HP_MARK)).at(-1);
   const faintCauses: Record<string, number> = {};
   let lastFoeMove: string | undefined;
   for (const m of log.map((x) => x.trim())) {
     const used = /^Foe (\S+) used (.+?)!$/.exec(m);
     if (used) lastFoeMove = `${used[1]}/${used[2]}`;
-    else if (m.endsWith("fainted!") && !/^(Foe|Wild) /.test(m)) faintCauses[lastFoeMove ?? "?"] = (faintCauses[lastFoeMove ?? "?"] ?? 0) + 1;
+    else if (m.endsWith("fainted!") && !isFoe(m) && !isPartnerFaint(m)) faintCauses[lastFoeMove ?? "?"] = (faintCauses[lastFoeMove ?? "?"] ?? 0) + 1;
   }
-  const playerFaints = fainted.length - opponentFaints;
+  const playerFaints = fainted.length - opponentFaints - partnerFaints;
   return {
     index,
     outcome: log.some(isLoss) ? "loss" : log.some(isWin) ? "win" : "unknown",
@@ -1128,21 +1349,74 @@ export function summarizeBattle(log: readonly string[], index = 0): BattleSummar
     opponentFaints,
     ...(hp && { playerEndHpPercent: hp.slice(PARTY_HP_MARK.length, -1).split(",").map(Number) }),
     ...(playerFaints > 0 && { faintCauses }),
+    ...(sides && { partnerFaints, ...summarizePartner(log, sides) }),
   };
 }
 
-/** Splits battleLog into battles: a new one starts at the first "What will" prompt after a win or loss message. */
+/** The partner-battle fields of a summary: foeKOsBy, partnerGuards, partnerHitsAlly (see BattleSummary). */
+export function summarizePartner(
+  log: readonly string[],
+  sides: { partner: readonly string[]; player: readonly string[] },
+): Required<Pick<BattleSummary, "foeKOsBy" | "partnerGuards" | "partnerHitsAlly">> {
+  const foeKOsBy: { player: number; partner: number; unknown?: number } = { player: 0, partner: 0 };
+  const partnerGuards: { turn: number; message: string }[] = [];
+  let partnerHitsAlly = 0;
+  let turn = 0;
+  let lastUser: "player" | "partner" | undefined;
+  /** A partner move whose messages are still showing and haven't hit one of yours yet. */
+  let partnerMoveOpen = false;
+  for (const m of log.map((x) => x.trim())) {
+    if (m.includes("What will")) {
+      turn++;
+      partnerMoveOpen = false;
+      continue;
+    }
+    const used = /^(.+?) used (.+?)!$/.exec(m);
+    if (used) {
+      partnerMoveOpen = false;
+      if (isFoe(m)) continue;
+      const mine = sides.partner.includes(used[1]);
+      lastUser = mine ? "partner" : "player";
+      partnerMoveOpen = mine;
+      if (mine && PARTNER_GUARD_MOVES.includes(used[2])) partnerGuards.push({ turn, message: m });
+      continue;
+    }
+    if (isFoe(m) && m.endsWith("fainted!")) {
+      if (lastUser) foeKOsBy[lastUser]++;
+      else foeKOsBy.unknown = (foeKOsBy.unknown ?? 0) + 1;
+      continue;
+    }
+    if (partnerMoveOpen && ALLY_HARM.test(m) && sides.player.some((n) => m.startsWith(`${n} `) || m.startsWith(`${n}'s `))) {
+      partnerHitsAlly++;
+      partnerMoveOpen = false;
+    }
+  }
+  return { foeKOsBy, partnerGuards, partnerHitsAlly };
+}
+
+/**
+ * Splits battleLog into battles: a new one starts at the first "What will" prompt (or a partner battle's
+ * PARTNER_PARTY_MARK, written just before it) after a win or loss message.
+ */
 export function summarizeBattles(log: readonly string[]): BattleSummary[] {
   const battles: string[][] = [[]];
   for (const m of log) {
     const cur = battles.at(-1)!;
-    if (m.includes("What will") && cur.some((x) => isWin(x) || isLoss(x))) battles.push([m]);
+    if ((m.includes("What will") || m.startsWith(PARTNER_PARTY_MARK)) && cur.some((x) => isWin(x) || isLoss(x))) battles.push([m]);
     else cur.push(m);
   }
   return battles.filter((b) => b.length).map((b, i) => summarizeBattle(b, i));
 }
 
-type SummaryBounds = { battle?: number; outcome?: "win" | "loss"; minTurns?: number; maxTurns?: number; minPlayerFaints?: number; maxPlayerFaints?: number };
+type SummaryBounds = {
+  battle?: number;
+  outcome?: "win" | "loss";
+  minTurns?: number;
+  maxTurns?: number;
+  minPlayerFaints?: number;
+  maxPlayerFaints?: number;
+  partner?: boolean;
+};
 
 /** expectBattleSummary: fails, printing the summary, unless the chosen battle (default: the last) meets every bound. */
 export function checkBattleSummary(summaries: readonly BattleSummary[], want: SummaryBounds): void {
@@ -1154,6 +1428,7 @@ export function checkBattleSummary(summaries: readonly BattleSummary[], want: Su
     want.maxTurns !== undefined && got.turns > want.maxTurns && `${got.turns} turns > maxTurns ${want.maxTurns}`,
     want.minPlayerFaints !== undefined && got.playerFaints < want.minPlayerFaints && `${got.playerFaints} player faints < min ${want.minPlayerFaints}`,
     want.maxPlayerFaints !== undefined && got.playerFaints > want.maxPlayerFaints && `${got.playerFaints} player faints > max ${want.maxPlayerFaints}`,
+    want.partner !== undefined && (got.foeKOsBy !== undefined) !== want.partner && (want.partner ? "no in-game partner summary (partnerFaints, foeKOsBy, …)" : "an in-game partner summary, expected none"),
   ].filter(Boolean);
   if (bad.length) fail(`expectBattleSummary: ${bad.join("; ")}; summary ${JSON.stringify(got)}`);
 }

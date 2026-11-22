@@ -4,6 +4,17 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   BAG_POSITION,
+  BATTLE_TYPE_INGAME_PARTNER,
+  PARTNER_MENU_BENCH_END,
+  PARTNER_PARTY_MARK,
+  PARTY_MENU_CONFIRM,
+  PARTY_MENU_TYPE_BYTE,
+  PARTY_MENU_TYPE_CHOOSE_HALF,
+  checkPartnerSides,
+  needsPartnerMarker,
+  parsePartnerPartyMarker,
+  partnerPartyMarker,
+  partyCursorButton,
   MAIN_STATE,
   MATCH_CALL_CONTACTS,
   POKENAV,
@@ -582,5 +593,158 @@ describe("battleTurns step and waitForBattleText forbid", () => {
       fresh: true,
       forbid: "super effective",
     });
+  });
+});
+
+describe("in-game partner battles (C391: Steven at the Space Center)", () => {
+  const INCLUDE = path.join(PLAYTESTS_DIR, "..", "include");
+  const SRC = path.join(PLAYTESTS_DIR, "..", "src");
+  const parse = (step: unknown) => parsePlaytest({ ...MINIMAL, steps: [step] }).steps[0];
+  const MARK = partnerPartyMarker(["METANG", "SKARMORY", "AGGRON"], ["SHELGON", "LINOONE", "WHISCASH"]);
+  // Trimmed from C391's space-center-steven-full / -worn battleLog, plus a planted TOXIC on SHELGON.
+  const PARTNER_LOG = [
+    MARK,
+    "PKMN TRAINER STEVEN sent out METANG! Go, SHELGON!",
+    "What will SHELGON do?",
+    "METANG used REFLECT!",
+    "Ally's REFLECT raised DEFENSE a little!",
+    "Foe WEEZING used SLUDGE BOMB!",
+    "SHELGON fainted! ",
+    "[sent out party menu slot 3]",
+    "Go! LINOONE!",
+    "What will LINOONE do?",
+    "LINOONE used FACADE!",
+    "METANG used PSYCHIC!",
+    "It's super effective!",
+    "Foe MUK fainted! ",
+    "Foe MAGMAR used BRICK BREAK!",
+    "METANG fainted! ",
+    "Go! SKARMORY!",
+    "What will LINOONE do?",
+    "SKARMORY used TOXIC!",
+    "Foe MAGMAR is badly poisoned!",
+    "SKARMORY used PROTECT!",
+    "LINOONE used FACADE!",
+    "Foe WEEZING fainted! ",
+    "What will LINOONE do?",
+    "SKARMORY used TOXIC!",
+    "LINOONE was badly poisoned!",
+    "LINOONE used FACADE!",
+    "Foe HOUNDOOM fainted! ",
+    "MAGMA LEADER MAXIE and MAGMA ADMIN TABITHA were defeated! ",
+    "I'm with our leader... Always have been. ...Right?",
+    "[party hp% 0,62,100,0,40,100]",
+  ];
+
+  it("chooseHalfParty takes exactly three different party slots 1-6", () => {
+    expect(parse({ chooseHalfParty: { slots: [1, 2, 3] } })).toEqual({ chooseHalfParty: { slots: [1, 2, 3] } });
+    expect(() => parse({ chooseHalfParty: { slots: [4, 1, 6], maxFrames: 2400 } })).not.toThrow();
+    expect(() => parse({ chooseHalfParty: { slots: [1, 2] } })).toThrow();
+    expect(() => parse({ chooseHalfParty: { slots: [1, 2, 3, 4] } })).toThrow();
+    expect(() => parse({ chooseHalfParty: { slots: [1, 1, 2] } })).toThrow(/different/);
+    expect(() => parse({ chooseHalfParty: { slots: [0, 1, 2] } })).toThrow();
+    expect(() => parse({ chooseHalfParty: { slots: [1, 2, 7] } })).toThrow();
+  });
+
+  it("choose-half menu constants match the source (menu type, CONFIRM slot, the bitfield byte)", () => {
+    const constants = fs.readFileSync(path.join(INCLUDE, "constants", "party_menu.h"), "utf8");
+    expect(constants).toMatch(new RegExp(`#define PARTY_MENU_TYPE_CHOOSE_HALF\\s+${PARTY_MENU_TYPE_CHOOSE_HALF}\\b`));
+    const header = fs.readFileSync(path.join(INCLUDE, "party_menu.h"), "utf8");
+    expect(/struct PartyMenu\s*\{([^}]*)\}/.exec(header)![1]).toMatch(/MainCallback exitCallback;\s*TaskFunc task;\s*u8 menuType:4;/);
+    expect(PARTY_MENU_TYPE_BYTE).toBe(4 + 4);
+    const global = fs.readFileSync(path.join(INCLUDE, "constants", "global.h"), "utf8");
+    expect(global).toMatch(new RegExp(`#define PARTY_SIZE ${PARTY_MENU_CONFIRM}\\b`));
+    const menu = fs.readFileSync(path.join(SRC, "party_menu.c"), "utf8");
+    expect(menu).toContain("// PARTY_SIZE + 1 is Cancel, PARTY_SIZE is Confirm");
+    expect(menu).toContain("gSelectedOrderFromParty[i] = gPartyMenu.slotId + 1;"); // CursorCb_Enter: 1-based slots
+  });
+
+  it("partyCursorButton: DOWN toward a higher slotId (CONFIRM is 6), UP toward a lower one", () => {
+    expect(partyCursorButton(0, 2)).toBe("DOWN");
+    expect(partyCursorButton(2, PARTY_MENU_CONFIRM)).toBe("DOWN");
+    expect(partyCursorButton(7, PARTY_MENU_CONFIRM)).toBe("UP"); // CANCEL → CONFIRM
+    expect(partyCursorButton(PARTY_MENU_CONFIRM, 1)).toBe("UP");
+  });
+
+  it("BATTLE_TYPE_INGAME_PARTNER and the multi send-out menu order match the source", () => {
+    const battle = fs.readFileSync(path.join(INCLUDE, "constants", "battle.h"), "utf8");
+    const bit = /#define BATTLE_TYPE_INGAME_PARTNER\s+\(1 << (\d+)\)/.exec(battle);
+    expect(bit && 1 << Number(bit[1])).toBe(BATTLE_TYPE_INGAME_PARTNER);
+    const menu = fs.readFileSync(path.join(SRC, "party_menu.c"), "utf8");
+    // Flank 0 (the player): battle order 0, 3, 1, 2, 4, 5, so menu slots 3-4 (indexes 2-3) are the player's bench.
+    expect(menu).toMatch(/partyBattleOrder\[0\] = 3 \| \(0 << 4\);\s*partyBattleOrder\[1\] = 2 \| \(1 << 4\);\s*partyBattleOrder\[2\] = 5 \| \(4 << 4\);/);
+    expect(menu).toContain("gPartyMenu.layout == PARTY_LAYOUT_MULTI && (slot == 1 || slot == 4 || slot == 5)");
+    expect(PARTNER_MENU_BENCH_END).toBe(4);
+  });
+
+  it("pickSendOutIndex in a partner battle picks only your bench (menu indexes 2-3), never the partner's", () => {
+    // menu order: SHELGON (fainted), METANG, LINOONE, WHISCASH, SKARMORY, AGGRON
+    expect(pickSendOutIndex([0, 80, 50, 90, 100, 100], true, -1, PARTNER_MENU_BENCH_END)).toBe(2);
+    expect(pickSendOutIndex([0, 80, 0, 90, 100, 100], true, -1, PARTNER_MENU_BENCH_END)).toBe(3);
+    expect(pickSendOutIndex([0, 80, 0, 0, 100, 100], true, -1, PARTNER_MENU_BENCH_END)).toBe(-1);
+    expect(pickSendOutIndex([0, 80, 0, 0, 100, 100], true)).toBe(4); // without the end, the old doubles pick
+  });
+
+  it("the partner marker round-trips and fails on a name on both sides", () => {
+    expect(MARK).toBe(`${PARTNER_PARTY_MARK}METANG,SKARMORY,AGGRON; player: SHELGON,LINOONE,WHISCASH]`);
+    expect(parsePartnerPartyMarker(MARK)).toEqual({ partner: ["METANG", "SKARMORY", "AGGRON"], player: ["SHELGON", "LINOONE", "WHISCASH"] });
+    expect(parsePartnerPartyMarker("[partner LINOONE]")).toBeUndefined(); // the doubles prompt marker
+    expect(() => checkPartnerSides("battleTurns move 1", { partner: ["METANG", "SKARMORY"], player: ["SKARMORY", "LINOONE"] })).toThrow(/SKARMORY is on both/);
+    expect(() => checkPartnerSides("x", { partner: ["METANG"], player: ["SHELGON"] })).not.toThrow();
+  });
+
+  it("needsPartnerMarker: once per battle, again after a win or loss", () => {
+    expect(needsPartnerMarker([])).toBe(true);
+    expect(needsPartnerMarker([MARK, "What will SHELGON do?"])).toBe(false);
+    expect(needsPartnerMarker([MARK, "were defeated! "])).toBe(true);
+    expect(needsPartnerMarker([MARK, "OAK whited out!", MARK])).toBe(false);
+  });
+
+  it("summarizeBattle splits faints and KOs by owner (planted: Steven's METANG faint, SKARMORY TOXIC on LINOONE)", () => {
+    expect(summarizeBattle(PARTNER_LOG)).toEqual({
+      index: 0,
+      outcome: "win",
+      turns: 4,
+      playerFaints: 1, // SHELGON only: METANG is Steven's
+      opponentFaints: 3,
+      playerEndHpPercent: [0, 62, 100, 0, 40, 100],
+      faintCauses: { "WEEZING/SLUDGE BOMB": 1 }, // not MAGMAR/BRICK BREAK, which downed METANG
+      partnerFaints: 1,
+      foeKOsBy: { player: 2, partner: 1 }, // MUK after METANG's PSYCHIC; WEEZING, HOUNDOOM after LINOONE
+      partnerGuards: [
+        { turn: 1, message: "METANG used REFLECT!" },
+        { turn: 3, message: "SKARMORY used PROTECT!" },
+      ],
+      partnerHitsAlly: 1, // turn 4's TOXIC on LINOONE, not turn 3's on Foe MAGMAR
+    });
+  });
+
+  it("a foe KO before any of your side has moved is credited to unknown", () => {
+    const got = summarizeBattle([MARK, "What will SHELGON do?", "Foe WEEZING used EXPLOSION!", "Foe WEEZING fainted! "]);
+    expect(got.foeKOsBy).toEqual({ player: 0, partner: 0, unknown: 1 });
+  });
+
+  it("summarizeBattles starts a new battle at a partner marker after an outcome", () => {
+    const got = summarizeBattles(["What will MIGHTYENA do?", "Foe CARVANHA fainted! ", "Player defeated AQUA ADMIN SHELLY! ", ...PARTNER_LOG]);
+    expect(got.map((b) => [b.index, b.outcome, b.turns, b.partnerFaints])).toEqual([[0, "win", 1, undefined], [1, "win", 4, 1]]);
+  });
+
+  it("non-partner battles summarize byte-identically to C390 (no partner keys, same key order)", () => {
+    // Real logs: C381 wi-shelly-full-party (singles) and C388 tate-liza-y7-ground (doubles, [partner X] prompts).
+    const singles = ["What will MIGHTYENA do?", "MIGHTYENA used BITE!", "Foe CARVANHA fainted! ", "What will MIGHTYENA do?", "Foe QWILFISH used WATER GUN!", "MIGHTYENA fainted! ", "[sent out party menu slot 2]", "What will PELIPPER do?", "Foe QWILFISH fainted! ", "Player defeated AQUA ADMIN SHELLY! ", "[party hp% 0,62,100]"];
+    expect(JSON.stringify(summarizeBattles(singles))).toBe(
+      '[{"index":0,"outcome":"win","turns":3,"playerFaints":1,"opponentFaints":2,"playerEndHpPercent":[0,62,100],"faintCauses":{"QWILFISH/WATER GUN":1}}]',
+    );
+    const doubles = ["What will SHELGON do?", "[partner LINOONE]", "Foe CLAYDOL used EARTHQUAKE!", "SHELGON fainted! ", "LINOONE used FACADE!", "Foe XATU fainted! ", "What will WHISCASH do?", "[partner LINOONE]", "OAK whited out!"];
+    expect(JSON.stringify(summarizeBattles(doubles))).toBe(
+      '[{"index":0,"outcome":"loss","turns":2,"playerFaints":1,"opponentFaints":1,"faintCauses":{"CLAYDOL/EARTHQUAKE":1}}]',
+    );
+  });
+
+  it("expectBattleSummary partner: true fails on a battle without a partner, and false the other way", () => {
+    expect(() => checkBattleSummary(summarizeBattles(PARTNER_LOG), { partner: true, outcome: "win" })).not.toThrow();
+    expect(() => checkBattleSummary(summarizeBattles(["What will LOTAD do?", "OAK whited out!"]), { partner: true })).toThrow(/no in-game partner summary/);
+    expect(() => checkBattleSummary(summarizeBattles(PARTNER_LOG), { partner: false })).toThrow(/expected none/);
+    expect(() => parse({ expectBattleSummary: { partner: true } })).not.toThrow();
   });
 });

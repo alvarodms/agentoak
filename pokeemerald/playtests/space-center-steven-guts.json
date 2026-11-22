@@ -1,0 +1,118 @@
+{
+  "name": "space-center-steven-guts",
+  "checks": "C391 v3.10 baseline, Guts miss-path (report-only, unedited vanilla fight): the full-HP yardstick with slot 3 = HARIYAMA 40, Guts (ability 2), BRICK_BREAK / KNOCK_OFF / ARM_THRUST / ROCK_TOMB. S5 asks whether any Steven move (SKARMORY TOXIC) lands on a player Pokémon: partnerHitsAlly in the summary. Also the in-game partner replacement path: a player faint opens the multi-layout send-out menu and battleTurns picks your bench (logged [sent out party menu slot 3/4], then Go! <your mon>), never Steven's. Guards only that the battle completes and its summary is a partner one.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
+    "x": 2,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET"
+    ],
+    "clearFlags": [
+      "FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA",
+      "FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_STEVEN"
+    ],
+    "vars": {
+      "VAR_MOSSDEEP_CITY_STATE": 2,
+      "VAR_MOSSDEEP_SPACE_CENTER_STATE": 2
+    },
+    "party": [
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 41,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ]
+      },
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 40,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_SHADOW_BALL",
+          "MOVE_HEADBUTT",
+          "MOVE_FURY_SWIPES"
+        ]
+      },
+      {
+        "species": "SPECIES_HARIYAMA",
+        "level": 40,
+        "ability": 2,
+        "moves": [
+          "MOVE_BRICK_BREAK",
+          "MOVE_KNOCK_OFF",
+          "MOVE_ARM_THRUST",
+          "MOVE_ROCK_TOMB"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 2,8 (MB_NORMAL c0; `node scripts/map_scan.cjs MossdeepCity_SpaceCenter_2F 0-5 5-9`), right of STEVEN (1,8); TABITHA 0,8 and MAXIE 1,9. VAR_MOSSDEEP_CITY_STATE 2 + VAR_MOSSDEEP_SPACE_CENTER_STATE 2 = Magma holds 2F, the three grunts already beaten. ON_TRANSITION (MoveCivilians) clears FLAG_INTERACTED_WITH_STEVEN_SPACE_CENTER at boot, so the first talk is the intro (it sets the flag) and the second is the YES/NO battle prompt."
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "What's the point of stealing rocket"
+    },
+    {
+      "talk": {
+        "answers": [
+          "yes"
+        ]
+      }
+    },
+    {
+      "expectText": "Are you ready?"
+    },
+    {
+      "chooseHalfParty": {
+        "slots": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_WEEZING",
+        "level": 44
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "Always have been",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleSummary": { "partner": true }
+    },
+    {
+      "screenshot": "space-center-steven-guts-end"
+    }
+  ]
+}
