@@ -1,6 +1,6 @@
 {
   "name": "space-center-steven-guts",
-  "checks": "C391 v3.10 baseline, Guts miss-path (report-only, unedited vanilla fight): the full-HP yardstick with slot 3 = HARIYAMA 40, Guts (ability 2), BRICK_BREAK / KNOCK_OFF / ARM_THRUST / ROCK_TOMB. S5 asks whether any Steven move (SKARMORY TOXIC) lands on a player Pokémon: partnerHitsAlly in the summary. Also the in-game partner replacement path: a player faint opens the multi-layout send-out menu and battleTurns picks your bench (logged [sent out party menu slot 3/4], then Go! <your mon>), never Steven's. Guards only that the battle completes and its summary is a partner one.",
+  "checks": "C392 v3.10 dial (a): WEEZING 42. Report-only outcome; S1-S6 + F1 are judged in C393 from report.json battleSummaries.",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
     "x": 2,
@@ -93,7 +93,7 @@
     {
       "expectBattle": {
         "opponent": "SPECIES_WEEZING",
-        "level": 44
+        "level": 42
       }
     },
     {

@@ -138,6 +138,12 @@ const StepSchema = z.union([
          * Boxes after the last answer get YES. Unused answers fail the step.
          */
         answers: z.array(z.enum(["yes", "no"])).min(1).optional(),
+        /**
+         * Stop, without pressing A, once the shown message box contains any of these (e.g. to check an object's
+         * facing or take a screenshot mid-script). The text so far, that box included, is the step's text; a later
+         * `talk: {"start": false}` resumes (its text starts with that box again). Fails if the script ends first.
+         */
+        until: Strings.optional(),
       }),
     ]),
   }),
@@ -282,6 +288,14 @@ const StepSchema = z.union([
       maxPlayerFaints: z.number().int().min(0).optional(),
       /** true: the battle had an in-game partner (its summary has partnerFaints, foeKOsBy, partnerGuards, partnerHitsAlly). */
       partner: z.boolean().optional(),
+      /** Partner battles: your own Pokémon landed at least this many foe KOs (foeKOsBy.player). */
+      minPlayerKOs: z.number().int().min(0).optional(),
+      /** Partner battles: the partner landed at most this many foe KOs (foeKOsBy.partner). */
+      maxPartnerKOs: z.number().int().min(0).optional(),
+      /** Partner battles: some partnerGuards entry came by this turn, using `move` (e.g. "REFLECT") when given. */
+      guardByTurn: z.strictObject({ move: z.string().min(1).optional(), byTurn: z.number().int().min(0) }).optional(),
+      /** Partner battles: at most this many partner moves harmed one of your Pokémon (partnerHitsAlly). */
+      maxPartnerHitsAlly: z.number().int().min(0).optional(),
     }),
   }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
@@ -510,7 +524,7 @@ async function runStep(
   if ("talk" in step) {
     const opts = step.talk === true ? {} : step.talk;
     const start = opts.start === false ? "resume" : "press";
-    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, start, opts.answers ?? []));
+    result.transcripts.push(await talk(s, opts.maxPresses ?? 200, start, opts.answers ?? [], opts.until === undefined ? undefined : asList(opts.until)));
     return;
   }
 
@@ -1416,6 +1430,10 @@ type SummaryBounds = {
   minPlayerFaints?: number;
   maxPlayerFaints?: number;
   partner?: boolean;
+  minPlayerKOs?: number;
+  maxPartnerKOs?: number;
+  guardByTurn?: { move?: string; byTurn: number };
+  maxPartnerHitsAlly?: number;
 };
 
 /** expectBattleSummary: fails, printing the summary, unless the chosen battle (default: the last) meets every bound. */
@@ -1429,8 +1447,26 @@ export function checkBattleSummary(summaries: readonly BattleSummary[], want: Su
     want.minPlayerFaints !== undefined && got.playerFaints < want.minPlayerFaints && `${got.playerFaints} player faints < min ${want.minPlayerFaints}`,
     want.maxPlayerFaints !== undefined && got.playerFaints > want.maxPlayerFaints && `${got.playerFaints} player faints > max ${want.maxPlayerFaints}`,
     want.partner !== undefined && (got.foeKOsBy !== undefined) !== want.partner && (want.partner ? "no in-game partner summary (partnerFaints, foeKOsBy, …)" : "an in-game partner summary, expected none"),
+    ...partnerBounds(got, want),
   ].filter(Boolean);
   if (bad.length) fail(`expectBattleSummary: ${bad.join("; ")}; summary ${JSON.stringify(got)}`);
+}
+
+/** The partner-only bounds of expectBattleSummary (minPlayerKOs, maxPartnerKOs, guardByTurn, maxPartnerHitsAlly). */
+function partnerBounds(got: BattleSummary, want: SummaryBounds): (string | false)[] {
+  const asked = ["minPlayerKOs", "maxPartnerKOs", "guardByTurn", "maxPartnerHitsAlly"].filter((k) => want[k as keyof SummaryBounds] !== undefined);
+  if (!asked.length) return [];
+  const { foeKOsBy, partnerGuards, partnerHitsAlly } = got;
+  if (!foeKOsBy || !partnerGuards || partnerHitsAlly === undefined) return [`${asked.join(", ")}: no in-game partner summary`];
+  const g = want.guardByTurn;
+  return [
+    want.minPlayerKOs !== undefined && foeKOsBy.player < want.minPlayerKOs && `${foeKOsBy.player} player KOs < minPlayerKOs ${want.minPlayerKOs}`,
+    want.maxPartnerKOs !== undefined && foeKOsBy.partner > want.maxPartnerKOs && `${foeKOsBy.partner} partner KOs > maxPartnerKOs ${want.maxPartnerKOs}`,
+    g !== undefined &&
+      !partnerGuards.some((x) => x.turn <= g.byTurn && (g.move === undefined || x.message.includes(`used ${g.move}!`))) &&
+      `no partner ${g.move ?? "guard"} by turn ${g.byTurn}`,
+    want.maxPartnerHitsAlly !== undefined && partnerHitsAlly > want.maxPartnerHitsAlly && `${partnerHitsAlly} partner hits on yours > maxPartnerHitsAlly ${want.maxPartnerHitsAlly}`,
+  ];
 }
 
 /** Offsets of pos and location in struct SaveBlock1 (include/global.h marks them; a unit test checks). */
@@ -1575,23 +1611,33 @@ async function catchWild(s: EmulatorSession, ball: string): Promise<string[]> {
   return seen;
 }
 
+/** talk `until`: true once the shown message box contains one of the substrings (compared like expectText). */
+export const talkStopsAt = (box: string, until: readonly string[]): boolean =>
+  until.some((u) => flatten(box).includes(flatten(u)));
+
+/** Frames a talk `until` stop waits, without pressing anything, so the box finishes printing (mid speed). */
+const TALK_UNTIL_SETTLE_FRAMES = 300;
+
 /**
  * Starts the script ("press": A to interact; "resume": pick it up after a
  * battle; "none": already running, e.g. from useKeyItem), then keeps pressing A until the field script ends
  * (or a battle starts), collecting each distinct message box. Message boxes
  * are read from gStringVar4, where the game expands every field message
  * before printing it, so each entry is a whole box, not what had scrolled.
+ * With `until`, stops pressing as soon as a box contains one of its strings (the script stays paused on it).
  */
 async function talk(
   s: EmulatorSession,
   maxPresses: number,
   start: "press" | "resume" | "none",
   answers: readonly ("yes" | "no")[] = [],
+  until?: readonly string[],
 ): Promise<string[]> {
   const buffer = s.symbols.address("gStringVar4");
   const boxes: string[] = [];
   const pending = [...answers];
   const done = (): string[] => {
+    if (until) fail(`talk: the script ended before a box with ${until.map((u) => JSON.stringify(u)).join(" or ")}; text ${JSON.stringify(boxes)}`);
     if (pending.length) {
       fail(`talk: ${pending.length} answer(s) unused (${pending.join(", ")}); only ${answers.length - pending.length} YES/NO box(es) appeared; text ${JSON.stringify(boxes)}`);
     }
@@ -1620,6 +1666,11 @@ async function talk(
     if (text.trim() && text !== last) {
       boxes.push(text);
       last = text;
+    }
+    if (until && text.trim() && talkStopsAt(text, until)) {
+      await s.run(TALK_UNTIL_SETTLE_FRAMES);
+      if (pending.length) fail(`talk: stopped at ${JSON.stringify(text)} with ${pending.length} answer(s) unused (${pending.join(", ")})`);
+      return boxes;
     }
     if (await s.scriptIdle()) return done();
     if (pending.length && (await yesNoBoxOpen(s))) {

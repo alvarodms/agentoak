@@ -1,6 +1,6 @@
 {
   "name": "space-center-steven-worn",
-  "checks": "C391 v3.10 baseline (report-only, unedited vanilla fight): Steven + the player vs Maxie + Tabitha at the Mossdeep Space Center. Worn yardstick = the Tate & Liza Y7 GROUND party's first three (SHELGON 41, LINOONE 40, WHISCASH 40) at 50% HP, picked with chooseHalfParty 1,2,3; slot 1 every turn, target opponent-left, replace. Guards only that the battle completes and the summary carries the partner fields; WIN/LOSS, faints, foeKOsBy, partnerGuards and partnerHitsAlly are recorded in completed-work/v310-side-by-side.md (close criteria S1-S6).",
+  "checks": "C392 v3.10 dial (a): WEEZING 42. Report-only outcome; S1-S6 + F1 are judged in C393 from report.json battleSummaries.",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
     "x": 2,
@@ -53,7 +53,7 @@
     { "talk": { "answers": ["yes"] } },
     { "expectText": "Are you ready?" },
     { "chooseHalfParty": { "slots": [1, 2, 3] } },
-    { "expectBattle": { "opponent": "SPECIES_WEEZING", "level": 44 } },
+    { "expectBattle": { "opponent": "SPECIES_WEEZING", "level": 42 } },
     {
       "battleTurns": {
         "move": 1,

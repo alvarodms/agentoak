@@ -1,6 +1,6 @@
 {
   "name": "space-center-steven-full",
-  "checks": "C391 v3.10 baseline (report-only, unedited vanilla fight): Steven + the player vs Maxie + Tabitha at full HP. Yardstick = the Tate & Liza Y7 GROUND party's first three (SHELGON 41, LINOONE 40, WHISCASH 40), chooseHalfParty 1,2,3; slot 1 every turn, target opponent-left, replace. Guards only that the battle completes and its summary is a partner one; outcome, faints, foeKOsBy, partnerGuards and partnerHitsAlly are recorded in completed-work/v310-side-by-side.md (S2: WIN with <=1 player faint; S3: METANG screen in turn 1-2).",
+  "checks": "C392 v3.10 dial (a): WEEZING 42. Report-only outcome; S1-S6 + F1 are judged in C393 from report.json battleSummaries.",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
     "x": 2,
@@ -92,7 +92,7 @@
     {
       "expectBattle": {
         "opponent": "SPECIES_WEEZING",
-        "level": 44
+        "level": 42
       }
     },
     {
@@ -109,6 +109,24 @@
     },
     {
       "expectBattleSummary": { "partner": true }
+    },
+    {
+      "talk": { "start": false, "until": ["to look back"] }
+    },
+    {
+      "expectText": "I didn't need"
+    },
+    {
+      "expectObject": { "id": "LOCALID_SPACE_CENTER_2F_STEVEN", "x": 1, "y": 8, "facing": "down" }
+    },
+    {
+      "screenshot": "space-center-steven-look-back"
+    },
+    {
+      "talk": { "start": false }
+    },
+    {
+      "expectText": "too tense"
     },
     {
       "screenshot": "space-center-steven-full-end"

@@ -12591,7 +12591,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Darcy[] = {
 static const struct TrainerMonItemCustomMoves sParty_MaxieMossdeep[] = {
     {
     .iv = 150,
-    .lvl = 44,
+    .lvl = 42,
     .species = SPECIES_WEEZING,
     .heldItem = ITEM_LEFTOVERS,
     .moves = {MOVE_SLUDGE_BOMB, MOVE_FIRE_BLAST, MOVE_THUNDERBOLT, MOVE_WILL_O_WISP}

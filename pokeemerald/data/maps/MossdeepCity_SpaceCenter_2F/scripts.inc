@@ -310,8 +310,14 @@ MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha::
 	turnobject LOCALID_SPACE_CENTER_2F_GENTLEMAN, DIR_NORTH
 	setobjectxy LOCALID_SPACE_CENTER_2F_RICH_BOY, 6, 2
 	turnobject LOCALID_SPACE_CENTER_2F_RICH_BOY, DIR_NORTH
-	call MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayer
+	turnobject LOCALID_SPACE_CENTER_2F_STEVEN, DIR_SOUTH
 	fadescreen FADE_FROM_BLACK
+	delay 30
+	msgbox MossdeepCity_SpaceCenter_2F_Text_StevenDidntNeedToLookBack, MSGBOX_DEFAULT
+	closemessage
+	delay 20
+	call MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayer
+	delay 10
 	msgbox MossdeepCity_SpaceCenter_2F_Text_StevenThankYouComeSeeMeAtHome, MSGBOX_DEFAULT
 	closemessage
 	fadescreen FADE_TO_BLACK
@@ -515,6 +521,10 @@ MossdeepCity_SpaceCenter_2F_Text_MaxieWeWillGiveUp:
 	.string "We will give up on the fuel…\p"
 	.string "There appear to be more important\n"
 	.string "matters that I must examine…$"
+
+MossdeepCity_SpaceCenter_2F_Text_StevenDidntNeedToLookBack:
+	.string "STEVEN: I didn't need\n"
+	.string "to look back.$"
 
 MossdeepCity_SpaceCenter_2F_Text_StevenThankYouComeSeeMeAtHome:
 	.string "STEVEN: Whew, that was too tense.\n"

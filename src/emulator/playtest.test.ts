@@ -39,6 +39,7 @@ import {
   pickTargetBattler,
   summarizeBattle,
   summarizeBattles,
+  talkStopsAt,
   walkToDirections,
   type PlaytestResult,
 } from "./playtest.js";
@@ -746,5 +747,66 @@ describe("in-game partner battles (C391: Steven at the Space Center)", () => {
     expect(() => checkBattleSummary(summarizeBattles(["What will LOTAD do?", "OAK whited out!"]), { partner: true })).toThrow(/no in-game partner summary/);
     expect(() => checkBattleSummary(summarizeBattles(PARTNER_LOG), { partner: false })).toThrow(/expected none/);
     expect(() => parse({ expectBattleSummary: { partner: true } })).not.toThrow();
+  });
+
+  describe("partner summary bounds (C392)", () => {
+    const sums = summarizeBattles(PARTNER_LOG); // foeKOsBy 2/1, guards REFLECT t1 + PROTECT t3, partnerHitsAlly 1
+    const NO_PARTNER = summarizeBattles(["What will LOTAD do?", "LOTAD used ABSORB!", "Foe POOCHYENA fainted! ", "Player defeated YOUNGSTER CALVIN! "]);
+
+    it("the schema takes the four bounds and rejects malformed ones", () => {
+      const step = { expectBattleSummary: { minPlayerKOs: 1, maxPartnerKOs: 2, guardByTurn: { move: "REFLECT", byTurn: 2 }, maxPartnerHitsAlly: 0 } };
+      expect(parse(step)).toEqual(step);
+      expect(() => parse({ expectBattleSummary: { guardByTurn: { byTurn: 2 } } })).not.toThrow();
+      expect(() => parse({ expectBattleSummary: { guardByTurn: { move: "REFLECT" } } })).toThrow();
+      expect(() => parse({ expectBattleSummary: { guardByTurn: { byTurn: 2, turn: 1 } } })).toThrow();
+      expect(() => parse({ expectBattleSummary: { minPlayerKOs: -1 } })).toThrow();
+    });
+
+    it("minPlayerKOs: foeKOsBy.player >= n", () => {
+      expect(() => checkBattleSummary(sums, { minPlayerKOs: 2 })).not.toThrow();
+      expect(() => checkBattleSummary(sums, { minPlayerKOs: 3 })).toThrow(/2 player KOs < minPlayerKOs 3.*"foeKOsBy"/);
+    });
+
+    it("maxPartnerKOs: foeKOsBy.partner <= n", () => {
+      expect(() => checkBattleSummary(sums, { maxPartnerKOs: 1 })).not.toThrow();
+      expect(() => checkBattleSummary(sums, { maxPartnerKOs: 0 })).toThrow(/1 partner KOs > maxPartnerKOs 0/);
+    });
+
+    it("guardByTurn: a partner guard (that move, when given) by the turn", () => {
+      expect(() => checkBattleSummary(sums, { guardByTurn: { move: "REFLECT", byTurn: 1 } })).not.toThrow();
+      expect(() => checkBattleSummary(sums, { guardByTurn: { byTurn: 3 } })).not.toThrow();
+      expect(() => checkBattleSummary(sums, { guardByTurn: { move: "PROTECT", byTurn: 2 } })).toThrow(/no partner PROTECT by turn 2/);
+      expect(() => checkBattleSummary(sums, { guardByTurn: { move: "LIGHT SCREEN", byTurn: 4 } })).toThrow(/no partner LIGHT SCREEN by turn 4/);
+      expect(() => checkBattleSummary(sums, { guardByTurn: { byTurn: 0 } })).toThrow(/no partner guard by turn 0/);
+    });
+
+    it("maxPartnerHitsAlly: partnerHitsAlly <= n", () => {
+      expect(() => checkBattleSummary(sums, { maxPartnerHitsAlly: 1 })).not.toThrow();
+      expect(() => checkBattleSummary(sums, { maxPartnerHitsAlly: 0 })).toThrow(/1 partner hits on yours > maxPartnerHitsAlly 0/);
+    });
+
+    it("each fails cleanly on a battle without a partner", () => {
+      for (const want of [{ minPlayerKOs: 0 }, { maxPartnerKOs: 3 }, { guardByTurn: { byTurn: 9 } }, { maxPartnerHitsAlly: 3 }]) {
+        expect(() => checkBattleSummary(NO_PARTNER, want)).toThrow(/no in-game partner summary/);
+      }
+      expect(() => checkBattleSummary(NO_PARTNER, { outcome: "win" })).not.toThrow(); // non-partner bounds unaffected
+    });
+  });
+});
+
+describe("talk until (C392)", () => {
+  const parse = (step: unknown) => parsePlaytest({ ...MINIMAL, steps: [step] }).steps[0];
+
+  it("the schema takes until (a string or a list) with start/answers", () => {
+    expect(parse({ talk: { start: false, until: ["to look back"] } })).toEqual({ talk: { start: false, until: ["to look back"] } });
+    expect(() => parse({ talk: { until: "to look back", answers: ["yes"] } })).not.toThrow();
+    expect(() => parse({ talk: { until: 3 } })).toThrow();
+  });
+
+  it("talkStopsAt: stops on the box with any substring, ignoring line breaks and curly quotes", () => {
+    expect(talkStopsAt("STEVEN: I didn’t need\nto look back.", ["to look back"])).toBe(true);
+    expect(talkStopsAt("STEVEN: I didn’t need\nto look back.", ["didn't need to look"])).toBe(true);
+    expect(talkStopsAt("STEVEN: Whew, that was too tense.", ["to look back", "Whew"])).toBe(true);
+    expect(talkStopsAt("MAXIE: We failed…", ["to look back"])).toBe(false);
   });
 });

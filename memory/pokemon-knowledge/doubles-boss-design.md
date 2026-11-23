@@ -1,8 +1,10 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 391 | **Date**: November 2026
+**Cycle**: 392 | **Date**: November 2026
 
----
+## C392: Space Center foes, vanilla vs LoH
+- **Vanilla Maxie (Mossdeep)** = MIGHTYENA 42 / CROBAT 43 / CAMERUPT 44; **Tabitha** = CAMERUPT 36 / MIGHTYENA 38 / GOLBAT 40 (Bulbapedia Part 14, StrategyWiki; Ludo's "Crobat 34" is a typo). **No Weezing in vanilla**: LoH's WEEZING 44 is our own addition, and it sits at vanilla's top-level slot.
+- **Structural point**: Steven's whole team is Steel, and Poison can't touch Steel, so every Sludge Bomb, and Crobat/Golbat's Poison STAB too, can only land on the player's three. Gen 3 AI scores a no-effect move at its minimum, so it **routes** Poison damage to the player's side. Lowering levels makes the hits weaker but doesn't change where they go.
 
 ## C391: Space Center multi battle (v3.10 "Side by side")
 - **Vanilla Emerald partner Steven** (Azurilland/Bulbapedia): METANG 42 / SKARMORY 43 / AGGRON 44, all Steel; the player picks 3 mons; foes Maxie + Tabitha. Bulbapedia's Lv57 Skarmory belongs to the ORAS section, so ignore it.
@@ -23,7 +25,7 @@
 
 ## C388: harness naming + "is the beat already vanilla?"
 - **Players already know this fight.** Strategy guides (rankedboost Emerald T&L page) describe vanilla Emerald's T&L as using Earthquake with Claydol while their Flying/Levitate partners stay unharmed; vanilla R/S advice is "Ground moves fail, bring Water/Grass/Bug/Ghost", which is v3.9's answers (b). The LoH spec keeps Claydol's EQ moveset "unchanged", so the turn-1 EQ may already fire in the current ROM. Measure the Y7 yardsticks on the pre-edit roster first (baseline), then after the Lunatone swap, so the diff shows what v3.9 actually adds.
-- **Harness API precedent**: the pokeemerald-expansion test system (DOUBLE_BATTLE_TEST) names the battlers `playerLeft / playerRight / opponentLeft / opponentRight`, gives targets explicitly only when needed (`target:`), and specifies the AI's actions with EXPECT_MOVE / EXPECT_SEND_OUT / EXPECT_SWITCH. Copy those names for `battleTurns target`, and treat a send-out after a faint as its own step. Inclement's doubles softlocks (below) were on the faint/replace path.
+- **Harness precedent (applied C388)**: expansion DOUBLE_BATTLE_TEST names playerLeft/opponentLeft…, `target:` only when needed, send-out as its own step.
 
 ## C387: Tate & Liza "ground that doesn't touch them"
 - **Vanilla Emerald team is already 4/4 EQ-immune** (Bulbapedia): Claydol 41 (Levitate), Xatu 41 (Flying), Lunatone 42 + Solrock 42 (Levitate); Tate always leads Solrock, Liza Lunatone. So v3.9's premise is mostly *move choice + timing*, not a new roster. Check trainer_parties.h to see whether vanilla Claydol already carries EARTHQUAKE.
