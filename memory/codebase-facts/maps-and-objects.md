@@ -41,3 +41,4 @@ Moved verbatim from memory/codebase-facts.md in C380 (index: [../codebase-facts.
 ## Postgame NPC Show/Hide Pattern (C248-286)
 
 **Pattern**: OnTransition checks `FLAG_SYS_GAME_CLEAR`, then `clearflag FLAG_HIDE_<NPC>`. Collection tracking via `FLAG_RECKONING_TALKED_*`. **Birch Lab payoff (C286)**: 6 flags -> ReckoningAcknowledge -> PP_MAX reward -> FLAG_RECKONING_COMPLETE.
+- **Object gfx id ceiling (C393)**: graphicsId is a u8 (include/global.fieldmap.h:95, :226) and OBJ_EVENT_GFX_VAR_F = NUM_OBJ_EVENT_GFX + 1 + 15; NUM is 239, the max (event_objects.h:246-254 comment). A NEW object graphic must reclaim an unused id (e.g. 76 UNUSED_NATU_DOLL, zero refs outside its 5 wiring lines), never append id 239. Objects spawn only on a camera move (TrySpawnObjectEvents, rows pos.y-7..pos.y+9; visible screen pos.y-4..pos.y+5), so a flag cleared mid-cutscene shows nothing until the player steps.

@@ -1,6 +1,6 @@
 {
   "name": "space-center-steven-full",
-  "checks": "C392 v3.10 dial (a): WEEZING 42. Report-only outcome; S1-S6 + F1 are judged in C393 from report.json battleSummaries.",
+  "checks": "C393 v3.10 verdict: a full-HP Steven + player tag battle stays a WIN with at most 2 player faints and at least 2 foe KOs by the player's own Pokémon (2, not 3: the C392 3-3 tie is RNG-fragile), then Steven's 'I didn't need to look back.' shows while he faces Maxie's empty tile. The worn and guts runs stay report-only (their loss is accepted for now, not intended).",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
     "x": 2,
@@ -108,7 +108,7 @@
       }
     },
     {
-      "expectBattleSummary": { "partner": true }
+      "expectBattleSummary": { "partner": true, "outcome": "win", "maxPlayerFaints": 2, "minPlayerKOs": 2 }
     },
     {
       "talk": { "start": false, "until": ["to look back"] }

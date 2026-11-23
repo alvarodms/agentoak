@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 318 | **Date**: October 2026
+**Cycle**: 393 | **Date**: November 2026
 
 ---
 
@@ -35,3 +35,10 @@
 - In SV, "titan" means a *boss fight*. If the Shoal Cave Mudkip is called a titan, players will expect the fight to feel different, not just a plain Lv-X static. Cheap ways to deliver that in vanilla engine: a higher level than the earlier dens (Torchic 30, Treecko 40), a held item, fixed IVs (the Inclement precedent above), and a tide-gated appearance (takeaway 3).
 - **Automated emulator checks:** mGBA has had Lua scripting since 0.10 (`emu:read8(addr)` and similar). Third-party tools (mgba-mcp, mcp-mgba) run it headless as `xvfb-run mgba-qt --script x.lua`, wait for a DONE marker file, and collect a screenshot and JSON. A script could load a save state, step frames, and read the den flag bytes. pokeemerald-expansion also has an in-ROM test runner (mgba-rom-test style, which reports exit status through an SWI). Not verified: whether mgba is installable in our CI.
 - Our own help request for den playtesters (C317) has had no response so far. Gating new content on human playtesting stalls the roadmap.
+
+## C393 addendum: quiet "unease → dread" beats (searched Nov 2026; results mostly listicles)
+- **Lavender Town** is the canonical quiet beat. Its dread comes from the place (atonal music, a grave site, Pokémon too afraid to fight), not from text. Most of the legend is later fan creepypasta. The game itself says very little.
+- **XY/ORAS ghost girl** (Kotaku, "you probably missed Pokémon's new ghost girl"): she says one line, "No, you're not the one.", then she is gone. It is never explained. Fans built theories (a trainer-ID check, Phoebe's relative) *because* nothing answers them. Kotaku's headline also shows the cost: many players never saw her.
+- **Mt. Pyre's register is grief, not dread.** Forum posters call it "just depressing" rather than scary. A beat set there reads as mourning by default.
+- Takeaways: (1) a dread beat needs a place that is *normally safe* to turn wrong; a graveyard is already sad, so it won't feel like a change. (2) Show one unexplained thing and answer nothing (this matches D1 and "react to outcomes, not causes"). (3) Put it on the critical path, or the Kotaku "you probably missed" problem applies.
+- Searches found no ROM hack known for an event-driven overworld change that players noticed (Unbound/Crystal Clear/Crimson pages list map changes, not quiet beats). This remains an open niche.
