@@ -826,5 +826,35 @@
     ],
     "speaker": "none",
     "seeFirst": "Light rain keeps falling over Route 119 after Shelly, and the sky clears at the edge of Fortree where the LOTAD DOLLs stand."
+  },
+  {
+    "id": "v311-still-warm",
+    "arc": "v3.11 Still warm, the summit lantern (C394; gate is the vanilla story var VAR_MT_PYRE_STATE >= 1)",
+    "register": "place",
+    "map": "MtPyre_Summit",
+    "object": "LOCALID_MT_PYRE_SUMMIT_LANTERN",
+    "gate": {
+      "var": "VAR_MT_PYRE_STATE",
+      "atLeast": 1
+    },
+    "hideFlag": "FLAG_TEMP_1",
+    "tiles": [
+      [
+        21,
+        16,
+        "down"
+      ]
+    ],
+    "labels": [
+      "MtPyre_Summit_OnTransition",
+      "MtPyre_Summit_EventScript_StillWarmLantern"
+    ],
+    "playtests": [
+      "mt-pyre-lantern-before-theft",
+      "mt-pyre-lantern-after-theft",
+      "mt-pyre-lantern-theft-walkdown"
+    ],
+    "speaker": "none",
+    "seeFirst": "A small lit lantern stands beside a grave on the summit path, where there was none on the way up."
   }
 ]

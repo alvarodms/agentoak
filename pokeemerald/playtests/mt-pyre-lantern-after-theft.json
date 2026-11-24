@@ -1,0 +1,21 @@
+{
+  "name": "mt-pyre-lantern-after-theft",
+  "checks": "v3.11 (C394): after the theft the lantern stands at 21,16 facing down, readable through the summit fog; one line, no name",
+  "scenario": {
+    "map": "MAP_MT_PYRE_SUMMIT",
+    "x": 22,
+    "y": 16,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA", "FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE", "FLAG_RECEIVED_RED_OR_BLUE_ORB"],
+    "vars": { "VAR_MT_PYRE_STATE": 1 },
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_MT_PYRE_SUMMIT_LANTERN", "x": 21, "y": 16, "visible": true, "facing": "down" } },
+    { "screenshot": "mt-pyre-lantern-fog" },
+    { "face": "left" },
+    { "talk": true },
+    { "expectText": "A lantern, still warm." },
+    { "expectText": "No one came up the path." },
+    { "expectBoxCount": 1 }
+  ]
+}

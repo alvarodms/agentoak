@@ -4,7 +4,13 @@ MtPyre_Summit_MapScripts::
 
 MtPyre_Summit_OnTransition:
 	call_if_eq VAR_MT_PYRE_STATE, 2, MtPyre_Summit_EventScript_SetArchieMaxiePositions
+	call_if_eq VAR_MT_PYRE_STATE, 0, MtPyre_Summit_EventScript_HideStillWarmLantern
 	end
+
+@ v3.11 "Still warm" (C394): the lantern appears only after the orb theft.
+MtPyre_Summit_EventScript_HideStillWarmLantern::
+	setflag FLAG_TEMP_1
+	return
 
 MtPyre_Summit_EventScript_SetArchieMaxiePositions::
 	setobjectxyperm LOCALID_MT_PYRE_SUMMIT_MAXIE, 23, 6
@@ -49,6 +55,7 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	removeobject LOCALID_MT_PYRE_SUMMIT_GRUNT_4
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA
+	clearflag FLAG_TEMP_1
 	fadedefaultbgm
 	fadescreen FADE_FROM_BLACK
 	delay 20
@@ -724,3 +731,12 @@ MtPyre_Summit_Text_KeeperPostEvent:
 	.string "Whatever draws these creatures\n"
 	.string "to HOENN has not finished its work.$"
 
+MtPyre_Summit_EventScript_StillWarmLantern::
+	lockall
+	msgbox MtPyre_Summit_Text_StillWarmLantern, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MtPyre_Summit_Text_StillWarmLantern:
+	.string "A lantern, still warm.\n"
+	.string "No one came up the path.$"

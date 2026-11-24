@@ -1,0 +1,25 @@
+{
+  "name": "mt-pyre-lantern-theft-walkdown",
+  "checks": "v3.11 (C394): the real theft scene, then a normal walk down column 23 brings the lantern on screen before the player passes y 16",
+  "scenario": {
+    "map": "MAP_MT_PYRE_SUMMIT",
+    "x": 23,
+    "y": 8,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET"],
+    "vars": { "VAR_MT_PYRE_STATE": 0 },
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "expectObject": { "id": "LOCALID_MT_PYRE_SUMMIT_ARCHIE", "visible": true } },
+    { "expectFlag": { "FLAG_TEMP_1": true } },
+    { "walk": "up" },
+    { "talk": { "start": false } },
+    { "expectText": ["We're pulling out!", "The BLUE ORB and RED ORB must never", "MAGMA EMBLEM"] },
+    { "expectVar": { "VAR_MT_PYRE_STATE": 1 } },
+    { "expectFlag": { "FLAG_TEMP_1": false } },
+    { "expectObject": { "id": "LOCALID_MT_PYRE_SUMMIT_ARCHIE", "absent": true } },
+    { "walkTo": { "x": 23, "y": 12 } },
+    { "expectObject": { "id": "LOCALID_MT_PYRE_SUMMIT_LANTERN", "x": 21, "y": 16, "visible": true, "facing": "down" } },
+    { "screenshot": "mt-pyre-lantern-walkdown" }
+  ]
+}

@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 393 | **Date**: November 2026
+**Cycle**: 394 | **Date**: November 2026
 
 ---
 
@@ -42,3 +42,10 @@
 - **Mt. Pyre's register is grief, not dread.** Forum posters call it "just depressing" rather than scary. A beat set there reads as mourning by default.
 - Takeaways: (1) a dread beat needs a place that is *normally safe* to turn wrong; a graveyard is already sad, so it won't feel like a change. (2) Show one unexplained thing and answer nothing (this matches D1 and "react to outcomes, not causes"). (3) Put it on the critical path, or the Kotaku "you probably missed" problem applies.
 - Searches found no ROM hack known for an event-driven overworld change that players noticed (Unbound/Crystal Clear/Crimson pages list map changes, not quiet beats). This remains an open niche.
+
+## C394 addendum: will a small sprite read in the summit fog? (searched Nov 2026; web thin, code-verified)
+- Bulbapedia (Fog): Gen III fog is overworld-only and "makes the area difficult to see, especially obstacles and Trainers". Mt. Pyre is listed as always foggy, and the summit has its own fog colours. PokeCommunity weather threads: of the fog types, only "steady mist" brightens block animations to match.
+- **Code (pokeemerald/src/field_weather.c)**: MtPyre_Summit is WEATHER_FOG_HORIZONTAL. In that weather every sprite palette is pulled about 75% toward pale mint RGB(28,31,28). A palette loaded on fade-in is marked by MarkFogSpritePalToLighten (:821), then lightened by ApplyFogBlend (:674-676, `(28-r)*3>>2`). A palette loaded later, when an object spawns, gets `BlendPalette(.., 12, RGB(28,31,28))` (:842). So every 5-bit channel ends up between about 21 and 31, and sprite contrast drops to about a quarter.
+- Effect on the CABLE_CAR palette: glow 11 (255,255,148) → near white; amber 14 → (26,26,21); iron 8 (41,49,90) → (22,24,23). Hue barely survives, so a "warm yellow glow" reads as cream. Only light vs dark and the silhouette survive.
+- **The NPC_2 fallback cannot fix this**: the fog blends every sprite palette slot the same way. The fix is in the art: the darkest index (8) as a full outline, the brightest index (11) in one solid core, and a lantern shape (top ring + cage) recognisable in two values. Judge the screenshot against the summit Old Woman, which gets the same blend.
+- Takeaway: for any object placed on a fog map (Mt. Pyre summit/exterior, Route 120 fog), design for luminance and shape, not hue.
