@@ -9,7 +9,23 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { crc32 } from 'node:zlib';
+import { createHash } from 'node:crypto';
+import zlib from 'node:zlib';
+
+/** CRC32 polyfill for Node < 22 (which lacks named crc32 export from node:zlib) */
+function crc32(buf) {
+  // Use zlib.crc32 if available (Node 22+), otherwise compute manually
+  if (typeof zlib.crc32 === 'function') return zlib.crc32(buf);
+  const TABLE = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let j = 0; j < 8; j++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+    TABLE[i] = c;
+  }
+  let crc = 0xffffffff;
+  for (let i = 0; i < buf.length; i++) crc = TABLE[(crc ^ buf[i]) & 0xff] ^ (crc >>> 8);
+  return (crc ^ 0xffffffff) >>> 0;
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = join(__dirname, '..');
@@ -690,13 +706,24 @@ async function main() {
   // Assemble pokemon entries
   const pokemon = [];
 
+  // Find the highest national dex ID to assign synthetic IDs for custom species
+  let maxDexId = 0;
+  for (const id of nationalDexOrder.values()) {
+    if (id > maxDexId) maxDexId = id;
+  }
+  let syntheticId = maxDexId + 1;
+
   for (const sp of speciesList) {
     const specConst = sp.speciesConstant;
     const specName = specConst.replace('SPECIES_', '');
 
-    // National dex ID
-    const dexId = nationalDexOrder.get(specConst) || 0;
-    if (dexId === 0) continue; // Skip if not in national dex
+    // National dex ID — assign a synthetic ID for custom species missing from pokedex.h
+    let dexId = nationalDexOrder.get(specConst) || 0;
+    if (dexId === 0) {
+      // Skip truly empty/placeholder entries (0 BST = no real data)
+      if (sp.bst === 0) continue;
+      dexId = syntheticId++;
+    }
 
     // Pokedex entry data
     const dexEntry = dexEntries.get(specConst) || {};
