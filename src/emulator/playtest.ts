@@ -22,7 +22,7 @@ import { z } from "zod";
 import { CHECKPOINT_NAMES } from "./checkpoints.js";
 import { SAVEBLOCK1_REGISTERED_ITEM } from "./scenario.js";
 import { BUTTONS, EmulatorSession, type Button, type RomBuild, type StartOptions } from "./session.js";
-import { SCRIPT_CONTEXT_SHUTDOWN, decodePartyMon, type Facing } from "./state.js";
+import { SCRIPT_CONTEXT_SHUTDOWN, decodeBattleMon, decodePartyMon, type Facing } from "./state.js";
 
 export { SAVEBLOCK1_REGISTERED_ITEM };
 
@@ -920,6 +920,32 @@ async function answerTargetPrompt(s: EmulatorSession, target: BattleTarget, labe
   await s.press("A");
 }
 
+/**
+ * Logs a new battle message. Partner battles (C395, foeHitsBySide) first log a BATTLER_HP_MARK when any battler's
+ * species or HP changed since the last one, so the HP a move took sits between its "used" message and the next.
+ */
+async function logBattleMessage(s: EmulatorSession, log: string[] | undefined, text: string, partner: boolean): Promise<void> {
+  if (!log) return;
+  if (partner) {
+    const layout = await s.getLayout();
+    const count = Math.min(await s.readU8(s.symbols.address("gBattlersCount")), 4);
+    const raw = await s.read(s.symbols.address("gBattleMons"), count * layout.battlePokemonSize);
+    const mons = Array.from({ length: count }, (_, i) => decodeBattleMon(raw.subarray(i * layout.battlePokemonSize), layout));
+    const mark = battlerHpMarker(mons);
+    if (mark !== lastBattlerHpMarker(log)) log.push(mark);
+  }
+  log.push(text);
+}
+
+/** The current battle's last BATTLER_HP_MARK (none before this battle's partner marker). */
+function lastBattlerHpMarker(log: readonly string[]): string | undefined {
+  for (let i = log.length - 1; i >= 0; i--) {
+    if (log[i].startsWith(BATTLER_HP_MARK)) return log[i];
+    if (log[i].startsWith(PARTNER_PARTY_MARK)) return undefined;
+  }
+  return undefined;
+}
+
 /** battleTurns: the most frames one turn may take, however many messages it shows. */
 const TURN_FRAME_CAP = 14400;
 
@@ -946,7 +972,7 @@ async function finishTurn(s: EmulatorSession, label: string, doubles: boolean, r
     }
     if (text.trim() && text !== seen.at(-1)) {
       seen.push(text);
-      log?.push(text);
+      await logBattleMessage(s, log, text, partner);
       const bad = forbidden(text, forbid);
       if (bad) fail(`${label}: the turn it started in showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen.slice(stale))}`);
     }
@@ -1012,7 +1038,7 @@ async function battleTurns(
   };
   for (let turn = 1; turn <= maxTurns; turn++) {
     const prompt = await battleText(s);
-    opts.log?.push(prompt); // the "What will … do?" prompt: summarizeBattle counts these as turns
+    await logBattleMessage(s, opts.log, prompt, partner); // the "What will … do?" prompt: summarizeBattle counts these as turns
     let { slot, menu } = await fight();
     let partnerDone = !doubles || partner;
     // B in the move menu would cancel the choice: wait for the turn's first message before tapping it.
@@ -1053,7 +1079,7 @@ async function battleTurns(
       if (text.trim() && text !== seen.at(-1)) {
         idle = 0;
         seen.push(text);
-        opts.log?.push(text);
+        await logBattleMessage(s, opts.log, text, partner);
         const bad = forbidden(text, forbid);
         if (bad) fail(`${label}: turn ${turn} showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
         if (missing().length === 0) {
@@ -1325,10 +1351,36 @@ export interface BattleSummary {
   partnerGuards?: { turn: number; message: string }[];
   /** Partner moves followed, before the next move or prompt, by a status or stat drop on one of YOUR Pokémon (e.g. TOXIC → "SHELGON was badly poisoned!"). */
   partnerHitsAlly?: number;
+  /**
+   * Partner battles with BATTLER_HP_MARK lines in the log (C395): each damaging foe move, keyed by the foe's name as the
+   * battle text prints it ("RHYDON"), counted by the side it took HP from: "player" = your battler (0), "partner" = the
+   * partner's (2). A spread move (ROCK SLIDE) that hits both counts once for each side. Read from gBattleMons HP drops
+   * between "Foe X used Y!" and the next move, prompt or residual-damage message, so misses, immunities and
+   * Substitute hits don't count.
+   */
+  foeHitsBySide?: Record<string, { player: number; partner: number }>;
 }
 
 /** battleLog marker battleTurns appends with the party's HP % when it returns. */
 const PARTY_HP_MARK = "[party hp% ";
+/**
+ * battleLog marker a partner battle writes before a new message when any battler's HP changed since the last one:
+ * `[battlers 112:85,376:120,375:0,229:96]` = species:hp per battler in gBattleMons order. foeHitsBySide reads it.
+ */
+export const BATTLER_HP_MARK = "[battlers ";
+export const battlerHpMarker = (mons: readonly { species: number; hp: number }[]) =>
+  `${BATTLER_HP_MARK}${mons.map((m) => `${m.species}:${m.hp}`).join(",")}]`;
+export function parseBattlerHpMarker(m: string): { species: number; hp: number }[] | undefined {
+  if (!m.startsWith(BATTLER_HP_MARK)) return undefined;
+  return m.slice(BATTLER_HP_MARK.length, -1).split(",").map((x) => {
+    const [species, hp] = x.split(":").map(Number);
+    return { species, hp };
+  });
+}
+/** Battler ids of your side in a partner battle: yours on the left (0), the partner's on the right (2). */
+const SIDE_OF_BATTLER: Record<number, "player" | "partner"> = { 0: "player", 2: "partner" };
+/** Messages after which an HP drop is no longer the last foe move's (end-of-turn and status damage, battle_message.c). */
+const RESIDUAL_DAMAGE = /(hurt by|buffeted by|pelted by|sapped by|hurt itself|is hurt|afflicted by|locked in a nightmare|restored|regained)/;
 const isWin = (m: string) => /\bdefeated\b/.test(m);
 const isLoss = (m: string) => m.includes("whited out") || m.includes("out of usable");
 
@@ -1371,7 +1423,7 @@ export function summarizeBattle(log: readonly string[], index = 0): BattleSummar
 export function summarizePartner(
   log: readonly string[],
   sides: { partner: readonly string[]; player: readonly string[] },
-): Required<Pick<BattleSummary, "foeKOsBy" | "partnerGuards" | "partnerHitsAlly">> {
+): Required<Pick<BattleSummary, "foeKOsBy" | "partnerGuards" | "partnerHitsAlly">> & Pick<BattleSummary, "foeHitsBySide"> {
   const foeKOsBy: { player: number; partner: number; unknown?: number } = { player: 0, partner: 0 };
   const partnerGuards: { turn: number; message: string }[] = [];
   let partnerHitsAlly = 0;
@@ -1379,7 +1431,33 @@ export function summarizePartner(
   let lastUser: "player" | "partner" | undefined;
   /** A partner move whose messages are still showing and haven't hit one of yours yet. */
   let partnerMoveOpen = false;
+  const foeHitsBySide: Record<string, { player: number; partner: number }> = {};
+  let sawHpMark = false;
+  let lastHp: { species: number; hp: number }[] | undefined;
+  /** The foe move whose HP drops are being collected, and the sides it has hit so far. */
+  let foeMove: { foe: string; hit: Set<"player" | "partner"> } | undefined;
+  const closeFoeMove = () => {
+    if (foeMove?.hit.size) {
+      const row = (foeHitsBySide[foeMove.foe] ??= { player: 0, partner: 0 });
+      for (const side of foeMove.hit) row[side]++;
+    }
+    foeMove = undefined;
+  };
   for (const m of log.map((x) => x.trim())) {
+    const hp = parseBattlerHpMarker(m);
+    if (hp) {
+      sawHpMark = true;
+      if (foeMove && lastHp) {
+        for (const [b, side] of Object.entries(SIDE_OF_BATTLER)) {
+          const was = lastHp[Number(b)];
+          const now = hp[Number(b)];
+          if (was && now && was.species === now.species && now.hp < was.hp) foeMove.hit.add(side);
+        }
+      }
+      lastHp = hp;
+      continue;
+    }
+    if (m.includes("What will") || RESIDUAL_DAMAGE.test(m)) closeFoeMove();
     if (m.includes("What will")) {
       turn++;
       partnerMoveOpen = false;
@@ -1388,7 +1466,11 @@ export function summarizePartner(
     const used = /^(.+?) used (.+?)!$/.exec(m);
     if (used) {
       partnerMoveOpen = false;
-      if (isFoe(m)) continue;
+      closeFoeMove();
+      if (isFoe(m)) {
+        foeMove = { foe: used[1].replace(/^Foe /, ""), hit: new Set() };
+        continue;
+      }
       const mine = sides.partner.includes(used[1]);
       lastUser = mine ? "partner" : "player";
       partnerMoveOpen = mine;
@@ -1405,7 +1487,8 @@ export function summarizePartner(
       partnerMoveOpen = false;
     }
   }
-  return { foeKOsBy, partnerGuards, partnerHitsAlly };
+  closeFoeMove();
+  return { foeKOsBy, partnerGuards, partnerHitsAlly, ...(sawHpMark && { foeHitsBySide }) };
 }
 
 /**

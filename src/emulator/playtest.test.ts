@@ -5,6 +5,9 @@ import { describe, expect, it } from "vitest";
 import {
   BAG_POSITION,
   BATTLE_TYPE_INGAME_PARTNER,
+  BATTLER_HP_MARK,
+  battlerHpMarker,
+  parseBattlerHpMarker,
   PARTNER_MENU_BENCH_END,
   PARTNER_PARTY_MARK,
   PARTY_MENU_CONFIRM,
@@ -718,6 +721,42 @@ describe("in-game partner battles (C391: Steven at the Space Center)", () => {
       ],
       partnerHitsAlly: 1, // turn 4's TOXIC on LINOONE, not turn 3's on Foe MAGMAR
     });
+  });
+
+  it("foeHitsBySide counts each damaging foe move by the side whose HP dropped (C395)", () => {
+    // Battlers: 0 SHELGON (yours), 1 Foe RHYDON, 2 METANG (Steven's), 3 Foe MUK. Species ids are arbitrary here.
+    const hp = (a: number, c: number, sp0 = 372) => battlerHpMarker([{ species: sp0, hp: a }, { species: 112, hp: 150 }, { species: 375, hp: c }, { species: 89, hp: 140 }]);
+    expect(hp(120, 110)).toBe(`${BATTLER_HP_MARK}372:120,112:150,375:110,89:140]`);
+    expect(parseBattlerHpMarker(hp(1, 2))?.[2]).toEqual({ species: 375, hp: 2 });
+    const log = [
+      MARK,
+      hp(120, 110),
+      "What will SHELGON do?",
+      "Foe RHYDON used ROCK SLIDE!",
+      hp(100, 104), // both sides: one hit each
+      "Foe MUK used SLUDGE BOMB!",
+      hp(70, 104), // MUK, yours only
+      "Foe RHYDON used FIRE PUNCH!",
+      hp(70, 60),
+      "It's super effective!", // still FIRE PUNCH's message
+      "SHELGON is hurt by poison!",
+      hp(62, 60), // residual: nobody's hit
+      "What will SHELGON do?",
+      "Foe RHYDON used DIG!",
+      "It doesn't affect SKARMORY...", // immune: no drop, no count
+      "Foe RHYDON used THUNDER PUNCH!",
+      "Foe RHYDON's attack missed!",
+      "Foe MUK used SLUDGE BOMB!",
+      hp(0, 60),
+      "SHELGON fainted! ",
+      hp(90, 60, 264), // LINOONE replaces SHELGON while MUK's move is still open: a different species, not a hit
+      "Go! LINOONE!",
+    ];
+    expect(summarizeBattle(log).foeHitsBySide).toEqual({ RHYDON: { player: 1, partner: 2 }, MUK: { player: 2, partner: 0 } });
+  });
+
+  it("foeHitsBySide is left out when the log has no battler HP markers (logs from before C395)", () => {
+    expect(summarizeBattle(PARTNER_LOG)).not.toHaveProperty("foeHitsBySide");
   });
 
   it("a foe KO before any of your side has moved is credited to unknown", () => {

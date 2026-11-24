@@ -11,7 +11,10 @@
 // (src/data/pokemon/species_info.h) and the type chart (gTypeEffectiveness,
 // src/battle_main.c), then reports:
 //   (a) PRESSURE: a foe damaging move every partner Pokémon is immune to or
-//       resists (x0.5 or less), so the AI can only aim it at the player's side;
+//       resists (x0.5 or less), so the AI can only aim it at the player's side.
+//       C395: moves whose .target is MOVE_TARGET_BOTH / MOVE_TARGET_FOES_AND_ALLY
+//       hit both opposing battlers at once, so they cannot be aimed away from the
+//       partner; they are listed as INFO, never PRESSURE;
 //   (b) SCREEN: a partner REFLECT (physical) / LIGHT_SCREEN (special) whose side
 //       is not the majority category of the foes' damaging moves.
 // Why: v3.10 (C392) Steven's all-Steel team made every WEEZING SLUDGE BOMB land
@@ -19,7 +22,10 @@
 //
 // Usage:
 //   node scripts/check_partner_typing.cjs              report, exit 0 always
-//   node scripts/check_partner_typing.cjs --selftest   planted case must be flagged (exit 1 if not)
+//   node scripts/check_partner_typing.cjs --selftest   planted cases must be flagged (exit 1 if not)
+//   node scripts/check_partner_typing.cjs --party <trainer_config.json>
+//       C395: analyse a candidate party without editing the ROM: the config's
+//       trainerId/party replaces that trainer's parsed trainer_parties.h party.
 // Make: `make report_partner_typing` (selftest + report; deliberately NOT in check_all).
 
 const fs = require('fs');
@@ -36,6 +42,8 @@ const PARTNER_BATTLES = {
 };
 
 const SCREENS = { MOVE_REFLECT: 'PHYSICAL', MOVE_LIGHT_SCREEN: 'SPECIAL' };
+// Spread targets that hit both opposing battlers (battle_moves.h .target).
+const SPREAD_TARGETS = new Set(['MOVE_TARGET_BOTH', 'MOVE_TARGET_FOES_AND_ALLY']);
 
 // ---------- parsing ----------
 
@@ -70,7 +78,7 @@ function parseMoves(src) {
   let m;
   while ((m = re.exec(src))) {
     const f = (k) => (m[2].match(new RegExp(`\\.${k}\\s*=\\s*(\\w+)`)) || [])[1];
-    moves.set(m[1], { power: Number(f('power') || 0), type: f('type'), category: (f('category') || '').replace('MOVE_CATEGORY_', '') });
+    moves.set(m[1], { power: Number(f('power') || 0), type: f('type'), category: (f('category') || '').replace('MOVE_CATEGORY_', ''), target: f('target') });
   }
   if (moves.size < 300) throw new Error(`battle_moves.h: only ${moves.size} moves parsed`);
   return moves;
@@ -106,6 +114,32 @@ function trainerParty(trainersH, partiesH, trainer) {
   const p = partiesH.indexOf(` ${party[2]}[]`);
   if (p < 0) throw new Error(`trainer_parties.h: no ${party[2]}`);
   return { array: party[2], mons: parseMonList(blockAfter(partiesH, p)) };
+}
+
+// C395 --party: a trainer_configs/*.json party in the same shape trainerParty() returns.
+function loadScratchParty(file) {
+  const cfg = JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'));
+  if (!cfg.trainerId || !Array.isArray(cfg.party)) throw new Error(`${file}: needs trainerId and party`);
+  return {
+    file,
+    trainerId: cfg.trainerId,
+    array: cfg.partyName || '(scratch)',
+    mons: cfg.party.map((m) => ({ species: m.species, moves: (m.moves || []).filter((mv) => mv && mv !== 'MOVE_NONE') })),
+  };
+}
+
+// Pure: swap the scratch party in for its trainer wherever that trainer is a foe.
+// Returns how many foe slots were replaced (0 = the config's trainer fights no partner battle).
+function applyScratch(battles, scratch) {
+  let replaced = 0;
+  for (const b of battles) {
+    b.foes = b.foes.map((f) => {
+      if (f.name !== scratch.trainerId) return f;
+      replaced++;
+      return { name: f.name, array: scratch.array, mons: scratch.mons, scratch: scratch.file };
+    });
+  }
+  return replaced;
 }
 
 function findBattles() {
@@ -163,6 +197,10 @@ function analyze(battle, { chart, moves, species }) {
         const muls = partnerMons.map((p) => multiplier(chart, d.type, species.get(p.species)));
         if (muls.every((x) => x <= 0.5)) {
           const detail = partnerMons.map((p, i) => `${p.species.replace('SPECIES_', '')} x${muls[i]}`).join(', ');
+          if (SPREAD_TARGETS.has(d.target)) {
+            findings.push({ kind: 'INFO', text: `${foe.name} ${mon.species.replace('SPECIES_', '')} ${mv.replace('MOVE_', '')} (${d.type.replace('TYPE_', '')}, ${d.category.toLowerCase()} ${d.power}) is resisted by every partner (${detail}) but is a spread move (${d.target.replace('MOVE_TARGET_', '')}): it hits both sides, so it is not PRESSURE` });
+            continue;
+          }
           findings.push({ kind: 'PRESSURE', text: `${foe.name} ${mon.species.replace('SPECIES_', '')} ${mv.replace('MOVE_', '')} (${d.type.replace('TYPE_', '')}, ${d.category.toLowerCase()} ${d.power}): every partner resists or is immune (${detail}), so ${muls.every((x) => x === 0) ? "it can only land on the player's side" : "the player's side is always the better target"}` });
         }
       }
@@ -179,7 +217,8 @@ function analyze(battle, { chart, moves, species }) {
 }
 
 function printReport(battle, result) {
-  console.log(`== ${battle.name}: partner ${battle.partner.name} [${battle.partner.mons.map((m) => m.species.replace('SPECIES_', '')).join(', ')}] vs ${battle.foes.map((f) => f.name).join(' + ')}`);
+  const scratch = battle.foes.find((f) => f.scratch);
+  console.log(`== ${battle.name}${scratch ? ` (scratch: ${scratch.scratch})` : ''}: partner ${battle.partner.name} [${battle.partner.mons.map((m) => m.species.replace('SPECIES_', '')).join(', ')}] vs ${battle.foes.map((f) => f.name).join(' + ')}`);
   console.log(`   foe damaging moves: ${result.counts.PHYSICAL} physical / ${result.counts.SPECIAL} special (one count per move slot)`);
   if (!result.findings.length) console.log('   no findings');
   for (const f of result.findings) console.log(`   ${f.kind}: ${f.text}`);
@@ -191,30 +230,53 @@ function selftest() {
     ['MOVE_PLANT_POISON', { power: 90, type: 'TYPE_POISON', category: 'SPECIAL' }],
     ['MOVE_PLANT_FIRE', { power: 90, type: 'TYPE_FIRE', category: 'SPECIAL' }],
     ['MOVE_PLANT_SPLASH', { power: 0, type: 'TYPE_WATER', category: 'STATUS' }],
+    ['MOVE_PLANT_SPREAD', { power: 75, type: 'TYPE_POISON', category: 'PHYSICAL', target: 'MOVE_TARGET_BOTH' }],
+    ['MOVE_PLANT_SCRATCH', { power: 80, type: 'TYPE_POISON', category: 'SPECIAL', target: 'MOVE_TARGET_SELECTED' }],
     ['MOVE_REFLECT', { power: 0, type: 'TYPE_PSYCHIC', category: 'STATUS' }],
   ]);
   const species = new Map([['SPECIES_PLANT_STEEL', { types: ['TYPE_STEEL'], abilities: [] }]]);
   const battle = {
     name: 'planted',
     partner: { name: 'sPlantedPartner', mons: [{ species: 'SPECIES_PLANT_STEEL', moves: ['MOVE_REFLECT'] }] },
-    foes: [{ name: 'TRAINER_PLANTED', array: 'sParty_Planted', mons: [{ species: 'SPECIES_PLANT_FOE', moves: ['MOVE_PLANT_POISON', 'MOVE_PLANT_FIRE', 'MOVE_PLANT_SPLASH'] }] }],
+    foes: [
+      { name: 'TRAINER_PLANTED', array: 'sParty_Planted', mons: [{ species: 'SPECIES_PLANT_FOE', moves: ['MOVE_PLANT_POISON', 'MOVE_PLANT_FIRE', 'MOVE_PLANT_SPLASH', 'MOVE_PLANT_SPREAD'] }] },
+      { name: 'TRAINER_PLANTED_B', array: 'sParty_PlantedB', mons: [{ species: 'SPECIES_PLANT_OLD', moves: ['MOVE_PLANT_FIRE'] }] },
+    ],
   };
+  // Scratch override (--party): written to a temp file so loadScratchParty's JSON path runs too.
+  const tmp = path.join(require('os').tmpdir(), `check_partner_typing_selftest_${process.pid}.json`);
+  fs.writeFileSync(tmp, JSON.stringify({ trainerId: 'TRAINER_PLANTED_B', partyName: 'sParty_PlantedB', party: [{ species: 'SPECIES_PLANT_NEW', moves: ['MOVE_PLANT_SCRATCH', 'MOVE_NONE'] }] }));
+  let replaced;
+  try { replaced = applyScratch([battle], loadScratchParty(tmp)); } finally { fs.unlinkSync(tmp); }
   const { findings } = analyze(battle, { chart, moves, species });
   const kinds = findings.map((f) => `${f.kind}:${f.text.split(' ').slice(0, 3).join(' ')}`);
-  const want = ['PRESSURE:TRAINER_PLANTED PLANT_FOE PLANT_POISON', 'SCREEN:sPlantedPartner PLANT_STEEL REFLECT'];
+  if (replaced !== 1) kinds.push(`SCRATCH:replaced ${replaced} foe slot(s), want 1`);
+  const want = [
+    'PRESSURE:TRAINER_PLANTED PLANT_FOE PLANT_POISON',
+    'INFO:TRAINER_PLANTED PLANT_FOE PLANT_SPREAD',
+    'PRESSURE:TRAINER_PLANTED_B PLANT_NEW PLANT_SCRATCH',
+    'SCREEN:sPlantedPartner PLANT_STEEL REFLECT',
+  ];
   const missing = want.filter((w) => !kinds.includes(w));
   const extra = kinds.filter((k) => !want.includes(k));
   if (missing.length || extra.length) {
     console.error(`check_partner_typing selftest FAIL: missing ${JSON.stringify(missing)}, unexpected ${JSON.stringify(extra)}`);
     process.exit(1);
   }
-  console.log('check_partner_typing selftest: 2/2 planted findings flagged (PRESSURE poison vs Steel, SCREEN reflect vs special), 0 false positives');
+  console.log('check_partner_typing selftest: 4/4 planted findings flagged (PRESSURE poison vs Steel, spread move INFO not PRESSURE, scratch-party PRESSURE, SCREEN reflect vs special), 0 false positives');
 }
 
 function main() {
   if (process.argv.includes('--selftest')) return selftest();
   try {
     const battles = findBattles();
+    const partyAt = process.argv.indexOf('--party');
+    if (partyAt >= 0) {
+      const file = process.argv[partyAt + 1];
+      if (!file) throw new Error('--party needs a trainer_config.json path');
+      const scratch = loadScratchParty(file);
+      if (!applyScratch(battles, scratch)) throw new Error(`--party ${file}: ${scratch.trainerId} is not a foe in any partner battle`);
+    }
     const ctx = {
       chart: parseTypeChart(read('src/battle_main.c')),
       moves: parseMoves(read('src/data/battle_moves.h')),
@@ -225,9 +287,9 @@ function main() {
     for (const b of battles) {
       const r = analyze(b, ctx);
       printReport(b, r);
-      total += r.findings.filter((f) => f.kind !== 'SKIP').length;
+      total += r.findings.filter((f) => f.kind !== 'SKIP' && f.kind !== 'INFO').length;
     }
-    console.log(`check_partner_typing: ${battles.length} partner battle(s), ${total} finding(s) (report-only)`);
+    console.log(`check_partner_typing: ${battles.length} partner battle(s), ${total} finding(s) (INFO/SKIP lines not counted; report-only)`);
   } catch (e) {
     console.log(`check_partner_typing: could not analyse (${e.message}); report-only, exit 0`);
   }

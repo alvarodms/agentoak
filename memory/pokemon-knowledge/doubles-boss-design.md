@@ -1,6 +1,12 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 392 | **Date**: November 2026
+**Cycle**: 395 | **Date**: November 2026
+
+## C395: CROBAT spec check (WEEZING→CROBAT)
+- **CROBAT at this slot is a restoration, not a new idea**: vanilla Maxie's Space Center ace-before-CAMERUPT is CROBAT 43. The poketools Mossdeep page lists **WING ATTACK / CONFUSE RAY / AIR CUTTER / MEAN LOOK**, but its layout is ambiguous; confirm in vanilla trainer_parties.h (git history).
+- **"CROBAT's moves are physical" is only half true.** Under the per-move P/S split, WING ATTACK is physical but AIR CUTTER is special. AIR CUTTER is also a spread move, hitting player + Steven at once, so REFLECT doesn't cover it. CONFUSE RAY and MEAN LOOK are status moves. Mean Look stops switching, so a worn party can't escape the trap. A REFLECT-matched guard criterion only works with a physical-only set (e.g. WING ATTACK / BITE / CONFUSE RAY / FLY or AERIAL ACE).
+- **Flying is resisted by Steel, but Steel is not immune to it** (unlike Poison). Gen 3 AI only "routes" hard on no-effect (immune) moves; a resisted hit still scores, so Steven soaks some of the damage. Keep SLUDGE BOMB/POISON FANG off CROBAT, or the C392 trap returns.
+- Crobat's base Speed 130 outruns Steven's whole team, so CROBAT always moves before METANG's turn-1 REFLECT.
 
 ## C392: Space Center foes, vanilla vs LoH
 - **Vanilla Maxie (Mossdeep)** = MIGHTYENA 42 / CROBAT 43 / CAMERUPT 44; **Tabitha** = CAMERUPT 36 / MIGHTYENA 38 / GOLBAT 40 (Bulbapedia Part 14, StrategyWiki; Ludo's "Crobat 34" is a typo). **No Weezing in vanilla**: LoH's WEEZING 44 is our own addition, and it sits at vanilla's top-level slot.
@@ -23,10 +29,6 @@
 - **Vanilla Xatu already carries PSYCHIC** (Lv41: Psychic / Sunny Day / Confuse Ray / Calm Mind, rankedboost/Bulbapedia). So XATU's PSYCHIC is the threat players already know, and guides counter it by leading a **Dark type** (Psychic can't touch it) + Water. Cutting PSYCHIC makes LoH's Xatu *weaker than vanilla*. Prefer fixing the yardstick: a Dark mon (MIGHTYENA/SHARPEDO/SABLEYE) is the community-standard answer, and our Y7 parties lack one.
 - NIGHT_SHADE (Natu line level-up move) is fixed damage = level (39), so it's predictable but erases the Psychic identity. If a swap is needed, AERIAL_ACE/SHADOW_BALL already cover Xatu; dropping PSYCHIC leaves no Psychic STAB on the Psychic-gym ace pair.
 
-## C388: harness naming + "is the beat already vanilla?"
-- **Players already know this fight.** Strategy guides (rankedboost Emerald T&L page) describe vanilla Emerald's T&L as using Earthquake with Claydol while their Flying/Levitate partners stay unharmed; vanilla R/S advice is "Ground moves fail, bring Water/Grass/Bug/Ghost", which is v3.9's answers (b). The LoH spec keeps Claydol's EQ moveset "unchanged", so the turn-1 EQ may already fire in the current ROM. Measure the Y7 yardsticks on the pre-edit roster first (baseline), then after the Lunatone swap, so the diff shows what v3.9 actually adds.
-- **Harness precedent (applied C388)**: expansion DOUBLE_BATTLE_TEST names playerLeft/opponentLeft…, `target:` only when needed, send-out as its own step.
-
 ## C387: Tate & Liza "ground that doesn't touch them"
 - **Vanilla Emerald team is already 4/4 EQ-immune** (Bulbapedia): Claydol 41 (Levitate), Xatu 41 (Flying), Lunatone 42 + Solrock 42 (Levitate); Tate always leads Solrock, Liza Lunatone. So v3.9's premise is mostly *move choice + timing*, not a new roster. Check trainer_parties.h to see whether vanilla Claydol already carries EARTHQUAKE.
 - **Gen 3 AI ability-confirmation bug (PokéCommunity thread 528581, FRLG; Bulbapedia notes similar in Gen 5)**: once the player shows a Levitate mon, the AI treats every player mon as Levitate and stops choosing Earthquake (a Groudon picked Body Slam every turn). Emerald's AI code is close to FRLG's. Risk for LoH: a player leading or switching in a Levitate mon (Gengar, Flygon, Claydol, Vibrava, Chimecho...) may never see the EQ beat. Gen 3 AI move choice is also score+RNG, so "turn 1 EQ" is not guaranteed even without the bug.
@@ -34,8 +36,7 @@
 - Design consequence: make the turn-1 EQ deterministic (only damaging move on the lead, or scripted) and playtest a Levitate player lead as the miss path.
 
 ## Facts found
-- **Vanilla Emerald already ran every Juan rematch as a Double Battle** (Bulbapedia / Sootopolis Gym pages). LoH's TRAINER_JUAN_1-5 slots became Wallace in C309 with "doubles unchanged", so **Wallace's Gym rematches are probably doubles already**. Check `doubleBattle` in `wallace_gym_2-5.json` before building Juan's doubles, so the two fights aren't the same format.
-- No hack we found turns Juan into a standalone doubles boss. The niche is open, but there's no proven pattern to copy.
+- Vanilla Juan rematches are all doubles, so LoH's Wallace (TRAINER_JUAN_1-5) rematches probably are too; no hack makes Juan a standalone doubles boss.
 - **Inclement Emerald (PokeCommunity v1.13 thread)**: player reports of softlocks in doubles. Fainting while a specific mon (M-Metagross) was on the field, and reviving an ally, left the player stuck on the SUMMARY screen. Takeaway: in this hack's community, doubles bugs show up on the **faint/replace/revive** paths, not the opening turn.
 - Gen 3 rain: Swift Swim doubles Speed (Kingdra is the classic case). Rain + Swift Swim + spread moves is the strongest doubles idea a Water leader has in Gen 3.
 
@@ -46,13 +47,11 @@
 4. Static checks should cover: party ≥2, doubleBattle TRUE, no self-hitting spread moves without an immune partner.
 
 ## Sources
-- https://bulbapedia.bulbagarden.net/wiki/Juan
-- https://pokemon.fandom.com/wiki/Sootopolis_Gym
+- https://www.poketools.com/emerald/mossdeep-city (C395 Maxie CROBAT set)
 - https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/page-12
 - https://www.smogon.com/forums/threads/kingdra-uber-analysis.80474
 - https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581
 - https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
-- https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system
 - https://rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald/
 - https://www.sportskeeda.com/pokemon/toughest-gym-battles-pokemon-mainline-game
 - https://www.pokecommunity.com/threads/gym-leaders.319564
