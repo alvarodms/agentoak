@@ -1,0 +1,62 @@
+{
+  "name": "route110-isabel-one-mon",
+  "checks": "C397 v3.12 P7: with one Pokémon (COMBUSKEN 20), talking to ISABEL shows the new not-enough-mons line and no battle starts.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_COMBUSKEN",
+        "level": 20,
+        "moves": [
+          "MOVE_DOUBLE_KICK",
+          "MOVE_EMBER",
+          "MOVE_PECK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 10,77 (MB_NORMAL c0; `node scripts/map_scan.cjs Route110 8-12 74-78`), right below ISABEL (10,76, Route110_EventScript_Isabel, faces left so she doesn't spot this tile). Slot 1 is a single-target attack on every mon."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "Just one POKéMON?"
+    },
+    {
+      "expectText": "Mine never go out alone."
+    },
+    {
+      "expectText": "Do come back with a friend!"
+    },
+    {
+      "expectNoText": "show off my delightful"
+    },
+    {
+      "wait": 120
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectPlayer": {
+        "x": 10,
+        "y": 77
+      }
+    }
+  ]
+}

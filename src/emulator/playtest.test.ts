@@ -323,8 +323,8 @@ describe("battle summaries (expectBattleSummary)", () => {
   ];
 
   it("summarizes a win and a loss from their battle messages", () => {
-    expect(summarizeBattle(WIN)).toEqual({ index: 0, outcome: "win", turns: 3, playerFaints: 1, opponentFaints: 2, playerEndHpPercent: [0, 62, 100], faintCauses: { "QWILFISH/WATER GUN": 1 } });
-    expect(summarizeBattle(LOSS)).toEqual({ index: 0, outcome: "loss", turns: 2, playerFaints: 2, opponentFaints: 1, faintCauses: { "?": 2 } });
+    expect(summarizeBattle(WIN)).toEqual({ index: 0, outcome: "win", turns: 3, playerFaints: 1, opponentFaints: 2, foeKOOrder: ["CARVANHA", "QWILFISH"], foeKOTurns: [1, 3], foeMoveFirstTurn: { "WATER GUN": 2 }, playerEndHpPercent: [0, 62, 100], faintCauses: { "QWILFISH/WATER GUN": 1 } });
+    expect(summarizeBattle(LOSS)).toEqual({ index: 0, outcome: "loss", turns: 2, playerFaints: 2, opponentFaints: 1, foeKOOrder: ["CARVANHA"], foeKOTurns: [1], foeMoveFirstTurn: {}, faintCauses: { "?": 2 } });
     expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "])).toMatchObject({ outcome: "unknown", opponentFaints: 1 });
   });
 
@@ -342,6 +342,54 @@ describe("battle summaries (expectBattleSummary)", () => {
     expect(summarizeBattle(log)).toMatchObject({ playerFaints: 3, opponentFaints: 1 });
     expect(summarizeBattle(log).faintCauses).toEqual({ "XATU/PSYCHIC": 2, "CLAYDOL/EARTHQUAKE": 1 });
     expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "])).not.toHaveProperty("faintCauses");
+  });
+
+  it("summarizeBattle lists foe KOs in order and each foe move's first turn (a failed use doesn't count)", () => {
+    // Shape of a C397 Route 110 ISABEL double: MINUN's HELPING HAND fails once PLUSLE is gone.
+    const log = [
+      "What will COMBUSKEN do?",
+      "[partner MAKUHITA]",
+      "Foe MINUN used HELPING HAND!",
+      "Foe MINUN is ready to help Foe PLUSLE!",
+      "Foe PLUSLE used SHOCK WAVE!",
+      "What will COMBUSKEN do?",
+      "[partner MAKUHITA]",
+      "Foe PLUSLE fainted! ",
+      "What will COMBUSKEN do?",
+      "Foe MINUN used QUICK ATTACK!",
+      "Foe MINUN used GROWL!",
+      "But it failed!",
+      "Foe MINUN fainted!",
+      "Player defeated POKéFAN ISABEL!",
+    ];
+    const got = summarizeBattle(log);
+    expect(got.turns).toBe(3);
+    expect(got.foeKOOrder).toEqual(["PLUSLE", "MINUN"]);
+    expect(got.foeKOTurns).toEqual([2, 3]);
+    expect(got.foeMoveFirstTurn).toEqual({ "HELPING HAND": 1, "SHOCK WAVE": 1, "QUICK ATTACK": 3 });
+    expect(summarizeBattle(["What will LOTAD do?", "Wild ZIGZAGOON fainted! "]).foeKOOrder).toEqual(["ZIGZAGOON"]);
+    // A HELPING HAND that only ever failed has no first turn.
+    expect(summarizeBattle(["What will A do?", "Foe MINUN used HELPING HAND!", "But it failed!"]).foeMoveFirstTurn).toEqual({});
+  });
+
+  it("firstFoeKO and foeMoveByTurn pass on the measured values and fail on planted ones", () => {
+    const summaries = summarizeBattles([
+      "What will COMBUSKEN do?",
+      "Foe MINUN used HELPING HAND!",
+      "Foe MINUN is ready to help Foe PLUSLE!",
+      "Foe MINUN fainted!",
+      "What will COMBUSKEN do?",
+      "Foe PLUSLE used SWIFT!",
+      "Foe PLUSLE fainted!",
+      "Player defeated POKéFAN ISABEL!",
+    ]);
+    expect(() => checkBattleSummary(summaries, { firstFoeKO: "MINUN", foeMoveByTurn: { move: "HELPING HAND", byTurn: 1 } })).not.toThrow();
+    expect(() => checkBattleSummary(summaries, { firstFoeKO: "PLUSLE" })).toThrow(/first foe KO MINUN, expected PLUSLE/);
+    expect(() => checkBattleSummary(summaries, { foeMoveByTurn: { move: "HELPING HAND", byTurn: 0 } })).toThrow(/no foe HELPING HAND by turn 0 \(first: turn 1\)/);
+    expect(() => checkBattleSummary(summaries, { foeMoveByTurn: { move: "THUNDER WAVE", byTurn: 5 } })).toThrow(/first: turn never/);
+    expect(() => checkBattleSummary(summarizeBattles(["What will A do?"]), { firstFoeKO: "MINUN" })).toThrow(/first foe KO \(none\)/);
+    expect(parsePlaytest({ ...MINIMAL, steps: [{ expectBattleSummary: { firstFoeKO: "MINUN", foeMoveByTurn: { move: "HELPING HAND", byTurn: 2 } } }] }).steps).toHaveLength(1);
+    expect(() => parsePlaytest({ ...MINIMAL, steps: [{ expectBattleSummary: { foeMoveByTurn: { move: "HELPING HAND" } } }] })).toThrow();
   });
 
   it("splits a log into battles at the first prompt after an outcome", () => {
@@ -711,6 +759,9 @@ describe("in-game partner battles (C391: Steven at the Space Center)", () => {
       turns: 4,
       playerFaints: 1, // SHELGON only: METANG is Steven's
       opponentFaints: 3,
+      foeKOOrder: ["MUK", "WEEZING", "HOUNDOOM"],
+      foeKOTurns: [2, 3, 4],
+      foeMoveFirstTurn: { "SLUDGE BOMB": 1, "BRICK BREAK": 2 },
       playerEndHpPercent: [0, 62, 100, 0, 40, 100],
       faintCauses: { "WEEZING/SLUDGE BOMB": 1 }, // not MAGMAR/BRICK BREAK, which downed METANG
       partnerFaints: 1,
@@ -769,15 +820,16 @@ describe("in-game partner battles (C391: Steven at the Space Center)", () => {
     expect(got.map((b) => [b.index, b.outcome, b.turns, b.partnerFaints])).toEqual([[0, "win", 1, undefined], [1, "win", 4, 1]]);
   });
 
-  it("non-partner battles summarize byte-identically to C390 (no partner keys, same key order)", () => {
+  it("non-partner battles summarize byte-identically to C397 (no partner keys, same key order)", () => {
+    // C397 added foeKOOrder / foeKOTurns / foeMoveFirstTurn after opponentFaints; nothing else moved since C390.
     // Real logs: C381 wi-shelly-full-party (singles) and C388 tate-liza-y7-ground (doubles, [partner X] prompts).
     const singles = ["What will MIGHTYENA do?", "MIGHTYENA used BITE!", "Foe CARVANHA fainted! ", "What will MIGHTYENA do?", "Foe QWILFISH used WATER GUN!", "MIGHTYENA fainted! ", "[sent out party menu slot 2]", "What will PELIPPER do?", "Foe QWILFISH fainted! ", "Player defeated AQUA ADMIN SHELLY! ", "[party hp% 0,62,100]"];
     expect(JSON.stringify(summarizeBattles(singles))).toBe(
-      '[{"index":0,"outcome":"win","turns":3,"playerFaints":1,"opponentFaints":2,"playerEndHpPercent":[0,62,100],"faintCauses":{"QWILFISH/WATER GUN":1}}]',
+      '[{"index":0,"outcome":"win","turns":3,"playerFaints":1,"opponentFaints":2,"foeKOOrder":["CARVANHA","QWILFISH"],"foeKOTurns":[1,3],"foeMoveFirstTurn":{"WATER GUN":2},"playerEndHpPercent":[0,62,100],"faintCauses":{"QWILFISH/WATER GUN":1}}]',
     );
     const doubles = ["What will SHELGON do?", "[partner LINOONE]", "Foe CLAYDOL used EARTHQUAKE!", "SHELGON fainted! ", "LINOONE used FACADE!", "Foe XATU fainted! ", "What will WHISCASH do?", "[partner LINOONE]", "OAK whited out!"];
     expect(JSON.stringify(summarizeBattles(doubles))).toBe(
-      '[{"index":0,"outcome":"loss","turns":2,"playerFaints":1,"opponentFaints":1,"faintCauses":{"CLAYDOL/EARTHQUAKE":1}}]',
+      '[{"index":0,"outcome":"loss","turns":2,"playerFaints":1,"opponentFaints":1,"foeKOOrder":["XATU"],"foeKOTurns":[1],"foeMoveFirstTurn":{"EARTHQUAKE":1},"faintCauses":{"CLAYDOL/EARTHQUAKE":1}}]',
     );
   });
 

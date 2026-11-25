@@ -1,6 +1,6 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 395 | **Date**: November 2026
+**Cycle**: 397 | **Date**: November 2026
 
 ## C395: CROBAT spec check (WEEZING→CROBAT)
 - **CROBAT at this slot is a restoration, not a new idea**: vanilla Maxie's Space Center ace-before-CAMERUPT is CROBAT 43. The poketools Mossdeep page lists **WING ATTACK / CONFUSE RAY / AIR CUTTER / MEAN LOOK**, but its layout is ambiguous; confirm in vanilla trainer_parties.h (git history).
@@ -18,11 +18,12 @@
 - Walkthroughs call the fight a mild spike after the sea routes. Nobody calls it memorable, and no hack we found redesigns it. Community partner-battle complaints are about partners doing **nothing** (PokéCommunity 425516) or being a re-skin (Run & Bun critique), not partners being too strong.
 - Design consequence: a partner "save" has to be *legible*. Vanilla Steven is a 3-Steel wall whose turns blend into the noise. One visible act (Protect-style guard, heal or priority KO) beats raw levels.
 
-## C390: Plusle & Minun twin doubles (backlog 388), prior art + engine check
-- **Code-verified quirk**: `CalculateBaseDamage` (src/pokemon.c:3356-3358) boosts Plus/Minus Sp. Atk 1.5x if `ABILITY_ON_FIELD2(ABILITY_MINUS/PLUS)`, which is `ABILITYEFFECT_FIELD_SPORT` default branch (battle_util.c:3217-3226): ANY battler on the field, **either side, no HP check, no doubles check**. So the player's own Minun powers the foe's Plusle (and vice versa), and it fires in singles too. Bulbapedia only states the "ally" rule; nobody documents this. Mainline Gen 3 matches pret, so it is vanilla behaviour.
-- **Vanilla already has the pair**: Route 110 Pokéfans ISABEL (Plusle+Minun, Lv14) and Emerald-only KALEB (Minun+Plusle, Lv14), close enough together to start a sight double (StrategyWiki/Serebii). A Hours 10-15 Plusle/Minun double would repeat a Hour-4 fight unless it does something different.
-- No hack found builds a boss around Plus/Minus or Helping Hand; doubles-everywhere hacks (Emerald Double Edition, Double Up Delevelled) just convert vanilla trainers. Fan threads call Plusle/Minun the obvious doubles theme, but nobody has built it.
-- Helping Hand multiplier not confirmed by search (verify in battle_script_commands/AI scripts before relying on the AI choosing it).
+## C390 + C397: Plusle & Minun "pair the player breaks" (backlog 388)
+- **Code-verified quirk**: `CalculateBaseDamage` (src/pokemon.c:3356-3359) boosts Sp. Atk 1.5x for PLUS only if a **MINUS** is on the field, and for MINUS only if a **PLUS** is (opposite ability required: two Plusles do nothing, re-read C397). The check counts any battler, **either side, no HP/doubles check**, so the player's Minun powers a foe Plusle and it fires in singles. Bulbapedia's Gen 3-4 text says "ally with the opposite ability"; LoH's engine is looser.
+- **Break-the-pair consequence (C397)**: KO the foe Minun and Plusle loses 1.5x, *unless the player has a Plus/Minus mon out*, which re-arms the foe. That's a legible miss path to playtest. Physical moves never get the boost (Sp. Atk only), so the dial should touch special moves (THUNDERBOLT/SHOCK_WAVE), not levels.
+- **Helping Hand**: +50% base power, fails in singles and fails if the partner already used it that turn (Bulbapedia talk, Emerald). pokeemerald-expansion had to add an AI_FLAG_DOUBLE_BATTLE rule for it, which suggests vanilla Gen 3 AI has no specific Helping Hand logic. Verify the HELPING_HAND score in data/battle_ai_scripts.s before the spec relies on the AI choosing it. If it is unscored, HH is RNG noise, not a readable "support" tell.
+- **Vanilla pair (corrected C397)**: Route 110 ISABEL_1 = PLUSLE 19 alone, KALEB = MINUN 19 alone (singles); only rematches ISABEL_2-5 carry both. C397 made ISABEL_1-5 doubles (v3.12, Hour 4-5). A Hours 10-15 pair must differ.
+- No hack found builds a boss around Plus/Minus or Helping Hand (searched C390, C397). Doubles-everywhere hacks (Emerald Double Edition, Double Up Delevelled) convert vanilla trainers.
 
 ## C389: is a hard T&L a bug or the expectation?
 - **Vanilla T&L is the community's "hardest Emerald gym"** (Sportskeeda's toughest-gym-per-game list picks T&L for Emerald; PokeCommunity "3rd Gen Gym Leaders" thread puts it tied with Norman). A Nuzlocke post: "there's a reason so many Kaizo hacks make gyms doubles." A Badge-7 loss on a narrow yardstick matches what players expect here; it isn't a defect.
@@ -38,7 +39,6 @@
 ## Facts found
 - Vanilla Juan rematches are all doubles, so LoH's Wallace (TRAINER_JUAN_1-5) rematches probably are too; no hack makes Juan a standalone doubles boss.
 - **Inclement Emerald (PokeCommunity v1.13 thread)**: player reports of softlocks in doubles. Fainting while a specific mon (M-Metagross) was on the field, and reviving an ally, left the player stuck on the SUMMARY screen. Takeaway: in this hack's community, doubles bugs show up on the **faint/replace/revive** paths, not the opening turn.
-- Gen 3 rain: Swift Swim doubles Speed (Kingdra is the classic case). Rain + Swift Swim + spread moves is the strongest doubles idea a Water leader has in Gen 3.
 
 ## Design rules for LoH
 1. Give the doubles fight its own identity: two mons that combo (rain setter + Swift Swim, or Surf with a Water Absorb/Lightning Rod-style partner) rather than a singles team split in two.
@@ -47,7 +47,7 @@
 4. Static checks should cover: party ≥2, doubleBattle TRUE, no self-hitting spread moves without an immune partner.
 
 ## Sources
-- https://www.poketools.com/emerald/mossdeep-city (C395 Maxie CROBAT set)
+- https://www.poketools.com/emerald/mossdeep-city (C395 Maxie CROBAT set) · https://bulbapedia.bulbagarden.net/wiki/Plus_(Ability) · https://bulbapedia.bulbagarden.net/wiki/Talk:Helping_Hand_(move) · https://rh-hideout.github.io/pokeemerald-expansion/tutorials/ai_flags.html (C397)
 - https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/page-12
 - https://www.smogon.com/forums/threads/kingdra-uber-analysis.80474
 - https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581

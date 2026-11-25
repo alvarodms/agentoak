@@ -23,7 +23,7 @@ first-ink-cue-screens first used `wait 120` per box; field text prints at ~3 fra
 
 
 ## Plan facts about vanilla data are guesses until grepped (C390)
-**Symptom**: the C390 plan called Route 110 Pokéfans ISABEL/KALEB "a Lv14 Plusle/Minun double"; the tree has ISABEL_1 Plusle 19 + Minun 19 and KALEB Minun 19, both singles. **Rule**: any plan or spec line that names a vanilla trainer party, level or battle type must cite trainers.h / trainer_parties.h lines grepped that cycle (C391 spec: Space Center Maxie/Tabitha + Steven partner IDs).
+**Symptom**: the C390 plan called Route 110 Pokéfans ISABEL/KALEB "a Lv14 Plusle/Minun double"; the tree has ISABEL_1 PLUSLE 19 alone and KALEB MINUN 19 alone, both singles (and C390's own correction "ISABEL_1 Plusle + Minun" was wrong again until C397 read trainer_parties.h:4696). **Rule**: any plan or spec line that names a vanilla trainer party, level or battle type must cite trainers.h / trainer_parties.h lines grepped that cycle (C391 spec: Space Center Maxie/Tabitha + Steven partner IDs).
 ## Archived (C390)
 - Budget: absolute `/__w/agentoak/agentoak/` paths, no `cd`; start edits by action ~15-25; cap planning research ~60 actions (C110-308).
 - Read before Edit; paths start `/__w/agentoak/agentoak/`, never `/w/` (C256-307).

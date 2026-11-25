@@ -1,0 +1,32 @@
+{
+  "_note": "C397 v3.12 'The one who helps': Route 110 Pokefan double. PLUSLE (opponent-left) is the attacker; MINUN (opponent-right) is the helper whose HELPING_HAND is the on-screen tell. .doubleBattle = TRUE on ISABEL_1-5 is set by hand in trainers.h (modify mode only rewrites the party). Rematches ISABEL_2-5 keep vanilla default-move parties. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/route110_isabel.json",
+  "mode": "modify",
+  "trainerId": "TRAINER_ISABEL_1",
+  "partyName": "sParty_Isabel1",
+  "party": [
+    {
+      "iv": 75,
+      "lvl": 20,
+      "species": "SPECIES_PLUSLE",
+      "heldItem": "ITEM_ORAN_BERRY",
+      "moves": [
+        "MOVE_SHOCK_WAVE",
+        "MOVE_SWIFT",
+        "MOVE_QUICK_ATTACK",
+        "MOVE_GROWL"
+      ]
+    },
+    {
+      "iv": 75,
+      "lvl": 18,
+      "species": "SPECIES_MINUN",
+      "heldItem": "ITEM_NONE",
+      "moves": [
+        "MOVE_HELPING_HAND",
+        "MOVE_THUNDER_WAVE",
+        "MOVE_GROWL",
+        "MOVE_QUICK_ATTACK"
+      ]
+    }
+  ]
+}

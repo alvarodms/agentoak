@@ -1,0 +1,103 @@
+{
+  "name": "route110-isabel-own-minun",
+  "checks": "C397 v3.12 run M (report-only, P5): the player's own MINUN 18 leads (Plus counts any Minus on the field, so ISABEL's PLUSLE keeps Plus all fight), then COMBUSKEN / MAKUHITA / ZIGZAGOON, target opponent-right. C397 baseline: WIN 5t, 1 faint (COMBUSKEN, helped crit QUICK ATTACK t2), foeKOOrder MINUN t2 / PLUSLE t5 (3 turns after MINUN, vs S's 2). Guards the outcome only.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_MINUN",
+        "level": 18,
+        "moves": [
+          "MOVE_QUICK_ATTACK",
+          "MOVE_HELPING_HAND",
+          "MOVE_THUNDER_WAVE",
+          "MOVE_GROWL"
+        ]
+      },
+      {
+        "species": "SPECIES_COMBUSKEN",
+        "level": 20,
+        "moves": [
+          "MOVE_DOUBLE_KICK",
+          "MOVE_EMBER",
+          "MOVE_PECK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_MAKUHITA",
+        "level": 18,
+        "moves": [
+          "MOVE_VITAL_THROW",
+          "MOVE_ARM_THRUST",
+          "MOVE_SAND_ATTACK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_ZIGZAGOON",
+        "level": 17,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_SAND_ATTACK",
+          "MOVE_TAIL_WHIP",
+          "MOVE_TACKLE"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 10,77 (MB_NORMAL c0; `node scripts/map_scan.cjs Route110 8-12 74-78`), right below ISABEL (10,76, Route110_EventScript_Isabel, faces left so she doesn't spot this tile). Slot 1 is a single-target attack on every mon."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 20
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentRight",
+        "until": [
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "comment": "C397: report-only run; the outcome is the guard."
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win"
+      }
+    }
+  ]
+}

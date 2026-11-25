@@ -1,0 +1,103 @@
+{
+  "name": "route110-isabel-marshtomp",
+  "checks": "C397 v3.12 run G (report-only, P5): a Ground lead (MARSHTOMP 20, then MAKUHITA / ZIGZAGOON / TAILLOW), target opponent-right. C397 baseline: WIN 3t, 0 faints, foeKOOrder MINUN t2 / PLUSLE t3, HELPING HAND t1+t2 (PLUSLE answered with GROWL, SWIFT). Guards the outcome only.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_MARSHTOMP",
+        "level": 20,
+        "moves": [
+          "MOVE_MUD_SHOT",
+          "MOVE_WATER_GUN",
+          "MOVE_MUD_SLAP",
+          "MOVE_GROWL"
+        ]
+      },
+      {
+        "species": "SPECIES_MAKUHITA",
+        "level": 18,
+        "moves": [
+          "MOVE_VITAL_THROW",
+          "MOVE_ARM_THRUST",
+          "MOVE_SAND_ATTACK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_ZIGZAGOON",
+        "level": 17,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_SAND_ATTACK",
+          "MOVE_TAIL_WHIP",
+          "MOVE_TACKLE"
+        ]
+      },
+      {
+        "species": "SPECIES_TAILLOW",
+        "level": 18,
+        "moves": [
+          "MOVE_WING_ATTACK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_PECK",
+          "MOVE_GROWL"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 10,77 (MB_NORMAL c0; `node scripts/map_scan.cjs Route110 8-12 74-78`), right below ISABEL (10,76, Route110_EventScript_Isabel, faces left so she doesn't spot this tile). Slot 1 is a single-target attack on every mon."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 20
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentRight",
+        "until": [
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "comment": "C397: report-only run; the outcome is the guard."
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win"
+      }
+    }
+  ]
+}

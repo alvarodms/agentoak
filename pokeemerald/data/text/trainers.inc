@@ -1159,11 +1159,17 @@ Route110_Text_IsabelIntro:
 	.string "off my delightful POKéMON.$"
 
 Route110_Text_IsabelDefeated:
-	.string "Oh, dear, this won't do.$"
+	.string "Oh, dear. Look at them,\n"
+	.string "still side by side.$"
 
 Route110_Text_IsabelPostBattle:
 	.string "Rather than battling, perhaps I should\n"
 	.string "show off my POKéMON at the FAN CLUB.$"
+
+Route110_Text_IsabelNotEnoughMons:
+	.string "Oh, dear! Just one POKéMON?\n"
+	.string "Mine never go out alone.\p"
+	.string "Do come back with a friend!$"
 
 Route110_Text_IsabelRegister:
 	.string "That wasn't close to what I could\n"

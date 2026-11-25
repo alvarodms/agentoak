@@ -4693,12 +4693,20 @@ static const struct TrainerMonItemDefaultMoves sParty_Bethany[] = {
     }
 };
 
-static const struct TrainerMonItemDefaultMoves sParty_Isabel1[] = {
+static const struct TrainerMonItemCustomMoves sParty_Isabel1[] = {
     {
     .iv = 75,
-    .lvl = 19,
+    .lvl = 20,
     .species = SPECIES_PLUSLE,
-    .heldItem = ITEM_ORAN_BERRY
+    .heldItem = ITEM_ORAN_BERRY,
+    .moves = {MOVE_SHOCK_WAVE, MOVE_SWIFT, MOVE_QUICK_ATTACK, MOVE_GROWL}
+    },
+    {
+    .iv = 75,
+    .lvl = 18,
+    .species = SPECIES_MINUN,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_HELPING_HAND, MOVE_THUNDER_WAVE, MOVE_GROWL, MOVE_QUICK_ATTACK}
     }
 };
 

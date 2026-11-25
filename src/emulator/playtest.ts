@@ -309,6 +309,13 @@ const StepSchema = z.union([
       guardByTurn: z.strictObject({ move: z.string().min(1).optional(), byTurn: z.number().int().min(0) }).optional(),
       /** Partner battles: at most this many partner moves harmed one of your Pokémon (partnerHitsAlly). */
       maxPartnerHitsAlly: z.number().int().min(0).optional(),
+      /** The first foe to faint (foeKOOrder[0]) is this one, by its battle-text name, e.g. "MINUN". */
+      firstFoeKO: z.string().min(1).optional(),
+      /**
+       * Some foe used `move` (battle-text name, e.g. "HELPING HAND") by turn `byTurn` (foeMoveFirstTurn): a use
+       * answered by "But it failed!" doesn't count.
+       */
+      foeMoveByTurn: z.strictObject({ move: z.string().min(1), byTurn: z.number().int().min(0) }).optional(),
     }),
   }),
   z.strictObject({ screenshot: z.string().regex(/^[\w-]+$/) }),
@@ -1386,6 +1393,12 @@ export interface BattleSummary {
   /** "X fainted!" for the player; "Foe X fainted!" / "Wild X fainted!" for the opponent. */
   playerFaints: number;
   opponentFaints: number;
+  /** Foe names in the order they fainted ("Foe MINUN fainted!" → "MINUN"; wild ones too). */
+  foeKOOrder: string[];
+  /** The turn (prompts so far) of each foeKOOrder faint, same order. */
+  foeKOTurns: number[];
+  /** Each foe move (battle-text name) → the first turn a foe used it; a use followed by "But it failed!" doesn't count. */
+  foeMoveFirstTurn: Record<string, number>;
   /** Party HP % (party order) read when the battle's last battleTurns step returned. */
   playerEndHpPercent?: number[];
   /** Player faints keyed "FOE/MOVE" by the last "Foe X used MOVE!" before each faint ("?" if none); chip damage (Leech Seed, poison) counts toward that last move. */
@@ -1463,10 +1476,36 @@ export function summarizeBattle(log: readonly string[], index = 0): BattleSummar
     turns: log.filter((m) => m.includes("What will")).length,
     playerFaints,
     opponentFaints,
-    ...(hp && { playerEndHpPercent: hp.slice(PARTY_HP_MARK.length, -1).split(",").map(Number) }),
+    ...summarizeFoeTurns(log),
+    ...(hp &&{ playerEndHpPercent: hp.slice(PARTY_HP_MARK.length, -1).split(",").map(Number) }),
     ...(playerFaints > 0 && { faintCauses }),
     ...(sides && { partnerFaints, ...summarizePartner(log, sides) }),
   };
+}
+
+/** foeKOOrder, foeKOTurns and foeMoveFirstTurn (see BattleSummary): turn = "What will" prompts so far. */
+export function summarizeFoeTurns(log: readonly string[]): Pick<BattleSummary, "foeKOOrder" | "foeKOTurns" | "foeMoveFirstTurn"> {
+  const foeKOOrder: string[] = [];
+  const foeKOTurns: number[] = [];
+  const foeMoveFirstTurn: Record<string, number> = {};
+  let turn = 0;
+  /** The last foe move, until the next message shows whether it failed. */
+  let pending: string | undefined;
+  for (const m of log.map((x) => x.trim())) {
+    if (m.startsWith("[")) continue; // harness markers ([party hp% …], [partner …], [battlers …])
+    if (pending !== undefined && m !== "But it failed!") foeMoveFirstTurn[pending] ??= turn;
+    pending = undefined;
+    if (m.includes("What will")) turn++;
+    const used = /^Foe .+? used (.+?)!$/.exec(m);
+    if (used) pending = used[1];
+    const ko = /^(?:Foe|Wild) (.+) fainted!$/.exec(m);
+    if (ko) {
+      foeKOOrder.push(ko[1]);
+      foeKOTurns.push(turn);
+    }
+  }
+  if (pending !== undefined) foeMoveFirstTurn[pending] ??= turn;
+  return { foeKOOrder, foeKOTurns, foeMoveFirstTurn };
 }
 
 /** The partner-battle fields of a summary: foeKOsBy, partnerGuards, partnerHitsAlly (see BattleSummary). */
@@ -1567,6 +1606,8 @@ type SummaryBounds = {
   maxPartnerKOs?: number;
   guardByTurn?: { move?: string; byTurn: number };
   maxPartnerHitsAlly?: number;
+  firstFoeKO?: string;
+  foeMoveByTurn?: { move: string; byTurn: number };
 };
 
 /** expectBattleSummary: fails, printing the summary, unless the chosen battle (default: the last) meets every bound. */
@@ -1580,6 +1621,10 @@ export function checkBattleSummary(summaries: readonly BattleSummary[], want: Su
     want.minPlayerFaints !== undefined && got.playerFaints < want.minPlayerFaints && `${got.playerFaints} player faints < min ${want.minPlayerFaints}`,
     want.maxPlayerFaints !== undefined && got.playerFaints > want.maxPlayerFaints && `${got.playerFaints} player faints > max ${want.maxPlayerFaints}`,
     want.partner !== undefined && (got.foeKOsBy !== undefined) !== want.partner && (want.partner ? "no in-game partner summary (partnerFaints, foeKOsBy, …)" : "an in-game partner summary, expected none"),
+    want.firstFoeKO !== undefined && got.foeKOOrder[0] !== want.firstFoeKO && `first foe KO ${got.foeKOOrder[0] ?? "(none)"}, expected ${want.firstFoeKO}`,
+    want.foeMoveByTurn !== undefined &&
+      !((got.foeMoveFirstTurn[want.foeMoveByTurn.move] ?? Infinity) <= want.foeMoveByTurn.byTurn) &&
+      `no foe ${want.foeMoveByTurn.move} by turn ${want.foeMoveByTurn.byTurn} (first: turn ${got.foeMoveFirstTurn[want.foeMoveByTurn.move] ?? "never"})`,
     ...partnerBounds(got, want),
   ].filter(Boolean);
   if (bad.length) fail(`expectBattleSummary: ${bad.join("; ")}; summary ${JSON.stringify(got)}`);

@@ -1,0 +1,107 @@
+{
+  "name": "route110-isabel-ace-first",
+  "checks": "C397 v3.12 run A: the same yardstick, target opponent-left (PLUSLE, the attacker) first. C397 baseline: WIN 4t, 2 faints (MAKUHITA crit SHOCK WAVE t1, ZIGZAGOON helped SHOCK WAVE t2), foeKOOrder PLUSLE t2 / MINUN t4; 'is ready to help' t2; the lone MINUN's HELPING HAND then fails twice ('But it failed!'). P3 PASS vs S (+1 turn, +1 faint). Guards: win, a working HELPING HAND by turn 2.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_COMBUSKEN",
+        "level": 20,
+        "moves": [
+          "MOVE_DOUBLE_KICK",
+          "MOVE_EMBER",
+          "MOVE_PECK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_MAKUHITA",
+        "level": 18,
+        "moves": [
+          "MOVE_VITAL_THROW",
+          "MOVE_ARM_THRUST",
+          "MOVE_SAND_ATTACK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_ZIGZAGOON",
+        "level": 17,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_SAND_ATTACK",
+          "MOVE_TAIL_WHIP",
+          "MOVE_TACKLE"
+        ]
+      },
+      {
+        "species": "SPECIES_TAILLOW",
+        "level": 18,
+        "moves": [
+          "MOVE_WING_ATTACK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_PECK",
+          "MOVE_GROWL"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 10,77 (MB_NORMAL c0; `node scripts/map_scan.cjs Route110 8-12 74-78`), right below ISABEL (10,76, Route110_EventScript_Isabel, faces left so she doesn't spot this tile). Slot 1 is a single-target attack on every mon."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 20
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentLeft",
+        "until": [
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "comment": "C397 guard: the tell (a HELPING HAND that doesn't fail) shows by turn 2 when the player goes for PLUSLE first."
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win",
+        "foeMoveByTurn": {
+          "move": "HELPING HAND",
+          "byTurn": 2
+        }
+      }
+    }
+  ]
+}
