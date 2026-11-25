@@ -169,21 +169,15 @@ FieldNotes_EventScript_ShowPage::
 	msgbox gStringVar4, MSGBOX_DEFAULT
 	return
 
-@ C361 v3.3 First Ink: armed from ON_RESUME (VAR_0x8004 = page species), shown from ON_FRAME
-@ (map_script_2 VAR_TEMP_7, 1). Route102 (page 1) and PetalburgWoods (page 2) scripts.inc hook it.
-FieldNotes_EventScript_ArmFirstInk::
-	goto_if_set FLAG_FIELD_NOTES_FIRST_INK, Common_EventScript_NopReturn
-	goto_if_unset FLAG_RECEIVED_FIELD_NOTES, Common_EventScript_NopReturn
-	specialvar VAR_RESULT, ScriptCheckPokedexCaught
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_NopReturn
-	setvar VAR_TEMP_7, 1
-	return
-
-@ VAR_0x8004 = page id (1 or 2). The flag is set first, so the cue can never repeat.
+@ C361 v3.3 First Ink: armed from ON_RESUME (setvar VAR_0x8004, <page id> + specialvar VAR_TEMP_7,
+@ GetFieldNotesInkCue: 1 = First Ink, 2 = pen sound), shown from ON_FRAME (map_script_2 VAR_TEMP_7).
+@ Since C396 four maps hook it: Route102 (page 1), PetalburgWoods (2), GraniteCave_B2F (3), Route113 (4).
+@ VAR_0x8004 = page id (1-4). The flag is set first, so the cue can never repeat.
 @ msgbox <label> expands into gStringVar4, so the ink is buffered after the open line.
 FieldNotes_EventScript_FirstInk::
 	lockall
 	setflag FLAG_FIELD_NOTES_FIRST_INK
+	special SetFieldNotesPenFlag
 	setvar VAR_TEMP_7, 0
 	copyvar VAR_0x8005, VAR_0x8004
 	applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_ExclamationMark
@@ -206,6 +200,15 @@ FieldNotes_EventScript_FirstInkSelect::
 FieldNotes_EventScript_FirstInkPocket::
 	msgbox FieldNotes_Text_FirstInkPocket, MSGBOX_DEFAULT
 	return
+
+@ C396 v3.3b: a later page inked after First Ink. One pen sound after the field settles; no text.
+@ VAR_0x8004 = page id (1-4). Never reads the Gligar doubt flag (D1).
+FieldNotes_EventScript_PenScratch::
+	setvar VAR_TEMP_7, 0
+	special SetFieldNotesPenFlag
+	delay 30
+	playse SE_M_SKETCH
+	end
 
 FieldNotes_Text_FirstInkOpen::
 	.string "{PLAYER} opened FIELD NOTES\n"

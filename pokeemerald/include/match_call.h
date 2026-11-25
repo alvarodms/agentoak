@@ -21,6 +21,8 @@ u16 BufferFieldNotesPage(void);
 u16 CountInkedFieldNotePages(void);
 u16 BufferFieldNotesInk(void);
 u16 TryRegisterFieldNotesToSelect(void);
+u16 GetFieldNotesInkCue(void);
+void SetFieldNotesPenFlag(void);
 u16 BufferBirchRedInkReport(void);
 bool32 SelectMatchCallMessage(int trainerId, u8 *str);
 void LoadMatchCallWindowGfx(u32 windowId, u32 destOffset, u32 paletteId);

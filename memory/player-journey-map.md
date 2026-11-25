@@ -21,6 +21,7 @@ Measured on the emulator (`first-ink-chapter-in-order`). Pen moment / schoolkid 
 ## Hour 3-6: Dewford → Mauville (Badges 1-3)
 
 Brawly (Gligar_Hoenn from tidal pools, Gliscor_H T4+) and Wattson (Lotad→Lombre→Ludicolo_Hoenn line across 5 tiers, rain at T4-T5) rebuilt C268-271; dialogue subtracted C299 to sensation, not exposition. Meteor Falls Bagon Colony (C153). Route 113: Vulpix_Hoenn (Ice/Fairy) 10% (C346) Lv21-22 + FrostTracker (C208); Jaylen/Madeline carry it (C244). Granite Cave B2F: Gligar_Hoenn 10% (C346) Lv10-13 (C250). **Red Ink believers**: Granite Cave B1F hiker (P3, C329) and Route 113 ash picnicker (P4, C330) — see walkthrough below.
+**The pen keeps writing (v3.3b, C396)**: back in the field on Granite Cave B2F with Gligar_H caught (page 3, ~Hour 3) or on Route 113 with Vulpix_H caught (page 4, ~Hour 5), the notebook answers with one pen scratch (SE_M_SKETCH, half a second after the field settles), no text. Pages 1-2 do the same if they are inked after First Ink; whichever page 1-4 is inked first still gets the C361 visual cue, now on any of the four maps.
 
 ### v3.4 Word Travels — retrospective (C371)
 

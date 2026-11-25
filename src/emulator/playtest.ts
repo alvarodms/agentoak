@@ -22,6 +22,7 @@ import { z } from "zod";
 import { CHECKPOINT_NAMES } from "./checkpoints.js";
 import { SAVEBLOCK1_REGISTERED_ITEM } from "./scenario.js";
 import { BUTTONS, EmulatorSession, type Button, type RomBuild, type StartOptions } from "./session.js";
+import { SE_PLAYERS, findSoundStart, sampleSePlayers, songHeaderAddress } from "./sound.js";
 import { SCRIPT_CONTEXT_SHUTDOWN, decodeBattleMon, decodePartyMon, type Facing } from "./state.js";
 
 export { SAVEBLOCK1_REGISTERED_ITEM };
@@ -199,6 +200,18 @@ const StepSchema = z.union([
   }),
   z.strictObject({ expectFlag: z.record(z.string(), z.boolean()) }),
   z.strictObject({ expectVar: z.record(z.string(), z.number().int()) }),
+  z.strictObject({
+    /**
+     * Advance frame by frame until a sound effect (an SE_* from include/constants/songs.h) starts on one of
+     * the m4a SE players; fails after maxFrames (default 240). A start since the last sound check (or since
+     * the field appeared at boot) counts too, e.g. an SE the boot settle or a warp already played.
+     */
+    expectSound: z.strictObject({ song: z.string().regex(/^(SE|MUS)_[A-Z0-9_]+$/), maxFrames: z.number().int().positive().optional() }),
+  }),
+  z.strictObject({
+    /** Advance `frames` frames (default 240); fails if the SE starts, or started since the last sound check. */
+    expectNoSound: z.strictObject({ song: z.string().regex(/^(SE|MUS)_[A-Z0-9_]+$/), frames: z.number().int().positive().optional() }),
+  }),
   /** Set saved VAR_*s mid-test, e.g. VAR_REPEL_STEP_COUNT after a catch so the walk back meets no wild battle. */
   z.strictObject({ setVar: z.record(z.string().regex(/^VAR_[A-Z0-9_]+$/), z.number().int().min(0).max(0xffff)) }),
   z.strictObject({ expectScreen: z.string() }),
@@ -388,9 +401,9 @@ const asList = (s: string | string[]) => (typeof s === "string" ? [s] : s);
 const flatten = (s: string) =>
   s.replace(/\s+/g, " ").replace(/[’‘]/g, "'").replace(/[“”]/g, '"');
 
-/** A talk transcript without its `[screen: …]` and `[answered …]` markers: the message boxes alone. */
+/** A talk transcript without its `[screen: …]`, `[answered …]` and `[sound: …]` markers: the message boxes alone. */
 export const messageBoxes = (transcript: readonly string[]) =>
-  transcript.filter((b) => !b.startsWith("[screen:") && !b.startsWith("[answered"));
+  transcript.filter((b) => !b.startsWith("[screen:") && !b.startsWith("[answered") && !b.startsWith("[sound:"));
 
 export interface RunOptions extends StartOptions {
   /** Directory for this test's screenshots (created on demand). */
@@ -628,6 +641,43 @@ async function runStep(
     for (const [name, want] of Object.entries(step.expectFlag)) {
       const got = await s.flag(name);
       if (got !== want) fail(`${name} is ${got ? "set" : "clear"}, expected ${want ? "set" : "clear"}`);
+    }
+    return;
+  }
+
+  if ("expectSound" in step) {
+    const { song, maxFrames = 240 } = step.expectSound;
+    const header = await songHeaderAddress(s, song);
+    let prev = s.seSamples ?? (await sampleSePlayers(s));
+    for (let f = 0; ; f++) {
+      const cur = await sampleSePlayers(s);
+      const player = findSoundStart(prev, cur, header);
+      s.seSamples = cur;
+      if (player >= 0) {
+        const when = f === 0 ? "before this step (since the last sound check)" : `at +${f} frames`;
+        result.transcripts.push([`[sound: ${song} started ${when} on ${SE_PLAYERS[player]}]`]);
+        return;
+      }
+      if (f >= maxFrames) fail(`expectSound ${song}: did not start within ${maxFrames} frames`);
+      prev = cur;
+      await s.run(1);
+    }
+  }
+
+  if ("expectNoSound" in step) {
+    const { song, frames = 240 } = step.expectNoSound;
+    const header = await songHeaderAddress(s, song);
+    let prev = s.seSamples ?? (await sampleSePlayers(s));
+    for (let f = 0; f <= frames; f++) {
+      if (f > 0) await s.run(1);
+      const cur = await sampleSePlayers(s);
+      const player = findSoundStart(prev, cur, header);
+      s.seSamples = cur;
+      if (player >= 0) {
+        const when = f === 0 ? "before this step (since the last sound check)" : `at +${f} frames`;
+        fail(`expectNoSound ${song}: it started ${when} on ${SE_PLAYERS[player]}`);
+      }
+      prev = cur;
     }
     return;
   }

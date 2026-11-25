@@ -1,5 +1,5 @@
 [
-  { "id": "next-free-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_UNUSED_0x037", "why": "strategy-notes: next free flag is 0x37 (FLAG_UNUSED_0x037, verified C380/C390)" },
+  { "id": "next-free-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_UNUSED_0x03B", "why": "strategy-notes: next free flag is 0x3B (FLAG_UNUSED_0x03B; 0x37-0x3A = C396 FIELD NOTES pen flags)" },
   { "id": "forager-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_PETALBURG_WOODS_FORAGER_MOVED", "why": "0x36 spent C363 (v3.3 forager walk)" },
   { "id": "free-slot-633", "file": "include/constants/opponents.h", "contains": "#define TRAINER_LUCAS_2                     633", "why": "free trainer slot 633 (check_trainer_slots C390); fails once reclaimed, then update memory" },
   { "id": "free-slot-634", "file": "include/constants/opponents.h", "contains": "#define TRAINER_MIKE_1                      634", "why": "free trainer slot 634 (check_trainer_slots C390); fails once reclaimed, then update memory" },

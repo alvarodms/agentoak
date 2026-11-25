@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 394 | **Date**: November 2026
+**Cycle**: 396 | **Date**: November 2026
 
 ---
 
@@ -49,3 +49,8 @@
 - Effect on the CABLE_CAR palette: glow 11 (255,255,148) → near white; amber 14 → (26,26,21); iron 8 (41,49,90) → (22,24,23). Hue barely survives, so a "warm yellow glow" reads as cream. Only light vs dark and the silhouette survive.
 - **The NPC_2 fallback cannot fix this**: the fog blends every sprite palette slot the same way. The fix is in the art: the darkest index (8) as a full outline, the brightest index (11) in one solid core, and a lantern shape (top ring + cage) recognisable in two values. Judge the screenshot against the summit Old Woman, which gets the same blend.
 - Takeaway: for any object placed on a fog map (Mt. Pyre summit/exterior, Route 120 fog), design for luminance and shape, not hue.
+
+## C396 addendum: a sound-only "correction confirmed" cue (searched Nov 2026; web thin on Pokémon SE names, songs.h read locally)
+- **Return of the Obra Dinn** is the closest precedent for a ledger the player corrects. A correct fate gets a jingle only in batches of three (reviewers: DualShockers, the TV Tropes page), so the sound stays rare and stays earned. A cue that fires on every entry loses its weight.
+- **Audio fatigue** (uxdesign.cc "Disruptive Audio"): a cue annoys players when it repeats and when it no longer tells them anything new. One sound per real event that never repeats is the safe pattern.
+- **pokeemerald songs.h**: SE_DEX_PAGE (109) already plays on every page the FIELD NOTES opens AND on the C361 first-ink pen moment, so it can't be the "pen" sound. The vanilla drawing sound is **SE_M_SKETCH (205, SE_W166, Smeargle's Sketch)**. Fallbacks: SE_M_SCRATCH (155), SE_CLICK (36). No pen SE exists in Gen 3 (web searches found no hack precedent for one).

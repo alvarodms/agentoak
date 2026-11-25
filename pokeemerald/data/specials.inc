@@ -548,3 +548,5 @@ gSpecials::
 	def_special TryRegisterFieldNotesToSelect
 	def_special BufferBirchRedInkReport
 	def_special ScriptCheckPokedexCaught
+	def_special GetFieldNotesInkCue
+	def_special SetFieldNotesPenFlag

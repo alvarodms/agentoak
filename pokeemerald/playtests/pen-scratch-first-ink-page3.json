@@ -1,0 +1,87 @@
+{
+  "name": "pen-scratch-first-ink-page3",
+  "checks": "C396 v3.3b: the C361 First Ink cue now works on page 3; Granite Cave B2F with GLIGAR_HOENN caught and no First Ink plays the visual cue, sets FIRST_INK and PEN_GLIGAR, and never plays the pen sound, then or after a return",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B2F",
+    "x": 26,
+    "y": 14,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_GLIGAR_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "the cue starts by itself on the first free frame"
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "expectText": [
+        "SAGE opened FIELD NOTES",
+        "and took out a pen.",
+        "SAGE kept FIELD NOTES",
+        "ready on SELECT."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_FIRST_INK": true,
+        "FLAG_FIELD_NOTES_PEN_GLIGAR": true
+      }
+    },
+    {
+      "expectNoSound": {
+        "song": "SE_M_SKETCH"
+      }
+    },
+    {
+      "comment": "a fresh return to B2F: neither cue plays again"
+    },
+    {
+      "warp": {
+        "map": "MAP_GRANITE_CAVE_B2F",
+        "x": 26,
+        "y": 14
+      }
+    },
+    {
+      "expectNoSound": {
+        "song": "SE_M_SKETCH"
+      }
+    },
+    {
+      "comment": "talk would re-read the first cue's last box, so walking freely is the proof no cue started (the C361 pattern)"
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_GRANITE_CAVE_B2F",
+        "x": 26,
+        "y": 13
+      }
+    }
+  ]
+}

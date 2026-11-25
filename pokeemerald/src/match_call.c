@@ -2428,6 +2428,62 @@ u16 TryRegisterFieldNotesToSelect(void)
     return FALSE;
 }
 
+// C396 v3.3b: pages 1-4 each hear the pen once (or show the First Ink cue, which sets the same flag)
+static const u16 sFieldNotesPenFlags[FIELD_NOTES_PAGE_COUNT] =
+{
+    [FIELD_NOTES_LOTAD]     = FLAG_FIELD_NOTES_PEN_LOTAD,
+    [FIELD_NOTES_SHROOMISH] = FLAG_FIELD_NOTES_PEN_SHROOMISH,
+    [FIELD_NOTES_GLIGAR]    = FLAG_FIELD_NOTES_PEN_GLIGAR,
+    [FIELD_NOTES_VULPIX]    = FLAG_FIELD_NOTES_PEN_VULPIX,
+};
+
+// Saves from C361-C395: First Ink was seen but no pen flag exists; pages inked before C396 stay silent.
+static void MigrateFieldNotesPenFlags(void)
+{
+    u8 i;
+
+    if (!FlagGet(FLAG_FIELD_NOTES_FIRST_INK))
+        return;
+    for (i = FIELD_NOTES_LOTAD; i <= FIELD_NOTES_VULPIX; i++)
+    {
+        if (FlagGet(sFieldNotesPenFlags[i]))
+            return;
+    }
+    for (i = FIELD_NOTES_LOTAD; i <= FIELD_NOTES_VULPIX; i++)
+    {
+        if (IsFieldNotesPageInked(i))
+            FlagSet(sFieldNotesPenFlags[i]);
+    }
+}
+
+// C396: VAR_0x8004 = page id 1-4. 0 = nothing, 1 = First Ink cue, 2 = pen sound only
+u16 GetFieldNotesInkCue(void)
+{
+    u16 pageId = gSpecialVar_0x8004;
+    u8 i;
+
+    MigrateFieldNotesPenFlags();
+    if (pageId < 1 || pageId > FIELD_NOTES_VULPIX + 1)
+        return 0;
+    i = pageId - 1;
+    if (!FlagGet(FLAG_RECEIVED_FIELD_NOTES) || !IsFieldNotesPageInked(i))
+        return 0;
+    if (!FlagGet(FLAG_FIELD_NOTES_FIRST_INK))
+        return 1;
+    if (!FlagGet(sFieldNotesPenFlags[i]))
+        return 2;
+    return 0;
+}
+
+// C396: VAR_0x8004 = page id 1-4
+void SetFieldNotesPenFlag(void)
+{
+    u16 pageId = gSpecialVar_0x8004;
+
+    if (pageId >= 1 && pageId <= FIELD_NOTES_VULPIX + 1)
+        FlagSet(sFieldNotesPenFlags[pageId - 1]);
+}
+
 void BufferPokedexRatingForMatchCall(u8 *destStr)
 {
     int numSeen, numCaught;

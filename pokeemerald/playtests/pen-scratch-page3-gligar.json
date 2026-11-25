@@ -1,0 +1,76 @@
+{
+  "name": "pen-scratch-page3-gligar",
+  "checks": "C396 v3.3b: First Ink already seen on page 1; returning to Granite Cave B2F with GLIGAR_HOENN caught plays SE_M_SKETCH once, with no text, and sets FLAG_FIELD_NOTES_PEN_GLIGAR; the player walks freely",
+  "scenario": {
+    "map": "MAP_GRANITE_CAVE_B2F",
+    "x": 26,
+    "y": 14,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_FIELD_NOTES_FIRST_INK",
+      "FLAG_FIELD_NOTES_PEN_LOTAD"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_LOTAD_HOENN",
+      "SPECIES_GLIGAR_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "PenScratch: pen flag set, delay 30, SE_M_SKETCH, end (no lockall, no text)"
+    },
+    {
+      "expectSound": {
+        "song": "SE_M_SKETCH"
+      }
+    },
+    {
+      "comment": "a talk that picks up nothing proves no script text ran"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 5
+      }
+    },
+    {
+      "expectNoText": [
+        "opened FIELD NOTES",
+        "took out a pen",
+        "ready on SELECT",
+        "KEY ITEMS pocket"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_PEN_GLIGAR": true,
+        "FLAG_FIELD_NOTES_FIRST_INK": true
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_GRANITE_CAVE_B2F",
+        "x": 26,
+        "y": 13
+      }
+    }
+  ]
+}

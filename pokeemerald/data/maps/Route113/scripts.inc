@@ -2,6 +2,7 @@ Route113_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route113_OnLoad
 	map_script MAP_SCRIPT_ON_RESUME, Route113_OnResume
 	map_script MAP_SCRIPT_ON_TRANSITION, Route113_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route113_OnFrame
 	.byte 0
 
 @ C356 v3.2 T1 "The ring in the ash": after the credits, once ELLIS is beaten, the six tiles around the
@@ -21,7 +22,23 @@ Route113_EventScript_OnLoadEnd:
 
 Route113_OnResume:
 	setstepcallback STEP_CB_ASH
+	setvar VAR_0x8004, 4
+	specialvar VAR_TEMP_7, GetFieldNotesInkCue
 	end
+
+@ C396: page 4 ink cue (First Ink or pen sound)
+Route113_OnFrame:
+	map_script_2 VAR_TEMP_7, 1, Route113_EventScript_FirstInk
+	map_script_2 VAR_TEMP_7, 2, Route113_EventScript_PenScratch
+	.2byte 0
+
+Route113_EventScript_FirstInk::
+	setvar VAR_0x8004, 4
+	goto FieldNotes_EventScript_FirstInk
+
+Route113_EventScript_PenScratch::
+	setvar VAR_0x8004, 4
+	goto FieldNotes_EventScript_PenScratch
 
 @ C330 Red Ink page 4: the picnicker waits by the warm rocks while she trusts BIRCH's page;
 @ once VULPIX_HOENN is caught she stands out in the open ash, face to the sky.

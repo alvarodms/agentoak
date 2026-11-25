@@ -66,10 +66,10 @@
 #define FLAG_FIELD_NOTES_FIRST_INK  0x34 // C361 v3.3: the one-time first-ink pen moment has played
 #define FLAG_ROUTE104_SKEPTIC_TURNED  0x35 // C362 v3.3: the Route 104 schoolkid read the player's LOTAD ink and turned east
 #define FLAG_PETALBURG_WOODS_FORAGER_MOVED  0x36 // C363 v3.3: the forager saw the player's frost SHROOMISH and walked to the cold patch
-#define FLAG_UNUSED_0x037    0x37 // Unused Flag
-#define FLAG_UNUSED_0x038    0x38 // Unused Flag
-#define FLAG_UNUSED_0x039    0x39 // Unused Flag
-#define FLAG_UNUSED_0x03A    0x3A // Unused Flag
+#define FLAG_FIELD_NOTES_PEN_LOTAD  0x37 // C396 FIELD NOTES page 1 pen sound heard (or First Ink cue shown)
+#define FLAG_FIELD_NOTES_PEN_SHROOMISH  0x38 // C396 FIELD NOTES page 2 pen sound heard (or First Ink cue shown)
+#define FLAG_FIELD_NOTES_PEN_GLIGAR  0x39 // C396 FIELD NOTES page 3 pen sound heard (or First Ink cue shown)
+#define FLAG_FIELD_NOTES_PEN_VULPIX  0x3A // C396 FIELD NOTES page 4 pen sound heard (or First Ink cue shown)
 #define FLAG_UNUSED_0x03B    0x3B // Unused Flag
 #define FLAG_UNUSED_0x03C    0x3C // Unused Flag
 #define FLAG_UNUSED_0x03D    0x3D // Unused Flag

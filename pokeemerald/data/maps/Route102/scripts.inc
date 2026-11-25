@@ -3,19 +3,24 @@ Route102_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route102_OnFrame
 	.byte 0
 
-@ C361 v3.3 First Ink: once per save, the first return to the field with LOTAD_HOENN caught
+@ C361 v3.3 First Ink / C396 pen sound: page 1 ink cue on return to the field with LOTAD_HOENN caught
 Route102_OnResume:
-	setvar VAR_0x8004, SPECIES_LOTAD_HOENN
-	call FieldNotes_EventScript_ArmFirstInk
+	setvar VAR_0x8004, 1
+	specialvar VAR_TEMP_7, GetFieldNotesInkCue
 	end
 
 Route102_OnFrame:
 	map_script_2 VAR_TEMP_7, 1, Route102_EventScript_FirstInk
+	map_script_2 VAR_TEMP_7, 2, Route102_EventScript_PenScratch
 	.2byte 0
 
 Route102_EventScript_FirstInk::
 	setvar VAR_0x8004, 1
 	goto FieldNotes_EventScript_FirstInk
+
+Route102_EventScript_PenScratch::
+	setvar VAR_0x8004, 1
+	goto FieldNotes_EventScript_PenScratch
 
 Route102_EventScript_LittleBoy::
 	msgbox Route102_Text_ImNotVeryTall, MSGBOX_NPC

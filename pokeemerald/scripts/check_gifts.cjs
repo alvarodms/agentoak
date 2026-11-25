@@ -25,7 +25,8 @@
 //     first argument (must be a SPECIES_ constant; same vanilla-twin rule and allowlist).
 //     C361: shared scripts in DEX_CHECK_CALLEES take the species in VAR_0x8004 from their
 //     caller, so their own ScriptCheckPokedexCaught is skipped and each `call <callee>`
-//     is checked against the caller's preceding setvar instead.
+//     is checked against the caller's preceding setvar instead. Empty since C396: the First Ink
+//     dex check moved into C (GetFieldNotesInkCue reads the _HOENN species by page id).
 //   Rule D (C335, fails unless allowlisted): each sIngameTrades entry in src/data/trade.h; its
 //     `.species` (what the player receives) and `.requestedSpecies` (what the NPC asks for) must
 //     not be a vanilla SPECIES_X with a SPECIES_X_HOENN twin. Allowlist entries for trades use
@@ -48,8 +49,9 @@ const GIFT_COMMANDS = ['givemon', 'setwildbattle', 'EventMacro_StaticDen'];
 
 // Rule C exceptions, as 'data/maps/Foo/scripts.inc:Label' strings. Starts empty.
 const DEX_CHECK_ALLOWLIST = [];
-// C361: label -> its ScriptCheckPokedexCaught reads the caller's VAR_0x8004 species
-const DEX_CHECK_CALLEES = ['FieldNotes_EventScript_ArmFirstInk'];
+// C361: label -> its ScriptCheckPokedexCaught reads the caller's VAR_0x8004 species.
+// C396: empty; the First Ink dex check lives in C (GetFieldNotesInkCue) on _HOENN species.
+const DEX_CHECK_CALLEES = [];
 
 // Rule D: parse sIngameTrades out of src/data/trade.h text. Returns { trades, errors, used }
 // where `used` holds the indexes of the trade allowlist entries that matched.

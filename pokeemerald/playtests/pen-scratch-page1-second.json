@@ -1,0 +1,75 @@
+{
+  "name": "pen-scratch-page1-second",
+  "checks": "C396 v3.3b: First Ink was on page 2 (Petalburg Woods); Route 102 with LOTAD_HOENN caught now gets only the pen sound: one SE_M_SKETCH, no text, FLAG_FIELD_NOTES_PEN_LOTAD set",
+  "scenario": {
+    "map": "MAP_ROUTE102",
+    "x": 47,
+    "y": 11,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_FIELD_NOTES_FIRST_INK",
+      "FLAG_FIELD_NOTES_PEN_SHROOMISH"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_LOTAD_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "PenScratch: pen flag set, delay 30, SE_M_SKETCH, end (no lockall, no text)"
+    },
+    {
+      "expectSound": {
+        "song": "SE_M_SKETCH"
+      }
+    },
+    {
+      "comment": "a talk that picks up nothing proves no script text ran"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 5
+      }
+    },
+    {
+      "expectNoText": [
+        "opened FIELD NOTES",
+        "took out a pen",
+        "ready on SELECT",
+        "KEY ITEMS pocket"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_PEN_LOTAD": true
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE102",
+        "x": 47,
+        "y": 10
+      }
+    }
+  ]
+}

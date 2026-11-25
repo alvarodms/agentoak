@@ -4,19 +4,24 @@ PetalburgWoods_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgWoods_OnFrame
 	.byte 0
 
-@ C361 v3.3 First Ink: once per save, the first return to the field with SHROOMISH_HOENN caught
+@ C361 v3.3 First Ink / C396 pen sound: page 2 ink cue on return to the field with SHROOMISH_HOENN caught
 PetalburgWoods_OnResume:
-	setvar VAR_0x8004, SPECIES_SHROOMISH_HOENN
-	call FieldNotes_EventScript_ArmFirstInk
+	setvar VAR_0x8004, 2
+	specialvar VAR_TEMP_7, GetFieldNotesInkCue
 	end
 
 PetalburgWoods_OnFrame:
 	map_script_2 VAR_TEMP_7, 1, PetalburgWoods_EventScript_FirstInk
+	map_script_2 VAR_TEMP_7, 2, PetalburgWoods_EventScript_PenScratch
 	.2byte 0
 
 PetalburgWoods_EventScript_FirstInk::
 	setvar VAR_0x8004, 2
 	goto FieldNotes_EventScript_FirstInk
+
+PetalburgWoods_EventScript_PenScratch::
+	setvar VAR_0x8004, 2
+	goto FieldNotes_EventScript_PenScratch
 
 PetalburgWoods_OnTransition::
 	setflag FLAG_HIDE_MIGRATION_PIKACHU_WOODS

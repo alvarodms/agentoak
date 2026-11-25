@@ -30,6 +30,7 @@ import {
   type Layout,
   type PartyMon,
 } from "./state.js";
+import { sampleSePlayers, type SePlayerSample } from "./sound.js";
 import { SymbolTable } from "./symbols.js";
 
 export const BUTTONS = {
@@ -134,6 +135,8 @@ export class EmulatorSession {
   private names: ConstantNames | undefined;
   /** Temp dirs (patched ROMs) removed on close. */
   private readonly cleanup: string[] = [];
+  /** SE players at the last expectSound/expectNoSound (or when the field appeared at boot): sound.ts. */
+  seSamples: SePlayerSample[] | undefined;
 
   private constructor(
     private readonly driver: MgbaDriver,
@@ -179,6 +182,8 @@ export class EmulatorSession {
       session = await EmulatorSession.start({ ...build, rom }, { ...opts, symbols });
       session.cleanup.push(tmp);
       await session.runUntilScreen("CB2_Overworld", opts.maxFrames ?? 1800);
+      // Before any map script runs, so a sound check sees an SE that plays during the settle below.
+      session.seSamples = await sampleSePlayers(session);
       if (scenario.registeredItem) {
         // The field is still fading in, so no script has read the SELECT slot yet.
         const id = session.constant(scenario.registeredItem);

@@ -1,0 +1,75 @@
+{
+  "name": "pen-scratch-page4-vulpix",
+  "checks": "C396 v3.3b: First Ink already seen on page 2; Route 113 with VULPIX_HOENN caught plays SE_M_SKETCH once, with no text, and sets FLAG_FIELD_NOTES_PEN_VULPIX; the ash step callback still runs and the player walks freely",
+  "scenario": {
+    "map": "MAP_ROUTE113",
+    "x": 41,
+    "y": 7,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_FIELD_NOTES_FIRST_INK",
+      "FLAG_FIELD_NOTES_PEN_SHROOMISH"
+    ],
+    "vars": {
+      "VAR_REPEL_STEP_COUNT": 200
+    },
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_SHROOMISH_HOENN",
+      "SPECIES_VULPIX_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "comment": "PenScratch: pen flag set, delay 30, SE_M_SKETCH, end (no lockall, no text)"
+    },
+    {
+      "expectSound": {
+        "song": "SE_M_SKETCH"
+      }
+    },
+    {
+      "comment": "a talk that picks up nothing proves no script text ran"
+    },
+    {
+      "talk": {
+        "start": false,
+        "maxPresses": 5
+      }
+    },
+    {
+      "expectNoText": [
+        "opened FIELD NOTES",
+        "took out a pen",
+        "ready on SELECT",
+        "KEY ITEMS pocket"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_FIELD_NOTES_PEN_VULPIX": true
+      }
+    },
+    {
+      "walk": "up"
+    },
+    {
+      "expectPlayer": {
+        "map": "MAP_ROUTE113",
+        "x": 41,
+        "y": 6
+      }
+    }
+  ]
+}
