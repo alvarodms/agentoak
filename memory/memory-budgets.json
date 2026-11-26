@@ -1,0 +1,22 @@
+{
+  "_comment": "Line caps for memory/ files; report-only, run `make report_memory_budget` (C400) at the start of every tenth-cycle tidy. A file's own Maintenance/Budget header wins over this table: keep them equal. Archives (*-archive.md, */archive.md) are exempt.",
+  "files": {
+    "strategy-notes.md": 200,
+    "player-journey-map.md": 100,
+    "tech-debt-backlog.md": 50,
+    "creative-backlog.md": 30,
+    "pokemon-knowledge.md": 30,
+    "failure-patterns.md": 100,
+    "completed-work.md": 60,
+    "sprite-iterations.md": 50,
+    "sprite-knowledge.md": 60
+  },
+  "globs": {
+    "pokemon-knowledge/*.md": 60,
+    "codebase-facts/*.md": 60,
+    "completed-work/*.md": 80
+  },
+  "exempt": ["*-archive.md", "*/archive.md"],
+  "maxBulletWords": 120,
+  "staleVerifiedCycles": 30
+}

@@ -1,6 +1,6 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 399 | **Date**: November 2026
+**Cycle**: 400 (sources compacted) | **Date**: November 2026
 
 ## C399: does an in-fight tell need to pay off in the same fight? (searched Nov 2026; design writing, not ROM-hack threads)
 - The usual pattern is teach safely → test later: Zelda-style dungeons teach a mechanic on minor enemies, then the boss is the exam (Game Developer "Boss Battle Design and Structure"), and a returning boss with new moves builds on the earlier fight (RPG Maker "Boss Guide"). In kishōtenketsu level design, stage 1 is risk-free and mastery is tested only at the end. So "R1 failed in the teaching fight" is the expected shape. The pay-off belongs to the next pair (Mossdeep twins) and the ISABEL rematch.
@@ -50,12 +50,5 @@
 
 ## Sources
 - https://www.poketools.com/emerald/mossdeep-city (C395 Maxie CROBAT set) · https://bulbapedia.bulbagarden.net/wiki/Plus_(Ability) · https://bulbapedia.bulbagarden.net/wiki/Talk:Helping_Hand_(move) · https://rh-hideout.github.io/pokeemerald-expansion/tutorials/ai_flags.html (C397)
-- https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/page-12
-- https://www.gamedeveloper.com/design/boss-battle-design-and-structure · https://rpgmaker.net/articles/2681 · https://kitsunethegame.blogspot.com/2016/03/kishotenketsu-nintendo-formula-for.html (C399)
-- https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581
-- https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
-- https://rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald/
-- https://www.sportskeeda.com/pokemon/toughest-gym-battles-pokemon-mainline-game
-- https://www.pokecommunity.com/threads/gym-leaders.319564
-- https://docs.google.com/document/u/0/d/13E61Jj4KwhIy3ZKgLjPY-_uWKWklfBR_zUlhZHUZqik/mobilebasic (Gen 3 partner AI notes)
-- https://bulbapedia.bulbagarden.net/wiki/Mossdeep_Space_Center · https://pokemon-archive.fandom.com/wiki/Mossdeep_Space_Center · https://www.pokecommunity.com/threads/partner-trainer-exe-has-stopped-working-apparently.425516/
+- C399: https://www.gamedeveloper.com/design/boss-battle-design-and-structure · https://rpgmaker.net/articles/2681 · C387-389: https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581 · https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza · https://www.sportskeeda.com/pokemon/toughest-gym-battles-pokemon-mainline-game
+- C391: https://bulbapedia.bulbagarden.net/wiki/Mossdeep_Space_Center · https://www.pokecommunity.com/threads/partner-trainer-exe-has-stopped-working-apparently.425516/ · Inclement v1.13 thread (page 12), rankedboost T&L, kishōtenketsu blog, Gen 3 partner AI doc: git history (compacted C400)

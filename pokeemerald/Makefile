@@ -177,7 +177,7 @@ MAKEFLAGS += --no-print-directory
 RULES_NO_SCAN += libagbsyscall clean clean-assets tidy tidymodern tidynonmodern generated clean-generated
 # playtest/playtest_coda only re-invoke make (PLAYTEST=1/2 rom), which does the scanning itself
 RULES_NO_SCAN += playtest playtest_coda check_playtest_build
-.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_species check_evolution check_map_scan check_battle_weather report_partner_typing report_obj_gfx_slots check_generate_trainer check_memory check_all check_all_quick
+.PHONY: all rom modern compare playtest playtest_coda check_playtest_build check_trainers check_ascii check_scripts check_flags check_encounters check_e4_rematches check_palettes check_bosses check_dens check_gifts check_text_width check_doubles check_trainer_slots check_flag_values check_matchcall_len check_object_tiles check_encounter_odds check_playtest check_beat_visibility check_beats check_species check_evolution check_map_scan check_battle_weather report_partner_typing report_obj_gfx_slots report_memory_budget check_generate_trainer check_memory check_all check_all_quick
 .PHONY: $(RULES_NO_SCAN)
 
 # Trainer data validation
@@ -291,6 +291,10 @@ report_partner_typing:
 # Object gfx id budget (C394, report-only, NOT in check_all): NUM_OBJ_EVENT_GFX vs the 239 ceiling, reclaimable UNUSED_/DOLL ids
 report_obj_gfx_slots:
 	@node scripts/check_obj_gfx_slots.cjs --selftest && node scripts/check_obj_gfx_slots.cjs
+
+# Memory budget report (C400, report-only, NOT in check_all): line caps, long bullets, stale "verified C<n>" stamps from memory/memory-budgets.json
+report_memory_budget:
+	@node scripts/check_memory_budget.cjs --selftest && node scripts/check_memory_budget.cjs
 
 check_battle_weather:
 	@node scripts/check_battle_weather.cjs --selftest && node scripts/check_battle_weather.cjs
