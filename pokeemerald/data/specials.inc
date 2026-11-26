@@ -550,3 +550,4 @@ gSpecials::
 	def_special ScriptCheckPokedexCaught
 	def_special GetFieldNotesInkCue
 	def_special SetFieldNotesPenFlag
+	def_special CountFaintedSelectedPartyMons

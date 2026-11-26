@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 396 | **Date**: November 2026
+**Cycle**: 399 | **Date**: November 2026
 
 ---
 
@@ -49,6 +49,10 @@
 - Effect on the CABLE_CAR palette: glow 11 (255,255,148) → near white; amber 14 → (26,26,21); iron 8 (41,49,90) → (22,24,23). Hue barely survives, so a "warm yellow glow" reads as cream. Only light vs dark and the silhouette survive.
 - **The NPC_2 fallback cannot fix this**: the fog blends every sprite palette slot the same way. The fix is in the art: the darkest index (8) as a full outline, the brightest index (11) in one solid core, and a lantern shape (top ring + cage) recognisable in two values. Judge the screenshot against the summit Old Woman, which gets the same blend.
 - Takeaway: for any object placed on a fog map (Mt. Pyre summit/exterior, Route 120 fog), design for luminance and shape, not hue.
+
+## C399 addendum: quiet beats for Hours 10-15 (searched Nov 2026; thin)
+- **ORAS Memory Girl** (Bulbapedia "Memory (game mechanic)") stands outside the *Lilycove* Pokémon Center and tells the player a Pokémon's memory of their journey, made from data the game already holds (where it was met). Emerald has no such NPC (it has the Pokémon Center Ladies instead). It is a quiet "the world remembers you" precedent built from save data, with no new flags. Lilycove is D1-sensitive (page 3), so a beat like this belongs on Route 124 or in Mossdeep.
+- Vanilla already rewrites the dialogue of Lilycove/Mossdeep outdoor NPCs once Kyogre wakes (Bulbapedia Route 124/Lilycove), so the Hours 13-15 "world reacts" layer is taken. A quiet beat should sit *before* Space Center/Seafloor, not compete with that rewrite. No search found a hack with a quiet beat that players remember in these hours.
 
 ## C396 addendum: a sound-only "correction confirmed" cue (searched Nov 2026; web thin on Pokémon SE names, songs.h read locally)
 - **Return of the Obra Dinn** is the closest precedent for a ledger the player corrects. A correct fate gets a jingle only in batches of three (reviewers: DualShockers, the TV Tropes page), so the sound stays rare and stays earned. A cue that fires on every entry loses its weight.

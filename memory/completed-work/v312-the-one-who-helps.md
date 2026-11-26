@@ -61,3 +61,12 @@ Guards shipped C398: route110-isabel-retarget (s0) win + maxPlayerFaints 2 (= A'
 - (i) The Creative Visionary's asymmetry: the correct play (supporter first) leaves nothing on screen to mark the loss, while the wrong play (ace first) produces the poignant lone "But it failed!". This is intended Red Ink register; do not tune it out. (Note: "But it failed!" showed on s0 and s7 A but not s23 A, where the lone MINUN attacked instead.)
 - (ii) The accidental rhyme: Route 109 TOBY's lone PLUSLE comes one route before ISABEL's pair.
 - (iii) Reflection C398: R1 partly tests the yardstick, not the player. R switches blindly after the tell even with PLUSLE already hurt; a real player who sees "ready to help" with PLUSLE half-dead finishes PLUSLE. So "R1 FAIL" means "a mid-fight switch is not the lesson", not "the tell is useless". Recommended C399 verdict: CLOSED as shipped (S ≥ A on 3/3 seeds = the pair is real; tell shows by t2 on 3/3 A seeds = it is seen). Do NOT add a pre-battle hint line (P6 / show-before-tell). No more ISABEL measuring.
+
+## Verdict C399 (CLOSED as shipped)
+
+No ROM change; no ISABEL file touched. Spot-checked C398 symbols before closing: `retargetAfter` (src/emulator/playtest.ts:257), the 12 route110-isabel-* playtests, the `route110-isabel-tell` screenshot step in route110-isabel-retarget.json.
+- **R1 FAIL tests a blind mid-fight switch, not the tell.** The retarget run abandons damage already on PLUSLE; a real player who sees "ready to help" with PLUSLE half-dead finishes PLUSLE.
+- **S ≥ A on 3/3 seeds** (the pair is real), and **the tell shows by t2 on 3/3 A seeds** (it is seen).
+- No pre-battle hint line and no more ISABEL runs. The lone "But it failed!" asymmetry stays (Red Ink register).
+- If anything is tuned later, tune the rematch parties ISABEL_2-5 (creative 397), not ISABEL_1.
+- **Known accepted risk** (Game Designer hypothesis C399): "If ISABEL's lesson really carries forward, the player's next double battle is where they show it, at Tate & Liza by turn 2 (or in ISABEL's rematch if they take it). If nothing between Route 110 and Mossdeep calls on that habit, the 'three partnership lessons' are three separate fights that only we call an arc." This blocks nothing.

@@ -1,16 +1,16 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 398 | **Date**: November 2026
+**Cycle**: 399 | **Date**: November 2026
+
+## C399: does an in-fight tell need to pay off in the same fight? (searched Nov 2026; design writing, not ROM-hack threads)
+- The usual pattern is teach safely → test later: Zelda-style dungeons teach a mechanic on minor enemies, then the boss is the exam (Game Developer "Boss Battle Design and Structure"), and a returning boss with new moves builds on the earlier fight (RPG Maker "Boss Guide"). In kishōtenketsu level design, stage 1 is risk-free and mastery is tested only at the end. So "R1 failed in the teaching fight" is the expected shape. The pay-off belongs to the next pair (Mossdeep twins) and the ISABEL rematch.
 
 ## C398: Isabel retarget run, the engine's targeting (code-read, battle_util.c HandleAction_UseMove:150-263)
 - **Spill-over**: a single-target move aimed at a foe that is already absent (fainted earlier in the turn) is sent to that foe's partner (lines 250-254). So in the retarget run, two player hits both aimed at PLUSLE on t1 are not wasted: if PLUSLE falls to the first, the second lands on MINUN. A "t2 retarget" can then show as a t1 MINUN KO. Read foeKOTurns before claiming the player "retargeted".
 - **Lightning Rod pulls Electric moves (Gen 3: redirect only, no immunity)**: lines 159-221 send any foe Electric move, other than one already aimed at the rod holder, to a LIGHTNING_ROD battler on the other side. A player Lotad_H with LIGHTNING_ROD (C364) eats every helped SHOCK_WAVE, which shields the partner and hides whom HH boosted. Treat it as a miss path, not a bug.
 - External: no hack, guide or thread found that teaches "kill the helper" through a readable Helping Hand (searched C390, C397, C398). "Support first" target order is folk wisdom from other games (e.g. Pokémon Masters guides), not documented ROM-hack practice. LoH's beat has no precedent to copy, and none to contradict it.
 
-## C395: CROBAT spec check (closed; WEEZING kept)
-- Vanilla Maxie CROBAT 43 = WING ATTACK / CONFUSE RAY / AIR CUTTER (special, spread) / MEAN LOOK. A REFLECT guard criterion needs a physical-only set. Steel resists Flying but is not immune, so the AI doesn't route Flying hits to the player.
-
-## C392: Space Center foes, vanilla vs LoH
+## C392 (+ C395: vanilla CROBAT 43 = WING ATTACK / CONFUSE RAY / AIR CUTTER special spread / MEAN LOOK; a REFLECT guard needs a physical-only set): Space Center foes, vanilla vs LoH
 - **Vanilla Maxie (Mossdeep)** = MIGHTYENA 42 / CROBAT 43 / CAMERUPT 44; **Tabitha** = CAMERUPT 36 / MIGHTYENA 38 / GOLBAT 40 (Bulbapedia Part 14, StrategyWiki; Ludo's "Crobat 34" is a typo). **No Weezing in vanilla**: LoH's WEEZING 44 is our own addition, and it sits at vanilla's top-level slot.
 - **Structural point**: Steven's whole team is Steel, and Poison can't touch Steel, so every Sludge Bomb, and Crobat/Golbat's Poison STAB too, can only land on the player's three. Gen 3 AI scores a no-effect move at its minimum, so it **routes** Poison damage to the player's side. Lowering levels makes the hits weaker but doesn't change where they go.
 
@@ -51,7 +51,7 @@
 ## Sources
 - https://www.poketools.com/emerald/mossdeep-city (C395 Maxie CROBAT set) · https://bulbapedia.bulbagarden.net/wiki/Plus_(Ability) · https://bulbapedia.bulbagarden.net/wiki/Talk:Helping_Hand_(move) · https://rh-hideout.github.io/pokeemerald-expansion/tutorials/ai_flags.html (C397)
 - https://www.pokecommunity.com/threads/pok%C3%A9mon-inclement-emerald-a-decomp-difficulty-hack-version-1-13.457039/page-12
-- https://www.smogon.com/forums/threads/kingdra-uber-analysis.80474
+- https://www.gamedeveloper.com/design/boss-battle-design-and-structure · https://rpgmaker.net/articles/2681 · https://kitsunethegame.blogspot.com/2016/03/kishotenketsu-nintendo-formula-for.html (C399)
 - https://www.pokecommunity.com/threads/frlg-ability-confirmation-bug-and-double-battle-ai.528581
 - https://bulbapedia.bulbagarden.net/wiki/Tate_and_Liza
 - https://rankedboost.com/pokemon/gym-leader/tate-and-liza/emerald/

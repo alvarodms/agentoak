@@ -1,0 +1,135 @@
+{
+  "name": "space-center-steven-clean",
+  "checks": "C399 creative 395: a zero-faint Space Center win keeps Steven's original line 'I didn't need to look back.' (an overleveled yardstick, a branch test, not a balance claim). Level 80: at 70 SHELGON still fell once, to MUK's SLUDGE BOMB.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
+    "x": 2,
+    "y": 8,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET"
+    ],
+    "clearFlags": [
+      "FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA",
+      "FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_STEVEN"
+    ],
+    "vars": {
+      "VAR_MOSSDEEP_CITY_STATE": 2,
+      "VAR_MOSSDEEP_SPACE_CENTER_STATE": 2
+    },
+    "party": [
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 80,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ]
+      },
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 80,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_SHADOW_BALL",
+          "MOVE_HEADBUTT",
+          "MOVE_FURY_SWIPES"
+        ]
+      },
+      {
+        "species": "SPECIES_WHISCASH",
+        "level": 80,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_ROCK_TOMB",
+          "MOVE_AMNESIA",
+          "MOVE_REST"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "Boots on 2,8 (MB_NORMAL c0; `node scripts/map_scan.cjs MossdeepCity_SpaceCenter_2F 0-5 5-9`), right of STEVEN (1,8); TABITHA 0,8 and MAXIE 1,9. VAR_MOSSDEEP_CITY_STATE 2 + VAR_MOSSDEEP_SPACE_CENTER_STATE 2 = Magma holds 2F, the three grunts already beaten. ON_TRANSITION (MoveCivilians) clears FLAG_INTERACTED_WITH_STEVEN_SPACE_CENTER at boot, so the first talk is the intro (it sets the flag) and the second is the YES/NO battle prompt."
+    },
+    {
+      "face": "left"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "What's the point of stealing rocket"
+    },
+    {
+      "talk": {
+        "answers": [
+          "yes"
+        ]
+      }
+    },
+    {
+      "expectText": "Are you ready?"
+    },
+    {
+      "chooseHalfParty": {
+        "slots": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_WEEZING",
+        "level": 42
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "Always have been",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 40
+      }
+    },
+    {
+      "expectBattleSummary": { "partner": true, "outcome": "win", "maxPlayerFaints": 0 }
+    },
+    {
+      "talk": { "start": false, "until": ["to look back"] }
+    },
+    {
+      "expectText": "I didn't need"
+    },
+    {
+      "expectObject": { "id": "LOCALID_SPACE_CENTER_2F_STEVEN", "x": 1, "y": 8, "facing": "down" }
+    },
+    {
+      "screenshot": "space-center-steven-clean-look-back"
+    },
+    {
+      "talk": { "start": false }
+    },
+    {
+      "expectText": "too tense"
+    },
+    {
+      "screenshot": "space-center-steven-clean-end"
+    }
+  ]
+}

@@ -313,7 +313,10 @@ MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha::
 	turnobject LOCALID_SPACE_CENTER_2F_STEVEN, DIR_SOUTH
 	fadescreen FADE_FROM_BLACK
 	delay 30
+	special CountFaintedSelectedPartyMons
+	goto_if_ne VAR_RESULT, 0, MossdeepCity_SpaceCenter_2F_EventScript_StevenLookedBack
 	msgbox MossdeepCity_SpaceCenter_2F_Text_StevenDidntNeedToLookBack, MSGBOX_DEFAULT
+MossdeepCity_SpaceCenter_2F_EventScript_StevenAfterLookBack::
 	closemessage
 	delay 20
 	call MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayer
@@ -337,6 +340,11 @@ MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha::
 	releaseall
 #endif
 	end
+
+@ LoH C399 (creative 395): a selected mon fainted in the multi battle, so Steven says he looked back.
+MossdeepCity_SpaceCenter_2F_EventScript_StevenLookedBack::
+	msgbox MossdeepCity_SpaceCenter_2F_Text_StevenLookedBack, MSGBOX_DEFAULT
+	goto MossdeepCity_SpaceCenter_2F_EventScript_StevenAfterLookBack
 
 MossdeepCity_SpaceCenter_2F_EventScript_StevenFacePlayer::
 	switch VAR_FACING
@@ -525,6 +533,10 @@ MossdeepCity_SpaceCenter_2F_Text_MaxieWeWillGiveUp:
 MossdeepCity_SpaceCenter_2F_Text_StevenDidntNeedToLookBack:
 	.string "STEVEN: I didn't need\n"
 	.string "to look back.$"
+
+MossdeepCity_SpaceCenter_2F_Text_StevenLookedBack:
+	.string "STEVEN: I looked back.\n"
+	.string "You were still there.$"
 
 MossdeepCity_SpaceCenter_2F_Text_StevenThankYouComeSeeMeAtHome:
 	.string "STEVEN: Whew, that was too tense.\n"

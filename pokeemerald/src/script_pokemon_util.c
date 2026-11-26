@@ -242,3 +242,21 @@ bool8 ScriptCheckPokedexCaught(void)
     gSpecialVar_Result = GetSetPokedexFlag(nationalDexNum, FLAG_GET_CAUGHT);
     return gSpecialVar_Result;
 }
+
+// LoH C399: after a frontier-style half-party battle (frontier_saveparty + LoadPlayerParty),
+// counts the selected mons that fainted. Result in VAR_RESULT.
+void CountFaintedSelectedPartyMons(void)
+{
+    u8 i;
+    u8 count = 0;
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
+    {
+        u16 monId = gSaveBlock2Ptr->frontier.selectedPartyMons[i] - 1;
+        if (monId < PARTY_SIZE
+         && GetMonData(&gPlayerParty[monId], MON_DATA_SPECIES, NULL) != SPECIES_NONE
+         && !GetMonData(&gPlayerParty[monId], MON_DATA_IS_EGG, NULL)
+         && GetMonData(&gPlayerParty[monId], MON_DATA_HP, NULL) == 0)
+            count++;
+    }
+    gSpecialVar_Result = count;
+}

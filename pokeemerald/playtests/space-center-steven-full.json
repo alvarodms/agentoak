@@ -1,6 +1,6 @@
 {
   "name": "space-center-steven-full",
-  "checks": "C393 v3.10 verdict: a full-HP Steven + player tag battle stays a WIN with at most 2 player faints and at least 2 foe KOs by the player's own Pokémon (2, not 3: the C392 3-3 tie is RNG-fragile), then Steven's 'I didn't need to look back.' shows while he faces Maxie's empty tile. The worn and guts runs stay report-only (their loss is accepted for now, not intended).",
+  "checks": "C393 v3.10 verdict: a full-HP Steven + player tag battle stays a WIN with at most 2 player faints and at least 2 foe KOs by the player's own Pokémon (2, not 3: the C392 3-3 tie is RNG-fragile), then, because this win costs at least 1 player faint (the guarded run has 2), Steven says 'I looked back. You were still there.' (creative 395, C399) while he faces Maxie's empty tile. The worn and guts runs stay report-only (their loss is accepted for now, not intended).",
   "scenario": {
     "map": "MAP_MOSSDEEP_CITY_SPACE_CENTER_2F",
     "x": 2,
@@ -111,10 +111,10 @@
       "expectBattleSummary": { "partner": true, "outcome": "win", "maxPlayerFaints": 2, "minPlayerKOs": 2 }
     },
     {
-      "talk": { "start": false, "until": ["to look back"] }
+      "talk": { "start": false, "until": ["still there"] }
     },
     {
-      "expectText": "I didn't need"
+      "expectText": "I looked back"
     },
     {
       "expectObject": { "id": "LOCALID_SPACE_CENTER_2F_STEVEN", "x": 1, "y": 8, "facing": "down" }
