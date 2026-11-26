@@ -1,12 +1,14 @@
 # Double Battle Boss Design (Juan doubles, slot 568; + Tate & Liza Levitate EQ, C387)
 
-**Cycle**: 397 | **Date**: November 2026
+**Cycle**: 398 | **Date**: November 2026
 
-## C395: CROBAT spec check (WEEZING→CROBAT)
-- **CROBAT at this slot is a restoration, not a new idea**: vanilla Maxie's Space Center ace-before-CAMERUPT is CROBAT 43. The poketools Mossdeep page lists **WING ATTACK / CONFUSE RAY / AIR CUTTER / MEAN LOOK**, but its layout is ambiguous; confirm in vanilla trainer_parties.h (git history).
-- **"CROBAT's moves are physical" is only half true.** Under the per-move P/S split, WING ATTACK is physical but AIR CUTTER is special. AIR CUTTER is also a spread move, hitting player + Steven at once, so REFLECT doesn't cover it. CONFUSE RAY and MEAN LOOK are status moves. Mean Look stops switching, so a worn party can't escape the trap. A REFLECT-matched guard criterion only works with a physical-only set (e.g. WING ATTACK / BITE / CONFUSE RAY / FLY or AERIAL ACE).
-- **Flying is resisted by Steel, but Steel is not immune to it** (unlike Poison). Gen 3 AI only "routes" hard on no-effect (immune) moves; a resisted hit still scores, so Steven soaks some of the damage. Keep SLUDGE BOMB/POISON FANG off CROBAT, or the C392 trap returns.
-- Crobat's base Speed 130 outruns Steven's whole team, so CROBAT always moves before METANG's turn-1 REFLECT.
+## C398: Isabel retarget run, the engine's targeting (code-read, battle_util.c HandleAction_UseMove:150-263)
+- **Spill-over**: a single-target move aimed at a foe that is already absent (fainted earlier in the turn) is sent to that foe's partner (lines 250-254). So in the retarget run, two player hits both aimed at PLUSLE on t1 are not wasted: if PLUSLE falls to the first, the second lands on MINUN. A "t2 retarget" can then show as a t1 MINUN KO. Read foeKOTurns before claiming the player "retargeted".
+- **Lightning Rod pulls Electric moves (Gen 3: redirect only, no immunity)**: lines 159-221 send any foe Electric move, other than one already aimed at the rod holder, to a LIGHTNING_ROD battler on the other side. A player Lotad_H with LIGHTNING_ROD (C364) eats every helped SHOCK_WAVE, which shields the partner and hides whom HH boosted. Treat it as a miss path, not a bug.
+- External: no hack, guide or thread found that teaches "kill the helper" through a readable Helping Hand (searched C390, C397, C398). "Support first" target order is folk wisdom from other games (e.g. Pokémon Masters guides), not documented ROM-hack practice. LoH's beat has no precedent to copy, and none to contradict it.
+
+## C395: CROBAT spec check (closed; WEEZING kept)
+- Vanilla Maxie CROBAT 43 = WING ATTACK / CONFUSE RAY / AIR CUTTER (special, spread) / MEAN LOOK. A REFLECT guard criterion needs a physical-only set. Steel resists Flying but is not immune, so the AI doesn't route Flying hits to the player.
 
 ## C392: Space Center foes, vanilla vs LoH
 - **Vanilla Maxie (Mossdeep)** = MIGHTYENA 42 / CROBAT 43 / CAMERUPT 44; **Tabitha** = CAMERUPT 36 / MIGHTYENA 38 / GOLBAT 40 (Bulbapedia Part 14, StrategyWiki; Ludo's "Crobat 34" is a typo). **No Weezing in vanilla**: LoH's WEEZING 44 is our own addition, and it sits at vanilla's top-level slot.

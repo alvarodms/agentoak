@@ -1,0 +1,103 @@
+{
+  "name": "route110-isabel-supporter-first-w7",
+  "checks": "C398 run S, seed s7 (wait 7 before talk): target MINUN throughout. Measured: WIN 4t, 0 faints (party 100% HP), foeKOOrder MINUN t2 / PLUSLE t4; HH first t1 (t1+t2). Guard: win only; the rest is report-only.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_COMBUSKEN",
+        "level": 20,
+        "moves": [
+          "MOVE_DOUBLE_KICK",
+          "MOVE_EMBER",
+          "MOVE_PECK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_MAKUHITA",
+        "level": 18,
+        "moves": [
+          "MOVE_VITAL_THROW",
+          "MOVE_ARM_THRUST",
+          "MOVE_SAND_ATTACK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_ZIGZAGOON",
+        "level": 17,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_SAND_ATTACK",
+          "MOVE_TAIL_WHIP",
+          "MOVE_TACKLE"
+        ]
+      },
+      {
+        "species": "SPECIES_TAILLOW",
+        "level": 18,
+        "moves": [
+          "MOVE_WING_ATTACK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_PECK",
+          "MOVE_GROWL"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "C398 v3.12 seed sweep: the C397 ace-first scenario (10,77 below ISABEL, COMBUSKEN 20 / MAKUHITA 18 / ZIGZAGOON 17 / TAILLOW 18, slot 1). The 7-frame wait before talking shifts the battle seed (the RNG advances every VBlank, src/main.c:365-366)."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "wait": 7
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 20
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentRight",
+        "until": [
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win"
+      }
+    }
+  ]
+}

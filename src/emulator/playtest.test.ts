@@ -40,6 +40,7 @@ import {
   pickMoveSlot,
   pickSendOutIndex,
   pickTargetBattler,
+  retargetFor,
   summarizeBattle,
   summarizeBattles,
   talkStopsAt,
@@ -581,6 +582,17 @@ describe("battleTurns step and waitForBattleText forbid", () => {
     expect(pickMoveSlot(moveFor, "SPECIES_DRAGONAIR", 1)).toBe(1);
     expect(pickMoveSlot(moveFor, undefined, 4)).toBe(4);
     expect(pickMoveSlot(undefined, "SPECIES_BRELOOM", 2)).toBe(2);
+  });
+
+  it("retargetFor switches target once, after a message with the rule's text", () => {
+    const rule = { text: "ready to help", target: "opponentRight" as const };
+    expect(retargetFor(rule, "MINUN is ready to\nhelp PLUSLE!", false)).toBe("opponentRight");
+    expect(retargetFor(rule, "Foe PLUSLE used SHOCK WAVE!", false)).toBeUndefined();
+    expect(retargetFor(rule, "MINUN is ready to help PLUSLE!", true)).toBeUndefined();
+    expect(retargetFor(undefined, "MINUN is ready to help PLUSLE!", false)).toBeUndefined();
+    expect(parse({ battleTurns: { move: 1, until: "x", retargetAfter: rule } })).toEqual({ battleTurns: { move: 1, until: "x", retargetAfter: rule } });
+    expect(() => parse({ battleTurns: { move: 1, until: "x", retargetAfter: { text: "", target: "opponentRight" } } })).toThrow();
+    expect(() => parse({ battleTurns: { move: 1, until: "x", retargetAfter: { text: "a", target: "ally" } } })).toThrow();
   });
 
   it("parses battleTurns target (doubles) and rejects other targets", () => {

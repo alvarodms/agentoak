@@ -241,6 +241,7 @@ const StepSchema = z.union([
      * Double battles are detected: both of the player's battlers pick FIGHT → the same slot, and a
      * single-target move's target prompt is answered with `target` (default "opponentLeft"; the other
      * foe when that one is gone). Spread moves (SURF, EARTHQUAKE) have no prompt.
+     * `retargetAfter`: once a battle message containing `text` has shown, every later turn's target prompt uses `target` instead (a player reacting to a tell). Logged as `[retarget TARGET after turn N]`.
      * In-game partner battles (Steven): only your left battler is prompted; the partner's AI picks, and the summary
      * splits faints and foe KOs between you and the partner (see BattleSummary).
      */
@@ -253,6 +254,7 @@ const StepSchema = z.union([
       forbid: Strings.optional(),
       any: z.boolean().optional(),
       replace: z.boolean().optional(),
+      retargetAfter: z.strictObject({ text: z.string().min(1), target: BattleTarget }).optional(),
     }),
   }),
   z.strictObject({
@@ -723,9 +725,9 @@ async function runStep(
   }
 
   if ("battleTurns" in step) {
-    const { move, moveFor, target, until, maxTurns = 10, forbid = [], any = false, replace = false } = step.battleTurns;
+    const { move, moveFor, target, until, maxTurns = 10, forbid = [], any = false, replace = false, retargetAfter } = step.battleTurns;
     result.battleLog ??= [];
-    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, moveFor, target, log: result.battleLog });
+    await battleTurns(s, move, asList(until), maxTurns, asList(forbid), { any, replace, moveFor, target, retargetAfter, log: result.battleLog });
     const hp = (await s.readState()).party.map((mon) => (mon.maxHp ? Math.round((100 * mon.hp) / mon.maxHp) : 0));
     result.battleLog.push(`${PARTY_HP_MARK}${hp.join(",")}]`);
     result.battleSummaries = summarizeBattles(result.battleLog);
@@ -810,6 +812,19 @@ const MOVE_SLOT_PATH: Record<number, Button[]> = { 1: [], 2: ["RIGHT"], 3: ["DOW
 /** battleTurns' move slot for this turn: `moveFor[foe species]` when listed, else the default `move`. */
 export function pickMoveSlot(moveFor: Readonly<Record<string, number>> | undefined, speciesName: string | undefined, move: number): number {
   return (speciesName !== undefined ? moveFor?.[speciesName] : undefined) ?? move;
+}
+
+/**
+ * battleTurns' `retargetAfter`: the target to switch to when `message` contains the rule's text (flattened like
+ * every text match), else undefined. Fires once: `fired` means an earlier message already switched it.
+ */
+export function retargetFor(
+  rule: { text: string; target: BattleTarget } | undefined,
+  message: string,
+  fired: boolean,
+): BattleTarget | undefined {
+  if (!rule || fired || !flatten(message).includes(flatten(rule.text))) return undefined;
+  return rule.target;
 }
 
 /** gBattleTypeFlags bit for a double battle (include/constants/battle.h). */
@@ -1051,7 +1066,14 @@ async function battleTurns(
   until: readonly string[],
   maxTurns: number,
   forbid: readonly string[],
-  opts: { any?: boolean; replace?: boolean; moveFor?: Record<string, number>; target?: BattleTarget; log?: string[] } = {},
+  opts: {
+    any?: boolean;
+    replace?: boolean;
+    moveFor?: Record<string, number>;
+    target?: BattleTarget;
+    retargetAfter?: { text: string; target: BattleTarget };
+    log?: string[];
+  } = {},
 ): Promise<void> {
   const label = `battleTurns move ${move}`;
   const seen: string[] = [];
@@ -1067,7 +1089,9 @@ async function battleTurns(
     opts.log.push(partnerPartyMarker(sides.partner, sides.player));
   }
   await finishTurn(s, label, doubles, opts.replace ?? false, forbid, opts.log, partner);
-  const target = opts.target ?? "opponentLeft";
+  // `let`: retargetAfter switches it mid-battle, and fight() reads the current value each time it runs.
+  let target: BattleTarget = opts.target ?? "opponentLeft";
+  let retargeted = false;
   /** FIGHT → this turn's slot for the battler whose action menu is open; returns the move menu's text. */
   const fight = async (): Promise<{ slot: number; menu: string }> => {
     let slot = move;
@@ -1139,6 +1163,12 @@ async function battleTurns(
         await logBattleMessage(s, opts.log, text, partner);
         const bad = forbidden(text, forbid);
         if (bad) fail(`${label}: turn ${turn} showed forbidden ${JSON.stringify(bad)}; seen ${JSON.stringify(seen)}`);
+        const next = retargetFor(opts.retargetAfter, text, retargeted);
+        if (next) {
+          target = next;
+          retargeted = true;
+          opts.log?.push(`[retarget ${target} after turn ${turn}]`);
+        }
         if (missing().length === 0) {
           await s.run(30);
           return;

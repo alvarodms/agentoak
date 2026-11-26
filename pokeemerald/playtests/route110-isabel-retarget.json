@@ -1,0 +1,124 @@
+{
+  "name": "route110-isabel-retarget",
+  "checks": "C398 v3.12 seed sweep, run R (target PLUSLE, switch to MINUN once 'ready to help' shows), seed s0 (no wait before talk). Split at the tell for the screenshot route110-isabel-tell (whole line 'Foe MINUN is ready to / help Foe PLUSLE!' legible after a 120-frame wait: R4 PASS). Measured: WIN 4t, 2 faints (MAKUHITA crit SHOCK WAVE t1, ZIGZAGOON helped SHOCK WAVE t2), foeKOOrder PLUSLE t2 / MINUN t4; HELPING HAND first t2, the turn PLUSLE falls, so the retarget only acts from t3 when the fallback already targets MINUN. R = A on s0, as predicted. Guard: win, maxPlayerFaints 2 = the s0 ace-first count (switching targets never costs more than holding on PLUSLE on this seed). Planted maxPlayerFaints 0 → '2 player faints > max 0'.",
+  "scenario": {
+    "map": "MAP_ROUTE110",
+    "x": 10,
+    "y": 77,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_COMBUSKEN",
+        "level": 20,
+        "moves": [
+          "MOVE_DOUBLE_KICK",
+          "MOVE_EMBER",
+          "MOVE_PECK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_MAKUHITA",
+        "level": 18,
+        "moves": [
+          "MOVE_VITAL_THROW",
+          "MOVE_ARM_THRUST",
+          "MOVE_SAND_ATTACK",
+          "MOVE_FOCUS_ENERGY"
+        ]
+      },
+      {
+        "species": "SPECIES_ZIGZAGOON",
+        "level": 17,
+        "moves": [
+          "MOVE_HEADBUTT",
+          "MOVE_SAND_ATTACK",
+          "MOVE_TAIL_WHIP",
+          "MOVE_TACKLE"
+        ]
+      },
+      {
+        "species": "SPECIES_TAILLOW",
+        "level": 18,
+        "moves": [
+          "MOVE_WING_ATTACK",
+          "MOVE_QUICK_ATTACK",
+          "MOVE_PECK",
+          "MOVE_GROWL"
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "comment": "C398 v3.12 seed sweep: the C397 ace-first scenario (10,77 below ISABEL, COMBUSKEN 20 / MAKUHITA 18 / ZIGZAGOON 17 / TAILLOW 18, slot 1). No wait: the suite seed (s0)."
+    },
+    {
+      "face": "up"
+    },
+    {
+      "talk": true
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "waitForBattleText": "What will",
+      "maxFrames": 1800
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_PLUSLE",
+        "level": 20
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentLeft",
+        "until": [
+          "ready to help",
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "comment": "The harness catches the tell as soon as it starts printing (\"Foe MINUN is\"); 120 frames lets the two-line box finish (90 showed \"help Foe PLUSL\"). The RNG advances every VBlank in battle too, so this wait only changes rolls after the tell (MINUN t3), not the headline."
+    },
+    {
+      "wait": 120
+    },
+    {
+      "screenshot": "route110-isabel-tell"
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "target": "opponentRight",
+        "until": [
+          "Oh, dear. Look at them",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 30
+      }
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win",
+        "maxPlayerFaints": 2
+      }
+    }
+  ]
+}
