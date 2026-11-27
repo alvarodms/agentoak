@@ -1,0 +1,63 @@
+{
+  "name": "meteor-falls-chalk-before",
+  "checks": "C336 control: before the crystal Treecko is caught the wall shows only Steven's old chalk; no answer, no copy, flag stays clear (stands at 7,3 facing right into the sign at 8,3: 8,4 and 9,3 are collision tiles)",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 7,
+    "y": 3,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": false
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Words are chalked on the cave",
+        "Not mine to collect.",
+        "- S."
+      ]
+    },
+    {
+      "expectNoText": [
+        "Under the old chalk",
+        "You copy it down."
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": false
+      }
+    }
+  ]
+}

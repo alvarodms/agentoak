@@ -1,6 +1,6 @@
 # v2.9 Planning — JSON Tooling, Maturity, Release-Stage Practice
 
-**Cycle**: 400 | **Date**: November 2026
+**Cycle**: 402 | **Date**: November 2026
 
 ---
 
@@ -17,6 +17,7 @@
 - **Selftest plants must name the rule** (C373, typescript-eslint RuleTester): assert which rule fired and that no other did.
 - **No published**: headless map.bin scanner (Porymap scripting is in-editor only; read MAPGRID_* masks from global.fieldmap.h), Match Call screen test, round-trip warp test, beat/quest manifest lint. LoH's tooling is unprecedented here.
 - **Seed sweeps (C400)**: pokeemerald-expansion's battle tests *rig* the RNG by default (always hit, no crits, secondary effects always fire, fixed damage roll) and assert only player-visible output. Chance is tested separately with `PASSES_RANDOMLY` (a pass-rate assertion over many RNG trials; the release notes say at most one per test, and a 3-arg form is used for speed). Upstream does not answer "outcome depends on seed" by sweeping whole fights. It splits the checks into a rigged *mechanic* test and a separate *probability* test. A LoH seedSweep step should report a rate (e.g. "HH by t2 in ≥2/3 seeds") and should not turn one-seed wins into guards.
+- **Generated playtests (C402)**: expansion writes before/after variants as ONE test body with `PARAMETRIZE {}` blocks (runs once per block), not as N generated files. The main risk practitioners report with generated tests is a **circular oracle**: the expected value comes from the same data the code is built from, so a wrong source row yields a wrong test that still passes. For gen_beat_playtests.cjs, the expected text and gate must come from somewhere other than the beats.json row under test (e.g. the script's own goto_if gate + the vanilla string in the before case). Then prove it can fail: plant a wrong gate, and the generated before test must FAIL. dbt's manifest-test checklist asks whether an assertion states an intended rule or just an accident of the current data.
 - Object facing: resolve by localId + map (`GetObjectEventIdByLocalId`), active slot ≠ template index; 16 active objects per map.
 
 ## Players and testers
@@ -32,6 +33,7 @@
 - C359/C362: bounded open beta as freeze exit; FTUE QA = fresh save, one continuous journey, out-of-order + quit/resume.
 
 ## Sources
+- C402: [Expansion testing (PARAMETRIZE)](https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system) · [Generated-test postmortem (circular oracle)](https://dev.to/sofiabennett84/when-ai-generated-tests-pass-but-miss-the-point-a-postmortem-5a8b) · [dbt data-informed tests](https://docs.getdbt.com/best-practices/how-to-use-wizard/wizard-4-data-informed-tests) · [Fowler, Tests as data](https://martinfowler.com/articles/tests-as-data.html)
 - C400: [Expansion 1.5.1 release (PASSES_RANDOMLY)](https://newreleases.io/project/github/rh-hideout/pokeemerald-expansion/release/expansion%2F1.5.1) · [Expansion testing system (rigged RNG)](https://expansion-docsite-kildemal.pages.dev/tutorials/how_to_testing_system)
 - C377: [bugnet regression](https://bugnet.io/blog/automated-regression-testing-game-builds) · [bugnet checkpoints](https://bugnet.io/blog/how-to-test-your-checkpoint-system-before-you-ship) · [PokeCommunity 445089](https://www.pokecommunity.com/threads/emerald-some-trainer-battles-wont-start-acting-like-i-already-beat-a-trainer-that-i-never-fought-before-in-a-save-file.445089)
 - C373/C372: [RuleTester test cases](https://tessl.io/registry/tessl/npm-typescript-eslint--rule-tester/files/docs/test-cases.md) · [SO blog regression tests](https://stackoverflow.blog/2026/10/22/the-regression-tests-nobody-writes-capturing-how-software-actually-behaves/) · [Pedre validators](https://msaizar.github.io/pedre/api/validators)

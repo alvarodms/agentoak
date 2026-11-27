@@ -189,7 +189,11 @@
     "labels": [
       "MeteorFalls_B1F_2R_EventScript_ChalkCopied"
     ],
-    "playtests": [],
+    "playtests": [
+      "meteor-falls-chalk-copy",
+      "meteor-falls-chalk-before",
+      "meteor-falls-chalk-no-book"
+    ],
     "speaker": "none",
     "checklistItem": 1,
     "preset": "den",
@@ -197,9 +201,6 @@
       "MeteorFalls_B1F_2R_EventScript_ChalkCopied": [
         "FLAG_DEN_METEOR_STEVEN_CHALK"
       ]
-    },
-    "b5Exempt": {
-      "*": "legacy C336: no playtests/*.json covers the chalk copy; check_playtest R5 (den preset) keeps its flag read live"
     }
   },
   {

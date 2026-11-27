@@ -8,7 +8,7 @@
   { "id": "abilities-count", "file": "include/constants/abilities.h", "contains": "#define ABILITIES_COUNT 84", "why": "strategy-notes: ABILITIES_COUNT=84, next ability 84" },
   { "id": "moves-count", "file": "include/constants/moves.h", "contains": "#define MOVES_COUNT 381", "why": "strategy-notes: MOVES_COUNT=381, next move 381" },
   { "id": "faint-causes-harness", "root": "repo", "file": "src/emulator/playtest.ts", "contains": "faintCauses", "why": "C389 harness: battleSummaries faintCauses" },
-  { "id": "chalk-copy-still-missing", "file": "playtests/meteor-falls-chalk-copy.json", "exists": false, "why": "tech-debt 374 pending (C374 LOST); when it ships, delete this claim and drop the beats.json b5Exempt" },
+  { "id": "chalk-copy-playtest", "file": "playtests/meteor-falls-chalk-copy.json", "contains": "Copied from the cave wall:", "why": "tech-debt 374 DONE C402: page 7 BLUE margin + flag proven pre-Champion; meteor-falls-steven-chalk has no b5Exempt" },
   { "id": "steven-skarmory-toxic", "file": "src/battle_tower.c", "contains": ".moves = {MOVE_TOXIC, MOVE_AERIAL_ACE, MOVE_PROTECT, MOVE_STEEL_WING}", "why": "v3.10 C391 baselines measured vanilla sStevenMons (dial (b) TOXIC->SPIKES not taken); if this changes, re-measure and update completed-work/v310-side-by-side.md" },
   { "id": "partner-battle-harness", "root": "repo", "file": "src/emulator/playtest.ts", "contains": "BATTLE_TYPE_INGAME_PARTNER", "why": "C391 harness: in-game partner battleTurns, chooseHalfParty, partner summary fields" },
   { "id": "space-center-guts-playtest", "file": "playtests/space-center-steven-guts.json", "contains": "\"chooseHalfParty\"", "why": "C391 v3.10 baseline playtests (worn/full/guts) drive the Space Center multi battle" }

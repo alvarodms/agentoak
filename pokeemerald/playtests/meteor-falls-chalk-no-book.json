@@ -1,0 +1,62 @@
+{
+  "name": "meteor-falls-chalk-no-book",
+  "checks": "C336 v2.9-save path: caught but without FIELD NOTES, the answer still reads but nothing is copied and the flag stays clear (stands at 7,3 facing right into the sign at 8,3: 8,4 and 9,3 are collision tiles)",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 7,
+    "y": 3,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_TREECKO_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": false
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Under the old chalk, a new",
+        "The forest still remembers."
+      ]
+    },
+    {
+      "expectNoText": [
+        "You copy it down.",
+        "Blue chalk dust"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": false
+      }
+    }
+  ]
+}

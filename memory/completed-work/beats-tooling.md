@@ -16,3 +16,11 @@ No ROM change: only `pokeemerald/scripts/**` and `memory/**` touched. Spec: memo
 
 ## Index row (moved verbatim from completed-work.md C380)
 - **Cycles**: **373** (refactor, no ROM change: scripts/lib/beats.cjs (new), scripts/beats.json fields seeFirst/visibility/traceName/mustReadScripts/b5Exempt, check_beats.cjs crossCheck + selftest plants, check_playtest.cjs R5 via mustReadEntries, check_beat_visibility.cjs via visibilityEntries/traceEntries; check_object_tiles.cjs unchanged) · **Files**: 5 scripts (1 new)
+
+## C402 files (tech-debt 374, no ROM source change)
+- `pokeemerald/playtests/meteor-falls-chalk-copy.json` (**new**): boots on MeteorFalls_B1F_2R 7,3 facing right into the chalk sign at 8,3 (8,4 and 9,3 are collision tiles), badges 1-8, FLAG_SYS_GAME_CLEAR unset, Treecko caught + FIELD NOTES. ChalkAnswer + ChalkCopy read, FLAG_DEN_METEOR_STEVEN_CHALK false → true, then FIELD NOTES page 7 shows ink + "Copied from the cave wall:" margin. Second read stops on p.7 (`talk start:false until`) and turns 4 prompts (240 frames each) to screenshots p7-red-ink / p7-blue-margin / p7-blue-margin-end: red and blue render distinct and legible.
+- `pokeemerald/playtests/meteor-falls-chalk-before.json` (**new**): same scenario, Treecko not caught → old 3-box note only, flag stays clear.
+- `pokeemerald/playtests/meteor-falls-chalk-no-book.json` (**new**): caught, no FIELD NOTES flag/item → answer reads, ChalkNoBook, no copy, flag stays clear.
+- `pokeemerald/scripts/beats.json`: row meteor-falls-steven-chalk `playtests` = the three above; `b5Exempt` deleted. Planted fail (scratch copy, playtests → ["meteor-falls-chalk-nonexistent"]): "check_beats: B5b meteor-falls-steven-chalk: playtest meteor-falls-chalk-nonexistent has no playtests/meteor-falls-chalk-nonexistent.json" (+ B1), FAILED (2 problem(s)).
+- `memory/claims.json`: claim chalk-copy-still-missing (exists: false) replaced by chalk-copy-playtest (contains "Copied from the cave wall:").
+- Proofs: `make -k check_all` green (check_memory M1 14 tags, M2 13 claims); full suite 162/162; npm test 543/543; tsc clean.

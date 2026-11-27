@@ -1,0 +1,138 @@
+{
+  "name": "meteor-falls-chalk-copy",
+  "checks": "C336 Red Ink p.7 (tech-debt 374): with Badge 8 and the Elite Four unbeaten, a later visit after the crystal Treecko catch shows Steven's new chalk; reading it copies the line into FIELD NOTES (FLAG_DEN_METEOR_STEVEN_CHALK) and page 7 gains the BLUE margin (stands at 7,3 facing right into the sign at 8,3: 8,4 and 9,3 are collision tiles)",
+  "scenario": {
+    "map": "MAP_METEOR_FALLS_B1F_2R",
+    "x": 7,
+    "y": 3,
+    "name": "SAGE",
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_RECEIVED_FIELD_NOTES",
+      "FLAG_CAUGHT_METEOR_FALLS_CRYSTAL_TREECKO",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_BADGE08_GET"
+    ],
+    "bag": {
+      "ITEM_FIELD_NOTES": 1
+    },
+    "party": [
+      {
+        "species": "SPECIES_SALAMENCE",
+        "level": 50
+      }
+    ],
+    "caught": [
+      "SPECIES_TREECKO_HOENN"
+    ]
+  },
+  "steps": [
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": false,
+        "FLAG_SYS_GAME_CLEAR": false
+      }
+    },
+    {
+      "face": "right"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "Under the old chalk, a new",
+        "Found, then. Good.",
+        "The forest still remembers.",
+        "You copy it down.",
+        "Blue chalk dust settles"
+      ]
+    },
+    {
+      "expectNoText": [
+        "Not mine to collect.",
+        "A stub of fresh chalk"
+      ]
+    },
+    {
+      "expectFlag": {
+        "FLAG_DEN_METEOR_STEVEN_CHALK": true,
+        "FLAG_SYS_GAME_CLEAR": false
+      }
+    },
+    {
+      "useKeyItem": "ITEM_FIELD_NOTES"
+    },
+    {
+      "expectText": [
+        "p.7 METEOR FALLS",
+        "It chimed in the deepest",
+        "Copied from the cave wall:",
+        "came for the meteor. - S."
+      ]
+    },
+    {
+      "comment": "Read again, stop on page 7, then turn past the old note and the red ink to the blue margin"
+    },
+    {
+      "useKeyItem": {
+        "item": "ITEM_FIELD_NOTES",
+        "read": false
+      }
+    },
+    {
+      "talk": {
+        "start": false,
+        "until": [
+          "p.7 METEOR FALLS"
+        ]
+      }
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "p7-red-ink"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "p7-blue-margin"
+    },
+    {
+      "press": "A"
+    },
+    {
+      "wait": 240
+    },
+    {
+      "screenshot": "p7-blue-margin-end"
+    }
+  ]
+}
