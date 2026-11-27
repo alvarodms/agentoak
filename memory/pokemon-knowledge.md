@@ -14,7 +14,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Tooling, Testing & Release Practice (+ C400 seed sweeps: expansion rigs RNG + PASSES_RANDOMLY rate tests) | 400 | [v29-planning-json-tooling-landscape-c301.md](pokemon-knowledge/v29-planning-json-tooling-landscape-c301.md) |
 | Learnset & Trainer Tooling (+ C385 slot reclaim, keep placeholder names) | 385 | [learnset-and-trainer-tooling-c302.md](pokemon-knowledge/learnset-and-trainer-tooling-c302.md) |
 | Difficulty Mechanics — Item Bans, Bag Lock, Stat Boosts | 325 | [difficulty-mechanics-landscape-c306.md](pokemon-knowledge/difficulty-mechanics-landscape-c306.md) |
-| Discovery & Quiet Beats (rewards, missable statics, quiet/dread beats, fog readability, sound cues, C400 Steven's rock display = set dressing, no precedent) | 400 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
+| Discovery & Quiet Beats (rewards, missable statics, quiet/dread beats, fog readability, sound cues, C400 Steven's rock display = set dressing, no precedent; C401 pre-win visit habituation + post-Seafloor revert) | 401 | [discovery-beats-and-exploration-rewards-c312.md](pokemon-knowledge/discovery-beats-and-exploration-rewards-c312.md) |
 | Boss Species Reuse & Elite Four Identity (#193) | 317 | [boss-species-reuse-and-e4-identity-c313.md](pokemon-knowledge/boss-species-reuse-and-e4-identity-c313.md) |
 | Custom Shiny Palette Design (#163) | 319 | [custom-shiny-palette-design.md](pokemon-knowledge/custom-shiny-palette-design.md) |
 | Double Battle Boss Design (Juan, T&L Levitate/EQ, Space Center partner, Plusle/Minun + Helping Hand, teach→test-later) | 400 | [doubles-boss-design.md](pokemon-knowledge/doubles-boss-design.md) |

@@ -104,7 +104,7 @@
       "y": 6,
       "elevation": 3,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "MossdeepCity_StevensHouse_EventScript_RockDisplay"
+      "script": "MossdeepCity_StevensHouse_EventScript_RockDisplayNewest"
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "name": "stevens-shelf-other-space-after",
+  "checks": "v3.13 (C401): after the win only the newest space changed; 10,4 keeps the vanilla text",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_STEVENS_HOUSE",
+    "x": 9,
+    "y": 4,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_DEFEATED_MAGMA_SPACE_CENTER"],
+    "clearFlags": ["FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN"],
+    "vars": { "VAR_STEVENS_HOUSE_STATE": 2 },
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": "assembled by STEVEN" },
+    { "expectNoText": "holds two" }
+  ]
+}

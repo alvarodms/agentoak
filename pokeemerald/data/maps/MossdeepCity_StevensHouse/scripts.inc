@@ -131,6 +131,11 @@ MossdeepCity_StevensHouse_EventScript_RockDisplay::
 	msgbox MossdeepCity_StevensHouse_Text_CollectionOfRareRocks, MSGBOX_SIGN
 	end
 
+MossdeepCity_StevensHouse_EventScript_RockDisplayNewest::
+	goto_if_unset FLAG_DEFEATED_MAGMA_SPACE_CENTER, MossdeepCity_StevensHouse_EventScript_RockDisplay
+	msgbox MossdeepCity_StevensHouse_Text_NewestSpaceHoldsTwo, MSGBOX_SIGN
+	end
+
 MossdeepCity_StevensHouse_EventScript_Steven::
 	msgbox MossdeepCity_StevensHouse_Text_UnderwateCavernBetweenMossdeepSootopolis, MSGBOX_NPC
 	end
@@ -211,4 +216,8 @@ MossdeepCity_StevensHouse_Text_LetterFromSteven:
 MossdeepCity_StevensHouse_Text_CollectionOfRareRocks:
 	.string "It's a collection of rare rocks and\n"
 	.string "stones assembled by STEVEN.$"
+
+MossdeepCity_StevensHouse_Text_NewestSpaceHoldsTwo:
+	.string "Rare rocks, one to a space.\n"
+	.string "The newest space holds two.$"
 

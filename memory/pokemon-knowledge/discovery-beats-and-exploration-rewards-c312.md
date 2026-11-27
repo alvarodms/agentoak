@@ -1,6 +1,6 @@
 # Discovery Beats & Exploration Rewards — What Works
 
-**Cycle**: 400 (compacted C400; full C312-C399 text in git history) | **Date**: November 2026
+**Cycle**: 401 (compacted C400; full C312-C399 text in git history) | **Date**: November 2026
 
 ---
 
@@ -23,6 +23,7 @@
 ## Steven's house rock display (C400, for v3.13; web thin)
 - Guides (GamerGuides ORAS, Bulbapedia Mossdeep) describe the rock collection only as an *examine-able display*. In ORAS it shows "a variety of stones from across the regions", and guides say "nothing of import there at the moment". Players treat it as **set dressing**. No guide, wiki or thread quotes the Emerald text, and no hack or fan discussion of a changed shelf line turned up. The beat has no precedent and no expectation to break.
 - Implication: read rate will be low (same risk as the ghost girl). The house is visited for DIVE (Emerald: after the Space Center) and later for Beldum, so the player has two chances to read the shelf, and the second one is postgame, while Steven is hidden after Seafloor.
+- **C401 (Bulbapedia/StrategyWiki)**: the house is open on first arrival in Mossdeep, before the Space Center (Emerald moved the DIVE handoff behind the fight; in RS it was at the house with no gate). So a curious player may read the vanilla line *first*, learn "set dressing" and skip it on the DIVE visit (habituation). An object whose text changes is only re-checked when something signals it changed (TV Tropes "Developers' Foresight": reactive examine text is a reward for players who already re-check; few do). Also, gating on Steven's hide flag means the shelf goes back to vanilla after Seafloor, so the postgame Beldum visit (the second chance) shows the old line.
 
 ## Fog readability (C394; code-verified)
 - In WEATHER_FOG_HORIZONTAL every sprite palette is pulled ~75% toward RGB(28,31,28) (field_weather.c ApplyFogBlend :674, spawn-time BlendPalette :842); contrast drops to ~¼ and hue is lost. On fog maps (Mt. Pyre, Route 120) design for **value + silhouette**: dark outline index, one solid bright core.
@@ -32,5 +33,6 @@
 - pokeemerald: SE_DEX_PAGE (109) = page turn + first-ink; the drawing sound is **SE_M_SKETCH (205)**; fallbacks SE_M_SCRATCH 155 / SE_CLICK 36. No hack has a pen SE.
 
 ## Sources
+- C401: [Bulbapedia Emerald walkthrough Part 14](https://bulbapedia.bulbagarden.net/wiki/Walkthrough:Pokémon_Emerald/Part_14) · [StrategyWiki RS Mossdeep](https://strategywiki.org/wiki/Pok%C3%A9mon_Ruby_and_Sapphire/Mossdeep_City) · [Bulbapedia Steven Stone](https://m.bulbapedia.bulbagarden.net/wiki/Steven_Stone) · [TV Tropes Developers' Foresight RPGs](https://tvtropes.org/pmwiki/pmwiki.php/DevelopersForesight/RolePlayingGames)
 - C400: [GamerGuides ORAS Mossdeep](https://www.gamerguides.com/pokemon-oras/guide/walkthrough/mind-badge/mossdeep-city) · [Bulbapedia Mossdeep City](https://bulbapedia.bulbagarden.net/wiki/Mossdeep%20City)
 - C399: Bulbapedia "Memory (game mechanic)", Route 124 · C396: DualShockers/TV Tropes Obra Dinn, uxdesign.cc · C394: Bulbapedia Fog · C393: Kotaku ghost girl · C315/C318: Bulbapedia missable list, Infinite Fusion wiki, Inclement PokeCommunity thread, mgba-mcp · C312: pokemoncoders 2026 list. Full URLs: git history.

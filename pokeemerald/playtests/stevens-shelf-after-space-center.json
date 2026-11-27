@@ -1,0 +1,21 @@
+{
+  "name": "stevens-shelf-after-space-center",
+  "checks": "v3.13 (C401): after the Space Center win, with Steven home, the newest space at 10,6 holds two; one box, no name",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_STEVENS_HOUSE",
+    "x": 9,
+    "y": 6,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_DEFEATED_MAGMA_SPACE_CENTER"],
+    "clearFlags": ["FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN"],
+    "vars": { "VAR_STEVENS_HOUSE_STATE": 2 },
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "screenshot": "stevens-shelf-after" },
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": "Rare rocks, one to a space." },
+    { "expectText": "The newest space holds two." },
+    { "expectBoxCount": 1 }
+  ]
+}

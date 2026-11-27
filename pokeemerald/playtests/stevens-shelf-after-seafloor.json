@@ -1,0 +1,18 @@
+{
+  "name": "stevens-shelf-after-seafloor",
+  "checks": "v3.13 (C401): the line is permanent; after Seafloor (Steven hidden) the newest space still holds two",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY_STEVENS_HOUSE",
+    "x": 9,
+    "y": 6,
+    "flags": ["FLAG_SYS_POKEMON_GET", "FLAG_SYS_POKEDEX_GET", "FLAG_DEFEATED_MAGMA_SPACE_CENTER", "FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN"],
+    "vars": { "VAR_STEVENS_HOUSE_STATE": 2 },
+    "party": [{ "species": "SPECIES_SALAMENCE", "level": 70 }]
+  },
+  "steps": [
+    { "face": "right" },
+    { "talk": true },
+    { "expectText": "The newest space holds two." },
+    { "expectBoxCount": 1 }
+  ]
+}

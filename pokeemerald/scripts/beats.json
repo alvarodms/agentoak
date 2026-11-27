@@ -856,5 +856,32 @@
     ],
     "speaker": "none",
     "seeFirst": "A small lit lantern stands beside a grave on the summit path, where there was none on the way up."
+  },
+  {
+    "id": "v313-side-by-side-after",
+    "arc": "v3.13 Side by side, after: Steven's rock display (C401; gate is the vanilla story flag FLAG_DEFEATED_MAGMA_SPACE_CENTER, permanent)",
+    "register": "place",
+    "map": "MossdeepCity_StevensHouse",
+    "gate": {
+      "flag": "FLAG_DEFEATED_MAGMA_SPACE_CENTER"
+    },
+    "tiles": [
+      [
+        10,
+        6,
+        "right"
+      ]
+    ],
+    "labels": [
+      "MossdeepCity_StevensHouse_EventScript_RockDisplayNewest"
+    ],
+    "playtests": [
+      "stevens-shelf-after-space-center",
+      "stevens-shelf-before-space-center",
+      "stevens-shelf-other-space-after",
+      "stevens-shelf-after-seafloor"
+    ],
+    "speaker": "none",
+    "seeFirst": "When DIVE ends, the right wall of Steven's rock shelf sits at the screen edge, a few steps from his desk."
   }
 ]
