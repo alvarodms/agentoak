@@ -10583,12 +10583,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Eric[] = {
     }
 };
 
-static const struct TrainerMonNoItemCustomMoves sParty_Lucas2[] = {
+static const struct TrainerMonNoItemCustomMoves sParty_MossdeepCharmGrunt[] = {
     {
-    .iv = 0,
-    .lvl = 9,
-    .species = SPECIES_WAILMER,
-    .moves = {MOVE_SPLASH, MOVE_WATER_GUN, MOVE_NONE, MOVE_NONE}
+    .iv = 100,
+    .lvl = 38,
+    .species = SPECIES_MIGHTYENA,
+    .moves = {MOVE_CRUNCH, MOVE_TAKE_DOWN, MOVE_TAUNT, MOVE_SWAGGER}
+    },
+    {
+    .iv = 100,
+    .lvl = 39,
+    .species = SPECIES_CARVANHA,
+    .moves = {MOVE_SURF, MOVE_CRUNCH, MOVE_SCREECH, MOVE_BITE}
     }
 };
 

@@ -1,0 +1,272 @@
+{
+  "name": "mossdeep-wren-gave-charm",
+  "checks": "C404 v3.14 \"Mine to give\" M1/M2/M6: with 0x35, WREN beaten and Badge 7 (state 2), the LOTAD DOLL (34,26), the Aqua grunt (35,26) and WREN (36,26, facing him) stand on the south clifftop before any box. Talking to WREN from 36,25: \"They asked for a storm charm.\" / \"I gave them one.\" / the grunt intro, then the battle (worn yardstick, WHISCASH leading on SURF; guard: win with <=1 faint). After the win the grunt still takes the doll and wades out (8 slow steps), WREN faces the sea: \"It was mine to give.\" The shore is empty; 0x3B is set; a re-talk repeats the line; after a warp out and back all three are gone.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY",
+    "x": 36,
+    "y": 25,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "vars": {
+      "VAR_MOSSDEEP_CITY_STATE": 2
+    },
+    "defeatedTrainers": [
+      "TRAINER_FORTREE_CHARM_KEEPER"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_WHISCASH",
+        "level": 40,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_ROCK_TOMB",
+          "MOVE_AMNESIA",
+          "MOVE_REST"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 41,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 40,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_SHADOW_BALL",
+          "MOVE_HEADBUTT",
+          "MOVE_FURY_SWIPES"
+        ],
+        "hpPercent": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_DOLL",
+        "x": 34,
+        "y": 26,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_GRUNT",
+        "x": 35,
+        "y": 26,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_WREN",
+        "x": 36,
+        "y": 26,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "screenshot": "mossdeep-wren-before-box-1"
+    },
+    {
+      "expectFlag": {
+        "FLAG_TEMP_1": false,
+        "FLAG_TEMP_2": false,
+        "FLAG_TEMP_3": false
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": [
+        "They asked for a storm charm.",
+        "I gave them one.",
+        "Your friend made a fair trade."
+      ]
+    },
+    {
+      "expectBoxCount": 3
+    },
+    {
+      "waitFor": "battle",
+      "maxFrames": 1200
+    },
+    {
+      "expectBattle": {
+        "opponent": "SPECIES_MIGHTYENA",
+        "level": 38
+      }
+    },
+    {
+      "battleTurns": {
+        "move": 1,
+        "until": [
+          "It was given, not won.",
+          "whited out"
+        ],
+        "any": true,
+        "replace": true,
+        "maxTurns": 20
+      }
+    },
+    {
+      "expectBattleSummary": {
+        "outcome": "win",
+        "maxPlayerFaints": 1
+      }
+    },
+    {
+      "talk": {
+        "start": false
+      }
+    },
+    {
+      "comment": "talk start:false picks up on the in-battle defeat box (still on screen), then the post-battle script: walk-out, delay, one WREN box"
+    },
+    {
+      "expectText": [
+        "It was given, not won.",
+        "It was mine to give."
+      ]
+    },
+    {
+      "expectBoxCount": 2
+    },
+    {
+      "expectScreen": "CB2_Overworld"
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_DOLL",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_GRUNT",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_WREN",
+        "x": 36,
+        "y": 26,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_MOSSDEEP_WREN_GAVE_CHARM": true
+      }
+    },
+    {
+      "screenshot": "mossdeep-wren-after-empty-shore"
+    },
+    {
+      "comment": "re-talk in the same visit: the same line, no turn, no battle"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectText": "It was mine to give."
+    },
+    {
+      "expectBoxCount": 1
+    },
+    {
+      "expectNoText": "They asked for a storm charm."
+    },
+    {
+      "warp": {
+        "map": "MAP_MOSSDEEP_CITY_GAME_CORNER_1F",
+        "x": 5,
+        "y": 7
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "warp": {
+        "map": "MAP_MOSSDEEP_CITY",
+        "x": 36,
+        "y": 25
+      }
+    },
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_DOLL",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_GRUNT",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_WREN",
+        "absent": true
+      }
+    },
+    {
+      "expectFlag": {
+        "FLAG_TEMP_1": true,
+        "FLAG_TEMP_2": true,
+        "FLAG_TEMP_3": true
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectBoxCount": 0
+    },
+    {
+      "screenshot": "mossdeep-wren-revisit-empty"
+    }
+  ]
+}

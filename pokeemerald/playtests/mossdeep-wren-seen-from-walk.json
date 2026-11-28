@@ -1,0 +1,107 @@
+{
+  "name": "mossdeep-wren-seen-from-walk",
+  "checks": "C404 v3.14 M1 (state 1): right after Badge 7, with Maxie's group still at 44-45,23-26, a player standing on 40,22 (the west-east link, not a coord-trigger tile) has the doll, the grunt and WREN on screen at once; the screenshot is the palette check with Magma sprites drawn beside PICNICKER / AQUA_MEMBER_M / LOTAD_DOLL.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY",
+    "x": 40,
+    "y": 22,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED"
+    ],
+    "vars": {
+      "VAR_MOSSDEEP_CITY_STATE": 1
+    },
+    "defeatedTrainers": [
+      "TRAINER_FORTREE_CHARM_KEEPER"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_WHISCASH",
+        "level": 40,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_ROCK_TOMB",
+          "MOVE_AMNESIA",
+          "MOVE_REST"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 41,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 40,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_SHADOW_BALL",
+          "MOVE_HEADBUTT",
+          "MOVE_FURY_SWIPES"
+        ],
+        "hpPercent": 50
+      }
+    ],
+    "clearFlags": [
+      "FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA"
+    ]
+  },
+  "steps": [
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_MAXIE",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_DOLL",
+        "x": 34,
+        "y": 26,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_GRUNT",
+        "x": 35,
+        "y": 26,
+        "facing": "down",
+        "visible": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_WREN",
+        "x": 36,
+        "y": 26,
+        "facing": "left",
+        "visible": true
+      }
+    },
+    {
+      "screenshot": "mossdeep-wren-from-40-22-state-1"
+    }
+  ]
+}

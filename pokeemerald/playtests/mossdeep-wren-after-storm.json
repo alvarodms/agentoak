@@ -1,0 +1,101 @@
+{
+  "name": "mossdeep-wren-after-storm",
+  "checks": "C404 v3.14 M4: fully gated but the beat never played and Kyogre has woken (FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN): the shore is empty, the doll gone without a word, and 0x3B stays unset.",
+  "scenario": {
+    "map": "MAP_MOSSDEEP_CITY",
+    "x": 36,
+    "y": 25,
+    "flags": [
+      "FLAG_SYS_POKEMON_GET",
+      "FLAG_SYS_POKEDEX_GET",
+      "FLAG_BADGE01_GET",
+      "FLAG_BADGE02_GET",
+      "FLAG_BADGE03_GET",
+      "FLAG_BADGE04_GET",
+      "FLAG_BADGE05_GET",
+      "FLAG_BADGE06_GET",
+      "FLAG_BADGE07_GET",
+      "FLAG_ROUTE104_SKEPTIC_TURNED",
+      "FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN"
+    ],
+    "vars": {
+      "VAR_MOSSDEEP_CITY_STATE": 2
+    },
+    "defeatedTrainers": [
+      "TRAINER_FORTREE_CHARM_KEEPER"
+    ],
+    "party": [
+      {
+        "species": "SPECIES_WHISCASH",
+        "level": 40,
+        "moves": [
+          "MOVE_SURF",
+          "MOVE_ROCK_TOMB",
+          "MOVE_AMNESIA",
+          "MOVE_REST"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_SHELGON",
+        "level": 41,
+        "moves": [
+          "MOVE_BITE",
+          "MOVE_DRAGON_BREATH",
+          "MOVE_HEADBUTT",
+          "MOVE_PROTECT"
+        ],
+        "hpPercent": 50
+      },
+      {
+        "species": "SPECIES_LINOONE",
+        "level": 40,
+        "moves": [
+          "MOVE_FACADE",
+          "MOVE_SHADOW_BALL",
+          "MOVE_HEADBUTT",
+          "MOVE_FURY_SWIPES"
+        ],
+        "hpPercent": 50
+      }
+    ]
+  },
+  "steps": [
+    {
+      "waitFor": "overworld",
+      "maxFrames": 120
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_DOLL",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_CHARM_GRUNT",
+        "absent": true
+      }
+    },
+    {
+      "expectObject": {
+        "id": "LOCALID_MOSSDEEP_WREN",
+        "absent": true
+      }
+    },
+    {
+      "face": "down"
+    },
+    {
+      "talk": true
+    },
+    {
+      "expectBoxCount": 0
+    },
+    {
+      "expectFlag": {
+        "FLAG_MOSSDEEP_WREN_GAVE_CHARM": false
+      }
+    }
+  ]
+}

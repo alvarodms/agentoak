@@ -350,7 +350,13 @@ FortreeCity_EventScript_CharmKeeperTurned::
 	end
 
 FortreeCity_EventScript_CharmKeeperEmptyPeg:
+	goto_if_set FLAG_MOSSDEEP_WREN_GAVE_CHARM, FortreeCity_EventScript_CharmKeeperPegStaysEmpty
 	msgbox FortreeCity_Text_CharmKeeperEmptyPeg, MSGBOX_AUTOCLOSE
+	end
+
+@ C404 v3.14: after Mossdeep, the doll is not coming back.
+FortreeCity_EventScript_CharmKeeperPegStaysEmpty:
+	msgbox FortreeCity_Text_CharmKeeperPegStaysEmpty, MSGBOX_AUTOCLOSE
 	end
 
 FortreeCity_EventScript_LotadDoll::
@@ -376,6 +382,9 @@ FortreeCity_Text_CharmKeeperDefeatTurned:
 FortreeCity_Text_CharmKeeperEmptyPeg:
 	.string "One of them went into the storm.\n"
 	.string "I'll set it out again tomorrow.$"
+
+FortreeCity_Text_CharmKeeperPegStaysEmpty:
+	.string "That peg stays empty now.$"
 
 FortreeCity_Text_CharmKeeperPost:
 	.string "The wind's calm today.\n"

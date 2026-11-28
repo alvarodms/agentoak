@@ -1,6 +1,6 @@
 # Betrayal Beat Design (Pokémon + fan games)
 
-**Cycle**: 403 | **Date**: November 2026
+**Cycle**: 404 | **Date**: November 2026
 
 ---
 
@@ -22,3 +22,10 @@
 
 ## Applied C403: WREN chosen, DAX deferred (rivalry, not betrayal)
 - WREN (Fortree charm-keeper) gives her doll to an Aqua grunt; spec v3.14 "Mine to give" in strategy-notes.md. DAX (Mauville gym hopeful) reads as a rival's jealousy, not a betrayal, so he stays a later candidate.
+
+## "Win the fight, lose the thing" (C404 research)
+- TV Tropes splits two patterns: *Seemingly Hopeless Boss Fight* (you lose, then the story rescues you) and *Heads I Win, Tails You Lose* (you win, then a cutscene takes it away). Players resent the second most when the cutscene overrides what the fight showed. Mass Effect 3's Kai Leng is the standard example: you beat him, then he wins in the cutscene. Listicles and forums, not systematic evidence.
+- The resentment comes from the villain being shown stronger than the fight proved, not from losing something. A loss is accepted when its cause sits outside the fight and the player saw it before the fight began.
+- Pokémon precedent: Bulbapedia's "Scripted battle" page logs fights whose result changes nothing (Crystal Crossing). A Smogon thread complains about Mars blocking the exit after Cyrus. On itch.io, a player who won a scripted loss in a fan game called the forced re-fight "lame".
+- Vanilla Emerald already teaches "a beaten grunt retreats" (Weather Institute, Mt. Pyre theft), so a grunt walking off after a loss is familiar. The new part is that he leaves *with* the item.
+- Applied: v3.14 shows WREN's "I gave them one." before the battle, which keeps the cause outside the fight. Keep the grunt's after-battle text about the trade, never a boast that the player can't stop him.

@@ -739,12 +739,14 @@
     ],
     "labels": [
       "FortreeCity_OnTransition",
-      "FortreeCity_EventScript_CharmKeeperTurned"
+      "FortreeCity_EventScript_CharmKeeperTurned",
+      "FortreeCity_EventScript_CharmKeeperEmptyPeg"
     ],
     "playtests": [
       "fortree-empty-peg-badge",
       "fortree-empty-peg-no-badge",
-      "fortree-empty-peg-not-turned"
+      "fortree-empty-peg-not-turned",
+      "fortree-peg-stays-empty"
     ],
     "speaker": "none",
     "seeFirst": "From the POKéMON CENTER door, the doll row has a gap between the first LOTAD DOLL and WREN, facing the storms."
@@ -884,5 +886,47 @@
     ],
     "speaker": "none",
     "seeFirst": "When DIVE ends, the right wall of Steven's rock shelf sits at the screen edge, a few steps from his desk."
+  },
+  {
+    "id": "v314-mine-to-give",
+    "arc": "v3.14 Mine to give: WREN gave an Aqua grunt her LOTAD DOLL (C403 spec, C404 build; also needs FLAG_ROUTE104_SKEPTIC_TURNED, gate unset FLAG_MOSSDEEP_WREN_GAVE_CHARM / FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN; the Fortree consequence is on v36-empty-peg)",
+    "register": "fight",
+    "map": "MossdeepCity",
+    "object": "LOCALID_MOSSDEEP_CHARM_DOLL",
+    "trainer": "TRAINER_MOSSDEEP_CHARM_GRUNT",
+    "gate": {
+      "flag": "FLAG_BADGE07_GET",
+      "trainer": "TRAINER_FORTREE_CHARM_KEEPER"
+    },
+    "hideFlag": "FLAG_TEMP_1",
+    "tiles": [
+      [
+        36,
+        25,
+        "down"
+      ],
+      [
+        37,
+        26,
+        "left"
+      ],
+      [
+        35,
+        25,
+        "down"
+      ]
+    ],
+    "labels": [
+      "MossdeepCity_EventScript_CharmBeatSetup",
+      "MossdeepCity_EventScript_CharmGrunt"
+    ],
+    "playtests": [
+      "mossdeep-wren-gave-charm",
+      "mossdeep-wren-seen-from-walk",
+      "mossdeep-wren-ungated",
+      "mossdeep-wren-after-storm"
+    ],
+    "speaker": "stranger",
+    "seeFirst": "On the clifftop below the GAME CORNER, a LOTAD DOLL faces the sea beside an Aqua grunt, and WREN stands next to him, watching."
   }
 ]

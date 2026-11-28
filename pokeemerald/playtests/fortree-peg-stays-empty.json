@@ -1,0 +1,31 @@
+{
+  "name": "fortree-peg-stays-empty",
+  "checks": "C404 v3.14 M5: after Mossdeep (FLAG_MOSSDEEP_WREN_GAVE_CHARM), WREN's Fortree re-talk is 'That peg stays empty now.' (one box) instead of 'One of them went into the storm.'; DOLL_2 (2,7) stays absent, DOLL_1/DOLL_3 and WREN facing left remain. fortree-empty-peg-badge keeps the old line before the beat.",
+  "scenario": {
+    "checkpoint": "fortree_arrival",
+    "map": "MAP_FORTREE_CITY",
+    "x": 5,
+    "y": 7,
+    "flags": ["FLAG_ROUTE104_SKEPTIC_TURNED", "FLAG_BADGE06_GET", "FLAG_BADGE07_GET", "FLAG_MOSSDEEP_WREN_GAVE_CHARM"],
+    "defeatedTrainers": ["TRAINER_FORTREE_CHARM_KEEPER"],
+    "party": [
+      { "species": "SPECIES_SALAMENCE", "level": 70, "moves": ["MOVE_DRAGON_CLAW"] }
+    ]
+  },
+  "steps": [
+    { "wait": 120 },
+    { "waitFor": "overworld", "maxFrames": 60 },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_2", "absent": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_1", "x": 1, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_LOTAD_DOLL_3", "x": 4, "y": 7, "visible": true } },
+    { "expectObject": { "id": "LOCALID_FORTREE_CHARM_KEEPER_TURNED", "x": 3, "y": 7, "facing": "left", "visible": true } },
+    { "comment": "down to 5,8 then left along row 8, around DOLL_3 on 4,7 (as fortree-empty-peg-badge)" },
+    { "walkTo": { "x": 3, "y": 8, "yFirst": true } },
+    { "face": "up" },
+    { "talk": true },
+    { "expectText": "That peg stays empty now." },
+    { "expectNoText": "One of them went into the storm." },
+    { "expectBoxCount": 1 },
+    { "expectScreen": "CB2_Overworld" }
+  ]
+}

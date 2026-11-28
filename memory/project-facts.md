@@ -55,3 +55,4 @@ Available via MCP server (Pokédex tools). All default to Gen 3.
 
 - `wild_encounters.json` is processed by `mapjson` during build; graphics are PNG converted by `gbagfx`; `data/*.s` are preprocessed with `preproc`; `generated/` holds build-time headers.
 - Playtest ROMs are not runner-built: the runner's "Build: SUCCESS" covers only retail `make` (detail: codebase-facts/harness.md).
+- `npm test` flake (C404): src/repo/game-tree.test.ts failed once in a full run, passed alone and on a full rerun (543/543); rerun before investigating, not a ROM signal.

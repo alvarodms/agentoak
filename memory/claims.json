@@ -1,8 +1,8 @@
 [
-  { "id": "next-free-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_UNUSED_0x03B", "why": "strategy-notes: next free flag is 0x3B (FLAG_UNUSED_0x03B; 0x37-0x3A = C396 FIELD NOTES pen flags)" },
+  { "id": "next-free-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_UNUSED_0x03C", "why": "strategy-notes: next free flag is 0x3C (0x3B = C404 FLAG_MOSSDEEP_WREN_GAVE_CHARM)" },
   { "id": "forager-flag", "file": "include/constants/flags.h", "contains": "#define FLAG_PETALBURG_WOODS_FORAGER_MOVED", "why": "0x36 spent C363 (v3.3 forager walk)" },
-  { "id": "free-slot-633", "file": "include/constants/opponents.h", "contains": "#define TRAINER_LUCAS_2                     633", "why": "free trainer slot 633 (check_trainer_slots C390); fails once reclaimed, then update memory" },
-  { "id": "free-slot-634", "file": "include/constants/opponents.h", "contains": "#define TRAINER_MIKE_1                      634", "why": "free trainer slot 634 (check_trainer_slots C390); fails once reclaimed, then update memory" },
+  { "id": "charm-grunt-slot-633", "file": "include/constants/opponents.h", "contains": "#define TRAINER_MOSSDEEP_CHARM_GRUNT        633", "why": "v3.14 C404: slot 633 reclaimed from LUCAS_2" },
+  { "id": "free-slot-634", "file": "include/constants/opponents.h", "contains": "#define TRAINER_MIKE_1                      634", "why": "634 is the LAST free trainer slot (check_trainer_slots C404); fails once reclaimed, then update memory" },
   { "id": "winona-sun-row", "file": "include/trainer_battle_weather.h", "contains": "{ TRAINER_WINONA_1, WEATHER_DROUGHT }", "why": "v3.8 Winona fights in permanent sun (C384)" },
   { "id": "xatu-night-shade", "file": "src/data/trainer_parties.h", "contains": ".moves = {MOVE_NIGHT_SHADE, MOVE_SHADOW_BALL, MOVE_CONFUSE_RAY, MOVE_AERIAL_ACE}", "why": "v3.9 sParty_TateAndLiza1 XATU PSYCHIC -> NIGHT_SHADE (C389)" },
   { "id": "abilities-count", "file": "include/constants/abilities.h", "contains": "#define ABILITIES_COUNT 84", "why": "strategy-notes: ABILITIES_COUNT=84, next ability 84" },

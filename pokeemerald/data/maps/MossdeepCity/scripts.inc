@@ -8,6 +8,7 @@ MossdeepCity_OnTransition:
 	clearflag FLAG_MOSSDEEP_GYM_SWITCH_3
 	clearflag FLAG_MOSSDEEP_GYM_SWITCH_4
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
+	call MossdeepCity_EventScript_CharmBeatSetup
 	end
 
 MossdeepCity_EventScript_PokefanF::
@@ -625,3 +626,82 @@ MossdeepCity_Text_WarmSwimmer_Uneasy:
 	.string "I've been swimming here for ten\n"
 	.string "years and it's never felt like this.$"
 
+
+@ C404 v3.14 "Mine to give": WREN (the Fortree charm-keeper, turned by 0x35 and
+@ beaten) gave an Aqua grunt the LOTAD DOLL from her empty peg. Between Badge 7
+@ and the storm, the doll, the grunt and WREN stand on the south clifftop
+@ (34-36,26), facing the sea. Win or not, he wades out with the doll.
+@ FLAG_TEMP_1/2/3 hide them; FLAG_MOSSDEEP_WREN_GAVE_CHARM ends it for good.
+MossdeepCity_EventScript_CharmBeatSetup::
+	goto_if_unset FLAG_ROUTE104_SKEPTIC_TURNED, MossdeepCity_EventScript_CharmBeatHide
+	goto_if_not_defeated TRAINER_FORTREE_CHARM_KEEPER, MossdeepCity_EventScript_CharmBeatHide
+	goto_if_unset FLAG_BADGE07_GET, MossdeepCity_EventScript_CharmBeatHide
+	goto_if_set FLAG_MOSSDEEP_WREN_GAVE_CHARM, MossdeepCity_EventScript_CharmBeatHide
+	goto_if_set FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN, MossdeepCity_EventScript_CharmBeatHide
+	return
+
+MossdeepCity_EventScript_CharmBeatHide::
+	setflag FLAG_TEMP_1
+	setflag FLAG_TEMP_2
+	setflag FLAG_TEMP_3
+	return
+
+@ On both WREN and the grunt. No faceplayer: WREN keeps facing him for line 1.
+MossdeepCity_EventScript_CharmGrunt::
+	lock
+	goto_if_set FLAG_MOSSDEEP_WREN_GAVE_CHARM, MossdeepCity_EventScript_CharmWrenAfter
+	msgbox MossdeepCity_Text_CharmWrenAsked, MSGBOX_DEFAULT
+	applymovement LOCALID_MOSSDEEP_WREN, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MossdeepCity_Text_CharmWrenGave, MSGBOX_DEFAULT
+	applymovement LOCALID_MOSSDEEP_CHARM_GRUNT, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MossdeepCity_Text_CharmGruntIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_MOSSDEEP_CHARM_GRUNT, MossdeepCity_Text_CharmGruntDefeat
+	applymovement LOCALID_MOSSDEEP_CHARM_GRUNT, Common_Movement_FaceLeft
+	waitmovement 0
+	removeobject LOCALID_MOSSDEEP_CHARM_DOLL
+	applymovement LOCALID_MOSSDEEP_CHARM_GRUNT, MossdeepCity_Movement_CharmGruntExit
+	waitmovement 0
+	removeobject LOCALID_MOSSDEEP_CHARM_GRUNT
+	setflag FLAG_MOSSDEEP_WREN_GAVE_CHARM
+	delay 45
+	applymovement LOCALID_MOSSDEEP_WREN, Common_Movement_FaceDown
+	waitmovement 0
+	msgbox MossdeepCity_Text_CharmWrenMine, MSGBOX_DEFAULT
+	release
+	end
+
+MossdeepCity_EventScript_CharmWrenAfter::
+	msgbox MossdeepCity_Text_CharmWrenMine, MSGBOX_DEFAULT
+	release
+	end
+
+@ 35,26 -> 33,26 -> down the beach stairs into the shallows, off screen at 33,32.
+MossdeepCity_Movement_CharmGruntExit:
+	walk_slow_left
+	walk_slow_left
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	step_end
+
+MossdeepCity_Text_CharmWrenAsked:
+	.string "They asked for a storm charm.$"
+
+MossdeepCity_Text_CharmWrenGave:
+	.string "I gave them one.$"
+
+MossdeepCity_Text_CharmGruntIntro:
+	.string "Your friend made a fair trade.\n"
+	.string "Go bother someone else.$"
+
+MossdeepCity_Text_CharmGruntDefeat:
+	.string "It was given, not won.\n"
+	.string "I don't owe you a thing.$"
+
+MossdeepCity_Text_CharmWrenMine:
+	.string "It was mine to give.$"

@@ -1,0 +1,29 @@
+{
+  "_note": "C404 v3.14 'Mine to give': the Aqua grunt on Mossdeep's south clifftop (35,26) who takes WREN's LOTAD DOLL. Slot 633 reclaimed from never-battled LUCAS_2 (not in gRematchTable; LUCAS_1 629 stays, Route114). Easy on purpose: the loss is the doll, not the battle (yardstick: worn SHELGON 41 / LINOONE 40 / WHISCASH 40, win with <=1 faint). MIGHTYENA = vanilla sParty_GruntSeafloorCavern1 lead verbatim; CARVANHA = sParty_GruntSeafloorCavern2's set with ICE_BEAM -> BITE (ICE_BEAM OHKOs the worn SHELGON). aiFlags as the Seafloor grunts. Pre-registered dial (C403, once): MIGHTYENA 36 / CARVANHA 37. Apply with: node scripts/generate_trainer.cjs scripts/trainer_configs/mossdeep_charm_grunt.json --dry-run, then without --dry-run.",
+  "mode": "reclaim",
+  "cycle": 404,
+  "fromId": "TRAINER_LUCAS_2",
+  "trainerId": "TRAINER_MOSSDEEP_CHARM_GRUNT",
+  "partyName": "sParty_MossdeepCharmGrunt",
+  "trainerClass": "TRAINER_CLASS_TEAM_AQUA",
+  "encounterMusic": "TRAINER_ENCOUNTER_MUSIC_AQUA",
+  "trainerPic": "TRAINER_PIC_AQUA_GRUNT_M",
+  "trainerName": "GRUNT",
+  "items": [],
+  "doubleBattle": false,
+  "aiFlags": ["AI_SCRIPT_CHECK_BAD_MOVE", "AI_SCRIPT_TRY_TO_FAINT", "AI_SCRIPT_CHECK_VIABILITY"],
+  "party": [
+    {
+      "iv": 100,
+      "lvl": 38,
+      "species": "SPECIES_MIGHTYENA",
+      "moves": ["MOVE_CRUNCH", "MOVE_TAKE_DOWN", "MOVE_TAUNT", "MOVE_SWAGGER"]
+    },
+    {
+      "iv": 100,
+      "lvl": 39,
+      "species": "SPECIES_CARVANHA",
+      "moves": ["MOVE_SURF", "MOVE_CRUNCH", "MOVE_SCREECH", "MOVE_BITE"]
+    }
+  ]
+}

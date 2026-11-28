@@ -70,7 +70,7 @@
 #define FLAG_FIELD_NOTES_PEN_SHROOMISH  0x38 // C396 FIELD NOTES page 2 pen sound heard (or First Ink cue shown)
 #define FLAG_FIELD_NOTES_PEN_GLIGAR  0x39 // C396 FIELD NOTES page 3 pen sound heard (or First Ink cue shown)
 #define FLAG_FIELD_NOTES_PEN_VULPIX  0x3A // C396 FIELD NOTES page 4 pen sound heard (or First Ink cue shown)
-#define FLAG_UNUSED_0x03B    0x3B // Unused Flag
+#define FLAG_MOSSDEEP_WREN_GAVE_CHARM  0x3B // C404 v3.14: WREN gave the Aqua grunt her LOTAD DOLL on Mossdeep (beat played; Fortree peg stays empty)
 #define FLAG_UNUSED_0x03C    0x3C // Unused Flag
 #define FLAG_UNUSED_0x03D    0x3D // Unused Flag
 #define FLAG_UNUSED_0x03E    0x3E // Unused Flag
