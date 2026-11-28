@@ -20,6 +20,7 @@ Each topic has its own research file under `memory/pokemon-knowledge/`.
 | Double Battle Boss Design (Juan, T&L Levitate/EQ, Space Center partner, Plusle/Minun + Helping Hand, teach→test-later) | 400 | [doubles-boss-design.md](pokemon-knowledge/doubles-boss-design.md) |
 | Steven Rematch Design & the Regi Question (#194) | 321 | [steven-rematch-and-regi-question-c308.md](pokemon-knowledge/steven-rematch-and-regi-question-c308.md) |
 | v3.0 Opener — Trainer Cap, ID Reclaim, Notebook Key Items, believers | 390 | [trainer-cap-and-notebook-item-v30.md](pokemon-knowledge/trainer-cap-and-notebook-item-v30.md) |
+| Betrayal Beat Design (worn "kind adult = villain" twist; motive + setup decide reception) | 403 | [betrayal-beat-design.md](pokemon-knowledge/betrayal-beat-design.md) |
 | v3.1 Physical Register — Weather, Overworld Events, Place Encounters (+ C383 R119 weather) | 383 | [v31-physical-register-weather-events.md](pokemon-knowledge/v31-physical-register-weather-events.md) |
 
 Older research files (Cycles 47-264) remain in `pokemon-knowledge/` for reference but are not indexed here — findings were applied and are now in the codebase.
